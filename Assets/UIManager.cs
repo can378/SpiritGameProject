@@ -36,11 +36,11 @@ public class UIManager : MonoBehaviour
         #endif
     }
 
-    public void HomeBtn() //Ȩ ��ư
+    public void HomeBtn() //È¨ ¹öÆ°
     {
         SceneManager.LoadScene("Title");
     }
-    public void RestartBtn() //����� ��ư
+    public void RestartBtn() //Àç½ÃÀÛ ¹öÆ°
     {
         tabkeyPanel.SetActive(false);
         esckeyPanel.SetActive(false);
