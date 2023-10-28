@@ -42,11 +42,10 @@ public class ScriptManager : MonoBehaviour
     public void ScriptTest() 
     {
         //활용 예시
+        /*
         for (int i = 0; i < lineSize; i++)
-        {
-            if (Sentence[i, 0] == "할머니") { print(Sentence[i, 1]); }
-        }
-
+        {    if (Sentence[i, 0] == "할머니") { print(Sentence[i, 1]); }    }
+        */
 
     }
 }
