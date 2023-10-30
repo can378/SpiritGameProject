@@ -9,8 +9,8 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     Vector3 cameraPosition;
 
-    [SerializeField]
-    Vector2 center;
+    // 카메라 제한 영역을 바꾸기 위해 public으로 바꿈
+    public Vector2 center;
     [SerializeField]
     Vector2 mapSize;
 
