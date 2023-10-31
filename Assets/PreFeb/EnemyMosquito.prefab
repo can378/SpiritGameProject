@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5990204765678523992}
   - component: {fileID: 1954304036989742529}
-  - component: {fileID: 846903511930926455}
   - component: {fileID: 5278137682984131367}
   - component: {fileID: 8184284879051431152}
+  - component: {fileID: 1260854528428505428}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyMosquito
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,19 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &846903511930926455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4099025357208923798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febdd1c319086fc4ba787c9bb7c0dc8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
 --- !u!70 &5278137682984131367
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -162,3 +149,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
+--- !u!114 &1260854528428505428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099025357208923798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c64e6215427f443b4ee9edbf7e2fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTarget: {fileID: 0}
+  name: Mosquito
+  sprite: {fileID: 0}
+  spawnPosition: {x: 0, y: 0}
+  health: 10
+  speed: 1
+  attack: 0
