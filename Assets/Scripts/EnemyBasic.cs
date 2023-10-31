@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyBasic : MonoBehaviour
 {
-    /*
+    
     public Transform enemyTarget;
 
 
@@ -52,7 +52,7 @@ public class EnemyBasic : MonoBehaviour
         transform.Translate(direction * 0.1f*Time.deltaTime);
     
     }
-   */
+   
 
     //장애물을 피해서 이동하는 기능
 
