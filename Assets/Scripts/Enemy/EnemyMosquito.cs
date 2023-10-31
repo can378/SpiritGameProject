@@ -7,7 +7,7 @@ public class EnemyMosquito : EnemyBasic
 
     void Start()
     {
-        print("target="+enemyTarget.gameObject.name);
+
     }
 
 
@@ -16,7 +16,7 @@ public class EnemyMosquito : EnemyBasic
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
         //target과 가까워지면 이동
-        if (targetDistance <= 5 && targetDistance >= 1.2f)
+        if (targetDistance <= 5 && targetDistance >= 0f)
         {
             //겹쳐지는 현상 해결하기
             Chase();

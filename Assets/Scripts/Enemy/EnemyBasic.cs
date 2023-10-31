@@ -52,6 +52,13 @@ public class EnemyBasic : MonoBehaviour
         //이 게임 오브젝트 파괴?
     
     }
-    
 
+    //플레이어와 닿으면 데미지 넣는다
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            print("플레이어와 접촉. 요괴가 데미지를 넣는다.");
+        }
+    }
 }
