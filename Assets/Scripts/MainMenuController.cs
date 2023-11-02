@@ -13,32 +13,32 @@ public class MainMenuController : MonoBehaviour
     {
         mainPanel.SetActive(true);
     }
-    public void StartBtn() //ê²Œì„ ì‹œì‘ ë²„íŠ¼
+    public void StartBtn() //°ÔÀÓ ½ÃÀÛ ¹öÆ°
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainUI");
     }
 
-    public void ShowOption() //ì„¤ì • ë²„íŠ¼
+    public void ShowOption() //¼³Á¤ ¹öÆ°
     {
         optionPanel.SetActive(true);
         taskPanel.SetActive(false);
         mainPanel.SetActive(false);
     }
 
-    public void ShowTask() //ë„ì „ ê³¼ì œ, ì°¾ì€ NPC ë³´ëŠ” ë²„íŠ¼
+    public void ShowTask() //µµÀü °úÁ¦, Ã£Àº NPC º¸´Â ¹öÆ°
     {
         optionPanel.SetActive(false);
         taskPanel.SetActive(true);
         mainPanel.SetActive(false);
     }
 
-    public void GoBackToTitle() //ë’¤ë¡œê°€ê¸° ë²„íŠ¼
+    public void GoBackToTitle() //µÚ·Î°¡±â ¹öÆ°
     {
         SceneManager.LoadScene("Title");
         mainPanel.SetActive(true);
     }
 
-    public void QuitGame() //ê²Œì„ ë‚˜ê°€ê¸° ë²„íŠ¼
+    public void QuitGame() //°ÔÀÓ ³ª°¡±â ¹öÆ°
     {
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

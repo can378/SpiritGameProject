@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     {
         esckeyPanel.SetActive(false);
     }
-    public void QuitBtn()
+    public void QuitBtn() //ÀúÀåÇÏ°í ³ª°¡±â
     {
         PlayerPrefs.Save();
         #if UNITY_EDITOR
@@ -36,11 +36,12 @@ public class UIManager : MonoBehaviour
         #endif
     }
 
-    public void HomeBtn() //ÃˆÂ¨ Â¹Ã¶Ã†Â°
+    public void HomeBtn() //È¨ ¹öÆ°
     {
+        PlayerPrefs.Save();
         SceneManager.LoadScene("Title");
     }
-    public void RestartBtn() //Ã€Ã§Â½ÃƒÃ€Ã› Â¹Ã¶Ã†Â°
+    public void RestartBtn() //Àç½ÃÀÛ ¹öÆ°
     {
         tabkeyPanel.SetActive(false);
         esckeyPanel.SetActive(false);
