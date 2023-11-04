@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Village : MonoBehaviour
 {
-
     public GameObject Inside;
+    public GameObject Exit;
     void Start()
     {
         
@@ -21,6 +21,7 @@ public class Village : MonoBehaviour
     {
         if (collision.gameObject.name == "Player") 
         {
+            
             if (this.gameObject.name == "Exit") { Inside.SetActive(false); }
             else { Inside.SetActive(true); }
             print("player collision");
