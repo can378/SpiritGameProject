@@ -231,6 +231,7 @@ MonoBehaviour:
   playerTransform: {fileID: 640989225}
   cameraPosition: {x: 0, y: 0, z: -10}
   center: {x: 0, y: 0}
+  postCenter: {x: 0, y: 0}
   mapSize: {x: 15, y: 15}
   cameraMoveSpeed: 10
 --- !u!1 &640989220
@@ -266,10 +267,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  runSpeed: 1.5
+  runSpeed: 2
   dodgeSpeed: 2
   dodgeFrame: 0.3
-  dDown: 0
+  runCoolTime: 5
+  runCurrentCoolTime: 0
 --- !u!50 &640989222
 Rigidbody2D:
   serializedVersion: 4
@@ -472,6 +474,22 @@ PrefabInstance:
     - target: {fileID: 5707744908849005454, guid: 5ca81df13acdbea4da54e9a51b434888, type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871765644194018847, guid: 5ca81df13acdbea4da54e9a51b434888, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871765644194018847, guid: 5ca81df13acdbea4da54e9a51b434888, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871765644194018847, guid: 5ca81df13acdbea4da54e9a51b434888, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871765644194018847, guid: 5ca81df13acdbea4da54e9a51b434888, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6990700710893423406, guid: 5ca81df13acdbea4da54e9a51b434888, type: 3}
       propertyPath: m_SortingOrder

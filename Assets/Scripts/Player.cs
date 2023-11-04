@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
 
-    public float speed;             // 10
-    public float runSpeed;          // 1.33f
-    public float dodgeSpeed;        // 2
-    public float dodgeFrame;        // 0.5f
+    public float speed;                     // 이동속도 기본 10
+    public float runSpeed;                  // 달리기 속도 기본 1.33f
+    public float dodgeSpeed;                // 회피 기본 2
+    public float dodgeFrame;                // 회피 시간 기본 0.5f
+    public float runCoolTime;               // 달리기 최대 대기 시간 기본 10
+    public float runCurrentCoolTime;        // 달리기 쿨타임
 
     float hAxis;
     float vAxis;
 
     bool rDown;            //달리기
-    public bool dDown;     //회피
+    bool dDown;     //회피
 
-    bool isRun;     //달리기
+    bool isRun = true;     //달리기
     bool isDodge;   //회피
 
     Vector2 moveVec;
@@ -62,8 +65,8 @@ public class Player : MonoBehaviour
         }
         else
         {
-            rigid.velocity = moveVec * speed * (rDown ? runSpeed : 1f);
-            if (rDown && moveVec != Vector2.zero)
+            rigid.velocity = moveVec * speed * (isRun ? runSpeed : 1f);
+            if (isRun && moveVec != Vector2.zero)
                 sprite.color = Color.magenta;
             else
                 sprite.color = Color.blue;
@@ -80,6 +83,7 @@ public class Player : MonoBehaviour
             rigid.velocity = moveVec * speed *dodgeSpeed;
             isDodge = true;
 
+            Run();
             Invoke("DodgeOut",dodgeFrame);
 
         }
@@ -89,6 +93,27 @@ public class Player : MonoBehaviour
     {
         sprite.color = Color.blue;
         isDodge = false;
+    }
+
+    // 다음 달리기까지 대기
+    void Run()
+    {
+        runCurrentCoolTime = runCoolTime;
+        if (isRun == true)
+        {
+            isRun = false;
+            StartCoroutine(RunCoolTime());
+        }
+    }
+
+    IEnumerator RunCoolTime()
+    {
+        while (runCurrentCoolTime > 0.0f)
+        {
+            runCurrentCoolTime -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        isRun = true;
     }
 
     void FixedUpdate() {

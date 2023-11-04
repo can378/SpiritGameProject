@@ -9,8 +9,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     Vector3 cameraPosition;
 
-    // 카메라 제한 영역을 바꾸기 위해 public으로 바꿈
-    public Vector2 center;
+    [SerializeField]
+    Vector2 center;                 // 현재 카메라 제한 영역
+    public Vector2 postCenter;      // 다음 카메라 제한 영역
     [SerializeField]
     Vector2 mapSize;
 
@@ -41,6 +42,8 @@ public class CameraManager : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position,
                                           playerTransform.position + cameraPosition,
                                           Time.deltaTime * cameraMoveSpeed);
+        center = Vector3.Lerp(center, postCenter, Time.deltaTime * cameraMoveSpeed);
+
         float lx = mapSize.x - width;
         float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);
 
