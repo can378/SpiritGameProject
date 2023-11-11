@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Village : MonoBehaviour
 {
     public GameObject Inside;
+    public GameObject Entrance;
     public GameObject Exit;
+    public GameObject Cave;
+
     void Start()
     {
         
@@ -22,9 +26,12 @@ public class Village : MonoBehaviour
         if (collision.gameObject.name == "Player") 
         {
             
-            if (this.gameObject.name == "Exit") { Inside.SetActive(false); }
-            else { Inside.SetActive(true); }
-            print("player collision");
+            if (this.gameObject == Exit) { Inside.SetActive(false); }
+            else if(this.gameObject==Entrance) { Inside.SetActive(true); }
+
+            if (this.gameObject == Cave) { SceneManager.LoadScene("Map"); }
+
+
         }
     }
 }

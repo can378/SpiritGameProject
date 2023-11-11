@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField]
-    Transform playerTransform;
+    GameObject Player;
+
     [SerializeField]
     Vector3 cameraPosition;
 
@@ -21,11 +22,11 @@ public class CameraManager : MonoBehaviour
 
     float height;
     float width;
-
+    Transform playerTransform;
 
     void Start()
     {
-        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        playerTransform = Player.GetComponent<Transform>();
 
         height = Camera.main.orthographicSize;
         width = height * Screen.width / Screen.height;

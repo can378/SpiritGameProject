@@ -15,7 +15,8 @@ public class MainMenuController : MonoBehaviour
     }
     public void StartBtn() //게임 시작 버튼
     {
-        SceneManager.LoadScene("Map");
+        //SceneManager.LoadScene("Map");
+        mainPanel.SetActive(false);
     }
 
     public void ShowOption() //설정 버튼
