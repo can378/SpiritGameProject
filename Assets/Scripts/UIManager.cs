@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     public void HomeBtn() //홈 버튼
     {
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("Main");
     }
     public void RestartBtn() //재시작 버튼
     {

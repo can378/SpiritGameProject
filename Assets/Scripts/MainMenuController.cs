@@ -15,7 +15,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void StartBtn() //게임 시작 버튼
     {
-        SceneManager.LoadScene("MainUI");
+        SceneManager.LoadScene("Map");
     }
 
     public void ShowOption() //설정 버튼
@@ -34,7 +34,7 @@ public class MainMenuController : MonoBehaviour
 
     public void GoBackToTitle() //뒤로가기 버튼
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("Main");
         mainPanel.SetActive(true);
     }
 
