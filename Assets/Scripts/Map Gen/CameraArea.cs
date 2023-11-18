@@ -15,7 +15,6 @@ public class CameraArea : MonoBehaviour
     {
         if (other.CompareTag("Player") == true)
         {
-            Debug.Log(name);
             cam.postCenter = transform.position;
         }
     }
