@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+
     float runCurrentCoolTime;        // 달리기 대기시간
     float attackDelay;        // 공격 대기시간
 
@@ -39,7 +41,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
