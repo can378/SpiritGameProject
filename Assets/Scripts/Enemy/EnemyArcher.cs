@@ -73,7 +73,7 @@ public class EnemyArcher : EnemyBasic
 
     IEnumerator ActiveFire()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         
         fireBalls[pivot++].SetActive(true);
         if (pivot == objectCount) pivot = 0;
