@@ -10,19 +10,17 @@ public class EnemyBasic : MonoBehaviour
     //피, 공격(공격력, 공격속도,공격 범위, 공격 사거리), 이동속도, 특수 특성
 
     public Transform enemyTarget;
-    public string name;
-    public Sprite sprite;
     public Vector2 spawnPosition;
     public int health;
     public float speed;
     public int attack;
     
 
-    GameObject enemy;
+
 
     private void Start()
     {
-        enemy = GameObject.Find("Enemy");
+        
 
     }
 

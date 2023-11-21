@@ -24,10 +24,8 @@ public class EnemyShooting : MonoBehaviour
         if (timeAfterAttack >= attackRate) 
         {
             timeAfterAttack = 0f;
-
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-        
-        
+            GameObject bullet 
+                = Instantiate(bulletPrefab, transform.position, transform.rotation);
         }
         
     }
