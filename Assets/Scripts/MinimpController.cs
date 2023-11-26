@@ -1,20 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MinimpController : MonoBehaviour
 {
-    public Material miniMapMaterial;
-    public Transform playerTransform;
-    public float radius = 5.0f;
+    public Transform playerTransform; // 실제 플레이어 Transform
+    public float iconScale = 1.5f; // 아이콘의 크기 배율
+    void Start()
+    {
+        // 아이콘의 크기를 설정된 배율로 조정
+        transform.localScale = new Vector3(iconScale, iconScale, iconScale);
+    }
     void Update()
     {
-        // 플레이어의 현재 위치를 Shader에 전달
-        if (miniMapMaterial != null && playerTransform != null)
-        {
-            Vector2 playerPos = new Vector2(playerTransform.position.x, playerTransform.position.y);
-            miniMapMaterial.SetVector("_PlayerPos", new Vector4(playerPos.x, playerPos.y, 0, 0));
-            miniMapMaterial.SetFloat("_Radius", radius);
-        }
+        // 아이콘의 위치를 플레이어의 현재 위치로 업데이트
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, transform.position.z);
     }
 }
