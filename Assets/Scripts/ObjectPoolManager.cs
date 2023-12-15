@@ -18,18 +18,19 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            //씬 전환이 되었을때, 이전 씬의 인스턴스를 계속 사용하기 위해, 새로운 씬의 게임오브젝트 제거
+            //씬 전환이 되었을때, 이전 씬의 인스턴스를 계속 사용하기 위해
+            //새로운 씬의 게임오브젝트 제거
             Destroy(this.gameObject);
         }
 
 
+        //pools 초기화
         pools = new List<GameObject>[prefabs.Length];
-
         for (int index = 0; index < pools.Length; index++)
             pools[index] = new List<GameObject>();
     }
 
-    public GameObject Get(int index)
+    public GameObject Get(int index)//오브젝트 이름으로 찾는거로 바꿀까?
     {
         GameObject select = null;
 
@@ -51,6 +52,9 @@ public class ObjectPoolManager : MonoBehaviour
 
         return select;
     }
+
+
+
 
     public void Clear(int index)
     {

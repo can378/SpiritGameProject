@@ -28,7 +28,8 @@ public class EnemyShooter : MonoBehaviour
         health = 300;
         Invoke("Stop",2f);
     }
-    void Think() {
+    void Think() 
+    {
 
         //현재 패턴 개수 넘어가면 원래대로 돌아온다.
         patternIndex = patternIndex == 3 ? 0 : patternIndex + 1;
@@ -40,8 +41,6 @@ public class EnemyShooter : MonoBehaviour
             case 1: FireShot(); break;
             case 2: FireArc(); break;
             case 3: FireAround(); break;
-
-        
         }
     }
 
@@ -148,18 +147,16 @@ public class EnemyShooter : MonoBehaviour
         
         }
 
-
-
-
-
-
-
         //Repeat
         curPatternCount++;
 
         if (curPatternCount < maxPatternCount[patternIndex])
             Invoke("FireAround", 1.5f);
         else
+        {
             Invoke("Think", 2f);
+            ObjectPoolManager.instance.Clear(0);
+        }
+            
     }
 }

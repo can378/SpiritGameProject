@@ -6,7 +6,8 @@ public class ScriptManager : MonoBehaviour
 {
     public static ScriptManager instance;
 
-    public TextAsset txt;
+    public TextAsset txt;//대본 txt 파일
+
     string[,] Sentence;
     int lineSize, rowSize;
 
@@ -22,13 +23,13 @@ public class ScriptManager : MonoBehaviour
     {
 
         string currentText = txt.text.Substring(0, txt.text.Length - 1);
-        //print(currentText);
 
-        string[] line = currentText.Split('\n');//줄바꿈으로 구분
+        string[] line = currentText.Split('\n');//txt파일의 한줄 한줄
+        
         lineSize = line.Length;
-        rowSize = line[0].Split('\t').Length;//탭으로 구분
+        rowSize = line[0].Split('\t').Length;
 
-        Sentence = new string[lineSize, rowSize];
+        Sentence = new string[lineSize, rowSize];//문장들
 
 
         for (int i = 0; i < lineSize; i++)

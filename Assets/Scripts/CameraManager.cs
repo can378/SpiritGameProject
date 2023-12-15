@@ -24,9 +24,19 @@ public class CameraManager : MonoBehaviour
     float width;
     Transform playerTransform;
 
+    public bool view3rd = true;
+
+    public static CameraManager instance;
+
+    private void Awake()
+    {
+        CameraManager.instance = this;
+    }
+
     void Start()
     {
         playerTransform = Player.GetComponent<Transform>();
+
 
         height = Camera.main.orthographicSize;
         width = height * Screen.width / Screen.height;
@@ -34,11 +44,11 @@ public class CameraManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        LimitCameraArea();
+        if(view3rd) CameraChasing();
         
     }
 
-    void LimitCameraArea()
+    void CameraChasing()
     {
         transform.position = Vector3.Lerp(transform.position,
                                           playerTransform.position + cameraPosition,
@@ -58,5 +68,16 @@ public class CameraManager : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(center, mapSize * 2);
+    }
+
+    
+
+
+    public void CameraMove(GameObject obj) 
+    {
+
+        transform.position = obj.transform.position;
+        transform.position+= new Vector3(0,0,-10f);
+        //hi yunji (by. minseo)
     }
 }
