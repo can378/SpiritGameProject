@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    private Rigidbody2D bulletRigidbody;
+    private float time=0;
+    private float speed=2;
     Transform playerPos;
-    Vector2 dir;
 
-
-    void Start()
+    void Awake()
     {
         playerPos = GameObject.Find("Player").GetComponent<Transform>();
-        dir = playerPos.position - transform.position;
-        GetComponent<Rigidbody2D>().AddForce(dir * Time.deltaTime * 10000);
-
-        Destroy(gameObject, 5f);
-    
+        //GetComponent<Rigidbody2D>().AddForce((playerPos.position - transform.position) * Time.deltaTime * 10000);
     }
-
-    void Update()
+    private void Update()
     {
-        
+        time += Time.deltaTime;
+
+        if (time >= 5f) { this.gameObject.SetActive(false); time = 0; }
+
+        Vector2 direction = transform.position- playerPos.position;
+        transform.Translate(direction * speed * Time.deltaTime);    
     }
 
 }

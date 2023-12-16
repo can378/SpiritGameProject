@@ -10,6 +10,8 @@ public class Village : MonoBehaviour
     public GameObject Exit;
     public GameObject Cave;
 
+    public GameObject Player;
+    
     void Start()
     {
     }
@@ -29,6 +31,8 @@ public class Village : MonoBehaviour
                 //카메라 이동
                 CameraManager.instance.view3rd = false;
                 CameraManager.instance.CameraMove(Inside);
+
+                //플레이어 이동 불가
             }
 
             //메인 게임 시작
@@ -57,6 +61,8 @@ public class Village : MonoBehaviour
                     //카메라 이동
                     CameraManager.instance.CameraMove(Entrance);
                     CameraManager.instance.view3rd = true;
+
+                    //플레이어 이동가능
 
                 }
             }

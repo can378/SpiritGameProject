@@ -2,34 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShooting : MonoBehaviour
+public class EnemyShooting : EnemyBasic
 {
-    public GameObject bulletPrefab;
 
-    public float attackRate = 2f;
-    private Transform target;
+    GameObject bullet;
+    public float attackRate = 1f;
     private float timeAfterAttack;
+
 
     void Start()
     {
         timeAfterAttack = 0f;
-        target = GameObject.Find("Player").transform;
-
+        
     }
 
     void Update()
     {
         timeAfterAttack += Time.deltaTime;
+        float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (timeAfterAttack >= attackRate) 
+        if (targetDistance <= detectionDistance)
         {
-            timeAfterAttack = 0f;
-            GameObject bullet 
-                = Instantiate(bulletPrefab, transform.position, transform.rotation);
+            if (timeAfterAttack >= attackRate)
+            {
+                timeAfterAttack = 0f;
+                bullet = ObjectPoolManager.instance.Get(1);
+                bullet.transform.position = this.transform.position;
+            }
         }
-        
+
     }
 
-    
-    
 }

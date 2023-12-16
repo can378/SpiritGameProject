@@ -5,8 +5,6 @@ using UnityEngine;
 public class EnemyJumper : EnemyBasic
 {
     bool isJumping=false;
-    Vector2 jumpStartPosition;
-
     int jumpSpeed=10;
 
     void Start()
@@ -20,33 +18,33 @@ public class EnemyJumper : EnemyBasic
 
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
-        //target과 가까워지면 이동
-        if (targetDistance <= 7 && targetDistance >= 0f)
+        if (targetDistance <= detectionDistance && targetDistance >= 0.2f)
         {
             if (isJumping == false) { JumpToTarget(); }
         }
-        else //그 외에는 혼자 배회
+        else
         {
-            //JumpWander();
+            //wander();
         }
     }
 
 
 
-    //target으로 이동
+
     void JumpToTarget()
     {
-        // 이동 방향 계산
+        // 이동 방향
         Vector3 direction = enemyTarget.position - transform.position;
         direction.Normalize();
 
-        // 이동 속도와 시간 설정
+        // 이동 속도, 시간
         float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / jumpSpeed;
 
-        
         // 점프 시작
         StartCoroutine(JumpCoroutine(direction, jumpDuration));
     }
+
+
 
     IEnumerator JumpCoroutine(Vector3 direction, float duration)
     {

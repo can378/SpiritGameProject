@@ -62,6 +62,7 @@ public class ObjectPoolManager : MonoBehaviour
             item.SetActive(false);
     }
 
+
     public void ClearAll()
     {
         for (int index = 0; index < pools.Length; index++)
