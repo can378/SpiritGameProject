@@ -16,7 +16,7 @@ public class EnemyMosquito : EnemyBasic
     {
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= detectionDistance && targetDistance >= 0f)
+        if (targetDistance <= detectionDistance && targetDistance >= 1f)
         {
             Chase();
         }
@@ -24,6 +24,10 @@ public class EnemyMosquito : EnemyBasic
         {
             Wander();
         }
+
+
+        if (health <= 0f) { EnemyDead(); }
+
     }
 
 

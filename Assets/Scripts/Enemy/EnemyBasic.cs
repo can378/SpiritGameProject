@@ -20,40 +20,22 @@ public class EnemyBasic : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         enemyTarget=GameObject.Find("Player").transform;
         this.transform.position = spawnPosition;
     }
 
-    private void Update()
-    {
-
-        //이동 구현? 장애물 피하거나 피하지 않고 이동
-
-        //애니메이터
-
-        //Death
-        if (health < 0.1f) { EnemyDead(); }
-        else 
-        {
-            //살아있음 = 가만히 / 쫓아가기 / 탐색(숨어있을때)
-            //공격하기 / 도망가기 / 특수행동
-
-        }
-
-
-    }
 
     public void EnemyDead() 
     {
-        Debug.Log(this.gameObject.name + "는 죽었다.");
+        Debug.Log(this.gameObject.name + "is dead");
         //animation
 
         //drop item
         //몬스터에 따라 특수 행동?
         //이 게임 오브젝트 파괴?
-    
+        
     }
 
 
@@ -73,5 +55,14 @@ public class EnemyBasic : MonoBehaviour
         direction.x += Random.Range(-2f, 2f);
         transform.Translate(direction * 0.1f * Time.deltaTime);
         */
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
+        {
+            Debug.Log("enemy attacked");
+            health--;
+        }
     }
 }
