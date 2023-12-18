@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 366594489170373061}
   - component: {fileID: 154290980870144635}
-  - component: {fileID: 6076044242716932805}
   - component: {fileID: 4972732932318985344}
   m_Layer: 0
   m_Name: EnemyShooting
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 6548480777929318164}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.9930344, y: 3.025903, z: -32.664032}
+  m_LocalPosition: {x: -3.9930344, y: 3.025903, z: 0}
   m_LocalScale: {x: 0.8828, y: 0.9531, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -86,20 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6076044242716932805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6548480777929318164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50809bc30fe31714fb23aded5d53eb75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 5940983208176413738, guid: d4f5937414f4256449bf70a503088d2a, type: 3}
-  attackRate: 2
 --- !u!50 &4972732932318985344
 Rigidbody2D:
   serializedVersion: 4

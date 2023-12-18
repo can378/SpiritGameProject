@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             if (hit.collider != null)
             {
                 touchedObject = hit.transform.gameObject;
-                print(touchedObject.name);
+                //print(touchedObject.name);
             }
         }
 
