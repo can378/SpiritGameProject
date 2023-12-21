@@ -11,8 +11,8 @@ public class CameraManager : MonoBehaviour
     Vector3 cameraPosition;
 
     [SerializeField]
-    Vector2 center;                 // 현재 카메라 제한 영역
-    public Vector2 postCenter;      // 다음 카메라 제한 영역
+    Vector2 center;                 
+    public Vector2 postCenter;
     [SerializeField]
     Vector2 mapSize;
 
