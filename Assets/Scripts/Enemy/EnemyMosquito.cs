@@ -25,9 +25,6 @@ public class EnemyMosquito : EnemyBasic
             Wander();
         }
 
-
-        if (health <= 0f) { EnemyDead(); }
-
     }
 
 

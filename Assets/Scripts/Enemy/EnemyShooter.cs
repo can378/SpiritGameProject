@@ -18,6 +18,7 @@ public class EnemyShooter : EnemyBasic
 
     void Think() 
     {
+
         ObjectPoolManager.instance.Clear(0);
         //현재 패턴 개수 넘어가면 원래대로 돌아온다.
         patternIndex = patternIndex == 2 ? 0 : patternIndex + 1;
@@ -47,11 +48,11 @@ public class EnemyShooter : EnemyBasic
 
     //Fire Patterns===========================================================================
     void FireForward() 
-    { 
+    {
+        if (!gameObject.activeSelf)
+            return;
+
         //한발씩 발사
-
-        Debug.Log("FireForward");
-
 
         GameObject bullet = ObjectPoolManager.instance.Get(0);
         //bullet.transform.position = transform.position + Vector3.right * 0.5f;
@@ -74,10 +75,11 @@ public class EnemyShooter : EnemyBasic
 
 
     void FireShot() 
-    { 
-        //여러개 한번에 발사
+    {
+        if (!gameObject.activeSelf)
+            return;
 
-        Debug.Log("Fireshot");
+        //여러개 한번에 발사
 
         for (int i = 0; i < 5; i++)
         {
@@ -109,11 +111,10 @@ public class EnemyShooter : EnemyBasic
 
 
     void FireAround() 
-    { 
-
+    {
+        if (!gameObject.activeSelf)
+            return;
         //원형 발사
-        Debug.Log("FireAround");
-
         int roundNumA = 30;
         int roundNumB = 20;
         int roundNum = curPatternCount % 2 == 0 ? roundNumA : roundNumB;

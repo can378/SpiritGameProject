@@ -16,28 +16,12 @@ public class EnemyBasic : MonoBehaviour
     //public int attackRange;
     public int detectionDistance;
 
-    
-
-
 
     private void Awake()
     {
         enemyTarget=GameObject.Find("Player").transform;
         this.transform.position = spawnPosition;
     }
-
-
-    public void EnemyDead() 
-    {
-        Debug.Log(this.gameObject.name + "is dead");
-        //animation
-
-        //drop item
-        //몬스터에 따라 특수 행동?
-        //이 게임 오브젝트 파괴?
-        
-    }
-
 
 
     public void Chase()
@@ -61,8 +45,20 @@ public class EnemyBasic : MonoBehaviour
     {
         if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
         {
-            Debug.Log("enemy attacked");
             health--;
+            print(this.name+" attaked");
+            if (health <= 0f) { EnemyDead(); }
         }
+    }
+    public void EnemyDead()
+    {
+        int dropCoinNum = 10;
+        //drop coin
+        GameManager.instance.dropCoin(dropCoinNum, transform.position);
+
+        //enemy 사라짐
+        this.gameObject.SetActive(false);
+        //Destroy(this.gameObject);
+
     }
 }

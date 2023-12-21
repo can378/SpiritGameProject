@@ -192,12 +192,15 @@ MonoBehaviour:
   health: 3
   walkSpeed: 3
   detectionDistance: 5
-  ePattern: 2
+  ePattern: 1
   EnemyGunMuzzle:
   - {fileID: 2882051056190669649}
   - {fileID: 8249389582094117096}
   - {fileID: 6685783766939783139}
   - {fileID: 8689681431222579082}
+  donutAttackRange: {fileID: 0}
+  roundAttackRange: {fileID: 0}
+  donutInside: {fileID: 0}
 --- !u!50 &4554605982955159981
 Rigidbody2D:
   serializedVersion: 4
@@ -254,7 +257,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

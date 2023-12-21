@@ -9,10 +9,13 @@ public enum enemyPatterns
 public class EnemyPattern : EnemyBasic
 {
     public enemyPatterns ePattern;
+    
     private Rigidbody2D rb;
     private Vector2 dirVec;
     private float time = 0;
     private float targetDistance;
+    private int roundNum;//multishot몇갈래 발포하는지 변수
+
     public List<GameObject> EnemyGunMuzzle;
     public GameObject donutAttackRange;
     public GameObject roundAttackRange;
@@ -38,7 +41,10 @@ public class EnemyPattern : EnemyBasic
         switch (ePattern)
         {
             case enemyPatterns.rushHit: StartCoroutine("rushHit"); break;
-            case enemyPatterns.multiShot: multiShot(); break;
+            case enemyPatterns.multiShot: 
+                roundNum = EnemyGunMuzzle.Count; 
+                multiShot(); 
+                break;
             case enemyPatterns.hitAndRun: StartCoroutine("hitAndRun"); break;
             case enemyPatterns.rangeAttack: StartCoroutine("rangeAttack"); break;
             case enemyPatterns.waveAttack: StartCoroutine("waveAttack"); break;
@@ -49,59 +55,25 @@ public class EnemyPattern : EnemyBasic
 
 
 
-
-    //rush hit와 유사하므로 아직 보류
     IEnumerator LRShot()
     {
-        Vector2 leftV = new Vector2(-1f, 0f);
-        Vector2 rightV = new Vector2(1f, 0f);
-        //left
-        for (int i = 0; i < 3; i++)
-        { rb.AddForce(leftV * 10f); }
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 3; i++)
-        { rb.AddForce(rightV * 10f); }
+        dirVec = (enemyTarget.transform.position - transform.position).normalized;
 
-        //shot
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.1f);
+
+        for (int i = 0; i < 100; i++)
+        { rb.AddForce(dirVec * walkSpeed); }
+
+        yield return new WaitForSeconds(0.1f);
+
+        rb.velocity = Vector2.zero;
         shot();
-
-        //right1
-        for (int i = 0; i < 3; i++)
-        { rb.AddForce(rightV * 10f);}
-        for (int i = 0; i < 3; i++)
-        { rb.AddForce(leftV * 10f); }
-        yield return new WaitForSeconds(2f);
-        //shot
-        shot();
-
         yield return new WaitForSeconds(3);
         StartCoroutine("LRShot");
     }
 
-
-
-
-    //대기 제대로 안하는 문제
-    IEnumerator rushHit() //돌진 후 대기 (반복)
-    {
-        print("rushHit");
-        time = 0;
-        dirVec = (enemyTarget.transform.position - transform.position).normalized;
-        //Vector2 direction = enemyTarget.transform.position - transform.position;
-        rb.velocity = Vector2.zero;
-        while (time<1f)
-        {
-            time += Time.deltaTime;
-            //transform.Translate(direction * 0.001f);
-            rb.AddForce(dirVec*walkSpeed);
-        }
-        rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(3);
-        StartCoroutine("rushHit");
-    }
-
-
-    private void shot() 
+    private void shot()
     {
         GameObject bullet = ObjectPoolManager.instance.Get(0);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
@@ -113,31 +85,69 @@ public class EnemyPattern : EnemyBasic
 
 
 
-
-
-    //hit and run = 때리고 도망가고
-    
-    IEnumerator hitAndRun() 
+    IEnumerator rushHit() //돌진 후 대기 (반복)
     {
-        /*
-        //initialize
-        time = 0;
         dirVec = (enemyTarget.transform.position - transform.position).normalized;
+  
         rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.1f);
 
-        //HIT
-        while (targetDistance>=0)
+        for (int i = 0; i < 100; i++)
+        { rb.AddForce(dirVec * walkSpeed); }
+        
+        yield return new WaitForSeconds(0.1f);
+       
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(3);
+        StartCoroutine("rushHit");
+    }
+
+
+
+
+
+    IEnumerator hitAndRun()
+    {
+        //getting closer
+        do
         {
             Chase();
+            targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+            yield return new WaitForSeconds(0.01f);
+        } while (targetDistance > 0.8f);
+
+
+        //getting farther
+        do 
+        {
+            rb.AddForce(-dirVec * walkSpeed,ForceMode2D.Impulse);
+            targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+            dirVec = (enemyTarget.transform.position - transform.position).normalized;
+            yield return new WaitForSeconds(0.01f);
+        } while (targetDistance < 10f);
+
+
+        yield return new WaitForSeconds(0.01f);
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(1f);
+
+        StartCoroutine("hitAndRun");
+    }
+
+
+    //필요할 경우 활용? 아직 안씀
+    IEnumerator moveEllipse() 
+    {
+        //dirVec = (enemyTarget.transform.position - transform.position).normalized;
+        int r = 10;
+
+        for (int theta = 0; theta < 360; theta++)
+        {
+            transform.position = new Vector3(r * Mathf.Cos(theta * Mathf.Deg2Rad) * 0.5f, r * Mathf.Sin(theta * Mathf.Deg2Rad));
+            yield return new WaitForSeconds(0.01f);
         }
 
-        //Run
-        rb.velocity = Vector2.zero;
-        */
-        yield return new WaitForSeconds(10);
-    
-        StartCoroutine("hitAndRun");
-
+        StartCoroutine("moveEllipse");
     }
 
     
@@ -145,8 +155,8 @@ public class EnemyPattern : EnemyBasic
     //multi shot=n갈래로 총을쏜다.
     void multiShot() 
     {
-        int roundNum = EnemyGunMuzzle.Count;//roundNum갈래의 총알 발포
-        print("multi shot");
+
+        if (!isActiveAndEnabled) { return; }//죽었으면 종료
         
         for (int i = 0; i < roundNum; i++)
         {
