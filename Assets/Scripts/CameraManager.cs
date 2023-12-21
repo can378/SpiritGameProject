@@ -24,7 +24,7 @@ public class CameraManager : MonoBehaviour
     float width;
     Transform playerTransform;
 
-    public bool view3rd = true;
+    public bool isCameraChasing = true;
 
     public static CameraManager instance;
 
@@ -44,7 +44,7 @@ public class CameraManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(view3rd) CameraChasing();
+        if(isCameraChasing) CameraChasing();
         
     }
 

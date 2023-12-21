@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
     private UserData playerData;
     public GameObject coinPrefab;
-    GameObject touchedObject;
+    public GameObject touchedObject;//마우스 클릭한 오브젝트
 
 
     void Awake()

@@ -19,7 +19,15 @@ public class Village : MonoBehaviour
 
     void Update()
     {
-        MouseClick();
+        if (GameManager.instance.touchedObject == Exit)
+        {
+            //카메라 이동
+            CameraManager.instance.CameraMove(Entrance);
+            CameraManager.instance.isCameraChasing = true;
+            GameManager.instance.touchedObject = null;
+            //플레이어 이동가능
+
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -29,7 +37,7 @@ public class Village : MonoBehaviour
             if (this.gameObject == Entrance) 
             { 
                 //카메라 이동
-                CameraManager.instance.view3rd = false;
+                CameraManager.instance.isCameraChasing = false;
                 CameraManager.instance.CameraMove(Inside);
 
                 //플레이어 이동 불가
@@ -43,32 +51,6 @@ public class Village : MonoBehaviour
     
     }
 
-
-
-    void MouseClick()
-    {
-
-        if (Input.GetMouseButton(0))
-        {
-            Vector2 clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(clickPos, Camera.main.transform.forward);
-
-            if (hit.collider != null)
-            {
-                GameObject touchedObject = hit.transform.gameObject;
-                if (touchedObject == Exit) 
-                {
-                    //카메라 이동
-                    CameraManager.instance.CameraMove(Entrance);
-                    CameraManager.instance.view3rd = true;
-
-                    //플레이어 이동가능
-
-                }
-            }
-        }
-
-    }
 
 
 
