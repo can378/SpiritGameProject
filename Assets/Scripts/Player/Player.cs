@@ -46,11 +46,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        GetInput();
-        Dodge();
-        Move();
-        Attack();
-        Turn();
+        if (status.isPlayerMove)
+        {
+            GetInput();
+            Dodge();
+            Move();
+            Attack();
+            Turn();
+        }
+
     }
 
     void GetInput()

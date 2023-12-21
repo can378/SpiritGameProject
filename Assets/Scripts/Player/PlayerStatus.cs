@@ -8,5 +8,6 @@ public class PlayerStatus : MonoBehaviour
     public float runSpeed = 1.33f;                
     public float dodgeSpeed = 1.66f;                
     public float dodgeFrame = 0.5f;               
-    public float runCoolTime = 5f;               
+    public float runCoolTime = 5f;
+    public bool isPlayerMove = true;
 }

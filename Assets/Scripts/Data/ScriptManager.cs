@@ -47,6 +47,7 @@ public class ScriptManager : MonoBehaviour
         for (int i = 0; i < lineSize; i++)
         {    if (Sentence[i, 0] == "할머니") { print(Sentence[i, 1]); }    }
         */
+        //호출 예시 ScriptManager.instance.ScriptTest();
 
     }
 

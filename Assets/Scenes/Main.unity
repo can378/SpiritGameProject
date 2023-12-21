@@ -650,7 +650,6 @@ MonoBehaviour:
   Entrance: {fileID: 866250245}
   Exit: {fileID: 0}
   Cave: {fileID: 211823942}
-  Player: {fileID: 0}
 --- !u!1 &226350344
 GameObject:
   m_ObjectHideFlags: 0
@@ -2162,6 +2161,7 @@ MonoBehaviour:
   dodgeSpeed: 1.66
   dodgeFrame: 0.5
   runCoolTime: 5
+  isPlayerMove: 1
 --- !u!1 &551952538
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,7 +3447,6 @@ MonoBehaviour:
   Entrance: {fileID: 866250245}
   Exit: {fileID: 1439555835}
   Cave: {fileID: 211823942}
-  Player: {fileID: 0}
 --- !u!4 &886233444 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5990204765678523992, guid: 6f4168ef41dae7640b5185d2d439a821, type: 3}
@@ -3600,7 +3599,6 @@ MonoBehaviour:
   Entrance: {fileID: 915258593}
   Exit: {fileID: 986185848}
   Cave: {fileID: 211823942}
-  Player: {fileID: 0}
 --- !u!1 &928330824
 GameObject:
   m_ObjectHideFlags: 0
@@ -3616,7 +3614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &928330825
 Transform:
   m_ObjectHideFlags: 0
@@ -5067,6 +5065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 7497321562072416978, guid: bbe829656ebc7d14e9f87775e3b4012f, type: 3}
+  touchedObject: {fileID: 0}
 --- !u!4 &1357223356
 Transform:
   m_ObjectHideFlags: 0
@@ -5669,7 +5668,7 @@ MonoBehaviour:
   postCenter: {x: 0, y: 0}
   mapSize: {x: 30, y: 20}
   cameraMoveSpeed: 3
-  view3rd: 1
+  isCameraChasing: 1
 --- !u!1 &1760414290
 GameObject:
   m_ObjectHideFlags: 0
@@ -6825,11 +6824,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2210832883832557148, guid: b4e6e588220144346b464f6e02fb97cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.205
+      value: -3.18
       objectReference: {fileID: 0}
     - target: {fileID: 2210832883832557148, guid: b4e6e588220144346b464f6e02fb97cf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.035
+      value: -1.51
       objectReference: {fileID: 0}
     - target: {fileID: 2210832883832557148, guid: b4e6e588220144346b464f6e02fb97cf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6923,6 +6922,10 @@ PrefabInstance:
     - target: {fileID: 2333220693945864348, guid: 6a03a755a0a8c964a9bc4ff41043838a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2778828443272669889, guid: 6a03a755a0a8c964a9bc4ff41043838a, type: 3}
+      propertyPath: walkSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2778828443272669889, guid: 6a03a755a0a8c964a9bc4ff41043838a, type: 3}
       propertyPath: enemyTarget

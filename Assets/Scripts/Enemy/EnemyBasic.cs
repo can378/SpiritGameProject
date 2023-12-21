@@ -14,7 +14,12 @@ public class EnemyBasic : MonoBehaviour
     //public int attackSpeed;
     //public int attackPower;
     //public int attackRange;
+
+
+    //collider로 player감지하는법도 있다.
+    //public CircleCollider2D playerDetectionCollider;
     public int detectionDistance;
+    //public bool isEnemyAttack=true;
 
 
     private void Awake()
@@ -61,4 +66,11 @@ public class EnemyBasic : MonoBehaviour
         //Destroy(this.gameObject);
 
     }
+
+    /*
+    private void OnTriggerStay2D(CircleCollider2D collision)
+    {
+        if (collision.tag == "Player") { isEnemyAttack = true; }
+    }
+    */
 }

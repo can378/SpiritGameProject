@@ -10,10 +10,11 @@ public class Village : MonoBehaviour
     public GameObject Exit;
     public GameObject Cave;
 
-    public GameObject Player;
+    private GameObject Player;
     
     void Start()
     {
+        Player = GameObject.Find("Player");
     }
 
 
@@ -26,7 +27,7 @@ public class Village : MonoBehaviour
             CameraManager.instance.isCameraChasing = true;
             GameManager.instance.touchedObject = null;
             //플레이어 이동가능
-
+            Player.GetComponent<PlayerStatus>().isPlayerMove = true;
         }
     }
 
@@ -41,6 +42,8 @@ public class Village : MonoBehaviour
                 CameraManager.instance.CameraMove(Inside);
 
                 //플레이어 이동 불가
+                Player.GetComponent<PlayerStatus>().isPlayerMove = false;
+
             }
 
             //메인 게임 시작
