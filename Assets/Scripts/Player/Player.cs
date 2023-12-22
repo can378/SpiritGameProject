@@ -5,37 +5,44 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-
     float runCurrentCoolTime;        // 달리기 대기시간
-    float attackDelay;        // 공격 대기시간
+    public float attackDelay;        // 공격 대기시간
 
     float hAxis;
     float vAxis;
 
-    bool rDown;             //달리기
+    bool rDown;             //재장전
     bool dDown;             //회피
     bool aDown;             //공격
+    bool iDown;             //상호작용
 
-    bool isRun = true;      //달리기
-    bool isDodge;           //회피
-    bool isAttack;   //공격
+    public bool isReload = false;
+    public bool isSprint = true;              //달리기
+    public bool isDodge = false;              //회피
+    public bool isAttack = false;           //공격
+    public bool isAttackReady = false;
+    public bool isEquip = false;           //무기 장비
 
     Vector2 moveVec;
     Vector2 dodgeVec;
 
     Rigidbody2D rigid;
     SpriteRenderer sprite;
+
     PlayerStatus status;
-    Weapon weapon;
     Attack attack;
+
+
+    GameObject nearObject;
+
+    GameObject weaponGameObject;
+    Weapon weapon;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
-        weapon = GetComponent<Weapon>();
         attack = GetComponentInChildren<Attack>();
     }
 
@@ -46,31 +53,30 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (status.isPlayerMove)
-        {
-            GetInput();
-            Dodge();
-            Move();
-            Attack();
-            Turn();
-        }
-
+        GetInput();
+        Dodge();
+        Move();
+        Attack();
+        Reload();
+        Turn();
+        Interaction();
     }
 
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
-        rDown = Input.GetButton("Run");
+        rDown = Input.GetButton("Reload");
         dDown = Input.GetButtonDown("Dodge");
         aDown = Input.GetButton("Attack");
+        iDown = Input.GetButtonDown("Interaction");
     }
 
     void Move()     //이동
     {
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (isAttack)       // 공격시 정지
+        if (isAttack || isReload)       // 공격시 정지
         {
             moveVec = Vector2.zero;
         }
@@ -80,10 +86,10 @@ public class Player : MonoBehaviour
         }
         else
         {
-            rigid.velocity = moveVec * status.speed * (isRun ? status.runSpeed : 1f);
-            if (isRun && moveVec != Vector2.zero)
+            rigid.velocity = moveVec * status.speed * (isSprint ? status.runSpeed : 1f);
+            if (isSprint && moveVec != Vector2.zero)
                 sprite.color = Color.magenta;
-            else 
+            else
                 sprite.color = Color.blue;
         }
     }
@@ -92,14 +98,14 @@ public class Player : MonoBehaviour
     void Turn()
     {
         // 기본 상태
-        if(moveVec == Vector2.zero)
+        if (moveVec == Vector2.zero)
             return;
 
-        if(moveVec == Vector2.up)
+        if (moveVec == Vector2.up)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (moveVec == new Vector2(1,1).normalized)
+        else if (moveVec == new Vector2(1, 1).normalized)
         {
             transform.rotation = Quaternion.Euler(0, 0, 315);
         }
@@ -129,25 +135,62 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Attack()
+    void Reload()
     {
-        if(weapon == null)
+        if (weaponGameObject == null || weapon == null)
             return;
 
-        attackDelay += Time.deltaTime;
-        isAttack = (1/weapon.rate) > attackDelay;
-        if (aDown && !isAttack && !isDodge)
+        if (weapon.weaponType != WeaponType.Shot)
+            return;
+
+        if (weapon.maxAmmo == weapon.ammo)
+            return;
+
+        if (rDown && !isDodge && !isReload && !isEquip && !isAttack)
         {
-            RunDelay();
-            Debug.Log("Attack");
-            attack.Use();
-            attackDelay = 0;
+            isReload = true;
+            Invoke("ReloadOut", weapon.reloadTime);
         }
+    }
+
+    void ReloadOut()
+    {
+        weapon.ammo = weapon.maxAmmo;
+        isReload = false;
+    }
+
+    void Attack()
+    {
+        if (weapon == null && weaponGameObject == null)
+            return;
+
+        if (weapon.ammo == 0)
+            return;
+
+        attackDelay -= Time.deltaTime;
+        isAttackReady = attackDelay <= 0;
+
+        if (aDown && !isAttack && !isDodge && isAttackReady)
+        {
+            isAttack = true;
+
+            RunDelay();
+            attack.Use();
+            attackDelay = weapon.delay;
+            isAttackReady = false;
+            Invoke("AttackOut", 1 / weapon.rate);
+
+        }
+    }
+
+    void AttackOut()
+    {
+        isAttack = false;
     }
 
     void Dodge()    // 회피
     {
-        if(dDown && !isAttack && moveVec != Vector2.zero && !isDodge)
+        if (dDown && !isAttack && moveVec != Vector2.zero && !isDodge)
         {
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
@@ -169,9 +212,9 @@ public class Player : MonoBehaviour
     void RunDelay()
     {
         runCurrentCoolTime = status.runCoolTime;
-        if (isRun == true)
+        if (isSprint == true)
         {
-            isRun = false;
+            isSprint = false;
             StartCoroutine(RunCoolTime());
         }
     }
@@ -183,26 +226,57 @@ public class Player : MonoBehaviour
             runCurrentCoolTime -= Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
-        isRun = true;
+        isSprint = true;
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
+    void Interaction()
+    {
+        if (iDown && nearObject != null && !isEquip && !isDodge && !isAttack && moveVec == Vector2.zero)
+        {
+            if (nearObject.tag == "Weapon")
+            {
+                if (weaponGameObject != null)
+                {
+                    attack.UnEquipWeapon();
+                    weaponGameObject.SetActive(true);
+                    weaponGameObject.transform.position = transform.position;
+                    weaponGameObject = null;
+                }
+                weaponGameObject = nearObject;
+                weapon = weaponGameObject.GetComponent<Weapon>();
+                attack.EquipWeapon(weapon);
+                attackDelay = 0;
+                weaponGameObject.SetActive(false);
+            }
+
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
         // *임시* 아이템 획득
-        if(other.tag == "Item")
+        if (other.tag == "Item")
         {
             Destroy(other.gameObject);
         }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
         if (other.tag == "Weapon")
         {
-            Debug.Log("Weapon");
-            weapon = other.GetComponent<Weapon>();
-            attack.GainWeapon(weapon);
-            attackDelay = weapon.rate;
-            other.gameObject.SetActive(false);
+            Debug.Log(other.name);
+            nearObject = other.gameObject;
         }
     }
 
-    void FixedUpdate() {
+    void OnTriggerExit2D(Collider2D other)
+    {
+        nearObject = null;
+    }
+
+    void FixedUpdate()
+    {
 
     }
 }
