@@ -1,0 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//이 스크립트를 가진 오브젝트가 타겟이다.
+public class ATarget : MonoBehaviour
+{
+    public void Update()
+    {
+        GameObject.Find("Astar").GetComponent<PathFinding>().touchOrigin = (Vector2)transform.position;
+    }
+}
