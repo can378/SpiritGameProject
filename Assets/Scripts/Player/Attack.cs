@@ -6,7 +6,7 @@ public class Attack : MonoBehaviour
 {
     // 얻은 무기 정보
     Weapon weapon;
-    BoxCollider2D meleeArea;
+    PolygonCollider2D meleeArea;
     Transform shotPos;
 
 
@@ -14,39 +14,49 @@ public class Attack : MonoBehaviour
     public GameObject[] weaponList;
     public GameObject bullet;
 
-    Animator anim;
-
     void Awake()
     {
-        anim = GetComponent<Animator>();
     }
 
     // 무기를 획득
-    public void GainWeapon(Weapon gainWeapon)
+    public void EquipWeapon(Weapon gainWeapon)
     {
         weapon = gainWeapon;
         weaponList[weapon.weaponCode].SetActive(true);
-        anim.SetFloat("rateSwing", weapon.rate);
         if (weapon.weaponType == WeaponType.Swing)
         {
-            anim.SetBool("isSwing",true);
-            meleeArea = weaponList[weapon.weaponCode].GetComponent<BoxCollider2D>();
+            meleeArea = weaponList[weapon.weaponCode].GetComponent<PolygonCollider2D>();
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
-            anim.SetBool("isShot", true);
             shotPos = weaponList[weapon.weaponCode].GetComponent<Transform>();
         }
     }
-    
+
+    public void UnEquipWeapon()
+    {
+        weaponList[weapon.weaponCode].SetActive(false);
+        if (weapon.weaponType == WeaponType.Swing)
+        {
+            meleeArea = null;
+        }
+        else if (weapon.weaponType == WeaponType.Shot)
+        {
+            shotPos = null;
+        }
+        weapon = null;
+    }
+
     public void Use()
     {
-        if(weapon.weaponType == WeaponType.Swing)
+        if (weapon.weaponType == WeaponType.Swing)
         {
             StartCoroutine("Swing");
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
+            weapon.ammo -= 1;
+
             StartCoroutine("Shot");
         }
 
@@ -54,7 +64,6 @@ public class Attack : MonoBehaviour
 
     IEnumerator Swing()
     {
-        anim.SetTrigger("doSwing");
         yield return new WaitForSeconds(0.1f / weapon.rate);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.8f / weapon.rate);
@@ -64,8 +73,7 @@ public class Attack : MonoBehaviour
 
     IEnumerator Shot()
     {
-        anim.SetTrigger("doShot");
-
+        yield return new WaitForSeconds(0.4f / weapon.rate);
         GameObject instantBullet = Instantiate(bullet, shotPos.position, shotPos.rotation);
         Rigidbody2D bulletRigid = instantBullet.GetComponent<Rigidbody2D>();
         bullet.GetComponent<Bullet>().damage = weapon.damage;
