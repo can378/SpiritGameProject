@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 253756292}
   - component: {fileID: 253756293}
   - component: {fileID: 253756294}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: jangSanBum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1495,7 +1495,7 @@ GameObject:
   - component: {fileID: 447489148}
   - component: {fileID: 447489149}
   - component: {fileID: 447489150}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: MangTae
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1630,7 +1630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &457788569
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2320,6 +2320,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436f0434039a7354fa325fa5e60a8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackDelay: 0
+  isReload: 0
+  isSprint: 1
+  isDodge: 0
+  isAttack: 0
+  isAttackReady: 0
+  isEquip: 0
 --- !u!114 &539968288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3159,7 +3166,7 @@ GameObject:
   - component: {fileID: 831659027}
   - component: {fileID: 831659028}
   - component: {fileID: 831659029}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: JeaQuy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4255,7 +4262,7 @@ GameObject:
   - component: {fileID: 1050754489}
   - component: {fileID: 1050754490}
   - component: {fileID: 1050754491}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: noHoJung
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5007,7 +5014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1177895450
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5317,7 +5324,7 @@ GameObject:
   - component: {fileID: 1252335860}
   - component: {fileID: 1252335861}
   - component: {fileID: 1252335862}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: GeuSunDae
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5675,7 +5682,7 @@ GameObject:
   - component: {fileID: 1437983045}
   - component: {fileID: 1437983046}
   - component: {fileID: 1437983047}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Jumak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5946,7 +5953,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1479709766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5963,7 +5970,7 @@ MonoBehaviour:
   player: {fileID: 457788570}
   OBSTACLE:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   gridWorldSize: {x: 60, y: 40}
   nodeRadius: 0.5
 --- !u!114 &1479709767
@@ -6605,7 +6612,7 @@ GameObject:
   - component: {fileID: 1951691233}
   - component: {fileID: 1951691234}
   - component: {fileID: 1951691235}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: FoxSister
   m_TagString: Untagged
   m_Icon: {fileID: 0}
