@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public LayerMask layerMask;//접근 불가한 레이어 설정
     private Collider2D collider;
     private Vector2 playerPosition;
-
+    
     Vector2 moveVec;
     Vector2 dodgeVec;
 
@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
         GetInput();
         if (isMoveable())
         {
@@ -281,12 +282,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    void playerDead() { Debug.Log("player dead"); }
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         // *임시* 아이템 획득
         if (other.tag == "Item")
         {
             Destroy(other.gameObject);
+        }
+        else if (other.tag == "Enemy"|| other.tag=="EnemyAttack") 
+        {
+            DataManager.instance.userData.playerHealth -=10;
+            Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+            playerDead();
         }
     }
 
@@ -308,4 +317,5 @@ public class Player : MonoBehaviour
     {
 
     }
+
 }

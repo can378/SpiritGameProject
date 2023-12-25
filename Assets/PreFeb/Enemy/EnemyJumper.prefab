@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4475995538173333841}
   - component: {fileID: 5859602557369308688}
   - component: {fileID: 3299620698172658683}
+  - component: {fileID: -3405653483538012315}
   - component: {fileID: 2484750247209635366}
   - component: {fileID: 1842358626026619882}
   m_Layer: 0
@@ -100,10 +101,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  spawnPosition: {x: -10, y: 3}
-  health: 10
-  walkSpeed: 2
-  detectionDistance: 5
+  status: {fileID: 0}
+--- !u!114 &-3405653483538012315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6662244182936845034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  speed: 3
+  damage: 3
+  spawnPos: {x: 0, y: 0}
+  detectionDis: 5
+  attackSpeed: 0
 --- !u!58 &2484750247209635366
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -152,7 +168,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 20
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 8058265250610555318}
   - component: {fileID: 6761793126700905997}
   - component: {fileID: 8825764311745853373}
+  - component: {fileID: 5827470377838235509}
   - component: {fileID: 4295815468599314996}
   m_Layer: 0
   m_Name: EnemyDonut
@@ -269,15 +270,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  spawnPosition: {x: 0, y: 0}
-  health: 3
-  walkSpeed: 3
-  detectionDistance: 3
+  status: {fileID: 0}
   ePattern: 4
   EnemyGunMuzzle: []
   donutAttackRange: {fileID: 2687807049514811634}
   roundAttackRange: {fileID: 0}
   donutInside: {fileID: 4549013735691123839}
+--- !u!114 &5827470377838235509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864662458237478717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  speed: 3
+  damage: 3
+  spawnPos: {x: 0, y: 0}
+  detectionDis: 5
+  attackSpeed: 0
 --- !u!58 &4295815468599314996
 CircleCollider2D:
   m_ObjectHideFlags: 0

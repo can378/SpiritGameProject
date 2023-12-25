@@ -16,7 +16,7 @@ public class EnemyMosquito : EnemyBasic
     {
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= detectionDistance && targetDistance >= 1f)
+        if (targetDistance <= status.detectionDis && targetDistance >= 1f)
         {
             Chase();
         }

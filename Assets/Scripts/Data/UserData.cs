@@ -8,6 +8,6 @@ using System;
 
 public class UserData
 {
-    public int health;
+    public int playerHealth;
     public int coin;
 }

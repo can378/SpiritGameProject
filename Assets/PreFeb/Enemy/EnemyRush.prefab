@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 2210832883832557148}
   - component: {fileID: 3732947920849170950}
   - component: {fileID: 5681944616045756527}
+  - component: {fileID: 1886751891195185771}
   - component: {fileID: 7716365934509816265}
   - component: {fileID: 8125306946911896217}
   m_Layer: 0
@@ -183,15 +184,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  spawnPosition: {x: -3, y: 0}
-  health: 10
-  walkSpeed: 20
-  detectionDistance: 5
+  status: {fileID: 0}
   ePattern: 0
   EnemyGunMuzzle: []
   donutAttackRange: {fileID: 0}
   roundAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
+--- !u!114 &1886751891195185771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953014201203086649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  speed: 3
+  damage: 3
+  spawnPos: {x: 0, y: 0}
+  detectionDis: 5
+  attackSpeed: 0
 --- !u!50 &7716365934509816265
 Rigidbody2D:
   serializedVersion: 4
@@ -205,7 +221,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 20
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

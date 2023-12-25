@@ -7,32 +7,21 @@ public class EnemyBasic : MonoBehaviour
 {
 
     public Transform enemyTarget;
-    public Vector2 spawnPosition;
-    public int health;
-    public float walkSpeed;
-    //public float runSpeed;
-    //public int attackSpeed;
-    //public int attackPower;
-    //public int attackRange;
-
-
-    //collider로 player감지하는법도 있다.
-    //public CircleCollider2D playerDetectionCollider;
-    public int detectionDistance;
-    //public bool isEnemyAttack=true;
+    public EnemyStatus status;
 
 
     private void Awake()
     {
         enemyTarget=GameObject.Find("Player").transform;
-        this.transform.position = spawnPosition;
+        status = GetComponent<EnemyStatus>();
+        this.transform.position = status.spawnPos;
     }
 
 
     public void Chase()
     {
         Vector2 direction = enemyTarget.transform.position - transform.position;
-        transform.Translate(direction * walkSpeed * Time.deltaTime);
+        transform.Translate(direction * status.speed * Time.deltaTime);
 
     }
 
@@ -50,9 +39,9 @@ public class EnemyBasic : MonoBehaviour
     {
         if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
         {
-            health--;
+            status.health--;
             print(this.name+" attaked");
-            if (health <= 0f) { EnemyDead(); }
+            if (status.health <= 0f) { EnemyDead(); }
         }
     }
 
@@ -72,10 +61,4 @@ public class EnemyBasic : MonoBehaviour
 
     }
 
-    /*
-    private void OnTriggerStay2D(CircleCollider2D collision)
-    {
-        if (collision.tag == "Player") { isEnemyAttack = true; }
-    }
-    */
 }

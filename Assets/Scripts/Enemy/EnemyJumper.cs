@@ -18,7 +18,7 @@ public class EnemyJumper : EnemyBasic
 
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= detectionDistance && targetDistance >= 0.2f)
+        if (targetDistance <= status.detectionDis && targetDistance >= 0.2f)
         {
             if (isJumping == false) { JumpToTarget(); }
         }

@@ -64,7 +64,7 @@ public class EnemyPattern : EnemyBasic
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rb.AddForce(dirVec * walkSpeed); }
+        { rb.AddForce(dirVec * status.speed); }
 
         yield return new WaitForSeconds(0.1f);
 
@@ -94,7 +94,7 @@ public class EnemyPattern : EnemyBasic
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rb.AddForce(dirVec * walkSpeed); }
+        { rb.AddForce(dirVec * status.speed); }
         
         yield return new WaitForSeconds(0.1f);
        
@@ -121,7 +121,7 @@ public class EnemyPattern : EnemyBasic
         //getting farther
         do 
         {
-            rb.AddForce(-dirVec * walkSpeed,ForceMode2D.Impulse);
+            rb.AddForce(-dirVec * status.speed,ForceMode2D.Impulse);
             targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
             dirVec = (enemyTarget.transform.position - transform.position).normalized;
             yield return new WaitForSeconds(0.01f);

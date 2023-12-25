@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {   
         playerData = DataManager.instance.userData;
 
-        DataManager.instance.userData.coin += 50;
+        //DataManager.instance.userData.coin += 50;
 
     }
 

@@ -5,15 +5,15 @@ using UnityEngine;
 public class EnemyMissile : EnemyBasic
 {
 
-    GameObject bullet;
+    private GameObject bullet;
     public float attackRate = 1f;
     private float timeAfterAttack;
-
+    private EnemyStatus status;
 
     void Start()
     {
         timeAfterAttack = 0f;
-        
+        status = GetComponent<EnemyStatus>();
     }
 
     void Update()
@@ -21,7 +21,7 @@ public class EnemyMissile : EnemyBasic
         timeAfterAttack += Time.deltaTime;
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= detectionDistance)
+        if (targetDistance <= status.detectionDis)
         {
             if (timeAfterAttack >= attackRate)
             {
