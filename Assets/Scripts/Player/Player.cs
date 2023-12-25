@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     public bool isAttackReady = false;
     public bool isEquip = false;           //무기 장비
 
+    public LayerMask layerMask;//접근 불가한 레이어 설정
+    private Collider2D collider;
+    private Vector2 playerPosition;
+
     Vector2 moveVec;
     Vector2 dodgeVec;
 
@@ -44,6 +48,7 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
         attack = GetComponentInChildren<Attack>();
+        collider = GetComponent<Collider2D>();
     }
 
     void Start()
@@ -54,8 +59,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         GetInput();
-        Dodge();
-        Move();
+        if (isMoveable())
+        {
+            Dodge();
+            Move();  
+        }
         Attack();
         Reload();
         Turn();
@@ -70,6 +78,27 @@ public class Player : MonoBehaviour
         dDown = Input.GetButtonDown("Dodge");
         aDown = Input.GetButton("Attack");
         iDown = Input.GetButtonDown("Interaction");
+    }
+
+    private bool isMoveable() 
+    {
+        // 레이저가 제대로 도착했을때 Null, 막혔을때 방해물이 Return
+        RaycastHit2D hit;
+
+        playerPosition = transform.position;
+        Vector2 end= playerPosition + new Vector2(playerPosition.x * status.speed, playerPosition.y * status.speed);
+        
+        // 캐릭터에 BoxCollider가 적용되어 있어 그걸 충돌체로 인식하므로 해제 후 설정
+        collider.enabled = false;
+        
+        // 레이저 발사 (시작, 끝, 레이어마스크)
+        hit = Physics2D.Linecast(playerPosition, end, layerMask);
+        collider.enabled = true;
+
+        // 벽으로 막혔을때 실행하지 않게 처리
+        if (hit.transform == null)
+        {  return true;   }
+        return false;
     }
 
     void Move()     //이동

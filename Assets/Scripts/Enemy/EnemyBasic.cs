@@ -55,6 +55,11 @@ public class EnemyBasic : MonoBehaviour
             if (health <= 0f) { EnemyDead(); }
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+    }
+
     public void EnemyDead()
     {
         int dropCoinNum = 10;

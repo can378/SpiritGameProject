@@ -52,8 +52,9 @@ public class EnemyPattern : EnemyBasic
         }
     }
 
+    
 
-
+    //Patterns===============================================================================
 
     IEnumerator LRShot()
     {
@@ -114,7 +115,7 @@ public class EnemyPattern : EnemyBasic
             Chase();
             targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
             yield return new WaitForSeconds(0.01f);
-        } while (targetDistance > 0.8f);
+        } while (targetDistance > 1.2f);
 
 
         //getting farther
