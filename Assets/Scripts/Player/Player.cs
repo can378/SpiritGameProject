@@ -301,9 +301,10 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        Debug.Log(other.name);
         if (other.tag == "Weapon")
         {
-            Debug.Log(other.name);
+            
             nearObject = other.gameObject;
         }
     }

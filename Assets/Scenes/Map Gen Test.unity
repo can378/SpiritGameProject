@@ -619,9 +619,45 @@ PrefabInstance:
       value: Room Manager
       objectReference: {fileID: 0}
     - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: area
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: spawn
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: roomSize
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: addedRoom
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: verticalCrossedRooms.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: horizontalCrossedRooms.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: verticalCrossedRooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 7258778697903850737, guid: f77d9958f2a7a4c4981013b19d374a19, type: 3}
+    - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: verticalCrossedRooms.Array.data[1]
+      value: 
+      objectReference: {fileID: 8705363741283824178, guid: 8dcaaae3d757a18488fa46d9dc19079f, type: 3}
+    - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: horizontalCrossedRooms.Array.data[0]
+      value: 
+      objectReference: {fileID: 3211218317358905785, guid: c8e820eda1fc62545b79e43a9e1a75ab, type: 3}
+    - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: horizontalCrossedRooms.Array.data[1]
+      value: 
+      objectReference: {fileID: 9023236910220642710, guid: 35d5533e7fcb4054daf6b8af5ecc39d0, type: 3}
     - target: {fileID: 8244132617338237421, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -769,6 +805,9 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 0
   isEquip: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &3645063603469177963
 GameObject:
   m_ObjectHideFlags: 0

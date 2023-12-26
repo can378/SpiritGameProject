@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MapType { Default, Lock, CrossRoad }
+public enum MapType { Default, Lock, InLock, Shop, Event, Boss, MiniBoss }
 
 public class Room : MonoBehaviour
 {

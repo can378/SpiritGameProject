@@ -11,10 +11,12 @@ public class RoomSpawner : MonoBehaviour
     // 3 --> need left door
     // 4 --> need right door
 
-
     private RoomTemplates templates;
     private RoomManager roomManager;
-    private int rand;
+    private int index = 0;
+    private int limitArea = 0;
+    private Vector3 roomSize;
+
     public bool spawned = false;
 
     void Start()
@@ -25,152 +27,141 @@ public class RoomSpawner : MonoBehaviour
         Invoke("Spawn",0.1f);
     }
 
+    void setRoom()
+    {
+        limitArea = roomManager.area * roomManager.roomSize * 10;
+        roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
+
+        // 방의 수가 충분하거나
+        // 영역을 넘어가게 되면 닫는다.
+        if ((roomManager.maxRoom - 1 <= roomManager.room.Count) ||
+        (transform.position.y < -limitArea || transform.position.y > limitArea || transform.position.x < -limitArea || transform.position.x > limitArea))
+        {
+            index = 0;
+        }
+        // 회전
+        // 확률적으로 회전하거나
+        // 영역의 경계의 닿을시 회전
+        else
+        {
+            // 0이 turning
+            // 확률임 수정 필요
+            int turning = Random.Range(0, roomManager.maxRoom / roomManager.turning);
+
+            // 범위 경계에 닿을시 회전
+            if ((openingDirection == 1 || openingDirection == 2) &&
+                (transform.position.y == -limitArea || transform.position.y == limitArea))
+            {
+                turning = 0;
+            }
+            else if ((openingDirection == 3 || openingDirection == 4) &&
+                (transform.position.x == -limitArea || transform.position.x == limitArea))
+            {
+                turning = 0;
+            }
+
+
+            //직진
+            if (turning != 0)
+            {
+                index = 3;
+            }
+            else
+            {
+                // 범위 안에서 회전 할 시
+                index = Random.Range(1, 3);
+                if (openingDirection == 1 || openingDirection == 2)
+                {
+                    // y에서 x로 회전
+                    // + 또는 - 방향으로 갈 때 해당 방향에 방이 없는 방 선택
+                    for (int i = 0; i < roomManager.room.Count; i++)
+                    {
+                        if (transform.position.y == roomManager.room[i].transform.position.y)
+                        {
+                            if (transform.position.x < roomManager.room[i].transform.position.x)
+                            {
+                                index = 1;
+                            }
+                            else if (transform.position.x > roomManager.room[i].transform.position.x)
+                            {
+                                index = 2;
+                            }
+                            break;
+                        }
+                    }
+                }
+                else if (openingDirection == 3 || openingDirection == 4)
+                {
+                    // x에서 y로 회전
+                    // + 또는 - 방향으로 갈 때 해당 방향에 방이 없는 방 선택
+                    for (int i = 0; i < roomManager.room.Count; i++)
+                    {
+                        if (transform.position.x == roomManager.room[i].transform.position.x)
+                        {
+                            if (transform.position.y < roomManager.room[i].transform.position.y)
+                            {
+                                index = 2;
+                            }
+                            else if (transform.position.y > roomManager.room[i].transform.position.y)
+                            {
+                                index = 1;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // 범위 경계에서 회전 할 시
+                // 범위 안쪽으로 회전
+                if ((openingDirection == 1 || (openingDirection == 2)) &&
+                (transform.position.x == limitArea))
+                {
+                    index = 1;
+                }
+                else if ((openingDirection == 1 || (openingDirection == 2)) &&
+                (transform.position.x == -limitArea))
+                {
+                    index = 2;
+                }
+                if ((openingDirection == 3 || (openingDirection == 4)) &&
+                (transform.position.y == limitArea))
+                {
+                    index = 2;
+                }
+                else if ((openingDirection == 3 || (openingDirection == 4)) &&
+                (transform.position.y == -limitArea))
+                {
+                    index = 1;
+                }
+
+            }
+        }
+    }
 
     void Spawn()
     {
         if (spawned == false)
         {
-            // 현재 상태에 따른 방 조정
-
-            if (roomManager.maxRoom - 1 <= roomManager.room.Count)
-            {
-                rand = 0;
-            }
-            else
-            {
-                // 0이 turning
-                // 확률임 수정 필요
-                int turning = Random.Range(0, roomManager.maxRoom / roomManager.turning);
-
-                // 범위 경계에 닿을시 회전
-                if ((openingDirection == 1 || openingDirection == 2) &&
-                    (transform.position.y == -(50 * roomManager.roomSize) || transform.position.y == (50 * roomManager.roomSize)))
-                {
-                    Debug.Log("trun");
-                    turning = 0;
-                }
-                else if((openingDirection == 3 || openingDirection == 4) &&
-                    (transform.position.x == -(50 * roomManager.roomSize) || transform.position.x == (50 * roomManager.roomSize)))
-                {
-                    Debug.Log("trun");
-                    turning = 0;
-                }
-
-
-                //직진
-                if (turning != 0)
-                {
-                    rand = 3;
-                }
-                else
-                {
-                    // turning
-                    // 현재 무식하게 모든 방을 확인하는 중
-                    // 더 좋은 방법있는지 확인
-
-                    // 범위 안에서 회전 할 시
-                    if (openingDirection == 1 || openingDirection == 2)
-                    {
-                        // y에서 x로 회전
-                        // + 또는 - 방향으로 갈 때 해당 방향에 방이 없는 방 선택
-                        bool isY = false;
-                        for (int i = 0; i < roomManager.room.Count; i++)
-                        {
-                            if (transform.position.y == roomManager.room[i].transform.position.y)
-                            {
-                                isY = true;
-                                if (transform.position.x < roomManager.room[i].transform.position.x)
-                                {
-                                    rand = 1;
-                                }
-                                else if (transform.position.x > roomManager.room[i].transform.position.x)
-                                {
-                                    rand = 2;
-                                }
-                                break;
-                            }
-                        }
-                        if(isY == false)
-                        {
-                            rand = Random.Range(1, 3);
-                        }
-                    }
-                    else if (openingDirection == 3 || openingDirection == 4)
-                    {
-                        // x에서 y로 회전
-                        // + 또는 - 방향으로 갈 때 해당 방향에 방이 없는 방 선택
-                        bool isX = false;
-                        for (int i = 0; i < roomManager.room.Count; i++)
-                        {
-                            if (transform.position.x == roomManager.room[i].transform.position.x)
-                            {
-                                isX = true;
-                                if (transform.position.y < roomManager.room[i].transform.position.y)
-                                {
-                                    rand = 2;
-                                }
-                                else if (transform.position.y > roomManager.room[i].transform.position.y)
-                                {
-                                    rand = 1;
-                                }
-                                break;
-                            }
-                        }
-                        if (isX == false)
-                        {
-                            rand = Random.Range(1, 3);
-                        }
-                    }
-
-                    // 범위 경계에서 회전 할 시
-                    // 범위 안쪽으로 회전
-                    if ((openingDirection == 1 || (openingDirection == 2)) &&
-                    (transform.position.x == (50 * roomManager.roomSize)))
-                    {
-                        rand = 1;
-                    }
-                    else if ((openingDirection == 1 || (openingDirection == 2)) &&
-                    (transform.position.x == -(50 * roomManager.roomSize)))
-                    {
-                        rand = 2;
-                    }
-                    if ((openingDirection == 3 || (openingDirection == 4)) &&
-                    (transform.position.y == (50 * roomManager.roomSize)))
-                    {
-                        rand = 2;
-                    }
-                    else if ((openingDirection == 3 || (openingDirection == 4)) &&
-                    (transform.position.y == -(50 * roomManager.roomSize)))
-                    {
-                        rand = 1;
-                    }
-
-                }
-            
-
-            
-            }
-
-            // 해당 방향의 반대로 통로가 있는 방
+            setRoom();
             if (openingDirection == 1)
             {
                 // Need to spawn a room with a BOTTOM door.
-                Instantiate(templates.bottomRooms[rand], transform.position, templates.bottomRooms[rand].transform.rotation);
+                Instantiate(templates.bottomRooms[index], transform.position, templates.bottomRooms[index].transform.rotation).transform.localScale = roomSize;
             }
             else if (openingDirection == 2)
             {
                 // Need to spawn a room with a TOP door.
-                Instantiate(templates.topRooms[rand], transform.position, templates.topRooms[rand].transform.rotation);
+                Instantiate(templates.topRooms[index], transform.position, templates.topRooms[index].transform.rotation).transform.localScale = roomSize;
             }
             else if (openingDirection == 3)
             {
                 // Need to spawn a room with a RIGHT door.
-                Instantiate(templates.rightRooms[rand], transform.position, templates.rightRooms[rand].transform.rotation);
+                Instantiate(templates.rightRooms[index], transform.position, templates.rightRooms[index].transform.rotation).transform.localScale = roomSize;
             }
             else if (openingDirection == 4)
             {
                 // Need to spawn a room with a LEFT door.
-                Instantiate(templates.leftRooms[rand], transform.position, templates.leftRooms[rand].transform.rotation);
+                Instantiate(templates.leftRooms[index], transform.position, templates.leftRooms[index].transform.rotation).transform.localScale = roomSize;
             }
             spawned = true;
         }
@@ -178,11 +169,13 @@ public class RoomSpawner : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        limitArea = roomManager.area * roomManager.roomSize * 10;
+        roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
         if (other.CompareTag("SpawnPoint"))
         {
             if (other.GetComponent<RoomSpawner>().spawned == false && spawned == false)
             {
-                Instantiate(templates.closedRoom, transform.position, Quaternion.identity);
+                Instantiate(templates.closedRoom, transform.position, Quaternion.identity).transform.localScale = roomSize;
                 Destroy(gameObject);
             }
             spawned = true;
