@@ -35,7 +35,8 @@ public class MainMenuController : MonoBehaviour
 
     public void GoBackToTitle() //뒤로가기 버튼
     {
-        SceneManager.LoadScene("Main");
+        optionPanel.SetActive(false);
+        taskPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
 

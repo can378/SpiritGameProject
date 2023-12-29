@@ -11,9 +11,12 @@ public class VideoOption : MonoBehaviour
     List<Resolution> resolutions = new List<Resolution>();
     public int resolutionNum;
 
+    public Slider sensitivitySlider;
+
     void Start()
     {
         initUI();
+        InitializeSensitivitySlider();
     }
 
 
@@ -62,5 +65,43 @@ public class VideoOption : MonoBehaviour
     public void OKBtnClick() {
 
         Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, screenMode);
+    }
+
+    private void InitializeSensitivitySlider() //감도 초기화
+    {
+        sensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
+    }
+
+    public void OnSensitivityChange() //감도 변경
+    {
+        float sensitivityValue = sensitivitySlider.value;
+        SaveSensitivity(sensitivityValue);
+    }
+
+    public void OnConfirmButtonClicked() //감도 조절 확인 버튼
+    {
+        ConfirmSensitivity();
+    }
+
+    public void OnResetButtonClicked() //설정 초기화 버튼
+    {
+        ResetSensitivity();
+    }
+
+    private void SaveSensitivity(float sensitivityValue) //마우스 민감도 저장
+    {
+        PlayerPrefs.SetFloat("MouseSensitivity", sensitivityValue); 
+        PlayerPrefs.Save();
+    }
+
+    private void ConfirmSensitivity()
+    {
+        Debug.Log("Sensitivity Confirmed!");
+    }
+
+    private void ResetSensitivity()
+    {
+        sensitivitySlider.value = 0.5f; //슬라이더를 초기값으로 설정
+        SaveSensitivity(0.5f); //초기값으로 마우스 감도 저장하는 함수 호출
     }
 }
