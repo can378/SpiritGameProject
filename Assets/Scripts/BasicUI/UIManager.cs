@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class UIManager : MonoBehaviour
     public GameObject tabkeyPanel;
     public GameObject esckeyPanel;
     public GameObject diePanel;
+
+    private int currentHP;
+    private int maxHP = 1000;
 
     private bool isPanelActive = false;
     void Update()
@@ -43,6 +47,9 @@ public class UIManager : MonoBehaviour
     }
     public void RestartBtn() //재시작 버튼
     {
+        SceneManager.LoadScene("Map"); //현재 씬 다시 로드
+        currentHP = maxHP; //플레이어 체력 복구
+
         tabkeyPanel.SetActive(false);
         esckeyPanel.SetActive(false);
         diePanel.SetActive(false);
