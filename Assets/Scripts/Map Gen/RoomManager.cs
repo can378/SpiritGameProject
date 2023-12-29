@@ -76,7 +76,7 @@ public class RoomManager : MonoBehaviour
             cross = true;
             Invoke("CrossedRoom",2f);
         }
-        generateFinish = true;
+        
     }
 
     /*
