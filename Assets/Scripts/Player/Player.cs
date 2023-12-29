@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class Player : MonoBehaviour
     GameObject weaponGameObject;
     Weapon weapon;
 
+    public Slider hpbarSlider;
+    public GameObject deathPanel;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -53,7 +57,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     void Update()
@@ -282,22 +286,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    void playerDead() { Debug.Log("player dead"); }
-    
     void OnTriggerEnter2D(Collider2D other)
     {
         // *임시* 아이템 획득
-        if (other.tag == "Item")
+        //if (other.tag == "Item")
+        //{
+        //    Destroy(other.gameObject);
+        //}
+        if (other.tag == "Enemy" || other.tag == "EnemyAttack") 
         {
-            Destroy(other.gameObject);
-        }
-        else if (other.tag == "Enemy"|| other.tag=="EnemyAttack") 
-        {
-            DataManager.instance.userData.playerHealth -=10;
-            Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
-            playerDead();
+            DataManager.instance.userData.playerHealth -= 5; //플레이어의 체력 감소, 데미지 수 조절 가능
+            UpdateHpbarSlider(); //감소된 체력을 슬라이더에 반영
+            if (DataManager.instance.userData.playerHealth <= 0) //체력이 0이라면 죽음
+            {
+                ShowDeathPanel();
+            }
         }
     }
+
+    void UpdateHpbarSlider() { hpbarSlider.value = DataManager.instance.userData.playerHealth; }
+
+    void ShowDeathPanel() { deathPanel.SetActive(true); }
 
     void OnTriggerStay2D(Collider2D other)
     {
