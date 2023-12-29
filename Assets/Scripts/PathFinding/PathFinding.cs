@@ -5,14 +5,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 /*
- * 입력받은 장애물을 피해 target위치로 플레이어(seeker)를 가장 최적의 루트로 이동시키는 스크립트 입니다.
+ * 장애물을 피해 target위치로 seeker를 가장 최적의 루트로 이동시키는 스크립트
  * 
- * 이 클래스는 화면을 grids로 나누어야 합니다. 이를 위해 커스텀클래스 Grid와 Node class를 사용합니다.
- * 
- * 사용시, Astar prefab을 Hierarchy view에 옮긴 후 position을 0,0,0으로 설정, 그리고
- * seeker에 Player를 등록하면 됩니다.
- * 
- * 알고리즘 개요
  * OPEN SET : 평가되어야 할 노드 집합
  * CLOSED SET : 이미 평가된 노드 집합
  * 
@@ -23,125 +17,74 @@ using UnityEngine.SceneManagement;
  */
 public class PathFinding : MonoBehaviour
 {
-  [Header("Path Finding")]
-    public Transform seeker;
-    // 맵을 격자로 분할한다.
-    AGrid grid;
-    // 남은거리를 넣을 큐 생성.
-    public Queue<Vector2> wayQueue = new Queue<Vector2>();
 
-    [Header("Player Ctrl")]
+    public Transform seeker;//추격자
 
-    // 뭔가와 상호작용 하고 있을때는 walkable이 false 가 됨.
+    AGrid grid;//그리드
+    public Queue<Vector2> wayQueue = new Queue<Vector2>();//target까지 가는 방법
+
     public static bool walkable = true;
-    // 터치 좌표를 저장할 변수
-    public Vector2 touchOrigin;
-    public Vector2 touchSave;
-    private Quaternion playerRot;
-    // 플레이어 이동/회전 속도 등 저장할 변수
-    public float moveSpeed;
-    public float rotSpeed;
-    // 장애물/NPC 판단시 멈추게 할 범위
-    public float range;
 
-    public bool isWalk;
+    public Vector2 fugitivePos;
+    public Vector2 seekerPos;
+
     public bool isWalking;
+    private int moveSpeed;
 
     private void Awake()
     {
-        // 격자 생성
         grid = GetComponent<AGrid>();
         walkable = true;
     }
+
     private void Start()
     {
-        // 초깃값 초기화.
         isWalking = false;
-        moveSpeed = 20f;
-        rotSpeed = 5f;
-        touchSave = seeker.position;
-        touchOrigin = seeker.position;
-        range = 4f;
-        playerRot = transform.rotation;
-        // story 0-1에는 캐릭터 자동이동이며, 이때 속도는 10으로 고정.
-        if (SceneManager.GetActiveScene().name == "Story0-1")
-            moveSpeed = 10f;
+        seekerPos = seeker.position;
+        moveSpeed = 10;
     }
 
     private void FixedUpdate()
     {
-        isWalk = walkable;
-        // walkable = true 인 경우에만 터치 받음 
+
         if (walkable == true)
         {
-            CheckTouch();
-        }
-        // walkable이 false 면 제자리 멈춤
-        else
-        {
-            touchSave = (Vector2)seeker.position;
-        }
-    }
-
-    // 화면이 터치 되었는지 판단하는 함수.
-    private void CheckTouch()
-    {
-        // 화면에 터치가 감지되었을 경우
-        if (Input.touchCount > 0)
-        {
-            // 아래 코드는 화면 상에서 UI가 터치 되지 않았을 경우(즉, 버튼 등을 클릭하지 않았을 경우에만 움직이게 함.)
-            // 무조건 해당 씬에 EventSystem이 있어야 함. 따라서, eventsystem이 없다면 추가해야 함.
-            if (EventSystem.current.IsPointerOverGameObject() == false)
+            if (seekerPos != fugitivePos)
             {
-                Touch myTouch = Input.touches[0];
-                // 처음 터치 감지 | 마지막 터치 감지로 제한
-                if ((myTouch.phase == TouchPhase.Began))
-                {
-                    touchOrigin = myTouch.position;
-                }
-
-                // 입력받은 터치를 화면좌표계 -> 월드좌표계로 변환
-                touchOrigin = Camera.main.ScreenToWorldPoint(myTouch.position);
+                //seekerPos = fugitivePos;
+                StopAllCoroutines();
+                StartCoroutine(FindPath(seeker.position, fugitivePos));
             }
         }
-
-        // 이 객체를 터치된 지점까지 이동시킵니다.
-        if(touchSave != touchOrigin)
+        else
         {
-            touchSave = touchOrigin;
-            //터치 초기 위치와 다른 좌표가 입력되었을 경우, 길찾기를 시작.
-            StartFindPath(seeker.position, touchSave);
+            seekerPos = (Vector2)seeker.position;
         }
+
     }
 
-    // start to target 이동.
-    public void StartFindPath(Vector2 startPos, Vector2 targetPos)
-    {
-        StopAllCoroutines();
-        StartCoroutine(FindPath(startPos, targetPos));
-    }
 
-    // 길찾기 로직.
+
+
+
     IEnumerator FindPath(Vector2 startPos, Vector2 targetPos)
     {   
-        // start, target의 좌표를 grid로 분할한 좌표로 지정.
+
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
         
-        // target에 도착했는지 확인하는 변수.
-        bool pathSuccess = false;
+        
+        bool pathSuccess = false;// target에 도착했는지
 
         if (!startNode.walkable)
-            Debug.Log("Unwalkable StartNode 입니다.");
+            Debug.Log("Unwalkable StartNode.");
 
-        // walkable한 targetNode인 경우 길찾기 시작.
+        
         if(targetNode.walkable)
         {
-            // openSet, closedSet 생성.
-            // closedSet은 이미 계산 고려한 노드들.
-            // openSet은 계산할 가치가 있는 노드들.
-            List<ANode> openSet = new List<ANode>();
-            HashSet<ANode> closedSet = new HashSet<ANode>();
+
+            List<ANode> openSet = new List<ANode>(); //계산한 노드
+            HashSet<ANode> closedSet = new HashSet<ANode>();//계산할 노드
 
             openSet.Add(startNode);
 
@@ -181,27 +124,23 @@ public class PathFinding : MonoBehaviour
                     if (!neighbour.walkable || closedSet.Contains(neighbour))
                         continue;
                     // F cost 생성.
-                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
+                    int fCost = currentNode.gCost + GetDistance(currentNode, neighbour);
                     // 이웃으로 가는 F cost가 이웃의 G보다 짧거나, 방문해볼 Openset에 그 값이 없다면,
-                    if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
+                    if (fCost < neighbour.gCost || !openSet.Contains(neighbour))
                     {
-                        neighbour.gCost = newMovementCostToNeighbour;
+                        neighbour.gCost = fCost;
                         neighbour.hCost = GetDistance(neighbour, targetNode);
                         neighbour.parent = currentNode;
 
                         // openSet에 추가.
-                        if (!openSet.Contains(neighbour))
-                        {
-                            openSet.Add(neighbour);
-                        }
+                        if (!openSet.Contains(neighbour)){   openSet.Add(neighbour);  }
                     }
                 }
             }
         }
-        else
+        else //목적지에 도달할 수 없을경우
         {
-            // 잘 가다가 Unwalkable 오브젝트를 클릭할 경우 기존 PATH를 따라간다.
-            // 그러나 way 최신화는 하지 않고 clear한다.
+            // way갱신 안함
             Vector3 origin = seeker.position;
             while (true)
             {
@@ -215,12 +154,12 @@ public class PathFinding : MonoBehaviour
         
         yield return null;
 
-        // 길을 찾았을 경우(계산 다 끝난경우) 이동시킴.
+        // 길을 찾으면 이동
         if(pathSuccess == true)
         {
-            // 이동중이라는 변수 ON
+
             isWalking = true;
-            // wayQueue를 따라 이동시킨다.
+
             while (wayQueue.Count > 0)
             {
                 seeker.position = Vector2.MoveTowards(seeker.position, wayQueue.First(), moveSpeed * Time.deltaTime);
@@ -230,10 +169,24 @@ public class PathFinding : MonoBehaviour
                 }
                 yield return new WaitForSeconds(0.02f);
             }
-            // 이동중이라는 변수 OFF
+
             isWalking = false;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // WayQueue에 새로운 PATH를 넣어준다.
     void PushWay(Vector2[] array)

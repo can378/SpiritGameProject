@@ -7,6 +7,7 @@ public class ATarget : MonoBehaviour
 {
     public void Update()
     {
-        GameObject.Find("Astar").GetComponent<PathFinding>().touchOrigin = (Vector2)transform.position;
+        GameObject.Find("Astar").GetComponent<PathFinding>().fugitivePos 
+            = (Vector2)transform.position;
     }
 }

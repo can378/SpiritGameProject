@@ -15,6 +15,8 @@ public class RoomManager : MonoBehaviour
 
     public List<GameObject> room;
 
+    public bool generateFinish=false;
+
     private bool cross;
     private int crossedRoomCount = 0;
 
@@ -22,12 +24,14 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
+        generateFinish = false;
         templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
     }
 
     void Update()
     {
         Spawn();
+        
     }
 
     void Spawn()
@@ -72,7 +76,7 @@ public class RoomManager : MonoBehaviour
             cross = true;
             Invoke("CrossedRoom",2f);
         }
-        
+        generateFinish = true;
     }
 
     /*
@@ -136,6 +140,7 @@ public class RoomManager : MonoBehaviour
 
                 if(crossedRoomCount >= crossedRoom)
                     break;
+                
             }
         }
     }

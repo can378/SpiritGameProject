@@ -294,7 +294,7 @@ public class Player : MonoBehaviour
         else if (other.tag == "Enemy"|| other.tag=="EnemyAttack") 
         {
             DataManager.instance.userData.playerHealth -=10;
-            Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+            //Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
             playerDead();
         }
     }
