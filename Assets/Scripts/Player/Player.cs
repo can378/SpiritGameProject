@@ -1,29 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    float runCurrentCoolTime;        // ´Ş¸®±â ´ë±â½Ã°£
-    public float attackDelay;        // °ø°İ ´ë±â½Ã°£
+    float runCurrentCoolTime;        // ë‹¬ë¦¬ê¸° ëŒ€ê¸°ì‹œê°„
+    public float attackDelay;        // ê³µê²© ëŒ€ê¸°ì‹œê°„
 
     float hAxis;
     float vAxis;
 
-    bool rDown;             //ÀçÀåÀü
-    bool dDown;             //È¸ÇÇ
-    bool aDown;             //°ø°İ
-    bool iDown;             //»óÈ£ÀÛ¿ë
+    bool rDown;             //ì¬ì¥ì „
+    bool dDown;             //íšŒí”¼
+    bool aDown;             //ê³µê²©
+    bool iDown;             //ìƒí˜¸ì‘ìš©
 
     public bool isReload = false;
-    public bool isSprint = true;              //´Ş¸®±â
-    public bool isDodge = false;              //È¸ÇÇ
-    public bool isAttack = false;           //°ø°İ
+    public bool isSprint = true;              //ë‹¬ë¦¬ê¸°
+    public bool isDodge = false;              //íšŒí”¼
+    public bool isAttack = false;           //ê³µê²©
     public bool isAttackReady = false;
-    public bool isEquip = false;           //¹«±â Àåºñ
+    public bool isEquip = false;           //ë¬´ê¸° ì¥ë¹„
 
-    public LayerMask layerMask;//Á¢±Ù ºÒ°¡ÇÑ ·¹ÀÌ¾î ¼³Á¤
+    public LayerMask layerMask;//ì ‘ê·¼ ë¶ˆê°€í•œ ë ˆì´ì–´ ì„¤ì •
     private Collider2D collider;
     private Vector2 playerPosition;
     
@@ -83,34 +83,34 @@ public class Player : MonoBehaviour
 
     private bool isMoveable() 
     {
-        // ·¹ÀÌÀú°¡ Á¦´ë·Î µµÂøÇßÀ»¶§ Null, ¸·ÇûÀ»¶§ ¹æÇØ¹°ÀÌ Return
+        // ë ˆì´ì €ê°€ ì œëŒ€ë¡œ ë„ì°©í–ˆì„ë•Œ Null, ë§‰í˜”ì„ë•Œ ë°©í•´ë¬¼ì´ Return
         RaycastHit2D hit;
 
         playerPosition = transform.position;
         Vector2 end= playerPosition + new Vector2(playerPosition.x * status.speed, playerPosition.y * status.speed);
         
-        // Ä³¸¯ÅÍ¿¡ BoxCollider°¡ Àû¿ëµÇ¾î ÀÖ¾î ±×°É Ãæµ¹Ã¼·Î ÀÎ½ÄÇÏ¹Ç·Î ÇØÁ¦ ÈÄ ¼³Á¤
-        collider.enabled = false;
-        
-        // ·¹ÀÌÀú ¹ß»ç (½ÃÀÛ, ³¡, ·¹ÀÌ¾î¸¶½ºÅ©)
-        hit = Physics2D.Linecast(playerPosition, end, layerMask);
-        collider.enabled = true;
 
-        // º®À¸·Î ¸·ÇûÀ»¶§ ½ÇÇàÇÏÁö ¾Ê°Ô Ã³¸®
+        //collider.enabled = false;
+        
+        // ë ˆì´ì € ë°œì‚¬ (ì‹œì‘, ë, ë ˆì´ì–´ë§ˆìŠ¤í¬)
+        hit = Physics2D.Linecast(playerPosition, end, layerMask);
+        //collider.enabled = true;
+
+        // ë²½ìœ¼ë¡œ ë§‰í˜”ì„ë•Œ ì‹¤í–‰í•˜ì§€ ì•Šê²Œ ì²˜ë¦¬
         if (hit.transform == null)
         {  return true;   }
         return false;
     }
 
-    void Move()     //ÀÌµ¿
+    void Move()     //ì´ë™
     {
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (isAttack || isReload)       // °ø°İ½Ã Á¤Áö
+        if (isAttack || isReload)       // ê³µê²©ì‹œ ì •ì§€
         {
             moveVec = Vector2.zero;
         }
-        if (isDodge)             // È¸ÇÇ½Ã ÇöÀç ¼Óµµ À¯Áö
+        if (isDodge)             // íšŒí”¼ì‹œ í˜„ì¬ ì†ë„ ìœ ì§€
         {
             moveVec = dodgeVec;
         }
@@ -124,10 +124,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    // ´ÙµëÀ» °Í
+    // ë‹¤ë“¬ì„ ê²ƒ
     void Turn()
     {
-        // ±âº» »óÅÂ
+        // ê¸°ë³¸ ìƒíƒœ
         if (moveVec == Vector2.zero)
             return;
 
@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
         isAttack = false;
     }
 
-    void Dodge()    // È¸ÇÇ
+    void Dodge()    // íšŒí”¼
     {
         if (dDown && !isAttack && moveVec != Vector2.zero && !isDodge)
         {
@@ -232,13 +232,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    void DodgeOut() // È¸ÇÇ ºüÁ®³ª°¡±â
+    void DodgeOut() // íšŒí”¼ ë¹ ì ¸ë‚˜ê°€ê¸°
     {
         sprite.color = Color.blue;
         isDodge = false;
     }
 
-    // ´Ş¸®±â ´ë±â
+    // ë‹¬ë¦¬ê¸° ëŒ€ê¸°
     void RunDelay()
     {
         runCurrentCoolTime = status.runCoolTime;
@@ -286,22 +286,54 @@ public class Player : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        // *ÀÓ½Ã* ¾ÆÀÌÅÛ È¹µæ
+        // *ì„ì‹œ* ì•„ì´í…œ íšë“
         if (other.tag == "Item")
         {
             Destroy(other.gameObject);
         }
         else if (other.tag == "Enemy"|| other.tag=="EnemyAttack") 
         {
-            DataManager.instance.userData.playerHealth -=10;
-            //Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
-            playerDead();
+            if (DataManager.instance.userData.playerHealth < 0)
+            { playerDead(); }
+            else 
+            {
+                DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
+                Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+
+                //OnDamaged(other.transform);
+                
+            }
+
         }
     }
 
+    //ë¬´ì ì‹œê°„
+Â Â Â Â void OnDamaged(Transform targetPos)
+    {
+        print("on damaged");
+Â Â Â Â Â Â Â Â //gameObject.layer = 11;Â //ì¶©ëŒì‹œÂ í”Œë ˆì´ì–´ì˜Â ë ˆì´ì–´ê°€Â PlayerDamagedÂ ì¦‰,11ë²ˆÂ ë ˆì´ì–´ë¡œÂ ë³€í•´ì•¼Â 
+
+        //íˆ¬ëª…
+        sprite.color = new Color(1, 1, 1, 0.4f);
+
+        //íŠ•ê²¨ë‚˜ê°
+        Vector2 dir = transform.position - targetPos.position;
+Â Â Â Â Â Â Â Â rigid.AddForce(dir * 3, ForceMode2D.Impulse);
+
+        Invoke("OffDamaged", 3);
+    }
+
+    void OffDamaged()
+    {
+        //gameObject.layer = 10;
+        sprite.color = new Color(1, 1, 1, 1);
+    }
+
+    
+
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other.name);
+        //Debug.Log(other.name);
         if (other.tag == "Weapon")
         {
             

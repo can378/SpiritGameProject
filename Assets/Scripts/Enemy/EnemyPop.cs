@@ -23,7 +23,7 @@ public class EnemyPop : EnemyBasic
         if (isAttacking == false)
         {
 
-            float targetDistance = Vector2.Distance(status.spawnPos, enemyTarget.position);
+            float targetDistance = Vector2.Distance(new Vector2(0,0), enemyTarget.position);
             float targetEnemyDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
             if (targetDistance <= status.detectionDis)

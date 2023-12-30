@@ -71,7 +71,7 @@ public class DataManager : MonoBehaviour
     public void InitData()
     {
         userData.coin = 10;
-        userData.playerHealth = 100000;
+        userData.playerHealth = 100;
     }
 
     void OnApplicationQuit()

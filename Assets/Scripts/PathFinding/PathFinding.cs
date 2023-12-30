@@ -41,7 +41,7 @@ public class PathFinding : MonoBehaviour
     {
         isWalking = false;
         seekerPos = seeker.position;
-        moveSpeed = 10;
+        moveSpeed = 20;
     }
 
     private void FixedUpdate()

@@ -14,7 +14,6 @@ public class EnemyBasic : MonoBehaviour
     {
         enemyTarget=GameObject.Find("Player").transform;
         status = GetComponent<EnemyStatus>();
-        //this.transform.position = status.spawnPos;
     }
 
 

@@ -7,7 +7,6 @@ public class EnemyStatus : MonoBehaviour
     public float health;
     public float speed;
     public int damage;
-    public Vector2 spawnPos;
     public int detectionDis;
     public int attackSpeed;
 }
