@@ -24,8 +24,10 @@ public class Player : MonoBehaviour
     public bool isEquip = false;           //무기 장비
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
-    private Collider2D collider;
-    private Vector2 playerPosition;
+    public GameObject nearObject;
+
+    Collider2D collider;
+    Vector2 playerPosition;
     
     Vector2 moveVec;
     Vector2 dodgeVec;
@@ -36,8 +38,7 @@ public class Player : MonoBehaviour
     PlayerStatus status;
     Attack attack;
 
-
-    GameObject nearObject;
+    
 
     GameObject weaponGameObject;
     Weapon weapon;
@@ -278,7 +279,13 @@ public class Player : MonoBehaviour
                 attackDelay = 0;
                 weaponGameObject.SetActive(false);
             }
-
+        }
+        if (iDown && nearObject != null && !isEquip && !isDodge && !isAttack && moveVec == Vector2.zero)
+        {
+            if (nearObject.tag == "Door")
+            {
+                nearObject.GetComponent<Door>().DoorInteraction();
+            }
         }
     }
 
@@ -333,10 +340,10 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        //Debug.Log(other.name);
-        if (other.tag == "Weapon")
+        
+        if (other.tag == "Weapon" || other.tag == "Door")
         {
-            
+            Debug.Log(other.name);
             nearObject = other.gameObject;
         }
     }

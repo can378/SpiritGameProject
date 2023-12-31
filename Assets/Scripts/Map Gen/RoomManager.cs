@@ -15,8 +15,6 @@ public class RoomManager : MonoBehaviour
 
     public List<GameObject> room;
 
-    public bool generateFinish=false;
-
     private bool cross;
     private int crossedRoomCount = 0;
 
@@ -24,7 +22,6 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        generateFinish = false;
         templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
     }
 
@@ -34,6 +31,7 @@ public class RoomManager : MonoBehaviour
         
     }
 
+    // 초기 위치 설정
     void Spawn()
     {
         if (spawn)
@@ -104,6 +102,7 @@ public class RoomManager : MonoBehaviour
     }
     */
 
+    // 분기 설정
     void CrossedRoom()
     {
         if(cross)
@@ -111,7 +110,9 @@ public class RoomManager : MonoBehaviour
             maxRoom = defaultMaxRoom + (crossedRoom * (addedRoom-1));
             for(int i = 0 ; i < defaultMaxRoom ; i++ )
             {
-                
+                if (crossedRoomCount >= crossedRoom)
+                    break;
+
                 int index = Random.Range(1, room.Count - 1);
                 GameObject crossedRoomGameObject = room[index];
                 Room crossedRoomGameObjectRoom = crossedRoomGameObject.GetComponent<Room>();
@@ -137,10 +138,6 @@ public class RoomManager : MonoBehaviour
                 crossedRoomCount++;
                 Destroy(crossedRoomGameObject);
                 room.RemoveAt(index);
-
-                if(crossedRoomCount >= crossedRoom)
-                    break;
-                
             }
         }
     }

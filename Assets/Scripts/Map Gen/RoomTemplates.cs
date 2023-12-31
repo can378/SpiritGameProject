@@ -13,4 +13,10 @@ public class RoomTemplates : MonoBehaviour
     public GameObject[] horizontalCrossedRooms;
 
     public GameObject closedRoom;
+
+    // type
+    public GameObject shopGameObject;
+    public GameObject treasureGameObject;
+    public GameObject miniBossGameObject;
+    public GameObject bossGameObject;
 }

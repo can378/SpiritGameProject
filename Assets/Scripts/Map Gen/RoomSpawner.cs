@@ -46,7 +46,7 @@ public class RoomSpawner : MonoBehaviour
         {
             // 0이 turning
             // 확률임 수정 필요
-            int turning = Random.Range(0, roomManager.maxRoom / roomManager.turning);
+            int turning = roomManager.turning == 0 ? 1 : Random.Range(0, roomManager.maxRoom / roomManager.turning);
 
             // 범위 경계에 닿을시 회전
             if ((openingDirection == 1 || openingDirection == 2) &&
