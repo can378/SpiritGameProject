@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     bool aDown;             //공격
     bool iDown;             //상호작용
 
+
     public bool isReload = false;
     public bool isSprint = true;              //달리기
     public bool isDodge = false;              //회피
@@ -23,8 +24,10 @@ public class Player : MonoBehaviour
     public bool isAttackReady = false;
     public bool isEquip = false;           //무기 장비
 
+
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
+
 
     Collider2D collider;
     Vector2 playerPosition;
@@ -54,22 +57,36 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
+        int layerNum = LayerMask.NameToLayer("Default");
+        this.layerMask = layerNum;
     }
 
     void Update()
     {
         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
         GetInput();
+
+
+        
         if (isMoveable())
         {
             Dodge();
             Move();  
         }
+
         Attack();
         Reload();
         Turn();
         Interaction();
+
+        string layerName = LayerMask.LayerToName(gameObject.layer);
+        //Debug.Log("My layer name is: " + layerName);
+
+
+    }
+    void FixedUpdate()
+    {
+
     }
 
     void GetInput()
@@ -80,26 +97,26 @@ public class Player : MonoBehaviour
         dDown = Input.GetButtonDown("Dodge");
         aDown = Input.GetButton("Attack");
         iDown = Input.GetButtonDown("Interaction");
+
     }
 
     private bool isMoveable() 
     {
-        // 레이저가 제대로 도착했을때 Null, 막혔을때 방해물이 Return
+        // 레이저가 제대로 도착하면 Null, 막혔을때 방해물 Return
         RaycastHit2D hit;
 
         playerPosition = transform.position;
-        Vector2 end= playerPosition + new Vector2(playerPosition.x * status.speed, playerPosition.y * status.speed);
+        Vector2 end= 
+            playerPosition + 
+            new Vector2(playerPosition.x * status.speed, playerPosition.y * status.speed);
         
 
-        //collider.enabled = false;
-        
         // 레이저 발사 (시작, 끝, 레이어마스크)
         hit = Physics2D.Linecast(playerPosition, end, layerMask);
-        //collider.enabled = true;
+
 
         // 벽으로 막혔을때 실행하지 않게 처리
-        if (hit.transform == null)
-        {  return true;   }
+        if (hit.transform == null) {  return true;   }
         return false;
     }
 
@@ -118,10 +135,18 @@ public class Player : MonoBehaviour
         else
         {
             rigid.velocity = moveVec * status.speed * (isSprint ? status.runSpeed : 1f);
+            
+            
+            /*
             if (isSprint && moveVec != Vector2.zero)
+            {    
                 sprite.color = Color.magenta;
+            }
             else
+            { 
                 sprite.color = Color.blue;
+            }
+            */
         }
     }
 
@@ -289,7 +314,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void playerDead() { Debug.Log("player dead"); }
+
     
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -301,42 +326,34 @@ public class Player : MonoBehaviour
         else if (other.tag == "Enemy"|| other.tag=="EnemyAttack") 
         {
             if (DataManager.instance.userData.playerHealth < 0)
-            { playerDead(); }
+            { Debug.Log("player dead"); }
             else 
             {
-                DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
-                Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+                print("damaged");
+                //DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
+                //Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+                int layerNum = LayerMask.NameToLayer("Invincible");
+                this.layerMask = layerNum;
 
-                //OnDamaged(other.transform);
+                sprite.color = new Color(1, 1, 1, 0.4f);
+
                 
+                //튕겨나감
+                Vector2 dir = (transform.position - other.transform.position).normalized;
+                rigid.AddForce(dir * 50f, ForceMode2D.Impulse);
+
+                
+                Invoke("OffDamaged", 1f);
+
             }
 
         }
     }
 
-    //무적시간
-    void OnDamaged(Transform targetPos)
-    {
-        print("on damaged");
-        //gameObject.layer = 11; //충돌시 플레이어의 레이어가 PlayerDamaged 즉,11번 레이어로 변해야 
+    void OffDamaged() { sprite.color = new Color(1, 1, 1, 1); this.layerMask = 0; }
 
-        //투명
-        sprite.color = new Color(1, 1, 1, 0.4f);
 
-        //튕겨나감
-        Vector2 dir = transform.position - targetPos.position;
-        rigid.AddForce(dir * 3, ForceMode2D.Impulse);
 
-        Invoke("OffDamaged", 3);
-    }
-
-    void OffDamaged()
-    {
-        //gameObject.layer = 10;
-        sprite.color = new Color(1, 1, 1, 1);
-    }
-
-    
 
     void OnTriggerStay2D(Collider2D other)
     {
@@ -353,9 +370,6 @@ public class Player : MonoBehaviour
         nearObject = null;
     }
 
-    void FixedUpdate()
-    {
 
-    }
 
 }

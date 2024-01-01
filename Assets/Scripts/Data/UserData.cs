@@ -10,4 +10,6 @@ public class UserData
 {
     public int playerHealth;
     public int coin;
+    public float BGSoundVolume;
+    public float SFXSoundVolume;
 }

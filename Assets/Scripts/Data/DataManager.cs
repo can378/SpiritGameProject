@@ -30,7 +30,7 @@ public class DataManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         
-        gameVar = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();//쓸일 없으면 나중에 삭제
+        //gameVar = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();//쓸일 없으면 나중에 삭제
         LoadData();
     }
 
@@ -72,6 +72,8 @@ public class DataManager : MonoBehaviour
     {
         userData.coin = 10;
         userData.playerHealth = 100;
+        userData.BGSoundVolume = 10;
+        userData.SFXSoundVolume = 10;
     }
 
     void OnApplicationQuit()

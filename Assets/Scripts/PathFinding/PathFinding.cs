@@ -41,7 +41,7 @@ public class PathFinding : MonoBehaviour
     {
         isWalking = false;
         seekerPos = seeker.position;
-        moveSpeed = 20;
+        moveSpeed = 50;
     }
 
     private void FixedUpdate()
@@ -68,19 +68,19 @@ public class PathFinding : MonoBehaviour
 
 
     IEnumerator FindPath(Vector2 startPos, Vector2 targetPos)
-    {   
+    {
 
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
-        
-        
+
+
         bool pathSuccess = false;// target에 도착했는지
 
         if (!startNode.walkable)
-            Debug.Log("Unwalkable StartNode.");
+        {    //Debug.Log("Unwalkable StartNode.");
+        }
 
-        
-        if(targetNode.walkable)
+        if (targetNode.walkable)
         {
 
             List<ANode> openSet = new List<ANode>(); //계산한 노드
