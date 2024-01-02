@@ -15,7 +15,6 @@ public class RoomManager : MonoBehaviour
 
     public List<GameObject> room;
 
-    private bool cross;
     private int crossedRoomCount = 0;
 
     private RoomTemplates templates;
@@ -36,8 +35,6 @@ public class RoomManager : MonoBehaviour
     {
         if (spawn)
         {
-            cross = false;
-
             crossedRoomCount = 0;
             maxRoom = defaultMaxRoom;
             crossedRoomCount = 0;
@@ -71,8 +68,7 @@ public class RoomManager : MonoBehaviour
                 new Vector3(roomSize, roomSize, 1);
             }
             spawn = false;
-            cross = true;
-            Invoke("CrossedRoom",2f);
+            Invoke("CrossedRoom",0.1f * defaultMaxRoom + 0.1f);
         }
         
     }
@@ -105,40 +101,37 @@ public class RoomManager : MonoBehaviour
     // 분기 설정
     void CrossedRoom()
     {
-        if(cross)
+        maxRoom = defaultMaxRoom + (crossedRoom * (addedRoom - 1));
+        for (int i = 0; i < defaultMaxRoom; i++)
         {
-            maxRoom = defaultMaxRoom + (crossedRoom * (addedRoom-1));
-            for(int i = 0 ; i < defaultMaxRoom ; i++ )
+            if (crossedRoomCount >= crossedRoom)
+                break;
+
+            int index = Random.Range(1, room.Count - 1);
+            GameObject crossedRoomGameObject = room[index];
+            Room crossedRoomGameObjectRoom = crossedRoomGameObject.GetComponent<Room>();
+
+            crossedRoomGameObject.SetActive(false);
+
+            if (crossedRoomGameObjectRoom.top && crossedRoomGameObjectRoom.bottom)
             {
-                if (crossedRoomCount >= crossedRoom)
-                    break;
-
-                int index = Random.Range(1, room.Count - 1);
-                GameObject crossedRoomGameObject = room[index];
-                Room crossedRoomGameObjectRoom = crossedRoomGameObject.GetComponent<Room>();
-                
-                crossedRoomGameObject.SetActive(false);
-
-                if (crossedRoomGameObjectRoom.top && crossedRoomGameObjectRoom.bottom)
-                {
-                    Instantiate(templates.verticalCrossedRooms[Random.Range(0,2)], crossedRoomGameObject.transform.position,crossedRoomGameObject.transform.rotation).transform.localScale = 
-                    new Vector3(roomSize,roomSize,1);
-                }
-                else if (crossedRoomGameObjectRoom.left && crossedRoomGameObjectRoom.right)
-                {
-                    Instantiate(templates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale = 
-                    new Vector3(roomSize, roomSize, 1);
-                }
-                else
-                {
-                    crossedRoomGameObject.SetActive(true);
-                    continue;
-                }
-
-                crossedRoomCount++;
-                Destroy(crossedRoomGameObject);
-                room.RemoveAt(index);
+                Instantiate(templates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
+                new Vector3(roomSize, roomSize, 1);
             }
+            else if (crossedRoomGameObjectRoom.left && crossedRoomGameObjectRoom.right)
+            {
+                Instantiate(templates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
+                new Vector3(roomSize, roomSize, 1);
+            }
+            else
+            {
+                crossedRoomGameObject.SetActive(true);
+                continue;
+            }
+
+            crossedRoomCount++;
+            Destroy(crossedRoomGameObject);
+            room.RemoveAt(index);
         }
     }
 }
