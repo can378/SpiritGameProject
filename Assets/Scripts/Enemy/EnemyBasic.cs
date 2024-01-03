@@ -8,11 +8,12 @@ public class EnemyBasic : MonoBehaviour
 
     public Transform enemyTarget;
     public EnemyStatus status;
-
+    private Rigidbody2D rigid;
 
     private void Awake()
     {
         enemyTarget=GameObject.Find("Player").transform;
+        rigid = GetComponent<Rigidbody2D>();
         status = GetComponent<EnemyStatus>();
     }
 
@@ -34,18 +35,27 @@ public class EnemyBasic : MonoBehaviour
         */
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
         {
-            status.health--;
-            print(this.name+" attaked");
+            //print(this.name + " attaked");
             if (status.health <= 0f) { EnemyDead(); }
+            else 
+            {
+                print("enemy damaged");
+                status.health--;
+                Vector2 dir = (transform.position - collision.transform.position).normalized;
+                rigid.AddForce(dir * 50f, ForceMode2D.Impulse);
+                Invoke("OffDamaged", 0.2f);
+            }
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OffDamaged()
     {
+        //this.layerMask = 0;
+        //isInvincible = false;
     }
 
     public void EnemyDead()

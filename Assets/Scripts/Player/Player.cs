@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public bool isAttack = false;           //공격
     public bool isAttackReady = false;
     public bool isEquip = false;           //무기 장비
-
+    private bool isInvincible = false;     //무적 상태
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
@@ -318,51 +318,64 @@ public class Player : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
+        
         // *임시* 아이템 획득
         if (other.tag == "Item")
         {
             Destroy(other.gameObject);
         }
-        else if (other.tag == "Enemy"|| other.tag=="EnemyAttack") 
-        {
-            if (DataManager.instance.userData.playerHealth < 0)
-            { Debug.Log("player dead"); }
-            else 
-            {
-                print("damaged");
-                //DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
-                //Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
-                int layerNum = LayerMask.NameToLayer("Invincible");
-                this.layerMask = layerNum;
-
-                sprite.color = new Color(1, 1, 1, 0.4f);
-
-                
-                //튕겨나감
-                Vector2 dir = (transform.position - other.transform.position).normalized;
-                rigid.AddForce(dir * 50f, ForceMode2D.Impulse);
-
-                
-                Invoke("OffDamaged", 1f);
-
-            }
-
-        }
+        
     }
 
-    void OffDamaged() { sprite.color = new Color(1, 1, 1, 1); this.layerMask = 0; }
+    
 
 
 
 
     void OnTriggerStay2D(Collider2D other)
     {
-        
+        print("trigger stay");
         if (other.tag == "Weapon" || other.tag == "Door")
         {
             Debug.Log(other.name);
             nearObject = other.gameObject;
         }
+        if (other.tag == "Enemy" || other.tag == "EnemyAttack")
+        {
+            if (DataManager.instance.userData.playerHealth < 0)
+            { Debug.Log("player dead"); }
+            else if (isInvincible == false)
+            {
+                print("damag enter");
+                
+                //DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
+
+                isInvincible = true;
+                DataManager.instance.userData.playerHealth -= 10;
+                Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+
+                int layerNum = LayerMask.NameToLayer("Invincible");
+                this.layerMask = layerNum;
+
+                sprite.color = new Color(1, 1, 1, 0.4f);
+
+
+                //튕겨나감
+                Vector2 dir = (transform.position - other.transform.position).normalized;
+                rigid.AddForce(dir * 50f, ForceMode2D.Impulse);
+
+
+                Invoke("OffDamaged", 0.2f);
+
+            }
+
+        }
+    }
+    void OffDamaged()
+    {
+        sprite.color = new Color(1, 1, 1, 1);
+        this.layerMask = 0;
+        isInvincible = false;
     }
 
     void OnTriggerExit2D(Collider2D other)
