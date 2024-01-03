@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private UserData playerData;
     public GameObject coinPrefab;
     public GameObject touchedObject;//마우스 클릭한 오브젝트
+    public GameObject canvas;
 
 
     void Awake()
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
     {   
         playerData = DataManager.instance.userData;
         //DataManager.instance.userData.coin += 50;
+        canvas.SetActive(true);
 
     }
 

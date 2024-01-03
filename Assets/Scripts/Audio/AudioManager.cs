@@ -137,7 +137,7 @@ public class AudioManager : MonoBehaviour
     //배경음악 플레이 함수
     public void BGMPlay(int index)
     {
-        print("bgm play");
+
         AudioClip clip;
         clip = AudioManager.instance.BgClipList[index];
 

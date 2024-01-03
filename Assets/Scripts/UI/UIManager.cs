@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     private int currentHP;
     private int maxHP = 1000;
 
-    private bool isPanelActive = false;
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Tab))

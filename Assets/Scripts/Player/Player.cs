@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     public GameObject nearObject;
 
 
-    Collider2D collider;
     Vector2 playerPosition;
     
     Vector2 moveVec;
@@ -52,7 +51,6 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
         attack = GetComponentInChildren<Attack>();
-        collider = GetComponent<Collider2D>();
     }
 
     void Start()
@@ -329,11 +327,12 @@ public class Player : MonoBehaviour
 
     
 
-
+    //Trigger=============================================================================================
 
 
     void OnTriggerStay2D(Collider2D other)
     {
+        
         //print("trigger stay");
         if (other.tag == "Weapon" || other.tag == "Door")
         {
@@ -346,10 +345,8 @@ public class Player : MonoBehaviour
             { Debug.Log("player dead"); }
             else if (isInvincible == false)
             {
-                print("damag enter");
-                
-                //DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
 
+                //DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
                 isInvincible = true;
                 DataManager.instance.userData.playerHealth -= 10;
                 Debug.Log("player health=" + DataManager.instance.userData.playerHealth);

@@ -12,7 +12,6 @@ public class EnemyPattern : EnemyBasic
     
     private Rigidbody2D rb;
     private Vector2 dirVec;
-    private float time = 0;
     private float targetDistance;
     private int roundNum;//multishot몇갈래 발포하는지 변수
 
