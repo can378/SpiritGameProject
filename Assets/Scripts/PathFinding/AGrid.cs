@@ -6,7 +6,7 @@ public class AGrid : MonoBehaviour
 {
     public bool displayGridGizmos;
     // 플레이어의 위치
-    public Transform player;
+    public Transform chaser;
     // 장애물 레이어
     public LayerMask OBSTACLE;
     // 화면의 크기
@@ -39,7 +39,7 @@ public class AGrid : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, new Vector2(gridWorldSize.x, gridWorldSize.y));
         if (grid != null)
         {
-            ANode playerNode = NodeFromWorldPoint(player.position);
+            ANode chaserNode = NodeFromWorldPoint(chaser.position);
             foreach (ANode n in grid)
             {
                 Gizmos.color = (n.walkable) ? Color.white * new Color(1f, 1f, 1f, 0.5f) : Color.red * new Color(1f, 1f, 1f, 0.5f);
@@ -54,7 +54,7 @@ public class AGrid : MonoBehaviour
 
                         }
                     }
-                if (playerNode == n) Gizmos.color = Color.cyan * new Color(1f, 1f, 1f, 0.5f);
+                if (chaserNode == n) Gizmos.color = Color.cyan * new Color(1f, 1f, 1f, 0.5f);
                 Gizmos.DrawCube(n.worldPosition, Vector2.one * (nodeDiameter - 0.1f));
             }
         }
