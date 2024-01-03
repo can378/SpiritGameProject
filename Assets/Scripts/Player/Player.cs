@@ -334,7 +334,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        print("trigger stay");
+        //print("trigger stay");
         if (other.tag == "Weapon" || other.tag == "Door")
         {
             Debug.Log(other.name);

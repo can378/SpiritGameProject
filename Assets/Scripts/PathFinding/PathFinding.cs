@@ -34,6 +34,7 @@ public class PathFinding : MonoBehaviour
     private void Awake()
     {
         grid = GetComponent<AGrid>();
+
         walkable = true;
     }
 
