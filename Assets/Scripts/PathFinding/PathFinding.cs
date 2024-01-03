@@ -18,69 +18,65 @@ using UnityEngine.SceneManagement;
 public class PathFinding : MonoBehaviour
 {
 
-    public Transform seeker;//추격자
+    public static PathFinding instance=null;
 
-    AGrid grid;//그리드
+    public Transform seeker;//추격자
+    
     public Queue<Vector2> wayQueue = new Queue<Vector2>();//target까지 가는 방법
 
-    public static bool walkable = true;
+    public Vector2 fugitivePos; //ATarget에서 값 가져온다.
 
-    public Vector2 fugitivePos;
-    public Vector2 seekerPos;
 
-    public bool isWalking;
-    private int moveSpeed;
+    private int seekerSpeed;
+    AGrid grid;//그리드
+
+
+
 
     private void Awake()
     {
-        grid = GetComponent<AGrid>();
-
-        walkable = true;
+        instance = this;
+        seekerSpeed = 50;
+        grid = GameObject.Find("AGridManager").GetComponent<AGrid>();
+        //grid = GetComponent<AGrid>();
     }
 
-    private void Start()
-    {
-        isWalking = false;
-        seekerPos = seeker.position;
-        moveSpeed = 50;
-    }
 
+    /*
     private void FixedUpdate()
     {
-
-        if (walkable == true)
-        {
-            if (seekerPos != fugitivePos)
-            {
-                //seekerPos = fugitivePos;
-                StopAllCoroutines();
-                StartCoroutine(FindPath(seeker.position, fugitivePos));
-            }
-        }
-        else
-        {
-            seekerPos = (Vector2)seeker.position;
-        }
-
+        //print("seeker=" + seekerPos + "figitive="+fugitivePos);
+        //StartFinding(seeker.position, fugitivePos);
     }
-
-
+    */
+    public void StartFinding(Vector2 startPos, Vector2 targetPos)
+    {
+        
+        if (startPos != targetPos)
+        {
+            StopAllCoroutines();
+            print("seeker=" + startPos + "figitive=" + targetPos);
+            StartCoroutine(FindPath(startPos,targetPos));
+        }
+    }
 
 
 
     IEnumerator FindPath(Vector2 startPos, Vector2 targetPos)
     {
-
+        yield return null;
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
 
-
+        
         bool pathSuccess = false;// target에 도착했는지
 
         if (!startNode.walkable)
         {    //Debug.Log("Unwalkable StartNode.");
         }
 
+
+        //길 찾기
         if (targetNode.walkable)
         {
 
@@ -139,15 +135,14 @@ public class PathFinding : MonoBehaviour
                 }
             }
         }
-        else //목적지에 도달할 수 없을경우
+        else //목적지에 도달할 수 없을경우 way갱신 안함
         {
-            // way갱신 안함
-            Vector3 origin = seeker.position;
+            Vector3 origin = transform.position;
             while (true)
             {
-                seeker.position = Vector2.MoveTowards(seeker.position, origin, moveSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, origin, seekerSpeed * Time.deltaTime);
                 yield return new WaitForSeconds(0.03f);
-                if ((int)seeker.position.x == (int)origin.x && (int)seeker.position.y == (int)origin.y) break;
+                if ((int)transform.position.x == (int)origin.x && (int)transform.position.y == (int)origin.y) break;
             }
 
             wayQueue.Clear();
@@ -155,24 +150,25 @@ public class PathFinding : MonoBehaviour
         
         yield return null;
 
-        // 길을 찾으면 이동
+        
+
+        // 길을 찾은 후 이동
         if(pathSuccess == true)
         {
 
-            isWalking = true;
-
             while (wayQueue.Count > 0)
             {
-                seeker.position = Vector2.MoveTowards(seeker.position, wayQueue.First(), moveSpeed * Time.deltaTime);
-                if ((Vector2)seeker.position == wayQueue.First())
+                transform.position = Vector2.MoveTowards(transform.position, wayQueue.First(), seekerSpeed * Time.deltaTime);
+                if ((Vector2)transform.position == wayQueue.First())
                 {
                     wayQueue.Dequeue();
                 }
                 yield return new WaitForSeconds(0.02f);
             }
 
-            isWalking = false;
         }
+
+
     }
 
 

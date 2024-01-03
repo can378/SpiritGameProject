@@ -5,26 +5,23 @@ using UnityEngine;
 public class EnemyMosquito : EnemyBasic
 {
 
-
-    void Start()
+    private void Start()
     {
-
+        GetComponent<PathFinding>().seeker = transform;
     }
 
 
-    void Update()
+    private void FixedUpdate()
     {
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
 
         if (targetDistance <= status.detectionDis && targetDistance >= 1f)
         {
-            Chase();
-        }
-        else
-        {
-            Wander();
+            GetComponent<PathFinding>().StartFinding
+                ((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
         }
 
     }
+
 
 }
