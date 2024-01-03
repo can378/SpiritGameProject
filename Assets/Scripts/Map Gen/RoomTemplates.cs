@@ -14,9 +14,13 @@ public class RoomTemplates : MonoBehaviour
 
     public GameObject closedRoom;
 
-    // type
-    public GameObject shopGameObject;
-    public GameObject treasureGameObject;
-    public GameObject miniBossGameObject;
-    public GameObject bossGameObject;
+    // maptype
+    public GameObject shopIcon;
+    public GameObject treasureIcon;
+    public GameObject missionIcon;
+    public GameObject miniBossIcon;
+    public GameObject bossIcon;
+    // doortype
+    public GameObject trapIcon;
+    public GameObject keyIcon;
 }

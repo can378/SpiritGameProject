@@ -16,7 +16,7 @@ public class Door : MonoBehaviour
     }
 
     // Shabby 파괴
-    public void DestroyWall()
+    public void DestroyShabbyWall()
     {
         this.enabled = false;
     }
@@ -24,15 +24,18 @@ public class Door : MonoBehaviour
     //player 상호작용
     public void DoorInteraction()
     {
+        // 키가 있다면
         if(this.doorType == DoorType.Key)
         {
             Debug.Log("열쇠를 사용하였다.");
             UnLockDoor();
         }
+        // 상호작용으로는 열리지 않음
         else if (this.doorType == DoorType.Trap)
         {
             Debug.Log("열리지 않는다.");
         }
+        // 폭탄을 사용하였다면
         else if(this.doorType == DoorType.ShabbyWall)
         {
             Destroy(this.gameObject);
@@ -40,8 +43,8 @@ public class Door : MonoBehaviour
         }
     }
 
-    // 시스템에서 문 잠그기
-    // 벽과 허름한 벽, 아무것도 없는 것은 조작 불가
+    // 문 잠그기
+    // none, wall, shabbywall은 조작 불가
     public void LockDoor()
     {
         if(this.doorType == DoorType.None)
@@ -54,8 +57,8 @@ public class Door : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
-    // 시스템에서 문 열기
-    // 벽과 허름한 벽, 아무것도 없는 것은 조작 불가
+    // 문 열기
+    // none, wall, shabbywall은 조작 불가
     public void UnLockDoor()
     {
         if (this.doorType == DoorType.None)
@@ -69,7 +72,7 @@ public class Door : MonoBehaviour
     }
 
     // 문 설정하기
-    // 벽과 허름한 벽은 조작 불가
+    // wall, shabbywall은 조작 불가
     public void SetDoorType(DoorType doorType)
     {
         if (this.doorType == DoorType.ShabbyWall)
@@ -94,8 +97,12 @@ public class Door : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void SetWallType(DoorType doorType)
+    // 벽 설정하기
+    // none, key, trap은 조작 불가
+    void SetWallType(DoorType doorType)
     {
+        if(this.doorType == DoorType.None)
+            return;
         if (this.doorType == DoorType.Key)
             return;
         if (this.doorType == DoorType.Trap)
@@ -113,8 +120,9 @@ public class Door : MonoBehaviour
         }
     }
 
+    // 통로와 맞닿은 wall은 shabby로 변경
     void OnTriggerEnter2D(Collider2D other) {
-        if(other.tag == "ShabbyCheck")
+        if(other.tag == "ShabbyCheck" && doorType == DoorType.Wall)
         {
             SetWallType(DoorType.ShabbyWall);
         }

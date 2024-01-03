@@ -72,10 +72,13 @@ MonoBehaviour:
   - {fileID: 4313598515406823029, guid: 7da452a0977b50e48b1c62ae4e5bee13, type: 3}
   - {fileID: 4313598515406823029, guid: e312a7a1aee15b9498222b8055f19a6c, type: 3}
   closedRoom: {fileID: 1126749107643369661, guid: 86f3d7a0727155c468fc02ebc9c86122, type: 3}
-  shopGameObject: {fileID: 0}
-  treasureGameObject: {fileID: 0}
-  miniBossGameObject: {fileID: 0}
-  bossGameObject: {fileID: 0}
+  shopIcon: {fileID: 1770730514973396891, guid: 3930f85f00897984fba33b4a7fa8db61, type: 3}
+  treasureIcon: {fileID: 6365712346947525531, guid: b284215bbeff3134087eba7e1b26bbd8, type: 3}
+  missionIcon: {fileID: 8345276549727693609, guid: 6222f728a6674b54bbafcb333fd0eec0, type: 3}
+  miniBossIcon: {fileID: 6977163118116975903, guid: e82178507b739e94faa01a96a4df3724, type: 3}
+  bossIcon: {fileID: 4066744948307765696, guid: a03afcb024e66be41999509d1a9e0d59, type: 3}
+  trapIcon: {fileID: 5756218431168464852, guid: 43743b610c096a9488b37e0b06ebea46, type: 3}
+  keyIcon: {fileID: 8171498059665028823, guid: f1b6c8f9644e70345bed9c3d32e66a8e, type: 3}
 --- !u!114 &1396603088322611139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,9 +94,11 @@ MonoBehaviour:
   spawn: 1
   addedRoom: 5
   turning: 2
-  crossedRoom: 5
+  crossedRoom: 3
   defaultMaxRoom: 10
   maxRoom: 0
   roomSize: 3
-  area: 0
+  area: 5
+  templates: {fileID: 0}
   room: []
+  finish: 0

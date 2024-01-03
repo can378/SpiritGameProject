@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class RoomSpawner : MonoBehaviour
 {
-
+    public bool spawned = false;
     public int openingDirection;
     // 1 --> need bottom door
     // 2 --> need top door
     // 3 --> need left door
     // 4 --> need right door
 
-    private RoomTemplates templates;
-    private RoomManager roomManager;
-    private int index = 0;
-    private int limitArea = 0;
-    private Vector3 roomSize;
-
-    public bool spawned = false;
+    RoomTemplates templates;
+    RoomManager roomManager;
+    int index = 0;
+    int limitArea = 0;
+    Vector3 roomSize;
 
     void Start()
     {

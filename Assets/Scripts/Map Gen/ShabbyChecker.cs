@@ -7,6 +7,6 @@ public class ShabbyChecker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(this.gameObject,10f);
+        Destroy(this.gameObject,1f);
     }
 }

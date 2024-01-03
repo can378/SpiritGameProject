@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b0d0fa899f9d44285c7d1a0681d868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorType: 4
 --- !u!61 &765093384733492355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -583,6 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b0d0fa899f9d44285c7d1a0681d868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorType: 4
 --- !u!61 &5551629896616081933
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -676,20 +678,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ef4a3e7b94f2c4ba899e9639547dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockTrigger: 0
+  unLockTrigger: 0
   mapType: 0
   doorType: 0
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
   doors:
   - {fileID: 5616290514868827232}
   - {fileID: 6228101524024110031}
   - {fileID: 7831671011362123053}
   - {fileID: 915567626603759243}
-  lockTrigger: 0
-  unLockTrigger: 0
-  setRoom: 0
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
 --- !u!1 &1394137318041832783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,6 +1389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b0d0fa899f9d44285c7d1a0681d868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorType: 4
 --- !u!61 &6366209010995364637
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2193,7 +2195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1ce44f76bcbca4e8cf9d5367d5b4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  None: 1
 --- !u!114 &3650407661656832656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2206,8 +2207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba112dddc835ac44a1f4f6795a999dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openingDirection: 0
   spawned: 1
+  openingDirection: 0
 --- !u!1 &6693909062671552376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,6 +2840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b0d0fa899f9d44285c7d1a0681d868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorType: 4
 --- !u!61 &8754342019335055468
 BoxCollider2D:
   m_ObjectHideFlags: 0

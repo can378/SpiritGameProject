@@ -17,13 +17,13 @@ public class Player : MonoBehaviour
     bool iDown;             //상호작용
 
 
-    public bool isReload = false;
-    public bool isSprint = true;              //달리기
-    public bool isDodge = false;              //회피
-    public bool isAttack = false;           //공격
-    public bool isAttackReady = false;
-    public bool isEquip = false;           //무기 장비
-    private bool isInvincible = false;     //무적 상태
+    public bool isReload = false;               //장전
+    public bool isSprint = true;                //달리기
+    public bool isDodge = false;                //회피
+    public bool isAttack = false;               //공격
+    public bool isAttackReady = false;          //공격 준비 완료
+    public bool isEquip = false;                //무기 장비
+    private bool isInvincible = false;          //무적 상태
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
 
 
     }
+    
     void FixedUpdate()
     {
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    
     public bool spawn;
     public int addedRoom;                   // 각 경로당 추가 생성할 방
     public int turning;                     // 꺾을 횟수
@@ -12,12 +13,14 @@ public class RoomManager : MonoBehaviour
     public int maxRoom;                     // 최대방의 수 [기본 상태 0]
     public int roomSize;                    // 방 크기 배율 기본 : 3
     public int area;                        // 방 상화 좌우 영역 기본 : 5
-
+    public RoomTemplates templates;
     public List<GameObject> room;
+    public bool finish;                     // 맵 생성 완료 보기용
 
-    private int crossedRoomCount = 0;
-
-    private RoomTemplates templates;
+    int preCount = 0;
+    float waitTime = 0;
+    int crossedRoomCount = 0;
+    
 
     void Start()
     {
@@ -27,7 +30,33 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
         Spawn();
-        
+        Finish();
+    }
+
+    // 방의 업데이트가 끝나고 1초 후 방 생성 완료
+    void Finish()
+    {
+        if(preCount != room.Count)
+        {
+            finish = false;
+            waitTime = 0;
+            preCount = room.Count;
+            return;
+        }
+
+        if(waitTime >=1)
+        {
+            if(room.Count < maxRoom )
+            {
+                spawn = true;
+                return;
+            }
+            finish = true;
+        }
+        else 
+        {
+            waitTime += Time.deltaTime;
+        }
     }
 
     // 초기 위치 설정
@@ -68,13 +97,13 @@ public class RoomManager : MonoBehaviour
                 new Vector3(roomSize, roomSize, 1);
             }
             spawn = false;
-            Invoke("CrossedRoom",0.1f * defaultMaxRoom + 0.1f);
+            Invoke("Crossed", 0.1f * defaultMaxRoom + 0.1f);
         }
         
     }
 
     /*
-    void LockRoom()
+    void Lock()
     {
         if(Lock)
         {
@@ -98,11 +127,11 @@ public class RoomManager : MonoBehaviour
     }
     */
 
-    // 분기 설정
-    void CrossedRoom()
+    // 갈림길 설정
+    void Crossed()
     {
         maxRoom = defaultMaxRoom + (crossedRoom * (addedRoom - 1));
-        for (int i = 0; i < defaultMaxRoom; i++)
+        for (int i = 0; i < defaultMaxRoom * 2; i++)
         {
             if (crossedRoomCount >= crossedRoom)
                 break;
@@ -133,5 +162,16 @@ public class RoomManager : MonoBehaviour
             Destroy(crossedRoomGameObject);
             room.RemoveAt(index);
         }
+    }
+
+    // 상점 설정
+    void Shop()
+    {
+        
+    }
+
+    // 보물 설정
+    void Treasure(){
+
     }
 }
