@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {   
         playerData = DataManager.instance.userData;
-
         //DataManager.instance.userData.coin += 50;
 
     }

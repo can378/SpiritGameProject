@@ -18,11 +18,13 @@ public class UIManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
+            AudioManager.instance.TestAudioPlay();
             tabkeyPanel.SetActive(!tabkeyPanel.activeSelf);
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+            AudioManager.instance.TestAudioPlay();
             esckeyPanel.SetActive(!tabkeyPanel.activeSelf);
         }
     }

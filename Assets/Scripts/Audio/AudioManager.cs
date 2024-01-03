@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Pooling")]
     [SerializeField]
-    private GameObject poolingObjectPrefab; //미리 생성될 프리팹
+    private GameObject soundPrefab; //미리 생성될 프리팹
     Queue<Sound> poolingObjectQueue = new Queue<Sound>(); //큐 생성
     public GameObject AudioManagerObj;
 
@@ -63,7 +63,8 @@ public class AudioManager : MonoBehaviour
         BGSoundVolume();
         SFXVolume();
 
-        AudioManager.instance.BGMPlay(1);
+        
+        AudioManager.instance.BGMPlay(0);
 
 
         //슬라이드값 변할때마다 아래 함수 실행
@@ -79,9 +80,9 @@ public class AudioManager : MonoBehaviour
 
         //배경음 음량조절
         if (BGSoundSlider.GetComponent<Slider>().value == 0) 
-        { mixer.SetFloat("BGSoundVolume", -80); }
+        { mixer.SetFloat("BG", -80); }
         else 
-        { mixer.SetFloat("BGSoundVolume", Mathf.Log10(BGSoundSlider.GetComponent<Slider>().value) * 20); }
+        { mixer.SetFloat("BG", Mathf.Log10(BGSoundSlider.GetComponent<Slider>().value) * 20); }
 
 
         DataManager.instance.userData.BGSoundVolume = BGSoundSlider.GetComponent<Slider>().value;
@@ -91,8 +92,8 @@ public class AudioManager : MonoBehaviour
     public void SFXVolume()
     {
         //효과음 음량조절
-        if (SFXSoundSlider.GetComponent<Slider>().value == 0) { mixer.SetFloat("SFXVolume", -80); }
-        else { mixer.SetFloat("SFXVolume", Mathf.Log10(SFXSoundSlider.GetComponent<Slider>().value) * 20); }
+        if (SFXSoundSlider.GetComponent<Slider>().value == 0) { mixer.SetFloat("SFX", -80); }
+        else { mixer.SetFloat("SFX", Mathf.Log10(SFXSoundSlider.GetComponent<Slider>().value) * 20); }
 
         DataManager.instance.userData.SFXSoundVolume = SFXSoundSlider.GetComponent<Slider>().value;
     }
@@ -127,12 +128,6 @@ public class AudioManager : MonoBehaviour
 
 
 
-    
-
-    //========================================================================================================
-    //========================================================================================================
-
-
     //효과음 플레이 함수
     public void TestAudioPlay()
     { SFXPlayPoolingVersion("testAudio", testAudio); }
@@ -142,12 +137,13 @@ public class AudioManager : MonoBehaviour
     //배경음악 플레이 함수
     public void BGMPlay(int index)
     {
+        print("bgm play");
         AudioClip clip;
         clip = AudioManager.instance.BgClipList[index];
 
         if (isPlayAudio == true)
         {
-            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BGSound")[0];
+            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
             bgSound.clip = clip;
             bgSound.loop = true;
             bgSound.volume = 0.2f;
@@ -170,7 +166,7 @@ public class AudioManager : MonoBehaviour
 
     private Sound CreateNewObject()
     {
-        var newObj = Instantiate(poolingObjectPrefab).GetComponent<Sound>();
+        var newObj = Instantiate(soundPrefab).GetComponent<Sound>();
         newObj.gameObject.SetActive(false);
         newObj.transform.SetParent(AudioManagerObj.transform);
         return newObj; //그리고 Queue에 넣게 반환
