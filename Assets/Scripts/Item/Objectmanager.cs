@@ -17,6 +17,11 @@ public class Objectmanager : MonoBehaviour
             Destroy(collision.gameObject); //코인 오브젝트 삭제
             coinCount++; //코인 개수 증가
             coinText.text = coinCount.ToString(); //텍스트 변환
+
+            int itemCost = FindObjectOfType<MerchantStore>().recovery;
+
+            // 코인을 차감하고 아이템을 얻는 동작 수행
+            BuyItem(itemCost);
         }
 
         if (collision.gameObject.tag == "Key")
@@ -24,6 +29,15 @@ public class Objectmanager : MonoBehaviour
             Destroy(collision.gameObject); //키 오브젝트 삭제
             keyCount++; //키 개수 증가
             keyText.text = keyCount.ToString(); //텍스트 변환
+        }
+    }
+
+    public void BuyItem(int cost)
+    {
+        if(coinCount >= cost)
+        {
+            coinCount -= cost;
+            coinText.text = coinCount.ToString();
         }
     }
 }
