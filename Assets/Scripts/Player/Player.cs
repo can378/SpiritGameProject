@@ -45,6 +45,8 @@ public class Player : MonoBehaviour
     GameObject weaponGameObject;
     Weapon weapon;
 
+    public GameObject deathPanel; //죽었을때 표시
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -343,7 +345,10 @@ public class Player : MonoBehaviour
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
             if (DataManager.instance.userData.playerHealth < 0)
-            { Debug.Log("player dead"); }
+            { 
+                Debug.Log("player dead");
+                deathPanel.SetActive(true);
+            }
             else if (isInvincible == false)
             {
 
