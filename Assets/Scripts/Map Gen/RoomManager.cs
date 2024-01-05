@@ -17,6 +17,7 @@ public class RoomManager : MonoBehaviour
     public List<GameObject> room;
     public bool finish;                     // 맵 생성 완료 보기용
 
+    bool spawning;
     int preCount = 0;
     float waitTime = 0;
     int crossedRoomCount = 0;
@@ -24,7 +25,10 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
+        templates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
+        maxRoom = defaultMaxRoom;
+        finish = true;
+        spawning = false;
     }
 
     void Update()
@@ -36,26 +40,29 @@ public class RoomManager : MonoBehaviour
     // 방의 업데이트가 끝나고 1초 후 방 생성 완료
     void Finish()
     {
-        if(preCount != room.Count)
+        if(spawning)
         {
-            finish = false;
-            waitTime = 0;
-            preCount = room.Count;
-            return;
-        }
-
-        if(waitTime >=1)
-        {
-            if(room.Count < maxRoom )
+            if (preCount != room.Count)
             {
-                spawn = true;
+                waitTime = 0;
+                preCount = room.Count;
                 return;
             }
-            finish = true;
-        }
-        else 
-        {
-            waitTime += Time.deltaTime;
+
+            if (waitTime >= 1)
+            {
+                spawning = false;
+                if (room.Count < maxRoom)
+                {
+                    spawn = true;
+                    return;
+                }
+                finish = true;
+            }
+            else
+            {
+                waitTime += Time.deltaTime;
+            }
         }
     }
 
@@ -64,6 +71,15 @@ public class RoomManager : MonoBehaviour
     {
         if (spawn)
         {
+            if(spawning)
+            {
+                spawn = false;
+                return;
+            }
+
+            finish = false;
+            spawning = true;
+            waitTime = 0;
             crossedRoomCount = 0;
             maxRoom = defaultMaxRoom;
             crossedRoomCount = 0;

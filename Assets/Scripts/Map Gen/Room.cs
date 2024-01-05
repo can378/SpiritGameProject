@@ -24,8 +24,10 @@ public class Room : MonoBehaviour
     DoorType preDoorType;
 
     void Start() {
-        roomManager = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomManager>();
+        roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
         roomManager.room.Add(this.gameObject);
+
+        //this.transform.SetParent(roomManager.transform);
 
         preMapType = mapType;
         preDoorType = doorType;
@@ -53,32 +55,29 @@ public class Room : MonoBehaviour
             if(mapType == MapType.Shop)
             {
                 mapIcon = Instantiate(roomManager.templates.shopIcon, transform.position, transform.rotation);
-                mapIcon.transform.localScale = new Vector3(roomManager.roomSize,roomManager.roomSize,0);
             }
             else if(mapType == MapType.Treasure)
             {
                 mapIcon = Instantiate(roomManager.templates.treasureIcon, transform.position, transform.rotation);
-                mapIcon.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 0);
             }
             else if (mapType == MapType.Mission)
             {
                 mapIcon = Instantiate(roomManager.templates.missionIcon, transform.position, transform.rotation);
-                mapIcon.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 0);
             }
             else if (mapType == MapType.MiniBoss)
             {
                 mapIcon = Instantiate(roomManager.templates.miniBossIcon, transform.position, transform.rotation);
-                mapIcon.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 0);
             }
             else if (mapType == MapType.Boss)
             {
                 mapIcon = Instantiate(roomManager.templates.bossIcon, transform.position, transform.rotation);
-                mapIcon.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 0);
             }
             else if(mapType == MapType.Default)
             {
                 mapIcon = null;
             }
+            mapIcon.transform.SetParent(this.transform);
+            mapIcon.transform.localScale = new Vector3(1, 1, 1);
             preMapType = mapType;
         }
     }
