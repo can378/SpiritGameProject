@@ -18,10 +18,19 @@ public class Objectmanager : MonoBehaviour
             coinCount++; //코인 개수 증가
             coinText.text = coinCount.ToString(); //텍스트 변환
 
-            int itemCost = FindObjectOfType<MerchantStore>().recovery;
+            MerchantStore merchantStore = FindObjectOfType<MerchantStore>();
 
-            // 코인을 차감하고 아이템을 얻는 동작 수행
-            BuyItem(itemCost);
+            if (merchantStore != null)
+            {
+                int itemCost = merchantStore.recovery;
+
+                // 코인을 차감하고 아이템을 얻는 동작 수행
+                BuyItem(itemCost);
+            }
+            else
+            {
+                Debug.LogWarning("MerchantStore not found!");
+            }
         }
 
         if (collision.gameObject.tag == "Key")
@@ -38,6 +47,11 @@ public class Objectmanager : MonoBehaviour
         {
             coinCount -= cost;
             coinText.text = coinCount.ToString();
+        }
+        else
+        {
+            // 추가: 충분한 코인이 없을 때 처리
+            Debug.LogWarning("Not enough coins to buy the item!");
         }
     }
 }
