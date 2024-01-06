@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -10,8 +11,11 @@ public class NPCbasic : MonoBehaviour
     private SpriteRenderer sprite;
     public bool isTalking;
     public GameObject DialogPanel;
+    public TMP_Text DialogTextMesh;
     private bool playerInRange = false;
 
+
+    int index = 0;
 
     void Start()
     {
@@ -29,7 +33,8 @@ public class NPCbasic : MonoBehaviour
 
         if (playerInRange && Input.GetKeyDown(KeyCode.F))
         {
-            Conversation();
+            Conversation(index);
+            index++;
         }
     }
 
@@ -63,9 +68,10 @@ public class NPCbasic : MonoBehaviour
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")&&DialogPanel!=null)
         {
             playerInRange = false;
+            
             DialogPanel.SetActive(false);
             
         }
@@ -73,15 +79,16 @@ public class NPCbasic : MonoBehaviour
 
 
     //¥Î»≠
-    void Conversation() 
+    void Conversation(int i) 
     {
 
         DialogPanel.SetActive(true);
-        ScriptManager.instance.ScriptTest();
-        
+        DialogTextMesh.text = ScriptManager.instance.NPCScript(i);
     }
 
     void FollowTarget() { }
 
     void NPCMove() { }
+
+
 }

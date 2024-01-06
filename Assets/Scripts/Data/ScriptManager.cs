@@ -49,11 +49,17 @@ public class ScriptManager : MonoBehaviour
         //호출 예시 ScriptManager.instance.ScriptTest();
 
     }
-    public void NPCScript() 
-    {
-        for (int i = 0; i < lineSize; i++)
-        { if (Sentence[i, 0] == "할머니") { print(Sentence[i, 1]); } }
 
+
+    public string NPCScript(int index) 
+    {
+        /*
+        for (int i = 0; i < lineSize; i++)
+        {
+            print(Sentence[i, 1]);
+        }
+        */
+        return Sentence[index%lineSize, 1];
     }
 
 
