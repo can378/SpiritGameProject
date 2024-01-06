@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance = null;
+
     float runCurrentCoolTime;        // 달리기 대기시간
     public float attackDelay;        // 공격 대기시간
+
+    Vector2 mousePos;
+    public Vector2 mouseDir;
+    public float mouseAngle;
 
     float hAxis;
     float vAxis;
@@ -49,6 +56,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
@@ -66,7 +74,7 @@ public class Player : MonoBehaviour
         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
         GetInput();
 
-
+        Turn2();
         
         if (isMoveable())
         {
@@ -85,6 +93,16 @@ public class Player : MonoBehaviour
     
     void FixedUpdate()
     {
+
+    }
+
+    void Turn2() 
+    {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseDir = (mousePos - (Vector2)transform.position).normalized;
+
+        mouseAngle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+        //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
 
     }
 
@@ -148,7 +166,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 다듬을 것
+    /*//사용안함
     void Turn()
     {
         // 기본 상태
@@ -188,6 +206,7 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 45);
         }
     }
+    */
 
     void Reload()
     {
@@ -236,6 +255,10 @@ public class Player : MonoBehaviour
 
         }
     }
+
+
+
+
 
     void AttackOut()
     {

@@ -14,6 +14,9 @@ public class Attack : MonoBehaviour
     public GameObject[] weaponList;
     public GameObject bullet;
 
+    //검 공격 방향 설정
+    public GameObject SwordPos;
+
     void Awake()
     {
     }
@@ -30,6 +33,7 @@ public class Attack : MonoBehaviour
         else if (weapon.weaponType == WeaponType.Shot)
         {
             shotPos = weaponList[weapon.weaponCode].GetComponent<Transform>();
+            
         }
     }
 
@@ -65,6 +69,7 @@ public class Attack : MonoBehaviour
     IEnumerator Swing()
     {
         yield return new WaitForSeconds(0.1f / weapon.rate);
+        SwordPos.transform.rotation= Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.8f / weapon.rate);
         meleeArea.enabled = false;
@@ -77,9 +82,9 @@ public class Attack : MonoBehaviour
         GameObject instantBullet = Instantiate(bullet, shotPos.position, shotPos.rotation);
         Rigidbody2D bulletRigid = instantBullet.GetComponent<Rigidbody2D>();
         bullet.GetComponent<Bullet>().damage = weapon.damage;
-        bulletRigid.velocity = shotPos.up * 25;
+        //bulletRigid.velocity = shotPos.up * 25;
+        bulletRigid.velocity = Player.instance.mouseDir * 25;
         Destroy(instantBullet, 2f);
         yield return null;
-
     }
 }
