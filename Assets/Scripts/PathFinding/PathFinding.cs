@@ -24,7 +24,7 @@ public class PathFinding : MonoBehaviour
     
     public Queue<Vector2> wayQueue = new Queue<Vector2>();//target까지 가는 방법
 
-    public Vector2 fugitivePos; //ATarget에서 값 가져온다.
+    public Vector2 fugitivePos;
 
 
     private int seekerSpeed;
@@ -38,6 +38,7 @@ public class PathFinding : MonoBehaviour
         instance = this;
         seekerSpeed = 50;
         grid = GameObject.Find("AGridManager").GetComponent<AGrid>();
+        //seeker = this.transform;
         //grid = GetComponent<AGrid>();
     }
 
@@ -55,7 +56,7 @@ public class PathFinding : MonoBehaviour
         if (startPos != targetPos)
         {
             StopAllCoroutines();
-            print("seeker=" + startPos + "figitive=" + targetPos);
+            //print("seeker=" + startPos + "figitive=" + targetPos);
             StartCoroutine(FindPath(startPos,targetPos));
         }
     }
@@ -65,26 +66,28 @@ public class PathFinding : MonoBehaviour
     IEnumerator FindPath(Vector2 startPos, Vector2 targetPos)
     {
         yield return null;
+
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
+       
 
-        
+
         bool pathSuccess = false;// target에 도착했는지
 
         if (!startNode.walkable)
-        {    //Debug.Log("Unwalkable StartNode.");
+        {    
+            Debug.Log("Unwalkable StartNode.");
         }
 
-
+        
         //길 찾기
         if (targetNode.walkable)
         {
-
             List<ANode> openSet = new List<ANode>(); //계산한 노드
             HashSet<ANode> closedSet = new HashSet<ANode>();//계산할 노드
 
             openSet.Add(startNode);
-
+            
             // closedSet에서 가장 최저의 F를 가지는 노드를 빼낸다. 
             while (openSet.Count > 0)
             {
@@ -93,7 +96,9 @@ public class PathFinding : MonoBehaviour
                 // 모든 openSet에 대해, current보다 f값이 작거나, h(휴리스틱)값이 작으면 그것을 current로 지정.
                 for (int i = 1; i < openSet.Count; i++)
                 {
-                    if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
+                    if (openSet[i].fCost < currentNode.fCost || 
+                        openSet[i].fCost == currentNode.fCost && 
+                        openSet[i].hCost < currentNode.hCost)
                     {
                         currentNode = openSet[i];
                     }
@@ -114,7 +119,7 @@ public class PathFinding : MonoBehaviour
                     pathSuccess = true;
                     break;
                 }
-
+                
                 // current의 상하좌우 노드들에 대하여 g,h cost를 고려한다.
                 foreach (ANode neighbour in grid.GetNeighbours(currentNode))
                 {
@@ -133,16 +138,18 @@ public class PathFinding : MonoBehaviour
                         if (!openSet.Contains(neighbour)){   openSet.Add(neighbour);  }
                     }
                 }
+                
             }
         }
         else //목적지에 도달할 수 없을경우 way갱신 안함
         {
-            Vector3 origin = transform.position;
+            
+            Vector3 origin = seeker.transform.position;
             while (true)
             {
-                transform.position = Vector2.MoveTowards(transform.position, origin, seekerSpeed * Time.deltaTime);
+                seeker.transform.position = Vector2.MoveTowards(seeker.transform.position, origin, seekerSpeed * Time.deltaTime);
                 yield return new WaitForSeconds(0.03f);
-                if ((int)transform.position.x == (int)origin.x && (int)transform.position.y == (int)origin.y) break;
+                if ((int)seeker.transform.position.x == (int)origin.x && (int)seeker.transform.position.y == (int)origin.y) break;
             }
 
             wayQueue.Clear();
@@ -155,11 +162,11 @@ public class PathFinding : MonoBehaviour
         // 길을 찾은 후 이동
         if(pathSuccess == true)
         {
-
+            
             while (wayQueue.Count > 0)
             {
-                transform.position = Vector2.MoveTowards(transform.position, wayQueue.First(), seekerSpeed * Time.deltaTime);
-                if ((Vector2)transform.position == wayQueue.First())
+                seeker.transform.position = Vector2.MoveTowards(seeker.transform.position, wayQueue.First(), seekerSpeed * Time.deltaTime);
+                if ((Vector2)seeker.transform.position == wayQueue.First())
                 {
                     wayQueue.Dequeue();
                 }

@@ -76,13 +76,11 @@ public class Player : MonoBehaviour
 
         Attack();
         Reload();
-        Turn();
+        //Turn();
         Interaction();
 
         string layerName = LayerMask.LayerToName(gameObject.layer);
         //Debug.Log("My layer name is: " + layerName);
-
-
     }
     
     void FixedUpdate()
@@ -97,8 +95,7 @@ public class Player : MonoBehaviour
         rDown = Input.GetButton("Reload");
         dDown = Input.GetButtonDown("Dodge");
         aDown = Input.GetButton("Attack");
-        iDown = Input.GetButtonDown("Interaction");
-
+        iDown = Input.GetButtonDown("Interaction");//f
     }
 
     private bool isMoveable() 
@@ -316,7 +313,11 @@ public class Player : MonoBehaviour
     }
 
 
-    
+
+
+
+    //Trigger=============================================================================================
+
     void OnTriggerEnter2D(Collider2D other)
     {
         
@@ -330,9 +331,6 @@ public class Player : MonoBehaviour
 
     
 
-    //Trigger=============================================================================================
-
-
     void OnTriggerStay2D(Collider2D other)
     {
         
@@ -345,7 +343,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
             if (DataManager.instance.userData.playerHealth < 0)
-            { 
+            {
                 Debug.Log("player dead");
                 deathPanel.SetActive(true);
             }
@@ -373,6 +371,8 @@ public class Player : MonoBehaviour
             }
 
         }
+        
+
     }
     void OffDamaged()
     {
