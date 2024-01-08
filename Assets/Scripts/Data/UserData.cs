@@ -8,8 +8,16 @@ using System;
 
 public class UserData
 {
-    public int playerHealth;
+    public float playerHP;
+    public float playerHPMax;
+    public float playerLevel;
+
     public int coin;
+    public int key;
+
+    public string Weapon;
+    public string Skill;
+
     public float BGSoundVolume;
     public float SFXSoundVolume;
 }

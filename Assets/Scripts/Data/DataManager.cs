@@ -70,8 +70,16 @@ public class DataManager : MonoBehaviour
 
     public void InitData()
     {
-        userData.coin = 10;
-        userData.playerHealth = 100;
+        userData.playerHP = 200;
+        userData.playerHPMax = 200;
+        userData.playerLevel = 1;
+
+        userData.coin = 0;
+        userData.key = 0;
+
+        userData.Weapon = "";
+        userData.Skill = "";
+
         userData.BGSoundVolume = 10;
         userData.SFXSoundVolume = 10;
     }

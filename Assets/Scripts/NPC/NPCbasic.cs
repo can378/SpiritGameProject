@@ -13,6 +13,7 @@ public class NPCbasic : MonoBehaviour
     public GameObject DialogPanel;
     public TMP_Text DialogTextMesh;
     private bool playerInRange = false;
+    public bool isWalking;
 
 
     int index = 0;
@@ -40,14 +41,19 @@ public class NPCbasic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float targetDistance = Vector2.Distance(transform.position, NPCTarget.transform.position);
-
-        if (targetDistance >= 3f && !(targetDistance<=1f))
+        if (isWalking)
         {
-            //print("follow");
-            GetComponent<PathFinding>().StartFinding
-                ((Vector2)transform.position, (Vector2)NPCTarget.transform.position);
+            float targetDistance = Vector2.Distance(transform.position, NPCTarget.transform.position);
+
+
+            if (targetDistance >= 3f && !(targetDistance <= 1f))
+            {
+                //print("follow");
+                GetComponent<PathFinding>().StartFinding
+                    ((Vector2)transform.position, (Vector2)NPCTarget.transform.position);
+            }
         }
+        
     }
 
 

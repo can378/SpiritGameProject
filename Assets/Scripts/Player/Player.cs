@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
     GameObject weaponGameObject;
     Weapon weapon;
 
-    public GameObject deathPanel; //죽었을때 표시
 
     void Awake()
     {
@@ -321,6 +320,8 @@ public class Player : MonoBehaviour
                 }
                 weaponGameObject = nearObject;
                 weapon = weaponGameObject.GetComponent<Weapon>();
+                DataManager.instance.userData.Weapon = weapon.name.ToString();
+                UIManager.instance.UpdateWeaponUI();
                 attack.EquipWeapon(weapon);
                 attackDelay = 0;
                 weaponGameObject.SetActive(false);
@@ -365,22 +366,27 @@ public class Player : MonoBehaviour
         }
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
-            if (DataManager.instance.userData.playerHealth < 0)
+            if (DataManager.instance.userData.playerHP < 0)
             {
                 Debug.Log("player dead");
-                deathPanel.SetActive(true);
+                DataManager.instance.InitData();
+                UIManager.instance.diePanel.SetActive(true);
             }
             else if (isInvincible == false)
             {
 
-                //DataManager.instance.userData.playerHealth -= other.GetComponent<EnemyStatus>().damage;
-                isInvincible = true;
-                DataManager.instance.userData.playerHealth -= 10;
-                Debug.Log("player health=" + DataManager.instance.userData.playerHealth);
+                //DataManager.instance.userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
+                
+                DataManager.instance.userData.playerHP -= 10;
 
+                
+                UIManager.instance.UpdateHealthUI();
+                //Debug.Log("player health=" + DataManager.instance.userData.playerHP);
+                
+                //무적
+                isInvincible = true;
                 int layerNum = LayerMask.NameToLayer("Invincible");
                 this.layerMask = layerNum;
-
                 sprite.color = new Color(1, 1, 1, 0.4f);
 
 
@@ -399,6 +405,7 @@ public class Player : MonoBehaviour
     }
     void OffDamaged()
     {
+        //무적 해제
         sprite.color = new Color(1, 1, 1, 1);
         this.layerMask = 0;
         isInvincible = false;
