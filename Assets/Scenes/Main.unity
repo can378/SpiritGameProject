@@ -3363,6 +3363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDelay: 0
   mouseDir: {x: 0, y: 0}
+  mouseAngle: 0
   isReload: 0
   isSprint: 1
   isDodge: 0
@@ -8035,6 +8036,7 @@ GameObject:
   - component: {fileID: 1665497553}
   - component: {fileID: 1665497552}
   - component: {fileID: 1665497555}
+  - component: {fileID: 1665497556}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8135,6 +8137,22 @@ MonoBehaviour:
   mapSize: {x: 30, y: 20}
   cameraMoveSpeed: 3
   isCameraChasing: 1
+--- !u!114 &1665497556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665497551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279cfb99ae06d0246b5b4f368402bee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEffect: 1
+  sEffect: 0
+  shakeAmount: 0.2
+  shakeTime: 10
 --- !u!1 &1684716577
 GameObject:
   m_ObjectHideFlags: 0
