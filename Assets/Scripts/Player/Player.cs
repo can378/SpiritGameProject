@@ -369,6 +369,7 @@ public class Player : MonoBehaviour
             if (DataManager.instance.userData.playerHP < 0)
             {
                 Debug.Log("player dead");
+                DataManager.instance.InitData();
                 UIManager.instance.diePanel.SetActive(true);
             }
             else if (isInvincible == false)

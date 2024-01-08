@@ -70,7 +70,7 @@ public class DataManager : MonoBehaviour
 
     public void InitData()
     {
-        userData.playerHP = 100;
+        userData.playerHP = 200;
         userData.playerHPMax = 200;
         userData.playerLevel = 1;
 
