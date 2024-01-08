@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class AGrid : MonoBehaviour
 {
+    public static AGrid instance = null;
+
     public bool displayGridGizmos;
-    // 플레이어의 위치
+    // 추격자 위치
     //public Transform seeker;
     // 장애물 레이어
     public LayerMask OBSTACLE;
@@ -22,6 +24,19 @@ public class AGrid : MonoBehaviour
 
     private void Awake()
     {
+
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else if (instance != this)
+        {
+            //씬 전환이 되었을때, 이전 씬의 인스턴스를 계속 사용하기 위해
+            //새로운 씬의 게임오브젝트 제거
+            Destroy(this.gameObject);
+        }
+
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
