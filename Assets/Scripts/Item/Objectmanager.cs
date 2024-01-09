@@ -19,7 +19,7 @@ public class Objectmanager : MonoBehaviour
         {
             Destroy(collision.gameObject); //코인 오브젝트 삭제
             userData.coin++;
-            UIManager.instance.UpdateCoinUI();
+            MapUIManager.instance.UpdateCoinUI();
 
             if (merchantStore != null)
             {
@@ -36,7 +36,7 @@ public class Objectmanager : MonoBehaviour
         {
             Destroy(collision.gameObject); //키 오브젝트 삭제
             userData.key++;
-            UIManager.instance.UpdateKeyUI();
+            MapUIManager.instance.UpdateKeyUI();
         }
     }
 
@@ -45,7 +45,7 @@ public class Objectmanager : MonoBehaviour
         if (userData.coin >= cost)
         {
             userData.coin -= cost;
-            UIManager.instance.UpdateCoinUI();
+            MapUIManager.instance.UpdateCoinUI();
         }
         else
         {

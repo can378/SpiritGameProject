@@ -7,9 +7,11 @@ using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
 
+
 public class AudioManager : MonoBehaviour
 {
     public bool isPlayAudio;
+    GameObject Canvas;
 
     [Header("object")]
     //소리 조절 슬라이더
@@ -58,6 +60,17 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        
+        Canvas = GameObject.Find("Canvas");
+        GameObject settingPanel = Canvas.transform.Find("SettingPanel").gameObject;
+        settingPanel.SetActive(true);
+        BGSoundSlider = GameObject.FindWithTag("BGSoundSlider");
+        SFXSoundSlider = GameObject.FindWithTag("SFXSoundSlider");
+        settingPanel.SetActive(false);
+        //이 위에거 조금 구림
+
+
+
         BGSoundSlider.GetComponent<Slider>().value = DataManager.instance.userData.BGSoundVolume;
         SFXSoundSlider.GetComponent<Slider>().value = DataManager.instance.userData.SFXSoundVolume;
         BGSoundVolume();

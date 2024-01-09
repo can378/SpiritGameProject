@@ -321,7 +321,8 @@ public class Player : MonoBehaviour
                 weaponGameObject = nearObject;
                 weapon = weaponGameObject.GetComponent<Weapon>();
                 DataManager.instance.userData.Weapon = weapon.name.ToString();
-                UIManager.instance.UpdateWeaponUI();
+                
+                MapUIManager.instance.UpdateWeaponUI();
                 attack.EquipWeapon(weapon);
                 attackDelay = 0;
                 weaponGameObject.SetActive(false);
@@ -370,7 +371,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("player dead");
                 DataManager.instance.InitData();
-                UIManager.instance.diePanel.SetActive(true);
+                MapUIManager.instance.diePanel.SetActive(true);
             }
             else if (isInvincible == false)
             {
@@ -380,7 +381,7 @@ public class Player : MonoBehaviour
                 DataManager.instance.userData.playerHP -= 10;
 
                 
-                UIManager.instance.UpdateHealthUI();
+                MapUIManager.instance.UpdateHealthUI();
                 //Debug.Log("player health=" + DataManager.instance.userData.playerHP);
                 
                 //무적
