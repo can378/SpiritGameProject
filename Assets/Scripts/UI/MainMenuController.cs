@@ -13,6 +13,8 @@ public class MainMenuController : MonoBehaviour
     {
         mainPanel.SetActive(true);
     }
+
+
     public void StartBtn() //게임 시작 버튼
     {
         //SceneManager.LoadScene("Map");

@@ -1,32 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum screenEffect
-{ shake,fade,rumbling };
+{ none, shake, fadeIn, fadeOut, rumbling };
 
 public class ScreenEffect : MonoBehaviour
 {
-    public bool isEffect;
     public screenEffect sEffect;
     public float shakeAmount;
     public float shakeTime;
+    public Image fade;
+    public GameObject fadePanel;
 
     void Start()
     {
-        if (isEffect) 
+        switch (sEffect)
         {
-            StartCoroutine("Shaking");
+            case screenEffect.shake:
+                StartCoroutine("Shaking");
+                break;
+            case screenEffect.fadeIn:
+                StartCoroutine("FadeIn");
+                break;
+            case screenEffect.fadeOut:
+                StartCoroutine("FadeOut");
+                break;
+            case screenEffect.rumbling:
+                StartCoroutine("Rumbling");
+                break;
+            default:break;
         }
-        
+
+
     }
 
 
-    //코루틴으로 바꾸기
-    void Update()
-    {
-        
-    }
 
     IEnumerator Shaking() 
     {
@@ -41,12 +51,42 @@ public class ScreenEffect : MonoBehaviour
         StartCoroutine("Shaking");
     }
 
-    IEnumerator FadeInOut() 
-    { 
-        yield return null;
-        //투명도 조절해서 만들기
+    IEnumerator FadeIn()
+    {
+        float fadeCount = 0;
 
-    
+
+        fadePanel.SetActive(true);
+        while (fadeCount <= 1)
+        {
+            fade.color = new Color(0, 0, 0, fadeCount);
+            fadeCount += 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+        fade.color = new Color(0, 0, 0, 1);
+        fadePanel.SetActive(false);
     }
-    
+
+    IEnumerator FadeOut()
+    {
+        float fadeCount = 1;
+        fadePanel.SetActive(true);
+        while (fadeCount >= 0)
+        {
+            fade.color = new Color(0, 0, 0, fadeCount);
+            fadeCount -= 0.1f;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+        fade.color = new Color(0, 0, 0, 0);
+        fadePanel.SetActive(false);
+    }
+    IEnumerator Rumbling()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+
+    }
+
+
 }
