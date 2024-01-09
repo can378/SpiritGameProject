@@ -14,13 +14,15 @@ public class RoomTemplates : MonoBehaviour
 
     public GameObject closedRoom;
 
-    // maptype
-    public GameObject shopIcon;
-    public GameObject treasureIcon;
-    public GameObject missionIcon;
-    public GameObject miniBossIcon;
-    public GameObject bossIcon;
-    // doortype
-    public GameObject trapIcon;
-    public GameObject keyIcon;
+    public GameObject[] defaultMap;
+    public GameObject[] shopMap;
+    public GameObject[] treasureMap;
+    public GameObject[] missionMap;
+    public GameObject[] miniBossMap;
+    public GameObject[] bossMap;
+
+    public GameObject[] normalEnemy;
+    public GameObject[] miniBossEnemy;
+    public GameObject[] bossEnemy;
+
 }

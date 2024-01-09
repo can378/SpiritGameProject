@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    
+    public RoomTemplates roomTemplates;
     public bool spawn;
     public int addedRoom;                   // 각 경로당 추가 생성할 방
     public int turning;                     // 꺾을 횟수
@@ -13,19 +13,20 @@ public class RoomManager : MonoBehaviour
     public int maxRoom;                     // 최대방의 수 [기본 상태 0]
     public int roomSize;                    // 방 크기 배율 기본 : 3
     public int area;                        // 방 상화 좌우 영역 기본 : 5
-    public RoomTemplates templates;
     public List<GameObject> room;
     public bool finish;                     // 맵 생성 완료 보기용
-
+    
     bool spawning;
     int preCount = 0;
     float waitTime = 0;
     int crossedRoomCount = 0;
+
     
+
 
     void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
+        roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
         maxRoom = defaultMaxRoom;
         finish = true;
         spawning = false;
@@ -94,22 +95,22 @@ public class RoomManager : MonoBehaviour
 
             if (dir == 1)
             {
-                Instantiate(templates.bottomRooms[0], startPoisition, Quaternion.identity).transform.localScale = 
+                Instantiate(roomTemplates.bottomRooms[0], startPoisition, Quaternion.identity).transform.localScale = 
                 new Vector3(roomSize,roomSize,1);
             }
             else if (dir == 2)
             {
-                Instantiate(templates.topRooms[0], startPoisition, Quaternion.identity).transform.localScale =
+                Instantiate(roomTemplates.topRooms[0], startPoisition, Quaternion.identity).transform.localScale =
                 new Vector3(roomSize, roomSize, 1);
             }
             else if (dir == 3)
             {
-                Instantiate(templates.rightRooms[0], startPoisition, Quaternion.identity).transform.localScale =
+                Instantiate(roomTemplates.rightRooms[0], startPoisition, Quaternion.identity).transform.localScale =
                 new Vector3(roomSize, roomSize, 1);
             }
             else if (dir == 4)
             {
-                Instantiate(templates.leftRooms[0], startPoisition, Quaternion.identity).transform.localScale =
+                Instantiate(roomTemplates.leftRooms[0], startPoisition, Quaternion.identity).transform.localScale =
                 new Vector3(roomSize, roomSize, 1);
             }
             spawn = false;
@@ -160,12 +161,12 @@ public class RoomManager : MonoBehaviour
 
             if (crossedRoomGameObjectRoom.top && crossedRoomGameObjectRoom.bottom)
             {
-                Instantiate(templates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
+                Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
                 new Vector3(roomSize, roomSize, 1);
             }
             else if (crossedRoomGameObjectRoom.left && crossedRoomGameObjectRoom.right)
             {
-                Instantiate(templates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
+                Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
                 new Vector3(roomSize, roomSize, 1);
             }
             else

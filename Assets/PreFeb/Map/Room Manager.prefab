@@ -72,13 +72,26 @@ MonoBehaviour:
   - {fileID: 4313598515406823029, guid: 7da452a0977b50e48b1c62ae4e5bee13, type: 3}
   - {fileID: 4313598515406823029, guid: e312a7a1aee15b9498222b8055f19a6c, type: 3}
   closedRoom: {fileID: 1126749107643369661, guid: 86f3d7a0727155c468fc02ebc9c86122, type: 3}
-  shopIcon: {fileID: 1770730514973396891, guid: 3930f85f00897984fba33b4a7fa8db61, type: 3}
-  treasureIcon: {fileID: 6365712346947525531, guid: b284215bbeff3134087eba7e1b26bbd8, type: 3}
-  missionIcon: {fileID: 8345276549727693609, guid: 6222f728a6674b54bbafcb333fd0eec0, type: 3}
-  miniBossIcon: {fileID: 6977163118116975903, guid: e82178507b739e94faa01a96a4df3724, type: 3}
-  bossIcon: {fileID: 4066744948307765696, guid: a03afcb024e66be41999509d1a9e0d59, type: 3}
-  trapIcon: {fileID: 5756218431168464852, guid: 43743b610c096a9488b37e0b06ebea46, type: 3}
-  keyIcon: {fileID: 8171498059665028823, guid: f1b6c8f9644e70345bed9c3d32e66a8e, type: 3}
+  defaultMap:
+  - {fileID: 2782812310506344177, guid: f35572d05fa15874c93f2997314431e0, type: 3}
+  shopMap:
+  - {fileID: 2782812310506344177, guid: ffa9ebf5568153a408faefcb719a816b, type: 3}
+  treasureMap:
+  - {fileID: 2782812310506344177, guid: 24ccbde777f194841a2180847a21ac62, type: 3}
+  missionMap:
+  - {fileID: 2782812310506344177, guid: 15c3b277441d61c45a42a3a1ea9856c3, type: 3}
+  miniBossMap:
+  - {fileID: 2782812310506344177, guid: 561611ccf1098414ba9a0e1e06f015fc, type: 3}
+  bossMap:
+  - {fileID: 2782812310506344177, guid: c7a383459503b5d4bbab072566b0753f, type: 3}
+  normalEnemy:
+  - {fileID: 4864662458237478717, guid: eaa7a17a5e462164f926145c259c65d0, type: 3}
+  - {fileID: 7040823031454602919, guid: 6a03a755a0a8c964a9bc4ff41043838a, type: 3}
+  - {fileID: 6662244182936845034, guid: 08e3d034f284afa40a2f1384623e67a5, type: 3}
+  miniBossEnemy:
+  - {fileID: 4940171701235279444, guid: bfa624b26f46b7f4b86f63e3b599fc73, type: 3}
+  bossEnemy:
+  - {fileID: 5531090725962068773, guid: 577be4cdef0a86a498d65b0c97f48cb0, type: 3}
 --- !u!114 &1396603088322611139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be494b7a0d78aaa438f87650564571ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomTemplates: {fileID: 0}
   spawn: 1
   addedRoom: 5
   turning: 2
@@ -99,6 +113,5 @@ MonoBehaviour:
   maxRoom: 0
   roomSize: 3
   area: 5
-  templates: {fileID: 0}
   room: []
   finish: 0

@@ -34,7 +34,4 @@ public class EnemySpawn : MonoBehaviour
 
 
     //PATTERN========================================
-
-
-
 }
