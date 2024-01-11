@@ -18,7 +18,7 @@ public class EnemySpawn : MonoBehaviour
 
     public void spawnEnemy() 
     {
-        RoomList = RoomManagerObj.GetComponent<RoomManager>().room;
+        RoomList = RoomManagerObj.GetComponent<RoomManager>().rooms;
 
         for (int i = 0; i < EnemyPrefab.Count; i++)
         {

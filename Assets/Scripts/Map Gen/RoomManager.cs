@@ -13,16 +13,13 @@ public class RoomManager : MonoBehaviour
     public int maxRoom;                     // 최대방의 수 [기본 상태 0]
     public int roomSize;                    // 방 크기 배율 기본 : 3
     public int area;                        // 방 상화 좌우 영역 기본 : 5
-    public List<GameObject> room;
+    public List<GameObject> rooms;
     public bool finish;                     // 맵 생성 완료 보기용
     
     bool spawning;
     int preCount = 0;
     float waitTime = 0;
     int crossedRoomCount = 0;
-
-    
-
 
     void Start()
     {
@@ -43,21 +40,22 @@ public class RoomManager : MonoBehaviour
     {
         if(spawning)
         {
-            if (preCount != room.Count)
+            if (preCount != rooms.Count)
             {
                 waitTime = 0;
-                preCount = room.Count;
+                preCount = rooms.Count;
                 return;
             }
 
             if (waitTime >= 1)
             {
                 spawning = false;
-                if (room.Count < maxRoom)
+                if (rooms.Count < maxRoom)
                 {
                     spawn = true;
                     return;
                 }
+                SetMap();
                 finish = true;
             }
             else
@@ -85,11 +83,11 @@ public class RoomManager : MonoBehaviour
             maxRoom = defaultMaxRoom;
             crossedRoomCount = 0;
 
-            for (int i = 0; i < room.Count; i++)
+            for (int i = 0; i < rooms.Count; i++)
             {
-                Destroy(room[i]);
+                Destroy(rooms[i]);
             }
-            room.Clear();
+            rooms.Clear();
             int dir = Random.Range(1, 5);
             Vector2 startPoisition = new Vector2(Random.Range(-2, 3) * 10 * roomSize, Random.Range(-2, 3) * 10 * roomSize);
 
@@ -153,8 +151,8 @@ public class RoomManager : MonoBehaviour
             if (crossedRoomCount >= crossedRoom)
                 break;
 
-            int index = Random.Range(1, room.Count - 1);
-            GameObject crossedRoomGameObject = room[index];
+            int index = Random.Range(1, rooms.Count - 1);
+            GameObject crossedRoomGameObject = rooms[index];
             Room crossedRoomGameObjectRoom = crossedRoomGameObject.GetComponent<Room>();
 
             crossedRoomGameObject.SetActive(false);
@@ -177,18 +175,56 @@ public class RoomManager : MonoBehaviour
 
             crossedRoomCount++;
             Destroy(crossedRoomGameObject);
-            room.RemoveAt(index);
+            rooms.RemoveAt(index);
         }
     }
 
-    // 상점 설정
-    void Shop()
+    void SetMap()
     {
-        
-    }
+        bool isBoss = false;
+        bool isMiniBoss = false;
+        bool isEvent = false;
 
-    // 보물 설정
-    void Treasure(){
+
+        // 모든 방 생성을 완료하면 각 방들의 용도를 설정한다.
+        for( int i = 1 ; i< rooms.Count ; i++)
+        {
+            Room room = rooms[i].GetComponent<Room>();
+            if(room.roomType == RoomType.None)
+            {
+                room.mapType = MapType.Treasure;
+            }
+            else if(room.roomType == RoomType.OneWay)
+            {
+                if(!isBoss)
+                {
+                    room.mapType = MapType.Boss;
+                    isBoss = true;
+                    continue;
+                }
+
+                int ran = Random.Range(0,2);
+                if(ran == 0)    // 미션
+                    room.mapType = MapType.Mission;
+                else if(ran == 1)   //보물 상자
+                    room.mapType = MapType.Treasure;
+            }
+            else if (room.roomType == RoomType.TwoWay)
+            {
+                room.mapType = MapType.Default;
+            }
+            else if (room.roomType == RoomType.ThreeWay)
+            {
+                if(!isEvent)
+                {
+                    room.mapType = MapType.Event;
+                    isEvent = true;
+                    continue;
+                }
+                room.mapType = MapType.Shop;
+            }
+        }
+
 
     }
 }

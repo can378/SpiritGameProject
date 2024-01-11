@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoomSpawner : MonoBehaviour
 {
+    // 버그 있음
+    // 한 자리에 동시에 3개의 방이 생성되려고 하면 한자리에 여러개의 방이 생성됨
     public bool spawned = false;
     public int openingDirection;
     // 1 --> need bottom door
@@ -27,12 +29,15 @@ public class RoomSpawner : MonoBehaviour
 
     void setRoom()
     {
+        // 적절한 형태의 방을 설정함
+        // 일반적으로 한개의 통로로 생성됨
+        // 맵의 개수가 최대로 도달 하였거나 맵의 영역 끝에 도달하면 가로막힌 방이 생성
         limitArea = roomManager.area * roomManager.roomSize * 10;
         roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
 
         // 방의 수가 충분하거나
         // 영역을 넘어가게 되면 닫는다.
-        if ((roomManager.maxRoom - 1 <= roomManager.room.Count) ||
+        if ((roomManager.maxRoom - 1 <= roomManager.rooms.Count) ||
         (transform.position.y < -limitArea || transform.position.y > limitArea || transform.position.x < -limitArea || transform.position.x > limitArea))
         {
             index = 0;
@@ -72,15 +77,15 @@ public class RoomSpawner : MonoBehaviour
                 {
                     // y에서 x로 회전
                     // + 또는 - 방향으로 갈 때 해당 방향에 방이 없는 방 선택
-                    for (int i = 0; i < roomManager.room.Count; i++)
+                    for (int i = 0; i < roomManager.rooms.Count; i++)
                     {
-                        if (transform.position.y == roomManager.room[i].transform.position.y)
+                        if (transform.position.y == roomManager.rooms[i].transform.position.y)
                         {
-                            if (transform.position.x < roomManager.room[i].transform.position.x)
+                            if (transform.position.x < roomManager.rooms[i].transform.position.x)
                             {
                                 index = 1;
                             }
-                            else if (transform.position.x > roomManager.room[i].transform.position.x)
+                            else if (transform.position.x > roomManager.rooms[i].transform.position.x)
                             {
                                 index = 2;
                             }
@@ -92,15 +97,15 @@ public class RoomSpawner : MonoBehaviour
                 {
                     // x에서 y로 회전
                     // + 또는 - 방향으로 갈 때 해당 방향에 방이 없는 방 선택
-                    for (int i = 0; i < roomManager.room.Count; i++)
+                    for (int i = 0; i < roomManager.rooms.Count; i++)
                     {
-                        if (transform.position.x == roomManager.room[i].transform.position.x)
+                        if (transform.position.x == roomManager.rooms[i].transform.position.x)
                         {
-                            if (transform.position.y < roomManager.room[i].transform.position.y)
+                            if (transform.position.y < roomManager.rooms[i].transform.position.y)
                             {
                                 index = 2;
                             }
-                            else if (transform.position.y > roomManager.room[i].transform.position.y)
+                            else if (transform.position.y > roomManager.rooms[i].transform.position.y)
                             {
                                 index = 1;
                             }
