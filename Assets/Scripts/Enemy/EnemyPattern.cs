@@ -20,13 +20,10 @@ public class EnemyPattern : EnemyBasic
     public GameObject roundAttackRange;
     public GameObject donutInside;
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         EnemyPatternStart();
 
     }
@@ -37,6 +34,7 @@ public class EnemyPattern : EnemyBasic
 
     void EnemyPatternStart() 
     {
+        
         switch (ePattern)
         {
             case enemyPatterns.rushHit: StartCoroutine("rushHit"); break;
@@ -108,25 +106,29 @@ public class EnemyPattern : EnemyBasic
 
     IEnumerator hitAndRun()
     {
-        //getting closer
-        do
+
+        targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+        if (targetDistance < status.detectionDis)
         {
-            Chase();
-            targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
-            yield return new WaitForSeconds(0.01f);
-        } while (targetDistance > 1.2f);
+            //getting closer
+            do
+            {
+                Chase();
+                targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+                yield return new WaitForSeconds(0.01f);
+            } while (targetDistance > 1.2f);
 
 
-        //getting farther
-        do 
-        {
-            rb.AddForce(-dirVec * status.speed,ForceMode2D.Impulse);
-            targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
-            dirVec = (enemyTarget.transform.position - transform.position).normalized;
-            yield return new WaitForSeconds(0.01f);
-        } while (targetDistance < 10f);
+            //getting farther
+            do
+            {
+                rb.AddForce(-dirVec * status.speed, ForceMode2D.Impulse);
+                targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+                dirVec = (enemyTarget.transform.position - transform.position).normalized;
+                yield return new WaitForSeconds(0.01f);
+            } while (targetDistance < 10f);
 
-
+        }
         yield return new WaitForSeconds(0.01f);
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1f);

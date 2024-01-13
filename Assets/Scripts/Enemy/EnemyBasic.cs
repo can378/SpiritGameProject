@@ -12,7 +12,8 @@ public class EnemyBasic : MonoBehaviour
 
     private void Awake()
     {
-        enemyTarget=GameObject.Find("Player").transform;
+        enemyTarget = GameObject.FindGameObjectWithTag("Player").transform;
+        //enemyTarget=GameObject.Find("Player").transform;
         rigid = GetComponent<Rigidbody2D>();
         status = GetComponent<EnemyStatus>();
     }

@@ -8,7 +8,7 @@ public class EnemyMissile : EnemyBasic
     private GameObject bullet;
     public float attackRate = 1f;
     private float timeAfterAttack;
-    private EnemyStatus status;
+    private new EnemyStatus status;//new√ﬂ∞°
 
     void Start()
     {

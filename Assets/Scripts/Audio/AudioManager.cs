@@ -44,16 +44,8 @@ public class AudioManager : MonoBehaviour
     //========================================================================================================
     private void Awake()
     {
-
-        //instance
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(instance);
-        }
-        else { Destroy(gameObject); }
-
-
+        instance = this;
+        
         Initialize(10);//10개 미리 만들기
     }
 
