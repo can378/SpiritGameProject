@@ -53,13 +53,16 @@ public class ScriptManager : MonoBehaviour
 
     public string NPCScript(int index) 
     {
-        /*
-        for (int i = 0; i < lineSize; i++)
+
+        if (Sentence[index % lineSize, 0] == "chapter")
         {
-            print(Sentence[i, 1]);
+            index++;
         }
-        */
+        else if (Sentence[index % lineSize, 0] == "repeat")
+        { }
+
         return Sentence[index%lineSize, 1];
+ 
     }
 
 

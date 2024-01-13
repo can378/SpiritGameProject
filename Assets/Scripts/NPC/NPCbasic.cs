@@ -90,6 +90,7 @@ public class NPCbasic : MonoBehaviour
 
         DialogPanel.SetActive(true);
         DialogTextMesh.text = ScriptManager.instance.NPCScript(i);
+
     }
 
     void FollowTarget() { }

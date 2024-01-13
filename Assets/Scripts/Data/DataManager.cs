@@ -82,6 +82,9 @@ public class DataManager : MonoBehaviour
 
         userData.BGSoundVolume = 10;
         userData.SFXSoundVolume = 10;
+
+        userData.NPCScriptIndex = 0;
+        userData.nowChapter = 0;
     }
 
     void OnApplicationQuit()

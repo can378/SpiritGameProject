@@ -20,4 +20,8 @@ public class UserData
 
     public float BGSoundVolume;
     public float SFXSoundVolume;
+
+    public int NPCScriptIndex;
+
+    public int nowChapter;
 }
