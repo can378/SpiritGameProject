@@ -202,15 +202,23 @@ public class RoomManager : MonoBehaviour
                     isBoss = true;
                     continue;
                 }
-
-                int ran = Random.Range(0,2);
-                if(ran == 0)    // 미션
-                    room.mapType = MapType.Mission;
-                else if(ran == 1)   //보물 상자
-                    room.mapType = MapType.Treasure;
+                else if (!isMiniBoss)
+                {
+                    room.mapType = MapType.MiniBoss;
+                    isMiniBoss = true;
+                    continue;
+                }
+                room.mapType = MapType.Mission;
             }
             else if (room.roomType == RoomType.TwoWay)
             {
+                
+                int ran = Random.Range(0, 10);
+                if(ran == 0)
+                {
+                    room.mapType = MapType.Treasure;
+                    continue;
+                }
                 room.mapType = MapType.Default;
             }
             else if (room.roomType == RoomType.ThreeWay)
