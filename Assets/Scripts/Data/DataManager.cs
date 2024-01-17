@@ -85,6 +85,8 @@ public class DataManager : MonoBehaviour
 
         userData.NPCScriptIndex = 0;
         userData.nowChapter = 0;
+
+        userData.map =new int[100];
     }
 
     void OnApplicationQuit()

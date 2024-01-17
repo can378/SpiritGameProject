@@ -17,6 +17,8 @@ public class RoomManager : MonoBehaviour
     public bool finish;                     // 맵 생성 완료 보기용
 
     public GameObject miniMapCamera;
+    public GameObject hideMap;
+    Transform roomParent;
     
 
     bool spawning;
@@ -27,6 +29,7 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
+        roomParent = GameObject.FindWithTag("roomParent").transform;
         maxRoom = defaultMaxRoom;
         finish = false;
         spawning = false;
@@ -61,6 +64,7 @@ public class RoomManager : MonoBehaviour
                 SetMap();
                 finish = true;
                 setMinimapCamera();
+                HidingMap();
             }
             else
             {
@@ -253,7 +257,7 @@ public class RoomManager : MonoBehaviour
     //맵의 중앙을 찾아서 미니맵 카메라 이동
     void setMinimapCamera()
     {
-        Transform roomParent = GameObject.FindWithTag("roomParent").transform;
+
         Vector2 middlePos=Vector2.zero;
 
         for(int i=0;i<roomParent.childCount;i++) 
@@ -270,5 +274,18 @@ public class RoomManager : MonoBehaviour
         miniMapCamera.transform.position = middlePos;
         miniMapCamera.transform.position += new Vector3(0,0,-5);
         
+    }
+
+    void HidingMap()
+    {
+        GameObject hide;
+        for (int i = 0; i < roomParent.childCount; i++)
+        {
+            hide=Instantiate(hideMap);
+            hide.transform.parent=roomParent.GetChild(i).transform;
+            hide.transform.localScale = new Vector3(roomSize*roomSize, roomSize * roomSize, 1);
+            hide.transform.position = roomParent.GetChild(i).position;
+        }
+
     }
 }

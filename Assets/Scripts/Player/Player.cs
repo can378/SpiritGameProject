@@ -351,6 +351,9 @@ public class Player : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        if (other.tag == "roomHide")
+        { Destroy(other.gameObject); }
+        
         
     }
 
@@ -417,6 +420,14 @@ public class Player : MonoBehaviour
         nearObject = null;
     }
 
+    void enterMap() 
+    { 
+        //map 방문하면
 
+        //현재 플레이어가 있는 map위치를 갱신
+        
+        //enemy가 공격 시작
+    
+    }
 
 }

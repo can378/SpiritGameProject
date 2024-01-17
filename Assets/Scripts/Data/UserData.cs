@@ -24,4 +24,6 @@ public class UserData
     public int NPCScriptIndex;
 
     public int nowChapter;
+
+    public int[] map;
 }
