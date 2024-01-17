@@ -15,7 +15,10 @@ public class RoomManager : MonoBehaviour
     public int area;                        // 방 상화 좌우 영역 기본 : 5
     public List<GameObject> rooms;
     public bool finish;                     // 맵 생성 완료 보기용
+
+    public GameObject miniMapCamera;
     
+
     bool spawning;
     int preCount = 0;
     float waitTime = 0;
@@ -25,7 +28,7 @@ public class RoomManager : MonoBehaviour
     {
         roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
         maxRoom = defaultMaxRoom;
-        finish = true;
+        finish = false;
         spawning = false;
     }
 
@@ -57,6 +60,7 @@ public class RoomManager : MonoBehaviour
                 }
                 SetMap();
                 finish = true;
+                setMinimapCamera();
             }
             else
             {
@@ -65,6 +69,7 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    
     // 초기 위치 설정
     void Spawn()
     {
@@ -91,26 +96,31 @@ public class RoomManager : MonoBehaviour
             int dir = Random.Range(1, 5);
             Vector2 startPoisition = new Vector2(Random.Range(-2, 3) * 10 * roomSize, Random.Range(-2, 3) * 10 * roomSize);
 
+
+            GameObject instObj=null;
+
             if (dir == 1)
             {
-                Instantiate(roomTemplates.bottomRooms[0], startPoisition, Quaternion.identity).transform.localScale = 
-                new Vector3(roomSize,roomSize,1);
+                instObj = Instantiate(roomTemplates.bottomRooms[0], startPoisition, Quaternion.identity);
             }
             else if (dir == 2)
             {
-                Instantiate(roomTemplates.topRooms[0], startPoisition, Quaternion.identity).transform.localScale =
-                new Vector3(roomSize, roomSize, 1);
+                instObj = Instantiate(roomTemplates.topRooms[0], startPoisition, Quaternion.identity);
+                
             }
             else if (dir == 3)
             {
-                Instantiate(roomTemplates.rightRooms[0], startPoisition, Quaternion.identity).transform.localScale =
-                new Vector3(roomSize, roomSize, 1);
+                instObj = Instantiate(roomTemplates.rightRooms[0], startPoisition, Quaternion.identity);
             }
             else if (dir == 4)
             {
-                Instantiate(roomTemplates.leftRooms[0], startPoisition, Quaternion.identity).transform.localScale =
-                new Vector3(roomSize, roomSize, 1);
+                instObj = Instantiate(roomTemplates.leftRooms[0], startPoisition, Quaternion.identity);
             }
+
+            instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
+            instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
+
+
             spawn = false;
             Invoke("Crossed", 0.1f * defaultMaxRoom + 0.1f);
         }
@@ -156,16 +166,19 @@ public class RoomManager : MonoBehaviour
             Room crossedRoomGameObjectRoom = crossedRoomGameObject.GetComponent<Room>();
 
             crossedRoomGameObject.SetActive(false);
+            GameObject instObj = null;
 
             if (crossedRoomGameObjectRoom.top && crossedRoomGameObjectRoom.bottom)
             {
-                Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
-                new Vector3(roomSize, roomSize, 1);
+                instObj = Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
+                instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
+                instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
             }
             else if (crossedRoomGameObjectRoom.left && crossedRoomGameObjectRoom.right)
             {
-                Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation).transform.localScale =
-                new Vector3(roomSize, roomSize, 1);
+                instObj = Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
+                instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
+                instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
             }
             else
             {
@@ -234,5 +247,28 @@ public class RoomManager : MonoBehaviour
         }
 
 
+    }
+
+
+    //맵의 중앙을 찾아서 미니맵 카메라 이동
+    void setMinimapCamera()
+    {
+        Transform roomParent = GameObject.FindWithTag("roomParent").transform;
+        Vector2 middlePos=Vector2.zero;
+
+        for(int i=0;i<roomParent.childCount;i++) 
+        {
+            middlePos += (Vector2)roomParent.GetChild(i).transform.position;
+        }
+
+
+        if (roomParent.childCount > 0)
+        {
+            middlePos /= roomParent.childCount;
+        }
+
+        miniMapCamera.transform.position = middlePos;
+        miniMapCamera.transform.position += new Vector3(0,0,-5);
+        
     }
 }

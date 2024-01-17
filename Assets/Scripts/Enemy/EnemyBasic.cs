@@ -43,7 +43,13 @@ public class EnemyBasic : MonoBehaviour
         if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
         {
             //print(this.name + " attaked");
-            if (status.health <= 0f) { EnemyDead(); }
+            if (status.health <= 0f) 
+            { 
+                DataManager.instance.userData.playerLevel++;
+                MapUIManager.instance.UpdateLevelUI();
+                EnemyDead(); 
+            
+            }
             else 
             {
                 print("enemy damaged");

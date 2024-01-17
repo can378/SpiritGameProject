@@ -13,6 +13,7 @@ public class RoomSpawner : MonoBehaviour
     // 3 --> need left door
     // 4 --> need right door
 
+
     RoomTemplates templates;
     RoomManager roomManager;
     int index = 0;
@@ -25,6 +26,7 @@ public class RoomSpawner : MonoBehaviour
         templates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
         roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
         Invoke("Spawn",0.1f);
+       
     }
 
     void setRoom()
@@ -146,26 +148,33 @@ public class RoomSpawner : MonoBehaviour
         if (spawned == false)
         {
             setRoom();
+
+            GameObject instObj = null;
             if (openingDirection == 1)
             {
                 // Need to spawn a room with a BOTTOM door.
-                Instantiate(templates.bottomRooms[index], transform.position, templates.bottomRooms[index].transform.rotation).transform.localScale = roomSize;
+                instObj = Instantiate(templates.bottomRooms[index], transform.position, templates.bottomRooms[index].transform.rotation);
             }
             else if (openingDirection == 2)
             {
                 // Need to spawn a room with a TOP door.
-                Instantiate(templates.topRooms[index], transform.position, templates.topRooms[index].transform.rotation).transform.localScale = roomSize;
+                instObj = Instantiate(templates.topRooms[index], transform.position, templates.topRooms[index].transform.rotation);
             }
             else if (openingDirection == 3)
             {
                 // Need to spawn a room with a RIGHT door.
-                Instantiate(templates.rightRooms[index], transform.position, templates.rightRooms[index].transform.rotation).transform.localScale = roomSize;
+                instObj = Instantiate(templates.rightRooms[index], transform.position, templates.rightRooms[index].transform.rotation);
             }
             else if (openingDirection == 4)
             {
                 // Need to spawn a room with a LEFT door.
-                Instantiate(templates.leftRooms[index], transform.position, templates.leftRooms[index].transform.rotation).transform.localScale = roomSize;
+                instObj = Instantiate(templates.leftRooms[index], transform.position, templates.leftRooms[index].transform.rotation);
+                
             }
+
+            instObj.transform.localScale = roomSize;
+            instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
+            
             spawned = true;
         }
     }
