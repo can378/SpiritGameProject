@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviour
     public List<GameObject> rooms;
     public bool finish;                     // 맵 생성 완료 보기용
 
-    public GameObject miniMapCamera;
+    public Camera miniMapCamera;
     public GameObject hideMap;
     Transform roomParent;
     
@@ -30,6 +30,7 @@ public class RoomManager : MonoBehaviour
     {
         roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
         roomParent = GameObject.FindWithTag("roomParent").transform;
+        miniMapCamera.cullingMask = 1 << LayerMask.NameToLayer("MiniMapOnly");
         maxRoom = defaultMaxRoom;
         finish = false;
         spawning = false;

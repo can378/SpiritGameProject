@@ -2645,6 +2645,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828348621}
   m_CullTransparentMesh: 1
+--- !u!1001 &935585090
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3122542878278472188, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_Name
+      value: playerPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122542878278472188, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471157623186610961, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
 --- !u!1 &952490673
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,6 +3694,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6ffdf7013addbc41b2e1af5c036aebb, type: 3}
+--- !u!1 &1303389226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3122542878278472188, guid: 2ffee8612f0ea5d4b8caddc085f09bfa, type: 3}
+  m_PrefabInstance: {fileID: 935585090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1331488467
 GameObject:
   m_ObjectHideFlags: 0
@@ -5986,6 +6052,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2830920931105813052, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
+      propertyPath: playerPos
+      value: 
+      objectReference: {fileID: 1303389226}
+    - target: {fileID: 2830920931105813052, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
       propertyPath: deathPanel
       value: 
       objectReference: {fileID: 408384733}
@@ -6160,7 +6230,7 @@ PrefabInstance:
     - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: miniMapCamera
       value: 
-      objectReference: {fileID: 590339456}
+      objectReference: {fileID: 590339458}
     - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: normalEnemy.Array.size
       value: 3
@@ -6542,3 +6612,4 @@ SceneRoots:
   - {fileID: 2053682482}
   - {fileID: 1639611563}
   - {fileID: 406474120}
+  - {fileID: 935585090}

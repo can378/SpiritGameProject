@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
 
+    public GameObject playerPos;//minimap에서 플레이어 위치 나타내는
 
     Vector2 playerPosition;
     
@@ -352,7 +353,10 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
         }
         if (other.tag == "roomHide")
-        { Destroy(other.gameObject); }
+        {
+            
+            enterRoom(other.gameObject); 
+        }
         
         
     }
@@ -418,16 +422,26 @@ public class Player : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         nearObject = null;
+        if (other.tag == "roomHide") { exitRoom(other.gameObject); }
+        
     }
 
-    void enterMap() 
-    { 
-        //map 방문하면
+    void enterRoom(GameObject room) 
+    {
+        playerPos.SetActive(true);
+        //최초방문시 room 가리고 있던것 없앰
+        room.transform.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
 
-        //현재 플레이어가 있는 map위치를 갱신
-        
+        //현재 플레이어가 있는 room위치를 갱신
+        playerPos.transform.position = room.transform.position;
+
         //enemy가 공격 시작
+
+    }
+    void exitRoom(GameObject room)
+    { 
+        
+        //enemy 공격 중지
     
     }
-
 }
