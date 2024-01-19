@@ -29,7 +29,7 @@ public class RoomSpawner : MonoBehaviour
        
     }
 
-    void setRoom()
+    void SetRoom()
     {
         // 적절한 형태의 방을 설정함
         // 일반적으로 한개의 통로로 생성됨
@@ -147,7 +147,7 @@ public class RoomSpawner : MonoBehaviour
     {
         if (spawned == false)
         {
-            setRoom();
+            SetRoom();
 
             GameObject instObj = null;
             if (openingDirection == 1)
@@ -181,13 +181,17 @@ public class RoomSpawner : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        limitArea = roomManager.area * roomManager.roomSize * 10;
-        roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
+        
         if (other.CompareTag("SpawnPoint"))
         {
+            GameObject instObj = null;
             if (other.GetComponent<RoomSpawner>().spawned == false && spawned == false)
             {
-                Instantiate(templates.closedRoom, transform.position, Quaternion.identity).transform.localScale = roomSize;
+                limitArea = roomManager.area * roomManager.roomSize * 10;
+                roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
+                instObj = Instantiate(templates.closedRoom, transform.position, Quaternion.identity);
+                instObj.transform.localScale = roomSize;
+                instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
                 Destroy(gameObject);
             }
             spawned = true;

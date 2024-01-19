@@ -18,7 +18,7 @@ public class RoomManager : MonoBehaviour
 
     public Camera miniMapCamera;
     public GameObject hideMap;
-    Transform roomParent;
+    GameObject roomParent;
     
 
     bool spawning;
@@ -29,7 +29,8 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
-        roomParent = GameObject.FindWithTag("roomParent").transform;
+        roomParent = new GameObject("Rooms");
+        roomParent.tag = "roomParent";
         miniMapCamera.cullingMask = 1 << LayerMask.NameToLayer("MiniMapOnly");
         maxRoom = defaultMaxRoom;
         finish = false;
@@ -261,15 +262,15 @@ public class RoomManager : MonoBehaviour
 
         Vector2 middlePos=Vector2.zero;
 
-        for(int i=0;i<roomParent.childCount;i++) 
+        for(int i=0;i<roomParent.transform.childCount;i++) 
         {
-            middlePos += (Vector2)roomParent.GetChild(i).transform.position;
+            middlePos += (Vector2)roomParent.transform.GetChild(i).transform.position;
         }
 
 
-        if (roomParent.childCount > 0)
+        if (roomParent.transform.childCount > 0)
         {
-            middlePos /= roomParent.childCount;
+            middlePos /= roomParent.transform.childCount;
         }
 
         miniMapCamera.transform.position = middlePos;
@@ -280,12 +281,12 @@ public class RoomManager : MonoBehaviour
     void HidingMap()
     {
         GameObject hide;
-        for (int i = 0; i < roomParent.childCount; i++)
+        for (int i = 0; i < roomParent.transform.childCount; i++)
         {
             hide=Instantiate(hideMap);
-            hide.transform.parent=roomParent.GetChild(i).transform;
+            hide.transform.parent=roomParent.transform.GetChild(i).transform;
             hide.transform.localScale = new Vector3(roomSize*roomSize, roomSize * roomSize, 1);
-            hide.transform.position = roomParent.GetChild(i).position;
+            hide.transform.position = roomParent.transform.GetChild(i).position;
         }
 
     }

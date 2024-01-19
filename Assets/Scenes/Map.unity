@@ -959,37 +959,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367054662}
   m_CullTransparentMesh: 1
---- !u!1 &406474119
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 406474120}
-  m_Layer: 0
-  m_Name: Rooms
-  m_TagString: roomParent
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &406474120
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406474119}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.08875, y: 9.185171, z: -0.04655751}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &408384733
 GameObject:
   m_ObjectHideFlags: 0
@@ -6234,7 +6203,7 @@ PrefabInstance:
     - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: roomsParent
       value: 
-      objectReference: {fileID: 406474119}
+      objectReference: {fileID: 0}
     - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: miniMapCamera
       value: 
@@ -6619,5 +6588,4 @@ SceneRoots:
   - {fileID: 1928308740}
   - {fileID: 2053682482}
   - {fileID: 1639611563}
-  - {fileID: 406474120}
   - {fileID: 935585090}

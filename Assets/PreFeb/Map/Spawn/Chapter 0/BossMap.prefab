@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6202803812658245017}
   - component: {fileID: 1414844443272828942}
-  - component: {fileID: 1520915839233480186}
   m_Layer: 0
   m_Name: EnemySpawn
   m_TagString: Untagged
@@ -85,20 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1520915839233480186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488559282424961357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62be316d176beba4a99abb9d0b04dc7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemySpawnPoint: []
-  enemys: []
 --- !u!1 &2664169533642411703
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62be316d176beba4a99abb9d0b04dc7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyGroup: {fileID: 2664169533642411703}
   enemySpawnPoint:
   - {fileID: 6202803812658245017}
   enemys: []

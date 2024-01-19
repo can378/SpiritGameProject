@@ -140,8 +140,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
-      propertyPath: roomSize
+      propertyPath: maxRoom
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: turning
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: roomSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: crossedRoom
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: defaultMaxRoom
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4826323427736810154, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: eventMap.Array.size
@@ -749,6 +765,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   nearObject: {fileID: 0}
+  playerPos: {fileID: 0}
 --- !u!1 &3645063603469177963
 GameObject:
   m_ObjectHideFlags: 0

@@ -91,7 +91,7 @@ public class Room : MonoBehaviour
                 ran = Random.Range(0, roomManager.roomTemplates.defaultMap.Length);
                 map = Instantiate(roomManager.roomTemplates.defaultMap[ran],transform.position,transform.rotation);
             }
-            map.GetComponent<ObjectSpawn>().spawnEnemy(mapType);
+            map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
             map.transform.SetParent(this.transform);
             preMapType = mapType;
         }

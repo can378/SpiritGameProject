@@ -31,8 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3731128763060151270}
-  - {fileID: 7784008443658884102}
-  - {fileID: 9138094594851502059}
+  - {fileID: 6416483125693093758}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8522849875804448683
@@ -47,11 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62be316d176beba4a99abb9d0b04dc7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnPoint:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  enemyGroup: {fileID: 0}
+  enemySpawnPoint: []
   enemys: []
 --- !u!1 &2967190686829771569
 GameObject:
@@ -137,38 +133,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &8350021578475228799
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7784008443658884102}
-  m_Layer: 0
-  m_Name: Treasure
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7784008443658884102
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8350021578475228799}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2323307323661156973}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3753350726624016356
+--- !u!1001 &1426639907380729713
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -218,15 +183,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6365712346947525531, guid: b284215bbeff3134087eba7e1b26bbd8, type: 3}
       propertyPath: m_Name
-      value: Treasure (1)
+      value: Treasure
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b284215bbeff3134087eba7e1b26bbd8, type: 3}
---- !u!4 &9138094594851502059 stripped
+--- !u!4 &6416483125693093758 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5388447036337717263, guid: b284215bbeff3134087eba7e1b26bbd8, type: 3}
-  m_PrefabInstance: {fileID: 3753350726624016356}
+  m_PrefabInstance: {fileID: 1426639907380729713}
   m_PrefabAsset: {fileID: 0}
