@@ -428,11 +428,12 @@ public class Player : MonoBehaviour
 
     void enterRoom(GameObject room) 
     {
-        playerPos.SetActive(true);
+        
         //최초방문시 room 가리고 있던것 없앰
         room.transform.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-
+        room.transform.GetComponent<SpriteRenderer>().sortingOrder = -1;
         //현재 플레이어가 있는 room위치를 갱신
+        playerPos.SetActive(true);
         playerPos.transform.position = room.transform.position;
 
         //enemy가 공격 시작

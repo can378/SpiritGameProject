@@ -66,7 +66,6 @@ public class RoomManager : MonoBehaviour
                 SetMap();
                 finish = true;
                 setMinimapCamera();
-                HidingMap();
             }
             else
             {
@@ -278,6 +277,7 @@ public class RoomManager : MonoBehaviour
         
     }
 
+    /*
     void HidingMap()
     {
         GameObject hide;
@@ -290,4 +290,5 @@ public class RoomManager : MonoBehaviour
         }
 
     }
+    */
 }
