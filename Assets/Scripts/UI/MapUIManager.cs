@@ -15,13 +15,14 @@ public class MapUIManager : MonoBehaviour
     public GameObject esckeyPanel;
     public GameObject diePanel;
     public GameObject settingPanel;
-
+    
 
     //Player
     public Slider Hpslider;
     public TMP_Text LevelTxt;
     public TMP_Text CoinTxt;
     public TMP_Text KeyTxt;
+    public Image itemImg;
     public TMP_Text WeaponTxt;
     public TMP_Text SkillTxt;
 
@@ -38,6 +39,7 @@ public class MapUIManager : MonoBehaviour
         UpdateLevelUI();
         UpdateWeaponUI();
         UpdateSkillUI();
+        updateItemUI(null);
     }
 
     void Update()
@@ -80,6 +82,17 @@ public class MapUIManager : MonoBehaviour
 
     }
 
+    public void updateItemUI(GameObject obj) 
+    {
+
+        if (obj != null)
+        {
+
+            itemImg.GetComponent<Image>().sprite = obj.GetComponent<SpriteRenderer>().sprite;
+        }
+        else { itemImg.GetComponent<Image>().sprite = null; }
+
+    }
     public void UpdateCoinUI() 
     {
         CoinTxt.text = DataManager.instance.userData.coin.ToString();

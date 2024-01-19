@@ -23,7 +23,7 @@ public class Room : MonoBehaviour
     RoomManager roomManager;
     MapType preMapType;
     DoorType preDoorType;
-    GameObject map;
+    public GameObject thisRoom;
 
     void Start() {
         roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
@@ -54,45 +54,45 @@ public class Room : MonoBehaviour
         if(preMapType != mapType)
         {
             int ran;
-            Destroy(map);
+            Destroy(thisRoom);
             if(mapType == MapType.Shop)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.shopMap.Length);
-                map = Instantiate(roomManager.roomTemplates.shopMap[ran], transform.position, transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.shopMap[ran], transform.position, transform.rotation);
                 
             }
             else if(mapType == MapType.Treasure)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.treasureMap.Length);
-                map = Instantiate(roomManager.roomTemplates.treasureMap[ran], transform.position, transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.treasureMap[ran], transform.position, transform.rotation);
             }
             else if(mapType == MapType.Event)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.eventMap.Length);
-                map = Instantiate(roomManager.roomTemplates.eventMap[ran], transform.position, transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.eventMap[ran], transform.position, transform.rotation);
             }
             else if (mapType == MapType.Mission)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.missionMap.Length);
-                map = Instantiate(roomManager.roomTemplates.missionMap[ran], transform.position, transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.missionMap[ran], transform.position, transform.rotation);
             }
             else if (mapType == MapType.MiniBoss)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.miniBossMap.Length);
-                map = Instantiate(roomManager.roomTemplates.miniBossMap[ran], transform.position, transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.miniBossMap[ran], transform.position, transform.rotation);
             }
             else if (mapType == MapType.Boss)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.bossMap.Length);
-                map = Instantiate(roomManager.roomTemplates.bossMap[ran], transform.position, transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.bossMap[ran], transform.position, transform.rotation);
             }
             else if(mapType == MapType.Default)
             {
                 ran = Random.Range(0, roomManager.roomTemplates.defaultMap.Length);
-                map = Instantiate(roomManager.roomTemplates.defaultMap[ran],transform.position,transform.rotation);
+                thisRoom = Instantiate(roomManager.roomTemplates.defaultMap[ran],transform.position,transform.rotation);
             }
-            map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
-            map.transform.SetParent(this.transform);
+            thisRoom.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
+            thisRoom.transform.SetParent(this.transform);
             preMapType = mapType;
         }
     }
@@ -153,5 +153,7 @@ public class Room : MonoBehaviour
             }
         }
     }
+
+
 
 }

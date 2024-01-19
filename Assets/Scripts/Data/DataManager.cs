@@ -76,7 +76,7 @@ public class DataManager : MonoBehaviour
 
         userData.coin = 0;
         userData.key = 0;
-
+        userData.playerItem = null;
         userData.Weapon = "";
         userData.Skill = "";
 

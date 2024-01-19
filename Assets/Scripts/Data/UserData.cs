@@ -11,6 +11,7 @@ public class UserData
     public float playerHP;
     public float playerHPMax;
     public float playerLevel;
+    public string playerItem;
 
     public int coin;
     public int key;

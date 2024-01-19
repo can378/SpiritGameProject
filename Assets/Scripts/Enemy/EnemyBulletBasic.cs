@@ -13,7 +13,9 @@ public class EnemyBulletBasic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag=="Player") gameObject.SetActive(false);
-
+        if (other.tag =="Player")
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

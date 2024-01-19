@@ -32,10 +32,12 @@ public class Player : MonoBehaviour
     public bool isEquip = false;                //무기 장비
     private bool isInvincible = false;          //무적 상태
 
+
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
 
-    public GameObject playerPos;//minimap에서 플레이어 위치 나타내는
+
+    public GameObject playerItem;//현재 가지고 있는 아이템
 
     Vector2 playerPosition;
     
@@ -82,6 +84,7 @@ public class Player : MonoBehaviour
             Move();  
         }
 
+        UseItem();
         Attack();
         Reload();
         //Turn();
@@ -285,6 +288,40 @@ public class Player : MonoBehaviour
         isDodge = false;
     }
 
+    void UseItem() 
+    {
+        if (Input.GetKeyDown(KeyCode.H)&& DataManager.instance.userData.playerItem!=null)
+        {
+            MapUIManager.instance.updateItemUI(null);
+
+            switch (DataManager.instance.userData.playerItem) 
+            {
+                case "bomb":
+                    playerItem.SetActive(true);
+                    playerItem.transform.position = transform.position+new Vector3(5f,0,0);
+                    playerItem.GetComponent<Collider2D>().enabled = false;
+                    playerItem.GetComponent<Item>().enabled = false;
+
+                    Vector3 throwDirection = transform.position - playerItem.transform.position;
+                    playerItem.GetComponent<Rigidbody2D>().AddForce(throwDirection.normalized * 3f);
+                    
+
+                    break;
+                case "Item":
+                    break;
+                case "HPPortion": 
+                    DataManager.instance.userData.playerHP += 10; 
+                    break;
+                default:break;
+            }
+
+            DataManager.instance.userData.playerItem = null;
+
+        }
+
+
+    }
+
     // 달리기 대기
     void RunDelay()
     {
@@ -347,17 +384,22 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         
-        // *임시* 아이템 획득
+        
         if (other.tag == "Item")
         {
-            Destroy(other.gameObject);
-        }
-        if (other.tag == "roomHide")
-        {
+            //아이템 갱신
+            playerItem = other.gameObject;
+            DataManager.instance.userData.playerItem = other.name;
+            MapUIManager.instance.updateItemUI(other.gameObject);
+            //프리팹통째로 dataManager에 저장할것?
+
+
+            // *임시* 아이템 획득
+            playerItem.SetActive(false);
+
+            //Destroy(other.gameObject);
             
-            enterRoom(other.gameObject); 
-        }
-        
+        }        
         
     }
 
@@ -366,12 +408,12 @@ public class Player : MonoBehaviour
     void OnTriggerStay2D(Collider2D other)
     {
         
-        //print("trigger stay");
         if (other.tag == "Weapon" || other.tag == "Door")
         {
             Debug.Log(other.name);
             nearObject = other.gameObject;
         }
+        //공격받음
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
             if (DataManager.instance.userData.playerHP < 0)
@@ -384,12 +426,9 @@ public class Player : MonoBehaviour
             {
 
                 //DataManager.instance.userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
-                
                 DataManager.instance.userData.playerHP -= 10;
-
-                
                 MapUIManager.instance.UpdateHealthUI();
-                //Debug.Log("player health=" + DataManager.instance.userData.playerHP);
+
                 
                 //무적
                 isInvincible = true;
@@ -422,27 +461,8 @@ public class Player : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         nearObject = null;
-        if (other.tag == "roomHide") { exitRoom(other.gameObject); }
         
     }
 
-    void enterRoom(GameObject room) 
-    {
-        
-        //최초방문시 room 가리고 있던것 없앰
-        room.transform.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-        room.transform.GetComponent<SpriteRenderer>().sortingOrder = -1;
-        //현재 플레이어가 있는 room위치를 갱신
-        playerPos.SetActive(true);
-        playerPos.transform.position = room.transform.position;
-
-        //enemy가 공격 시작
-
-    }
-    void exitRoom(GameObject room)
-    { 
-        
-        //enemy 공격 중지
     
-    }
 }
