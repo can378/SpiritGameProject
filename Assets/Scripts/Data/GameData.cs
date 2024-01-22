@@ -13,6 +13,7 @@ public class GameData : MonoBehaviour
     public List<GameObject> skillList;
     public List<GameObject> testList;
 
+
     void Start()
     {
         instance = this;

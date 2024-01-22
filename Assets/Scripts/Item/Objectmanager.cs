@@ -46,10 +46,11 @@ public class Objectmanager : MonoBehaviour
         {
             userData.coin -= cost;
             MapUIManager.instance.UpdateCoinUI();
+            MapUIManager.instance.updateItemUI(GameData.instance.itemList[2]);
+            userData.playerItem = GameData.instance.itemList[2].name;
         }
         else
         {
-            // 추가: 충분한 코인이 없을 때 처리
             Debug.LogWarning("Not enough coins to buy the item!");
         }
     }

@@ -24,10 +24,6 @@ public class MerchantStore : MonoBehaviour
 
         if (objectManager != null && currentCoins >= recovery)
         {
-            currentCoins -= recovery;
-            recoveryCoin.text = currentCoins.ToString();
-
-            // Objectmanager의 코인 갯수를 감소시키는 동작 수행
             objectManager.BuyItem(recovery);
         }
     }

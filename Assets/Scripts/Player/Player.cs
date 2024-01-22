@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Bson;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,9 +36,6 @@ public class Player : MonoBehaviour
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
-
-
-    public GameObject playerItem;//현재 가지고 있는 아이템
 
     Vector2 playerPosition;
     
@@ -76,7 +74,7 @@ public class Player : MonoBehaviour
         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
         GetInput();
 
-        Turn2();
+        Turn();
         
         if (isMoveable())
         {
@@ -87,7 +85,6 @@ public class Player : MonoBehaviour
         UseItem();
         Attack();
         Reload();
-        //Turn();
         Interaction();
 
         string layerName = LayerMask.LayerToName(gameObject.layer);
@@ -98,17 +95,6 @@ public class Player : MonoBehaviour
     {
 
     }
-
-    void Turn2() 
-    {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDir = (mousePos - (Vector2)transform.position).normalized;
-
-        mouseAngle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
-        //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
-
-    }
-
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");
@@ -118,6 +104,9 @@ public class Player : MonoBehaviour
         aDown = Input.GetButton("Attack");
         iDown = Input.GetButtonDown("Interaction");//f
     }
+
+    #region Moving
+    
 
     private bool isMoveable() 
     {
@@ -154,62 +143,68 @@ public class Player : MonoBehaviour
         else
         {
             rigid.velocity = moveVec * status.speed * (isSprint ? status.runSpeed : 1f);
-            
-            
-            /*
-            if (isSprint && moveVec != Vector2.zero)
-            {    
-                sprite.color = Color.magenta;
-            }
-            else
-            { 
-                sprite.color = Color.blue;
-            }
-            */
+
         }
     }
 
-    /*//사용안함
     void Turn()
     {
-        // 기본 상태
-        if (moveVec == Vector2.zero)
-            return;
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseDir = (mousePos - (Vector2)transform.position).normalized;
 
-        if (moveVec == Vector2.up)
+        mouseAngle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+        //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
+
+    }
+
+ 
+ 
+    void Dodge()    // 회피
+    {
+        if (dDown && !isAttack && moveVec != Vector2.zero && !isDodge)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (moveVec == new Vector2(1, 1).normalized)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 315);
-        }
-        else if (moveVec == Vector2.right)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 270);
-        }
-        else if (moveVec == new Vector2(1, -1).normalized)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 225);
-        }
-        else if (moveVec == Vector2.down)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 180);
-        }
-        else if (moveVec == new Vector2(-1, -1).normalized)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 135);
-        }
-        else if (moveVec == Vector2.left)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 90);
-        }
-        else if (moveVec == new Vector2(-1, 1).normalized)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 45);
+            sprite.color = Color.cyan;
+            dodgeVec = moveVec;
+            rigid.velocity = moveVec * status.speed * status.dodgeSpeed;
+            isDodge = true;
+
+            Invoke("DodgeOut", status.dodgeFrame);
+
         }
     }
-    */
+
+    void DodgeOut() // 회피 빠져나가기
+    {
+        sprite.color = Color.blue;
+        isDodge = false;
+    }
+
+    
+
+    // 달리기 대기
+    void RunDelay()
+    {
+        runCurrentCoolTime = status.runCoolTime;
+        if (isSprint == true)
+        {
+            isSprint = false;
+            StartCoroutine(RunCoolTime());
+        }
+    }
+
+    IEnumerator RunCoolTime()
+    {
+        while (runCurrentCoolTime > 0.0f)
+        {
+            runCurrentCoolTime -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        isSprint = true;
+    }
+
+    #endregion
+
+    #region Attack
 
     void Reload()
     {
@@ -259,89 +254,12 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
-
-
     void AttackOut()
     {
         isAttack = false;
     }
 
-    void Dodge()    // 회피
-    {
-        if (dDown && !isAttack && moveVec != Vector2.zero && !isDodge)
-        {
-            sprite.color = Color.cyan;
-            dodgeVec = moveVec;
-            rigid.velocity = moveVec * status.speed * status.dodgeSpeed;
-            isDodge = true;
-
-            Invoke("DodgeOut", status.dodgeFrame);
-
-        }
-    }
-
-    void DodgeOut() // 회피 빠져나가기
-    {
-        sprite.color = Color.blue;
-        isDodge = false;
-    }
-
-    void UseItem() 
-    {
-        if (Input.GetKeyDown(KeyCode.H)&& DataManager.instance.userData.playerItem!=null)
-        {
-            MapUIManager.instance.updateItemUI(null);
-
-            switch (DataManager.instance.userData.playerItem) 
-            {
-                case "bomb":
-                    playerItem.SetActive(true);
-                    playerItem.transform.position = transform.position+new Vector3(5f,0,0);
-                    playerItem.GetComponent<Collider2D>().enabled = false;
-                    playerItem.GetComponent<Item>().enabled = false;
-
-                    Vector3 throwDirection = transform.position - playerItem.transform.position;
-                    playerItem.GetComponent<Rigidbody2D>().AddForce(throwDirection.normalized * 3f);
-                    
-
-                    break;
-                case "Item":
-                    break;
-                case "HPPortion": 
-                    DataManager.instance.userData.playerHP += 10; 
-                    break;
-                default:break;
-            }
-
-            DataManager.instance.userData.playerItem = null;
-
-        }
-
-
-    }
-
-    // 달리기 대기
-    void RunDelay()
-    {
-        runCurrentCoolTime = status.runCoolTime;
-        if (isSprint == true)
-        {
-            isSprint = false;
-            StartCoroutine(RunCoolTime());
-        }
-    }
-
-    IEnumerator RunCoolTime()
-    {
-        while (runCurrentCoolTime > 0.0f)
-        {
-            runCurrentCoolTime -= Time.deltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-        isSprint = true;
-    }
+    #endregion
 
     void Interaction()
     {
@@ -375,11 +293,43 @@ public class Player : MonoBehaviour
         }
     }
 
+    void UseItem()
+    {
+        if (Input.GetKeyDown(KeyCode.H) && DataManager.instance.userData.playerItem != null)
+        {
+            MapUIManager.instance.updateItemUI(null);
+
+            switch (DataManager.instance.userData.playerItem)
+            {
+                case "bomb":
+                    
+                    //Vector3 throwDirection = transform.position - playerItem.transform.position;
+                    //playerItem.GetComponent<Rigidbody2D>().AddForce(throwDirection.normalized * 3f);
 
 
+                    break;
+                case "Item":
+                    print("item");
+                    break;
+                case "HPPortion":
+                    DataManager.instance.userData.playerHP += 10;
+                    MapUIManager.instance.UpdateHealthUI();
+                    break;
+                default: break;
+            }
+
+            DataManager.instance.userData.playerItem = null;
+
+        }
 
 
-    //Trigger=============================================================================================
+    }
+
+   
+
+
+    #region Trigger
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -388,16 +338,9 @@ public class Player : MonoBehaviour
         if (other.tag == "Item")
         {
             //아이템 갱신
-            playerItem = other.gameObject;
-            DataManager.instance.userData.playerItem = other.name;
+            DataManager.instance.userData.playerItem=other.name;
             MapUIManager.instance.updateItemUI(other.gameObject);
-            //프리팹통째로 dataManager에 저장할것?
-
-
-            // *임시* 아이템 획득
-            playerItem.SetActive(false);
-
-            //Destroy(other.gameObject);
+            Destroy(other.gameObject);
             
         }        
         
@@ -464,5 +407,5 @@ public class Player : MonoBehaviour
         
     }
 
-    
+    #endregion
 }
