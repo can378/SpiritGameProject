@@ -20,12 +20,11 @@ public class RoomEnterExit : MonoBehaviour
 
     }
 
-    /*
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            //print("player enter");
             enterRoom();
         }
     }
@@ -33,7 +32,6 @@ public class RoomEnterExit : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            //print("player exit");
             exitRoom();
         }
     }
@@ -55,11 +53,7 @@ public class RoomEnterExit : MonoBehaviour
         //enemy가 공격 시작
         if (room.mapType==MapType.Boss || room.mapType == MapType.Default) 
         { 
-
-            //enemyGroup=room.thisRoom.transform.GetComponent<ObjectSpawn>().enemyGroup; 
-
-            enemyGroup=room.map.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup; 
-
+            enemyGroup=room.map.transform.GetComponent<ObjectSpawn>().enemyGroup; 
             enemyGroup.SetActive(true);
         }
         
@@ -68,19 +62,17 @@ public class RoomEnterExit : MonoBehaviour
     void exitRoom()
     {
         playerPos.SetActive(false);
+
         //enemy 공격 중지
         if (room.mapType == MapType.Boss || room.mapType == MapType.Default)
         {
 
-            //enemyGroup = room.thisRoom.transform.GetComponent<ObjectSpawn>().enemyGroup;
-
-            enemyGroup = room.map.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup;
-
+            enemyGroup = room.map.transform.GetComponent<ObjectSpawn>().enemyGroup;
             enemyGroup.SetActive(false);
         }
         
         forMap.SetActive(true);
 
     }
-    */
+
 }
