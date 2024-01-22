@@ -24,13 +24,18 @@ public class EnemyPattern : EnemyBasic
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        EnemyPatternStart();
+        if (this.isActiveAndEnabled == false) { EnemyPatternStart(); }
+    }
 
-    }
-    private void Update()
+    private void OnEnable()
     {
-        //targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+        EnemyPatternStart();
     }
+    private void OnDisable() 
+    {
+        StopAllCoroutines();
+    }
+
 
     void EnemyPatternStart() 
     {

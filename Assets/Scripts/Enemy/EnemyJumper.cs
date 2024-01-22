@@ -22,10 +22,7 @@ public class EnemyJumper : EnemyBasic
         {
             if (isJumping == false) { JumpToTarget(); }
         }
-        else
-        {
-            //wander();
-        }
+
     }
 
 

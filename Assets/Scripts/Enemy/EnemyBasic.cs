@@ -27,22 +27,10 @@ public class EnemyBasic : MonoBehaviour
     }
 
 
-
-    public void Wander()
-    {
-        /*
-        Vector2 direction = transform.position;
-        direction.x += Random.Range(-2f, 2f);
-        transform.Translate(direction * 0.1f * Time.deltaTime);
-        */
-    }
-
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
         {
-            //print(this.name + " attaked");
             if (status.health <= 0f) 
             { 
                 DataManager.instance.userData.playerLevel++;

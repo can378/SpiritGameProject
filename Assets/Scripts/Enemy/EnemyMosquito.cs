@@ -17,8 +17,8 @@ public class EnemyMosquito : EnemyBasic
 
         if (targetDistance <= status.detectionDis && targetDistance >= 1f)
         {
-            GetComponent<PathFinding>().StartFinding
-                ((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
+            //GetComponent<PathFinding>().StartFinding((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
+            Chase();
         }
 
     }

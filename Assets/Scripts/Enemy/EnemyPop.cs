@@ -41,7 +41,7 @@ public class EnemyPop : EnemyBasic
             }
             else
             { 
-                sprite.color = new Color(1f, 1f, 1f, 0f);
+                sprite.color = new Color(1f, 1f, 1f, 0.2f);
             }
         }
     }

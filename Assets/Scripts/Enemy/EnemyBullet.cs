@@ -15,10 +15,11 @@ public class EnemyBullet : MonoBehaviour
     }
     private void Update()
     {
+        //5초뒤에는 비활성화
         time += Time.deltaTime;
-
         if (time >= 5f) { this.gameObject.SetActive(false); time = 0; }
 
+        //플레이어쪽으로 발사
         Vector2 direction = transform.position- playerPos.position;
         transform.Translate(direction * status.speed * Time.deltaTime);    
     }
