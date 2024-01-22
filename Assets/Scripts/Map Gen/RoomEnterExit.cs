@@ -10,12 +10,17 @@ public class RoomEnterExit : MonoBehaviour
     public Room room;
     GameObject enemyGroup;
 
+
     public SpriteRenderer forMiniMapSprite;
     public GameObject forMap;
 
 
+    void Start()
+    {
 
+    }
 
+    /*
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -48,9 +53,13 @@ public class RoomEnterExit : MonoBehaviour
 
 
         //enemy가 공격 시작
-        if (room.mapType==MapType.Boss|| room.mapType == MapType.MiniBoss || room.mapType == MapType.Default) 
+        if (room.mapType==MapType.Boss || room.mapType == MapType.Default) 
         { 
-            enemyGroup=room.thisRoom.transform.GetComponent<ObjectSpawn>().enemyGroup; 
+
+            //enemyGroup=room.thisRoom.transform.GetComponent<ObjectSpawn>().enemyGroup; 
+
+            enemyGroup=room.map.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup; 
+
             enemyGroup.SetActive(true);
         }
         
@@ -60,13 +69,18 @@ public class RoomEnterExit : MonoBehaviour
     {
         playerPos.SetActive(false);
         //enemy 공격 중지
-        if (room.mapType == MapType.Boss || room.mapType == MapType.MiniBoss || room.mapType == MapType.Default)
+        if (room.mapType == MapType.Boss || room.mapType == MapType.Default)
         {
-            enemyGroup = room.thisRoom.transform.GetComponent<ObjectSpawn>().enemyGroup;
+
+            //enemyGroup = room.thisRoom.transform.GetComponent<ObjectSpawn>().enemyGroup;
+
+            enemyGroup = room.map.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup;
+
             enemyGroup.SetActive(false);
         }
         
         forMap.SetActive(true);
 
     }
+    */
 }
