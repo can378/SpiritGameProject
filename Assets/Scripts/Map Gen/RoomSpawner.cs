@@ -25,6 +25,10 @@ public class RoomSpawner : MonoBehaviour
         Destroy(gameObject,5f);
         templates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
         roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
+
+        limitArea = roomManager.area * roomManager.roomSize * 10;
+        roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
+
         Invoke("Spawn",0.1f);
        
     }
@@ -34,8 +38,6 @@ public class RoomSpawner : MonoBehaviour
         // 적절한 형태의 방을 설정함
         // 일반적으로 한개의 통로로 생성됨
         // 맵의 개수가 최대로 도달 하였거나 맵의 영역 끝에 도달하면 가로막힌 방이 생성
-        limitArea = roomManager.area * roomManager.roomSize * 10;
-        roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
 
         // 방의 수가 충분하거나
         // 영역을 넘어가게 되면 닫는다.
@@ -179,20 +181,26 @@ public class RoomSpawner : MonoBehaviour
         }
     }
 
+    // 통로 없는 방 전용
+    // TriggerEnter 순서 문제 때문인지 Spawner가 삭제되지 않고 None 생성될때가 있음
+    // 따라서 약간의 딜레이 후 생성
+    void SpawnNone()
+    {
+        GameObject instObj = null;
+        instObj = Instantiate(templates.closedRoom, transform.position, Quaternion.identity);
+        instObj.transform.localScale = roomSize;
+        instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
+        Destroy(gameObject);
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         
         if (other.CompareTag("SpawnPoint"))
         {
-            GameObject instObj = null;
             if (other.GetComponent<RoomSpawner>().spawned == false && spawned == false)
             {
-                limitArea = roomManager.area * roomManager.roomSize * 10;
-                roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
-                instObj = Instantiate(templates.closedRoom, transform.position, Quaternion.identity);
-                instObj.transform.localScale = roomSize;
-                instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
-                Destroy(gameObject);
+                Invoke("SpawnNone",0.05f);
             }
             spawned = true;
         }

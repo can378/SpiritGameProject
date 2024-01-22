@@ -5,6 +5,8 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public RoomTemplates roomTemplates;
+    public MapTemplates mapTemplates;
+    public EnemyTemplates enemyTemplates;
     public bool spawn;
     public int addedRoom;                   // 각 경로당 추가 생성할 방
     public int turning;                     // 꺾을 횟수
@@ -19,7 +21,6 @@ public class RoomManager : MonoBehaviour
     public Camera miniMapCamera;
     public GameObject hideMap;
     GameObject roomParent;
-    
 
     bool spawning;
     int preCount = 0;
@@ -28,11 +29,18 @@ public class RoomManager : MonoBehaviour
 
     void Start()
     {
+        //templates 설정
         roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
+        mapTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<MapTemplates>();
+        enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
+
+        // room 부모
         roomParent = new GameObject("Rooms");
         roomParent.tag = "roomParent";
+
         miniMapCamera.cullingMask = 1 << LayerMask.NameToLayer("MiniMapOnly");
         maxRoom = defaultMaxRoom;
+
         finish = false;
         spawning = false;
     }
@@ -80,12 +88,14 @@ public class RoomManager : MonoBehaviour
     {
         if (spawn)
         {
+            // 생성중이면 무시
             if(spawning)
             {
                 spawn = false;
                 return;
             }
 
+            //초기화
             finish = false;
             spawning = true;
             waitTime = 0;
@@ -93,14 +103,16 @@ public class RoomManager : MonoBehaviour
             maxRoom = defaultMaxRoom;
             crossedRoomCount = 0;
 
+            // 방 삭제
             for (int i = 0; i < rooms.Count; i++)
             {
                 Destroy(rooms[i]);
             }
             rooms.Clear();
+            
+            // 시작 방향 설정
             int dir = Random.Range(1, 5);
             Vector2 startPoisition = new Vector2(Random.Range(-2, 3) * 10 * roomSize, Random.Range(-2, 3) * 10 * roomSize);
-
 
             GameObject instObj=null;
 
@@ -200,7 +212,6 @@ public class RoomManager : MonoBehaviour
     void SetMap()
     {
         bool isBoss = false;
-        bool isMiniBoss = false;
         bool isEvent = false;
 
 
@@ -208,6 +219,7 @@ public class RoomManager : MonoBehaviour
         for( int i = 1 ; i< rooms.Count ; i++)
         {
             Room room = rooms[i].GetComponent<Room>();
+            
             if(room.roomType == RoomType.None)
             {
                 room.mapType = MapType.Treasure;
@@ -218,12 +230,6 @@ public class RoomManager : MonoBehaviour
                 {
                     room.mapType = MapType.Boss;
                     isBoss = true;
-                    continue;
-                }
-                else if (!isMiniBoss)
-                {
-                    room.mapType = MapType.MiniBoss;
-                    isMiniBoss = true;
                     continue;
                 }
                 room.mapType = MapType.Mission;
