@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MapType { None, Default, Shop, Treasure, Event, Mission, MiniBoss, Boss }
+public enum MapType { None, Default, Shop, Treasure, Event, Mission, Boss }
 public enum RoomType { None, OneWay, TwoWay, ThreeWay, FourWay } // 문의 개수
 
 public class Room : MonoBehaviour
 {
     public bool lockTrigger;        //맵을 잠궈버린다
     public bool unLockTrigger;      //맵의 잠금을 해제한다.
-    public MapType mapType;         //맵 타입을 바꾸면 현재 방이 변경됨
+    public MapType mapType;          //맵 타입을 바꾸면 현재 방이 변경됨
     public DoorType doorType;
     public RoomType roomType;
     public Door[] doors;
+    public GameObject map;
 
     // 문 존재 여부 설정용
     public bool top;
@@ -21,14 +22,17 @@ public class Room : MonoBehaviour
     public bool right;
 
     RoomManager roomManager;
+    MapTemplates mapTemplates;
     MapType preMapType;
     DoorType preDoorType;
-    public GameObject thisRoom;
+    
 
     void Start() {
         roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
-        roomManager.rooms.Add(this.gameObject);
+        mapTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<MapTemplates>();
 
+        roomManager.rooms.Add(this.gameObject);
+        
         //this.transform.SetParent(roomManager.transform);
 
         preMapType = mapType;
@@ -54,45 +58,40 @@ public class Room : MonoBehaviour
         if(preMapType != mapType)
         {
             int ran;
-            Destroy(thisRoom);
+            Destroy(map);
             if(mapType == MapType.Shop)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.shopMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.shopMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.shopMap.Length);
+                map = Instantiate(mapTemplates.shopMap[ran], transform.position, transform.rotation);
                 
             }
             else if(mapType == MapType.Treasure)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.treasureMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.treasureMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.treasureMap.Length);
+                map = Instantiate(mapTemplates.treasureMap[ran], transform.position, transform.rotation);
             }
             else if(mapType == MapType.Event)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.eventMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.eventMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.eventMap.Length);
+                map = Instantiate(mapTemplates.eventMap[ran], transform.position, transform.rotation);
             }
             else if (mapType == MapType.Mission)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.missionMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.missionMap[ran], transform.position, transform.rotation);
-            }
-            else if (mapType == MapType.MiniBoss)
-            {
-                ran = Random.Range(0, roomManager.roomTemplates.miniBossMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.miniBossMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.missionMap.Length);
+                map = Instantiate(mapTemplates.missionMap[ran], transform.position, transform.rotation);
             }
             else if (mapType == MapType.Boss)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.bossMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.bossMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.bossMap.Length);
+                map = Instantiate(mapTemplates.bossMap[ran], transform.position, transform.rotation);
             }
             else if(mapType == MapType.Default)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.defaultMap.Length);
-                thisRoom = Instantiate(roomManager.roomTemplates.defaultMap[ran],transform.position,transform.rotation);
+                ran = Random.Range(0, mapTemplates.defaultMap.Length);
+                map = Instantiate(mapTemplates.defaultMap[ran],transform.position,transform.rotation);
             }
-            thisRoom.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
-            thisRoom.transform.SetParent(this.transform);
+            map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
+            map.transform.SetParent(this.transform);
             preMapType = mapType;
         }
     }

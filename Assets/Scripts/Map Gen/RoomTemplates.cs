@@ -14,16 +14,4 @@ public class RoomTemplates : MonoBehaviour
 
     public GameObject closedRoom;
 
-    public GameObject[] defaultMap;
-    public GameObject[] shopMap;
-    public GameObject[] treasureMap;
-    public GameObject[] eventMap;
-    public GameObject[] missionMap;
-    public GameObject[] miniBossMap;
-    public GameObject[] bossMap;
-
-    public GameObject[] normalEnemy;
-    public GameObject[] miniBossEnemy;
-    public GameObject[] bossEnemy;
-
 }

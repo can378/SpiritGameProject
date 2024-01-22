@@ -16,7 +16,6 @@ public class RoomEnterExit : MonoBehaviour
         switch (room.mapType)
         {
             case MapType.Boss:isEnemyHere = true; break;
-            case MapType.MiniBoss: isEnemyHere = true; break;
             case MapType.Default: isEnemyHere = true; break;
             default:break;
         }
@@ -28,7 +27,7 @@ public class RoomEnterExit : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            print("player enter");
+            //print("player enter");
             enterRoom();
         }
     }
@@ -36,7 +35,7 @@ public class RoomEnterExit : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            print("player exit");
+            //print("player exit");
             exitRoom();
         }
     }
@@ -55,7 +54,7 @@ public class RoomEnterExit : MonoBehaviour
         //enemy가 공격 시작
         if(isEnemyHere) 
         { 
-            enemyGroup=room.thisRoom.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup; 
+            enemyGroup=room.map.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup; 
             enemyGroup.SetActive(true);
         }
         //setActive(true);
@@ -67,7 +66,7 @@ public class RoomEnterExit : MonoBehaviour
         //enemy 공격 중지
         if (isEnemyHere) 
         {
-            enemyGroup = room.thisRoom.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup;
+            enemyGroup = room.map.transform.Find("Enemy").GetComponent<ObjectSpawn>().enemyGroup;
             enemyGroup.SetActive(false);
 
         }

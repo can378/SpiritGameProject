@@ -5,33 +5,35 @@ using UnityEngine;
 public class ObjectSpawn : MonoBehaviour
 {
     public GameObject enemyGroup;
-    RoomManager roomManager;
     public List<Transform> enemySpawnPoint;
     public List<GameObject> enemys;
 
+    EnemyTemplates enemyTemplates;
+    RoomManager roomManager;
+
     public void SpawnEnemy(MapType mapType)
     {
-        int ran;
         roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
+        enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
         this.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, roomManager.roomSize);
 
         foreach (Transform enemyTransform in enemySpawnPoint)
         {
+            int ran;
             GameObject instEnemy = null;
             if (mapType == MapType.Default)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.normalEnemy.Length);
-                instEnemy = Instantiate(roomManager.roomTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
-            }
-            else if (mapType == MapType.MiniBoss)
-            {
-                ran = Random.Range(0, roomManager.roomTemplates.miniBossEnemy.Length);
-                instEnemy = Instantiate(roomManager.roomTemplates.miniBossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+                ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
+                instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
             }
             else if (mapType == MapType.Boss)
             {
-                ran = Random.Range(0, roomManager.roomTemplates.bossEnemy.Length);
-                instEnemy = Instantiate(roomManager.roomTemplates.bossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+                ran = Random.Range(0, enemyTemplates.bossEnemy.Length);
+                instEnemy = Instantiate(enemyTemplates.bossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+            }
+            else if (mapType == MapType.Mission)
+            {
+
             }
             // 위치 삭제
             Destroy(enemyTransform.gameObject);
@@ -41,9 +43,11 @@ public class ObjectSpawn : MonoBehaviour
             enemys.Add(instEnemy);
         }
         // 위치 정보 초기화
+        // 안 없애도 되나?
         enemySpawnPoint.Clear();
         
     }
+
 
     void OnDestroy() {
         foreach(GameObject enemy in enemys)
