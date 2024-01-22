@@ -14,7 +14,7 @@ public class DataManager : MonoBehaviour
     string UserDataFileName = "UserData.json";
 
     public UserData userData;
-    private GameData gameVar;//쓸일 없으면 나중에 삭제
+    private GameData gameVar;
 
     void Awake()
     {
@@ -30,7 +30,7 @@ public class DataManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         
-        //gameVar = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();//쓸일 없으면 나중에 삭제
+        gameVar = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         LoadData();
     }
 
