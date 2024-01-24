@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
 
         if (weapon.weaponType != WeaponType.Shot)
             return;
-
+        
         if (weapon.maxAmmo == weapon.ammo)
             return;
 
@@ -265,23 +265,9 @@ public class Player : MonoBehaviour
     {
         if (iDown && nearObject != null && !isEquip && !isDodge && !isAttack && moveVec == Vector2.zero)
         {
-            if (nearObject.tag == "Weapon")
+            if (nearObject.tag == "SelectItem")
             {
-                if (weaponGameObject != null)
-                {
-                    attack.UnEquipWeapon();
-                    weaponGameObject.SetActive(true);
-                    weaponGameObject.transform.position = transform.position;
-                    weaponGameObject = null;
-                }
-                weaponGameObject = nearObject;
-                weapon = weaponGameObject.GetComponent<Weapon>();
-                DataManager.instance.userData.Weapon = weapon.name.ToString();
-                
-                MapUIManager.instance.UpdateWeaponUI();
-                attack.EquipWeapon(weapon);
-                attackDelay = 0;
-                weaponGameObject.SetActive(false);
+                GainSelectItem();
             }
         }
         if (iDown && nearObject != null && !isEquip && !isDodge && !isAttack && moveVec == Vector2.zero)
@@ -290,6 +276,36 @@ public class Player : MonoBehaviour
             {
                 nearObject.GetComponent<Door>().DoorInteraction();
             }
+        }
+    }
+
+    void GainSelectItem()
+    {
+        SelectItem selectItem = nearObject.GetComponent<SelectItem>();
+        if (selectItem.selectItemClass == SelectItemClass.Weapon)
+        {
+            if (weaponGameObject != null)
+            {
+                attack.UnEquipWeapon();
+                weaponGameObject.SetActive(true);
+                weaponGameObject.transform.position = transform.position;
+                weaponGameObject = null;
+            }
+            weaponGameObject = nearObject;
+            weapon = weaponGameObject.GetComponent<Weapon>();
+            DataManager.instance.userData.Weapon = weapon.name.ToString();
+
+            MapUIManager.instance.UpdateWeaponUI();
+            attack.EquipWeapon(weapon);
+            attackDelay = 0;
+            weaponGameObject.SetActive(false);
+        }
+        else if(selectItem.selectItemClass == SelectItemClass.Consumable)
+        {
+            //아이템 갱신
+            DataManager.instance.userData.playerItem = selectItem.name;
+            MapUIManager.instance.updateItemUI(selectItem.gameObject);
+            Destroy(selectItem.gameObject);
         }
     }
 
@@ -325,38 +341,14 @@ public class Player : MonoBehaviour
 
     }
 
-   
-
 
     #region Trigger
 
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        
-        
-        if (other.tag == "Item")
-        {
-            //아이템 갱신
-            DataManager.instance.userData.playerItem=other.name;
-            MapUIManager.instance.updateItemUI(other.gameObject);
-            Destroy(other.gameObject);
-            
-        }        
-        
-    }
-
-    
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        
-        if (other.tag == "Weapon" || other.tag == "Door")
-        {
-            Debug.Log(other.name);
-            nearObject = other.gameObject;
-        }
         //공격받음
+        //Enter로 하는게 나을 듯?
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
             if (DataManager.instance.userData.playerHP < 0)
@@ -372,7 +364,7 @@ public class Player : MonoBehaviour
                 DataManager.instance.userData.playerHP -= 10;
                 MapUIManager.instance.UpdateHealthUI();
 
-                
+
                 //무적
                 isInvincible = true;
                 int layerNum = LayerMask.NameToLayer("Invincible");
@@ -390,7 +382,24 @@ public class Player : MonoBehaviour
             }
 
         }
-        
+    }
+
+    void GainItem(Collider2D item)
+    {
+        //아이템 갱신
+        DataManager.instance.userData.playerItem = item.name;
+        MapUIManager.instance.updateItemUI(item.gameObject);
+        Destroy(item.gameObject);
+    }
+
+
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "SelectItem" || other.tag == "Door")
+        {
+            nearObject = other.gameObject;
+        }
 
     }
     void OffDamaged()
@@ -404,7 +413,6 @@ public class Player : MonoBehaviour
     void OnTriggerExit2D(Collider2D other)
     {
         nearObject = null;
-        
     }
 
     #endregion

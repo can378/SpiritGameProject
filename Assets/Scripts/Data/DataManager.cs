@@ -29,14 +29,14 @@ public class DataManager : MonoBehaviour
             //새로운 씬의 게임오브젝트 제거
             Destroy(this.gameObject);
         }
-        
+
         gameVar = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         LoadData();
     }
 
     public void LoadData()
     {
-       
+
         string filePath = Application.persistentDataPath + UserDataFileName;
 
         if (File.Exists(filePath))
@@ -86,7 +86,7 @@ public class DataManager : MonoBehaviour
         userData.NPCScriptIndex = 0;
         userData.nowChapter = 0;
 
-        userData.map =new int[100];
+        userData.map = new int[100];
     }
 
     void OnApplicationQuit()

@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType { None, Swing, Stab, Shot }
+public enum WeaponType { Melee, Shot, Sub }
+public enum WeaponRating { Temporary, General, Rare, Unique }
+public enum WeaponAttribute { ColdArm, Divinity, FireArm }
+public enum MainWeaponOption { None, Attack, Speed, Critical, CriticalDamage, Recovery }
 
-public class Weapon : MonoBehaviour
+public class Weapon : SelectItem
 {
     public WeaponType weaponType;
+    public WeaponRating weaponRating;
+    public WeaponAttribute weaponAttribute;
     public int weaponCode;
     public float damage;
     public float rate;              // 1/rate 초 동안 공격

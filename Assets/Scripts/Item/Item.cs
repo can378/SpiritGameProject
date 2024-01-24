@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemClass { Coin, Key, BossKey, Heal, MaxHealth, ExtraHealth, EXP};
+
 public class Item : MonoBehaviour
 {
+    public ItemClass itemClass;
     public Transform playerTransform;
 
     void FixedUpdate()

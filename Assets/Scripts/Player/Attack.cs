@@ -9,43 +9,46 @@ public class Attack : MonoBehaviour
     PolygonCollider2D meleeArea;
     Transform shotPos;
 
-
     // 사용 가능 무기들
-    public GameObject[] weaponList;
-    public GameObject bullet;
+    public GameObject[] meleeWeaponList;
+    public GameObject[] shotWeaponList;
+    //public GameObject bullet;
 
     //검 공격 방향 설정
     public GameObject SwordPos;
 
     void Awake()
     {
+        
     }
 
     // 무기를 획득
     public void EquipWeapon(Weapon gainWeapon)
     {
         weapon = gainWeapon;
-        weaponList[weapon.weaponCode].SetActive(true);
-        if (weapon.weaponType == WeaponType.Swing)
+
+        if (weapon.weaponType == WeaponType.Melee)
         {
-            meleeArea = weaponList[weapon.weaponCode].GetComponent<PolygonCollider2D>();
+            meleeWeaponList[weapon.weaponCode].SetActive(true);
+            meleeArea = meleeWeaponList[weapon.weaponCode].GetComponent<PolygonCollider2D>();
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
-            shotPos = weaponList[weapon.weaponCode].GetComponent<Transform>();
-            
+            shotWeaponList[weapon.weaponCode].SetActive(true);
+            shotPos = shotWeaponList[weapon.weaponCode].GetComponent<Transform>();
         }
     }
 
     public void UnEquipWeapon()
     {
-        weaponList[weapon.weaponCode].SetActive(false);
-        if (weapon.weaponType == WeaponType.Swing)
+        if (weapon.weaponType == WeaponType.Melee)
         {
+            meleeWeaponList[weapon.weaponCode].SetActive(false);
             meleeArea = null;
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
+            shotWeaponList[weapon.weaponCode].SetActive(false);
             shotPos = null;
         }
         weapon = null;
@@ -53,14 +56,13 @@ public class Attack : MonoBehaviour
 
     public void Use()
     {
-        if (weapon.weaponType == WeaponType.Swing)
+        if (weapon.weaponType == WeaponType.Melee)
         {
             StartCoroutine("Swing");
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
             weapon.ammo -= 1;
-
             StartCoroutine("Shot");
         }
 
@@ -68,6 +70,7 @@ public class Attack : MonoBehaviour
 
     IEnumerator Swing()
     {
+        Debug.Log("Swing");
         yield return new WaitForSeconds(0.1f / weapon.rate);
         SwordPos.transform.rotation= Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
         meleeArea.enabled = true;
@@ -78,10 +81,16 @@ public class Attack : MonoBehaviour
 
     IEnumerator Shot()
     {
+        Debug.Log("Shot");
+
+        // 탄 종류 가져오기
+        // 비효율적이면 바꾸기
+        ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
+
         yield return new WaitForSeconds(0.4f / weapon.rate);
-        GameObject instantBullet = Instantiate(bullet, shotPos.position, shotPos.rotation);
+        GameObject instantBullet = Instantiate(shotWeapon.bullet, shotPos.position, shotPos.rotation);
         Rigidbody2D bulletRigid = instantBullet.GetComponent<Rigidbody2D>();
-        bullet.GetComponent<Bullet>().damage = weapon.damage;
+        shotWeapon.bullet.GetComponent<Bullet>().damage = weapon.damage;
         //bulletRigid.velocity = shotPos.up * 25;
         bulletRigid.velocity = Player.instance.mouseDir * 25;
         Destroy(instantBullet, 2f);
