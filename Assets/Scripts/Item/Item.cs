@@ -6,8 +6,10 @@ public enum ItemClass { Coin, Key, BossKey, Heal, MaxHealth, ExtraHealth, EXP};
 
 public class Item : MonoBehaviour
 {
-    public ItemClass itemClass;
-    public Transform playerTransform;
+    [field: SerializeField]
+    public ItemClass itemClass {get; private set;}
+
+    Transform playerTransform;
 
     void FixedUpdate()
     {
@@ -17,5 +19,10 @@ public class Item : MonoBehaviour
             return;
         }
         transform.position = Vector2.Lerp(transform.position, playerTransform.position, 0.1f);
+    }
+
+    public void SetPlayerPos(Transform playerTransform)
+    {
+        this.playerTransform = playerTransform;
     }
 }

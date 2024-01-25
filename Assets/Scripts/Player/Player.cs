@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public static Player instance = null;
 
     float runCurrentCoolTime;        // 달리기 대기시간
-    public float attackDelay;        // 공격 대기시간
+    float attackDelay;        // 공격 대기시간
 
     Vector2 mousePos;
     public Vector2 mouseDir;
@@ -24,15 +24,13 @@ public class Player : MonoBehaviour
     bool aDown;             //공격
     bool iDown;             //상호작용
 
-
-    public bool isReload = false;               //장전
-    public bool isSprint = true;                //달리기
-    public bool isDodge = false;                //회피
-    public bool isAttack = false;               //공격
-    public bool isAttackReady = false;          //공격 준비 완료
-    public bool isEquip = false;                //무기 장비
-    private bool isInvincible = false;          //무적 상태
-
+    [SerializeField] bool isReload = false;               //장전
+    [SerializeField] bool isSprint = true;                //달리기
+    [SerializeField] bool isDodge = false;                //회피
+    [SerializeField] bool isAttack = false;               //공격
+    [SerializeField] bool isAttackReady = false;          //공격 준비 완료
+    [SerializeField] bool isEquip = false;                //무기 장비
+    [SerializeField] bool isInvincible = false;          //무적 상태
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
@@ -47,8 +45,6 @@ public class Player : MonoBehaviour
 
     PlayerStatus status;
     Attack attack;
-
-    
 
     GameObject weaponGameObject;
     Weapon weapon;
@@ -213,7 +209,7 @@ public class Player : MonoBehaviour
 
         if (weapon.weaponType != WeaponType.Shot)
             return;
-        
+
         if (weapon.maxAmmo == weapon.ammo)
             return;
 
@@ -226,7 +222,7 @@ public class Player : MonoBehaviour
 
     void ReloadOut()
     {
-        weapon.ammo = weapon.maxAmmo;
+        weapon.Reload();
         isReload = false;
     }
 

@@ -135,6 +135,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: spawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <area>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <maxRoom>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <turning>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <roomSize>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <addedRoom>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <crossedRoom>k__BackingField
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396603088322611139, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
+      propertyPath: <defaultMaxRoom>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8244132617338237421, guid: 6b154c559838f28499bb9315d60abaa8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -575,10 +607,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bc7e415cd3038478d4b3a895ba7d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponList:
-  - {fileID: 6691507591330316267}
-  - {fileID: 896201522904047122}
-  bullet: {fileID: 1465481353037356265, guid: d6ffdf7013addbc41b2e1af5c036aebb, type: 3}
+  meleeWeaponList: []
+  shotWeaponList: []
   SwordPos: {fileID: 0}
 --- !u!212 &1873015518683453683
 SpriteRenderer:
@@ -675,7 +705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436f0434039a7354fa325fa5e60a8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDelay: 0
   mouseDir: {x: 0, y: 0}
   mouseAngle: 0
   isReload: 0
@@ -684,11 +713,11 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 0
   isEquip: 0
+  isInvincible: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   nearObject: {fileID: 0}
-  playerItem: {fileID: 0}
 --- !u!1 &3645063603469177963
 GameObject:
   m_ObjectHideFlags: 0

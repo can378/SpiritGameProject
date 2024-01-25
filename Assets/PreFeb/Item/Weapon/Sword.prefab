@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2240183684125499985}
-  - component: {fileID: 4326583180886243799}
   - component: {fileID: 7134848955563953320}
+  - component: {fileID: 4326583180886243799}
   m_Layer: 0
   m_Name: Sword
   m_TagString: SelectItem
@@ -27,13 +27,39 @@ Transform:
   m_GameObject: {fileID: 3179661334137346525}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.2425447, y: 2.7130141, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7122650362293078312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7134848955563953320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179661334137346525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c9b9e197edf9443b459c0248ca8fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <selectItemClass>k__BackingField: 0
+  <weaponType>k__BackingField: 0
+  <weaponRating>k__BackingField: 1
+  <weaponAttribute>k__BackingField: 0
+  <weaponCode>k__BackingField: 0
+  <damage>k__BackingField: 12
+  <rate>k__BackingField: 1
+  <delay>k__BackingField: 0
+  <maxAmmo>k__BackingField: -1
+  <ammo>k__BackingField: -1
+  <reloadTime>k__BackingField: 0
+  <attackType>k__BackingField: 0
+  <weaponSize>k__BackingField: 1
+  <mainWeaponOption>k__BackingField: 0
 --- !u!58 &4326583180886243799
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -69,32 +95,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &7134848955563953320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71c9b9e197edf9443b459c0248ca8fa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectItemClass: 0
-  weaponType: 0
-  weaponRating: 1
-  weaponAttribute: 0
-  weaponCode: 0
-  damage: 12
-  rate: 1
-  delay: 0
-  maxAmmo: -1
-  ammo: -1
-  reloadTime: 0
-  attackType: 0
-  weaponSize: 1
-  mainWeaponOption: 0
 --- !u!1 &4547545222030557343
 GameObject:
   m_ObjectHideFlags: 0

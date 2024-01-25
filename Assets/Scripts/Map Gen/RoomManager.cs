@@ -7,16 +7,19 @@ public class RoomManager : MonoBehaviour
     public RoomTemplates roomTemplates;
     public MapTemplates mapTemplates;
     public EnemyTemplates enemyTemplates;
-    public bool spawn;
-    public int addedRoom;                   // 각 경로당 추가 생성할 방
-    public int turning;                     // 꺾을 횟수
-    public int crossedRoom;                 // 갈림길 방의 수
-    public int defaultMaxRoom;              // 기본 최대방의 수
-    public int maxRoom;                     // 최대방의 수 [기본 상태 0]
-    public int roomSize;                    // 방 크기 배율 기본 : 3
-    public int area;                        // 방 상화 좌우 영역 기본 : 5
+
+
+    [SerializeField] bool spawn;
+
+    [field: SerializeField] public int addedRoom { get; private set; }                   // 각 경로당 추가 생성할 방
+    [field: SerializeField] public int turning { get; private set; }                     // 꺾을 횟수
+    [field: SerializeField] public int crossedRoom { get; private set; }                 // 갈림길 방의 수
+    [field: SerializeField] public int defaultMaxRoom { get; private set; }              // 기본 최대방의 수
+    [field: SerializeField] public int maxRoom { get; private set; }                    // 최대방의 수 [기본 상태 0]
+    [field: SerializeField] public int roomSize { get; private set; }                    // 방 크기 배율 기본 : 3
+    [field: SerializeField] public int area {get; private set;}                        // 방 상화 좌우 영역 기본 : 5
     public List<GameObject> rooms;
-    public bool finish;                     // 맵 생성 완료 보기용
+    [field: SerializeField] public bool finish{get; private set;}                     // 맵 생성 완료 보기용
 
     public Camera miniMapCamera;
     public GameObject hideMap;
@@ -222,17 +225,17 @@ public class RoomManager : MonoBehaviour
             
             if(room.roomType == RoomType.None)
             {
-                room.mapType = MapType.Treasure;
+                room.SetMapManager(MapType.Treasure);
             }
             else if(room.roomType == RoomType.OneWay)
             {
                 if(!isBoss)
                 {
-                    room.mapType = MapType.Boss;
+                    room.SetMapManager(MapType.Boss);
                     isBoss = true;
                     continue;
                 }
-                room.mapType = MapType.Mission;
+                room.SetMapManager(MapType.Mission);
             }
             else if (room.roomType == RoomType.TwoWay)
             {
@@ -240,20 +243,20 @@ public class RoomManager : MonoBehaviour
                 int ran = Random.Range(0, 10);
                 if(ran == 0)
                 {
-                    room.mapType = MapType.Treasure;
+                    room.SetMapManager(MapType.Treasure);
                     continue;
                 }
-                room.mapType = MapType.Default;
+                room.SetMapManager(MapType.Default);
             }
             else if (room.roomType == RoomType.ThreeWay)
             {
                 if(!isEvent)
                 {
-                    room.mapType = MapType.Event;
+                    room.SetMapManager(MapType.Event);
                     isEvent = true;
                     continue;
                 }
-                room.mapType = MapType.Shop;
+                room.SetMapManager(MapType.Shop);
             }
         }
 

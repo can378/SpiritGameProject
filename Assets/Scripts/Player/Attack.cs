@@ -8,11 +8,11 @@ public class Attack : MonoBehaviour
     Weapon weapon;
     PolygonCollider2D meleeArea;
     Transform shotPos;
+    GameObject bullet;
 
     // 사용 가능 무기들
-    public GameObject[] meleeWeaponList;
-    public GameObject[] shotWeaponList;
-    //public GameObject bullet;
+    [SerializeField] GameObject[] meleeWeaponList;
+    [SerializeField] GameObject[] shotWeaponList;
 
     //검 공격 방향 설정
     public GameObject SwordPos;
@@ -36,6 +36,8 @@ public class Attack : MonoBehaviour
         {
             shotWeaponList[weapon.weaponCode].SetActive(true);
             shotPos = shotWeaponList[weapon.weaponCode].GetComponent<Transform>();
+            ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
+            bullet = shotWeapon.bullet;
         }
     }
 
@@ -62,7 +64,7 @@ public class Attack : MonoBehaviour
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
-            weapon.ammo -= 1;
+            weapon.ConsumeAmmo();
             StartCoroutine("Shot");
         }
 
@@ -83,14 +85,10 @@ public class Attack : MonoBehaviour
     {
         Debug.Log("Shot");
 
-        // 탄 종류 가져오기
-        // 비효율적이면 바꾸기
-        ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
-
         yield return new WaitForSeconds(0.4f / weapon.rate);
-        GameObject instantBullet = Instantiate(shotWeapon.bullet, shotPos.position, shotPos.rotation);
+        GameObject instantBullet = Instantiate(bullet, shotPos.position, shotPos.rotation);
         Rigidbody2D bulletRigid = instantBullet.GetComponent<Rigidbody2D>();
-        shotWeapon.bullet.GetComponent<Bullet>().damage = weapon.damage;
+        bullet.GetComponent<Bullet>().SetBullet(weapon.damage);
         //bulletRigid.velocity = shotPos.up * 25;
         bulletRigid.velocity = Player.instance.mouseDir * 25;
         Destroy(instantBullet, 2f);

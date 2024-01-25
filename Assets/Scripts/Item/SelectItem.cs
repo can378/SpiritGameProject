@@ -6,6 +6,6 @@ public enum SelectItemClass {Weapon, Consumable, Skill };
 
 public class SelectItem : MonoBehaviour
 {
-    public SelectItemClass selectItemClass;
+    [field: SerializeField] public SelectItemClass selectItemClass {get; private set;}
 }
 

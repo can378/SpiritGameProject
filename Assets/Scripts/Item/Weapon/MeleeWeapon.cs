@@ -7,7 +7,7 @@ public enum WeaponSize {Big, Middle, Small}
 
 public class MeleeWeapon : Weapon
 {
-    public AttackType attackType;
-    public WeaponSize weaponSize;
-    public MainWeaponOption mainWeaponOption;
+    [field: SerializeField] public AttackType attackType {get; private set;}
+    [field: SerializeField] public WeaponSize weaponSize { get; private set; }
+    [field: SerializeField] public MainWeaponOption mainWeaponOption { get; set;}
 }

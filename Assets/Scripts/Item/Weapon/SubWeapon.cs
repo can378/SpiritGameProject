@@ -7,6 +7,6 @@ public enum SubWeaponType {Shield, Amulet, Fan}
 
 public class SubWeapon : Weapon
 {
-    SubWeaponOption subWeaponOption;
-    SubWeaponType subWeaponType;
+    [field: SerializeField] public SubWeaponOption subWeaponOption { get; set;}
+    [field: SerializeField] public SubWeaponType subWeaponType { get; private set; }
 }

@@ -125,8 +125,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5242110244964992286}
-  - component: {fileID: 7923798826213622146}
   - component: {fileID: 4045735915874496207}
+  - component: {fileID: 7923798826213622146}
   m_Layer: 0
   m_Name: Gun
   m_TagString: SelectItem
@@ -143,13 +143,40 @@ Transform:
   m_GameObject: {fileID: 8830712857820811360}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.3985124, y: 3.1833096, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6650566766952924600}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4045735915874496207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830712857820811360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795e579c2139f014e8e5ad6f82d90feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <selectItemClass>k__BackingField: 0
+  <weaponType>k__BackingField: 1
+  <weaponRating>k__BackingField: 1
+  <weaponAttribute>k__BackingField: 2
+  <weaponCode>k__BackingField: 0
+  <damage>k__BackingField: 7
+  <rate>k__BackingField: 3
+  <delay>k__BackingField: 0.2
+  <maxAmmo>k__BackingField: 6
+  <ammo>k__BackingField: 6
+  <reloadTime>k__BackingField: 0.5
+  <reloadType>k__BackingField: 0
+  <bulletType>k__BackingField: 0
+  <mainWeaponOption>k__BackingField: 0
+  <bullet>k__BackingField: {fileID: 1465481353037356265, guid: b92409abc7fd7a64188f47ce9cd3cbd7, type: 3}
 --- !u!58 &7923798826213622146
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -185,30 +212,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &4045735915874496207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830712857820811360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795e579c2139f014e8e5ad6f82d90feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectItemClass: 0
-  weaponType: 1
-  weaponRating: 1
-  weaponAttribute: 2
-  weaponCode: 0
-  damage: 7
-  rate: 5
-  delay: 0.8
-  maxAmmo: 6
-  ammo: 6
-  reloadTime: 0.5
-  reloadType: 1
-  bulletType: 0
-  mainWeaponOption: 0
-  bullet: {fileID: 1465481353037356265, guid: b92409abc7fd7a64188f47ce9cd3cbd7, type: 3}

@@ -931,7 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba112dddc835ac44a1f4f6795a999dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawned: 1
+  <spawned>k__BackingField: 1
   openingDirection: 0
 --- !u!1 &2463630829212234849
 GameObject:
@@ -1659,17 +1659,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ef4a3e7b94f2c4ba899e9639547dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockTrigger: 0
-  unLockTrigger: 0
-  mapType: 0
-  doorType: 0
-  roomType: 1
-  doors:
+  <lockTrigger>k__BackingField: 0
+  <unLockTrigger>k__BackingField: 0
+  <mapType>k__BackingField: 0
+  <doorType>k__BackingField: 0
+  <roomType>k__BackingField: 1
+  <doors>k__BackingField:
   - {fileID: 5395743770635309987}
-  top: 0
-  bottom: 0
-  left: 1
-  right: 0
+  <map>k__BackingField: {fileID: 0}
+  <top>k__BackingField: 0
+  <bottom>k__BackingField: 0
+  <left>k__BackingField: 1
+  <right>k__BackingField: 0
 --- !u!1 &4316683446222625785
 GameObject:
   m_ObjectHideFlags: 0
@@ -3941,7 +3942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba112dddc835ac44a1f4f6795a999dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawned: 0
+  <spawned>k__BackingField: 0
   openingDirection: 3
 --- !u!61 &7765226864225756084
 BoxCollider2D:

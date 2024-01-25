@@ -7,19 +7,20 @@ public enum RoomType { None, OneWay, TwoWay, ThreeWay, FourWay } // 문의 개수
 
 public class Room : MonoBehaviour
 {
-    public bool lockTrigger;        //맵을 잠궈버린다
-    public bool unLockTrigger;      //맵의 잠금을 해제한다.
-    public MapType mapType;          //맵 타입을 바꾸면 현재 방이 변경됨
-    public DoorType doorType;
-    public RoomType roomType;
-    public Door[] doors;
-    public GameObject map;
+
+    [SerializeField] bool lockTrigger;        //맵을 잠궈버린다
+    [SerializeField] bool unLockTrigger;      //맵의 잠금을 해제한다.
+    [field: SerializeField] public MapType mapType { get; private set; }          //맵 타입을 바꾸면 현재 방이 변경됨
+    [field: SerializeField] public DoorType doorType { get; private set; }                         //나중에 설정
+    [field: SerializeField] public RoomType roomType { get; private set; }
+    [field: SerializeField] public Door[] doors { get; private set; }
+    [field: SerializeField] public GameObject map { get; private set; }
 
     // 문 존재 여부 설정용
-    public bool top;
-    public bool bottom;
-    public bool left;
-    public bool right;
+    [field: SerializeField] public bool top {get; private set;}
+    [field: SerializeField] public bool bottom { get; private set; }
+    [field: SerializeField] public bool left { get; private set; }
+    [field: SerializeField] public bool right { get; private set; }
 
     RoomManager roomManager;
     MapTemplates mapTemplates;
@@ -135,8 +136,8 @@ public class Room : MonoBehaviour
             foreach (Door door in doors)
             {
                 door.LockDoor();
-                lockTrigger = false;
             }
+            lockTrigger = false;
         }
     }
 
@@ -148,11 +149,15 @@ public class Room : MonoBehaviour
             foreach (Door door in doors)
             {
                 door.UnLockDoor();
-                unLockTrigger = false;
             }
+            unLockTrigger = false;
         }
     }
 
-
+    // 매니저용
+    public void SetMapManager(MapType mapType)
+    {
+        this.mapType = mapType;
+    }
 
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RoomSpawner : MonoBehaviour
 {
-    // 버그 있음
-    // 한 자리에 동시에 3개의 방이 생성되려고 하면 한자리에 여러개의 방이 생성됨
-    public bool spawned = false;
-    public int openingDirection;
+    [field:SerializeField]
+    public bool spawned { get; private set;}
+    [SerializeField]
+    int openingDirection;
     // 1 --> need bottom door
     // 2 --> need top door
     // 3 --> need left door
