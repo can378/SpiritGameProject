@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
+    public GameObject playerItem;
 
     Vector2 playerPosition;
     
@@ -298,39 +299,41 @@ public class Player : MonoBehaviour
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable)
         {
+            //전에 가지고 있던 아이템 드랍
+            if (playerItem != null)
+            { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
+            
             //아이템 갱신
-            DataManager.instance.userData.playerItem = selectItem.name;
+            //DataManager.instance.userData.playerItem = selectItem.name;
+            playerItem = selectItem.gameObject;
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
-            Destroy(selectItem.gameObject);
+            playerItem.SetActive(false);
+            //Destroy(selectItem.gameObject);
         }
     }
 
     void UseItem()
     {
-        if (Input.GetKeyDown(KeyCode.H) && DataManager.instance.userData.playerItem != null)
+        if (Input.GetKeyDown(KeyCode.H) && playerItem != null)
         {
             MapUIManager.instance.updateItemUI(null);
+            
 
-            switch (DataManager.instance.userData.playerItem)
+            switch (playerItem.name)
             {
                 case "bomb":
-                    
-                    //Vector3 throwDirection = transform.position - playerItem.transform.position;
-                    //playerItem.GetComponent<Rigidbody2D>().AddForce(throwDirection.normalized * 3f);
-
-
-                    break;
                 case "Item":
-                    print("item");
+                    StartCoroutine(attack.ThrowWeapon(playerItem));
                     break;
                 case "HPPortion":
                     DataManager.instance.userData.playerHP += 10;
                     MapUIManager.instance.UpdateHealthUI();
+                    Destroy(playerItem);
                     break;
                 default: break;
             }
+            playerItem = null;
 
-            DataManager.instance.userData.playerItem = null;
 
         }
 

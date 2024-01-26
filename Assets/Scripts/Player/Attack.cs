@@ -13,6 +13,7 @@ public class Attack : MonoBehaviour
     // 사용 가능 무기들
     [SerializeField] GameObject[] meleeWeaponList;
     [SerializeField] GameObject[] shotWeaponList;
+    [SerializeField] GameObject[] throwWeaponList;
 
     //검 공격 방향 설정
     public GameObject SwordPos;
@@ -69,6 +70,29 @@ public class Attack : MonoBehaviour
         }
 
     }
+
+
+    public IEnumerator ThrowWeapon(GameObject explosive) 
+    { 
+        
+        yield return new WaitForSeconds(0.1f);
+
+        explosive.tag = "Weapon";
+        explosive.SetActive(true);
+        explosive.transform.position = transform.position;
+        explosive.GetComponent<Rigidbody2D>().velocity = Player.instance.mouseDir * 25;
+
+        float originalRadius = explosive.GetComponent<CircleCollider2D>().radius;
+        for (int i = 0; i < originalRadius * 1.5; i++)
+        { 
+            explosive.GetComponent<CircleCollider2D>().radius++;
+            yield return new WaitForSeconds(0.1f);
+        }
+        Destroy(explosive);
+        yield return null;
+
+    }
+
 
     IEnumerator Swing()
     {

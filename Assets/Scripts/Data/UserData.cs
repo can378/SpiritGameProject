@@ -10,7 +10,7 @@ public class UserData
 {
     public float playerHP;
     public float playerHPMax;
-    public float playerLevel;
+    public float playerExp;
     public string playerItem;
 
     public int coin;

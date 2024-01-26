@@ -72,7 +72,7 @@ public class DataManager : MonoBehaviour
     {
         userData.playerHP = 200;
         userData.playerHPMax = 200;
-        userData.playerLevel = 1;
+        userData.playerExp = 1;
 
         userData.coin = 0;
         userData.key = 0;

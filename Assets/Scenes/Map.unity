@@ -1617,7 +1617,7 @@ MonoBehaviour:
   diePanel: {fileID: 408384733}
   settingPanel: {fileID: 1529893396}
   Hpslider: {fileID: 1877854910}
-  LevelTxt: {fileID: 828348623}
+  ExpTxt: {fileID: 828348623}
   CoinTxt: {fileID: 1628206002}
   KeyTxt: {fileID: 715733514}
   itemImg: {fileID: 221591761}
@@ -2666,7 +2666,7 @@ GameObject:
   - component: {fileID: 828348624}
   - component: {fileID: 828348623}
   m_Layer: 5
-  m_Name: Level
+  m_Name: Exp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2788,6 +2788,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828348621}
   m_CullTransparentMesh: 1
+--- !u!1001 &946313816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3546453168684463931, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_Name
+      value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.24542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.4021966
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488563610573141593, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
 --- !u!1 &952490673
 GameObject:
   m_ObjectHideFlags: 0
@@ -4880,7 +4937,7 @@ GameObject:
   - component: {fileID: 1815469026}
   - component: {fileID: 1815469025}
   m_Layer: 5
-  m_Name: LevelText
+  m_Name: ExpText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4925,7 +4982,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB808\uBCA8"
+  m_text: Exp
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c4b52d4fc7478c74ab03afc7ec28a6aa, type: 2}
   m_sharedMaterial: {fileID: 6521103307169671964, guid: c4b52d4fc7478c74ab03afc7ec28a6aa, type: 2}
@@ -6649,3 +6706,4 @@ SceneRoots:
   - {fileID: 1983504098}
   - {fileID: 230767456}
   - {fileID: 354142252}
+  - {fileID: 946313816}

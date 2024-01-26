@@ -1745,7 +1745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436f0434039a7354fa325fa5e60a8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDelay: 0
   mouseDir: {x: 0, y: 0}
   mouseAngle: 0
   isReload: 0
@@ -1754,10 +1753,12 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 0
   isEquip: 0
+  isInvincible: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   nearObject: {fileID: 0}
+  playerItem: {fileID: 0}
 --- !u!114 &539968288
 MonoBehaviour:
   m_ObjectHideFlags: 0

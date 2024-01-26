@@ -33,8 +33,8 @@ public class EnemyBasic : MonoBehaviour
         {
             if (status.health <= 0f) 
             { 
-                DataManager.instance.userData.playerLevel++;
-                MapUIManager.instance.UpdateLevelUI();
+                DataManager.instance.userData.playerExp++;
+                MapUIManager.instance.UpdateExpUI();
                 EnemyDead(); 
             
             }

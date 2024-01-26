@@ -19,7 +19,7 @@ public class MapUIManager : MonoBehaviour
 
     //Player
     public Slider Hpslider;
-    public TMP_Text LevelTxt;
+    public TMP_Text ExpTxt;
     public TMP_Text CoinTxt;
     public TMP_Text KeyTxt;
     public Image itemImg;
@@ -36,7 +36,7 @@ public class MapUIManager : MonoBehaviour
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();
-        UpdateLevelUI();
+        UpdateExpUI();
         UpdateWeaponUI();
         UpdateSkillUI();
         updateItemUI(null);
@@ -102,9 +102,9 @@ public class MapUIManager : MonoBehaviour
         KeyTxt.text = DataManager.instance.userData.key.ToString();
     }
 
-    public void UpdateLevelUI() 
+    public void UpdateExpUI() 
     {
-        LevelTxt.text = DataManager.instance.userData.playerLevel.ToString();
+        ExpTxt.text = DataManager.instance.userData.playerExp.ToString();
     }
     public void UpdateWeaponUI() 
     {
