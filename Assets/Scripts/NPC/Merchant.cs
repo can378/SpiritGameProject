@@ -6,42 +6,115 @@ using TMPro;
 
 public class Merchant : MonoBehaviour
 {
+    public List<GameObject> itemList;//판매 가능한 아이템 종류
+    public List<GameObject> sellingItem;//이번에 판매할 아이템
+    public List<GameObject> storePos;
+
     public GameObject storePanel;
 
-    private bool playerInRange = false;
-        
-    void Update()
+    UserData userData;
+
+
+
+
+    private void Start()
     {
-        // 플레이어가 충돌 영역에 있고 R키를 눌렀을 때
-        if (playerInRange && storePanel != null && Input.GetKeyDown(KeyCode.R))
+        userData = FindObjectOfType<DataManager>().userData;
+        //setStore();
+
+    }
+
+
+    private void setStore()
+    {
+        for (int i = 0; i < storePos.Count; i++)
         {
-            storePanel.SetActive(!storePanel.activeSelf);
+            int randNum = Random.Range(0, itemList.Count);
+            GameObject itemObj = Instantiate(itemList[randNum]);
+            itemObj.GetComponent<ItemStatus>().obtainable = false;
+            itemObj.transform.position = storePos[i].transform.position;
+
+        }
+    }
+    private void buying(GameObject buyingObj)
+    {
+
+        int price = buyingObj.GetComponent<ItemStatus>().price;
+
+        if (userData.coin >= price)
+        {
+            userData.coin -= price;
+            MapUIManager.instance.UpdateCoinUI();
+            MapUIManager.instance.updateItemUI(buyingObj);
+            buyingObj.SetActive(false);
+            buyingObj.GetComponent<ItemStatus>().obtainable = true;
+            Player.instance.playerItem = buyingObj;
+            //userData.playerItem = GameData.instance.itemList[2].name;
+        }
+        else { print("no enough coin"); }
+
+    }
+
+    /*
+    IEnumerator selectItem()
+    {
+
+        while (true)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+
+
+                if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Item"))
+                {
+
+                    Debug.Log(hit.collider.gameObject.name);
+                    buying(hit.collider.gameObject);
+                }
+            }
+
+            yield return null;
+        }
+    }
+    */
+
+    IEnumerator storeActivate()
+    {
+        while (true)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                storePanel.SetActive(!storePanel.activeSelf);
+            }
+            yield return null;
         }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        //플레이어가 충돌 영역에 들어왔을 경우
         if (collision.CompareTag("Player"))
         {
-            playerInRange = true;
-
-
+            StartCoroutine(storeActivate());
         }
     }
 
-    public void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        //플레이어가 충돌 영역에서 나간 경우
         if (collision.CompareTag("Player"))
         {
-            playerInRange = false;
-
-            // 패널이 존재하고 활성화되어있다면 비활성화
+            StopAllCoroutines();
             if (storePanel != null && storePanel.activeSelf)
             {
                 storePanel.SetActive(false);
             }
         }
     }
+
+
+
+
+
+
 }

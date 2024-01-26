@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 8518207996224165186}
   - component: {fileID: 724250959904060719}
   - component: {fileID: 8571260093985997785}
-  m_Layer: 0
+  - component: {fileID: -4285379257914946232}
+  - component: {fileID: 2602397362528170328}
+  m_Layer: 6
   m_Name: HPPortion
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
@@ -134,3 +136,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <selectItemClass>k__BackingField: 1
+--- !u!114 &-4285379257914946232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911212924154988040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c96a009cead91e408fcc25ba048bce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: HPPortion
+  obtainable: 1
+  price: 1
+--- !u!50 &2602397362528170328
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911212924154988040}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -297,7 +297,11 @@ public class Player : MonoBehaviour
             attackDelay = 0;
             weaponGameObject.SetActive(false);
         }
-        else if(selectItem.selectItemClass == SelectItemClass.Consumable)
+        else if
+            (
+            selectItem.selectItemClass == SelectItemClass.Consumable&&
+            selectItem.GetComponent<ItemStatus>().obtainable
+            )
         {
             //전에 가지고 있던 아이템 드랍
             if (playerItem != null)
@@ -319,7 +323,7 @@ public class Player : MonoBehaviour
             MapUIManager.instance.updateItemUI(null);
             
 
-            switch (playerItem.name)
+            switch (playerItem.GetComponent<ItemStatus>().name)
             {
                 case "bomb":
                 case "Item":
@@ -330,7 +334,7 @@ public class Player : MonoBehaviour
                     MapUIManager.instance.UpdateHealthUI();
                     Destroy(playerItem);
                     break;
-                default: break;
+                default: print("wrong item process"); break;
             }
             playerItem = null;
 
@@ -381,14 +385,6 @@ public class Player : MonoBehaviour
             }
 
         }
-    }
-
-    void GainItem(Collider2D item)
-    {
-        //아이템 갱신
-        DataManager.instance.userData.playerItem = item.name;
-        MapUIManager.instance.updateItemUI(item.gameObject);
-        Destroy(item.gameObject);
     }
 
 
