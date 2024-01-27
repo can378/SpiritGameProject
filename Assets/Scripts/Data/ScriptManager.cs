@@ -38,31 +38,35 @@ public class ScriptManager : MonoBehaviour
             for (int j = 0; j < rowSize; j++)
             { Sentence[i, j] = row[j]; }
         }
-    }
-
-    public void ScriptTest() 
-    {
-        //활용 예시
-
-        for (int i = 0; i < lineSize; i++)
-        {    if (Sentence[i, 0] == "할머니") { print(Sentence[i, 1]); }    }
-        //호출 예시 ScriptManager.instance.ScriptTest();
 
     }
 
-
-    public string NPCScript(int index) 
+    public void ScriptTest()//활용 예시
     {
+        //for (int i = 0; i < lineSize; i++)
+        //{    if (Sentence[0,i, 0] == "할머니") { print(Sentence[0,i, 1]); }    }
+    }
 
-        if (Sentence[index % lineSize, 0] == "chapter")
+
+    public string NPCScript(int chapter,int index) 
+    {
+        if (Sentence[index % lineSize, 0] == chapter.ToString())
         {
-            index++;
+            if (Sentence[index % lineSize, 1] == "npc")
+            {
+                return "npc : " + Sentence[index % lineSize, 2];
+            }
+            else if (Sentence[index % lineSize, 1] == "player")
+            {
+                return "player : " + Sentence[index % lineSize, 2];
+            }
+            else if (Sentence[index % lineSize, 1] == "border")
+            {
+                return "border";
+            }
         }
-        else if (Sentence[index % lineSize, 0] == "repeat")
-        { }
-
-        return Sentence[index%lineSize, 1];
- 
+        
+        return "wrong";
     }
 
 
