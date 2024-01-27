@@ -290,9 +290,9 @@ public class Player : MonoBehaviour
             }
             weaponGameObject = nearObject;
             weapon = weaponGameObject.GetComponent<Weapon>();
-            DataManager.instance.userData.Weapon = weapon.name.ToString();
+            //DataManager.instance.userData.Weapon = weapon.name.ToString();
 
-            MapUIManager.instance.UpdateWeaponUI();
+            //MapUIManager.instance.UpdateWeaponUI();
             attack.EquipWeapon(weapon);
             attackDelay = 0;
             weaponGameObject.SetActive(false);
