@@ -5,12 +5,12 @@ using TMPro;
 
 public class Objectmanager : MonoBehaviour
 {
-    MerchantStore merchantStore;
+    //MerchantStore merchantStore;
     UserData userData;
 
     private void Start()
     {
-        merchantStore = FindObjectOfType<MerchantStore>();
+        //merchantStore = FindObjectOfType<MerchantStore>();
         userData = FindObjectOfType<DataManager>().userData;
     }
     void OnTriggerEnter2D(Collider2D collision)
@@ -25,6 +25,7 @@ public class Objectmanager : MonoBehaviour
                 userData.coin++;
                 MapUIManager.instance.UpdateCoinUI();
 
+                /*
                 if (merchantStore != null)
                 {
                     int itemCost = merchantStore.recovery;
@@ -34,6 +35,7 @@ public class Objectmanager : MonoBehaviour
                 {
                     Debug.LogWarning("MerchantStore not found!");
                 }
+                */
             }
 
             if (item.itemClass == ItemClass.Key)
@@ -46,18 +48,5 @@ public class Objectmanager : MonoBehaviour
         
     }
 
-    public void BuyItem(int cost)
-    {
-        if (userData.coin >= cost)
-        {
-            userData.coin -= cost;
-            MapUIManager.instance.UpdateCoinUI();
-            MapUIManager.instance.updateItemUI(GameData.instance.itemList[2]);
-            userData.playerItem = GameData.instance.itemList[2].name;
-        }
-        else
-        {
-            Debug.LogWarning("Not enough coins to buy the item!");
-        }
-    }
+    
 }

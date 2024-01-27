@@ -426,6 +426,42 @@ MonoBehaviour:
   mapSize: {x: 15, y: 15}
   cameraMoveSpeed: 10
   isCameraChasing: 1
+--- !u!1 &56670143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 56670144}
+  m_Layer: 5
+  m_Name: StorePanel
+  m_TagString: StorePanel
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &56670144
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56670143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 927265802}
+  m_Father: {fileID: 1024405852}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &102581396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2903,7 +2939,7 @@ GameObject:
   - component: {fileID: 927265804}
   - component: {fileID: 927265803}
   m_Layer: 5
-  m_Name: StorePanel
+  m_Name: Store
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2926,12 +2962,12 @@ RectTransform:
   - {fileID: 2141839011}
   - {fileID: 986881985}
   - {fileID: 2001478652}
-  m_Father: {fileID: 1024405852}
+  m_Father: {fileID: 56670144}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -397.56778}
-  m_SizeDelta: {x: 0, y: -795.137}
+  m_SizeDelta: {x: 1820, y: 185.4317}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &927265803
 MonoBehaviour:
@@ -3518,7 +3554,7 @@ RectTransform:
   - {fileID: 564903048}
   - {fileID: 2062678234}
   - {fileID: 636527152}
-  - {fileID: 927265802}
+  - {fileID: 56670144}
   - {fileID: 1529893395}
   - {fileID: 1822958989}
   m_Father: {fileID: 0}
@@ -5402,7 +5438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.5849056, g: 0.35039157, b: 0.35039157, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5459,6 +5495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1427fd151cbf247bf57eea1bbeac34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemList: []
+  storeBtn: []
   recovery: 1
   recoveryCoin: {fileID: 752219522}
 --- !u!114 &1822958991

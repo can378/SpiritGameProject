@@ -6,25 +6,19 @@ using TMPro;
 
 public class Merchant : MonoBehaviour
 {
-    public List<GameObject> itemList;//판매 가능한 아이템 종류
-    public List<GameObject> sellingItem;//이번에 판매할 아이템
-    public List<GameObject> storePos;
-
-    public GameObject storePanel;
-
-    UserData userData;
 
 
+    GameObject storePanel;
 
+    //UserData userData;
 
     private void Start()
     {
-        userData = FindObjectOfType<DataManager>().userData;
+        storePanel = GameObject.FindWithTag("StorePanel").transform.GetChild(0).gameObject;
+        //userData = FindObjectOfType<DataManager>().userData;
         //setStore();
-
     }
-
-
+    /*
     private void setStore()
     {
         for (int i = 0; i < storePos.Count; i++)
@@ -54,7 +48,7 @@ public class Merchant : MonoBehaviour
         else { print("no enough coin"); }
 
     }
-
+    */
     /*
     IEnumerator selectItem()
     {

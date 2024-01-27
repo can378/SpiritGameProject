@@ -323,7 +323,7 @@ public class Player : MonoBehaviour
             MapUIManager.instance.updateItemUI(null);
             
 
-            switch (playerItem.GetComponent<ItemStatus>().name)
+            switch (playerItem.GetComponent<ItemStatus>().itemName)
             {
                 case "bomb":
                 case "Item":
@@ -334,7 +334,7 @@ public class Player : MonoBehaviour
                     MapUIManager.instance.UpdateHealthUI();
                     Destroy(playerItem);
                     break;
-                default: print("wrong item process"); break;
+                default: print("wrong item process"+ playerItem.GetComponent<ItemStatus>().itemName); break;
             }
             playerItem = null;
 
