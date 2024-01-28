@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     [field: SerializeField] public MapType mapType { get; private set; }          //맵 타입을 바꾸면 현재 방이 변경됨
     [field: SerializeField] public DoorType doorType { get; private set; }                         //나중에 설정
     [field: SerializeField] public RoomType roomType { get; private set; }
-    [field: SerializeField] public Door[] doors { get; private set; }
+    [field: SerializeField] public Door door { get; private set; }
     [field: SerializeField] public GameObject map { get; private set; }
 
     // 문 존재 여부 설정용
@@ -78,11 +78,13 @@ public class Room : MonoBehaviour
             }
             else if (mapType == MapType.Mission)
             {
+                doorType = DoorType.Trap;
                 ran = Random.Range(0, mapTemplates.missionMap.Length);
                 map = Instantiate(mapTemplates.missionMap[ran], transform.position, transform.rotation);
             }
             else if (mapType == MapType.Boss)
             {
+                doorType = DoorType.Key;
                 ran = Random.Range(0, mapTemplates.bossMap.Length);
                 map = Instantiate(mapTemplates.bossMap[ran], transform.position, transform.rotation);
             }
@@ -106,50 +108,44 @@ public class Room : MonoBehaviour
     // Wall 절대 부술수 없는 문
     void SetDoor()
     {
-        // 벽으로 설정 불가
-        if (doorType == DoorType.ShabbyWall || doorType == DoorType.Wall)
-        {
-            doorType = preDoorType;
-            return;
-        }
-
         // 변경
         if (preDoorType != doorType)
         {
-            foreach (Door door in doors)
-            {
-                door.SetDoorType(doorType);
-            }
+            door.SetDoorType(doorType);
 
-            if(doorType == DoorType.Key)
+            if (doorType == DoorType.Key)
                 lockTrigger = true;
 
             preDoorType = doorType;
         }
     }
 
+    public void LockDoor()
+    {
+        lockTrigger = true;
+    }
+
+    public void UnLockDoor()
+    {
+        unLockTrigger = true;
+    }
+
     // key, Trap이면 문을 잠굴 수 있다.
-    public void LockTrigger()
+    void LockTrigger()
     {
         if(lockTrigger)
         {
-            foreach (Door door in doors)
-            {
-                door.LockDoor();
-            }
+            door.LockDoor();
             lockTrigger = false;
         }
     }
 
     // key, Trap이면 문을 열 수 있다.
-    public void UnLockTrigger()
+    void UnLockTrigger()
     {
         if(unLockTrigger)
         {
-            foreach (Door door in doors)
-            {
-                door.UnLockDoor();
-            }
+            door.UnLockDoor();
             unLockTrigger = false;
         }
     }

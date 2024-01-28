@@ -57,6 +57,10 @@ public class RoomEnterExit : MonoBehaviour
             enemyGroup.SetActive(true);
         }
         
+        if(room.doorType == DoorType.Trap)
+        {
+            room.LockDoor();
+        }
 
     }
     void exitRoom()

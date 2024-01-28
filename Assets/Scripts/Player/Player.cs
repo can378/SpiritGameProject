@@ -273,6 +273,10 @@ public class Player : MonoBehaviour
             {
                 nearObject.GetComponent<Door>().DoorInteraction();
             }
+            else if (nearObject.tag == "Wall")
+            {
+                nearObject.GetComponent<Wall>().WallInteraction();
+            }
         }
     }
 
