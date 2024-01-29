@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
@@ -50,6 +51,8 @@ public class Player : MonoBehaviour
     GameObject weaponGameObject;
     Weapon weapon;
 
+    UserData userData;
+
 
     void Awake()
     {
@@ -62,6 +65,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        userData = DataManager.instance.userData;
         int layerNum = LayerMask.NameToLayer("Default");
         this.layerMask = layerNum;
     }
@@ -334,7 +338,7 @@ public class Player : MonoBehaviour
                     StartCoroutine(attack.ThrowWeapon(playerItem));
                     break;
                 case "HPPortion":
-                    DataManager.instance.userData.playerHP += 10;
+                    userData.playerHP += 10;
                     MapUIManager.instance.UpdateHealthUI();
                     Destroy(playerItem);
                     break;
@@ -358,7 +362,7 @@ public class Player : MonoBehaviour
         //Enter로 하는게 나을 듯?
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
-            if (DataManager.instance.userData.playerHP < 0)
+            if (userData.playerHP < 0)
             {
                 Debug.Log("player dead");
                 DataManager.instance.InitData();
@@ -367,8 +371,8 @@ public class Player : MonoBehaviour
             else if (isInvincible == false)
             {
 
-                //DataManager.instance.userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
-                DataManager.instance.userData.playerHP -= 10;
+                //userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
+                userData.playerHP -= 10;
                 MapUIManager.instance.UpdateHealthUI();
 
 
@@ -389,6 +393,17 @@ public class Player : MonoBehaviour
             }
 
         }
+        else if (LayerMask.LayerToName(other.gameObject.layer) == "EnterDungeon")
+        {
+            if (userData.nowChapter != 5)
+            {
+                userData.nowChapter++;
+                string sceneName = "Map" + userData.nowChapter.ToString();
+                SceneManager.LoadScene(sceneName);
+            }
+            else { userData.nowChapter = 0; SceneManager.LoadScene("Main"); }
+        }
+        
     }
 
 

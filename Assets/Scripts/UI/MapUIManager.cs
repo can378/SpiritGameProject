@@ -131,15 +131,16 @@ public class MapUIManager : MonoBehaviour
 
     public void HomeBtn() //홈 버튼
     {
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Main");
+        //PlayerPrefs.Save();
+        //SceneManager.LoadScene("Main");
     }
 
 
     public void RestartBtn() //재시작 버튼
     {
-        SceneManager.LoadScene("Map");
         DataManager.instance.InitData();
+        SceneManager.LoadScene("Main");
+        
     }
 
     public void QuitBtn()

@@ -8,7 +8,6 @@ public class Village : MonoBehaviour
     public GameObject Inside;
     public GameObject Entrance;
     public GameObject Exit;
-    public GameObject Cave;
 
     private GameObject Player;
     
@@ -45,10 +44,6 @@ public class Village : MonoBehaviour
                 Player.GetComponent<PlayerStatus>().isPlayerMove = false;
 
             }
-
-            //메인 게임 시작
-            if (this.gameObject == Cave) 
-            { SceneManager.LoadScene("Map"); }
 
         }
     

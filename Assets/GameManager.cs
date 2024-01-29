@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +34,12 @@ public class GameManager : MonoBehaviour
         //DataManager.instance.userData.coin += 50;
         canvas.SetActive(true);
 
+        if (playerData.nowChapter != 0) 
+        {
+            string sceneName = "Map" + playerData.nowChapter.ToString();
+            SceneManager.LoadScene(sceneName);
+        }
+        
     }
 
    

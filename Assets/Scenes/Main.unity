@@ -365,11 +365,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7702378838149605242, guid: 069caac10953bde4b8a399320581c0d7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0842
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7702378838149605242, guid: 069caac10953bde4b8a399320581c0d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -20.347
+      value: -21.2
       objectReference: {fileID: 0}
     - target: {fileID: 7702378838149605242, guid: 069caac10953bde4b8a399320581c0d7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -419,8 +419,7 @@ GameObject:
   - component: {fileID: 211823944}
   - component: {fileID: 211823943}
   - component: {fileID: 211823945}
-  - component: {fileID: 211823946}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: cave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,22 +528,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &211823946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211823942}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61b2aba10919e284989fc129255ff474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Inside: {fileID: 343740264}
-  Entrance: {fileID: 866250245}
-  Exit: {fileID: 0}
-  Cave: {fileID: 211823942}
 --- !u!1 &236045680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,7 +2692,6 @@ MonoBehaviour:
   Inside: {fileID: 343740264}
   Entrance: {fileID: 866250245}
   Exit: {fileID: 1439555835}
-  Cave: {fileID: 211823942}
 --- !u!1 &911653953
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,7 +2874,6 @@ MonoBehaviour:
   Inside: {fileID: 275461866}
   Entrance: {fileID: 915258593}
   Exit: {fileID: 986185848}
-  Cave: {fileID: 211823942}
 --- !u!1 &923270709
 GameObject:
   m_ObjectHideFlags: 0
