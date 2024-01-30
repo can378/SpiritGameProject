@@ -51,6 +51,7 @@ public class DataManager : MonoBehaviour
             Debug.Log("货肺款 单捞磐 积己");
             userData = new UserData();
             InitData();
+            InitSettingData();
             SaveData();
         }
 
@@ -80,13 +81,19 @@ public class DataManager : MonoBehaviour
         userData.Weapon = "";
         userData.Skill = "";
 
-        userData.BGSoundVolume = 10;
-        userData.SFXSoundVolume = 10;
-
-        userData.NPCScriptIndex = 0;
         userData.nowChapter = 0;
 
-        userData.map = new int[100];
+    }
+
+    public void InitSettingData()
+    {
+        userData.BGSoundVolume = 10;
+        userData.SFXSoundVolume = 10;
+    }
+
+    public void InitStoryData()
+    {
+        
     }
 
     void OnApplicationQuit()

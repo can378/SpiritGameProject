@@ -13,6 +13,7 @@ public class RoomEnterExit : MonoBehaviour
 
     public SpriteRenderer forMiniMapSprite;
     public GameObject forMap;
+    public List<SpriteRenderer> aisleSprite;
 
 
     void Start()
@@ -42,6 +43,8 @@ public class RoomEnterExit : MonoBehaviour
         //최초방문시 miniMap에서 가리고 있던것 없앰
         forMiniMapSprite.color = new Color(1, 1, 1, 1);
         forMiniMapSprite.sortingOrder = -1;
+        foreach (SpriteRenderer spr in aisleSprite) 
+        { spr.color = new Color(1, 1, 1, 1); }
 
         forMap.SetActive(false);
 

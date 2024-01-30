@@ -67,6 +67,13 @@ public class MapUIManager : MonoBehaviour
         }
     }
 
+    void setUpgradePanel()
+    {
+        chapterTxt.text = "Chapter " + DataManager.instance.userData.nowChapter.ToString();
+        //스탯 할당
+    }
+
+
     #region player UI
     public void UpdateHealthUI()
     {
@@ -134,18 +141,17 @@ public class MapUIManager : MonoBehaviour
     }
     
 
-    public void HomeBtn() //홈 버튼
+    public void ResetBtn()
     {
-        //PlayerPrefs.Save();
-        //SceneManager.LoadScene("Main");
+        DataManager.instance.InitData();
+        DataManager.instance.userData.nowChapter= 0;
+        SceneManager.LoadScene("Main");
     }
 
 
-    public void RestartBtn() //재시작 버튼
+    public void RestartBtn() //now chapter restart
     {
-        DataManager.instance.InitData();
-        SceneManager.LoadScene("Main");
-        
+        SceneManager.LoadScene("Map");
     }
 
     public void QuitBtn()
@@ -177,12 +183,5 @@ public class MapUIManager : MonoBehaviour
     }
     #endregion
 
-    void setUpgradePanel() 
-    {
-        chapterTxt.text = "Chapter " + DataManager.instance.userData.nowChapter.ToString();
-
-        //스탯 할당
     
-    }
-
 }

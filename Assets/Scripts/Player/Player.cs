@@ -408,7 +408,11 @@ public class Player : MonoBehaviour
                 SceneManager.LoadScene("FinalMap"); 
             }
             else if(userData.nowChapter==5) 
-            { userData.nowChapter = 0; SceneManager.LoadScene("Main"); }
+            {
+                DataManager.instance.InitData();
+                userData.nowChapter = 0; 
+                SceneManager.LoadScene("Main"); 
+            }
         }
         else if (other.tag == "StartFighting")
         {
