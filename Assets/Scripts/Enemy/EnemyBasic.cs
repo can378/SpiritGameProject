@@ -29,16 +29,21 @@ public class EnemyBasic : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Weapon" || collision.tag == "PlayerBullet")
+        
+    }
+
+    private void OnTriggerEnter2D (Collider2D collision) 
+{
+        if (collision.tag == "PlayerBullet")
         {
-            if (status.health <= 0f) 
-            { 
+            if (status.health <= 0f)
+            {
                 DataManager.instance.userData.playerExp++;
                 MapUIManager.instance.UpdateExpUI();
-                EnemyDead(); 
-            
+                EnemyDead();
+
             }
-            else 
+            else
             {
                 print("enemy damaged");
                 status.health--;
@@ -48,6 +53,7 @@ public class EnemyBasic : MonoBehaviour
             }
         }
     }
+
     void OffDamaged()
     {
         //this.layerMask = 0;

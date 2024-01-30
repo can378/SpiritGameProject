@@ -36,7 +36,6 @@ public class Player : MonoBehaviour
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
     public GameObject playerItem;
-    public RoomManager roomManager;
 
     Vector2 playerPosition;
     
@@ -248,9 +247,9 @@ public class Player : MonoBehaviour
 
             RunDelay();
             attack.Use();
-            attackDelay = weapon.delay;
+            attackDelay = (weapon.preDelay + weapon.rate + weapon.postDelay) / weapon.attackSpeed;
             isAttackReady = false;
-            Invoke("AttackOut", 1 / weapon.rate);
+            Invoke("AttackOut", (weapon.preDelay + weapon.rate) / weapon.attackSpeed);
 
         }
     }
@@ -385,7 +384,7 @@ public class Player : MonoBehaviour
 
                 //튕겨나감
                 Vector2 dir = (transform.position - other.transform.position).normalized;
-                rigid.AddForce(dir * 50f, ForceMode2D.Impulse);
+                rigid.AddForce(dir * 10f, ForceMode2D.Impulse);
 
 
                 Invoke("OffDamaged", 0.2f);
@@ -413,16 +412,6 @@ public class Player : MonoBehaviour
                 userData.nowChapter = 0; 
                 SceneManager.LoadScene("Main"); 
             }
-        }
-        else if (other.tag == "StartFighting")
-        {
-            if(roomManager.finish==true)
-            {
-                transform.position = roomManager.rooms[0].transform.position;
-                CameraManager.instance.CenterMove(gameObject);
-                CameraManager.instance.CameraMove(gameObject);
-            }
-        
         }
         else if (other.tag == "Item")
         {

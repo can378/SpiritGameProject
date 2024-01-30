@@ -8,7 +8,7 @@ public class Attack : MonoBehaviour
     Weapon weapon;
     PolygonCollider2D meleeArea;
     Transform shotPos;
-    GameObject bullet;
+    GameObject projectileGameObject;
 
     // 사용 가능 무기들
     [SerializeField] GameObject[] meleeWeaponList;
@@ -38,7 +38,7 @@ public class Attack : MonoBehaviour
             shotWeaponList[weapon.weaponCode].SetActive(true);
             shotPos = shotWeaponList[weapon.weaponCode].GetComponent<Transform>();
             ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
-            bullet = shotWeapon.bullet;
+            projectileGameObject = shotWeapon.projectile;
         }
     }
 
@@ -72,6 +72,7 @@ public class Attack : MonoBehaviour
     }
 
 
+    // 던질 아이템 구현하겠습니다.
     public IEnumerator ThrowWeapon(GameObject explosive) 
     { 
         
@@ -97,10 +98,14 @@ public class Attack : MonoBehaviour
     IEnumerator Swing()
     {
         Debug.Log("Swing");
-        yield return new WaitForSeconds(0.1f / weapon.rate);
+
+        yield return new WaitForSeconds(weapon.preDelay / weapon.attackSpeed);
+
         SwordPos.transform.rotation= Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
         meleeArea.enabled = true;
-        yield return new WaitForSeconds(0.8f / weapon.rate);
+
+        yield return new WaitForSeconds(weapon.rate / weapon.attackSpeed);
+
         meleeArea.enabled = false;
 
     }
@@ -109,13 +114,19 @@ public class Attack : MonoBehaviour
     {
         Debug.Log("Shot");
 
-        yield return new WaitForSeconds(0.4f / weapon.rate);
-        GameObject instantBullet = Instantiate(bullet, shotPos.position, shotPos.rotation);
-        Rigidbody2D bulletRigid = instantBullet.GetComponent<Rigidbody2D>();
-        bullet.GetComponent<Bullet>().SetBullet(weapon.damage);
+        yield return new WaitForSeconds(weapon.preDelay / weapon.attackSpeed);
+
+        GameObject instantProjectile = Instantiate(projectileGameObject, shotPos.position, shotPos.rotation);
+        Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
+        Projectile projectile = projectileGameObject.GetComponent<Projectile>();
+        ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
+
         //bulletRigid.velocity = shotPos.up * 25;
-        bulletRigid.velocity = Player.instance.mouseDir * 25;
-        Destroy(instantBullet, 2f);
+        projectile.SetProjectile(shotWeapon.damage, shotWeapon.speed, shotWeapon.size, shotWeapon.weaponAttribute);
+        Destroy(instantProjectile, shotWeapon.time);
+
+        bulletRigid.velocity = Player.instance.mouseDir * 25 * shotWeapon.speed;
+
         yield return null;
     }
 }
