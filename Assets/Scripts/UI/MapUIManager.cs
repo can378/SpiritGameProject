@@ -15,9 +15,9 @@ public class MapUIManager : MonoBehaviour
     public GameObject esckeyPanel;
     public GameObject diePanel;
     public GameObject settingPanel;
-    
+    public GameObject startPanel;
 
-    //Player
+    //Player status
     public Slider Hpslider;
     public TMP_Text ExpTxt;
     public TMP_Text CoinTxt;
@@ -25,6 +25,9 @@ public class MapUIManager : MonoBehaviour
     public Image itemImg;
     public TMP_Text WeaponTxt;
     public TMP_Text SkillTxt;
+
+    //gameObject
+    public TMP_Text chapterTxt;
 
     private void Awake()
     {
@@ -40,6 +43,8 @@ public class MapUIManager : MonoBehaviour
         UpdateWeaponUI();
         UpdateSkillUI();
         updateItemUI(null);
+
+        setUpgradePanel();
     }
 
     void Update()
@@ -166,7 +171,18 @@ public class MapUIManager : MonoBehaviour
         esckeyPanel.SetActive(!esckeyPanel.activeSelf);
         settingPanel.SetActive(false);
     }
+    public void StartBtn() 
+    {
+        startPanel.SetActive(false);
+    }
     #endregion
 
+    void setUpgradePanel() 
+    {
+        chapterTxt.text = "Chapter " + DataManager.instance.userData.nowChapter.ToString();
+
+        //╫╨ех гр╢Г
+    
+    }
 
 }

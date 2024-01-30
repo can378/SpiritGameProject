@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
     public GameObject playerItem;
+    public RoomManager roomManager;
 
     Vector2 playerPosition;
     
@@ -176,7 +177,6 @@ public class Player : MonoBehaviour
 
     void DodgeOut() // 회피 빠져나가기
     {
-        sprite.color = Color.blue;
         isDodge = false;
     }
 
@@ -393,17 +393,52 @@ public class Player : MonoBehaviour
             }
 
         }
-        else if (LayerMask.LayerToName(other.gameObject.layer) == "EnterDungeon")
+        else if (other.tag == "EnterDungeon")
         {
-            if (userData.nowChapter != 5)
+            if (userData.nowChapter < 4)
             {
+                DataManager.instance.SaveData();
                 userData.nowChapter++;
-                string sceneName = "Map" + userData.nowChapter.ToString();
-                SceneManager.LoadScene(sceneName);
+                SceneManager.LoadScene("Map");
             }
-            else { userData.nowChapter = 0; SceneManager.LoadScene("Main"); }
+            else if (userData.nowChapter == 4)
+            {
+                DataManager.instance.SaveData();
+                userData.nowChapter++;
+                SceneManager.LoadScene("FinalMap"); 
+            }
+            else if(userData.nowChapter==5) 
+            { userData.nowChapter = 0; SceneManager.LoadScene("Main"); }
         }
+        else if (other.tag == "StartFighting")
+        {
+            if(roomManager.finish==true)
+            {
+                transform.position = roomManager.rooms[0].transform.position;
+                CameraManager.instance.CenterMove(gameObject);
+                CameraManager.instance.CameraMove(gameObject);
+            }
         
+        }
+        else if (other.tag == "Item")
+        {
+            Item item = other.GetComponent<Item>();
+
+            if (item.itemClass == ItemClass.Coin)
+            {
+                Destroy(other.gameObject); //코인 오브젝트 삭제
+                userData.coin++;
+                MapUIManager.instance.UpdateCoinUI();
+            }
+
+            if (item.itemClass == ItemClass.Key)
+            {
+                Destroy(other.gameObject); //키 오브젝트 삭제
+                userData.key++;
+                MapUIManager.instance.UpdateKeyUI();
+            }
+        }
+
     }
 
 

@@ -30,7 +30,7 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        CameraManager.instance = this;
+        instance = this;
     }
 
     void Start()
@@ -40,6 +40,9 @@ public class CameraManager : MonoBehaviour
 
         height = Camera.main.orthographicSize;
         width = height * Screen.width / Screen.height;
+
+
+        CameraMove(playerTransform.gameObject);
     }
 
     void FixedUpdate()
@@ -75,9 +78,12 @@ public class CameraManager : MonoBehaviour
 
     public void CameraMove(GameObject obj) 
     {
-
         transform.position = obj.transform.position;
         transform.position+= new Vector3(0,0,-10f);
-        //hi yunji (by. minseo)
+    }
+    public void CenterMove(GameObject obj) 
+    {
+        postCenter = obj.transform.position;
+        center=obj.transform.position;
     }
 }

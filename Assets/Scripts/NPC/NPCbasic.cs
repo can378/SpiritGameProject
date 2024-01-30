@@ -43,6 +43,7 @@ public class NPCbasic : MonoBehaviour
     private void FixedUpdate()
     {
         //following player
+        /*
         if (isWalking)
         {
             float targetDistance = Vector2.Distance(transform.position, NPCTarget.transform.position);
@@ -52,7 +53,7 @@ public class NPCbasic : MonoBehaviour
                     ((Vector2)transform.position, (Vector2)NPCTarget.transform.position);
             }
         }
-        
+        */
     }
 
 

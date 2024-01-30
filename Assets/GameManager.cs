@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private UserData playerData;
+    private UserData userData;
     public GameObject coinPrefab;
     public GameObject touchedObject;//마우스 클릭한 오브젝트
-    public GameObject canvas;
+    //public GameObject canvas;
 
+    
 
     void Awake()
     {
@@ -30,25 +31,26 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {   
-        playerData = DataManager.instance.userData;
-        //DataManager.instance.userData.coin += 50;
-        canvas.SetActive(true);
+        userData = DataManager.instance.userData;
+        LoadNowScene();
 
-        if (playerData.nowChapter != 0) 
-        {
-            string sceneName = "Map" + playerData.nowChapter.ToString();
-            SceneManager.LoadScene(sceneName);
-        }
-        
     }
-
-   
-
-
     void Update()
     {
         MouseClick();
     }
+
+    void LoadNowScene() 
+    {
+        if (userData.nowChapter == 0)
+        { SceneManager.LoadScene("Main"); }
+        else if (userData.nowChapter == 5)
+        { SceneManager.LoadScene("FinalMap"); }
+        else
+        { SceneManager.LoadScene("Map"); }
+    }
+
+    
 
     void MouseClick() 
     {

@@ -92,7 +92,7 @@ public class DataManager : MonoBehaviour
     void OnApplicationQuit()
     {
         //게임종료시 데이터 저장
-        SaveData();
+        //SaveData();
     }
 
 }
