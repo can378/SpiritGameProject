@@ -365,6 +365,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("player dead");
                 DataManager.instance.InitData();
+                DataManager.instance.SaveUserData();
                 MapUIManager.instance.diePanel.SetActive(true);
             }
             else if (isInvincible == false)
@@ -396,20 +397,22 @@ public class Player : MonoBehaviour
         {
             if (userData.nowChapter < 4)
             {
-                DataManager.instance.SaveData();
+                
                 userData.nowChapter++;
+                DataManager.instance.SaveUserData();
                 SceneManager.LoadScene("Map");
             }
             else if (userData.nowChapter == 4)
             {
-                DataManager.instance.SaveData();
+                
                 userData.nowChapter++;
+                DataManager.instance.SaveUserData();
                 SceneManager.LoadScene("FinalMap"); 
             }
             else if(userData.nowChapter==5) 
             {
                 DataManager.instance.InitData();
-                userData.nowChapter = 0; 
+                DataManager.instance.SaveUserData();
                 SceneManager.LoadScene("Main"); 
             }
         }

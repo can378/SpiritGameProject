@@ -63,8 +63,8 @@ public class AudioManager : MonoBehaviour
 
 
 
-        BGSoundSlider.GetComponent<Slider>().value = DataManager.instance.userData.BGSoundVolume;
-        SFXSoundSlider.GetComponent<Slider>().value = DataManager.instance.userData.SFXSoundVolume;
+        BGSoundSlider.GetComponent<Slider>().value = DataManager.instance.persistentData.BGSoundVolume;
+        SFXSoundSlider.GetComponent<Slider>().value = DataManager.instance.persistentData.SFXSoundVolume;
         BGSoundVolume();
         SFXVolume();
 
@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour
         { mixer.SetFloat("BG", Mathf.Log10(BGSoundSlider.GetComponent<Slider>().value) * 20); }
 
 
-        DataManager.instance.userData.BGSoundVolume = BGSoundSlider.GetComponent<Slider>().value;
+        DataManager.instance.persistentData.BGSoundVolume = BGSoundSlider.GetComponent<Slider>().value;
 
     }
 
@@ -100,7 +100,7 @@ public class AudioManager : MonoBehaviour
         if (SFXSoundSlider.GetComponent<Slider>().value == 0) { mixer.SetFloat("SFX", -80); }
         else { mixer.SetFloat("SFX", Mathf.Log10(SFXSoundSlider.GetComponent<Slider>().value) * 20); }
 
-        DataManager.instance.userData.SFXSoundVolume = SFXSoundSlider.GetComponent<Slider>().value;
+        DataManager.instance.persistentData.SFXSoundVolume = SFXSoundSlider.GetComponent<Slider>().value;
     }
 
 

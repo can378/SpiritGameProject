@@ -19,10 +19,6 @@ public class UserData
     public string Weapon;
     public string Skill;
 
-    public float BGSoundVolume;
-    public float SFXSoundVolume;
-
-
     public int nowChapter;
 
 }

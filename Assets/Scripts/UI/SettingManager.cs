@@ -36,7 +36,7 @@ public class SettingManager : MonoBehaviour
         for (int i = 0; i < Screen.resolutions.Length; i++)
         {
             if (Screen.resolutions[i].refreshRate == 60)//Àç»çÀ²ºóµµ60ÀÎ°Í¸¸ °ñ¶úµû
-                resolutions.Add(Screen.resolutions[i]);
+            { resolutions.Add(Screen.resolutions[i]); }
         }
 
         resolutionDropdown.options.Clear();

@@ -12,8 +12,10 @@ public class DataManager : MonoBehaviour
     public static DataManager instance = null;
 
     string UserDataFileName = "UserData.json";
+    string PersistentDataFileName = "PersistentData.json";
 
     public UserData userData;
+    public PersistentData persistentData;
     private GameData gameVar;
 
     void Awake()
@@ -37,36 +39,58 @@ public class DataManager : MonoBehaviour
     public void LoadData()
     {
 
-        string filePath = Application.persistentDataPath + UserDataFileName;
+        string userDataFilePath = Application.persistentDataPath + UserDataFileName;
+        string persistentDataFilePath = Application.persistentDataPath + PersistentDataFileName;
 
-        if (File.Exists(filePath))
+        if (File.Exists(userDataFilePath)&&File.Exists(persistentDataFilePath))
         {
             //json파일 불러오기
-            string jsonData = File.ReadAllText(filePath);
+            string userDataJsonData = File.ReadAllText(userDataFilePath);
+            string persistentJsonData = File.ReadAllText(persistentDataFilePath);
             //역직렬화
-            userData = JsonConvert.DeserializeObject<UserData>(jsonData);
+            userData = JsonConvert.DeserializeObject<UserData>(userDataJsonData);
+            persistentData=JsonConvert.DeserializeObject<PersistentData>(persistentJsonData);
         }
         else
         {
             Debug.Log("새로운 데이터 생성");
+            
             userData = new UserData();
+            persistentData=new PersistentData();
+
             InitData();
-            InitSettingData();
-            SaveData();
+            InitPersistentData();
+
+            SaveUserData();
+            SavePersistentData();
         }
 
     }
 
-    public void SaveData()
+    public void SaveUserData()
     {
         //파일 저장 경로
-        string filePath = Application.persistentDataPath + UserDataFileName;
+        string userDataFilePath = Application.persistentDataPath + UserDataFileName;
 
         //데이터 직렬화
-        string jsonData = JsonConvert.SerializeObject(userData);
+        string userJsonData = JsonConvert.SerializeObject(userData);
 
-        File.WriteAllText(filePath, jsonData);
-        Debug.Log("저장 위치 : " + filePath);
+        File.WriteAllText(userDataFilePath, userJsonData);
+
+        Debug.Log("user data : " + userDataFilePath);
+    }
+
+    public void SavePersistentData()
+    {
+        //파일 저장 경로
+        string persistentDataFilePath = Application.persistentDataPath + PersistentDataFileName;
+
+        //데이터 직렬화
+        string persistentJsonData = JsonConvert.SerializeObject(persistentData);
+
+        File.WriteAllText(persistentDataFilePath, persistentJsonData);
+
+        Debug.Log("persistent data : " + persistentDataFilePath);
     }
 
     public void InitData()
@@ -85,21 +109,18 @@ public class DataManager : MonoBehaviour
 
     }
 
-    public void InitSettingData()
+    public void InitPersistentData()
     {
-        userData.BGSoundVolume = 10;
-        userData.SFXSoundVolume = 10;
+        persistentData.BGSoundVolume = 10;
+        persistentData.SFXSoundVolume = 10;
     }
 
-    public void InitStoryData()
-    {
-        
-    }
+
 
     void OnApplicationQuit()
     {
         //게임종료시 데이터 저장
-        //SaveData();
+        SavePersistentData();
     }
 
 }

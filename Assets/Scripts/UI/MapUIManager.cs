@@ -144,13 +144,14 @@ public class MapUIManager : MonoBehaviour
     public void ResetBtn()
     {
         DataManager.instance.InitData();
-        DataManager.instance.userData.nowChapter= 0;
+        DataManager.instance.SaveUserData();
         SceneManager.LoadScene("Main");
     }
 
 
     public void RestartBtn() //now chapter restart
     {
+        DataManager.instance.LoadData();
         SceneManager.LoadScene("Map");
     }
 
