@@ -31,7 +31,9 @@ public class Player : MonoBehaviour
     [SerializeField] bool isAttack = false;               //공격
     [SerializeField] bool isAttackReady = false;          //공격 준비 완료
     [SerializeField] bool isEquip = false;                //무기 장비
-    [SerializeField] bool isInvincible = false;          //무적 상태
+    [SerializeField] bool isInvincible = false;           //무적 상태
+    public bool isAttackable = true;            //공격가능 상태
+
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
@@ -84,8 +86,13 @@ public class Player : MonoBehaviour
         }
 
         UseItem();
-        Attack();
-        Reload();
+        
+        if (isAttackable)
+        {
+            Attack();
+            Reload();
+        }
+        
         Interaction();
 
         string layerName = LayerMask.LayerToName(gameObject.layer);
