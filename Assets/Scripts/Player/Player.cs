@@ -328,7 +328,7 @@ public class Player : MonoBehaviour
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            DataManager.instance.userData.playerItem = selectItem.name;
+            DataManager.instance.userData.playerItem = selectItem.GetComponent<ItemStatus>().name;
             playerItem = selectItem.gameObject;
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
             playerItem.SetActive(false);
@@ -354,7 +354,7 @@ public class Player : MonoBehaviour
                     MapUIManager.instance.UpdateHealthUI();
                     Destroy(playerItem);
                     break;
-                default: print("wrong item process"+ playerItem.GetComponent<ItemStatus>().itemName); break;
+                default: print("no information item process"+ playerItem.GetComponent<ItemStatus>().itemName); break;
             }
             playerItem = null;
             DataManager.instance.userData.playerItem = "";
@@ -390,7 +390,6 @@ public class Player : MonoBehaviour
             { 
                 if (obj.GetComponent<ItemStatus>().name == playerItemName)
                 {
-                    print("item that player has="+obj.GetComponent<ItemStatus>().name);
                     playerItem = Instantiate(obj);
                     MapUIManager.instance.updateItemUI(playerItem.gameObject);
                     playerItem.SetActive(false);

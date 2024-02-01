@@ -20,7 +20,14 @@ public class Merchant : MonoBehaviour
     {
         while(true) 
         {
+            GameObject touchObj= GameManager.instance.touchedObject;
 
+            if (touchObj!=null&&touchObj.tag == "SellingItem")
+            {
+                int itemI = touchObj.GetComponent<SellingItem>().thisItemIndex;
+
+                print(DataManager.instance.gameVar.itemList[itemI].name);
+            }
             yield return null;
         }
         
@@ -34,7 +41,7 @@ public class Merchant : MonoBehaviour
         {
             checkTemp.SetActive(true);
             Player.instance.isAttackable = false;
-            //StartCoroutine(storeActivate());
+            StartCoroutine(storeActivate());
         }
     }
 
@@ -44,7 +51,7 @@ public class Merchant : MonoBehaviour
         {
             checkTemp.SetActive(false);
             Player.instance.isAttackable = true;
-            //StopAllCoroutines();
+            StopAllCoroutines();
         }
     }
 
