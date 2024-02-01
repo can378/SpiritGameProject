@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Arrow : Projectile
 {
-    
+    // 뒤로 밀려남
 }

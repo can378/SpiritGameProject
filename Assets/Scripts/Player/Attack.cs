@@ -6,17 +6,15 @@ public class Attack : MonoBehaviour
 {
     // 얻은 무기 정보
     Weapon weapon;
-    PolygonCollider2D meleeArea;
-    Transform shotPos;
+    GameObject weaponGameObject;
+
+    // 공격 정보
     GameObject projectileGameObject;
 
     // 사용 가능 무기들
     [SerializeField] GameObject[] meleeWeaponList;
     [SerializeField] GameObject[] shotWeaponList;
     [SerializeField] GameObject[] throwWeaponList;
-
-    //검 공격 방향 설정
-    public GameObject SwordPos;
 
     void Awake()
     {
@@ -30,13 +28,12 @@ public class Attack : MonoBehaviour
 
         if (weapon.weaponType == WeaponType.Melee)
         {
-            meleeWeaponList[weapon.weaponCode].SetActive(true);
-            meleeArea = meleeWeaponList[weapon.weaponCode].GetComponent<PolygonCollider2D>();
+            weaponGameObject = meleeWeaponList[weapon.weaponCode];
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
-            shotWeaponList[weapon.weaponCode].SetActive(true);
-            shotPos = shotWeaponList[weapon.weaponCode].GetComponent<Transform>();
+            weaponGameObject = shotWeaponList[weapon.weaponCode];
+
             ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
             projectileGameObject = shotWeapon.projectile;
         }
@@ -46,14 +43,14 @@ public class Attack : MonoBehaviour
     {
         if (weapon.weaponType == WeaponType.Melee)
         {
-            meleeWeaponList[weapon.weaponCode].SetActive(false);
-            meleeArea = null;
+
         }
         else if (weapon.weaponType == WeaponType.Shot)
         {
-            shotWeaponList[weapon.weaponCode].SetActive(false);
-            shotPos = null;
+            projectileGameObject = null;
         }
+        weaponGameObject.SetActive(false);
+        weaponGameObject = null;
         weapon = null;
     }
 
@@ -72,7 +69,7 @@ public class Attack : MonoBehaviour
     }
 
 
-    // 던질 아이템 구현하겠습니다.
+    
     public IEnumerator ThrowWeapon(GameObject explosive) 
     { 
         
@@ -101,12 +98,12 @@ public class Attack : MonoBehaviour
 
         yield return new WaitForSeconds(weapon.preDelay / weapon.attackSpeed);
 
-        SwordPos.transform.rotation= Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
-        meleeArea.enabled = true;
+        weaponGameObject.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
+        weaponGameObject.SetActive(true);
 
         yield return new WaitForSeconds(weapon.rate / weapon.attackSpeed);
 
-        meleeArea.enabled = false;
+        weaponGameObject.SetActive(false);
 
     }
 
@@ -116,16 +113,19 @@ public class Attack : MonoBehaviour
 
         yield return new WaitForSeconds(weapon.preDelay / weapon.attackSpeed);
 
-        GameObject instantProjectile = Instantiate(projectileGameObject, shotPos.position, shotPos.rotation);
+        GameObject instantProjectile = Instantiate(projectileGameObject, weaponGameObject.transform.position, weaponGameObject.transform.rotation);
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
         Projectile projectile = projectileGameObject.GetComponent<Projectile>();
         ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
 
         //bulletRigid.velocity = shotPos.up * 25;
         projectile.SetProjectile(shotWeapon.damage, shotWeapon.speed, shotWeapon.size, shotWeapon.weaponAttribute);
+        instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
         Destroy(instantProjectile, shotWeapon.time);
 
         bulletRigid.velocity = Player.instance.mouseDir * 25 * shotWeapon.speed;
+
+        yield return new WaitForSeconds(weapon.postDelay / weapon.attackSpeed);
 
         yield return null;
     }

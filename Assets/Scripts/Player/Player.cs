@@ -253,6 +253,9 @@ public class Player : MonoBehaviour
             isAttack = true;
 
             RunDelay();
+            // 공격 방향
+            // 현재 마우스 위치가 아닌
+            // 클릭 한 위치로
             attack.Use();
             attackDelay = (weapon.preDelay + weapon.rate + weapon.postDelay) / weapon.attackSpeed;
             isAttackReady = false;
@@ -283,7 +286,7 @@ public class Player : MonoBehaviour
             {
                 nearObject.GetComponent<Door>().DoorInteraction();
             }
-            else if (nearObject.tag == "Wall")
+            else if (nearObject.tag == "ShabbyWall")
             {
                 nearObject.GetComponent<Wall>().WallInteraction();
             }
@@ -362,7 +365,7 @@ public class Player : MonoBehaviour
     #region Trigger
 
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         //공격받음
         //Enter로 하는게 나을 듯?
@@ -377,7 +380,7 @@ public class Player : MonoBehaviour
             }
             else if (isInvincible == false)
             {
-
+                Debug.Log("player Damaged");
                 //userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
                 userData.playerHP -= 10;
                 MapUIManager.instance.UpdateHealthUI();
@@ -448,7 +451,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "SelectItem" || other.tag == "Door")
+        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall")
         {
             nearObject = other.gameObject;
         }
