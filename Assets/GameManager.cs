@@ -28,12 +28,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    
     void Start()
     {   
         userData = DataManager.instance.userData;
         LoadNowScene();
-
     }
     void Update()
     {

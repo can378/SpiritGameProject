@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ using UnityEngine;
 
 public class SellingItem : MonoBehaviour
 {
+
+    public GameObject info;
+    public TMP_Text itemName;
+    public TMP_Text itemPrice;
+    
     private List<GameObject> itemList;//판매 가능한 아이템 종류
 
 
@@ -40,8 +46,9 @@ public class SellingItem : MonoBehaviour
         thisItemName=thisSlotItem.GetComponent<ItemStatus>().name;
         thisItemPrice = thisSlotItem.GetComponent<ItemStatus>().price;
         
-        //itemName.text = thisSlotItem.GetComponent<ItemStatus>().itemName;
-        //itemPrice.text = thisSlotItem.GetComponent<ItemStatus>().price.ToString();
+        
+        itemName.text = thisItemName;
+        itemPrice.text = thisItemPrice.ToString();
     }
 
 
@@ -79,14 +86,18 @@ public class SellingItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //show information
-        print("name="+thisItemName + " /price="+thisItemPrice);
         //check buying
         StartCoroutine(checkBuying());
+
+        //show information
+        info.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision) 
-    { StopCoroutine(checkBuying()); }
+    { 
+        StopCoroutine(checkBuying()); 
+        info.SetActive(false);
+    }
 
 
     IEnumerator checkBuying() 
