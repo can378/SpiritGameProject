@@ -293,6 +293,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    #region Item
+
+
     void GainSelectItem()
     {
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
@@ -325,7 +328,7 @@ public class Player : MonoBehaviour
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            //DataManager.instance.userData.playerItem = selectItem.name;
+            DataManager.instance.userData.playerItem = selectItem.name;
             playerItem = selectItem.gameObject;
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
             playerItem.SetActive(false);
@@ -354,13 +357,52 @@ public class Player : MonoBehaviour
                 default: print("wrong item process"+ playerItem.GetComponent<ItemStatus>().itemName); break;
             }
             playerItem = null;
-
+            DataManager.instance.userData.playerItem = "";
 
         }
 
 
     }
+    #endregion
 
+
+    #region SceneReload - item
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //Debug.Log("Scene reloaded: " + scene.name);
+        //Scene reload 후에도 전에 얻은 아이템 유지
+        string playerItemName = DataManager.instance.userData.playerItem;
+
+        if (scene.name != "Main"&& playerItemName != "")
+        {
+            
+            foreach (GameObject obj in DataManager.instance.gameVar.itemList)
+            { 
+                if (obj.GetComponent<ItemStatus>().name == playerItemName)
+                {
+                    print("item that player has="+obj.GetComponent<ItemStatus>().name);
+                    playerItem = Instantiate(obj);
+                    MapUIManager.instance.updateItemUI(playerItem.gameObject);
+                    playerItem.SetActive(false);
+                    break;
+                }
+            }
+
+        
+        }
+
+    }
+    #endregion
 
     #region Trigger
 

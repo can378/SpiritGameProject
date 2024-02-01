@@ -42,7 +42,8 @@ public class MapUIManager : MonoBehaviour
         UpdateExpUI();
         UpdateWeaponUI();
         UpdateSkillUI();
-        updateItemUI(null);
+        if (DataManager.instance.userData.playerItem == "")
+        { updateItemUI(null); }
 
         setUpgradePanel();
     }

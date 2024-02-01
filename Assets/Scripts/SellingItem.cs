@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//판매하는 아이템 각각에 들어가는 스크립트
+
 public class SellingItem : Merchant
 {
     public List<GameObject> itemList;//판매 가능한 아이템 종류
@@ -17,6 +19,7 @@ public class SellingItem : Merchant
     private void Awake()
     {
         userData = DataManager.instance.userData;
+        itemList = DataManager.instance.gameVar.itemList;
     }
 
     void Start()

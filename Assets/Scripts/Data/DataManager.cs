@@ -16,7 +16,7 @@ public class DataManager : MonoBehaviour
 
     public UserData userData;
     public PersistentData persistentData;
-    private GameData gameVar;
+    public GameData gameVar;
 
     void Awake()
     {
@@ -101,7 +101,7 @@ public class DataManager : MonoBehaviour
 
         userData.coin = 0;
         userData.key = 0;
-        userData.playerItem = null;
+        userData.playerItem = "";
         userData.Weapon = "";
         userData.Skill = "";
 
