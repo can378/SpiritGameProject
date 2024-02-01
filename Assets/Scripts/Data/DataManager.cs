@@ -16,7 +16,7 @@ public class DataManager : MonoBehaviour
 
     public UserData userData;
     public PersistentData persistentData;
-    public GameData gameVar;
+    public GameData gameData;
 
     void Awake()
     {
@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        gameVar = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         LoadData();
     }
 
@@ -98,6 +98,7 @@ public class DataManager : MonoBehaviour
         userData.playerHP = 200;
         userData.playerHPMax = 200;
         userData.playerExp = 1;
+        userData.playerTempHP = 0;
 
         userData.coin = 0;
         userData.key = 0;

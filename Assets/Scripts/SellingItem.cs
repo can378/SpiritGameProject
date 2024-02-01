@@ -28,7 +28,7 @@ public class SellingItem : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         userData = DataManager.instance.userData;
-        itemList = DataManager.instance.gameVar.itemList;
+        itemList = DataManager.instance.gameData.selectItemList;
     }
 
     void Start()
@@ -43,8 +43,8 @@ public class SellingItem : MonoBehaviour
         GameObject thisSlotItem = itemList[thisItemIndex];
 
         GetComponent<SpriteRenderer>().sprite = thisSlotItem.GetComponent<SpriteRenderer>().sprite;
-        thisItemName=thisSlotItem.GetComponent<ItemStatus>().name;
-        thisItemPrice = thisSlotItem.GetComponent<ItemStatus>().price;
+        thisItemName=thisSlotItem.GetComponent<ItemInfo>().selectItemName.ToString();
+        thisItemPrice = thisSlotItem.GetComponent<ItemInfo>().price;
         
         
         itemName.text = thisItemName;

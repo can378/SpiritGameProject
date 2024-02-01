@@ -310,29 +310,27 @@ public class Player : MonoBehaviour
             }
             weaponGameObject = nearObject;
             weapon = weaponGameObject.GetComponent<Weapon>();
-            //DataManager.instance.userData.Weapon = weapon.name.ToString();
 
-            //MapUIManager.instance.UpdateWeaponUI();
+
             attack.EquipWeapon(weapon);
             attackDelay = 0;
             weaponGameObject.SetActive(false);
         }
         else if
-            (
-            selectItem.selectItemClass == SelectItemClass.Consumable&&
-            selectItem.GetComponent<ItemStatus>().obtainable
-            )
+        (   
+            selectItem.selectItemClass == SelectItemClass.Consumable || 
+            selectItem.selectItemClass==SelectItemClass.ThrowWeapon  
+        )
         {
             //전에 가지고 있던 아이템 드랍
             if (playerItem != null)
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            DataManager.instance.userData.playerItem = selectItem.GetComponent<ItemStatus>().name;
+            DataManager.instance.userData.playerItem = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
             playerItem = selectItem.gameObject;
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
             playerItem.SetActive(false);
-            //Destroy(selectItem.gameObject);
         }
     }
 
@@ -340,27 +338,55 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.H) && playerItem != null)
         {
-            MapUIManager.instance.updateItemUI(null);
-            
-
-            switch (playerItem.GetComponent<ItemStatus>().itemName)
+            //Throwing Items
+            if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
+            { StartCoroutine(attack.ThrowWeapon(playerItem)); }
+            //Consumable Item
+            else 
             {
-                case "bomb":
-                case "Item":
-                    StartCoroutine(attack.ThrowWeapon(playerItem));
-                    break;
-                case "HPPortion":
-                    userData.playerHP += 10;
-                    MapUIManager.instance.UpdateHealthUI();
-                    Destroy(playerItem);
-                    break;
-                default: print("no information item process"+ playerItem.GetComponent<ItemStatus>().itemName); break;
+                switch (playerItem.GetComponent<ItemInfo>().selectItemName)
+                {
+                    case SelectItemName.HPPortion:
+                        userData.playerHP += 10;
+                        MapUIManager.instance.UpdateHealthUI();
+                        break;
+                    case SelectItemName.SpeedPortion:
+                        break;
+                    case SelectItemName.SkillPortion:
+                        break;
+                    case SelectItemName.Insam:
+                        userData.playerHP += 20;
+                        MapUIManager.instance.UpdateHealthUI();
+                        break;
+                    case SelectItemName.Sansam:
+                        userData.playerHP += 30;
+                        MapUIManager.instance.UpdateHealthUI();
+                        break;
+                    case SelectItemName.SmallArmor:
+                        userData.playerTempHP += 10;
+                        break;
+                    case SelectItemName.LargeArmor:
+                        userData.playerTempHP += 20;
+                        break;
+                    case SelectItemName.NormalArmor:
+                        userData.playerTempHP += 30;
+                        break;
+
+
+                    default:
+                        Debug.LogWarning("no information item process" + playerItem.GetComponent<ItemInfo>().selectItemName);
+                        break;
+                }
+                Destroy(playerItem);
             }
+           
+            
+            //"no item" status
+            MapUIManager.instance.updateItemUI(null);
             playerItem = null;
             DataManager.instance.userData.playerItem = "";
 
         }
-
 
     }
     #endregion
@@ -386,9 +412,9 @@ public class Player : MonoBehaviour
         if (scene.name != "Main"&& playerItemName != "")
         {
             
-            foreach (GameObject obj in DataManager.instance.gameVar.itemList)
+            foreach (GameObject obj in DataManager.instance.gameData.selectItemList)
             { 
-                if (obj.GetComponent<ItemStatus>().name == playerItemName)
+                if (obj.GetComponent<ItemInfo>().selectItemName.ToString() == playerItemName)
                 {
                     playerItem = Instantiate(obj);
                     MapUIManager.instance.updateItemUI(playerItem.gameObject);

@@ -9,7 +9,7 @@ public class GameData : MonoBehaviour
 
     public static GameData instance;
 
-    public List<GameObject> itemList;
+    public List<GameObject> selectItemList;
     public List<GameObject> skillList;
     public List<GameObject> testList;
 
