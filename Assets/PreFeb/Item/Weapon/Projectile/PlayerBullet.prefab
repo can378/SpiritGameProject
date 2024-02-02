@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3214235305519029506}
+  - component: {fileID: 3150744811474367080}
   - component: {fileID: 3347979801488068503}
-  - component: {fileID: 6099207642889852731}
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
   m_Layer: 0
   m_Name: PlayerBullet
-  m_TagString: PlayerBullet
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,6 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3150744811474367080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4106ff6699322944b9be02dc9de39b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <weaponAttribute>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
 --- !u!212 &3347979801488068503
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -87,23 +102,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6099207642889852731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a16aaefc95690ca48b29c9efb637fea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <weaponAttribute>k__BackingField: 2
-  <damage>k__BackingField: 0
-  <speed>k__BackingField: 0
-  <time>k__BackingField: 0
-  <size>k__BackingField: 0
 --- !u!50 &7530864278459449910
 Rigidbody2D:
   serializedVersion: 4

@@ -98,6 +98,8 @@ public class Attack : MonoBehaviour
 
         yield return new WaitForSeconds(weapon.preDelay / weapon.attackSpeed);
 
+        HitDetection hitDetection = weaponGameObject.GetComponentInChildren<HitDetection>();
+        hitDetection.SetHitDetection(weapon.weaponAttribute, weapon.damage, weapon.knockBack);
         weaponGameObject.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
         weaponGameObject.SetActive(true);
 
@@ -114,16 +116,18 @@ public class Attack : MonoBehaviour
         yield return new WaitForSeconds(weapon.preDelay / weapon.attackSpeed);
 
         GameObject instantProjectile = Instantiate(projectileGameObject, weaponGameObject.transform.position, weaponGameObject.transform.rotation);
-        Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-        Projectile projectile = projectileGameObject.GetComponent<Projectile>();
         ShotWeapon shotWeapon = weapon.GetComponent<ShotWeapon>();
+        Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
+        HitDetection projectile = instantProjectile.GetComponent<HitDetection>();
+        
 
         //bulletRigid.velocity = shotPos.up * 25;
-        projectile.SetProjectile(shotWeapon.damage, shotWeapon.speed, shotWeapon.size, shotWeapon.weaponAttribute);
-        instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
-        Destroy(instantProjectile, shotWeapon.time);
-
-        bulletRigid.velocity = Player.instance.mouseDir * 25 * shotWeapon.speed;
+        // 투사체 설정
+        projectile.SetHitDetection(shotWeapon.weaponAttribute,shotWeapon.damage, shotWeapon.knockBack); //기본 설정
+        instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);  // 방향 설정
+        instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize, shotWeapon.projectileSize, 1);  // 크기 설정
+        bulletRigid.velocity = Player.instance.mouseDir * 25 * shotWeapon.projectileSpeed;  // 속도 설정
+        Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
 
         yield return new WaitForSeconds(weapon.postDelay / weapon.attackSpeed);
 

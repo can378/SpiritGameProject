@@ -34,22 +34,21 @@ public class EnemyBasic : MonoBehaviour
 
     private void OnTriggerEnter2D (Collider2D collision) 
 {
-        if (collision.tag == "PlayerBullet")
+        if (collision.tag == "PlayerAttack")
         {
+            print("enemy damaged");
+            HitDetection hitDetection = collision.GetComponent<HitDetection>();
+            status.health -= hitDetection.damage;
+            Vector2 dir = (transform.position - collision.transform.position).normalized;
+            rigid.AddForce(dir * hitDetection.knockBack, ForceMode2D.Impulse);
+            Invoke("OffDamaged", 0.2f);
+
             if (status.health <= 0f)
             {
                 DataManager.instance.userData.playerExp++;
                 MapUIManager.instance.UpdateExpUI();
                 EnemyDead();
 
-            }
-            else
-            {
-                print("enemy damaged");
-                status.health--;
-                Vector2 dir = (transform.position - collision.transform.position).normalized;
-                rigid.AddForce(dir * 50f, ForceMode2D.Impulse);
-                Invoke("OffDamaged", 0.2f);
             }
         }
     }

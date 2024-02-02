@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bomb : Projectile
 {
+    [field: SerializeField] public float explosionTime { get; private set; }
     [field: SerializeField] public GameObject explosionField { get; private set; }
     
     private void OnDestroy() {
@@ -12,6 +13,7 @@ public class Bomb : Projectile
 
     void explosion()
     {
-        Instantiate(explosionField, gameObject.transform.position, gameObject.transform.rotation);
+        GameObject explonsionGameObject = Instantiate(explosionField, gameObject.transform.position, gameObject.transform.rotation);
+        Destroy(explonsionGameObject, explosionTime);
     }
 }

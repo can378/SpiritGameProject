@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4662081752181882095}
-  - component: {fileID: 7835020637636841875}
+  - component: {fileID: 3384785703687074923}
   - component: {fileID: 4795214577067854906}
   - component: {fileID: 6900096828389256611}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: PlayerBullet
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 7906289184429686270}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7835020637636841875
+--- !u!114 &3384785703687074923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,14 +44,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 831173352780998368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283f5843879609f40ad76066c4cd0b8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4106ff6699322944b9be02dc9de39b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <weaponAttribute>k__BackingField: 2
+  <weaponAttribute>k__BackingField: 0
   <damage>k__BackingField: 0
-  <speed>k__BackingField: 0
-  <time>k__BackingField: 0
-  <size>k__BackingField: 0
+  <knockBack>k__BackingField: 0
 --- !u!61 &4795214577067854906
 BoxCollider2D:
   m_ObjectHideFlags: 0
