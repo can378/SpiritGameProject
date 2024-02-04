@@ -10,4 +10,9 @@ public class PlayerStatus : MonoBehaviour
     public float dodgeFrame = 0.5f;               
     public float runCoolTime = 5f;
     public bool isPlayerMove = true;
+
+    public float playerPower;
+    public int playerCritical;
+    public float playerCriticalDamage;
+    public float playerDrain;
 }

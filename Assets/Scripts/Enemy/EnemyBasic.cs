@@ -38,7 +38,10 @@ public class EnemyBasic : MonoBehaviour
         {
             print("enemy damaged");
             HitDetection hitDetection = collision.GetComponent<HitDetection>();
-            status.health -= hitDetection.damage;
+
+            int criticalHit = Random.Range(0, 100) < hitDetection.critical ? 1 : 0;
+
+            status.health -= hitDetection.damage + criticalHit * hitDetection.criticalDamage * hitDetection.damage;
             Vector2 dir = (transform.position - collision.transform.position).normalized;
             rigid.AddForce(dir * hitDetection.knockBack, ForceMode2D.Impulse);
             Invoke("OffDamaged", 0.2f);

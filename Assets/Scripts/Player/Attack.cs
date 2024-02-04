@@ -67,8 +67,6 @@ public class Attack : MonoBehaviour
         }
 
     }
-
-
     
     public IEnumerator ThrowWeapon(GameObject explosive) 
     { 
@@ -120,7 +118,6 @@ public class Attack : MonoBehaviour
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
         HitDetection projectile = instantProjectile.GetComponent<HitDetection>();
         
-
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
         projectile.SetHitDetection(shotWeapon.weaponAttribute,shotWeapon.damage, shotWeapon.knockBack, 0, 0); //기본 설정

@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     public GameObject nearObject;
     public GameObject playerItem;
 
+    [SerializeField] GameObject[] meleeWeaponList;
+
     Vector2 playerPosition;
     
     Vector2 moveVec;
@@ -50,7 +52,6 @@ public class Player : MonoBehaviour
     PlayerStatus status;
     Attack attack;
 
-    GameObject weaponGameObject;
     MainWeapon mainWeapon;
 
     UserData userData;
@@ -215,7 +216,7 @@ public class Player : MonoBehaviour
 
     void Reload()
     {
-        if (weaponGameObject == null || mainWeapon == null)
+        if (mainWeapon == null)
             return;
 
         if (mainWeapon.weaponType != WeaponType.Shot)
@@ -239,7 +240,7 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
-        if (mainWeapon == null && weaponGameObject == null)
+        if (mainWeapon == null)
             return;
 
         if (mainWeapon.ammo == 0)
@@ -256,7 +257,7 @@ public class Player : MonoBehaviour
             // 공격 방향
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
-            attack.Use();
+            Use();
             attackDelay = (mainWeapon.preDelay + mainWeapon.rate + mainWeapon.postDelay) / mainWeapon.attackSpeed;
             isAttackReady = false;
             Invoke("AttackOut", (mainWeapon.preDelay + mainWeapon.rate) / mainWeapon.attackSpeed);
@@ -267,6 +268,79 @@ public class Player : MonoBehaviour
     void AttackOut()
     {
         isAttack = false;
+    }
+
+    void Use()
+    {
+        if (mainWeapon.weaponType == WeaponType.Melee)
+        {
+            // 플레이어 애니메이션 실행
+            StartCoroutine("Swing");
+        }
+        else if (mainWeapon.weaponType == WeaponType.Shot)
+        {
+            // 플레이어 애니메이션 실행
+            mainWeapon.ConsumeAmmo();
+            StartCoroutine("Shot");
+        }
+
+    }
+
+    // 이펙트 생성
+    IEnumerator Swing()
+    {
+        Debug.Log("Swing");
+
+        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
+
+        // 무기 이펙트 유형 설정
+        MeleeWeapon meleeWeapon = mainWeapon.GetComponent<MeleeWeapon>();
+        GameObject mainWeaponGameObject = meleeWeaponList[meleeWeapon.attackType];
+        mainWeaponGameObject.transform.localScale = new Vector3(meleeWeapon.weaponSize, meleeWeapon.weaponSize, 1);
+
+        // 이펙트 수치 설정
+        HitDetection hitDetection = mainWeaponGameObject.GetComponentInChildren<HitDetection>();
+        hitDetection.SetHitDetection(mainWeapon.weaponAttribute, mainWeapon.damage * status.playerPower, mainWeapon.knockBack, status.playerCritical, status.playerCriticalDamage);
+        
+        // 무기 방향 
+        mainWeaponGameObject.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
+        
+        // 무기 이펙트 실행
+        mainWeaponGameObject.SetActive(true);
+
+        yield return new WaitForSeconds(mainWeapon.rate / mainWeapon.attackSpeed);
+
+        mainWeaponGameObject.SetActive(false);
+
+    }
+
+    // 무기 투사체 발사
+    IEnumerator Shot()
+    {
+        Debug.Log("Shot");
+
+        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
+
+        // 무기 투사체 적용
+        ShotWeapon shotWeapon = mainWeapon.GetComponent<ShotWeapon>();
+        GameObject instantProjectile = Instantiate(shotWeapon.projectile, transform.position, transform.rotation);
+
+        //투사체 설정
+        Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
+        HitDetection projectile = instantProjectile.GetComponent<HitDetection>();
+
+
+        //bulletRigid.velocity = shotPos.up * 25;
+        // 투사체 설정
+        projectile.SetHitDetection(shotWeapon.weaponAttribute, shotWeapon.damage * status.playerPower, shotWeapon.knockBack, status.playerCritical, status.playerCriticalDamage); //기본 설정
+        instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);  // 방향 설정
+        instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize, shotWeapon.projectileSize, 1);  // 크기 설정
+        bulletRigid.velocity = Player.instance.mouseDir * 25 * shotWeapon.projectileSpeed;  // 속도 설정
+        Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
+
+        yield return new WaitForSeconds(mainWeapon.postDelay / mainWeapon.attackSpeed);
+
+        yield return null;
     }
 
     #endregion
@@ -301,20 +375,16 @@ public class Player : MonoBehaviour
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
-            if (weaponGameObject != null)
+            if (mainWeapon != null)
             {
-                attack.UnEquipWeapon();
-                weaponGameObject.SetActive(true);
-                weaponGameObject.transform.position = transform.position;
-                weaponGameObject = null;
+                mainWeapon.gameObject.SetActive(true);
+                mainWeapon.transform.position = transform.position;
+                mainWeapon = null;
             }
-            weaponGameObject = nearObject;
-            mainWeapon = weaponGameObject.GetComponent<MainWeapon>();
+            mainWeapon = nearObject.GetComponent<MainWeapon>();
 
-
-            attack.EquipWeapon(mainWeapon);
             attackDelay = 0;
-            weaponGameObject.SetActive(false);
+            mainWeapon.gameObject.SetActive(false);
         }
         else if
         (   
@@ -340,7 +410,11 @@ public class Player : MonoBehaviour
         {
             //Throwing Items
             if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
-            { StartCoroutine(attack.ThrowWeapon(playerItem)); }
+            { 
+                // Attack 스크립트 폐기
+                // 나중에 다시 적용할 것
+                //StartCoroutine(attack.ThrowWeapon(playerItem)); 
+                }
             //Consumable Item
             else 
             {

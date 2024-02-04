@@ -50,6 +50,8 @@ MonoBehaviour:
   <weaponAttribute>k__BackingField: 0
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
 --- !u!61 &4795214577067854906
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -103,11 +105,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831173352780998368}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

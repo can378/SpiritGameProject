@@ -80,7 +80,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8438652728052770192
 Transform:
   m_ObjectHideFlags: 0
@@ -679,6 +679,9 @@ MonoBehaviour:
     m_Bits: 0
   nearObject: {fileID: 0}
   playerItem: {fileID: 0}
+  meleeWeaponList:
+  - {fileID: 5324849133557116994}
+  - {fileID: 1820615735909877065}
 --- !u!114 &2680101835875493889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -697,6 +700,10 @@ MonoBehaviour:
   dodgeFrame: 0.5
   runCoolTime: 5
   isPlayerMove: 1
+  playerPower: 1
+  playerCritical: 0
+  playerCriticalDamage: 0.5
+  playerDrain: 0
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -758,8 +765,8 @@ Transform:
   m_GameObject: {fileID: 3698801542754413869}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8568671889351775709}
@@ -844,7 +851,7 @@ Transform:
   m_GameObject: {fileID: 4069335388848529470}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -866,6 +873,8 @@ MonoBehaviour:
   <weaponAttribute>k__BackingField: 2
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
 --- !u!60 &3481271467806886931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -910,10 +919,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.5, y: 2}
-      - {x: -0.5, y: 2}
-      - {x: -0.5, y: -2}
-      - {x: 0.5, y: -2}
+    - - {x: 0.4, y: 1.25}
+      - {x: -0.4, y: 1.25}
+      - {x: -0.5, y: -1.25}
+      - {x: 0.5, y: -1.25}
   m_UseDelaunayMesh: 0
 --- !u!50 &971580390121925394
 Rigidbody2D:
@@ -1224,7 +1233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1586216131741191115
 Transform:
   m_ObjectHideFlags: 0
@@ -1356,6 +1365,8 @@ MonoBehaviour:
   <weaponAttribute>k__BackingField: 0
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
 --- !u!60 &919348861844483977
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1400,11 +1411,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 2}
-      - {x: -2, y: 1}
+    - - {x: 0, y: 1.25}
+      - {x: -1.5, y: 0.5}
       - {x: -0.5877852, y: -0.80901706}
       - {x: 0.58778536, y: -0.80901694}
-      - {x: 2, y: 1}
+      - {x: 1.5, y: 0.5}
   m_UseDelaunayMesh: 0
 --- !u!50 &8871813951421568649
 Rigidbody2D:
@@ -1459,8 +1470,8 @@ Transform:
   m_GameObject: {fileID: 7732434934125285422}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.65, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 7.5, y: 7.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9028656194532829887}
@@ -1813,7 +1824,6 @@ GameObject:
   - component: {fileID: 6469687433694640058}
   - component: {fileID: 2823156509253879243}
   - component: {fileID: 3543736066135281685}
-  - component: {fileID: 9129027086967575876}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Player
@@ -1911,25 +1921,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9129027086967575876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9072190913098653964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10bc7e415cd3038478d4b3a895ba7d0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meleeWeaponList:
-  - {fileID: 5324849133557116994}
-  - {fileID: 1820615735909877065}
-  shotWeaponList:
-  - {fileID: 7127231220625368504}
-  - {fileID: 6764970146541855844}
-  - {fileID: 216424909661330140}
-  throwWeaponList:
-  - {fileID: 3237688199151948138, guid: 00950d120cbe68d438d11d88f2234c02, type: 3}
-  - {fileID: 3546453168684463931, guid: 5fda9d417a62d234695bde48a8b470d8, type: 3}
