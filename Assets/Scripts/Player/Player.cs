@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     Attack attack;
 
     GameObject weaponGameObject;
-    Weapon weapon;
+    MainWeapon mainWeapon;
 
     UserData userData;
 
@@ -215,34 +215,34 @@ public class Player : MonoBehaviour
 
     void Reload()
     {
-        if (weaponGameObject == null || weapon == null)
+        if (weaponGameObject == null || mainWeapon == null)
             return;
 
-        if (weapon.weaponType != WeaponType.Shot)
+        if (mainWeapon.weaponType != WeaponType.Shot)
             return;
 
-        if (weapon.maxAmmo == weapon.ammo)
+        if (mainWeapon.maxAmmo == mainWeapon.ammo)
             return;
 
         if (rDown && !isDodge && !isReload && !isEquip && !isAttack)
         {
             isReload = true;
-            Invoke("ReloadOut", weapon.reloadTime);
+            Invoke("ReloadOut", mainWeapon.reloadTime);
         }
     }
 
     void ReloadOut()
     {
-        weapon.Reload();
+        mainWeapon.Reload();
         isReload = false;
     }
 
     void Attack()
     {
-        if (weapon == null && weaponGameObject == null)
+        if (mainWeapon == null && weaponGameObject == null)
             return;
 
-        if (weapon.ammo == 0)
+        if (mainWeapon.ammo == 0)
             return;
 
         attackDelay -= Time.deltaTime;
@@ -257,9 +257,9 @@ public class Player : MonoBehaviour
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
             attack.Use();
-            attackDelay = (weapon.preDelay + weapon.rate + weapon.postDelay) / weapon.attackSpeed;
+            attackDelay = (mainWeapon.preDelay + mainWeapon.rate + mainWeapon.postDelay) / mainWeapon.attackSpeed;
             isAttackReady = false;
-            Invoke("AttackOut", (weapon.preDelay + weapon.rate) / weapon.attackSpeed);
+            Invoke("AttackOut", (mainWeapon.preDelay + mainWeapon.rate) / mainWeapon.attackSpeed);
 
         }
     }
@@ -309,10 +309,10 @@ public class Player : MonoBehaviour
                 weaponGameObject = null;
             }
             weaponGameObject = nearObject;
-            weapon = weaponGameObject.GetComponent<Weapon>();
+            mainWeapon = weaponGameObject.GetComponent<MainWeapon>();
 
 
-            attack.EquipWeapon(weapon);
+            attack.EquipWeapon(mainWeapon);
             attackDelay = 0;
             weaponGameObject.SetActive(false);
         }

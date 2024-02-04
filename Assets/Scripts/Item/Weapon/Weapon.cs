@@ -5,14 +5,14 @@ using UnityEngine;
 public enum WeaponType { Melee, Shot, Sub }
 public enum WeaponRating { Temporary, General, Rare, Unique }
 public enum WeaponAttribute { Slash, Blow, Pierce, Fire, Cold, Electricity, Divinity, Darkness }
-public enum WeaponOption { None, Attack, Speed, Critical, CriticalDamage, Recovery }
+public enum WeaponOption { None, Attack, Speed, Critical, CriticalDamage, Drain }
 
-public class Weapon : SelectItem
+public class MainWeapon : SelectItem
 {
-
     [field: SerializeField] public WeaponType weaponType {get; private set;}
     [field: SerializeField] public WeaponRating weaponRating { get; private set; }
     [field: SerializeField] public WeaponAttribute weaponAttribute { get; private set; }
+    [field: SerializeField] public WeaponOption weaponOption { get; private set; }
     [field: SerializeField] public int weaponCode { get; private set; }
     [field: SerializeField] public float damage { get; private set; }
     [field: SerializeField] public float attackSpeed { get; private set; }

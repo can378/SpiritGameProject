@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotWeapon : Weapon
+public class ShotWeapon : MainWeapon
 {
     [field: SerializeField] public GameObject projectile { get; private set; }
     [field: SerializeField] public float projectileSpeed { get; private set; }
