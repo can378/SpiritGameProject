@@ -342,7 +342,26 @@ public class Player : MonoBehaviour
 
         yield return null;
     }
+    public IEnumerator ThrowWeapon(GameObject explosive)
+    {
 
+        yield return new WaitForSeconds(0.1f);
+
+        explosive.tag = "Weapon";
+        explosive.SetActive(true);
+        explosive.transform.position = transform.position;
+        explosive.GetComponent<Rigidbody2D>().velocity = Player.instance.mouseDir * 25;
+
+        float originalRadius = explosive.GetComponent<CircleCollider2D>().radius;
+        for (int i = 0; i < originalRadius * 1.5; i++)
+        {
+            explosive.GetComponent<CircleCollider2D>().radius++;
+            yield return new WaitForSeconds(0.1f);
+        }
+        Destroy(explosive);
+        yield return null;
+
+    }
     #endregion
 
     void Interaction()
@@ -410,11 +429,7 @@ public class Player : MonoBehaviour
         {
             //Throwing Items
             if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
-            { 
-                // Attack 스크립트 폐기
-                // 나중에 다시 적용할 것
-                //StartCoroutine(attack.ThrowWeapon(playerItem)); 
-                }
+            { StartCoroutine(ThrowWeapon(playerItem)); }
             //Consumable Item
             else 
             {
