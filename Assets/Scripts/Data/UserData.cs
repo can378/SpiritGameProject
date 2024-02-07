@@ -8,18 +8,51 @@ using System;
 
 public class UserData
 {
-    public float playerHP;
-    public float playerHPMax;
+    public int playerLevel;
     public float playerExp;
-    public string playerItem;
+    
+    public float playerHPMax;
+    public float playerHP;
     public float playerTempHP;
 
+    public float playerPower;
+    public int playerCritical;
+    public float playerCriticalDamage;
+    public float playerDrain;
+
+    public float playerSpeed;
+    public float playerRunSpeed;
+    public float playerRunCoolTime;
+
+    public float playerDodgeSpeed;
+    public float playerDodgeTime;
+
+    public float playerLuck;
+    
     public int coin;
     public int key;
+    public int dice;
 
-    public string Weapon;
-    public string Skill;
+    public string playerItem;
+
+    public string mainWeapon;
+    public string subWeapon;
+
+    public string activeSkill;
+    public string passiveSkill;
 
     public int nowChapter;
+
+    
+    
+    
+    
+    
+    
+
+    
+   
+    
+    
 
 }

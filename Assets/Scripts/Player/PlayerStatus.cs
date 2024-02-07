@@ -8,6 +8,7 @@ public class PlayerStatus : MonoBehaviour
     [field : SerializeField] public float runCurrentCoolTime { get; set; }       // 달리기 대기시간
     [field: SerializeField] public float attackDelay { get; set; }              // 공격 대기시간
     [field: SerializeField] public float subWeaponDelay {get; set; }            // subWeaponDelay 준비 시간
+    [field: SerializeField] public bool isPlayerMove { get; set; }
 
     [field: SerializeField] public bool isReload {get; set;}               //장전
     [field: SerializeField] public bool isSprint { get; set; }                 //달리기
@@ -25,19 +26,4 @@ public class PlayerStatus : MonoBehaviour
 
     [field: SerializeField] public bool isStun { get; set; }                    //행동 불능
 
-
-
-    // 이 아래 있는 것들은 player 능력치
-    // userdata로 옮겨야 함
-    public float speed = 5;                     
-    public float runSpeed = 1.33f;                
-    public float dodgeSpeed = 1.66f;                
-    public float dodgeFrame = 0.5f;               
-    public float runCoolTime = 5f;
-    public bool isPlayerMove = true;
-
-    public float playerPower;
-    public int playerCritical;
-    public float playerCriticalDamage;
-    public float playerDrain;
 }

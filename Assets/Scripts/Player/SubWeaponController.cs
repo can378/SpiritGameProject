@@ -23,6 +23,7 @@ public class SubWeaponController : MonoBehaviour
     // 무기 해제
     public void UnEquipWeapon()
     {
+        subWeapon.gameObject.transform.position = gameObject.transform.position;
         subWeapon.gameObject.SetActive(true);
         subWeapon = null;
     }

@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
-            new Vector2(playerPosition.x * status.speed, playerPosition.y * status.speed);
+            new Vector2(playerPosition.x * DataManager.instance.userData.playerSpeed, playerPosition.y * DataManager.instance.userData.playerSpeed);
         
 
         // 레이저 발사 (시작, 끝, 레이어마스크)
@@ -147,11 +147,11 @@ public class Player : MonoBehaviour
         }
         else if(status.isGuard)
         {
-            rigid.velocity = moveVec * status.speed * subWeaponController.subWeapon.ratio;    //임시
+            rigid.velocity = moveVec * DataManager.instance.userData.playerSpeed * subWeaponController.subWeapon.ratio;    //임시
         }
         else
         {
-            rigid.velocity = moveVec * status.speed * (status.isSprint ? status.runSpeed : 1f);
+            rigid.velocity = moveVec * DataManager.instance.userData.playerSpeed * (status.isSprint ? DataManager.instance.userData.playerRunSpeed : 1f);
         }
     }
 
@@ -171,10 +171,10 @@ public class Player : MonoBehaviour
         {
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
-            rigid.velocity = moveVec * status.speed * status.dodgeSpeed;
+            rigid.velocity = moveVec * DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDodgeSpeed;
             status.isDodge = true;
 
-            Invoke("DodgeOut", status.dodgeFrame);
+            Invoke("DodgeOut", DataManager.instance.userData.playerDodgeTime);
 
         }
     }
@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
     // 달리기 대기
     void RunDelay()
     {
-        status.runCurrentCoolTime = status.runCoolTime;
+        status.runCurrentCoolTime = DataManager.instance.userData.playerRunCoolTime;
         if (status.isSprint == true)
         {
             status.isSprint = false;
@@ -370,8 +370,6 @@ public class Player : MonoBehaviour
         {
             if (mainWeaponController.mainWeapon != null)
             {
-                // 무기의 위치를 현재 위치로 옮긴 후 해체
-                mainWeaponController.mainWeapon.gameObject.transform.position = transform.position;
                 mainWeaponController.UnEquipWeapon();
             }
             // 무기 장비
@@ -386,7 +384,6 @@ public class Player : MonoBehaviour
             if (subWeaponController.subWeapon != null)
             {
                 // 무기의 위치를 현재 위치로 옮긴 후 해체
-                subWeaponController.subWeapon.gameObject.transform.position = transform.position;
                 subWeaponController.UnEquipWeapon();
             }
             // 무기 장비

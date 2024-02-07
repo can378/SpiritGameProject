@@ -48,6 +48,7 @@ public class MainWeaponController : MonoBehaviour
         {
             projectileGameObject = null;
         }
+        mainWeapon.gameObject.transform.position = gameObject.transform.position;
         mainWeapon.gameObject.SetActive(true);
         mainWeapon = null;
     }
@@ -140,7 +141,7 @@ public class MainWeaponController : MonoBehaviour
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(mainWeapon.weaponAttribute, mainWeapon.damage * status.playerPower, mainWeapon.knockBack, status.playerCritical, status.playerCriticalDamage);
+        hitDetection.SetHitDetection(mainWeapon.weaponAttribute, mainWeapon.damage * DataManager.instance.userData.playerPower, mainWeapon.knockBack, DataManager.instance.userData.playerCritical, DataManager.instance.userData.playerCriticalDamage);
 
         // 무기 방향 
         HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
@@ -173,7 +174,7 @@ public class MainWeaponController : MonoBehaviour
 
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
-        projectile.SetHitDetection(shotWeapon.weaponAttribute, shotWeapon.damage * status.playerPower, shotWeapon.knockBack, status.playerCritical, status.playerCriticalDamage); //기본 설정
+        projectile.SetHitDetection(shotWeapon.weaponAttribute, shotWeapon.damage * DataManager.instance.userData.playerPower, shotWeapon.knockBack, DataManager.instance.userData.playerCritical, DataManager.instance.userData.playerCriticalDamage); //기본 설정
         instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize, shotWeapon.projectileSize, 1);  // 크기 설정
         bulletRigid.velocity = Player.instance.mouseDir * 10 * shotWeapon.projectileSpeed;  // 속도 설정
@@ -198,7 +199,7 @@ public class MainWeaponController : MonoBehaviour
         Explosive explosive = instantExplosive.GetComponent<Explosive>();
 
         // 범위 공격 설정
-        explosive.SetExplosive(shotWeapon.weaponAttribute, shotWeapon.damage * status.playerPower, shotWeapon.knockBack, status.playerCritical, status.playerCriticalDamage, shotWeapon.projectileSize, shotWeapon.projectileTime);
+        explosive.SetExplosive(shotWeapon.weaponAttribute, shotWeapon.damage * DataManager.instance.userData.playerPower, shotWeapon.knockBack, DataManager.instance.userData.playerCritical, DataManager.instance.userData.playerCriticalDamage, shotWeapon.projectileSize, shotWeapon.projectileTime);
         // 이 시간 후 폭발
         Destroy(instantExplosive, shotWeapon.projectileSpeed);  
 

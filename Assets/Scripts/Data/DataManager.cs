@@ -95,16 +95,38 @@ public class DataManager : MonoBehaviour
 
     public void InitData()
     {
-        userData.playerHP = 200;
-        userData.playerHPMax = 200;
-        userData.playerExp = 1;
+        userData.playerLevel = 1;
+        userData.playerExp = 0;
+
+        userData.playerHPMax = 100;
+        userData.playerHP = 100;
         userData.playerTempHP = 0;
+
+        userData.playerPower = 1;
+        userData.playerCritical = 0;
+        userData.playerCriticalDamage = 0.5f;
+        userData.playerDrain = 0;
+
+        userData.playerSpeed = 5;
+        userData.playerRunSpeed = 1.66f;
+        userData.playerRunCoolTime = 5;
+
+        userData.playerDodgeSpeed = 2;
+        userData.playerDodgeTime = 0.6f;
+
+        userData.playerLuck = 0;
 
         userData.coin = 0;
         userData.key = 0;
+        userData.dice = 0;
+
         userData.playerItem = "";
-        userData.Weapon = "";
-        userData.Skill = "";
+
+        userData.mainWeapon = "";
+        userData.subWeapon = "";
+
+        userData.activeSkill = "";
+        userData.passiveSkill = "";
 
         userData.nowChapter = 0;
 

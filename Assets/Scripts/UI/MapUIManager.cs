@@ -121,12 +121,12 @@ public class MapUIManager : MonoBehaviour
     }
     public void UpdateWeaponUI() 
     {
-        WeaponTxt.text = DataManager.instance.userData.Weapon;
+        WeaponTxt.text = DataManager.instance.userData.mainWeapon;
     }
 
     public void UpdateSkillUI() 
     {
-        WeaponTxt.text = DataManager.instance.userData.Skill;
+        WeaponTxt.text = DataManager.instance.userData.activeSkill;
     }
 
 
