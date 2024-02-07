@@ -43,13 +43,8 @@ public class UserData
 
     public int nowChapter;
 
-    
-    
-    
-    
-    
-    
 
+ 
     
    
     

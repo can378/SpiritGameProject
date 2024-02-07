@@ -345,6 +345,7 @@ MonoBehaviour:
   - {fileID: 3911212924154988040, guid: b332e40e5765ac444ac7a45d54e2e08f, type: 3}
   skillList: []
   testList: []
+  passiveSkillList: []
 --- !u!1001 &164696084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1732,20 +1733,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseDir: {x: 0, y: 0}
   mouseAngle: 0
-  isReload: 0
-  isSprint: 1
-  isDodge: 0
-  isAttack: 0
-  isAttackReady: 0
-  isEquip: 0
-  isInvincible: 0
-  isAttackable: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   nearObject: {fileID: 0}
   playerItem: {fileID: 0}
-  meleeWeaponList: []
 --- !u!114 &539968288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,16 +1750,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ab0145e2a78be499a07c26b80dfc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  runSpeed: 1.33
-  dodgeSpeed: 1.66
-  dodgeFrame: 0.5
-  runCoolTime: 5
-  isPlayerMove: 1
-  playerPower: 0
-  playerCritical: 0
-  playerCriticalDamage: 0
-  playerDrain: 0
+  <runCurrentCoolTime>k__BackingField: 0
+  <attackDelay>k__BackingField: 0
+  <subWeaponDelay>k__BackingField: 0
+  <isPlayerMove>k__BackingField: 0
+  <isReload>k__BackingField: 0
+  <isSprint>k__BackingField: 0
+  <isDodge>k__BackingField: 0
+  <isAttack>k__BackingField: 0
+  <isAttackReady>k__BackingField: 0
+  <isEquip>k__BackingField: 0
+  <isInvincible>k__BackingField: 0
+  <isAttackable>k__BackingField: 0
+  <isSubWeapon>k__BackingField: 0
+  <isGuard>k__BackingField: 0
+  <isParry>k__BackingField: 0
+  <isSubWeaponReady>k__BackingField: 0
+  <isStun>k__BackingField: 0
 --- !u!61 &539968289
 BoxCollider2D:
   m_ObjectHideFlags: 0

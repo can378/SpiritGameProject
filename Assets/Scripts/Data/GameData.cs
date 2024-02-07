@@ -12,7 +12,7 @@ public class GameData : MonoBehaviour
     public List<GameObject> selectItemList;
     public List<GameObject> skillList;
     public List<GameObject> testList;
-
+    public List<GameObject> passiveSkillList;
 
     void Start()
     {

@@ -130,6 +130,7 @@ public class DataManager : MonoBehaviour
 
         userData.nowChapter = 0;
 
+
     }
 
     public void InitPersistentData()

@@ -16,6 +16,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject diePanel;
     public GameObject settingPanel;
     public GameObject startPanel;
+    public RectTransform sidePanel;
 
     //Player status
     public Slider Hpslider;
@@ -28,6 +29,10 @@ public class MapUIManager : MonoBehaviour
 
     //gameObject
     public TMP_Text chapterTxt;
+
+
+
+    private bool sidePanelVisible = false;
 
     private void Awake()
     {
@@ -184,7 +189,30 @@ public class MapUIManager : MonoBehaviour
     {
         startPanel.SetActive(false);
     }
+
+    public void SideBtn() 
+    {
+        if(sidePanelVisible) 
+        {
+            // 패널을 오른쪽으로 이동시킴
+            sidePanel.anchoredPosition += new Vector2(sidePanel.rect.width, 0);
+            sidePanelVisible = false;
+        }
+        else
+        {
+            // 패널을 왼쪽으로 이동시킴
+            sidePanel.anchoredPosition -= new Vector2(sidePanel.rect.width, 0);
+            sidePanelVisible = true;
+        }
+
+    }
     #endregion
 
+    //set random passive skill
+
+
+    //get passive skill
     
+
+
 }
