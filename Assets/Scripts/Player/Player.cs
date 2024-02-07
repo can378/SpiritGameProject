@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
 
     UserData userData;
 
-
     void Awake()
     {
         instance = this;
@@ -165,8 +164,6 @@ public class Player : MonoBehaviour
         //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
 
     }
-
- 
  
     void Dodge()    // 회피
     {
@@ -273,6 +270,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region SubWeapon
+    
     void UseSubWeapon()
     {
         if (subWeaponController.subWeapon == null)
@@ -313,18 +311,21 @@ public class Player : MonoBehaviour
 
     }
 
+    // 시간이 지나면 자동으로 반격 해체
     void ParryOut()
     {
         status.isSubWeapon = false;
         status.isParry = false;
     }
 
+    // 시간이 지나면 해당 위치로 순간이동
     void TeleportOut()
     {
         gameObject.transform.position = mousePos;
         status.isSubWeapon = false;
     }
 
+    // 클릭을 떼면 가드가 풀림
     void GuardOut()
     {
         if (sUp && status.isGuard && subWeaponController.subWeapon.subWeaponType == SubWeaponType.Guard)
@@ -466,6 +467,7 @@ public class Player : MonoBehaviour
         }
 
     }
+    
     #endregion
 
     #region SceneReload - item
@@ -506,7 +508,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Trigger
-
 
     void OnTriggerEnter2D(Collider2D other)
     {
