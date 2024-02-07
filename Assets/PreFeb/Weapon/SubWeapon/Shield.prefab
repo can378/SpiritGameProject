@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2339338425874300441}
   - component: {fileID: 4308771752712339980}
   m_Layer: 0
-  m_Name: Pocket
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 150
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 1, g: 0.54365426, b: 0, a: 1}
+  m_Color: {r: 0.4433962, g: 0.24169442, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -93,10 +93,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6067381030381497294}
-  - component: {fileID: 8781284898425803661}
   - component: {fileID: 5404862387230291009}
+  - component: {fileID: 5774895725341085596}
   m_Layer: 0
-  m_Name: Bomb Pocket
+  m_Name: Shield
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,38 +118,6 @@ Transform:
   - {fileID: 5669746645929349152}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8781284898425803661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6144746033619172035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 795e579c2139f014e8e5ad6f82d90feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemClass>k__BackingField: 0
-  <weaponType>k__BackingField: 1
-  <weaponRating>k__BackingField: 1
-  <weaponAttribute>k__BackingField: 1
-  <weaponCode>k__BackingField: 2
-  <damage>k__BackingField: 1
-  <attackSpeed>k__BackingField: 0.5
-  <knockBack>k__BackingField: 0
-  <preDelay>k__BackingField: 0.1
-  <rate>k__BackingField: 0
-  <postDelay>k__BackingField: 0.9
-  <maxAmmo>k__BackingField: -1
-  <ammo>k__BackingField: -1
-  <reloadTime>k__BackingField: 0
-  <projectileSpeed>k__BackingField: 0.5
-  <projectileTime>k__BackingField: 2
-  <projectileSize>k__BackingField: 1
-  <reloadType>k__BackingField: 0
-  <shotWeaponOption>k__BackingField: 0
-  <projectile>k__BackingField: {fileID: 3237688199151948138, guid: 4efda8b553e913346959c7406d009af0, type: 3}
 --- !u!58 &5404862387230291009
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -185,6 +153,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &5774895725341085596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6144746033619172035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1effad732268af4384c1c4fb8a77677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <selectItemClass>k__BackingField: 0
+  <SubweaponCode>k__BackingField: 0
+  <subWeaponType>k__BackingField: 0
+  <weaponRating>k__BackingField: 1
+  <preDelay>k__BackingField: 0.1
+  <rate>k__BackingField: 0
+  <coolTime>k__BackingField: 2
+  <ratio>k__BackingField: 0.5
 --- !u!1 &7517663214654905377
 GameObject:
   m_ObjectHideFlags: 0

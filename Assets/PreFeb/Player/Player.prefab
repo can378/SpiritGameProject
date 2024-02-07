@@ -548,6 +548,8 @@ GameObject:
   - component: {fileID: 4369510584889721068}
   - component: {fileID: 2830920931105813052}
   - component: {fileID: 2680101835875493889}
+  - component: {fileID: 8114064950361091504}
+  - component: {fileID: 4067080628616577797}
   - component: {fileID: 320829814975973146}
   m_Layer: 0
   m_Name: Player
@@ -666,14 +668,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseDir: {x: 0, y: 0}
   mouseAngle: 0
-  isReload: 0
-  isSprint: 1
-  isDodge: 0
-  isAttack: 0
-  isAttackReady: 0
-  isEquip: 0
-  isInvincible: 0
-  isAttackable: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -704,6 +698,35 @@ MonoBehaviour:
   playerCritical: 0
   playerCriticalDamage: 0.5
   playerDrain: 0
+--- !u!114 &8114064950361091504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3504708173630329506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10bc7e415cd3038478d4b3a895ba7d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainWeapon: {fileID: 0}
+  meleeWeaponList:
+  - {fileID: 5324849133557116994}
+  - {fileID: 1820615735909877065}
+--- !u!114 &4067080628616577797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3504708173630329506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874236337ffef9140a6c32c5e60a1bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subWeapon: {fileID: 0}
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

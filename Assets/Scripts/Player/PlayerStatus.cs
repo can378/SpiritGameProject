@@ -4,6 +4,31 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
+    // 플레이어 상태
+    [field : SerializeField] public float runCurrentCoolTime { get; set; }       // 달리기 대기시간
+    [field: SerializeField] public float attackDelay { get; set; }              // 공격 대기시간
+    [field: SerializeField] public float subWeaponDelay {get; set; }            // subWeaponDelay 준비 시간
+
+    [field: SerializeField] public bool isReload {get; set;}               //장전
+    [field: SerializeField] public bool isSprint { get; set; }                 //달리기
+    [field: SerializeField] public bool isDodge { get; set; }                //회피
+    [field: SerializeField] public bool isAttack { get; set; }                //공격
+    [field: SerializeField] public bool isAttackReady { get; set; }           //공격 준비 완료
+    [field: SerializeField] public bool isEquip { get; set; }                 //무기 장비
+    [field: SerializeField] public bool isInvincible { get; set; }            //무적 상태
+    [field: SerializeField] public bool isAttackable { get; set; }             //공격가능 상태
+
+    [field: SerializeField] public bool isSubWeapon { get; set; }               // 보조무기 사용중
+    [field: SerializeField] public bool isGuard { get; set; }                   // 막기
+    [field: SerializeField] public bool isParry { get; set; }                   // 반격
+    [field: SerializeField] public bool isSubWeaponReady { get; set; }          // 보조무기 준비 완료
+
+    [field: SerializeField] public bool isStun { get; set; }                    //행동 불능
+
+
+
+    // 이 아래 있는 것들은 player 능력치
+    // userdata로 옮겨야 함
     public float speed = 5;                     
     public float runSpeed = 1.33f;                
     public float dodgeSpeed = 1.66f;                

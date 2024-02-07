@@ -10,9 +10,6 @@ public class Player : MonoBehaviour
 {
     public static Player instance = null;
 
-    float runCurrentCoolTime;        // 달리기 대기시간
-    float attackDelay;        // 공격 대기시간
-
     Vector2 mousePos;
     public Vector2 mouseDir;
     public float mouseAngle;
@@ -23,23 +20,14 @@ public class Player : MonoBehaviour
     bool rDown;             //재장전
     bool dDown;             //회피
     bool aDown;             //공격
+    bool sDown;             // 보조무기 누른 상태
+    bool sUp;               // 보조무기 뗀 상태
+    bool siDown;            // 선택 아이템
     bool iDown;             //상호작용
-
-    [SerializeField] bool isReload = false;               //장전
-    [SerializeField] bool isSprint = true;                //달리기
-    [SerializeField] bool isDodge = false;                //회피
-    [SerializeField] bool isAttack = false;               //공격
-    [SerializeField] bool isAttackReady = false;          //공격 준비 완료
-    [SerializeField] bool isEquip = false;                //무기 장비
-    [SerializeField] bool isInvincible = false;           //무적 상태
-    public bool isAttackable = true;            //공격가능 상태
-
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
     public GameObject playerItem;
-
-    [SerializeField] GameObject[] meleeWeaponList;
 
     Vector2 playerPosition;
     
@@ -49,10 +37,10 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
 
-    PlayerStatus status;
-    Attack attack;
-
-    MainWeapon mainWeapon;
+    public PlayerStatus status { get; private set;}
+    MainWeaponController mainWeaponController;
+    SubWeaponController subWeaponController;
+    
 
     UserData userData;
 
@@ -63,7 +51,8 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
-        attack = GetComponentInChildren<Attack>();
+        mainWeaponController = GetComponent<MainWeaponController>();
+        subWeaponController = GetComponent<SubWeaponController>();
     }
 
     void Start()
@@ -88,10 +77,12 @@ public class Player : MonoBehaviour
 
         UseItem();
         
-        if (isAttackable)
+        if (status.isAttackable)
         {
             Attack();
             Reload();
+            UseSubWeapon();
+            GuardOut();
         }
         
         Interaction();
@@ -104,6 +95,7 @@ public class Player : MonoBehaviour
     {
 
     }
+
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");
@@ -111,7 +103,12 @@ public class Player : MonoBehaviour
         rDown = Input.GetButton("Reload");
         dDown = Input.GetButtonDown("Dodge");
         aDown = Input.GetButton("Attack");
-        iDown = Input.GetButtonDown("Interaction");//f
+        iDown = Input.GetButtonDown("Interaction"); //f
+        siDown = Input.GetButtonDown("SelectItem"); //h
+
+        sDown = Input.GetButtonDown("SubWeapon");   //마우스 우클릭
+        sUp = Input.GetButtonUp("SubWeapon");
+        
     }
 
     #region Moving
@@ -141,18 +138,21 @@ public class Player : MonoBehaviour
     {
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (isAttack || isReload)       // 공격시 정지
+        if (status.isAttack || status.isReload || status.isParry)       // 정지
         {
             moveVec = Vector2.zero;
         }
-        if (isDodge)             // 회피시 현재 속도 유지
+        if (status.isDodge)             // 회피시 현재 속도 유지
         {
             moveVec = dodgeVec;
         }
+        else if(status.isGuard)
+        {
+            rigid.velocity = moveVec * status.speed * subWeaponController.subWeapon.ratio;    //임시
+        }
         else
         {
-            rigid.velocity = moveVec * status.speed * (isSprint ? status.runSpeed : 1f);
-
+            rigid.velocity = moveVec * status.speed * (status.isSprint ? status.runSpeed : 1f);
         }
     }
 
@@ -170,12 +170,12 @@ public class Player : MonoBehaviour
  
     void Dodge()    // 회피
     {
-        if (dDown && !isAttack && moveVec != Vector2.zero && !isDodge)
+        if (dDown && !status.isAttack && moveVec != Vector2.zero && !status.isDodge)
         {
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
             rigid.velocity = moveVec * status.speed * status.dodgeSpeed;
-            isDodge = true;
+            status.isDodge = true;
 
             Invoke("DodgeOut", status.dodgeFrame);
 
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
 
     void DodgeOut() // 회피 빠져나가기
     {
-        isDodge = false;
+        status.isDodge = false;
     }
 
     
@@ -192,22 +192,22 @@ public class Player : MonoBehaviour
     // 달리기 대기
     void RunDelay()
     {
-        runCurrentCoolTime = status.runCoolTime;
-        if (isSprint == true)
+        status.runCurrentCoolTime = status.runCoolTime;
+        if (status.isSprint == true)
         {
-            isSprint = false;
+            status.isSprint = false;
             StartCoroutine(RunCoolTime());
         }
     }
 
     IEnumerator RunCoolTime()
     {
-        while (runCurrentCoolTime > 0.0f)
+        while (status.runCurrentCoolTime > 0.0f)
         {
-            runCurrentCoolTime -= Time.deltaTime;
+            status.runCurrentCoolTime -= Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
-        isSprint = true;
+        status.isSprint = true;
     }
 
     #endregion
@@ -216,164 +216,138 @@ public class Player : MonoBehaviour
 
     void Reload()
     {
-        if (mainWeapon == null)
+        if (mainWeaponController.mainWeapon == null)
             return;
 
-        if (mainWeapon.weaponType != WeaponType.Shot)
+        if (mainWeaponController.mainWeapon.maxAmmo < 0)
             return;
 
-        if (mainWeapon.maxAmmo == mainWeapon.ammo)
+        if (mainWeaponController.mainWeapon.maxAmmo == mainWeaponController.mainWeapon.ammo)
             return;
 
-        if (rDown && !isDodge && !isReload && !isEquip && !isAttack)
+        if (rDown && !status.isDodge && !status.isReload && !status.isEquip && !status.isAttack)
         {
-            isReload = true;
-            Invoke("ReloadOut", mainWeapon.reloadTime);
+            status.isReload = true;
+            Invoke("ReloadOut", mainWeaponController.mainWeapon.reloadTime);
         }
     }
 
     void ReloadOut()
     {
-        mainWeapon.Reload();
-        isReload = false;
+        mainWeaponController.mainWeapon.Reload();
+        status.isReload = false;
     }
 
     void Attack()
     {
-        if (mainWeapon == null)
+        if (mainWeaponController.mainWeapon == null)
             return;
 
-        if (mainWeapon.ammo == 0)
+        if (mainWeaponController.mainWeapon.ammo == 0)
             return;
 
-        attackDelay -= Time.deltaTime;
-        isAttackReady = attackDelay <= 0;
+        status.attackDelay -= Time.deltaTime;
+        status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !isAttack && !isDodge && isAttackReady)
+        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady)
         {
-            isAttack = true;
+            status.isAttack = true;
 
             RunDelay();
             // 공격 방향
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
-            Use();
-            attackDelay = (mainWeapon.preDelay + mainWeapon.rate + mainWeapon.postDelay) / mainWeapon.attackSpeed;
-            isAttackReady = false;
-            Invoke("AttackOut", (mainWeapon.preDelay + mainWeapon.rate) / mainWeapon.attackSpeed);
+            mainWeaponController.Use(mousePos);
+            status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / mainWeaponController.mainWeapon.attackSpeed;
+            status.isAttackReady = false;
+            Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / mainWeaponController.mainWeapon.attackSpeed);
 
         }
     }
 
     void AttackOut()
     {
-        isAttack = false;
+        status.isAttack = false;
     }
-
-    void Use()
-    {
-        if (mainWeapon.weaponType == WeaponType.Melee)
-        {
-            // 플레이어 애니메이션 실행
-            StartCoroutine("Swing");
-        }
-        else if (mainWeapon.weaponType == WeaponType.Shot)
-        {
-            // 플레이어 애니메이션 실행
-            mainWeapon.ConsumeAmmo();
-            StartCoroutine("Shot");
-        }
-
-    }
-
-    // 이펙트 생성
-    IEnumerator Swing()
-    {
-        Debug.Log("Swing");
-
-        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
-
-        // 무기 이펙트 유형 설정
-        MeleeWeapon meleeWeapon = mainWeapon.GetComponent<MeleeWeapon>();
-        GameObject mainWeaponGameObject = meleeWeaponList[meleeWeapon.attackType];
-        mainWeaponGameObject.transform.localScale = new Vector3(meleeWeapon.weaponSize, meleeWeapon.weaponSize, 1);
-
-        // 이펙트 수치 설정
-        HitDetection hitDetection = mainWeaponGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(mainWeapon.weaponAttribute, mainWeapon.damage * status.playerPower, mainWeapon.knockBack, status.playerCritical, status.playerCriticalDamage);
-        
-        // 무기 방향 
-        mainWeaponGameObject.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
-        
-        // 무기 이펙트 실행
-        mainWeaponGameObject.SetActive(true);
-
-        yield return new WaitForSeconds(mainWeapon.rate / mainWeapon.attackSpeed);
-
-        mainWeaponGameObject.SetActive(false);
-
-    }
-
-    // 무기 투사체 발사
-    IEnumerator Shot()
-    {
-        Debug.Log("Shot");
-
-        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
-
-        // 무기 투사체 적용
-        ShotWeapon shotWeapon = mainWeapon.GetComponent<ShotWeapon>();
-        GameObject instantProjectile = Instantiate(shotWeapon.projectile, transform.position, transform.rotation);
-
-        //투사체 설정
-        Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-        HitDetection projectile = instantProjectile.GetComponent<HitDetection>();
-
-
-        //bulletRigid.velocity = shotPos.up * 25;
-        // 투사체 설정
-        projectile.SetHitDetection(shotWeapon.weaponAttribute, shotWeapon.damage * status.playerPower, shotWeapon.knockBack, status.playerCritical, status.playerCriticalDamage); //기본 설정
-        instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);  // 방향 설정
-        instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize, shotWeapon.projectileSize, 1);  // 크기 설정
-        bulletRigid.velocity = Player.instance.mouseDir * 25 * shotWeapon.projectileSpeed;  // 속도 설정
-        Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
-
-        yield return new WaitForSeconds(mainWeapon.postDelay / mainWeapon.attackSpeed);
-
-        yield return null;
-    }
-    public IEnumerator ThrowWeapon(GameObject explosive)
-    {
-
-        yield return new WaitForSeconds(0.1f);
-
-        explosive.tag = "Weapon";
-        explosive.SetActive(true);
-        explosive.transform.position = transform.position;
-        explosive.GetComponent<Rigidbody2D>().velocity = Player.instance.mouseDir * 25;
-
-        float originalRadius = explosive.GetComponent<CircleCollider2D>().radius;
-        for (int i = 0; i < originalRadius * 1.5; i++)
-        {
-            explosive.GetComponent<CircleCollider2D>().radius++;
-            yield return new WaitForSeconds(0.1f);
-        }
-        Destroy(explosive);
-        yield return null;
-
-    }
+    
     #endregion
+
+    #region SubWeapon
+    void UseSubWeapon()
+    {
+        if (subWeaponController.subWeapon == null)
+            return;
+
+        status.subWeaponDelay -= Time.deltaTime;
+        status.isSubWeaponReady = status.subWeaponDelay <= 0;
+
+        if (sDown && !status.isSubWeapon && !status.isDodge && status.isSubWeaponReady)
+        {
+            status.isSubWeapon = true;
+            RunDelay();
+            SubWeaponUse();
+            status.isSubWeaponReady = false;
+        }
+    }
+
+    void SubWeaponUse()
+    {
+        if (subWeaponController.subWeapon.subWeaponType == SubWeaponType.Guard)
+        {
+            Debug.Log("막기");
+            status.isGuard = true;
+        }
+        else if (subWeaponController.subWeapon.subWeaponType == SubWeaponType.Parry)
+        {
+            Debug.Log("반격");
+            status.isParry = true;
+            status.subWeaponDelay = (subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate + subWeaponController.subWeapon.coolTime);
+            Invoke("ParryOut", subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate);
+        }
+        else if (subWeaponController.subWeapon.subWeaponType == SubWeaponType.Teleport)
+        {
+            Debug.Log("순간이동");
+            status.subWeaponDelay = (subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate + subWeaponController.subWeapon.coolTime);
+            Invoke("TeleportOut", subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate);
+        }
+
+    }
+
+    void ParryOut()
+    {
+        status.isSubWeapon = false;
+        status.isParry = false;
+    }
+
+    void TeleportOut()
+    {
+        gameObject.transform.position = mousePos;
+        status.isSubWeapon = false;
+    }
+
+    void GuardOut()
+    {
+        if (sUp && status.isGuard && subWeaponController.subWeapon.subWeaponType == SubWeaponType.Guard)
+        {
+            status.isSubWeapon = false;
+            status.isGuard = false;
+            status.subWeaponDelay = subWeaponController.subWeapon.coolTime;
+        }
+    }
+
+    #endregion SubWeapon
 
     void Interaction()
     {
-        if (iDown && nearObject != null && !isEquip && !isDodge && !isAttack && moveVec == Vector2.zero)
+        if (iDown && nearObject != null && !status.isEquip && !status.isDodge && !status.isAttack && moveVec == Vector2.zero
+        && !status.isAttack && !status.isSubWeapon)
         {
             if (nearObject.tag == "SelectItem")
             {
                 GainSelectItem();
             }
         }
-        if (iDown && nearObject != null && !isEquip && !isDodge && !isAttack && moveVec == Vector2.zero)
+        if (iDown && nearObject != null && !status.isEquip && !status.isDodge && !status.isAttack && moveVec == Vector2.zero)
         {
             if (nearObject.tag == "Door")
             {
@@ -388,22 +362,34 @@ public class Player : MonoBehaviour
 
     #region Item
 
-
     void GainSelectItem()
     {
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
-            if (mainWeapon != null)
+            if (mainWeaponController.mainWeapon != null)
             {
-                mainWeapon.gameObject.SetActive(true);
-                mainWeapon.transform.position = transform.position;
-                mainWeapon = null;
+                // 무기의 위치를 현재 위치로 옮긴 후 해체
+                mainWeaponController.mainWeapon.gameObject.transform.position = transform.position;
+                mainWeaponController.UnEquipWeapon();
             }
-            mainWeapon = nearObject.GetComponent<MainWeapon>();
-
-            attackDelay = 0;
-            mainWeapon.gameObject.SetActive(false);
+            // 무기 장비
+            mainWeaponController.EquipWeapon(nearObject.GetComponent<MainWeapon>());
+        }
+        else if (selectItem.selectItemClass == SelectItemClass.SubWeapon)
+        {
+            Debug.Log("보조무기 사용법");
+            Debug.Log("막기: 우클릭 동안 유지 - 데미지 감소");
+            Debug.Log("반격 : 우클릭 시 raio초 동안 발동 - 적 스턴");
+            Debug.Log("순간이동 : 우클릭 시 선딜레이 이후 클릭한 방향으로 이동");
+            if (subWeaponController.subWeapon != null)
+            {
+                // 무기의 위치를 현재 위치로 옮긴 후 해체
+                subWeaponController.subWeapon.gameObject.transform.position = transform.position;
+                subWeaponController.UnEquipWeapon();
+            }
+            // 무기 장비
+            subWeaponController.EquipSubWeapon(nearObject.GetComponent<SubWeapon>());
         }
         else if
         (   
@@ -425,11 +411,12 @@ public class Player : MonoBehaviour
 
     void UseItem()
     {
-        if (Input.GetKeyDown(KeyCode.H) && playerItem != null)
+        if (siDown && playerItem != null)
         {
+            Debug.Log("UseSelectItem");
             //Throwing Items
             if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
-            { StartCoroutine(ThrowWeapon(playerItem)); }
+            { mainWeaponController.UseItem(playerItem, mousePos); }
             //Consumable Item
             else 
             {
@@ -443,6 +430,7 @@ public class Player : MonoBehaviour
                         break;
                     case SelectItemName.SkillPortion:
                         break;
+                    // 밑에 아이템들은 획득 즉시로 바꾸었으면 좋겠습니다.
                     case SelectItemName.Insam:
                         userData.playerHP += 20;
                         MapUIManager.instance.UpdateHealthUI();
@@ -479,7 +467,6 @@ public class Player : MonoBehaviour
 
     }
     #endregion
-
 
     #region SceneReload - item
     private void OnEnable()
@@ -521,29 +508,41 @@ public class Player : MonoBehaviour
     #region Trigger
 
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         //공격받음
-        //Enter로 하는게 나을 듯?
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
-            if (userData.playerHP < 0)
-            {
-                Debug.Log("player dead");
-                DataManager.instance.InitData();
-                DataManager.instance.SaveUserData();
-                MapUIManager.instance.diePanel.SetActive(true);
-            }
-            else if (isInvincible == false)
+
+            if (status.isInvincible == false)
             {
                 Debug.Log("player Damaged");
                 //userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
-                userData.playerHP -= 10;
-                MapUIManager.instance.UpdateHealthUI();
 
+
+                if(status.isGuard)
+                {
+                    Debug.Log("막기 성공");
+                    userData.playerHP -= (10 - (10 * subWeaponController.subWeapon.ratio));
+                    MapUIManager.instance.UpdateHealthUI();
+                }
+                else if(status.isParry)
+                {
+                    //적 스턴
+                    Debug.Log("패링 성공");
+                    return;
+                }
+                if (userData.playerHP < 0)
+                {
+                    Debug.Log("player dead");
+                    DataManager.instance.InitData();
+                    DataManager.instance.SaveUserData();
+                    MapUIManager.instance.diePanel.SetActive(true);
+                    return;
+                }
 
                 //무적
-                isInvincible = true;
+                status.isInvincible = true;
                 int layerNum = LayerMask.NameToLayer("Invincible");
                 this.layerMask = layerNum;
                 sprite.color = new Color(1, 1, 1, 0.4f);
@@ -551,12 +550,14 @@ public class Player : MonoBehaviour
 
                 //튕겨나감
                 Vector2 dir = (transform.position - other.transform.position).normalized;
-                rigid.AddForce(dir * 10f, ForceMode2D.Impulse);
+                rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
 
 
                 Invoke("OffDamaged", 0.2f);
 
             }
+
+            
 
         }
         else if (other.tag == "EnterDungeon")
@@ -603,8 +604,6 @@ public class Player : MonoBehaviour
 
     }
 
-
-
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall")
@@ -613,12 +612,13 @@ public class Player : MonoBehaviour
         }
 
     }
+    
     void OffDamaged()
     {
         //무적 해제
         sprite.color = new Color(1, 1, 1, 1);
         this.layerMask = 0;
-        isInvincible = false;
+        status.isInvincible = false;
     }
 
     void OnTriggerExit2D(Collider2D other)
