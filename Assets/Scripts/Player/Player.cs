@@ -255,9 +255,11 @@ public class Player : MonoBehaviour
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
             mainWeaponController.Use(mousePos);
-            status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / mainWeaponController.mainWeapon.attackSpeed;
+            status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / 
+                (mainWeaponController.mainWeapon.attackSpeed+DataManager.instance.userData.playerAttackSpeed);
             status.isAttackReady = false;
-            Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / mainWeaponController.mainWeapon.attackSpeed);
+            Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / 
+                (mainWeaponController.mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed));
 
         }
     }
@@ -514,7 +516,7 @@ public class Player : MonoBehaviour
 
             if (status.isInvincible == false)
             {
-                Debug.Log("player Damaged");
+                //Debug.Log("player Damaged");
                 //userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
 
 
@@ -522,7 +524,7 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("막기 성공");
                     userData.playerHP -= (10 - (10 * subWeaponController.subWeapon.ratio));
-                    MapUIManager.instance.UpdateHealthUI();
+                    
                 }
                 else if(status.isParry)
                 {
@@ -530,6 +532,8 @@ public class Player : MonoBehaviour
                     Debug.Log("패링 성공");
                     return;
                 }
+
+
                 if (userData.playerHP < 0)
                 {
                     Debug.Log("player dead");
@@ -538,6 +542,11 @@ public class Player : MonoBehaviour
                     MapUIManager.instance.diePanel.SetActive(true);
                     return;
                 }
+                else 
+                {
+                    userData.playerHP -= 10;
+                }
+                MapUIManager.instance.UpdateHealthUI();
 
                 //무적
                 status.isInvincible = true;
@@ -548,8 +557,8 @@ public class Player : MonoBehaviour
 
                 //튕겨나감
                 Vector2 dir = (transform.position - other.transform.position).normalized;
-                rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
-
+                //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
+                rigid.AddForce(dir * (10), ForceMode2D.Impulse);
 
                 Invoke("OffDamaged", 0.2f);
 

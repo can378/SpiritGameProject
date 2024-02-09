@@ -133,7 +133,9 @@ public class MainWeaponController : MonoBehaviour
     {
         Debug.Log("Swing");
 
-        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
+        float attackSpeed = mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed;
+
+        yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 이펙트 크기 설정
         MeleeWeapon meleeWeapon = mainWeapon.GetComponent<MeleeWeapon>();
@@ -149,7 +151,7 @@ public class MainWeaponController : MonoBehaviour
         // 무기 이펙트 실행
         HitDetectionGameObject.SetActive(true);
 
-        yield return new WaitForSeconds(mainWeapon.rate / mainWeapon.attackSpeed);
+        yield return new WaitForSeconds(mainWeapon.rate / attackSpeed);
 
         HitDetectionGameObject.SetActive(false);
 
@@ -160,8 +162,8 @@ public class MainWeaponController : MonoBehaviour
     IEnumerator Shot()
     {
         Debug.Log("Shot");
-
-        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
+        float attackSpeed = mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed;
+        yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 투사체 적용
         ShotWeapon shotWeapon = mainWeapon.GetComponent<ShotWeapon>();
@@ -180,7 +182,7 @@ public class MainWeaponController : MonoBehaviour
         bulletRigid.velocity = Player.instance.mouseDir * 10 * shotWeapon.projectileSpeed;  // 속도 설정
         Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
 
-        yield return new WaitForSeconds(mainWeapon.postDelay / mainWeapon.attackSpeed);
+        yield return new WaitForSeconds(mainWeapon.postDelay / attackSpeed);
 
         yield return null;
     }
@@ -190,8 +192,8 @@ public class MainWeaponController : MonoBehaviour
     IEnumerator Throw(Vector3 clickPos)
     {
         Debug.Log("Throw");
-
-        yield return new WaitForSeconds(mainWeapon.preDelay / mainWeapon.attackSpeed);
+        float attackSpeed = mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed;
+        yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 폭발체 적용
         ShotWeapon shotWeapon = mainWeapon.GetComponent<ShotWeapon>();
@@ -203,7 +205,7 @@ public class MainWeaponController : MonoBehaviour
         // 이 시간 후 폭발
         Destroy(instantExplosive, shotWeapon.projectileSpeed);  
 
-        yield return new WaitForSeconds(mainWeapon.postDelay / mainWeapon.attackSpeed);
+        yield return new WaitForSeconds(mainWeapon.postDelay / attackSpeed);
 
         yield return null;
     }

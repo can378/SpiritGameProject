@@ -20,12 +20,14 @@ public class MapUIManager : MonoBehaviour
 
     //Player status
     public Slider Hpslider;
+    public Slider ExpSlider;
     public TMP_Text ExpTxt;
     public TMP_Text CoinTxt;
     public TMP_Text KeyTxt;
     public Image itemImg;
     public TMP_Text WeaponTxt;
     public TMP_Text SkillTxt;
+    public TMP_Text PointTxt;
 
     //gameObject
     public TMP_Text chapterTxt;
@@ -33,10 +35,12 @@ public class MapUIManager : MonoBehaviour
 
 
     private bool sidePanelVisible = false;
+    UserData userData;
 
     private void Awake()
     {
         instance = this;
+        userData = DataManager.instance.userData;
     }
 
     void Start()
@@ -47,7 +51,8 @@ public class MapUIManager : MonoBehaviour
         UpdateExpUI();
         UpdateWeaponUI();
         UpdateSkillUI();
-        if (DataManager.instance.userData.playerItem == "")
+        UpdatePointUI();
+        if (userData.playerItem == "")
         { updateItemUI(null); }
 
         setUpgradePanel();
@@ -76,28 +81,33 @@ public class MapUIManager : MonoBehaviour
     void setUpgradePanel()
     {
         chapterTxt.text = "Chapter " + DataManager.instance.userData.nowChapter.ToString();
-        //스탯 할당
     }
 
 
     #region player UI
     public void UpdateHealthUI()
     {
-        
-        // DataManager가 초기화되지 않았거나 instance가 null이면 더 이상 진행하지 않음
-        if (DataManager.instance == null || DataManager.instance.userData == null)
-        {
-            return;
-        }
 
-        float normalizedHealth 
-            = (DataManager.instance.userData.playerHP / DataManager.instance.userData.playerHPMax)*100;
-        //Debug.Log("Player Health: " + DataManager.instance.userData.playerHP+ DataManager.instance.userData.playerHPMax);
-        //Debug.Log("Normalized Health: " + normalizedHealth);
+        float normalizedHealth = (userData.playerHP / userData.playerHPMax)*100;
         Hpslider.value = normalizedHealth;
-        //Hpscrollbar.GetComponentInChildren<Text>().text = "Health: " + DataManager.instance.userData.playerHP; //일단 숫자 텍스트 보류
 
+    }
 
+    public void UpdateExpUI()
+    {
+        if(userData.playerExp%10==0) 
+        {
+            userData.playerLevel++;
+            userData.playerPoint++;
+            userData.playerExp = 0;
+            UpdatePointUI();
+        }
+        
+        float normalizedEXP = userData.playerExp;
+        ExpSlider.value = normalizedEXP;
+
+        print("update exp ui" + normalizedEXP);
+        ExpTxt.text = userData.playerExp.ToString();
     }
 
     public void updateItemUI(GameObject obj) 
@@ -111,27 +121,31 @@ public class MapUIManager : MonoBehaviour
         else { itemImg.GetComponent<Image>().sprite = null; }
 
     }
+
     public void UpdateCoinUI() 
     {
-        CoinTxt.text = DataManager.instance.userData.coin.ToString();
-    }
-    public void UpdateKeyUI()
-    {
-        KeyTxt.text = DataManager.instance.userData.key.ToString();
+        CoinTxt.text = userData.coin.ToString();
     }
 
-    public void UpdateExpUI() 
+    public void UpdateKeyUI()
     {
-        ExpTxt.text = DataManager.instance.userData.playerExp.ToString();
+        KeyTxt.text = userData.key.ToString();
     }
+
+
     public void UpdateWeaponUI() 
     {
-        WeaponTxt.text = DataManager.instance.userData.mainWeapon;
+        WeaponTxt.text = userData.mainWeapon;
     }
 
     public void UpdateSkillUI() 
     {
-        WeaponTxt.text = DataManager.instance.userData.activeSkill;
+        WeaponTxt.text = userData.activeSkill;
+    }
+
+    public void UpdatePointUI()
+    {
+        PointTxt.text=userData.playerPoint.ToString();
     }
 
 
@@ -158,7 +172,7 @@ public class MapUIManager : MonoBehaviour
     public void RestartBtn() //now chapter restart
     {
         DataManager.instance.LoadData();
-        if (DataManager.instance.userData.nowChapter == 5) { SceneManager.LoadScene("FinalMap"); }
+        if (userData.nowChapter == 5) { SceneManager.LoadScene("FinalMap"); }
         else { SceneManager.LoadScene("Map"); }
     }
 
