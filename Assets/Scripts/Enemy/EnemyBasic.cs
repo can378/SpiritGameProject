@@ -5,32 +5,22 @@ using UnityEngine;
 
 public class EnemyBasic : MonoBehaviour
 {
-
+    [HideInInspector]
     public Transform enemyTarget;
+    [HideInInspector]
     public EnemyStatus status;
-    private Rigidbody2D rigid;
+    [HideInInspector]
+    public Rigidbody2D rigid;
+    [HideInInspector]
+    public Vector2 targetDirVec;
 
     private void Awake()
     {
-        enemyTarget = GameObject.FindGameObjectWithTag("Player").transform;
-        //enemyTarget=GameObject.Find("Player").transform;
+        enemyTarget = GameObject.FindWithTag("Player").transform;
         rigid = GetComponent<Rigidbody2D>();
         status = GetComponent<EnemyStatus>();
     }
 
-
-    public void Chase()
-    {
-        Vector2 direction = enemyTarget.transform.position - transform.position;
-        transform.Translate(direction * status.speed * Time.deltaTime);
-
-    }
-
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        
-    }
 
     private void OnTriggerEnter2D (Collider2D collision) 
 {
@@ -44,7 +34,7 @@ public class EnemyBasic : MonoBehaviour
             status.health -= hitDetection.damage + criticalHit * hitDetection.criticalDamage * hitDetection.damage;
             Vector2 dir = (transform.position - collision.transform.position).normalized;
             rigid.AddForce(dir * hitDetection.knockBack, ForceMode2D.Impulse);
-            Invoke("OffDamaged", 0.2f);
+
 
             if (status.health <= 0f)
             {
@@ -56,21 +46,26 @@ public class EnemyBasic : MonoBehaviour
         }
     }
 
-    void OffDamaged()
-    {
-        //this.layerMask = 0;
-        //isInvincible = false;
-    }
+
 
     public void EnemyDead()
     {
-        int dropCoinNum = 10;
+
         //drop coin
+        int dropCoinNum = 10;
         GameManager.instance.dropCoin(dropCoinNum, transform.position);
 
-        //enemy »ç¶óÁü
+
+        //enemy disappear
         this.gameObject.SetActive(false);
-        //Destroy(this.gameObject);
+        //Destroy(this.gameObject); °Á destroyÇÒ±î¿ä?
+
+    }
+
+    public void Chase()
+    {
+        Vector2 direction = enemyTarget.position - transform.position;
+        transform.Translate(direction * status.speed * Time.deltaTime);
 
     }
 

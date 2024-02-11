@@ -10,8 +10,8 @@ public class EnemyPattern : EnemyBasic
 {
     public enemyPatterns ePattern;
     
-    private Rigidbody2D rb;
-    private Vector2 dirVec;
+    //private Rigidbody2D rb;
+    
     private float targetDistance;
     private int roundNum;//multishot몇갈래 발포하는지 변수
 
@@ -23,7 +23,7 @@ public class EnemyPattern : EnemyBasic
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
         if (this.isActiveAndEnabled == false) { EnemyPatternStart(); }
     }
 
@@ -60,17 +60,17 @@ public class EnemyPattern : EnemyBasic
 
     IEnumerator LRShot()
     {
-        dirVec = (enemyTarget.transform.position - transform.position).normalized;
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
 
-        rb.velocity = Vector2.zero;
+        rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rb.AddForce(dirVec * status.speed); }
+        { rigid.AddForce(targetDirVec * status.speed); }
 
         yield return new WaitForSeconds(0.1f);
 
-        rb.velocity = Vector2.zero;
+        rigid.velocity = Vector2.zero;
         shot();
         yield return new WaitForSeconds(3);
         StartCoroutine("LRShot");
@@ -82,25 +82,25 @@ public class EnemyPattern : EnemyBasic
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
         bullet.transform.position = transform.position;
-        dirVec = (enemyTarget.transform.position - transform.position).normalized;
-        rigid.AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        rigid.AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
     }
 
 
 
     IEnumerator rushHit() //돌진 후 대기 (반복)
     {
-        dirVec = (enemyTarget.transform.position - transform.position).normalized;
-  
-        rb.velocity = Vector2.zero;
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+
+        rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rb.AddForce(dirVec * status.speed); }
+        { rigid.AddForce(targetDirVec * status.speed); }
         
         yield return new WaitForSeconds(0.1f);
-       
-        rb.velocity = Vector2.zero;
+
+        rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(3);
         StartCoroutine("rushHit");
     }
@@ -127,15 +127,15 @@ public class EnemyPattern : EnemyBasic
             //getting farther
             do
             {
-                rb.AddForce(-dirVec * status.speed, ForceMode2D.Impulse);
+                rigid.AddForce(-targetDirVec * status.speed, ForceMode2D.Impulse);
                 targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
-                dirVec = (enemyTarget.transform.position - transform.position).normalized;
+                targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);
             } while (targetDistance < 10f);
 
         }
         yield return new WaitForSeconds(0.01f);
-        rb.velocity = Vector2.zero;
+        rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(1f);
 
         StartCoroutine("hitAndRun");
@@ -145,7 +145,7 @@ public class EnemyPattern : EnemyBasic
     //필요할 경우 활용? 아직 안씀
     IEnumerator moveEllipse() 
     {
-        //dirVec = (enemyTarget.transform.position - transform.position).normalized;
+        //targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
         int r = 10;
 
         for (int theta = 0; theta < 360; theta++)
@@ -172,11 +172,11 @@ public class EnemyPattern : EnemyBasic
             bullet.transform.rotation = Quaternion.identity;
 
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-            Vector2 dirVec = new Vector2(
+            Vector2 targetDirVec = new Vector2(
                 Mathf.Cos(Mathf.PI * 2 * i / roundNum),
                 Mathf.Sin(Mathf.PI * 2 * i / roundNum));
 
-            rigid.AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
+            rigid.AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
             Vector3 rotVec = Vector3.forward * 260 * i / roundNum + Vector3.forward * 90;
             bullet.transform.Rotate(rotVec);
 
