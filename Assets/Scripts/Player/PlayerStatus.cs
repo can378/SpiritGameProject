@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour
 {
     // 플레이어 상태
-    [field : SerializeField] public float runCurrentCoolTime { get; set; }       // 달리기 대기시간
+    [field: SerializeField] public float runCurrentCoolTime { get; set; }       // 달리기 대기시간
     [field: SerializeField] public float attackDelay { get; set; }              // 공격 대기시간
     [field: SerializeField] public float subWeaponDelay {get; set; }            // subWeaponDelay 준비 시간
     [field: SerializeField] public bool isPlayerMove { get; set; }
@@ -24,6 +24,6 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public bool isParry { get; set; }                   // 반격
     [field: SerializeField] public bool isSubWeaponReady { get; set; }          // 보조무기 준비 완료
 
-    [field: SerializeField] public bool isStun { get; set; }                    //행동 불능
+    [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();
 
 }

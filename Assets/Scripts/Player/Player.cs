@@ -40,9 +40,8 @@ public class Player : MonoBehaviour
     public PlayerStatus status { get; private set;}
     MainWeaponController mainWeaponController;
     SubWeaponController subWeaponController;
-    
 
-    UserData userData;
+    public UserData userData { get; private set; }
 
     void Awake()
     {
@@ -256,10 +255,10 @@ public class Player : MonoBehaviour
             // 클릭 한 위치로
             mainWeaponController.Use(mousePos);
             status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / 
-                (mainWeaponController.mainWeapon.attackSpeed+DataManager.instance.userData.playerAttackSpeed);
+                (mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed);
             status.isAttackReady = false;
             Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / 
-                (mainWeaponController.mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed));
+                (mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed));
 
         }
     }
@@ -513,59 +512,17 @@ public class Player : MonoBehaviour
         //공격받음
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
+            // 적에게 공격 당할시
+            // 피해를 입고
+            // 뒤로 밀려나며
+            // 잠시 무적이 된다.
 
-            if (status.isInvincible == false)
-            {
-                //Debug.Log("player Damaged");
-                //userData.playerHP -= other.GetComponent<EnemyStatus>().damage;
+            EnemyStatus enemyStatus =other.GetComponent<EnemyStatus>();
 
-
-                if(status.isGuard)
-                {
-                    Debug.Log("막기 성공");
-                    userData.playerHP -= (10 - (10 * subWeaponController.subWeapon.ratio));
-                    
-                }
-                else if(status.isParry)
-                {
-                    //적 스턴
-                    Debug.Log("패링 성공");
-                    return;
-                }
-
-
-                if (userData.playerHP < 0)
-                {
-                    Debug.Log("player dead");
-                    DataManager.instance.InitData();
-                    DataManager.instance.SaveUserData();
-                    MapUIManager.instance.diePanel.SetActive(true);
-                    return;
-                }
-                else 
-                {
-                    userData.playerHP -= 10;
-                }
-                MapUIManager.instance.UpdateHealthUI();
-
-                //무적
-                status.isInvincible = true;
-                int layerNum = LayerMask.NameToLayer("Invincible");
-                this.layerMask = layerNum;
-                sprite.color = new Color(1, 1, 1, 0.4f);
-
-
-                //튕겨나감
-                Vector2 dir = (transform.position - other.transform.position).normalized;
-                //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
-                rigid.AddForce(dir * (10), ForceMode2D.Impulse);
-
-                Invoke("OffDamaged", 0.2f);
-
-            }
-
-            
-
+            Damaged(enemyStatus.damage);
+            KnockBack(other.gameObject);
+            Invincible();
+            Invoke("OutInvincible", 0.2f);
         }
         else if (other.tag == "EnterDungeon")
         {
@@ -619,14 +576,6 @@ public class Player : MonoBehaviour
         }
 
     }
-    
-    void OffDamaged()
-    {
-        //무적 해제
-        sprite.color = new Color(1, 1, 1, 1);
-        this.layerMask = 0;
-        status.isInvincible = false;
-    }
 
     void OnTriggerExit2D(Collider2D other)
     {
@@ -634,4 +583,110 @@ public class Player : MonoBehaviour
     }
 
     #endregion
+
+    #region Effect
+    public void Damaged(float damage)
+    {
+        if (status.isGuard)
+        {
+            damage -= damage * subWeaponController.subWeapon.ratio;
+        }
+        else if (status.isParry || status.isInvincible)
+        {
+            damage = 0;
+        }
+
+        Debug.Log("Player Damaged" + damage);
+        userData.playerHP -= damage;
+        MapUIManager.instance.UpdateHealthUI();
+
+        
+        if(userData.playerHP >= userData.playerHPMax)
+        {
+            userData.playerHP = userData.playerHPMax;
+        }
+
+        if (userData.playerHP < 0)
+        {
+            Dead();
+        }
+
+    }
+
+    public void KnockBack(GameObject agent)
+    {
+        //튕겨나감
+        float distance = 10;
+        Vector2 dir = (transform.position - agent.transform.position).normalized;
+
+        //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
+
+        if(status.isGuard)
+        {
+            distance = distance * 0.5f;
+        }
+        else if(status.isParry || status.isInvincible)
+        {
+            distance = 0;
+        }
+
+        rigid.AddForce(dir * (distance), ForceMode2D.Impulse);
+    }
+
+    public void Invincible()
+    {
+        status.isInvincible = true;
+        int layerNum = LayerMask.NameToLayer("Invincible");
+        this.layerMask = layerNum;
+        sprite.color = new Color(1, 1, 1, 0.4f);
+    }
+
+    void OutInvincible()
+    {
+        //무적 해제
+        sprite.color = new Color(1, 1, 1, 1);
+        this.layerMask = 0;
+        status.isInvincible = false;
+    }
+
+    void Dead()
+    {
+        Debug.Log("player dead");
+        DataManager.instance.InitData();
+        DataManager.instance.SaveUserData();
+        MapUIManager.instance.diePanel.SetActive(true);
+    }
+
+    public void ApplyBuff(GameObject effect)
+    {
+        GameObject Buff = Instantiate(effect);
+        StatusEffect statusEffect = Buff.GetComponent<StatusEffect>();
+        statusEffect.SetTarget(gameObject);
+
+        statusEffect.ApplyEffect();
+        status.activeEffects.Add(statusEffect);
+        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
+    }
+
+    private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
+    {
+        yield return new WaitForSeconds(effect.duration);
+        effect.RemoveEffect();
+        status.activeEffects.Remove(effect);
+
+        Destroy(effect.gameObject);
+    }
+
+    public void RemoveAllEffects()
+    {
+        foreach (StatusEffect effect in status.activeEffects)
+        {
+            effect.RemoveEffect();
+        }
+        status.activeEffects.Clear();
+    }
+
+    #endregion
+
+
 }

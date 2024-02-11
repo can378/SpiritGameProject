@@ -108,7 +108,7 @@ public class DataManager : MonoBehaviour
         userData.playerCriticalDamage = 0.5f;
         userData.playerDrain = 0;
         userData.playerAttackRange = 0;
-        userData.playerAttackSpeed = 0;
+        userData.playerAttackSpeed = 1;
 
         userData.playerSpeed = 5;
         userData.playerRunSpeed = 1.66f;

@@ -384,73 +384,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &3356898493846820139
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5256567636927622104}
-  - component: {fileID: 5052586413695841034}
-  m_Layer: 0
-  m_Name: tirgger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5256567636927622104
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3356898493846820139}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8884761542970708304}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &5052586413695841034
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3356898493846820139}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.0115311, y: 1.9413891}
-  m_Direction: 0
 --- !u!1 &3442463649046685974
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +505,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6469687433694640058}
-  - {fileID: 5256567636927622104}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7715870851423386026
@@ -673,9 +605,6 @@ MonoBehaviour:
     m_Bits: 0
   nearObject: {fileID: 0}
   playerItem: {fileID: 0}
-  meleeWeaponList:
-  - {fileID: 5324849133557116994}
-  - {fileID: 1820615735909877065}
 --- !u!114 &2680101835875493889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,16 +617,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ab0145e2a78be499a07c26b80dfc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  runSpeed: 1.33
-  dodgeSpeed: 1.66
-  dodgeFrame: 0.5
-  runCoolTime: 5
-  isPlayerMove: 1
-  playerPower: 1
-  playerCritical: 0
-  playerCriticalDamage: 0.5
-  playerDrain: 0
+  <runCurrentCoolTime>k__BackingField: 0
+  <attackDelay>k__BackingField: 0
+  <subWeaponDelay>k__BackingField: 0
+  <isPlayerMove>k__BackingField: 0
+  <isReload>k__BackingField: 0
+  <isSprint>k__BackingField: 0
+  <isDodge>k__BackingField: 0
+  <isAttack>k__BackingField: 0
+  <isAttackReady>k__BackingField: 0
+  <isEquip>k__BackingField: 0
+  <isInvincible>k__BackingField: 0
+  <isAttackable>k__BackingField: 0
+  <isSubWeapon>k__BackingField: 0
+  <isGuard>k__BackingField: 0
+  <isParry>k__BackingField: 0
+  <isSubWeaponReady>k__BackingField: 0
+  <activeEffects>k__BackingField: []
 --- !u!114 &8114064950361091504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -711,6 +647,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainWeapon: {fileID: 0}
+  HitDetectionGameObject: {fileID: 0}
+  projectileGameObject: {fileID: 0}
   meleeWeaponList:
   - {fileID: 5324849133557116994}
   - {fileID: 1820615735909877065}
