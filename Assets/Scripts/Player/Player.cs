@@ -689,7 +689,8 @@ public class Player : MonoBehaviour
         }
 
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
-        damage = damage * DataManager.instance.userData.playerReductionRatio;
+        //damage = damage * DataManager.instance.userData.playerReductionRatio;
+
         Debug.Log("Player Damaged" + damage);
         userData.playerHP -= damage;
         MapUIManager.instance.UpdateHealthUI();

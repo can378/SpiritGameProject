@@ -33,12 +33,14 @@ public class ObjectSpawn : MonoBehaviour
             }
             else if (mapType == MapType.Mission)
             {
-
+                ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
+                instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
             }
             // 위치 삭제
             Destroy(enemyTransform.gameObject);
             // 부모 설정
             instEnemy.transform.SetParent(enemyGroup.transform);
+            
             // 리스트에 추가
             enemys.Add(instEnemy);
         }

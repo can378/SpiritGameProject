@@ -52,30 +52,27 @@ public class RoomEnterExit : MonoBehaviour
         playerPos.SetActive(true);
 
 
-
-        //enemy가 공격 시작
-        if (room.mapType==MapType.Boss || room.mapType == MapType.Default) 
-        { 
-            enemyGroup=room.map.transform.GetComponent<ObjectSpawn>().enemyGroup; 
-            enemyGroup.SetActive(true);
-        }
-        
-        if(room.doorType == DoorType.Trap)
+        if (room.doorType == DoorType.Trap)
         {
             room.LockDoor();
         }
+
+        if (room.map!=null) 
+        { 
+            room.map.SetActive(true);
+        }
+        
+        
 
     }
     void exitRoom()
     {
         playerPos.SetActive(false);
 
-        //enemy 공격 중지
-        if (room.mapType == MapType.Boss || room.mapType == MapType.Default)
-        {
 
-            enemyGroup = room.map.transform.GetComponent<ObjectSpawn>().enemyGroup;
-            enemyGroup.SetActive(false);
+        if (room.map != null)
+        {
+            room.map.SetActive(false);
         }
         
         forMap.SetActive(true);

@@ -81,8 +81,8 @@ public class Room : MonoBehaviour
                 doorType = DoorType.Trap;
                 ran = Random.Range(0, mapTemplates.missionMap.Length);
                 map = Instantiate(mapTemplates.missionMap[ran], transform.position, transform.rotation);
-                StartCoroutine( map.GetComponent<Mission>().CheckMissionEnd());
-
+                
+                map.GetComponent<Mission>().roomScript = this;
             }
             else if (mapType == MapType.Boss)
             {
