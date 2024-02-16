@@ -24,6 +24,8 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public bool isParry { get; set; }                   // 반격
     [field: SerializeField] public bool isSubWeaponReady { get; set; }          // 보조무기 준비 완료
 
+    [field: SerializeField] public bool isSkill { get; set; }
+
     [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();
 
 }

@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     float hAxis;
     float vAxis;
 
+    #region Key
+
     bool rDown;             //재장전
     bool dDown;             //회피
     bool aDown;             //공격
@@ -24,6 +26,11 @@ public class Player : MonoBehaviour
     bool sUp;               // 보조무기 뗀 상태
     bool siDown;            // 선택 아이템
     bool iDown;             //상호작용
+
+    bool skDown;
+    bool skUp;
+
+    #endregion
 
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
@@ -40,6 +47,7 @@ public class Player : MonoBehaviour
     public PlayerStatus status { get; private set;}
     MainWeaponController mainWeaponController;
     SubWeaponController subWeaponController;
+    public Skill skill;
 
     public UserData userData { get; private set; }
 
@@ -81,6 +89,7 @@ public class Player : MonoBehaviour
             Reload();
             UseSubWeapon();
             GuardOut();
+            Skill();
         }
         
         Interaction();
@@ -106,6 +115,9 @@ public class Player : MonoBehaviour
 
         sDown = Input.GetButtonDown("SubWeapon");   //마우스 우클릭
         sUp = Input.GetButtonUp("SubWeapon");
+
+        skDown = Input.GetButtonDown("Skill");
+        skUp = Input.GetButtonUp("Skill");
         
     }
 
@@ -309,7 +321,6 @@ public class Player : MonoBehaviour
             status.subWeaponDelay = (subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate + subWeaponController.subWeapon.coolTime);
             Invoke("TeleportOut", subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate);
         }
-
     }
 
     // 시간이 지나면 자동으로 반격 해체
@@ -338,6 +349,33 @@ public class Player : MonoBehaviour
     }
 
     #endregion SubWeapon
+
+    #region Skill
+
+    void Skill()
+    {
+        if (skill == null)
+            return;
+
+        if (skill.skillCoolTime > 0)
+            return;
+        
+        if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
+        {
+            Debug.Log("스킬 사용");
+            status.isSkill = true;
+
+            RunDelay();
+            // 공격 방향
+            // 현재 마우스 위치가 아닌
+            // 클릭 한 위치로
+            skill.Use(gameObject);
+
+            status.isSkill = false;
+        }
+    }
+
+    #endregion
 
     void Interaction()
     {
@@ -390,11 +428,18 @@ public class Player : MonoBehaviour
             // 무기 장비
             subWeaponController.EquipSubWeapon(nearObject.GetComponent<SubWeapon>());
         }
-        else if
-        (   
-            selectItem.selectItemClass == SelectItemClass.Consumable || 
-            selectItem.selectItemClass==SelectItemClass.ThrowWeapon  
-        )
+        else if (selectItem.selectItemClass == SelectItemClass.Skill)
+        {
+            if (skill != null)
+            {
+                skill.transform.position = transform.position;
+                //skill.gameObject.SetActive(true);
+            }
+            // 스킬 장착
+            skill = nearObject.GetComponent<Skill>();
+            //skill.gameObject.SetActive(false);
+        }
+        else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {
             //전에 가지고 있던 아이템 드랍
             if (playerItem != null)
