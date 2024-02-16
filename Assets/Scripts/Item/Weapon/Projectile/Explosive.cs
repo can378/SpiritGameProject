@@ -19,7 +19,7 @@ public class Explosive : Projectile
     }
 
     // Æø¹ßÃ¼ ¼³Á¤
-    public void SetExplosive(WeaponAttribute weaponAttribute, float damage, float knockBack, int critical, float criticalDamage,
+    public void SetExplosive(WeaponAttribute weaponAttribute, float damage, float knockBack, float critical, float criticalDamage,
         float size, float time)
     {
         HitDetection hitDetection = explosionField.GetComponent<HitDetection>();

@@ -102,6 +102,7 @@ public class DataManager : MonoBehaviour
         userData.playerHPMax = 100f;
         userData.playerHP = 100f;
         userData.playerTempHP = 0;
+        userData.playerReductionRatio = 0;
 
         userData.playerPower = 1;
         userData.playerCritical = 0;
@@ -110,7 +111,8 @@ public class DataManager : MonoBehaviour
         userData.playerAttackRange = 0;
         userData.playerAttackSpeed = 1;
 
-        userData.playerSpeed = 5;
+        userData.playerDefaultSpeed = 5;
+        userData.playerSpeed = 1;
         userData.playerRunSpeed = 1.66f;
         userData.playerRunCoolTime = 5;
 
@@ -129,7 +131,6 @@ public class DataManager : MonoBehaviour
         userData.subWeapon = "";
 
         userData.activeSkill = "";
-        userData.passiveSkill = "";
         userData.skillCoolTime = 0;
 
         userData.nowChapter = 0;

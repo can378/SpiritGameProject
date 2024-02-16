@@ -33,27 +33,17 @@ public class SubWeaponController : MonoBehaviour
     {
         if(subWeapon.subWeaponType == SubWeaponType.Guard)
         {
-            status.isGuard = true;
+            
         }
         else if (subWeapon.subWeaponType == SubWeaponType.Parry)
         {
-            status.isParry = true;
+            
         }
         else if (subWeapon.subWeaponType == SubWeaponType.Teleport)
         {
             // 플레이어 위치 변경
         }
 
-    }
-
-    void GuardOut()
-    {
-
-    }
-
-    void ParryOut()
-    {
-        
     }
 
 }

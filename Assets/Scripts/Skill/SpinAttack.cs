@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpinAttack : Skill
 {
     [field: SerializeField] public int damage { get; private set; }
+    [field: SerializeField] public int size { get; private set; }
     [field: SerializeField] public GameObject spinEffect { get; private set; }
 
     public override void Use(GameObject user)
@@ -16,11 +17,40 @@ public class SpinAttack : Skill
     IEnumerator Attack()
     {
         Debug.Log("SpinAttack");
-        yield return new WaitForSeconds(0.1f);
+
+        Player player = user.GetComponent<Player>();
+        MeleeWeapon meleeWeapon = player.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
+
+        // 공속 = 플레이어 공속 * 무기 공속
+        float attackRate = player.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
+
+        yield return new WaitForSeconds(preDelay / attackRate);
+
         GameObject instant = Instantiate(spinEffect, user.transform.position,user.transform.rotation);
-        Destroy(instant, 0.5f);
+
+        if(user.tag == "Player")
+        {
+            HitDetection hitDetection = instant.GetComponent<HitDetection>();
+
+            // 크기 조정
+            instant.transform.localScale = new Vector3(size * meleeWeapon.weaponSize, size * meleeWeapon.weaponSize,0);
+
+            // 속성 = 무기 속성
+            // 피해량 = (무기 + 기본 피해량) * 플레이어 공격력
+            // 넉백 = 무기 넉백
+            // 치확 = 플레이어 치확
+            // 치뎀 = 플레이어 치뎀
+            hitDetection.SetHitDetection(meleeWeapon.weaponAttribute,
+             (meleeWeapon.damage + damage) * player.userData.playerPower,
+             meleeWeapon.knockBack,
+             player.userData.playerCritical,
+             player.userData.playerCriticalDamage
+             );
+        }
+
+        Destroy(instant, rate / attackRate);
         
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(postDelay / attackRate);
 
         StartCoroutine("CoolDown");
 

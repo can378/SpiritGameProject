@@ -8,7 +8,10 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance = null;
+    // player 현재 능력치
+    public static Player instance { get; private set; }
+    // player 현재 상태
+    public PlayerStatus status { get; set; }
 
     Vector2 mousePos;
     public Vector2 mouseDir;
@@ -17,7 +20,7 @@ public class Player : MonoBehaviour
     float hAxis;
     float vAxis;
 
-    #region Key
+    #region Key Input
 
     bool rDown;             //재장전
     bool dDown;             //회피
@@ -44,9 +47,9 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
 
-    public PlayerStatus status { get; private set;}
-    MainWeaponController mainWeaponController;
-    SubWeaponController subWeaponController;
+
+    public MainWeaponController mainWeaponController { get; private set; }
+    public SubWeaponController subWeaponController { get; private set; }
     public Skill skill;
 
     public UserData userData { get; private set; }
@@ -87,8 +90,8 @@ public class Player : MonoBehaviour
         {
             Attack();
             Reload();
-            UseSubWeapon();
-            GuardOut();
+            //UseSubWeapon();
+            //GuardOut();
             Skill();
         }
         
@@ -129,10 +132,12 @@ public class Player : MonoBehaviour
         // 레이저가 제대로 도착하면 Null, 막혔을때 방해물 Return
         RaycastHit2D hit;
 
+        // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
+        float moveSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed;
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
-            new Vector2(playerPosition.x * DataManager.instance.userData.playerSpeed, playerPosition.y * DataManager.instance.userData.playerSpeed);
+            new Vector2(playerPosition.x * moveSpeed, playerPosition.y * moveSpeed);
         
 
         // 레이저 발사 (시작, 끝, 레이어마스크)
@@ -148,7 +153,7 @@ public class Player : MonoBehaviour
     {
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (status.isAttack || status.isReload || status.isParry)       // 정지
+        if (status.isAttack || status.isReload || status.isSkill)       // 정지
         {
             moveVec = Vector2.zero;
         }
@@ -156,13 +161,11 @@ public class Player : MonoBehaviour
         {
             moveVec = dodgeVec;
         }
-        else if(status.isGuard)
-        {
-            rigid.velocity = moveVec * DataManager.instance.userData.playerSpeed * subWeaponController.subWeapon.ratio;    //임시
-        }
         else
         {
-            rigid.velocity = moveVec * DataManager.instance.userData.playerSpeed * (status.isSprint ? DataManager.instance.userData.playerRunSpeed : 1f);
+            // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
+            float moveSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed;
+            rigid.velocity = moveVec * moveSpeed * (status.isSprint ? DataManager.instance.userData.playerRunSpeed : 1f);
         }
     }
 
@@ -178,11 +181,14 @@ public class Player : MonoBehaviour
  
     void Dodge()    // 회피
     {
-        if (dDown && !status.isAttack && moveVec != Vector2.zero && !status.isDodge)
+        if (dDown && !status.isAttack && !status.isSkill && moveVec != Vector2.zero && !status.isDodge)
         {
+            
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
-            rigid.velocity = moveVec * DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDodgeSpeed;
+            // 회피 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 회피속도
+            float dodgeSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed * DataManager.instance.userData.playerDodgeSpeed;
+            rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
 
             Invoke("DodgeOut", DataManager.instance.userData.playerDodgeTime);
@@ -233,9 +239,11 @@ public class Player : MonoBehaviour
         if (mainWeaponController.mainWeapon.maxAmmo == mainWeaponController.mainWeapon.ammo)
             return;
 
-        if (rDown && !status.isDodge && !status.isReload && !status.isEquip && !status.isAttack)
+        if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill)
         {
             status.isReload = true;
+            //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
+            float reloadTime = mainWeaponController.mainWeapon.reloadTime / DataManager.instance.userData.playerAttackSpeed;
             Invoke("ReloadOut", mainWeaponController.mainWeapon.reloadTime);
         }
     }
@@ -257,7 +265,7 @@ public class Player : MonoBehaviour
         status.attackDelay -= Time.deltaTime;
         status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady)
+        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill)
         {
             status.isAttack = true;
 
@@ -266,11 +274,14 @@ public class Player : MonoBehaviour
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
             mainWeaponController.Use(mousePos);
-            status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / 
-                (mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed);
+            // 초당 공격 횟수 = 플레이어 공속 * 무기 공속
+            float attackRate = mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed;
+            // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
+            status.attackDelay = 1 / attackRate;
+            // 공격 준비 안됨
             status.isAttackReady = false;
-            Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / 
-                (mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed));
+            // 공격 완료까지 시간 = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
+            Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / attackRate);
 
         }
     }
@@ -284,6 +295,8 @@ public class Player : MonoBehaviour
 
     #region SubWeapon
     
+    /*
+    // 잠시 비활성화
     void UseSubWeapon()
     {
         if (subWeaponController.subWeapon == null)
@@ -347,7 +360,7 @@ public class Player : MonoBehaviour
             status.subWeaponDelay = subWeaponController.subWeapon.coolTime;
         }
     }
-
+    */
     #endregion SubWeapon
 
     #region Skill
@@ -359,7 +372,28 @@ public class Player : MonoBehaviour
 
         if (skill.skillCoolTime > 0)
             return;
-        
+
+        if (skill.skillLimit != SkillLimit.None && mainWeaponController.mainWeapon == null)
+        {
+            Debug.Log("무기 없음");
+            return;
+        }
+            
+
+        if (skill.skillLimit == SkillLimit.Shot && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Shot)
+        {
+            Debug.Log("원거리 전용 스킬");
+            return;
+        }
+
+        if (skill.skillLimit == SkillLimit.Melee && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Melee)
+        {
+            Debug.Log("근거리 전용 스킬");
+            return;
+        }
+
+
+
         if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
         {
             Debug.Log("스킬 사용");
@@ -371,23 +405,40 @@ public class Player : MonoBehaviour
             // 클릭 한 위치로
             skill.Use(gameObject);
 
-            status.isSkill = false;
+            //스킬 사용 중인 시간 = 선딜 + 시전 중 + 후딜
+            float skillRate = skill.preDelay + skill.rate + skill.postDelay;
+            // 일반 스킬은 플레이어 공속에 영향
+            // 그 외에 스킬은 플레이어 공속 * 무기 공속
+            if(skill.skillLimit == SkillLimit.None)
+            {
+                Invoke("SkillOut", skillRate / userData.playerAttackSpeed);
+            }
+            else 
+            {
+                Invoke("SkillOut", skillRate / (userData.playerAttackSpeed * mainWeaponController.mainWeapon.attackSpeed));
+            }
+            
         }
+    }
+
+    void SkillOut()
+    {
+        status.isSkill = false;
     }
 
     #endregion
 
     void Interaction()
     {
-        if (iDown && nearObject != null && !status.isEquip && !status.isDodge && !status.isAttack && moveVec == Vector2.zero
-        && !status.isAttack && !status.isSubWeapon)
+        if (iDown && nearObject != null && !status.isDodge && !status.isAttack && moveVec == Vector2.zero
+        && !status.isAttack && !status.isSkill)
         {
             if (nearObject.tag == "SelectItem")
             {
                 GainSelectItem();
             }
         }
-        if (iDown && nearObject != null && !status.isEquip && !status.isDodge && !status.isAttack && moveVec == Vector2.zero)
+        if (iDown && nearObject != null && !status.isDodge && !status.isAttack && !status.isSkill && moveVec == Vector2.zero)
         {
             if (nearObject.tag == "Door")
             {
@@ -632,15 +683,13 @@ public class Player : MonoBehaviour
     #region Effect
     public void Damaged(float damage)
     {
-        if (status.isGuard)
-        {
-            damage -= damage * subWeaponController.subWeapon.ratio;
-        }
-        else if (status.isParry || status.isInvincible)
+        if (status.isInvincible)
         {
             damage = 0;
         }
 
+        //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
+        damage = damage * DataManager.instance.userData.playerReductionRatio;
         Debug.Log("Player Damaged" + damage);
         userData.playerHP -= damage;
         MapUIManager.instance.UpdateHealthUI();
@@ -666,11 +715,7 @@ public class Player : MonoBehaviour
 
         //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
 
-        if(status.isGuard)
-        {
-            distance = distance * 0.5f;
-        }
-        else if(status.isParry || status.isInvincible)
+        if(status.isInvincible)
         {
             distance = 0;
         }

@@ -17,17 +17,19 @@ public class UserData
     public float playerHPMax;
     public float playerHP;
     public float playerTempHP;
+    public float playerReductionRatio;
 
     //Attack
     public float playerPower;
-    public int playerCritical;
+    public float playerCritical;
     public float playerCriticalDamage;
     public float playerDrain;
     public float playerAttackRange;
     public float playerAttackSpeed;
-    
+
 
     //Move Speed
+    public float playerDefaultSpeed;
     public float playerSpeed;
     public float playerRunSpeed;
     public float playerRunCoolTime;
@@ -49,8 +51,7 @@ public class UserData
 
     //Skill
     public string activeSkill;
-    public string passiveSkill;
-    public int skillCoolTime;
+    public float skillCoolTime; //Äð°¨
 
     //Chpater
     public int nowChapter;

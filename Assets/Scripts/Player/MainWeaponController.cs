@@ -133,7 +133,7 @@ public class MainWeaponController : MonoBehaviour
     {
         Debug.Log("Swing");
 
-        float attackSpeed = mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed;
+        float attackSpeed = mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed;
 
         yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
@@ -162,7 +162,7 @@ public class MainWeaponController : MonoBehaviour
     IEnumerator Shot()
     {
         Debug.Log("Shot");
-        float attackSpeed = mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed;
+        float attackSpeed = mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed;
         yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 투사체 적용
@@ -192,7 +192,7 @@ public class MainWeaponController : MonoBehaviour
     IEnumerator Throw(Vector3 clickPos)
     {
         Debug.Log("Throw");
-        float attackSpeed = mainWeapon.attackSpeed + DataManager.instance.userData.playerAttackSpeed;
+        float attackSpeed = mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed;
         yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 폭발체 적용
