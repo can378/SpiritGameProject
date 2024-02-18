@@ -151,6 +151,7 @@ public class Player : MonoBehaviour
 
     void Move()     //이동
     {
+        
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
         if (status.isAttack || status.isReload || status.isSkill)       // 정지
@@ -166,6 +167,7 @@ public class Player : MonoBehaviour
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
             float moveSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed;
             rigid.velocity = moveVec * moveSpeed * (status.isSprint ? DataManager.instance.userData.playerRunSpeed : 1f);
+            
         }
     }
 
@@ -276,6 +278,7 @@ public class Player : MonoBehaviour
             mainWeaponController.Use(mousePos);
             // 초당 공격 횟수 = 플레이어 공속 * 무기 공속
             float attackRate = mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed;
+            AudioManager.instance.SFXPlay("attack_sword");
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
             status.attackDelay = 1 / attackRate;
             // 공격 준비 안됨

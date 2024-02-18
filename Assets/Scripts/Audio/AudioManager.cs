@@ -29,17 +29,22 @@ public class AudioManager : MonoBehaviour
     public GameObject AudioManagerObj;
 
 
-
+    [Header("BGM Audio Source")]
     //배경음 오디오
     public AudioClip[] BgClipList;
 
-    //효과음 오디오
+    [Header("SFX Audio Source")]
     public AudioClip testAudio;
-    
+    public AudioClip swingSword;
+    public AudioClip drop_key;
+    public AudioClip hit;
+    public AudioClip footStepDirt;
+    public AudioClip footStepStone;
+    public AudioClip[] SFXClipList;
 
     //instance
     public static AudioManager instance;
-
+   
 
     //========================================================================================================
     private void Awake()
@@ -52,16 +57,6 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        
-        Canvas = GameObject.Find("Canvas");
-        GameObject settingPanel = Canvas.transform.Find("SettingPanel").gameObject;
-        settingPanel.SetActive(true);
-        BGSoundSlider = GameObject.FindWithTag("BGSoundSlider");
-        SFXSoundSlider = GameObject.FindWithTag("SFXSoundSlider");
-        settingPanel.SetActive(false);
-        //이 위에거 조금 구림
-
-
 
         BGSoundSlider.GetComponent<Slider>().value = DataManager.instance.persistentData.BGSoundVolume;
         SFXSoundSlider.GetComponent<Slider>().value = DataManager.instance.persistentData.SFXSoundVolume;
@@ -69,7 +64,7 @@ public class AudioManager : MonoBehaviour
         SFXVolume();
 
         
-        AudioManager.instance.BGMPlay(0);
+        AudioManager.instance.BGMPlay(4);
 
 
         //슬라이드값 변할때마다 아래 함수 실행
@@ -135,9 +130,19 @@ public class AudioManager : MonoBehaviour
 
     //효과음 플레이 함수
     public void TestAudioPlay()
-    { SFXPlayPoolingVersion("testAudio", testAudio); }
-    
-   
+    { SFXPlayPoolingVersion(testAudio); }
+
+    public void SwordAudioPlay() 
+    { SFXPlayPoolingVersion(swingSword); }
+    public void KeyAudioPlay() 
+    { SFXPlayPoolingVersion(drop_key); }
+    public void HitAudioPlay() 
+    { SFXPlayPoolingVersion(hit); }
+    public void FootDirtAudioPlay() 
+    { SFXPlayPoolingVersion(footStepDirt); }
+    public void FootStoneAudioPlay() 
+    { SFXPlayPoolingVersion(footStepStone); }
+
 
     //배경음악 플레이 함수
     public void BGMPlay(int index)
@@ -198,8 +203,27 @@ public class AudioManager : MonoBehaviour
         obj.gameObject.SetActive(false); //끄고
         instance.poolingObjectQueue.Enqueue(obj); // 다시 Enqueue 삽입
     }
-    public void SFXPlayPoolingVersion(string sfxName, AudioClip clip)
+    public void SFXPlayPoolingVersion(AudioClip clip)
     {
+        var obj = GetObject();
+        obj.gameObject.GetComponent<AudioSource>().clip = clip;
+        obj.gameObject.GetComponent<AudioSource>().loop = false;
+        obj.gameObject.GetComponent<AudioSource>().Play();
+        obj.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
+
+    }
+
+    
+    public void SFXPlay(string clipName) 
+    { 
+        AudioClip clip=null;
+
+        //find Audio clip
+        foreach (AudioClip c in SFXClipList)
+        { if (c.name == clipName) { clip = c; break; } }
+
+        if (clip == null) { Debug.LogWarning("cannot find SFX AudioClip"); return; }
+
         var obj = GetObject();
         obj.gameObject.GetComponent<AudioSource>().clip = clip;
         obj.gameObject.GetComponent<AudioSource>().loop = false;
