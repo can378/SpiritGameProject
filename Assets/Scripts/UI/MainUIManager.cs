@@ -47,6 +47,11 @@ public class MainUIManager : MonoBehaviour
         taskPanel.SetActive(false);
     }
 
+    public void CancelBtn()
+    {
+
+    }
+
     public void SettingBtn() 
     {
         settingPanel.SetActive(true);
