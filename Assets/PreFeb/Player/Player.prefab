@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 2680101835875493889}
   - component: {fileID: 8114064950361091504}
   - component: {fileID: 4067080628616577797}
+  - component: {fileID: 385001862643613236}
   - component: {fileID: 320829814975973146}
   m_Layer: 0
   m_Name: Player
@@ -618,22 +619,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <runCurrentCoolTime>k__BackingField: 0
-  <attackDelay>k__BackingField: 0
-  <subWeaponDelay>k__BackingField: 0
   <isPlayerMove>k__BackingField: 0
   <isReload>k__BackingField: 0
   <isSprint>k__BackingField: 0
   <isDodge>k__BackingField: 0
-  <isAttack>k__BackingField: 0
-  <isAttackReady>k__BackingField: 0
-  <isEquip>k__BackingField: 0
   <isInvincible>k__BackingField: 0
   <isAttackable>k__BackingField: 0
+  <isAttack>k__BackingField: 0
+  <attackDelay>k__BackingField: 0
+  <isAttackReady>k__BackingField: 0
   <isSubWeapon>k__BackingField: 0
-  <isGuard>k__BackingField: 0
-  <isParry>k__BackingField: 0
+  <subWeaponDelay>k__BackingField: 0
   <isSubWeaponReady>k__BackingField: 0
-  <activeEffects>k__BackingField: []
+  <isSkill>k__BackingField: 0
+  <isSkillReady>k__BackingField: 0
+  <isSkillHold>k__BackingField: 0
+  activeEffects: []
 --- !u!114 &8114064950361091504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,6 +666,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subWeapon: {fileID: 0}
+--- !u!114 &385001862643613236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3504708173630329506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0a1aa67ce92c5449c4d11a976217dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 0}
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

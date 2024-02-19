@@ -27,6 +27,10 @@ public class UserData
     public float playerAttackRange;
     public float playerAttackSpeed;
 
+    //Skill
+    public float skillPower;
+    public float skillCoolTime; //Äð°¨
+    
 
     //Move Speed
     public float playerDefaultSpeed;
@@ -51,7 +55,6 @@ public class UserData
 
     //Skill
     public string activeSkill;
-    public float skillCoolTime; //Äð°¨
 
     //Chpater
     public int nowChapter;

@@ -8,6 +8,7 @@ public class MainUIManager : MonoBehaviour
     public GameObject mainPanel;
     public GameObject taskPanel;
     public GameObject settingPanel;
+    public GameObject warningPanel;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class MainUIManager : MonoBehaviour
             mainPanel.SetActive(!mainPanel.activeSelf);
             settingPanel.SetActive(false);
             taskPanel.SetActive(false);
+            warningPanel.SetActive(false);
         }
     }
 
@@ -45,17 +47,18 @@ public class MainUIManager : MonoBehaviour
         mainPanel.SetActive(!mainPanel.activeSelf);
         settingPanel.SetActive(false);
         taskPanel.SetActive(false);
+        warningPanel.SetActive(false);
     }
-
-    public void CancelBtn()
-    {
-
-    }
-
     public void SettingBtn() 
     {
         settingPanel.SetActive(true);
         taskPanel.SetActive(false);
+        mainPanel.SetActive(false);
+    }
+
+    public void ExitBtn()
+    {
+        warningPanel.SetActive(true);
         mainPanel.SetActive(false);
     }
 

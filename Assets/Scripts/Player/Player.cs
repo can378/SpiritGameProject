@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     // player 현재 상태
     public PlayerStatus status { get; set; }
 
-    Vector2 mousePos;
+    public Vector2 mousePos;
     public Vector2 mouseDir;
     public float mouseAngle;
 
@@ -22,16 +22,16 @@ public class Player : MonoBehaviour
 
     #region Key Input
 
-    bool rDown;             //재장전
-    bool dDown;             //회피
-    bool aDown;             //공격
-    bool sDown;             // 보조무기 누른 상태
-    bool sUp;               // 보조무기 뗀 상태
-    bool siDown;            // 선택 아이템
-    bool iDown;             //상호작용
+    public bool rDown { get; private set; }             //재장전
+    public bool dDown { get; private set; }             //회피
+    public bool aDown { get; private set; }             //공격
+    public bool sDown { get; private set; }             // 보조무기 누른 상태
+    public bool sUp { get; private set; }               // 보조무기 뗀 상태
+    public bool siDown { get; private set; }            // 선택 아이템
+    public bool iDown { get; private set; }             //상호작용
 
-    bool skDown;
-    bool skUp;
+    public bool skDown { get; private set; }
+    public bool skUp { get; private set; }
 
     #endregion
 
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
     public MainWeaponController mainWeaponController { get; private set; }
     public SubWeaponController subWeaponController { get; private set; }
-    public Skill skill;
+    public SkillController skillController { get; private set; }
 
     public UserData userData { get; private set; }
 
@@ -60,8 +60,10 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
+        
         mainWeaponController = GetComponent<MainWeaponController>();
         subWeaponController = GetComponent<SubWeaponController>();
+        skillController = GetComponent<SkillController>();
     }
 
     void Start()
@@ -206,7 +208,7 @@ public class Player : MonoBehaviour
     
 
     // 달리기 대기
-    void RunDelay()
+    public void RunDelay()
     {
         status.runCurrentCoolTime = DataManager.instance.userData.playerRunCoolTime;
         if (status.isSprint == true)
@@ -267,7 +269,7 @@ public class Player : MonoBehaviour
         status.attackDelay -= Time.deltaTime;
         status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill)
+        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady)
         {
             status.isAttack = true;
 
@@ -285,7 +287,6 @@ public class Player : MonoBehaviour
             status.isAttackReady = false;
             // 공격 완료까지 시간 = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
             Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / attackRate);
-
         }
     }
 
@@ -370,63 +371,50 @@ public class Player : MonoBehaviour
 
     void Skill()
     {
-        if (skill == null)
+        if (skillController.skill == null)
             return;
 
-        if (skill.skillCoolTime > 0)
+        if (skillController.skill.skillCoolTime > 0)
             return;
 
-        if (skill.skillLimit != SkillLimit.None && mainWeaponController.mainWeapon == null)
+        if (skillController.skill.skillLimit != SkillLimit.None && mainWeaponController.mainWeapon == null)
         {
             Debug.Log("무기 없음");
             return;
         }
             
 
-        if (skill.skillLimit == SkillLimit.Shot && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Shot)
+        if (skillController.skill.skillLimit == SkillLimit.Shot && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Shot)
         {
             Debug.Log("원거리 전용 스킬");
             return;
         }
 
-        if (skill.skillLimit == SkillLimit.Melee && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Melee)
+        if (skillController.skill.skillLimit == SkillLimit.Melee && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Melee)
         {
             Debug.Log("근거리 전용 스킬");
             return;
         }
 
-
-
         if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
         {
-            Debug.Log("스킬 사용");
-            status.isSkill = true;
+            skillController.SkillDown();
+        }
 
-            RunDelay();
-            // 공격 방향
-            // 현재 마우스 위치가 아닌
-            // 클릭 한 위치로
-            skill.Use(gameObject);
-
-            //스킬 사용 중인 시간 = 선딜 + 시전 중 + 후딜
-            float skillRate = skill.preDelay + skill.rate + skill.postDelay;
-            // 일반 스킬은 플레이어 공속에 영향
-            // 그 외에 스킬은 플레이어 공속 * 무기 공속
-            if(skill.skillLimit == SkillLimit.None)
-            {
-                Invoke("SkillOut", skillRate / userData.playerAttackSpeed);
-            }
-            else 
-            {
-                Invoke("SkillOut", skillRate / (userData.playerAttackSpeed * mainWeaponController.mainWeapon.attackSpeed));
-            }
-            
+        if (aDown && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillReady)
+        {
+            StartCoroutine(skillController.Immediate());
         }
     }
 
-    void SkillOut()
+    void SkillReady()
     {
-        status.isSkill = false;
+
+    }
+
+    void SkillHold()
+    {
+
     }
 
     #endregion
@@ -484,14 +472,12 @@ public class Player : MonoBehaviour
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
-            if (skill != null)
+            if (skillController.skill != null)
             {
-                skill.transform.position = transform.position;
-                //skill.gameObject.SetActive(true);
+                skillController.UnEquipSkill();
             }
             // 스킬 장착
-            skill = nearObject.GetComponent<Skill>();
-            //skill.gameObject.SetActive(false);
+            skillController.EquipSkill(nearObject.GetComponent<Skill>());
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {
@@ -683,6 +669,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    // 상태 관련
     #region Effect
     public void Damaged(float damage)
     {
