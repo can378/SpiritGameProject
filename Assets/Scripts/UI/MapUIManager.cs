@@ -16,6 +16,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject diePanel;
     public GameObject settingPanel;
     public GameObject startPanel;
+    public GameObject warningPanel;
     public RectTransform sidePanel;
 
     //Player status
@@ -198,6 +199,7 @@ public class MapUIManager : MonoBehaviour
         AudioManager.instance.TestAudioPlay();
         esckeyPanel.SetActive(!esckeyPanel.activeSelf);
         settingPanel.SetActive(false);
+        warningPanel.SetActive(false);
     }
     public void StartBtn() 
     {
@@ -219,6 +221,12 @@ public class MapUIManager : MonoBehaviour
             sidePanelVisible = true;
         }
 
+    }
+
+    public void ExitBtn()
+    {
+        warningPanel.SetActive(true);
+        esckeyPanel.SetActive(false);
     }
     #endregion
 
