@@ -18,22 +18,25 @@ public class SpinAttack : Skill
     {
         Debug.Log("SpinAttack");
 
-        Player player = user.GetComponent<Player>();
-        MeleeWeapon meleeWeapon = player.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
-
-        // 공속 = 플레이어 공속 * 무기 공속
-        float attackRate = player.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
-
-        yield return new WaitForSeconds(preDelay / attackRate);
-
-        GameObject instant = Instantiate(spinEffect, user.transform.position,user.transform.rotation);
 
         if(user.tag == "Player")
         {
+            Player player = user.GetComponent<Player>();
+            MeleeWeapon meleeWeapon = player.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
+
+            // 쿨타임 적용
+            skillCoolTime = skillDefalutCoolTime + player.userData.skillCoolTime * skillDefalutCoolTime;
+
+            // 공속 = 플레이어 공속 * 무기 공속
+            float attackRate = player.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
+
+            yield return new WaitForSeconds(preDelay / attackRate);
+
+            GameObject instant = Instantiate(spinEffect, user.transform.position, user.transform.rotation);
             HitDetection hitDetection = instant.GetComponent<HitDetection>();
 
             // 크기 조정
-            instant.transform.localScale = new Vector3(size * meleeWeapon.weaponSize, size * meleeWeapon.weaponSize,0);
+            instant.transform.localScale = new Vector3(size * meleeWeapon.weaponSize, size * meleeWeapon.weaponSize, 0);
 
             // 속성 = 무기 속성
             // 피해량 = (무기 + 기본 피해량) * 플레이어 공격력
@@ -46,13 +49,15 @@ public class SpinAttack : Skill
              player.userData.playerCritical,
              player.userData.playerCriticalDamage
              );
+
+            Destroy(instant, rate / attackRate);
+
+            yield return new WaitForSeconds(postDelay / attackRate);
         }
+    }
 
-        Destroy(instant, rate / attackRate);
+    public override void Exit(GameObject user)
+    {
         
-        yield return new WaitForSeconds(postDelay / attackRate);
-
-        StartCoroutine("CoolDown");
-
     }
 }

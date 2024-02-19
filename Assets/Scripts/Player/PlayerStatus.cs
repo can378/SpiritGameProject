@@ -26,6 +26,8 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public bool isSubWeaponReady { get; set; }              // 보조무기 준비 완료
 
     [field: SerializeField] public bool isSkill { get; set; }                       // 스킬 사용 중
+    [field: SerializeField] public bool isSkillReady { get; set; }                  // 스킬 준비 중
+    [field: SerializeField] public bool isSkillHold { get; set; }                   // 스킬 홀드 중
 
     [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();
 

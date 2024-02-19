@@ -22,16 +22,16 @@ public class Player : MonoBehaviour
 
     #region Key Input
 
-    bool rDown;             //재장전
-    bool dDown;             //회피
-    bool aDown;             //공격
-    bool sDown;             // 보조무기 누른 상태
-    bool sUp;               // 보조무기 뗀 상태
-    bool siDown;            // 선택 아이템
-    bool iDown;             //상호작용
+    public bool rDown { get; private set; }             //재장전
+    public bool dDown { get; private set; }             //회피
+    public bool aDown { get; private set; }             //공격
+    public bool sDown { get; private set; }             // 보조무기 누른 상태
+    public bool sUp { get; private set; }               // 보조무기 뗀 상태
+    public bool siDown { get; private set; }            // 선택 아이템
+    public bool iDown { get; private set; }             //상호작용
 
-    bool skDown;
-    bool skUp;
+    public bool skDown { get; private set; }
+    public bool skUp { get; private set; }
 
     #endregion
 
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
 
     public MainWeaponController mainWeaponController { get; private set; }
     public SubWeaponController subWeaponController { get; private set; }
-    public Skill skill;
+    public SkillController skillController { get; private set; }
 
     public UserData userData { get; private set; }
 
@@ -60,8 +60,10 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         status = GetComponent<PlayerStatus>();
+        
         mainWeaponController = GetComponent<MainWeaponController>();
         subWeaponController = GetComponent<SubWeaponController>();
+        skillController = GetComponent<SkillController>();
     }
 
     void Start()
@@ -206,7 +208,7 @@ public class Player : MonoBehaviour
     
 
     // 달리기 대기
-    void RunDelay()
+    public void RunDelay()
     {
         status.runCurrentCoolTime = DataManager.instance.userData.playerRunCoolTime;
         if (status.isSprint == true)
@@ -370,26 +372,26 @@ public class Player : MonoBehaviour
 
     void Skill()
     {
-        if (skill == null)
+        if (skillController.skill == null)
             return;
 
-        if (skill.skillCoolTime > 0)
+        if (skillController.skill.skillCoolTime > 0)
             return;
 
-        if (skill.skillLimit != SkillLimit.None && mainWeaponController.mainWeapon == null)
+        if (skillController.skill.skillLimit != SkillLimit.None && mainWeaponController.mainWeapon == null)
         {
             Debug.Log("무기 없음");
             return;
         }
             
 
-        if (skill.skillLimit == SkillLimit.Shot && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Shot)
+        if (skillController.skill.skillLimit == SkillLimit.Shot && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Shot)
         {
             Debug.Log("원거리 전용 스킬");
             return;
         }
 
-        if (skill.skillLimit == SkillLimit.Melee && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Melee)
+        if (skillController.skill.skillLimit == SkillLimit.Melee && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Melee)
         {
             Debug.Log("근거리 전용 스킬");
             return;
@@ -400,33 +402,9 @@ public class Player : MonoBehaviour
         if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
         {
             Debug.Log("스킬 사용");
-            status.isSkill = true;
-
-            RunDelay();
-            // 공격 방향
-            // 현재 마우스 위치가 아닌
-            // 클릭 한 위치로
-            skill.Use(gameObject);
-
-            //스킬 사용 중인 시간 = 선딜 + 시전 중 + 후딜
-            float skillRate = skill.preDelay + skill.rate + skill.postDelay;
-            // 일반 스킬은 플레이어 공속에 영향
-            // 그 외에 스킬은 플레이어 공속 * 무기 공속
-            if(skill.skillLimit == SkillLimit.None)
-            {
-                Invoke("SkillOut", skillRate / userData.playerAttackSpeed);
-            }
-            else 
-            {
-                Invoke("SkillOut", skillRate / (userData.playerAttackSpeed * mainWeaponController.mainWeapon.attackSpeed));
-            }
             
+            skillController.Use();
         }
-    }
-
-    void SkillOut()
-    {
-        status.isSkill = false;
     }
 
     #endregion
@@ -484,14 +462,12 @@ public class Player : MonoBehaviour
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
-            if (skill != null)
+            if (skillController.skill != null)
             {
-                skill.transform.position = transform.position;
-                //skill.gameObject.SetActive(true);
+                skillController.UnEquipSkill();
             }
             // 스킬 장착
-            skill = nearObject.GetComponent<Skill>();
-            //skill.gameObject.SetActive(false);
+            skillController.EquipSkill(nearObject.GetComponent<Skill>());
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {

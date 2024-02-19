@@ -9,6 +9,7 @@ public abstract class Skill : SelectItem
     [field: SerializeField] public string skillName { get; private set; }
     [field: SerializeField] public string skillID { get; private set; }
     [field: SerializeField] public SkillLimit skillLimit { get; private set; }
+    [field: SerializeField] public int skillType { get; private set; }                  // 0이면 즉발, 1이면 준비, 2이면 홀드
 
     [field: SerializeField] public float preDelay { get; private set; }                 //스킬 사용 전 대기 시간
     [field: SerializeField] public float rate { get; private set; }                     //스킬 사용 시간
@@ -19,21 +20,18 @@ public abstract class Skill : SelectItem
 
     [field: SerializeField] public GameObject user { get; set; }                        //사용자
 
-    public abstract void Use(GameObject user);
-    public IEnumerator CoolDown()
-    {
-        if(user.tag == "Player")
-        {
-            Player player = user.GetComponent<Player>();
-            skillCoolTime = skillDefalutCoolTime + (skillDefalutCoolTime * player.userData.skillCoolTime);
-        }
-        
-        
+    void Update() {
+        CoolDown();
+    }
+
+    public abstract void Use(GameObject user);                                          //사용
+    public abstract void Exit(GameObject user);                                         //스킬 사용 끝
+
+    void CoolDown()
+    {        
         while(skillCoolTime >= 0)
         {
-            yield return new WaitForSeconds(0.1f);
-
-            skillCoolTime -= 0.1f;
+            skillCoolTime -= Time.deltaTime;
         }
     }
 
