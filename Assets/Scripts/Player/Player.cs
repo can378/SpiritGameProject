@@ -616,12 +616,12 @@ public class Player : MonoBehaviour
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
 
-            EnemyStatus enemyStatus =other.GetComponent<EnemyStatus>();
 
-            Damaged(enemyStatus.damage);
+            Damaged(other.GetComponent<EnemyStatus>().damage);
+            //Damaged(10);
             KnockBack(other.gameObject);
             Invincible();
-            Invoke("OutInvincible", 0.2f);
+            Invoke("OutInvincible", 0.3f);
         }
         else if (other.tag == "EnterDungeon")
         {
@@ -689,6 +689,7 @@ public class Player : MonoBehaviour
         if (status.isInvincible)
         {
             damage = 0;
+            return;
         }
 
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율

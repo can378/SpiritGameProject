@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 9132051599210916687}
   - component: {fileID: 478597652695199392}
-  - component: {fileID: 2676907310404457916}
+  - component: {fileID: 5961262668058502625}
   - component: {fileID: -747655345849372718}
   - component: {fileID: 3557150430981615453}
   - component: {fileID: -7153402919048777576}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyPop
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.3679245, g: 0.20987357, b: 0.16197933, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2676907310404457916
+--- !u!114 &5961262668058502625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,14 +97,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5421934333945080465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde694dae14ca74469dbc3e12cd87a65, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  status: {fileID: -747655345849372718}
+  status: {fileID: 0}
   rigid: {fileID: 0}
+  sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
-  attackDuration: 3
+  timeValue: 0
+  enemyAttack: 5
+  EnemyGunMuzzle: []
+  donutAttackRange: {fileID: 0}
+  donutInside: {fileID: 0}
+  roundAttackRange: {fileID: 0}
 --- !u!114 &-747655345849372718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +126,7 @@ MonoBehaviour:
   maxHealth: 0
   health: 3
   speed: 3
-  damage: 3
+  damage: 5
   detectionDis: 3
   attackSpeed: 0
 --- !u!70 &3557150430981615453

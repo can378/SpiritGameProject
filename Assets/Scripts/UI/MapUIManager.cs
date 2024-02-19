@@ -106,7 +106,7 @@ public class MapUIManager : MonoBehaviour
         float normalizedEXP = userData.playerExp;
         ExpSlider.value = normalizedEXP;
 
-        print("update exp ui" + normalizedEXP);
+        //print("update exp ui" + normalizedEXP);
         ExpTxt.text = userData.playerExp.ToString();
     }
 

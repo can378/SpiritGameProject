@@ -32,7 +32,7 @@ public class DataManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+        gameData = this.GetComponent<GameData>();
         LoadData();
     }
 

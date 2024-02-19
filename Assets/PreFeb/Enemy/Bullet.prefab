@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3214235305519029506}
   - component: {fileID: 3347979801488068503}
+  - component: {fileID: 6266424549933134781}
+  - component: {fileID: -587354190876685427}
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
-  - component: {fileID: -587354190876685427}
-  - component: {fileID: 6266424549933134781}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: EnemyAttack
@@ -88,6 +88,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6266424549933134781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43073fd0dadf9b41a104743ad884734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-587354190876685427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
+  speed: 0
+  damage: 1
+  detectionDis: 0
+  attackSpeed: 0
 --- !u!50 &7530864278459449910
 Rigidbody2D:
   serializedVersion: 4
@@ -150,32 +180,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &-587354190876685427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  speed: 0
-  damage: 1
-  detectionDis: 0
-  attackSpeed: 0
---- !u!114 &6266424549933134781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43073fd0dadf9b41a104743ad884734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

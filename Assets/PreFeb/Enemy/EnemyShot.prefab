@@ -94,12 +94,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1906036652039528675}
   - component: {fileID: 6530490119515279939}
-  - component: {fileID: 6975186147743471066}
+  - component: {fileID: 6139556662884496509}
   - component: {fileID: -8506440877553194834}
   - component: {fileID: 4554605982955159981}
   - component: {fileID: 2275793760991100723}
   m_Layer: 8
-  m_Name: EnemyShooter0
+  m_Name: EnemyShot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6975186147743471066
+--- !u!114 &6139556662884496509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,20 +185,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5531090725962068773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aff6d6aa1a714a744b2d773d04c8fe2c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  status: {fileID: -8506440877553194834}
-  ePattern: 1
+  status: {fileID: 0}
+  rigid: {fileID: 0}
+  sprite: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  timeValue: 0
+  enemyAttack: 1
   EnemyGunMuzzle:
   - {fileID: 2882051056190669649}
   - {fileID: 8249389582094117096}
   - {fileID: 6685783766939783139}
   - {fileID: 8689681431222579082}
   donutAttackRange: {fileID: 0}
-  roundAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
+  roundAttackRange: {fileID: 0}
 --- !u!114 &-8506440877553194834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,9 +215,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
   health: 3
   speed: 3
-  damage: 3
+  damage: 1
   detectionDis: 3
   attackSpeed: 0
 --- !u!50 &4554605982955159981

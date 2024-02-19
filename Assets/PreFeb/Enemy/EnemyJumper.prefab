@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4475995538173333841}
   - component: {fileID: 5859602557369308688}
-  - component: {fileID: 3299620698172658683}
+  - component: {fileID: 7525306328793790430}
   - component: {fileID: -3405653483538012315}
   - component: {fileID: 2484750247209635366}
   - component: {fileID: 1842358626026619882}
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3299620698172658683
+--- !u!114 &7525306328793790430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,11 +97,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 6662244182936845034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d80ed4ca9e30d614385734df9513f819, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  status: {fileID: -3405653483538012315}
+  status: {fileID: 0}
+  rigid: {fileID: 0}
+  sprite: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  timeValue: 0
+  enemyAttack: 7
+  EnemyGunMuzzle: []
+  donutAttackRange: {fileID: 0}
+  donutInside: {fileID: 0}
+  roundAttackRange: {fileID: 0}
 --- !u!114 &-3405653483538012315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,9 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
   health: 30
-  speed: 3
-  damage: 3
+  speed: 10
+  damage: 5
   detectionDis: 5
   attackSpeed: 0
 --- !u!58 &2484750247209635366

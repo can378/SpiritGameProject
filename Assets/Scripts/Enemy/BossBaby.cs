@@ -9,7 +9,6 @@ public class BossBaby : EnemyBasic
     public GameObject SafeArea;
     public GameObject DamageArea;
 
-    private float targetDistance;
     private int patternIndex = 0;
     private bool isHitWall;
     void Start()

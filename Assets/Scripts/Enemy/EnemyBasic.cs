@@ -12,13 +12,18 @@ public class EnemyBasic : MonoBehaviour
     [HideInInspector]
     public Rigidbody2D rigid;
     [HideInInspector]
+    public SpriteRenderer sprite;
+    [HideInInspector]
     public Vector2 targetDirVec;
+    [HideInInspector]
+    public float timeValue=0;
 
     private void Awake()
     {
         enemyTarget = GameObject.FindWithTag("Player").transform;
         rigid = GetComponent<Rigidbody2D>();
         status = GetComponent<EnemyStatus>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
 
@@ -26,7 +31,7 @@ public class EnemyBasic : MonoBehaviour
 {
         if (collision.tag == "PlayerAttack")
         {
-            
+            //Damaged
             HitDetection hitDetection = collision.GetComponent<HitDetection>();
 
             int criticalHit = Random.Range(0, 100) < hitDetection.critical ? 1 : 0;
@@ -36,7 +41,7 @@ public class EnemyBasic : MonoBehaviour
             Vector2 dir = (transform.position - collision.transform.position).normalized;
             rigid.AddForce(dir * hitDetection.knockBack, ForceMode2D.Impulse);
 
-
+            //DIE
             if (status.health <= 0f)
             {
                 DataManager.instance.userData.playerExp++;
@@ -56,11 +61,8 @@ public class EnemyBasic : MonoBehaviour
         int dropCoinNum = 10;
         GameManager.instance.dropCoin(dropCoinNum, transform.position);
 
-
         //enemy disappear
         this.gameObject.SetActive(false);
-        //Destroy(this.gameObject); °Á destroyÇÒ±î¿ä?
-
     }
 
     public void Chase()

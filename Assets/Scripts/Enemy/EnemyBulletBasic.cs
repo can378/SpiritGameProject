@@ -5,15 +5,9 @@ using UnityEngine;
 public class EnemyBulletBasic : MonoBehaviour
 {
 
-    void Start()
-    {
-        
-    }
-
-
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag =="Player")
+        if (other.tag =="Player"||other.tag=="Wall")
         {
             gameObject.SetActive(false);
         }
