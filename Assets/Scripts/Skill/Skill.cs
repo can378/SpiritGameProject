@@ -29,9 +29,13 @@ public abstract class Skill : SelectItem
 
     void CoolDown()
     {        
-        while(skillCoolTime >= 0)
+        if (skillCoolTime > 0)
         {
             skillCoolTime -= Time.deltaTime;
+        }
+        else
+        {
+            skillCoolTime = 0;
         }
     }
 

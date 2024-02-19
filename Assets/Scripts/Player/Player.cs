@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     // player 현재 상태
     public PlayerStatus status { get; set; }
 
-    Vector2 mousePos;
+    public Vector2 mousePos;
     public Vector2 mouseDir;
     public float mouseAngle;
 
@@ -269,7 +269,7 @@ public class Player : MonoBehaviour
         status.attackDelay -= Time.deltaTime;
         status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill)
+        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady)
         {
             status.isAttack = true;
 
@@ -287,7 +287,6 @@ public class Player : MonoBehaviour
             status.isAttackReady = false;
             // 공격 완료까지 시간 = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
             Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / attackRate);
-
         }
     }
 
@@ -397,14 +396,25 @@ public class Player : MonoBehaviour
             return;
         }
 
-
-
         if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
         {
-            Debug.Log("스킬 사용");
-            
-            skillController.Use();
+            skillController.SkillDown();
         }
+
+        if (aDown && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillReady)
+        {
+            StartCoroutine(skillController.Immediate());
+        }
+    }
+
+    void SkillReady()
+    {
+
+    }
+
+    void SkillHold()
+    {
+
     }
 
     #endregion
@@ -659,6 +669,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    // 상태 관련
     #region Effect
     public void Damaged(float damage)
     {

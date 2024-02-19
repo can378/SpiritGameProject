@@ -28,28 +28,33 @@ public class SkillController : MonoBehaviour
         skill = null;
     }
 
-    public void Use()
+    public void SkillDown()
     {
         if (skill.skillType == 0)
         {
             // 즉발
+            Debug.Log("스킬 즉시 시전");
             StartCoroutine("Immediate");
         }
         else if (skill.skillType == 1)
         {
             //준비
+            Debug.Log("스킬 준비");
             StartCoroutine("Ready");
         }
         else if (skill.skillType == 2)
         {
             //홀드
+            Debug.Log("스킬 홀드");
             StartCoroutine("Hold");
         }
 
     }
 
-    IEnumerator Immediate()
+    public IEnumerator Immediate()
     {
+        Debug.Log("스킬 시전");
+        player.status.isSkillReady = false;
         player.status.isSkill = true;
         player.RunDelay();
 
@@ -59,7 +64,6 @@ public class SkillController : MonoBehaviour
         if (skill.skillLimit == SkillLimit.None)
         {
             yield return new WaitForSeconds(skillRate / player.userData.playerAttackSpeed);
-            
         }
         else
         {
@@ -70,39 +74,16 @@ public class SkillController : MonoBehaviour
 
     }
 
-    IEnumerator Ready()
+    void Ready()
     {
-        player.status.isSkillReady = true;
-        player.RunDelay();
-
-        while(player.status.isSkillReady)
+        if(!player.status.isSkillReady)
         {
-            // 스킬 취소
-            if(player.skDown)
-            {
-                skill.skillCoolTime = 0.5f;
-                //스킬 재사용 대기시간 추가
-            }
-
-            // 스킬 사용
-            if(player.sDown)
-            {
-                player.status.isSkillReady = false;
-                player.status.isSkill = true;
-
-                skill.Use(gameObject);
-
-                float skillRate = skill.preDelay + skill.rate + skill.postDelay;
-                if (skill.skillLimit == SkillLimit.None)
-                {
-                    yield return new WaitForSeconds(skillRate / player.userData.playerAttackSpeed);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(skillRate / player.userData.playerAttackSpeed * player.mainWeaponController.mainWeapon.attackSpeed);
-                }
-                player.status.isSkill = false;
-            }
+            player.status.isSkillReady = true;
+        }
+        else if(player.status.isSkillReady)
+        {
+            player.status.isSkillReady = false;
+            skill.skillCoolTime = 0.5f;
         }
     }
 

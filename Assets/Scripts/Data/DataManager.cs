@@ -111,6 +111,9 @@ public class DataManager : MonoBehaviour
         userData.playerAttackRange = 0;
         userData.playerAttackSpeed = 1;
 
+        userData.skillPower = 1;
+        userData.skillCoolTime = 0;
+
         userData.playerDefaultSpeed = 5;
         userData.playerSpeed = 1;
         userData.playerRunSpeed = 1.66f;
@@ -131,7 +134,6 @@ public class DataManager : MonoBehaviour
         userData.subWeapon = "";
 
         userData.activeSkill = "";
-        userData.skillCoolTime = 0;
 
         userData.nowChapter = 0;
 
