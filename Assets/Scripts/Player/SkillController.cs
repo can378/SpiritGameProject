@@ -60,11 +60,11 @@ public class SkillController : MonoBehaviour
         float skillRate = skill.preDelay + skill.rate + skill.postDelay;
         if (skill.skillLimit == SkillLimit.None)
         {
-            yield return new WaitForSeconds(skillRate / DataManager.instance.userData.playerAttackSpeed);
+            yield return new WaitForSeconds(skillRate / Player.instance.userData.playerAttackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skillRate / DataManager.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
+            yield return new WaitForSeconds(skillRate / Player.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
         }
 
         status.isSkill = false;
@@ -91,11 +91,11 @@ public class SkillController : MonoBehaviour
 
         if (skill.skillLimit == SkillLimit.None)
         {
-            yield return new WaitForSeconds(skill.preDelay / DataManager.instance.userData.playerAttackSpeed);
+            yield return new WaitForSeconds(skill.preDelay / Player.instance.userData.playerAttackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skill.preDelay / DataManager.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
+            yield return new WaitForSeconds(skill.preDelay / Player.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
         }
 
         skill.Use(gameObject);
@@ -107,11 +107,11 @@ public class SkillController : MonoBehaviour
         skill.Exit(gameObject);
         if (skill.skillLimit == SkillLimit.None)
         {
-            yield return new WaitForSeconds(skill.postDelay / DataManager.instance.userData.playerAttackSpeed);
+            yield return new WaitForSeconds(skill.postDelay / Player.instance.userData.playerAttackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skill.postDelay / DataManager.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
+            yield return new WaitForSeconds(skill.postDelay / Player.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
         }
         status.isSkillHold = false;
     }
