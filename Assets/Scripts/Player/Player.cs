@@ -11,27 +11,21 @@ public class Player : MonoBehaviour
     // player 현재 능력치
     public static Player instance { get; private set; }
     // player 현재 상태
-    public PlayerStatus status { get; set; }
-
-    public Vector2 mousePos;
-    public Vector2 mouseDir;
-    public float mouseAngle;
+    public  PlayerStatus status { get; private set; }
 
     float hAxis;
     float vAxis;
 
     #region Key Input
 
-    public bool rDown { get; private set; }             //재장전
-    public bool dDown { get; private set; }             //회피
-    public bool aDown { get; private set; }             //공격
-    public bool sDown { get; private set; }             // 보조무기 누른 상태
-    public bool sUp { get; private set; }               // 보조무기 뗀 상태
-    public bool siDown { get; private set; }            // 선택 아이템
-    public bool iDown { get; private set; }             //상호작용
+    bool rDown;            //재장전
+    bool dDown;           //회피
+    bool aDown;            //공격
+    bool siDown;           // 선택 아이템
+    bool iDown;             //상호작용
 
-    public bool skDown { get; private set; }
-    public bool skUp { get; private set; }
+    bool skDown;
+    bool skUp;
 
     #endregion
 
@@ -47,10 +41,8 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
 
-
-    public MainWeaponController mainWeaponController { get; private set; }
-    public SubWeaponController subWeaponController { get; private set; }
-    public SkillController skillController { get; private set; }
+    public MainWeaponController mainWeaponController;
+    public SkillController skillController;
 
     public UserData userData { get; private set; }
 
@@ -62,7 +54,6 @@ public class Player : MonoBehaviour
         status = GetComponent<PlayerStatus>();
         
         mainWeaponController = GetComponent<MainWeaponController>();
-        subWeaponController = GetComponent<SubWeaponController>();
         skillController = GetComponent<SkillController>();
     }
 
@@ -82,6 +73,7 @@ public class Player : MonoBehaviour
         
         if (isMoveable())
         {
+            RunCoolTime();
             Dodge();
             Move();  
         }
@@ -118,11 +110,8 @@ public class Player : MonoBehaviour
         iDown = Input.GetButtonDown("Interaction"); //f
         siDown = Input.GetButtonDown("SelectItem"); //h
 
-        sDown = Input.GetButtonDown("SubWeapon");   //마우스 우클릭
-        sUp = Input.GetButtonUp("SubWeapon");
-
-        skDown = Input.GetButtonDown("Skill");
-        skUp = Input.GetButtonUp("Skill");
+        skDown = Input.GetButtonDown("Skill");      //e Down
+        skUp = Input.GetButtonUp("Skill");          //e Up
         
     }
 
@@ -135,7 +124,7 @@ public class Player : MonoBehaviour
         RaycastHit2D hit;
 
         // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-        float moveSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed;
+        float moveSpeed = userData.playerSpeed * userData.playerDefaultSpeed;
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
@@ -167,18 +156,18 @@ public class Player : MonoBehaviour
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            float moveSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed;
-            rigid.velocity = moveVec * moveSpeed * (status.isSprint ? DataManager.instance.userData.playerRunSpeed : 1f);
+            float moveSpeed = userData.playerSpeed * userData.playerDefaultSpeed;
+            rigid.velocity = moveVec * moveSpeed * (status.isSprint ? userData.playerRunSpeed : 1f);
             
         }
     }
 
     void Turn()
     {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDir = (mousePos - (Vector2)transform.position).normalized;
+        status.mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        status.mouseDir = (status.mousePos - (Vector2)transform.position).normalized;
 
-        mouseAngle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+        status.mouseAngle = Mathf.Atan2(status.mousePos.y - transform.position.y, status.mousePos.x - transform.position.x) * Mathf.Rad2Deg;
         //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
 
     }
@@ -191,11 +180,11 @@ public class Player : MonoBehaviour
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
             // 회피 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 회피속도
-            float dodgeSpeed = DataManager.instance.userData.playerSpeed * DataManager.instance.userData.playerDefaultSpeed * DataManager.instance.userData.playerDodgeSpeed;
+            float dodgeSpeed = userData.playerSpeed * userData.playerDefaultSpeed * userData.playerDodgeSpeed;
             rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
 
-            Invoke("DodgeOut", DataManager.instance.userData.playerDodgeTime);
+            Invoke("DodgeOut", userData.playerDodgeTime);
 
         }
     }
@@ -205,27 +194,17 @@ public class Player : MonoBehaviour
         status.isDodge = false;
     }
 
-    
-
-    // 달리기 대기
-    public void RunDelay()
+    void RunCoolTime()
     {
-        status.runCurrentCoolTime = DataManager.instance.userData.playerRunCoolTime;
-        if (status.isSprint == true)
+        if(status.isAttack || status.isSkill || status.isSkillHold)
         {
             status.isSprint = false;
-            StartCoroutine(RunCoolTime());
+            status.runCurrentCoolTime = userData.playerRunCoolTime;
+            return;
         }
-    }
 
-    IEnumerator RunCoolTime()
-    {
-        while (status.runCurrentCoolTime > 0.0f)
-        {
-            status.runCurrentCoolTime -= Time.deltaTime;
-            yield return new WaitForFixedUpdate();
-        }
-        status.isSprint = true;
+        status.runCurrentCoolTime -= Time.deltaTime;
+        status.isSprint = status.runCurrentCoolTime > 0 ? false : true;
     }
 
     #endregion
@@ -247,7 +226,7 @@ public class Player : MonoBehaviour
         {
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = mainWeaponController.mainWeapon.reloadTime / DataManager.instance.userData.playerAttackSpeed;
+            float reloadTime = mainWeaponController.mainWeapon.reloadTime / userData.playerAttackSpeed;
             Invoke("ReloadOut", mainWeaponController.mainWeapon.reloadTime);
         }
     }
@@ -273,13 +252,12 @@ public class Player : MonoBehaviour
         {
             status.isAttack = true;
 
-            RunDelay();
             // 공격 방향
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
-            mainWeaponController.Use(mousePos);
+            mainWeaponController.Use(status.mousePos);
             // 초당 공격 횟수 = 플레이어 공속 * 무기 공속
-            float attackRate = mainWeaponController.mainWeapon.attackSpeed * DataManager.instance.userData.playerAttackSpeed;
+            float attackRate = mainWeaponController.mainWeapon.attackSpeed * userData.playerAttackSpeed;
             AudioManager.instance.SFXPlay("attack_sword");
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
             status.attackDelay = 1 / attackRate;
@@ -296,76 +274,6 @@ public class Player : MonoBehaviour
     }
     
     #endregion
-
-    #region SubWeapon
-    
-    /*
-    // 잠시 비활성화
-    void UseSubWeapon()
-    {
-        if (subWeaponController.subWeapon == null)
-            return;
-
-        status.subWeaponDelay -= Time.deltaTime;
-        status.isSubWeaponReady = status.subWeaponDelay <= 0;
-
-        if (sDown && !status.isSubWeapon && !status.isDodge && status.isSubWeaponReady)
-        {
-            status.isSubWeapon = true;
-            RunDelay();
-            SubWeaponUse();
-            status.isSubWeaponReady = false;
-        }
-    }
-
-    void SubWeaponUse()
-    {
-        if (subWeaponController.subWeapon.subWeaponType == SubWeaponType.Guard)
-        {
-            Debug.Log("막기");
-            status.isGuard = true;
-        }
-        else if (subWeaponController.subWeapon.subWeaponType == SubWeaponType.Parry)
-        {
-            Debug.Log("반격");
-            status.isParry = true;
-            status.subWeaponDelay = (subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate + subWeaponController.subWeapon.coolTime);
-            Invoke("ParryOut", subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate);
-        }
-        else if (subWeaponController.subWeapon.subWeaponType == SubWeaponType.Teleport)
-        {
-            Debug.Log("순간이동");
-            status.subWeaponDelay = (subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate + subWeaponController.subWeapon.coolTime);
-            Invoke("TeleportOut", subWeaponController.subWeapon.preDelay + subWeaponController.subWeapon.rate);
-        }
-    }
-
-    // 시간이 지나면 자동으로 반격 해체
-    void ParryOut()
-    {
-        status.isSubWeapon = false;
-        status.isParry = false;
-    }
-
-    // 시간이 지나면 해당 위치로 순간이동
-    void TeleportOut()
-    {
-        gameObject.transform.position = mousePos;
-        status.isSubWeapon = false;
-    }
-
-    // 클릭을 떼면 가드가 풀림
-    void GuardOut()
-    {
-        if (sUp && status.isGuard && subWeaponController.subWeapon.subWeaponType == SubWeaponType.Guard)
-        {
-            status.isSubWeapon = false;
-            status.isGuard = false;
-            status.subWeaponDelay = subWeaponController.subWeapon.coolTime;
-        }
-    }
-    */
-    #endregion SubWeapon
 
     #region Skill
 
@@ -407,16 +315,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SkillReady()
-    {
-
-    }
-
-    void SkillHold()
-    {
-
-    }
-
     #endregion
 
     void Interaction()
@@ -456,20 +354,6 @@ public class Player : MonoBehaviour
             // 무기 장비
             mainWeaponController.EquipWeapon(nearObject.GetComponent<MainWeapon>());
         }
-        else if (selectItem.selectItemClass == SelectItemClass.SubWeapon)
-        {
-            Debug.Log("보조무기 사용법");
-            Debug.Log("막기: 우클릭 동안 유지 - 데미지 감소");
-            Debug.Log("반격 : 우클릭 시 raio초 동안 발동 - 적 스턴");
-            Debug.Log("순간이동 : 우클릭 시 선딜레이 이후 클릭한 방향으로 이동");
-            if (subWeaponController.subWeapon != null)
-            {
-                // 무기의 위치를 현재 위치로 옮긴 후 해체
-                subWeaponController.UnEquipWeapon();
-            }
-            // 무기 장비
-            subWeaponController.EquipSubWeapon(nearObject.GetComponent<SubWeapon>());
-        }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
             if (skillController.skill != null)
@@ -486,7 +370,7 @@ public class Player : MonoBehaviour
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            DataManager.instance.userData.playerItem = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
+            userData.playerItem = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
             playerItem = selectItem.gameObject;
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
             playerItem.SetActive(false);
@@ -500,7 +384,7 @@ public class Player : MonoBehaviour
             Debug.Log("UseSelectItem");
             //Throwing Items
             if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
-            { mainWeaponController.UseItem(playerItem, mousePos); }
+            { mainWeaponController.UseItem(playerItem, status.mousePos); }
             //Consumable Item
             else 
             {
@@ -545,7 +429,7 @@ public class Player : MonoBehaviour
             //"no item" status
             MapUIManager.instance.updateItemUI(null);
             playerItem = null;
-            DataManager.instance.userData.playerItem = "";
+            userData.playerItem = "";
 
         }
 

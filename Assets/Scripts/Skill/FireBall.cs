@@ -21,18 +21,15 @@ public class FireBall : Skill
 
         if (user.tag == "Player")
         {
-            Player player = user.GetComponent<Player>();
-            Vector3 mousePos = player.mousePos;
-
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime + player.userData.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = skillDefalutCoolTime + Player.instance.userData.skillCoolTime * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.userData.playerAttackSpeed;
+            float attackRate = Player.instance.userData.playerAttackSpeed;
 
             yield return new WaitForSeconds(preDelay / attackRate);
 
-            GameObject instant = Instantiate(FireBallEffect, mousePos, Quaternion.identity);
+            GameObject instant = Instantiate(FireBallEffect, Player.instance.status.mousePos, Quaternion.identity);
             HitDetection hitDetection = instant.GetComponent<HitDetection>();
             // 속성 = 불
             // 피해량 = 피해량 * 플레이어 공격력
@@ -40,7 +37,7 @@ public class FireBall : Skill
             // 치확 = 0
             // 치뎀 = 0
             hitDetection.SetHitDetection(WeaponAttribute.Fire,
-             damage * player.userData.skillPower,
+             damage * Player.instance.userData.skillPower,
              knockBack,
              0,
              0

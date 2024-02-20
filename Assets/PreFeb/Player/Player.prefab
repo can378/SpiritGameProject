@@ -599,13 +599,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436f0434039a7354fa325fa5e60a8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseDir: {x: 0, y: 0}
-  mouseAngle: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
   nearObject: {fileID: 0}
   playerItem: {fileID: 0}
+  mainWeaponController: {fileID: 0}
+  skillController: {fileID: 0}
 --- !u!114 &2680101835875493889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +618,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ab0145e2a78be499a07c26b80dfc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <mousePos>k__BackingField: {x: 0, y: 0}
+  <mouseDir>k__BackingField: {x: 0, y: 0}
+  <mouseAngle>k__BackingField: 0
   <runCurrentCoolTime>k__BackingField: 0
   <isPlayerMove>k__BackingField: 0
   <isReload>k__BackingField: 0
@@ -628,9 +631,6 @@ MonoBehaviour:
   <isAttack>k__BackingField: 0
   <attackDelay>k__BackingField: 0
   <isAttackReady>k__BackingField: 0
-  <isSubWeapon>k__BackingField: 0
-  <subWeaponDelay>k__BackingField: 0
-  <isSubWeaponReady>k__BackingField: 0
   <isSkill>k__BackingField: 0
   <isSkillReady>k__BackingField: 0
   <isSkillHold>k__BackingField: 0
@@ -647,10 +647,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bc7e415cd3038478d4b3a895ba7d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainWeapon: {fileID: 0}
+  <mainWeapon>k__BackingField: {fileID: 0}
   HitDetectionGameObject: {fileID: 0}
   projectileGameObject: {fileID: 0}
-  meleeWeaponList:
+  meleeEffectList:
   - {fileID: 5324849133557116994}
   - {fileID: 1820615735909877065}
 --- !u!114 &4067080628616577797
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0a1aa67ce92c5449c4d11a976217dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skill: {fileID: 0}
+  <skill>k__BackingField: {fileID: 0}
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

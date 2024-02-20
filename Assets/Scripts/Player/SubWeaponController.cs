@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//폐기
 public class SubWeaponController : MonoBehaviour
 {
     // 얻은 보조무기 정보

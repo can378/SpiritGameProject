@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class MainWeaponController : MonoBehaviour
 {
+    [field: SerializeField] public MainWeapon mainWeapon { get; set; }              // 무기
     PlayerStatus status;
-
-    // 얻은 무기 정보
-    public MainWeapon mainWeapon;
 
     // 공격 정보
     [SerializeField] GameObject HitDetectionGameObject;
     [SerializeField] GameObject projectileGameObject;
 
-    // 사용 가능 무기들
-    [SerializeField] GameObject[] meleeWeaponList;
+    // 근거리 공격 이펙트 
+    [SerializeField] GameObject[] meleeEffectList;
 
     void Awake()
     {
@@ -28,7 +26,7 @@ public class MainWeaponController : MonoBehaviour
 
         if (mainWeapon.weaponType == MainWeaponType.Melee)
         {
-            HitDetectionGameObject = meleeWeaponList[mainWeapon.attackType];
+            HitDetectionGameObject = meleeEffectList[mainWeapon.attackType];
         }
         else if (mainWeapon.weaponType == MainWeaponType.Shot)
         {
@@ -90,7 +88,7 @@ public class MainWeaponController : MonoBehaviour
         explosive.tag = "Weapon";
         explosive.SetActive(true);
         explosive.transform.position = transform.position;
-        explosive.GetComponent<Rigidbody2D>().velocity = Player.instance.mouseDir * 25;
+        explosive.GetComponent<Rigidbody2D>().velocity = status.mouseDir * 25;
 
         float originalRadius = explosive.GetComponent<CircleCollider2D>().radius;
         for (int i = 0; i < originalRadius * 1.5; i++)
@@ -113,7 +111,7 @@ public class MainWeaponController : MonoBehaviour
         explosive.tag = "Weapon";
         explosive.SetActive(true);
         explosive.transform.position = transform.position;
-        explosive.GetComponent<Rigidbody2D>().velocity = Player.instance.mouseDir * 25;
+        explosive.GetComponent<Rigidbody2D>().velocity = status.mouseDir * 25;
 
         float originalRadius = explosive.GetComponent<CircleCollider2D>().radius;
         for (int i = 0; i < originalRadius * 1.5; i++)
@@ -146,7 +144,7 @@ public class MainWeaponController : MonoBehaviour
         hitDetection.SetHitDetection(mainWeapon.weaponAttribute, mainWeapon.damage * DataManager.instance.userData.playerPower, mainWeapon.knockBack, DataManager.instance.userData.playerCritical, DataManager.instance.userData.playerCriticalDamage);
 
         // 무기 방향 
-        HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);
+        HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);
 
         // 무기 이펙트 실행
         HitDetectionGameObject.SetActive(true);
@@ -177,9 +175,9 @@ public class MainWeaponController : MonoBehaviour
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
         projectile.SetHitDetection(shotWeapon.weaponAttribute, shotWeapon.damage * DataManager.instance.userData.playerPower, shotWeapon.knockBack, DataManager.instance.userData.playerCritical, DataManager.instance.userData.playerCriticalDamage); //기본 설정
-        instantProjectile.transform.rotation = Quaternion.AngleAxis(Player.instance.mouseAngle - 90, Vector3.forward);  // 방향 설정
+        instantProjectile.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize, shotWeapon.projectileSize, 1);  // 크기 설정
-        bulletRigid.velocity = Player.instance.mouseDir * 10 * shotWeapon.projectileSpeed;  // 속도 설정
+        bulletRigid.velocity = status.mouseDir * 10 * shotWeapon.projectileSpeed;  // 속도 설정
         Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
 
         yield return new WaitForSeconds(mainWeapon.postDelay / attackSpeed);

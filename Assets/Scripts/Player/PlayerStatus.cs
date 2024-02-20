@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
-    // 플레이어 상태
+    // 외부에서 접근 할 수도 있는 플레이어 정보들
+    // 유저데이터에 넣기 애매한 것들은 우선 여기로
+
+    [field: SerializeField] public Vector2 mousePos { get; set; }
+    [field: SerializeField] public Vector2 mouseDir { get; set; }
+    [field: SerializeField] public float mouseAngle { get; set; }
+
     [field: SerializeField] public float runCurrentCoolTime { get; set; }           // 달리기 대기시간
-    
-              
+         
     [field: SerializeField] public bool isPlayerMove { get; set; }
 
     [field: SerializeField] public bool isReload {get; set;}                        //장전
@@ -21,14 +26,9 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public float attackDelay { get; set; }                  // 다음 공격까지 대기시간
     [field: SerializeField] public bool isAttackReady { get; set; }                 // 공격 준비 완료
 
-    [field: SerializeField] public bool isSubWeapon { get; set; }                   // 보조무기 사용중
-    [field: SerializeField] public float subWeaponDelay { get; set; }               // subWeaponDelay 준비 시간
-    [field: SerializeField] public bool isSubWeaponReady { get; set; }              // 보조무기 준비 완료
-
     [field: SerializeField] public bool isSkill { get; set; }                       // 스킬 사용 중
     [field: SerializeField] public bool isSkillReady { get; set; }                  // 스킬 준비 중
     [field: SerializeField] public bool isSkillHold { get; set; }                   // 스킬 홀드 중
 
-    [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();
-
+    [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
 }

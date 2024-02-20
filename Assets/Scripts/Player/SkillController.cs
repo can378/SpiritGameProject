@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class SkillController : MonoBehaviour
 {
-    Player player;
-
-    // ¾òÀº ¹«±â Á¤º¸
-    public Skill skill;
-
+    [field: SerializeField] public Skill skill { get; set; }                        // ½ºÅ³
+    PlayerStatus status;
+    
     void Awake()
     {
-        player = GetComponent<Player>();
+        status = GetComponent<PlayerStatus>();
     }
 
-    // ¹«±â¸¦ È¹µæ
+    // ½ºÅ³ È¹µæ
     public void EquipSkill(Skill gainSkill)
     {
         skill = gainSkill;
@@ -54,72 +52,68 @@ public class SkillController : MonoBehaviour
     public IEnumerator Immediate()
     {
         Debug.Log("½ºÅ³ ½ÃÀü");
-        player.status.isSkillReady = false;
-        player.status.isSkill = true;
-        player.RunDelay();
+        status.isSkillReady = false;
+        status.isSkill = true;
 
         skill.Use(gameObject);
 
         float skillRate = skill.preDelay + skill.rate + skill.postDelay;
         if (skill.skillLimit == SkillLimit.None)
         {
-            yield return new WaitForSeconds(skillRate / player.userData.playerAttackSpeed);
+            yield return new WaitForSeconds(skillRate / DataManager.instance.userData.playerAttackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skillRate / player.userData.playerAttackSpeed * player.mainWeaponController.mainWeapon.attackSpeed);
+            yield return new WaitForSeconds(skillRate / DataManager.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
         }
 
-        player.status.isSkill = false;
+        status.isSkill = false;
 
     }
 
     void Ready()
     {
-        if(!player.status.isSkillReady)
+        if(!status.isSkillReady)
         {
-            player.status.isSkillReady = true;
+            status.isSkillReady = true;
         }
-        else if(player.status.isSkillReady)
+        else if(status.isSkillReady)
         {
-            player.status.isSkillReady = false;
+            status.isSkillReady = false;
             skill.skillCoolTime = 0.5f;
         }
     }
 
     IEnumerator Hold()
     {
-        player.status.isSkillHold = true;
-        player.RunDelay();
+        status.isSkillHold = true;
+        //player.RunDelay();
 
         if (skill.skillLimit == SkillLimit.None)
         {
-            yield return new WaitForSeconds(skill.preDelay / player.userData.playerAttackSpeed);
+            yield return new WaitForSeconds(skill.preDelay / DataManager.instance.userData.playerAttackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skill.preDelay / player.userData.playerAttackSpeed * player.mainWeaponController.mainWeapon.attackSpeed);
+            yield return new WaitForSeconds(skill.preDelay / DataManager.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
         }
 
         skill.Use(gameObject);
 
-        while(player.status.isSkillHold)
-        {
-            if(player.skUp)
-            {
-                skill.Exit(gameObject);
-                if (skill.skillLimit == SkillLimit.None)
-                {
-                    yield return new WaitForSeconds(skill.postDelay / player.userData.playerAttackSpeed);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(skill.postDelay / player.userData.playerAttackSpeed * player.mainWeaponController.mainWeapon.attackSpeed);
-                }
-                player.status.isSkillHold = false;
-            }
-        }
+    }
 
+    IEnumerator HoldOut()
+    {
+        skill.Exit(gameObject);
+        if (skill.skillLimit == SkillLimit.None)
+        {
+            yield return new WaitForSeconds(skill.postDelay / DataManager.instance.userData.playerAttackSpeed);
+        }
+        else
+        {
+            yield return new WaitForSeconds(skill.postDelay / DataManager.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
+        }
+        status.isSkillHold = false;
     }
 
 }

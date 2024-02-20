@@ -18,21 +18,23 @@ public class SpinAttack : Skill
     {
         Debug.Log("SpinAttack");
 
-
         if(user.tag == "Player")
         {
-            Player player = user.GetComponent<Player>();
-            MeleeWeapon meleeWeapon = player.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
+            MeleeWeapon meleeWeapon = Player.instance.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime + player.userData.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = skillDefalutCoolTime + Player.instance.userData.skillCoolTime * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
+            float attackRate = Player.instance.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
 
+            // 선딜
             yield return new WaitForSeconds(preDelay / attackRate);
 
+            // 사용자 위치에 생성
             GameObject instant = Instantiate(spinEffect, user.transform.position, user.transform.rotation);
+
+            // 공격 판정 조정
             HitDetection hitDetection = instant.GetComponent<HitDetection>();
 
             // 크기 조정
@@ -44,14 +46,16 @@ public class SpinAttack : Skill
             // 치확 = 플레이어 치확
             // 치뎀 = 플레이어 치뎀
             hitDetection.SetHitDetection(meleeWeapon.weaponAttribute,
-             (meleeWeapon.damage + damage) * player.userData.playerPower,
+             (meleeWeapon.damage + damage) * Player.instance.userData.playerPower,
              meleeWeapon.knockBack,
-             player.userData.playerCritical,
-             player.userData.playerCriticalDamage
+             Player.instance.userData.playerCritical,
+             Player.instance.userData.playerCriticalDamage
              );
 
+            // rate 동안 유지
             Destroy(instant, rate / attackRate);
 
+            //후딜
             yield return new WaitForSeconds(postDelay / attackRate);
         }
     }
