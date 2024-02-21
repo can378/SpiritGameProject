@@ -16,6 +16,7 @@ public class Mission : MonoBehaviour
     private ObjectSpawn spawn;
     private float time;
     private float playerFirstHP;
+    public GameObject clock;
 
     [HideInInspector]
     public Room roomScript;
@@ -30,6 +31,12 @@ public class Mission : MonoBehaviour
         time = 0;
         playerFirstHP = DataManager.instance.userData.playerHP;
         StartCoroutine(CheckMissionEnd());
+
+        if(MissionType.Dream == type) 
+        { 
+            StartCoroutine(clock.GetComponent<Clock>().ClockStart(timeCondition)); 
+            
+        }
     }
 
 
