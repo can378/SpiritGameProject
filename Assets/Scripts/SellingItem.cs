@@ -34,6 +34,7 @@ public class SellingItem : MonoBehaviour
     void Start()
     {
         setStore();
+
     }
 
 
@@ -86,24 +87,35 @@ public class SellingItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //check buying
-        StartCoroutine(checkBuying());
+        print("enter");
+        if (collision.tag == "Player")
+        {
+            
+            print("start selling item");
+            //check buying
+            StartCoroutine(checkBuying());
 
-        //show information
-        info.SetActive(true);
+            //show information
+            info.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision) 
     { 
-        StopCoroutine(checkBuying()); 
-        info.SetActive(false);
+        if(collision.tag=="Player")
+        {
+            StopCoroutine(checkBuying());
+            info.SetActive(false);
+        }
+        
     }
 
 
     IEnumerator checkBuying() 
     {
         while (true) 
-        { 
+        {
+            
             if (Input.GetKeyDown(KeyCode.F))
             {  BuyItem();  }
             yield return null;

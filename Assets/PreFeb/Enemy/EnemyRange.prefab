@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 255089509286812626}
   - component: {fileID: 3522395471417673003}
   - component: {fileID: 901846088811915562}
+  - component: {fileID: 6676982112817433531}
   m_Layer: 8
   m_Name: roundAttackRange
   m_TagString: Enemy
@@ -120,6 +121,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &6676982112817433531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274632073442661097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 3
+  speed: 3
+  damage: 5
+  detectionDis: 3
+  attackSpeed: 0
 --- !u!1 &4152586537395230762
 GameObject:
   m_ObjectHideFlags: 0

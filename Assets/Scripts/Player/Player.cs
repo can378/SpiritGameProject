@@ -331,10 +331,17 @@ public class Player : MonoBehaviour
         {
             if (nearObject.tag == "Door")
             {
-                nearObject.GetComponent<Door>().DoorInteraction();
+                if (userData.key > 0) 
+                { 
+                    userData.key--;
+                    MapUIManager.instance.UpdateKeyUI();
+                    nearObject.GetComponent<Door>().DoorInteraction(); 
+                }
+                
             }
             else if (nearObject.tag == "ShabbyWall")
             {
+                //open with bomb
                 nearObject.GetComponent<Wall>().WallInteraction();
             }
         }
