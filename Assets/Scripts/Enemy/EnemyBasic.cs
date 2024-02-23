@@ -34,24 +34,39 @@ public class EnemyBasic : MonoBehaviour
             //Damaged
             HitDetection hitDetection = collision.GetComponent<HitDetection>();
 
-            int criticalHit = Random.Range(0, 100) < hitDetection.critical ? 1 : 0;
-            int damage = (int)(hitDetection.damage + criticalHit * hitDetection.criticalDamage * hitDetection.damage);
-            print("enemy damaged : " + damage);
-            status.health -= damage;
-            Vector2 dir = (transform.position - collision.transform.position).normalized;
-            rigid.AddForce(dir * hitDetection.knockBack, ForceMode2D.Impulse);
-
+            Damaged(hitDetection.damage,hitDetection.critical, hitDetection.criticalDamage);
+            KnockBack(collision.gameObject, hitDetection.knockBack);
             //DIE
-            if (status.health <= 0f)
-            {
-                DataManager.instance.userData.playerExp++;
-                MapUIManager.instance.UpdateExpUI();
-                EnemyDead();
 
-            }
         }
     }
 
+    public void Damaged(float damage, float critical, float criticalDamage)
+    {
+        int criticalHit = Random.Range(0, 100) < critical ? 1 : 0;
+        damage = (int)(damage + criticalHit * criticalDamage * damage);
+        print("enemy damaged : " + damage);
+        status.health -= damage;
+        sprite.color = Color.red;
+        Invoke("DamagedOut",0.05f);
+        if (status.health <= 0f)
+        {
+            DataManager.instance.userData.playerExp++;
+            MapUIManager.instance.UpdateExpUI();
+            EnemyDead();
+        }
+    }
+
+    void DamagedOut()
+    {
+        sprite.color = Color.white;
+    }
+
+    public void KnockBack(GameObject agent, float knockBack)
+    {
+        Vector2 dir = (transform.position - agent.transform.position).normalized;
+        rigid.AddForce(dir * knockBack, ForceMode2D.Impulse);
+    }
 
 
     public void EnemyDead()

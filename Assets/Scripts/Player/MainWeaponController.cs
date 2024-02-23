@@ -169,14 +169,18 @@ public class MainWeaponController : MonoBehaviour
 
         //투사체 설정
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-        HitDetection projectile = instantProjectile.GetComponent<HitDetection>();
+        Projectile projectile = instantProjectile.GetComponent<Projectile>();
 
 
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
-        projectile.SetHitDetection(shotWeapon.weaponAttribute, shotWeapon.damage * Player.instance.userData.playerPower, shotWeapon.knockBack, Player.instance.userData.playerCritical, Player.instance.userData.playerCriticalDamage); //기본 설정
+        projectile.SetProjectile(
+            shotWeapon.weaponAttribute,
+            shotWeapon.damage * Player.instance.userData.playerPower, 
+            shotWeapon.knockBack, Player.instance.userData.playerCritical, 
+            Player.instance.userData.playerCriticalDamage,
+            shotWeapon.projectileSize); //기본 설정
         instantProjectile.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);  // 방향 설정
-        instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize, shotWeapon.projectileSize, 1);  // 크기 설정
         bulletRigid.velocity = status.mouseDir * 10 * shotWeapon.projectileSpeed;  // 속도 설정
         Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 기본 공격 판정
 public class HitDetection : MonoBehaviour
 {
     [field: SerializeField] public WeaponAttribute weaponAttribute { get; private set; }

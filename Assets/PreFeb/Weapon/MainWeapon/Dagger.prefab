@@ -1,89 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1330673579626903051
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1044573551217848910}
-  - component: {fileID: 7549960486541996786}
-  m_Layer: 10
-  m_Name: Grip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1044573551217848910
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330673579626903051}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.25, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5425582260772677607}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
---- !u!212 &7549960486541996786
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330673579626903051}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 150
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6226415, g: 0.22287245, b: 0, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &1529737578304566637
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +11,7 @@ GameObject:
   - component: {fileID: 7883253674880124967}
   - component: {fileID: 8448275540166581632}
   m_Layer: 10
-  m_Name: Bowstring
+  m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &5911884418151705155
+--- !u!1 &5243546981726652285
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,37 +92,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1714126321060772199}
-  - component: {fileID: 3001070798517358072}
+  - component: {fileID: 1794636220542008502}
+  - component: {fileID: 3769407922870882579}
   m_Layer: 10
-  m_Name: Grip
+  m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1714126321060772199
+--- !u!4 &1794636220542008502
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5911884418151705155}
+  m_GameObject: {fileID: 5243546981726652285}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5425582260772677607}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
---- !u!212 &3001070798517358072
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!212 &3769407922870882579
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5911884418151705155}
+  m_GameObject: {fileID: 5243546981726652285}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -242,7 +158,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 150
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6226415, g: 0.22287245, b: 0, a: 1}
+  m_Color: {r: 0.33490568, g: 0.35161668, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -276,16 +192,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8179586051210863248}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7883253674880124967}
-  - {fileID: 1044573551217848910}
-  - {fileID: 1714126321060772199}
+  - {fileID: 1794636220542008502}
   m_Father: {fileID: 5242110244964992286}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8830712857820811360
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +213,7 @@ GameObject:
   - component: {fileID: 4045735915874496207}
   - component: {fileID: 7923798826213622146}
   m_Layer: 10
-  m_Name: Bow
+  m_Name: Dagger
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,25 +248,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <selectItemClass>k__BackingField: 1
-  <mainWeaponCode>k__BackingField: 3
+  <mainWeaponCode>k__BackingField: 5
   <weaponType>k__BackingField: 1
-  <attackType>k__BackingField: 1
+  <attackType>k__BackingField: 2
   <weaponRating>k__BackingField: 1
-  <weaponAttribute>k__BackingField: 2
+  <weaponAttribute>k__BackingField: 0
   <mainweaponOption>k__BackingField: 0
-  <damage>k__BackingField: 10
+  <damage>k__BackingField: 1
   <knockBack>k__BackingField: 0
-  <attackSpeed>k__BackingField: 1
-  <preDelay>k__BackingField: 0.7
+  <attackSpeed>k__BackingField: 2
+  <preDelay>k__BackingField: 0.3
   <rate>k__BackingField: 0
-  <postDelay>k__BackingField: 0.3
+  <postDelay>k__BackingField: 0.7
   <maxAmmo>k__BackingField: -1
   <ammo>k__BackingField: -1
   <reloadTime>k__BackingField: 0
-  <projectile>k__BackingField: {fileID: 831173352780998368, guid: ecbb486bb6c43f641988657fa2e411d7, type: 3}
-  <projectileSpeed>k__BackingField: 2
-  <projectileTime>k__BackingField: 1
-  <projectileSize>k__BackingField: 1
+  <projectile>k__BackingField: {fileID: 1465481353037356265, guid: 8bf13dea3af10b4408a5d3b20f1ef017, type: 3}
+  <projectileSpeed>k__BackingField: 0.5
+  <projectileTime>k__BackingField: 10
+  <projectileSize>k__BackingField: 5
 --- !u!58 &7923798826213622146
 CircleCollider2D:
   m_ObjectHideFlags: 0
