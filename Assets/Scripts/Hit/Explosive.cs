@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 터지는 물체
+// 폭발 이펙트를 넣는다.
 public class Explosive : Projectile
 {
     [field: SerializeField] public float explosionTime { get; private set; }

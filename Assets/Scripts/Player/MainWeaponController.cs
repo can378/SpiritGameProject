@@ -102,6 +102,7 @@ public class MainWeaponController : MonoBehaviour
 
     // 아이템 투척
     // 클릭한 위치에 아이템 생성
+    /*
     IEnumerator ThrowItem(GameObject explosive)
     {
         Debug.Log("ThrowItem");
@@ -123,7 +124,7 @@ public class MainWeaponController : MonoBehaviour
         yield return null;
 
     }
-    
+    */    
 
     // 이펙트 생성
     // 클릭한 방향으로 이펙트 생성
@@ -191,6 +192,7 @@ public class MainWeaponController : MonoBehaviour
 
     // 범위 공격
     // 클릭한 위치에 공격 판정 생성
+    /*
     IEnumerator Throw(Vector3 clickPos)
     {
         Debug.Log("Throw");
@@ -211,4 +213,5 @@ public class MainWeaponController : MonoBehaviour
 
         yield return null;
     }
+    */
 }

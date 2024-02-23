@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpinAttack : Skill
 {
     [field: SerializeField] public int damage { get; private set; }
-    [field: SerializeField] public int size { get; private set; }
+    [field: SerializeField] public float size { get; private set; }
     [field: SerializeField] public GameObject spinEffect { get; private set; }
 
     public override void Use(GameObject user)

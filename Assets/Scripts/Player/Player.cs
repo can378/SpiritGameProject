@@ -84,9 +84,9 @@ public class Player : MonoBehaviour
         {
             Attack();
             Reload();
-            //UseSubWeapon();
-            //GuardOut();
             Skill();
+            ReadyOut();
+            HoldOut();
         }
         
         Interaction();
@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
  
     void Dodge()    // 회피
     {
-        if (dDown && !status.isAttack && !status.isSkill && moveVec != Vector2.zero && !status.isDodge)
+        if (dDown && !status.isAttack && !status.isSkill && moveVec != Vector2.zero && !status.isDodge && !status.isSkillHold)
         {
             
             sprite.color = Color.cyan;
@@ -222,7 +222,7 @@ public class Player : MonoBehaviour
         if (mainWeaponController.mainWeapon.maxAmmo == mainWeaponController.mainWeapon.ammo)
             return;
 
-        if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill)
+        if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
@@ -233,6 +233,7 @@ public class Player : MonoBehaviour
 
     void ReloadOut()
     {
+        Debug.Log("스킬 홀드 중단");
         mainWeaponController.mainWeapon.Reload();
         status.isReload = false;
     }
@@ -248,7 +249,7 @@ public class Player : MonoBehaviour
         status.attackDelay -= Time.deltaTime;
         status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady)
+        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady && !status.isSkillHold)
         {
             status.isAttack = true;
 
@@ -304,14 +305,35 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // 스킬 키 다운
         if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
         {
             skillController.SkillDown();
         }
 
+    }
+
+    void ReadyOut()
+    {
+        if (skillController.skill == null)
+            return;
+
+        // 스킬 준비 상태에서 공격 키 다운
         if (aDown && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillReady)
         {
             StartCoroutine(skillController.Immediate());
+        }
+    }
+
+    void HoldOut()
+    {
+        if (skillController.skill == null)
+            return;
+
+        //스킬 hold 상태에서 스킬 키 up
+        if (skUp && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
+        {
+            skillController.HoldOut();
         }
     }
 

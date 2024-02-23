@@ -5,8 +5,8 @@ using UnityEngine;
 public class FireBall : Skill
 {
     [field: SerializeField] public int damage { get; private set; }
-    [field: SerializeField] public int size { get; private set; }
-    [field: SerializeField] public int knockBack { get; private set; }
+    [field: SerializeField] public float size { get; private set; }
+    [field: SerializeField] public float knockBack { get; private set; }
     [field: SerializeField] public GameObject FireBallEffect { get; private set; }
 
     public override void Use(GameObject user)

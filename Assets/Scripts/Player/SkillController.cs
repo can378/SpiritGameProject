@@ -44,7 +44,7 @@ public class SkillController : MonoBehaviour
         {
             //È¦µå
             Debug.Log("½ºÅ³ È¦µå");
-            StartCoroutine("Hold");
+            Hold();
         }
 
     }
@@ -84,35 +84,18 @@ public class SkillController : MonoBehaviour
         }
     }
 
-    IEnumerator Hold()
+    void Hold()
     {
         status.isSkillHold = true;
         //player.RunDelay();
-
-        if (skill.skillLimit == SkillLimit.None)
-        {
-            yield return new WaitForSeconds(skill.preDelay / Player.instance.userData.playerAttackSpeed);
-        }
-        else
-        {
-            yield return new WaitForSeconds(skill.preDelay / Player.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
-        }
 
         skill.Use(gameObject);
 
     }
 
-    IEnumerator HoldOut()
+    public void HoldOut()
     {
         skill.Exit(gameObject);
-        if (skill.skillLimit == SkillLimit.None)
-        {
-            yield return new WaitForSeconds(skill.postDelay / Player.instance.userData.playerAttackSpeed);
-        }
-        else
-        {
-            yield return new WaitForSeconds(skill.postDelay / Player.instance.userData.playerAttackSpeed * Player.instance.mainWeaponController.mainWeapon.attackSpeed);
-        }
         status.isSkillHold = false;
     }
 
