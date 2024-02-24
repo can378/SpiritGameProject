@@ -32,8 +32,6 @@ public class MainUIManager : MonoBehaviour
         mainPanel.SetActive(false);
     }
 
-
-
     public void TaskBtn() //도전 과제, 찾은 NPC 보는 버튼
     {
         settingPanel.SetActive(false);

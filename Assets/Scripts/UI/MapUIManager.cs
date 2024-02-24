@@ -17,6 +17,8 @@ public class MapUIManager : MonoBehaviour
     public GameObject settingPanel;
     public GameObject startPanel;
     public GameObject warningPanel;
+    public GameObject restartPanel;
+    public GameObject resetPanel;
     public RectTransform sidePanel;
 
     //Player status
@@ -200,7 +202,10 @@ public class MapUIManager : MonoBehaviour
         esckeyPanel.SetActive(!esckeyPanel.activeSelf);
         settingPanel.SetActive(false);
         warningPanel.SetActive(false);
+        restartPanel.SetActive(false);
+        resetPanel.SetActive(false);
     }
+
     public void StartBtn() 
     {
         startPanel.SetActive(false);
@@ -228,6 +233,19 @@ public class MapUIManager : MonoBehaviour
         warningPanel.SetActive(true);
         esckeyPanel.SetActive(false);
     }
+
+    public void ResetCheckBtn()
+    {
+        resetPanel.SetActive(true);
+        esckeyPanel.SetActive(false);
+    }
+
+    public void RestartCheckBtn()
+    {
+        restartPanel.SetActive(true);
+        esckeyPanel.SetActive(false);
+    }
+
     #endregion
 
     //set random passive skill
