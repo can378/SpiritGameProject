@@ -24,6 +24,12 @@ public class MainUIManager : MonoBehaviour
             taskPanel.SetActive(false);
             warningPanel.SetActive(false);
         }
+
+        if(taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf)
+        {
+            Time.timeScale = 0f;
+        }
+        else { Time.timeScale = 1f; }
     }
 
     public void StartBtn() //게임 시작 버튼

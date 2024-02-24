@@ -79,6 +79,12 @@ public class MapUIManager : MonoBehaviour
             settingPanel.SetActive(false);
             
         }
+
+        if(esckeyPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf || resetPanel.activeSelf || restartPanel.activeSelf)
+        {
+            Time.timeScale = 0f;
+        }
+        else { Time.timeScale = 1f; }
     }
 
     void setUpgradePanel()
