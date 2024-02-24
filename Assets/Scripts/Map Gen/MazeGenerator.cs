@@ -11,7 +11,8 @@ public class MazeGenerator : MonoBehaviour
     public Vector2Int endCell;
 
     private bool[,] visitedCells;
-    private List<Vector2Int> directions = new List<Vector2Int> { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
+    private List<Vector2Int> directions = new List<Vector2Int> 
+    { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
 
     void Start()
     {
