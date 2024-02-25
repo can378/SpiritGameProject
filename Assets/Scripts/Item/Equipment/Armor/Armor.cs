@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Armor : Equipments
 {
-    public abstract void EquipArmor();
+    protected abstract void EquipArmor();
 
-    public abstract void UnEquipArmor();
+    protected abstract void UnEquipArmor();
 
     public override void Equip()
     {

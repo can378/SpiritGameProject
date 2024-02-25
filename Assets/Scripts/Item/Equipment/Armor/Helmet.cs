@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Helmet : Armor
 {
-    public override void EquipArmor()
+    protected override void EquipArmor()
     {
+        Debug.Log("플레이어 주문력 증가");
         Player.instance.userData.skillPower += 1f;
     }
 
     // Update is called once per frame
-    public override void UnEquipArmor()
+    protected override void UnEquipArmor()
     {
         Player.instance.userData.skillPower -= 1f;
     }

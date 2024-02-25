@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     public MainWeaponController mainWeaponController;
     public SkillController skillController;
+    public Armor armor;
 
     public UserData userData { get; private set; }
 
@@ -385,7 +386,21 @@ public class Player : MonoBehaviour
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
-            
+            if (armor != null)
+            {
+                armor.gameObject.transform.position = gameObject.transform.position;
+                armor.gameObject.SetActive(true);
+
+                // 무기 능력치 해제
+                armor.UnEquip();
+
+                // 무기 해제
+                armor = null;
+            }
+            // 무기 장비
+            armor = nearObject.GetComponent<Armor>();
+            armor.Equip();
+            armor.gameObject.SetActive(false);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
