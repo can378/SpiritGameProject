@@ -29,8 +29,14 @@ public class AGrid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+        
+        
+    }
+
+    private void Start()
+    {
         // 격자 생성
-        CreateGrid();
+        //CreateGrid();
     }
 
     // A*에서 사용할 PATH.
@@ -66,7 +72,7 @@ public class AGrid : MonoBehaviour
     }
 
     // 격자 생성 함수
-    void CreateGrid()
+    public void CreateGrid()
     {
         grid = new ANode[gridSizeX, gridSizeY];
         // 격자 생성은 좌측 최하단부터 시작. transform은 월드 중앙에 위치한다. 

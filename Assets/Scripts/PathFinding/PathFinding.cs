@@ -21,6 +21,7 @@ public class PathFinding : MonoBehaviour
     public static PathFinding instance=null;
 
     public Transform seeker;//추격자
+    public Transform target;
     
     public Queue<Vector2> wayQueue = new Queue<Vector2>();//target까지 가는 방법
 
@@ -38,18 +39,20 @@ public class PathFinding : MonoBehaviour
         instance = this;
         seekerSpeed = 50;
         grid = GameObject.Find("AGridManager").GetComponent<AGrid>();
+        target=GameObject.FindWithTag("Player").GetComponent<Transform>();
         //seeker = this.transform;
         //grid = GetComponent<AGrid>();
     }
 
 
-    /*
+
     private void FixedUpdate()
     {
         //print("seeker=" + seekerPos + "figitive="+fugitivePos);
-        //StartFinding(seeker.position, fugitivePos);
+        fugitivePos = target.position;
+        StartFinding(seeker.position, fugitivePos);
     }
-    */
+
     public void StartFinding(Vector2 startPos, Vector2 targetPos)
     {
         

@@ -78,6 +78,7 @@ public class MazeGenerator : MonoBehaviour {
     private void Start()
     {
         GenerateMaze(mazeRows, mazeColumns);
+        AGrid.instance.CreateGrid();
     }
 
     private void GenerateMaze(int rows, int columns)
