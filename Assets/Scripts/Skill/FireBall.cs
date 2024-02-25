@@ -32,12 +32,12 @@ public class FireBall : Skill
 
             GameObject instant = Instantiate(FireBallEffect, player.status.mousePos, Quaternion.identity);
             HitDetection hitDetection = instant.GetComponent<HitDetection>();
-            // 속성 = 불
+            // 속성 = 불 : 4
             // 피해량 = 피해량 * 플레이어 공격력
             // 넉백 = 넉백
             // 치확 = 0
             // 치뎀 = 0
-            hitDetection.SetHitDetection(WeaponAttribute.Fire,
+            hitDetection.SetHitDetection(4,
              damage * player.userData.skillPower,
              knockBack,
              0,

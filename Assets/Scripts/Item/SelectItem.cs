@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SelectItemClass {SubWeapon, Weapon, Consumable, Skill, ThrowWeapon };
+public enum SelectItemClass { Equipments, Weapon, Consumable, Skill, ThrowWeapon };
 
 public class SelectItem : MonoBehaviour
 {

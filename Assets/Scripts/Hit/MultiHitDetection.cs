@@ -7,9 +7,9 @@ public class MultiHitDetection : HitDetection
     [field: SerializeField] public float size { get; private set; }          // 초당 타격수
     [field: SerializeField] public int DPS { get; private set; }          // 초당 타격수
 
-    public void SetMultiHitDetection(WeaponAttribute weaponAttribute, float damage, float knockBack, float critical, float criticalDamage, float size, int DPS)
+    public void SetMultiHitDetection(int attackAttribute, float damage, float knockBack, float critical, float criticalDamage, float size, int DPS)
     {
-        SetHitDetection(weaponAttribute, damage, knockBack, critical, criticalDamage);
+        SetHitDetection(attackAttribute, damage, knockBack, critical, criticalDamage);
         this.size = size;
         this.DPS = DPS;
         transform.localScale = new Vector3(size, size, 0);

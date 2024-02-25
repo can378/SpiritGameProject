@@ -47,7 +47,7 @@ public class WheelWind : Skill
             // 넉백 = 무기 넉백
             // 치확 = 플레이어 치확
             // 치뎀 = 플레이어 치뎀
-            hitDetection.SetMultiHitDetection(meleeWeapon.weaponAttribute,
+            hitDetection.SetMultiHitDetection(meleeWeapon.attackAttribute,
              (meleeWeapon.damage + damage) * player.userData.playerPower,
              meleeWeapon.knockBack,
              player.userData.playerCritical,

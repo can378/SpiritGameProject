@@ -26,8 +26,7 @@ public class Wall : MonoBehaviour
         // 폭탄을 사용하였다면
         else if (this.wallType == WallType.ShabbyWall)
         {
-            Destroy(this.gameObject);
-            Debug.Log("벽이 부서졌다.");
+            Debug.Log("허름한 벽이다.");
         }
     }
 
@@ -52,6 +51,28 @@ public class Wall : MonoBehaviour
         if (other.tag == "ShabbyCheck" && wallType == WallType.Wall)
         {
             SetWallType(WallType.ShabbyWall);
+        }
+
+        if(other.tag == "PlayerAttack" && wallType == WallType.ShabbyWall)
+        {
+            Collapse(other.GetComponent<HitDetection>());
+        }
+    }
+
+    public void Collapse(HitDetection hitDetection)
+    {
+        // 0 : 무속성, 1 : 참격, 2 : 타격, 3 : 관통, 4 : 화염, 5 : 냉기, 6 : 전기, 7 : 역장, 8 : 신성, 9 : 어둠
+        if ((hitDetection.attackAttribute == 2 || hitDetection.attackAttribute == 7))
+        {
+            if(hitDetection.damage < 20)
+            {
+                Debug.Log("너무 약하다.");
+            }
+            else
+            {
+                Debug.Log("벽이 무너졌다.");
+                Destroy(this.gameObject);
+            }
         }
     }
 }
