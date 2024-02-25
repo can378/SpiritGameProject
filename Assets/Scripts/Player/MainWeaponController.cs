@@ -22,7 +22,11 @@ public class MainWeaponController : MonoBehaviour
     // 무기를 획득
     public void EquipWeapon(MainWeapon gainWeapon)
     {
+        // 무기 소유
         mainWeapon = gainWeapon;
+
+        // 장비 능력치 해제
+        mainWeapon.Equip();
 
         if (mainWeapon.weaponType == MainWeaponType.Melee)
         {
@@ -33,6 +37,8 @@ public class MainWeaponController : MonoBehaviour
             ShotWeapon shotWeapon = mainWeapon.GetComponent<ShotWeapon>();
             projectileGameObject = shotWeapon.projectile;
         }
+
+        // 장비 안보이게 하기
         mainWeapon.gameObject.SetActive(false);
     }
 
@@ -46,8 +52,15 @@ public class MainWeaponController : MonoBehaviour
         {
             projectileGameObject = null;
         }
+        
+        // 현재 위치에 장비를 놓는다.
         mainWeapon.gameObject.transform.position = gameObject.transform.position;
         mainWeapon.gameObject.SetActive(true);
+
+        // 무기 능력치 해제
+        mainWeapon.UnEquip();
+
+        // 무기 해제
         mainWeapon = null;
     }
 
@@ -142,7 +155,7 @@ public class MainWeaponController : MonoBehaviour
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(mainWeapon.weaponAttribute, mainWeapon.damage * Player.instance.userData.playerPower, mainWeapon.knockBack, Player.instance.userData.playerCritical, Player.instance.userData.playerCriticalDamage);
+        hitDetection.SetHitDetection(mainWeapon.attackAttribute, mainWeapon.damage * Player.instance.userData.playerPower, mainWeapon.knockBack, Player.instance.userData.playerCritical, Player.instance.userData.playerCriticalDamage);
 
         // 무기 방향 
         HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);
@@ -176,7 +189,7 @@ public class MainWeaponController : MonoBehaviour
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
         projectile.SetProjectile(
-            shotWeapon.weaponAttribute,
+            shotWeapon.attackAttribute,
             shotWeapon.damage * Player.instance.userData.playerPower, 
             shotWeapon.knockBack, Player.instance.userData.playerCritical, 
             Player.instance.userData.playerCriticalDamage,

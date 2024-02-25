@@ -14,9 +14,9 @@ public class Projectile : HitDetection
         }
     }
 
-    public void SetProjectile(WeaponAttribute weaponAttribute, float damage, float knockBack, float critical, float criticalDamage, float size)
+    public void SetProjectile(int attackAttribute, float damage, float knockBack, float critical, float criticalDamage, float size)
     {
-        SetHitDetection(weaponAttribute, damage,knockBack,critical,criticalDamage);
+        SetHitDetection(attackAttribute, damage,knockBack,critical,criticalDamage);
         this.size = size;
         transform.localScale = new Vector3(size,size,0);
     }

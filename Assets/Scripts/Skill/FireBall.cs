@@ -37,7 +37,7 @@ public class FireBall : Skill
             // ³Ë¹é = ³Ë¹é
             // Ä¡È® = 0
             // Ä¡µ© = 0
-            hitDetection.SetHitDetection(WeaponAttribute.Fire,
+            hitDetection.SetHitDetection(4,
              damage * player.userData.skillPower,
              knockBack,
              0,

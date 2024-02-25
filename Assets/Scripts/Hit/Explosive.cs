@@ -21,11 +21,11 @@ public class Explosive : Projectile
     }
 
     // 폭발체 설정
-    public void SetExplosive(WeaponAttribute weaponAttribute, float damage, float knockBack, float critical, float criticalDamage,
+    public void SetExplosive(int attackAttribute, float damage, float knockBack, float critical, float criticalDamage,
         float size, float time)
     {
         HitDetection hitDetection = explosionField.GetComponent<HitDetection>();
-        hitDetection.SetHitDetection(weaponAttribute, damage, knockBack, critical, criticalDamage);
+        hitDetection.SetHitDetection(attackAttribute, damage, knockBack, critical, criticalDamage);
 
         // 폭발 범위 설정
         explosionField.transform.localScale = new Vector3(size,size,1);

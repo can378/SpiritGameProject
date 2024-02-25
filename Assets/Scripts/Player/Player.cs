@@ -364,7 +364,7 @@ public class Player : MonoBehaviour
             else if (nearObject.tag == "ShabbyWall")
             {
                 //open with bomb
-                nearObject.GetComponent<Wall>().WallInteraction();
+                //nearObject.GetComponent<Wall>().WallInteraction();
             }
         }
     }
@@ -382,6 +382,10 @@ public class Player : MonoBehaviour
             }
             // 무기 장비
             mainWeaponController.EquipWeapon(nearObject.GetComponent<MainWeapon>());
+        }
+        else if (selectItem.selectItemClass == SelectItemClass.Equipments)
+        {
+            
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
