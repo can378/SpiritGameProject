@@ -40,21 +40,28 @@ public class WheelWind : Skill
 
 
             // 공격 판정 조정
-            MultiHitDetection hitDetection = instant.GetComponent<MultiHitDetection>();
+            HitDetection hitDetection = instant.GetComponent<HitDetection>();
 
-            // 속성 = 무기 속성
-            // 피해량 = (무기 + 기본 피해량) * 플레이어 공격력
-            // 넉백 = 무기 넉백
-            // 치확 = 플레이어 치확
-            // 치뎀 = 플레이어 치뎀
-            hitDetection.SetMultiHitDetection(meleeWeapon.attackAttribute,
+            instant.transform.localScale = new Vector3(size * meleeWeapon.weaponSize, size * meleeWeapon.weaponSize, 0);
+            /*
+            투사체 = false
+            관통력 = -1
+            다단히트 = true
+            초당 타격 횟수 = DPS * attackRate 
+            속성 = 무기 속성
+            피해량 = (기본 피해량 + 무기 피해량) * 플레이어 공격력
+            넉백 = 무기 넉백
+            치확 = 플레이어 치확
+            치뎀 = 플레이어 치뎀
+            디버프 = 없음
+            */
+            hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackRate),
+             meleeWeapon.attackAttribute,
              (meleeWeapon.damage + damage) * player.userData.playerPower,
              meleeWeapon.knockBack,
              player.userData.playerCritical,
              player.userData.playerCriticalDamage,
-             meleeWeapon.weaponSize * size,
-             (int)(DPS * attackRate)
-             );
+             meleeWeapon.deBuff);
         }
     }
 
@@ -77,6 +84,7 @@ public class WheelWind : Skill
             Destroy(instant);
 
             //후딜
+            //없애도 될듯
             yield return new WaitForSeconds(postDelay / attackRate);
         }
     }

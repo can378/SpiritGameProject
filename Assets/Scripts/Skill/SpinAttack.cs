@@ -41,22 +41,31 @@ public class SpinAttack : Skill
             // 크기 조정
             instant.transform.localScale = new Vector3(size * meleeWeapon.weaponSize, size * meleeWeapon.weaponSize, 0);
 
-            // 속성 = 무기 속성
-            // 피해량 = (무기 + 기본 피해량) * 플레이어 공격력
-            // 넉백 = 무기 넉백
-            // 치확 = 플레이어 치확
-            // 치뎀 = 플레이어 치뎀
-            hitDetection.SetHitDetection(meleeWeapon.attackAttribute,
-             (meleeWeapon.damage + damage) * player.userData.playerPower,
-             meleeWeapon.knockBack,
-             player.userData.playerCritical,
-             player.userData.playerCriticalDamage
-             );
+            /*
+            투사체 = false
+            관통력 = -1
+            다단히트 = false
+            초당 타격 횟수 = -1 
+            속성 = 무기 속성
+            피해량 = (기본 피해량 + 무기 피해량) * 플레이어 공격력
+            넉백 = 무기 넉백
+            치확 = 플레이어 치확
+            치뎀 = 플레이어 치뎀
+            디버프 = 없음
+            */
+            hitDetection.SetHitDetection(false, -1, false, -1,
+             meleeWeapon.attackAttribute, 
+             (meleeWeapon.damage + damage) * player.userData.playerPower, 
+             meleeWeapon.knockBack, 
+             player.userData.playerCritical, 
+             player.userData.playerCriticalDamage,
+             meleeWeapon.deBuff);
 
             // rate 동안 유지
             Destroy(instant, rate / attackRate);
 
-            //후딜
+            // 후딜
+            // 없애도 될 듯
             yield return new WaitForSeconds(postDelay / attackRate);
         }
     }

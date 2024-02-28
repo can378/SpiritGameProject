@@ -57,6 +57,8 @@ public class SkillController : MonoBehaviour
 
         skill.Use(gameObject);
 
+
+        // 스킬 시전 시간 (다음 움직이기 까지 대기 시간)
         float skillRate = skill.preDelay + skill.rate + skill.postDelay;
         if (skill.skillLimit == SkillLimit.None)
         {

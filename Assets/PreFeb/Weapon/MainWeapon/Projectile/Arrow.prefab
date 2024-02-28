@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4662081752181882095}
-  - component: {fileID: 3384785703687074923}
   - component: {fileID: 4795214577067854906}
   - component: {fileID: 6900096828389256611}
+  - component: {fileID: 2339166584673235170}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: PlayerAttack
@@ -35,23 +35,6 @@ Transform:
   - {fileID: 7906289184429686270}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3384785703687074923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831173352780998368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4106ff6699322944b9be02dc9de39b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <weaponAttribute>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
 --- !u!61 &4795214577067854906
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -124,6 +107,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2339166584673235170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831173352780998368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 1
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <attackAttributes>k__BackingField: 
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <deBuff>k__BackingField: {fileID: 0}
 --- !u!1 &8172994953639201744
 GameObject:
   m_ObjectHideFlags: 0

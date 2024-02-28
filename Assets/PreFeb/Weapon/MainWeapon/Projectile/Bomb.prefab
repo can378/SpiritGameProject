@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5213076292348642907}
-  - component: {fileID: 8027100653755257716}
   - component: {fileID: 2709215477121815719}
   - component: {fileID: 1711866502859185947}
+  - component: {fileID: 7547268499302607480}
+  - component: {fileID: 8983104758440613179}
   m_Layer: 6
   m_Name: Bomb
   m_TagString: PlayerAttack
@@ -35,25 +36,6 @@ Transform:
   - {fileID: 7569895920469666767}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8027100653755257716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237688199151948138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4aeb57509478154d9e26c78383a6eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <weaponAttribute>k__BackingField: 1
-  <damage>k__BackingField: 1
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <explosionTime>k__BackingField: 0.5
-  <explosionField>k__BackingField: {fileID: 5651732826295342366, guid: 0da9c40e202b4234e8c0fde660e542e1, type: 3}
 --- !u!50 &2709215477121815719
 Rigidbody2D:
   serializedVersion: 4
@@ -116,6 +98,42 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &7547268499302607480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237688199151948138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 1
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <attackAttributes>k__BackingField: 
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <deBuff>k__BackingField: {fileID: 0}
+--- !u!114 &8983104758440613179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237688199151948138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4aeb57509478154d9e26c78383a6eb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <explosionTime>k__BackingField: 1
+  <explosionField>k__BackingField: {fileID: 5651732826295342366, guid: 0da9c40e202b4234e8c0fde660e542e1, type: 3}
 --- !u!1 &9154743223894945601
 GameObject:
   m_ObjectHideFlags: 0

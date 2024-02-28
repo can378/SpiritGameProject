@@ -262,10 +262,10 @@ public class Player : MonoBehaviour
             float attackRate = mainWeaponController.mainWeapon.attackSpeed * userData.playerAttackSpeed;
             AudioManager.instance.SFXPlay("attack_sword");
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
-            status.attackDelay = 1 / attackRate;
+            status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / attackRate;
             // 공격 준비 안됨
             status.isAttackReady = false;
-            // 공격 완료까지 시간 = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
+            // 공격 시간(움직이기까지 대기 시간) = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
             Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / attackRate);
         }
     }

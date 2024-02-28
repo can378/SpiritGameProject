@@ -482,7 +482,6 @@ GameObject:
   - component: {fileID: 2830920931105813052}
   - component: {fileID: 2680101835875493889}
   - component: {fileID: 8114064950361091504}
-  - component: {fileID: 4067080628616577797}
   - component: {fileID: 385001862643613236}
   - component: {fileID: 320829814975973146}
   m_Layer: 0
@@ -606,6 +605,7 @@ MonoBehaviour:
   playerItem: {fileID: 0}
   mainWeaponController: {fileID: 0}
   skillController: {fileID: 0}
+  armor: {fileID: 0}
 --- !u!114 &2680101835875493889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   <isSprint>k__BackingField: 0
   <isDodge>k__BackingField: 0
   <isInvincible>k__BackingField: 0
-  <isAttackable>k__BackingField: 0
+  <isAttackable>k__BackingField: 1
   <isAttack>k__BackingField: 0
   <attackDelay>k__BackingField: 0
   <isAttackReady>k__BackingField: 0
@@ -653,19 +653,6 @@ MonoBehaviour:
   meleeEffectList:
   - {fileID: 5324849133557116994}
   - {fileID: 1820615735909877065}
---- !u!114 &4067080628616577797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3504708173630329506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 874236337ffef9140a6c32c5e60a1bc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  subWeapon: {fileID: 0}
 --- !u!114 &385001862643613236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,11 +832,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <weaponAttribute>k__BackingField: 2
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <attackAttributes>k__BackingField: 
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
+  <deBuff>k__BackingField: {fileID: 0}
 --- !u!60 &3481271467806886931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1337,11 +1329,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <weaponAttribute>k__BackingField: 0
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <attackAttributes>k__BackingField: 
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
+  <deBuff>k__BackingField: {fileID: 0}
 --- !u!60 &919348861844483977
 PolygonCollider2D:
   m_ObjectHideFlags: 0

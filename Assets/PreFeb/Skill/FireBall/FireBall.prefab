@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7343399755032385016}
   - component: {fileID: 786419763627698833}
   m_Layer: 0
-  m_Name: SpinAttackHit
+  m_Name: FireBall
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,8 +133,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <attackAttribute>k__BackingField: 4
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <attackAttributes>k__BackingField: 
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
+  <deBuff>k__BackingField: {fileID: 0}

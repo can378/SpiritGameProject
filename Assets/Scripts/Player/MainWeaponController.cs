@@ -147,6 +147,7 @@ public class MainWeaponController : MonoBehaviour
 
         float attackSpeed = mainWeapon.attackSpeed * Player.instance.userData.playerAttackSpeed;
 
+        //선딜
         yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 이펙트 크기 설정
@@ -155,7 +156,7 @@ public class MainWeaponController : MonoBehaviour
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(mainWeapon.attackAttribute, mainWeapon.damage * Player.instance.userData.playerPower, mainWeapon.knockBack, Player.instance.userData.playerCritical, Player.instance.userData.playerCriticalDamage);
+        hitDetection.SetHitDetection(false,-1, mainWeapon.isMultiHit, mainWeapon.DPS, mainWeapon.attackAttribute, mainWeapon.damage * Player.instance.userData.playerPower, mainWeapon.knockBack, Player.instance.userData.playerCritical, Player.instance.userData.playerCriticalDamage,mainWeapon.deBuff);
 
         // 무기 방향 
         HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);
@@ -163,8 +164,10 @@ public class MainWeaponController : MonoBehaviour
         // 무기 이펙트 실행
         HitDetectionGameObject.SetActive(true);
 
+        // 공격 시간
         yield return new WaitForSeconds(mainWeapon.rate / attackSpeed);
 
+        // 무기 이펙트 해제
         HitDetectionGameObject.SetActive(false);
 
     }
@@ -175,6 +178,7 @@ public class MainWeaponController : MonoBehaviour
     {
         Debug.Log("Shot");
         float attackSpeed = mainWeapon.attackSpeed * Player.instance.userData.playerAttackSpeed;
+        // 선딜
         yield return new WaitForSeconds(mainWeapon.preDelay / attackSpeed);
 
         // 무기 투사체 적용
@@ -183,21 +187,19 @@ public class MainWeaponController : MonoBehaviour
 
         //투사체 설정
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-        Projectile projectile = instantProjectile.GetComponent<Projectile>();
+        HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
 
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
-        projectile.SetProjectile(
-            shotWeapon.attackAttribute,
-            shotWeapon.damage * Player.instance.userData.playerPower, 
-            shotWeapon.knockBack, Player.instance.userData.playerCritical, 
-            Player.instance.userData.playerCriticalDamage,
-            shotWeapon.projectileSize); //기본 설정
+        hitDetection.SetHitDetection(true, shotWeapon.penetrations, mainWeapon.isMultiHit, mainWeapon.DPS, mainWeapon.attackAttribute, mainWeapon.damage * Player.instance.userData.playerPower, mainWeapon.knockBack, Player.instance.userData.playerCritical, Player.instance.userData.playerCriticalDamage, mainWeapon.deBuff);
         instantProjectile.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);  // 방향 설정
+        instantProjectile.transform.localScale = new Vector3(shotWeapon.projectileSize,shotWeapon.projectileSize,1);
         bulletRigid.velocity = status.mouseDir * 10 * shotWeapon.projectileSpeed;  // 속도 설정
         Destroy(instantProjectile, shotWeapon.projectileTime);  //사거리 설정
 
+        // 후딜
+        // 없애도 될듯
         yield return new WaitForSeconds(mainWeapon.postDelay / attackSpeed);
 
         yield return null;

@@ -34,19 +34,40 @@ public class EnemyBasic : MonoBehaviour
             //Damaged
             HitDetection hitDetection = collision.GetComponent<HitDetection>();
 
-            Damaged(hitDetection.damage,hitDetection.critical, hitDetection.criticalDamage);
+            Damaged(hitDetection.attackAttributes,hitDetection.damage,hitDetection.critical, hitDetection.criticalDamage);
+            ApplyBuff(hitDetection.deBuff);
             KnockBack(collision.gameObject, hitDetection.knockBack);
             //DIE
 
         }
     }
 
-    public void Damaged(float damage, float critical, float criticalDamage)
+    public void Damaged(List<int> attackAttributes, float damage, float critical, float criticalDamage)
     {
         int criticalHit = Random.Range(0, 100) < critical ? 1 : 0;
         damage = (int)(damage + criticalHit * criticalDamage * damage);
-        print("enemy damaged : " + damage);
-        status.health -= damage;
+
+        foreach(int attackAttribute in attackAttributes)
+        {
+            string att;
+            switch(attackAttribute)
+            {
+                case 1: att = "참격"; break;
+                case 2: att = "타격"; break;
+                case 3: att = "관통"; break;
+                case 4: att = "화염"; break;
+                case 5: att = "냉기"; break;
+                case 6: att = "전기"; break;
+                case 7: att = "역장"; break;
+                case 8: att = "신성"; break;
+                case 9: att = "어둠"; break;
+                default : att = "무속성"; break;
+
+            }
+            print(att + " enemy damaged : " + damage * status.resist[attackAttribute] / attackAttributes.Count);
+            status.health -= damage * status.resist[attackAttribute] / attackAttributes.Count;
+        }
+        
         sprite.color = Color.red;
         Invoke("DamagedOut",0.05f);
         if (status.health <= 0f)
@@ -68,6 +89,19 @@ public class EnemyBasic : MonoBehaviour
         rigid.AddForce(dir * knockBack, ForceMode2D.Impulse);
     }
 
+    public void ApplyBuff(GameObject effect)
+    {
+        if(effect == null)
+            return;
+        Debug.Log(gameObject.name + ": 디버프 적용");
+    }
+
+    /*
+    private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
+    {
+
+    }
+    */
 
     public void EnemyDead()
     {

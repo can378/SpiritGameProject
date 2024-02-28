@@ -9,8 +9,10 @@ public class MainWeapon : Equipments
     [field: SerializeField] public MainWeaponType weaponType {get; private set;}
     [field: SerializeField] public int attackType { get; private set; }             //근거리 : 0 - 휘두르기, 1 - 찌르기, 2 - 기타
                                                                                     //원거리 : 0 - 총, 1 - 활, 2 - 던지기, 3 - 범위 공격
-    [field: SerializeField] public int attackAttribute { get; private set; }        // 0 : 무속성, 1 : 참격, 2 : 타격, 3 : 관통, 4 : 화염, 5 : 냉기, 6 : 전기, 7 : 역장, 8 : 신성, 9 : 어둠 
-    
+    [field: SerializeField] public List<int> attackAttribute { get; private set; }        // 0 : 무속성, 1 : 참격, 2 : 타격, 3 : 관통, 4 : 화염, 5 : 냉기, 6 : 전기, 7 : 역장, 8 : 신성, 9 : 어둠 
+
+    [field: SerializeField] public bool isMultiHit { get; private set; }            // 다단히트 여부
+    [field: SerializeField] public int DPS { get; private set; }                    // 초당 타격 횟수 필요 없을 시 음수
     [field: SerializeField] public float damage { get; private set; }
     [field: SerializeField] public float knockBack { get; private set; }
     [field: SerializeField] public float attackSpeed { get; private set; }          // 공격속도
@@ -22,6 +24,9 @@ public class MainWeapon : Equipments
     [field: SerializeField] public int maxAmmo { get; private set; }             // 재장전 필요 없는 무기는 음수로 표기
     [field: SerializeField] public int ammo { get; private set; }                // 재장전 필요 없는 무기는 음수로 표기
     [field: SerializeField] public float reloadTime { get; private set; }
+
+    [field: SerializeField] public GameObject deBuff { get; private set; }
+    
 
     public override void Equip()
     {
