@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum screenEffect
-{ none, shake, fadeIn, fadeOut, rumbling, bleeding };
+{ none, shake, fadeIn, fadeOut, rumbling, bleeding, rumbling1, rumbling2 };
 
 public class ScreenEffect : MonoBehaviour
 {
@@ -34,6 +34,10 @@ public class ScreenEffect : MonoBehaviour
                 break;
             case screenEffect.bleeding:
                 StartCoroutine(Bleeding());
+                break;
+            case screenEffect.rumbling1:
+                break;
+            case screenEffect.rumbling2:
                 break;
             default:break;
         }
@@ -116,6 +120,7 @@ public class ScreenEffect : MonoBehaviour
         
         StartCoroutine(Bleeding());
     }
+
 
 
     public void stopBleeding() 
