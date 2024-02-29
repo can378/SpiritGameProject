@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MissionType {KillAll, NoHurt, MiniBoss, TimeAttack,Jump,Lava,Dream}
+public enum MissionType 
+{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse,Dream,Maze}
 
 public class Mission : MonoBehaviour
 {
@@ -10,16 +11,23 @@ public class Mission : MonoBehaviour
    
 
     public float timeCondition;
-    public List<GameObject> Lavas;
 
 
     private ObjectSpawn spawn;
     private float time;
     private float playerFirstHP;
+
+    [Header("TimeAttack, Dream")]
     public GameObject clock;
+
+    [Header("Curse")]
+    public GameObject curse;
+
+
 
     [HideInInspector]
     public Room roomScript;
+
 
     private void Awake()
     {
@@ -69,11 +77,10 @@ public class Mission : MonoBehaviour
                     StopCoroutine(CheckMissionEnd());
                 }
                 break;
-            case MissionType.Jump:
-                //temp..
+            case MissionType.KillAll2:
                 break;
-            case MissionType.Lava:
-                //kill all of them --> end
+            case MissionType.Curse:
+
                 if (KillAll()) 
                 { 
                     roomScript.UnLockDoor();
@@ -81,9 +88,8 @@ public class Mission : MonoBehaviour
                 }
                 else
                 { 
-                    //lava rises
-                    foreach (GameObject lava in Lavas)
-                    { lava.transform.localScale += new Vector3(0.001f,0.001f,0.001f); }
+                    //curse rises
+                    curse.transform.localScale+= new Vector3(0.001f, 0.001f, 0.001f);
                 }
                 break;
             case MissionType.TimeAttack:

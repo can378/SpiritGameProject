@@ -1,13 +1,6 @@
 ﻿/* ----------------------------
- * 2D Maze Generator for Unity.
- * Uses Deapth-First searching 
- * and Recursive Backtracking.
- * ----------------------------
- * Generates a 2x2 centre room in 
- * the middle of the Maze.
- * ----------------------------
+ * Uses Deapth-First searching and Recursive Backtracking.
  * Author: c00pala
- * ~13/05/2018~
  * ---------------------------- */
 
 using System.Collections;
@@ -21,14 +14,10 @@ public class MazeGenerator : MonoBehaviour {
     // User defined variables - set in editor:
     // ------------------------------------------------------
     [Header("Maze generation values:")]
-    [Tooltip("How many cells tall is the maze. MUST be an even number. " +
-        "If number is odd, it will be reduced by 1.\n\n" +
-        "Minimum value of 4.")]
+    [Tooltip("maze tall, wide .mandatory even number. Minimum = 4.")]
     public int mazeRows;
-    [Tooltip("How many cells wide is the maze. Must be an even number. " +
-        "If number is odd, it will be reduced by 1.\n\n" +
-        "Minimum value of 4.")]
     public int mazeColumns;
+    public Vector2 mazePos;
 
     [Header("Maze object variables:")]
     [Tooltip("Cell prefab object.")]
@@ -38,6 +27,8 @@ public class MazeGenerator : MonoBehaviour {
     [Tooltip("If you want to disable the main sprite so the cell has no background, set to TRUE. This will create a maze with only walls.")]
     public bool disableCellSprite;
 
+    public GameObject mazeExitPortal;
+    public AGrid AGrid;
     // ------------------------------------------------------
     // System defined variables - You don't need to touch these:
     // ------------------------------------------------------
@@ -69,24 +60,22 @@ public class MazeGenerator : MonoBehaviour {
     private GameObject mazeParent;
     #endregion
 
-    /* This Start run is an example, you can delete this when 
-     * you want to start calling the maze generator manually. 
-     * To generate a maze is really easy, just call the GenerateMaze() function
-     * pass a rows value and columns value as parameters and the generator will
-     * do the rest for you. Enjoy!
-     */
+
     private void Start()
     {
-        GenerateMaze(mazeRows, mazeColumns);
-        AGrid.instance.CreateGrid();
+        mazePos = GameObject.FindWithTag("MazeEntrance").GetComponent<MazeEnter>().mazePos;
+        GenerateMaze();
+
+        AGrid.CreateGrid();
+        //AGrid.instance.CreateGrid();
     }
 
-    private void GenerateMaze(int rows, int columns)
+    public void GenerateMaze()
     {
         if (mazeParent != null) DeleteMaze();
 
-        mazeRows = rows;
-        mazeColumns = columns;
+        //mazeRows = rows;
+        //mazeColumns = columns;
         CreateLayout();
     }
 
@@ -96,12 +85,15 @@ public class MazeGenerator : MonoBehaviour {
         InitValues();
 
         // Set starting point, set spawn point to start.
-        Vector2 startPos = new Vector2(-(cellSize * (mazeColumns / 2)) + (cellSize / 2), -(cellSize * (mazeRows / 2)) + (cellSize / 2));
+        Vector2 startPos 
+            = new Vector2(
+                -(cellSize * (mazeColumns / 2)) + (cellSize / 2)+mazePos.x, 
+                -(cellSize * (mazeRows / 2)) + (cellSize / 2)+mazePos.y);
         Vector2 spawnPos = startPos;
 
-        for (int x = 1; x <= mazeColumns; x++)
+        for (int x = 1+Mathf.CeilToInt(mazePos.x); x <= mazeColumns + Mathf.CeilToInt(mazePos.x); x++)
         {
-            for (int y = 1; y <= mazeRows; y++)
+            for (int y = 1+ Mathf.CeilToInt(mazePos.y); y <= mazeRows + Mathf.CeilToInt(mazePos.y); y++)
             {
                 GenerateCell(spawnPos, new Vector2(x, y));
 
@@ -154,14 +146,16 @@ public class MazeGenerator : MonoBehaviour {
 
     public void MakeExit()
     {
+        /*
         // Create and populate list of all possible edge cells.
         List<Cell> edgeCells = new List<Cell>();
 
         foreach (KeyValuePair<Vector2, Cell> cell in allCells)
         {
-            if (cell.Key.x == 0 || cell.Key.x == mazeColumns || cell.Key.y == 0 || cell.Key.y == mazeRows)
+            if (cell.Key.x == 0+ Mathf.CeilToInt(mazePos.x) || cell.Key.x == mazeColumns + Mathf.CeilToInt(mazePos.x) || cell.Key.y == 0 + Mathf.CeilToInt(mazePos.y) || cell.Key.y == mazeRows + Mathf.CeilToInt(mazePos.y))
             {
                 edgeCells.Add(cell.Value);
+                //print("edge=" + cell.Key.x+" "+ cell.Key.y);
             }
         }
 
@@ -169,12 +163,24 @@ public class MazeGenerator : MonoBehaviour {
         Cell newCell = edgeCells[Random.Range(0, edgeCells.Count)];
 
         // Remove appropriate wall for chosen edge cell.
-        if (newCell.gridPos.x == 0) RemoveWall(newCell.cScript, 1);
-        else if (newCell.gridPos.x == mazeColumns) RemoveWall(newCell.cScript, 2);
-        else if (newCell.gridPos.y == mazeRows) RemoveWall(newCell.cScript, 3);
-        else RemoveWall(newCell.cScript, 4);
+        if (newCell.gridPos.x == 0) 
+            RemoveWall(newCell.cScript, 1);
+        else if (newCell.gridPos.x == mazeColumns) 
+            RemoveWall(newCell.cScript, 2);
+        else if (newCell.gridPos.y == mazeRows) 
+            RemoveWall(newCell.cScript, 3);
+        else 
+            RemoveWall(newCell.cScript, 4);
+        */
+
+        //make Exit
+        //Instantiate(mazeExitPortal).transform.position = newCell.gridPos+new Vector2(mazeColumns,mazeRows);
+        //print(newCell.gridPos);
 
         Debug.Log("Maze generation finished.");
+
+
+        
     }
 
     public List<Cell> GetUnvisitedNeighbours(Cell curCell)
@@ -236,22 +242,23 @@ public class MazeGenerator : MonoBehaviour {
         else if (wallID == 2) cScript.wallR.SetActive(false);
         else if (wallID == 3) cScript.wallU.SetActive(false);
         else if (wallID == 4) cScript.wallD.SetActive(false);
+
     }
 
     public void CreateCentre()
     {
         // Get the 4 centre cells using the rows and columns variables.
         // Remove the required walls for each.
-        centreCells[0] = allCells[new Vector2((mazeColumns / 2), (mazeRows / 2) + 1)];
+        centreCells[0] = allCells[new Vector2((mazeColumns / 2)+Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + 1 + Mathf.CeilToInt(mazePos.y))];
         RemoveWall(centreCells[0].cScript, 4);
         RemoveWall(centreCells[0].cScript, 2);
-        centreCells[1] = allCells[new Vector2((mazeColumns / 2) + 1, (mazeRows / 2) + 1)];
+        centreCells[1] = allCells[new Vector2((mazeColumns / 2) + 1 + Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + 1 + Mathf.CeilToInt(mazePos.y))];
         RemoveWall(centreCells[1].cScript, 4);
         RemoveWall(centreCells[1].cScript, 1);
-        centreCells[2] = allCells[new Vector2((mazeColumns / 2), (mazeRows / 2))];
+        centreCells[2] = allCells[new Vector2((mazeColumns / 2) + Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + Mathf.CeilToInt(mazePos.y))];
         RemoveWall(centreCells[2].cScript, 3);
         RemoveWall(centreCells[2].cScript, 2);
-        centreCells[3] = allCells[new Vector2((mazeColumns / 2) + 1, (mazeRows / 2))];
+        centreCells[3] = allCells[new Vector2((mazeColumns / 2) + 1 + Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + Mathf.CeilToInt(mazePos.y))];
         RemoveWall(centreCells[3].cScript, 3);
         RemoveWall(centreCells[3].cScript, 1);
 
@@ -281,7 +288,7 @@ public class MazeGenerator : MonoBehaviour {
         // Child new cell to parent.
         if (mazeParent != null) newCell.cellObject.transform.parent = mazeParent.transform;
         // Set name of cellObject.
-        newCell.cellObject.name = "Cell - X:" + keyPos.x + " Y:" + keyPos.y;
+        newCell.cellObject.name = "Cell / X:" + keyPos.x + " Y:" + keyPos.y;
         // Get reference to attached CellScript.
         newCell.cScript = newCell.cellObject.GetComponent<CellScript>();
         // Disable Cell sprite, if applicable.
@@ -313,6 +320,8 @@ public class MazeGenerator : MonoBehaviour {
         mazeParent = new GameObject();
         mazeParent.transform.position = Vector2.zero;
         mazeParent.name = "Maze";
+        mazeParent.tag = "Maze";
+        
     }
 
     public bool IsOdd(int value)

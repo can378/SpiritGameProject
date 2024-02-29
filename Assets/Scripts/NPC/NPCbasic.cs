@@ -27,7 +27,7 @@ public class NPCbasic : MonoBehaviour
     {
         isTalking = false;
         sprite=GetComponent<SpriteRenderer>();
-        GetComponent<PathFinding>().seeker = this.transform;
+        //GetComponent<PathFinding>().seeker = this.transform;
         scriptManager = GetComponent<ScriptManager>();
     }
 

@@ -7,7 +7,7 @@ public class EnemyMosquito : EnemyBasic
 
     private void Start()
     {
-        GetComponent<PathFinding>().seeker = transform;
+        //GetComponent<PathFinding>().seeker = transform;
     }
 
 

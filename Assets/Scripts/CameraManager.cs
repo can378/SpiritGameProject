@@ -14,7 +14,7 @@ public class CameraManager : MonoBehaviour
     Vector2 center;                 
     public Vector2 postCenter;
     [SerializeField]
-    Vector2 mapSize;
+    public Vector2 mapSize;
 
     [SerializeField]
     float cameraMoveSpeed;
