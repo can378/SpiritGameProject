@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum screenEffect
-{ none, shake, fadeIn, fadeOut, rumbling };
+{ none, shake, fadeIn, fadeOut, rumbling, bleeding };
 
 public class ScreenEffect : MonoBehaviour
 {
@@ -13,6 +13,8 @@ public class ScreenEffect : MonoBehaviour
     public float shakeTime;
     public Image fade;
     public GameObject fadePanel;
+    public Image edgeEffect;
+    public GameObject effectPanel;
 
     void Start()
     {
@@ -29,6 +31,9 @@ public class ScreenEffect : MonoBehaviour
                 break;
             case screenEffect.rumbling:
                 StartCoroutine("Rumbling");
+                break;
+            case screenEffect.bleeding:
+                StartCoroutine(Bleeding());
                 break;
             default:break;
         }
@@ -86,6 +91,37 @@ public class ScreenEffect : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
 
+    }
+
+    IEnumerator Bleeding()
+    {
+        effectPanel.SetActive(true);
+        edgeEffect.color *= new Color(1, 1, 1, 0f);
+
+
+        //clear
+        while (edgeEffect.color.a < 0.3)
+        {
+            edgeEffect.color += new Color(0, 0, 0, 0.1f);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        //blurry
+        while (edgeEffect.color.a > 0)
+        {
+            edgeEffect.color += new Color(0, 0, 0, -0.1f);
+            yield return new WaitForSeconds(0.1f); 
+        }
+        
+        
+        StartCoroutine(Bleeding());
+    }
+
+
+    public void stopBleeding() 
+    {
+        StopCoroutine(Bleeding());
+        effectPanel.SetActive(false);
     }
 
 

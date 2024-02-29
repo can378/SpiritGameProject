@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public enum StatName { Hp, AttackPower, AttackSpeed, AttackRange, MoveSpeed, Dodge, SkillCoolTime };
+public enum StatName 
+{ Hp, AttackPower, AttackSpeed, CriChance, CriPower, SkillPower, SkillCoolTime, MoveSpeed };
 public class StatSlot : MonoBehaviour
 {
     public StatName statName;
@@ -54,24 +55,24 @@ public class StatSlot : MonoBehaviour
                 //attack speed up
                 userdata.playerAttackSpeed++;
                 break;
-            case StatName.AttackRange:
-                userdata.playerAttackRange++;
-                //attack range up
+            case StatName.CriChance:
+                userdata.playerCritical += 1;
+                break;
+            case StatName.CriPower:
+                userdata.playerCriticalDamage += 1;
+                break;
+            case StatName.SkillCoolTime:
+                //skill cool time
+                userdata.skillCoolTime -= 1;
+                break;
+            case StatName.SkillPower:
+                userdata.skillPower+=1;
                 break;
             case StatName.MoveSpeed:
                 //move speed
                 userdata.playerSpeed += 1;
                 userdata.playerRunSpeed += 1;
                 userdata.playerRunCoolTime -= 1;
-                break;
-            case StatName.Dodge:
-                //dodge
-                userdata.playerDodgeSpeed += 1;
-                userdata.playerDodgeTime -= 1;
-                break;
-            case StatName.SkillCoolTime:
-                //skill cool time
-                userdata.skillCoolTime -= 1;
                 break;
             default:
                 print("stat apply error");

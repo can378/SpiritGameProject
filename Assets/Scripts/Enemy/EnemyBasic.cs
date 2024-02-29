@@ -37,7 +37,7 @@ public class EnemyBasic : MonoBehaviour
             Damaged(hitDetection.attackAttributes,hitDetection.damage,hitDetection.critical, hitDetection.criticalDamage);
             ApplyBuff(hitDetection.deBuff);
             KnockBack(collision.gameObject, hitDetection.knockBack);
-            //DIE
+
 
         }
     }
