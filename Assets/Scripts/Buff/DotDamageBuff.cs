@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DotDamageBuff : StatusEffect
 {
-    // 고정 %수치
+    // 최대 체력 비례 %수치
     // dotDamage가 양수이면 피해
     // 음수이면 힐
     [field: SerializeField] public float damagePerSecond { get; set; }
@@ -13,8 +13,9 @@ public class DotDamageBuff : StatusEffect
     public override void ApplyEffect()
     {
         // 주기적으로 피해를 입히는 코루틴 시작
+        ResetEffect();
         dotDamageCoroutine = StartCoroutine(InflictDamageOverTime());
-        Debug.Log("DoT debuff applied: " + damagePerSecond + " damage per second");
+        //Debug.Log("DoT debuff applied: " + damagePerSecond + " damage per second");
     }
 
     public override void RemoveEffect()
@@ -24,7 +25,26 @@ public class DotDamageBuff : StatusEffect
         {
             StopCoroutine(dotDamageCoroutine);
         }
-        Debug.Log("DoT debuff removed");
+        //Debug.Log("DoT debuff removed");
+    }
+
+    public override void ResetEffect()      //지속시간 갱신
+    {
+        // 중첩 
+        overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+
+        // 저항 수치에 따른 지속시간 결정
+        if (target.tag == "Player")
+        {
+            Player player = target.GetComponent<Player>();
+            duration = (1 - (1 - player.userData.playerResist[resist]) * 2) * defaultDuration;
+        }
+        else if (target.tag == "Enemy")
+        {
+            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
+            duration = (1 - (1 - enemy.status.resist[resist]) * 2) * defaultDuration;
+        }
+        //print(duration);
     }
 
     private IEnumerator InflictDamageOverTime()
@@ -46,12 +66,14 @@ public class DotDamageBuff : StatusEffect
         if(target.tag == "Player")
         {
             Player player = target.GetComponent<Player>();
-            player.Damaged(player.userData.playerHPMax * damage);
+            player.Damaged(player.userData.playerHPMax * damage * overlap);
         }
         else if(target.tag == "Enemy")
         {
-            EnemyStatus enemyStatus = target.GetComponent<EnemyStatus>();
-            enemyStatus.health -= enemyStatus.maxHealth * damage;
+            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
+            List<int> attributes = new List<int>();
+            attributes.Add(0);
+            enemy.Damaged(enemy.status.maxHealth * damage * overlap);
         }
     }
 }

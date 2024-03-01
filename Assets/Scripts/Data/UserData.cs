@@ -17,7 +17,10 @@ public class UserData
     public float playerHPMax;
     public float playerHP;
     public float playerTempHP;
+
+    //피해 감소
     public float playerReductionRatio;
+    public float[] playerResist = new float[11];
 
     //Attack
     public float playerPower;
@@ -49,9 +52,9 @@ public class UserData
 
     public string playerItem;
 
-    //Weapon
+    //Equipment
     public string mainWeapon;
-    public string subWeapon;
+    public string[] armor = new string[3];
 
     //Skill
     public string activeSkill;

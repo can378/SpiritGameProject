@@ -12,5 +12,10 @@ public class BuffField : MonoBehaviour
             Player player = other.GetComponent<Player>();
             player.ApplyBuff(Buff);
         }
+        else if(other.tag == "Enemy")
+        {
+            EnemyBasic enemy = other.GetComponent<EnemyBasic>();
+            enemy.ApplyBuff(Buff);
+        }
     }
 }
