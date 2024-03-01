@@ -50,7 +50,7 @@ public class PathFinding : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //print("seeker=" + seekerPos + "figitive="+fugitivePos);
+        //print("seeker=" + seekerPos + "fugitive="+fugitivePos);
         
         fugitivePos = target.position;
         StartFinding(seeker.position, fugitivePos);
@@ -73,23 +73,22 @@ public class PathFinding : MonoBehaviour
     {
         
         yield return null;
-
+        
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
-       
 
+        print("a star1");
 
-        bool pathSuccess = false;// target에 도착했는지
+        bool pathSuccess = false;// target에 도착여부
 
-        if (!startNode.walkable)
-        {    
-            Debug.Log("Unwalkable StartNode.");
-        }
-
+        if (!startNode.walkable) {   Debug.Log("Unwalkable StartNode.");  }
+        if (!targetNode.walkable) { print("Unwalkable TargetNode."); }
+        
         
         //길 찾기
         if (targetNode.walkable)
         {
+            print("a star2");
             List<ANode> openSet = new List<ANode>(); //계산한 노드
             HashSet<ANode> closedSet = new HashSet<ANode>();//계산할 노드
 
@@ -126,7 +125,7 @@ public class PathFinding : MonoBehaviour
                     pathSuccess = true;
                     break;
                 }
-                
+                print("a star3");
                 // current의 상하좌우 노드들에 대하여 g,h cost를 고려한다.
                 foreach (ANode neighbour in grid.GetNeighbours(currentNode))
                 {
@@ -150,7 +149,7 @@ public class PathFinding : MonoBehaviour
         }
         else //목적지에 도달할 수 없을경우 way갱신 안함
         {
-            
+            print("a star4");
             Vector3 origin = seeker.transform.position;
             while (true)
             {
@@ -164,7 +163,7 @@ public class PathFinding : MonoBehaviour
         
         yield return null;
 
-        
+        print("a star5");
 
         // 길을 찾은 후 이동
         if (pathSuccess == true)

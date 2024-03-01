@@ -17,7 +17,7 @@ public class MazeGenerator : MonoBehaviour {
     [Tooltip("maze tall, wide .mandatory even number. Minimum = 4.")]
     public int mazeRows;
     public int mazeColumns;
-    public Vector2 mazePos;
+    //public Vector2 mazePos;
 
     [Header("Maze object variables:")]
     [Tooltip("Cell prefab object.")]
@@ -63,7 +63,7 @@ public class MazeGenerator : MonoBehaviour {
 
     private void Start()
     {
-        mazePos = GameObject.FindWithTag("MazeEntrance").GetComponent<MazeEnter>().mazePos;
+        //mazePos = GameObject.FindWithTag("MazeEntrance").GetComponent<MazeEnter>().mazePos;
         GenerateMaze();
 
         AGrid.CreateGrid();
@@ -87,13 +87,13 @@ public class MazeGenerator : MonoBehaviour {
         // Set starting point, set spawn point to start.
         Vector2 startPos 
             = new Vector2(
-                -(cellSize * (mazeColumns / 2)) + (cellSize / 2)+mazePos.x, 
-                -(cellSize * (mazeRows / 2)) + (cellSize / 2)+mazePos.y);
+                -(cellSize * (mazeColumns / 2)) + (cellSize / 2), 
+                -(cellSize * (mazeRows / 2)) + (cellSize / 2));
         Vector2 spawnPos = startPos;
 
-        for (int x = 1+Mathf.CeilToInt(mazePos.x); x <= mazeColumns + Mathf.CeilToInt(mazePos.x); x++)
+        for (int x = 1; x <= mazeColumns ; x++)
         {
-            for (int y = 1+ Mathf.CeilToInt(mazePos.y); y <= mazeRows + Mathf.CeilToInt(mazePos.y); y++)
+            for (int y = 1; y <= mazeRows; y++)
             {
                 GenerateCell(spawnPos, new Vector2(x, y));
 
@@ -249,16 +249,16 @@ public class MazeGenerator : MonoBehaviour {
     {
         // Get the 4 centre cells using the rows and columns variables.
         // Remove the required walls for each.
-        centreCells[0] = allCells[new Vector2((mazeColumns / 2)+Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + 1 + Mathf.CeilToInt(mazePos.y))];
+        centreCells[0] = allCells[new Vector2((mazeColumns / 2), (mazeRows / 2) + 1 )];
         RemoveWall(centreCells[0].cScript, 4);
         RemoveWall(centreCells[0].cScript, 2);
-        centreCells[1] = allCells[new Vector2((mazeColumns / 2) + 1 + Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + 1 + Mathf.CeilToInt(mazePos.y))];
+        centreCells[1] = allCells[new Vector2((mazeColumns / 2) + 1 , (mazeRows / 2) + 1 )];
         RemoveWall(centreCells[1].cScript, 4);
         RemoveWall(centreCells[1].cScript, 1);
-        centreCells[2] = allCells[new Vector2((mazeColumns / 2) + Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + Mathf.CeilToInt(mazePos.y))];
+        centreCells[2] = allCells[new Vector2((mazeColumns / 2) , (mazeRows / 2) )];
         RemoveWall(centreCells[2].cScript, 3);
         RemoveWall(centreCells[2].cScript, 2);
-        centreCells[3] = allCells[new Vector2((mazeColumns / 2) + 1 + Mathf.CeilToInt(mazePos.x), (mazeRows / 2) + Mathf.CeilToInt(mazePos.y))];
+        centreCells[3] = allCells[new Vector2((mazeColumns / 2) + 1 , (mazeRows / 2))];
         RemoveWall(centreCells[3].cScript, 3);
         RemoveWall(centreCells[3].cScript, 1);
 

@@ -8,7 +8,7 @@ public class MazeEnter : MonoBehaviour
     public mazePortal mazePortal;
 
     public GameObject maze;
-    public Vector2 mazePos;
+    //public Vector2 mazePos;
 
     private GameObject mazeInst=null;
 
@@ -22,17 +22,22 @@ public class MazeEnter : MonoBehaviour
         if (collision.tag == "Player")
         {
             if (mazePortal == mazePortal.enter)
-            { 
+            {
+
+                GameObject.FindWithTag("roomParent").SetActive(false);
+                
+                
                 //generate maze
                 mazeInst = Instantiate(maze);
-                mazeInst.transform.position = mazePos;
+                //mazeInst.transform.position = mazePos;
                 mazeInst.GetComponent<MazeGenerator>().GenerateMaze();
                 //GameObject.FindWithTag("Maze").transform.position = mazePos;
 
-                
+
 
                 //player move
-                collision.transform.position = mazePos;
+                //collision.transform.position = mazePos;
+                collision.transform.position = new Vector2(0,0);
                 
                 //camera move
                 CameraManager.instance.CameraMove(collision.gameObject);
@@ -41,6 +46,8 @@ public class MazeEnter : MonoBehaviour
             }
             else if(mazePortal==mazePortal.exit)
             {
+                //GameObject.FindWithTag("roomParent").SetActive(true);
+
                 //entrance disabled
                 GameObject.FindWithTag("MazeEntrance").GetComponent<CircleCollider2D>().enabled = false;
 
