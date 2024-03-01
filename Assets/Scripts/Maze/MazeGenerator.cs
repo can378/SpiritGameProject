@@ -146,13 +146,13 @@ public class MazeGenerator : MonoBehaviour {
 
     public void MakeExit()
     {
-        /*
+        
         // Create and populate list of all possible edge cells.
         List<Cell> edgeCells = new List<Cell>();
 
         foreach (KeyValuePair<Vector2, Cell> cell in allCells)
         {
-            if (cell.Key.x == 0+ Mathf.CeilToInt(mazePos.x) || cell.Key.x == mazeColumns + Mathf.CeilToInt(mazePos.x) || cell.Key.y == 0 + Mathf.CeilToInt(mazePos.y) || cell.Key.y == mazeRows + Mathf.CeilToInt(mazePos.y))
+            if (cell.Key.x == 0 || cell.Key.x == mazeColumns  || cell.Key.y == 0  || cell.Key.y == mazeRows)
             {
                 edgeCells.Add(cell.Value);
                 //print("edge=" + cell.Key.x+" "+ cell.Key.y);
@@ -161,7 +161,7 @@ public class MazeGenerator : MonoBehaviour {
 
         // Get edge cell randomly from list.
         Cell newCell = edgeCells[Random.Range(0, edgeCells.Count)];
-
+        /*
         // Remove appropriate wall for chosen edge cell.
         if (newCell.gridPos.x == 0) 
             RemoveWall(newCell.cScript, 1);
@@ -174,7 +174,9 @@ public class MazeGenerator : MonoBehaviour {
         */
 
         //make Exit
-        //Instantiate(mazeExitPortal).transform.position = newCell.gridPos+new Vector2(mazeColumns,mazeRows);
+        GameObject exit = Instantiate(mazeExitPortal);
+        exit.transform.position = newCell.cellObject.transform.position;
+        exit.transform.parent = this.transform;
         //print(newCell.gridPos);
 
         Debug.Log("Maze generation finished.");

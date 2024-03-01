@@ -39,7 +39,7 @@ public class PathFinding : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        seekerSpeed = 50;
+        seekerSpeed = 30;
         grid = GameObject.Find("AGridManager").GetComponent<AGrid>();
         target=GameObject.FindWithTag("Player").GetComponent<Transform>();
         seeker = this.transform;
