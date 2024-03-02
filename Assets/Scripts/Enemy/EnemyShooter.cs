@@ -9,16 +9,25 @@ public class EnemyShooter : EnemyBasic
     public int curPatternCount;
     public int[] maxPatternCount;
 
+    private void Start()
+    {
+        Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+        rigid.velocity = Vector2.zero;
+    }
 
     private void OnEnable()
     {
-        Invoke("Stop",2f);
+        StartCoroutine(Think());
+    }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
 
-    void Think() 
+    IEnumerator Think() 
     {
-
+        yield return null;
         ObjectPoolManager.instance.Clear(0);
         //현재 패턴 개수 넘어가면 원래대로 돌아온다.
         patternIndex = patternIndex == 2 ? 0 : patternIndex + 1;
@@ -26,31 +35,21 @@ public class EnemyShooter : EnemyBasic
 
         switch (patternIndex)
         {
-            case 0: FireForward(); break;
-            case 1: FireShot(); break;
-            case 2: FireAround(); break;
+            case 0: StartCoroutine(FireForward()); break;
+            case 1: StartCoroutine(FireShot()); break;
+            case 2: StartCoroutine(FireAround()); break;
         }
     }
 
-
-    private void Stop()
-    {
-        if (!gameObject.activeSelf)
-            return;
-        Rigidbody2D rigid = GetComponent<Rigidbody2D>();
-        rigid.velocity = Vector2.zero;
-        
-        Invoke("Think", 2f);
-    }
 
 
 
 
     //Fire Patterns===========================================================================
-    void FireForward() 
+    IEnumerator FireForward() 
     {
         if (!gameObject.activeSelf)
-            return;
+            yield break;
 
         //한발씩 발사
 
@@ -68,19 +67,25 @@ public class EnemyShooter : EnemyBasic
         curPatternCount++;
 
         if (curPatternCount < maxPatternCount[patternIndex])
-            Invoke("FireForward", 1f);
+        {
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(FireForward());
+        }
         else
-            Invoke("Think", 2f);
+        {
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(Think());
+        }
+           
     }
 
 
-    void FireShot() 
+    IEnumerator FireShot() 
     {
         if (!gameObject.activeSelf)
-            return;
+            yield break;
 
         //여러개 한번에 발사
-
         for (int i = 0; i < 5; i++)
         {
             GameObject bullet = ObjectPoolManager.instance.Get(0);
@@ -101,19 +106,18 @@ public class EnemyShooter : EnemyBasic
         curPatternCount++;
 
         if (curPatternCount < maxPatternCount[patternIndex])
-            Invoke("FireShot", 1f);
+        { yield return new WaitForSeconds(1f); StartCoroutine(FireShot()); }
         else
-            Invoke("Think", 4f);
-
+        { yield return new WaitForSeconds(4f); StartCoroutine(Think()); }
 
     }
 
 
 
-    void FireAround() 
+    IEnumerator FireAround() 
     {
-        if (!gameObject.activeSelf)
-            return;
+        if (!gameObject.activeSelf) yield break;
+
         //원형 발사
         int roundNumA = 30;
         int roundNumB = 20;
@@ -143,10 +147,10 @@ public class EnemyShooter : EnemyBasic
         curPatternCount++;
 
         if (curPatternCount < maxPatternCount[patternIndex])
-            Invoke("FireAround", 1.5f);
+        { yield return new WaitForSeconds(1.5f);StartCoroutine(FireAround()); }
         else
         {
-            Invoke("Think", 6f);
+            yield return new WaitForSeconds(5f); StartCoroutine(Think());
         }
             
     }

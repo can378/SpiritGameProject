@@ -78,6 +78,17 @@ public class Mission : MonoBehaviour
                 }
                 break;
             case MissionType.KillAll2:
+                if (time% 10==0)
+                {
+                    //respawn
+                    spawn.SpawnEnemy(MapType.Mission);
+                
+                }
+                if (KillAll())
+                {
+                    roomScript.UnLockDoor();
+                    StopCoroutine(CheckMissionEnd());
+                }
                 break;
             case MissionType.Curse:
 
@@ -86,10 +97,10 @@ public class Mission : MonoBehaviour
                     roomScript.UnLockDoor();
                     StopCoroutine(CheckMissionEnd());
                 }
-                else
+                else if(curse.transform.localScale.x>=0)
                 { 
-                    //curse rises
-                    curse.transform.localScale+= new Vector3(0.001f, 0.001f, 0.001f);
+                    //curse safe area decreased
+                    curse.transform.localScale-= new Vector3(0.001f, 0.001f, 0.001f);
                 }
                 break;
             case MissionType.TimeAttack:
