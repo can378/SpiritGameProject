@@ -45,8 +45,8 @@ public class HitDetection : MonoBehaviour
         {
             foreach (EnemyBasic enemy in enemies)
             {
-                enemy.Damaged(attackAttributes, damage, critical, criticalDamage);
-                enemy.ApplyBuff(deBuff);
+                enemy.Damaged(damage, critical, criticalDamage, attackAttributes);
+                if(deBuff != null) enemy.ApplyBuff(deBuff);
             }
             yield return new WaitForSeconds(1 / (float)DPS);
         }

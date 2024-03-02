@@ -34,38 +34,46 @@ public class EnemyBasic : MonoBehaviour
             //Damaged
             HitDetection hitDetection = collision.GetComponent<HitDetection>();
 
-            Damaged(hitDetection.attackAttributes,hitDetection.damage,hitDetection.critical, hitDetection.criticalDamage);
-            ApplyBuff(hitDetection.deBuff);
+            Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage, hitDetection.attackAttributes);
+            if(hitDetection.deBuff != null) ApplyBuff(hitDetection.deBuff);
             KnockBack(collision.gameObject, hitDetection.knockBack);
 
 
         }
     }
 
-    public void Damaged(List<int> attackAttributes, float damage, float critical, float criticalDamage)
+    public void Damaged(float damage, float critical = 0, float criticalDamage = 0, List<int> attackAttributes = null)
     {
         int criticalHit = Random.Range(0, 100) < critical ? 1 : 0;
         damage = (int)(damage + criticalHit * criticalDamage * damage);
 
-        foreach(int attackAttribute in attackAttributes)
+        if(attackAttributes != null)
         {
-            string att;
-            switch(attackAttribute)
+            foreach (int attackAttribute in attackAttributes)
             {
-                case 1: att = "참격"; break;
-                case 2: att = "타격"; break;
-                case 3: att = "관통"; break;
-                case 4: att = "화염"; break;
-                case 5: att = "냉기"; break;
-                case 6: att = "전기"; break;
-                case 7: att = "역장"; break;
-                case 8: att = "신성"; break;
-                case 9: att = "어둠"; break;
-                default : att = "무속성"; break;
+                string att;
+                switch (attackAttribute)
+                {
+                    case 1: att = "참격"; break;
+                    case 2: att = "타격"; break;
+                    case 3: att = "관통"; break;
+                    case 4: att = "화염"; break;
+                    case 5: att = "냉기"; break;
+                    case 6: att = "전기"; break;
+                    case 7: att = "역장"; break;
+                    case 8: att = "신성"; break;
+                    case 9: att = "어둠"; break;
+                    default: att = "무속성"; break;
 
+                }
+                print(att + " enemy damaged : " + damage * status.resist[attackAttribute] / attackAttributes.Count);
+                status.health -= damage * status.resist[attackAttribute] / attackAttributes.Count;
             }
-            print(att + " enemy damaged : " + damage * status.resist[attackAttribute] / attackAttributes.Count);
-            status.health -= damage * status.resist[attackAttribute] / attackAttributes.Count;
+        }
+        else if(attackAttributes == null)
+        {
+            print("enemy damaged : " + damage);
+            status.health -= damage;
         }
         
         sprite.color = Color.red;
@@ -91,17 +99,54 @@ public class EnemyBasic : MonoBehaviour
 
     public void ApplyBuff(GameObject effect)
     {
-        if(effect == null)
-            return;
-        Debug.Log(gameObject.name + ": 디버프 적용");
+        // 가지고 있는 버프인지 체크한다.
+        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
+        foreach (StatusEffect buff in status.activeEffects)
+        {
+            // 가지고 있는 버프라면 갱신한다.
+            if (buff.buffId == statusEffect.buffId)
+            {
+                buff.ResetEffect();
+                return;
+            }
+        }
+
+        // 가지고 있는 버프가 아니라면 새로 추가한다.
+        GameObject Buff = Instantiate(effect);
+        statusEffect = Buff.GetComponent<StatusEffect>();
+        statusEffect.SetTarget(gameObject);
+
+        statusEffect.ApplyEffect();
+        status.activeEffects.Add(statusEffect);
+
+        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
 
-    /*
     private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
     {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            if (effect.duration <= 0)
+            {
+                break;
+            }
+        }
+        effect.RemoveEffect();
+        status.activeEffects.Remove(effect);
 
+        Destroy(effect.gameObject);
     }
-    */
+
+    public void RemoveAllEffects()
+    {
+        foreach (StatusEffect effect in status.activeEffects)
+        {
+            effect.RemoveEffect();
+        }
+        status.activeEffects.Clear();
+    }
+
 
     public void EnemyDead()
     {

@@ -612,7 +612,7 @@ public class Player : MonoBehaviour
         }
 
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
-        //damage = damage * DataManager.instance.userData.playerReductionRatio;
+        damage = damage * (1 - DataManager.instance.userData.playerReductionRatio);
 
         Debug.Log("Player Damaged" + damage);
         userData.playerHP -= damage;
@@ -634,7 +634,7 @@ public class Player : MonoBehaviour
     public void KnockBack(GameObject agent)
     {
         //튕겨나감
-        float distance = 10;
+        float distance = 10 * (1 - DataManager.instance.userData.playerReductionRatio);
         Vector2 dir = (transform.position - agent.transform.position).normalized;
 
         //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
@@ -673,18 +673,39 @@ public class Player : MonoBehaviour
 
     public void ApplyBuff(GameObject effect)
     {
+        // 가지고 있는 버프인지 체크한다.
+        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
+        foreach (StatusEffect buff in status.activeEffects)
+        {
+            // 가지고 있는 버프라면 갱신한다.
+            if (buff.buffId == statusEffect.buffId)
+            {
+                buff.ResetEffect();
+                return;
+            }
+        }
+        
+        // 가지고 있는 버프가 아니라면 새로 추가한다.
         GameObject Buff = Instantiate(effect);
-        StatusEffect statusEffect = Buff.GetComponent<StatusEffect>();
+        statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);
 
         statusEffect.ApplyEffect();
         status.activeEffects.Add(statusEffect);
+        
         StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
 
     private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
     {
-        yield return new WaitForSeconds(effect.duration);
+        while(true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            if(effect.duration <= 0)
+            {
+                break;
+            }
+        }
         effect.RemoveEffect();
         status.activeEffects.Remove(effect);
 

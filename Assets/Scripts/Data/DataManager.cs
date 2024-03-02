@@ -102,7 +102,12 @@ public class DataManager : MonoBehaviour
         userData.playerHPMax = 100f;
         userData.playerHP = 100f;
         userData.playerTempHP = 0;
+
         userData.playerReductionRatio = 0;
+        for(int i = 0;i<11;i++)
+        {
+            userData.playerResist[i] = 1.0f;
+        }
 
         userData.playerPower = 1;
         userData.playerCritical = 0;
@@ -131,7 +136,10 @@ public class DataManager : MonoBehaviour
         userData.playerItem = "";
 
         userData.mainWeapon = "";
-        userData.subWeapon = "";
+        for (int i = 0; i < 11; i++)
+        {
+            userData.armor[i] = "";
+        }
 
         userData.activeSkill = "";
 
