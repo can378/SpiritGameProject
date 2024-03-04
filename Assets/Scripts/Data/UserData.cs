@@ -12,62 +12,30 @@ public class UserData
     public int playerLevel;
     public int playerExp;
     public int playerPoint;
-    
+
     //HP
-    public float playerHPMax;
     public float playerHP;
+    public float playerHPMax;
     public float playerTempHP;
-
-    //피해 감소
-    public float playerReductionRatio;
-    public float[] playerResist = new float[11];
-
-    //Attack
-    public float playerPower;
-    public float playerCritical;
-    public float playerCriticalDamage;
-    public float playerDrain;
-    public float playerAttackRange;
-    public float playerAttackSpeed;
-
-    //Skill
-    public float skillPower;
-    public float skillCoolTime; //쿨감
     
-
-    //Move Speed
-    public float playerDefaultSpeed;
-    public float playerSpeed;
-    public float playerRunSpeed;
-    public float playerRunCoolTime;
-
-    //Dodge
-    public float playerDodgeSpeed;
-    public float playerDodgeTime;
-
     //Item
-    public int coin;
-    public int key;
-    public int dice;
+    public int playerCoin;
+    public int playerKey;
+    public int playerDice;
 
     public string playerItem;
 
     //Equipment
-    public string mainWeapon;
-    public string[] armor = new string[3];
+    public int playerMainWeapon;
+    public int[] playerArmor = new int[3];
 
     //Skill
-    public string activeSkill;
+    public int playerSkill;
 
     //Chpater
     public int nowChapter;
 
     //Stat
-    public int[] playerStat;
-
-    //?
-    public float playerLuck;
-
-
+    public int[] playerStat = new int[8];
 
 }

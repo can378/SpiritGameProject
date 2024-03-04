@@ -49,6 +49,7 @@ public class DataManager : MonoBehaviour
             string persistentJsonData = File.ReadAllText(persistentDataFilePath);
             //역직렬화
             userData = JsonConvert.DeserializeObject<UserData>(userDataJsonData);
+            // userData로 player 스탯 적용하기
             persistentData=JsonConvert.DeserializeObject<PersistentData>(persistentJsonData);
         }
         else
@@ -69,6 +70,27 @@ public class DataManager : MonoBehaviour
 
     public void SaveUserData()
     {
+        // userData를 player 스탯으로 덮어씌우기
+        userData.playerLevel = Player.instance.stats.level;
+        userData.playerExp = Player.instance.stats.exp;
+        userData.playerPoint = Player.instance.stats.point;
+
+        userData.playerHP = Player.instance.stats.HPMax;
+        userData.playerTempHP = Player.instance.stats.tempHP;
+
+        userData.playerCoin = Player.instance.stats.coin;
+        userData.playerKey = Player.instance.stats.key;
+        userData.playerDice = Player.instance.stats.dice;
+
+        if (Player.instance.stats.mainWeapon != null) userData.playerMainWeapon = Player.instance.stats.mainWeapon.equipmentsId;
+        // if (Player.instance.stats.playerArmor != null) userData.playerArmor = Player.instance.stats.armor.equipmentsId;
+        if (Player.instance.stats.skill != null) userData.playerSkill = Player.instance.stats.skill.skillID;
+
+        for (int i = 0; i < 8; i++)
+        {
+            DataManager.instance.userData.playerStat[i] = Player.instance.stats.playerStat[i];
+        }
+
         //파일 저장 경로
         string userDataFilePath = Application.persistentDataPath + UserDataFileName;
 
@@ -96,56 +118,34 @@ public class DataManager : MonoBehaviour
     public void InitData()
     {
         userData.playerLevel = 1;
-        userData.playerExp = 5;
-        userData.playerPoint = 10;
+        userData.playerExp = 1;
+        userData.playerPoint = 5;
 
         userData.playerHPMax = 100f;
         userData.playerHP = 100f;
         userData.playerTempHP = 0;
 
-        userData.playerReductionRatio = 0;
-        for(int i = 0;i<11;i++)
-        {
-            userData.playerResist[i] = 1.0f;
-        }
-
-        userData.playerPower = 1;
-        userData.playerCritical = 0;
-        userData.playerCriticalDamage = 0.5f;
-        userData.playerDrain = 0;
-        userData.playerAttackRange = 0;
-        userData.playerAttackSpeed = 1;
-
-        userData.skillPower = 1;
-        userData.skillCoolTime = 0;
-
-        userData.playerDefaultSpeed = 5;
-        userData.playerSpeed = 1;
-        userData.playerRunSpeed = 1.66f;
-        userData.playerRunCoolTime = 5;
-
-        userData.playerDodgeSpeed = 2;
-        userData.playerDodgeTime = 0.6f;
-
-        userData.playerLuck = 0;
-
-        userData.coin = 0;
-        userData.key = 0;
-        userData.dice = 0;
+        userData.playerCoin = 0;
+        userData.playerKey = 0;
+        userData.playerDice = 0;
 
         userData.playerItem = "";
 
-        userData.mainWeapon = "";
-        for (int i = 0; i < 11; i++)
+        userData.playerMainWeapon = 0;
+        for (int i = 0; i < 3; i++)
         {
-            userData.armor[i] = "";
+            userData.playerArmor[i] = 0;
         }
 
-        userData.activeSkill = "";
+        userData.playerSkill = 0;
 
         userData.nowChapter = 0;
 
-        userData.playerStat = new int[7];
+        userData.playerStat = new int[8];
+        for (int i = 0; i < 8; i++)
+        {
+            userData.playerStat[i] = 0;
+        }
 
 
     }

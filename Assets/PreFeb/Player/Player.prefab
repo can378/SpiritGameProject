@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 7715870851423386026}
   - component: {fileID: 4369510584889721068}
   - component: {fileID: 2830920931105813052}
+  - component: {fileID: 6162495839983942233}
   - component: {fileID: 2680101835875493889}
   - component: {fileID: 8114064950361091504}
   - component: {fileID: 385001862643613236}
@@ -605,7 +606,64 @@ MonoBehaviour:
   playerItem: {fileID: 0}
   mainWeaponController: {fileID: 0}
   skillController: {fileID: 0}
-  armor: {fileID: 0}
+  armor:
+  - {fileID: 0}
+--- !u!114 &6162495839983942233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3504708173630329506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c1f3f103429984db857c505bb5ed1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  reductionRatio: 0
+  resist:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  power: 1
+  defaultSpeed: 5
+  activeEffects: []
+  level: 1
+  exp: 1
+  point: 10
+  critical: 0
+  criticalDamage: 0.5
+  drain: 0
+  attackSpeed: 1
+  skillPower: 1
+  skillCoolTime: 0
+  speed: 1
+  runSpeed: 1.66
+  runCoolTime: 5
+  dodgeSpeed: 2
+  dodgeTime: 0.5
+  coin: 0
+  key: 0
+  dice: 0
+  item: 
+  mainWeapon: {fileID: 0}
+  skill: {fileID: 0}
+  armors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerStat: 0000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &2680101835875493889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,7 +692,6 @@ MonoBehaviour:
   <isSkill>k__BackingField: 0
   <isSkillReady>k__BackingField: 0
   <isSkillHold>k__BackingField: 0
-  activeEffects: []
 --- !u!114 &8114064950361091504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -647,7 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bc7e415cd3038478d4b3a895ba7d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <mainWeapon>k__BackingField: {fileID: 0}
   HitDetectionGameObject: {fileID: 0}
   projectileGameObject: {fileID: 0}
   meleeEffectList:
@@ -665,7 +721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0a1aa67ce92c5449c4d11a976217dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <skill>k__BackingField: {fileID: 0}
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -842,6 +897,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <deBuff>k__BackingField: {fileID: 0}
+  <enemies>k__BackingField: []
 --- !u!60 &3481271467806886931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1339,6 +1395,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <deBuff>k__BackingField: {fileID: 0}
+  <enemies>k__BackingField: []
 --- !u!60 &919348861844483977
 PolygonCollider2D:
   m_ObjectHideFlags: 0

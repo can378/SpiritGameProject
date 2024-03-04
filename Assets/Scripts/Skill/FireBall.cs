@@ -25,10 +25,10 @@ public class FireBall : Skill
         {
             Player player = user.GetComponent<Player>();
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime + player.userData.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = skillDefalutCoolTime + player.stats.skillCoolTime * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.userData.playerAttackSpeed;
+            float attackRate = player.stats.attackSpeed;
 
             // 선딜
             yield return new WaitForSeconds(preDelay / attackRate);
@@ -47,7 +47,7 @@ public class FireBall : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(false, -1, false, -1, attackAttributes, damage * player.userData.skillPower, knockBack,0,0, BurnDeBuff);
+            hitDetection.SetHitDetection(false, -1, false, -1, attackAttributes, damage * player.stats.skillPower, knockBack,0,0, BurnDeBuff);
 
             Destroy(instant, rate);
 

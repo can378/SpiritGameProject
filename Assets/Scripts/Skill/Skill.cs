@@ -7,7 +7,7 @@ public enum SkillLimit {None, Melee, Shot}
 public abstract class Skill : SelectItem
 {
     [field: SerializeField] public string skillName { get; private set; }
-    [field: SerializeField] public string skillID { get; private set; }
+    [field: SerializeField] public int skillID { get; private set; }
     [field: SerializeField] public SkillLimit skillLimit { get; private set; }
     [field: SerializeField] public int skillType { get; private set; }                  // 0이면 즉발, 1이면 준비, 2이면 홀드
 

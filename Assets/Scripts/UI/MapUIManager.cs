@@ -52,10 +52,10 @@ public class MapUIManager : MonoBehaviour
         UpdateCoinUI();
         UpdateKeyUI();
         UpdateExpUI();
-        UpdateWeaponUI();
-        UpdateSkillUI();
+        //UpdateWeaponUI();
+        //UpdateSkillUI();
         UpdatePointUI();
-        if (userData.playerItem == "")
+        if (Player.instance.stats.item == "")
         { updateItemUI(null); }
 
         setUpgradePanel();
@@ -97,26 +97,26 @@ public class MapUIManager : MonoBehaviour
     public void UpdateHealthUI()
     {
 
-        float normalizedHealth = (userData.playerHP / userData.playerHPMax)*100;
+        float normalizedHealth = (Player.instance.stats.HP / Player.instance.stats.HPMax) *100;
         Hpslider.value = normalizedHealth;
 
     }
 
     public void UpdateExpUI()
     {
-        if(userData.playerExp%10==0) 
+        if(Player.instance.stats.exp%10==0) 
         {
-            userData.playerLevel++;
-            userData.playerPoint++;
-            userData.playerExp = 0;
+            Player.instance.stats.level++;
+            Player.instance.stats.point++;
+            Player.instance.stats.exp = 0;
             UpdatePointUI();
         }
         
-        float normalizedEXP = userData.playerExp;
+        float normalizedEXP = Player.instance.stats.exp;
         ExpSlider.value = normalizedEXP;
 
         //print("update exp ui" + normalizedEXP);
-        ExpTxt.text = userData.playerExp.ToString();
+        ExpTxt.text = Player.instance.stats.exp.ToString();
     }
 
     public void updateItemUI(GameObject obj) 
@@ -124,7 +124,6 @@ public class MapUIManager : MonoBehaviour
 
         if (obj != null)
         {
-
             itemImg.GetComponent<Image>().sprite = obj.GetComponent<SpriteRenderer>().sprite;
         }
         else { itemImg.GetComponent<Image>().sprite = null; }
@@ -133,28 +132,36 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateCoinUI() 
     {
-        CoinTxt.text = userData.coin.ToString();
+        CoinTxt.text = Player.instance.stats.coin.ToString();
     }
 
     public void UpdateKeyUI()
     {
-        KeyTxt.text = userData.key.ToString();
+        KeyTxt.text = Player.instance.stats.key.ToString();
     }
 
 
     public void UpdateWeaponUI() 
     {
-        WeaponTxt.text = userData.mainWeapon;
+        if (Player.instance.stats.mainWeapon != null)
+        {
+            WeaponTxt.text = Player.instance.stats.mainWeapon.equipmentsName;
+        }
+        else {WeaponTxt.text = "";}
     }
 
     public void UpdateSkillUI() 
     {
-        WeaponTxt.text = userData.activeSkill;
+        if (Player.instance.stats.skill != null)
+        {
+            SkillTxt.text = Player.instance.stats.skill.skillName;
+        }
+        else {SkillTxt.text = "";}
     }
 
     public void UpdatePointUI()
     {
-        PointTxt.text=userData.playerPoint.ToString();
+        PointTxt.text = Player.instance.stats.point.ToString();
     }
 
 

@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     private float time=0;
-    private EnemyStatus status;
+    private EnemyStats status;
     Transform playerPos;
 
     void Awake()
     {
         playerPos = GameObject.Find("Player").GetComponent<Transform>();
-        status = GetComponent<EnemyStatus>();
+        status = GetComponent<EnemyStats>();
     }
     private void Update()
     {
@@ -21,7 +21,7 @@ public class EnemyBullet : MonoBehaviour
 
         //플레이어쪽으로 발사
         Vector2 direction = transform.position- playerPos.position;
-        transform.Translate(direction * status.speed * Time.deltaTime);    
+        transform.Translate(direction * status.defaultSpeed * Time.deltaTime);    
     }
 
 }

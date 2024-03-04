@@ -52,13 +52,13 @@ public class BossBaby : EnemyBasic
         {
             if (isHitWall == false)
             {
-                rigid.AddForce(targetDirVec * status.speed);
+                rigid.AddForce(targetDirVec * status.defaultSpeed);
                 yield return new WaitForSeconds(0.1f);
             }
             else 
             {
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-                rigid.AddForce(targetDirVec * status.speed);
+                rigid.AddForce(targetDirVec * status.defaultSpeed);
                 yield return new WaitForSeconds(0.1f);
                 isHitWall = false;
             }
@@ -84,7 +84,7 @@ public class BossBaby : EnemyBasic
         while(Vector2.Distance(transform.position, corner) > 30f) 
         {
             yield return new WaitForSeconds(0.1f);
-            rigid.AddForce(targetDirVec*status.speed);
+            rigid.AddForce(targetDirVec*status.defaultSpeed);
         }
         rigid.velocity = Vector2.zero;
 
@@ -139,7 +139,7 @@ public class BossBaby : EnemyBasic
         {
             if (isHitWall == false)
             {
-                rigid.AddForce(targetDirVec * status.speed);
+                rigid.AddForce(targetDirVec * status.defaultSpeed);
                 yield return new WaitForSeconds(0.1f);
             }
             else
@@ -147,7 +147,7 @@ public class BossBaby : EnemyBasic
                 randomX = Random.Range(bounds.min.x, bounds.max.x);
                 randomY = Random.Range(bounds.min.y, bounds.max.y);
                 targetDirVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
-                rigid.AddForce(targetDirVec * status.speed);
+                rigid.AddForce(targetDirVec * status.defaultSpeed);
                 yield return new WaitForSeconds(0.1f);
                 isHitWall = false;
             }

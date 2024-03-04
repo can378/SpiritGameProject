@@ -7,12 +7,12 @@ public class Helmet : Armor
     protected override void EquipArmor()
     {
         Debug.Log("플레이어 주문력 증가");
-        Player.instance.userData.skillPower += 1f;
+        Player.instance.stats.skillPower += 1f;
     }
 
     // Update is called once per frame
     protected override void UnEquipArmor()
     {
-        Player.instance.userData.skillPower -= 1f;
+        Player.instance.stats.skillPower -= 1f;
     }
 }
