@@ -33,17 +33,8 @@ public class DotDamageBuff : StatusEffect
         // 중첩 
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
-        // 저항 수치에 따른 지속시간 결정
-        if (target.tag == "Player")
-        {
-            Player player = target.GetComponent<Player>();
-            duration = (1 - (1 - player.userData.playerResist[resist]) * 2) * defaultDuration;
-        }
-        else if (target.tag == "Enemy")
-        {
-            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
-            duration = (1 - (1 - enemy.status.resist[resist]) * 2) * defaultDuration;
-        }
+        Stats stats = target.GetComponent<Stats>();
+        duration = (1 - (stats.resist[resist] * 2)) * defaultDuration;
         //print(duration);
     }
 
@@ -66,14 +57,14 @@ public class DotDamageBuff : StatusEffect
         if(target.tag == "Player")
         {
             Player player = target.GetComponent<Player>();
-            player.Damaged(player.userData.playerHPMax * damage * overlap);
+            player.Damaged(player.stats.HPMax * damage * overlap);
         }
         else if(target.tag == "Enemy")
         {
             EnemyBasic enemy = target.GetComponent<EnemyBasic>();
             List<int> attributes = new List<int>();
             attributes.Add(0);
-            enemy.Damaged(enemy.status.maxHealth * damage * overlap);
+            enemy.Damaged(enemy.status.HPMax * damage * overlap);
         }
     }
 }

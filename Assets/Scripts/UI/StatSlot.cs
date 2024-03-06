@@ -11,75 +11,26 @@ public class StatSlot : MonoBehaviour
     public int statIndex;
     public TMP_Text statLv;
 
-
-    UserData userdata;
-
     void Start()
     {
-        userdata = DataManager.instance.userData;
-
-        statLv.text = userdata.playerStat[statIndex].ToString();
+        statLv.text = Player.instance.stats.playerStat[statIndex].ToString();
     }
 
 
     public void statBtn()
     {
-        if (userdata.playerPoint > 0)
+        if (Player.instance.stats.point > 0)
         {
 
-            userdata.playerStat[statIndex]++;
-            statLv.text = userdata.playerStat[statIndex].ToString();
-            
-            userdata.playerPoint--;
+            Player.instance.stats.playerStat[statIndex]++;
+            statLv.text = Player.instance.stats.playerStat[statIndex].ToString();
+
+            Player.instance.stats.point--;
             MapUIManager.instance.UpdatePointUI();
 
-            statApply();
+            Player.instance.statApply();
         }
         else { print("no enough points"); }
 
-    }
-
-    void statApply() 
-    { 
-        switch (statName) 
-        {
-            case StatName.Hp:
-                //HP up
-                userdata.playerHPMax += 10;
-                break;
-            case StatName.AttackPower:
-                //attack power up
-                userdata.playerPower++;
-                break; 
-            case StatName.AttackSpeed:
-                //attack speed up
-                userdata.playerAttackSpeed++;
-                break;
-            case StatName.CriChance:
-                userdata.playerCritical += 1;
-                break;
-            case StatName.CriPower:
-                userdata.playerCriticalDamage += 1;
-                break;
-            case StatName.SkillCoolTime:
-                //skill cool time
-                userdata.skillCoolTime -= 1;
-                break;
-            case StatName.SkillPower:
-                userdata.skillPower+=1;
-                break;
-            case StatName.MoveSpeed:
-                //move speed
-                userdata.playerSpeed += 1;
-                userdata.playerRunSpeed += 1;
-                userdata.playerRunCoolTime -= 1;
-                break;
-            default:
-                print("stat apply error");
-                break;
-        
-        
-        }
-    
     }
 }

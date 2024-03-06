@@ -30,5 +30,4 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public bool isSkillReady { get; set; }                  // 스킬 준비 중
     [field: SerializeField] public bool isSkillHold { get; set; }                   // 스킬 홀드 중
 
-    [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
 }

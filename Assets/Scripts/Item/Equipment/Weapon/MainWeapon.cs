@@ -36,22 +36,22 @@ public class MainWeapon : Equipments
             case 0:
                 break;
             case 1:
-                Player.instance.userData.playerPower += 0.5f;
+                Player.instance.stats.power += 0.5f;
                 break;
             case 2:
-                Player.instance.userData.playerAttackSpeed += 0.5f;
+                Player.instance.stats.attackSpeed += 0.5f;
                 break;
             case 3:
-                Player.instance.userData.skillPower += 1f;
+                Player.instance.stats.skillPower += 1f;
                 break;
             case 4:
-                Player.instance.userData.skillCoolTime -= 0.5f;
+                Player.instance.stats.skillCoolTime -= 0.5f;
                 break;
             case 5:
-                Player.instance.userData.playerCritical += 0.5f;
+                Player.instance.stats.critical += 0.5f;
                 break;
             case 6:
-                Player.instance.userData.playerCriticalDamage += 0.5f;
+                Player.instance.stats.criticalDamage += 0.5f;
                 break;
             default:
                 break;
@@ -72,22 +72,22 @@ public class MainWeapon : Equipments
             case 0:
                 break;
             case 1:
-                Player.instance.userData.playerPower -= 0.5f;
+                Player.instance.stats.power -= 0.5f;
                 break;
             case 2:
-                Player.instance.userData.playerAttackSpeed -= 0.5f;
+                Player.instance.stats.attackSpeed -= 0.5f;
                 break;
             case 3:
-                Player.instance.userData.skillPower -= 1f;
+                Player.instance.stats.skillPower -= 1f;
                 break;
             case 4:
-                Player.instance.userData.skillCoolTime += 0.5f;
+                Player.instance.stats.skillCoolTime += 0.5f;
                 break;
             case 5:
-                Player.instance.userData.playerCritical -= 0.5f;
+                Player.instance.stats.critical -= 0.5f;
                 break;
             case 6:
-                Player.instance.userData.playerCriticalDamage -= 0.5f;
+                Player.instance.stats.criticalDamage -= 0.5f;
                 break;
             default:
                 break;

@@ -64,13 +64,10 @@ public class EnemyAttack : EnemyPattern
     IEnumerator whiteFox() 
     {
 
-        if (isCorRun == false)
-        { StartCoroutine(hitAndRun(false)); }
         
         yield return new WaitForSeconds(3f);
 
-        if (isCorRun == false)
-        { StartCoroutine(peripheralAttack(10, 5, false)); }        
+
 
         StartCoroutine(whiteFox());
     }

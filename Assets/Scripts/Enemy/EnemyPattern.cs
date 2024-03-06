@@ -20,7 +20,8 @@ public class EnemyPattern : EnemyBasic
             yield return new WaitForSeconds(0.1f);
 
             for (int j = 0; j < 100; j++)
-            { rigid.AddForce(targetDirVec * Mathf.Pow(-1,i) * status.speed*Mathf.Pow(3,i)); }
+            { rigid.AddForce(targetDirVec * Mathf.Pow(-1, i) * 2 * Mathf.Pow(3, i)); }
+            //{ rigid.AddForce(targetDirVec * Mathf.Pow(-1,i) * status.speed*Mathf.Pow(3,i)); }
 
             yield return new WaitForSeconds(0.1f);
             rigid.velocity = Vector2.zero;
@@ -86,7 +87,7 @@ public class EnemyPattern : EnemyBasic
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rigid.AddForce(targetDirVec * status.speed); }
+        { rigid.AddForce(targetDirVec * status.defaultSpeed); }
         
         yield return new WaitForSeconds(0.1f);
 
@@ -122,7 +123,7 @@ public class EnemyPattern : EnemyBasic
             //getting farther
             do
             {
-                rigid.AddForce(-targetDirVec * status.speed, ForceMode2D.Impulse);
+                rigid.AddForce(-targetDirVec * status.defaultSpeed, ForceMode2D.Impulse);
                 targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);
@@ -160,7 +161,7 @@ public class EnemyPattern : EnemyBasic
     //본인의 주변을 공격
     public IEnumerator peripheralAttack(float radius,float attackTime, bool isRepeat)
     {
-        isCorRun = true;
+        //isCorRun = true;
         //extend collider itself
 
         float originRadius=GetComponent<CircleCollider2D>().radius;
@@ -175,7 +176,7 @@ public class EnemyPattern : EnemyBasic
 
         if (isRepeat == true)
             StartCoroutine(peripheralAttack(radius, attackTime, isRepeat));
-        else isCorRun = false;
+        // isCorRun = false;
     }
 
 
@@ -306,7 +307,7 @@ public class EnemyPattern : EnemyBasic
                 direction.Normalize();
 
                 // 이동 속도, 시간
-                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / status.speed;
+                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / status.defaultSpeed;
 
                 // 점프 시작
                 isJumping = true;
@@ -315,7 +316,7 @@ public class EnemyPattern : EnemyBasic
 
                 while (elapsedTime < jumpDuration)
                 {
-                    transform.Translate(direction * (Time.deltaTime / jumpDuration) * status.speed);
+                    transform.Translate(direction * (Time.deltaTime / jumpDuration) * status.defaultSpeed);
                     elapsedTime = Time.time - startTime;
                     yield return null;
                 }
@@ -347,7 +348,8 @@ public class EnemyPattern : EnemyBasic
             randomX = Random.Range(-25, 25);
             randomY = Random.Range(-25, 25);
             targetDirVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
-            rigid.AddForce(targetDirVec * status.speed);
+            //rigid.AddForce(targetDirVec * status.speed);
+            rigid.AddForce(targetDirVec * 2);
             yield return new WaitForSeconds(0.1f);
 
             time += Time.deltaTime;

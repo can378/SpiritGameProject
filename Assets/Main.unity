@@ -1549,6 +1549,7 @@ GameObject:
   - component: {fileID: 539968288}
   - component: {fileID: 539968289}
   - component: {fileID: 539968282}
+  - component: {fileID: 539968290}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1670,7 +1671,8 @@ MonoBehaviour:
   playerItem: {fileID: 0}
   mainWeaponController: {fileID: 0}
   skillController: {fileID: 0}
-  armor: {fileID: 0}
+  armor:
+  - {fileID: 0}
 --- !u!114 &539968288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1699,7 +1701,6 @@ MonoBehaviour:
   <isSkill>k__BackingField: 0
   <isSkillReady>k__BackingField: 0
   <isSkillHold>k__BackingField: 0
-  activeEffects: []
 --- !u!61 &539968289
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1745,6 +1746,62 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.6052303, y: 2.9966316}
   m_EdgeRadius: 0
+--- !u!114 &539968290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539968278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c1f3f103429984db857c505bb5ed1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  reductionRatio: 0
+  resist:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  power: 1
+  defaultSpeed: 5
+  activeEffects: []
+  level: 1
+  exp: 1
+  point: 10
+  critical: 0
+  criticalDamage: 0.5
+  drain: 0
+  attackSpeed: 1
+  skillPower: 1
+  skillCoolTime: 0
+  speed: 1
+  runSpeed: 1.66
+  runCoolTime: 5
+  dodgeSpeed: 2
+  dodgeTime: 0.5
+  coin: 0
+  key: 0
+  dice: 0
+  item: 
+  mainWeapon: {fileID: 0}
+  skill: {fileID: 0}
+  armors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerStat: 0000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &554915693
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,7 +4154,20 @@ MonoBehaviour:
   - {fileID: 1035750178597986389, guid: e516990993600ce4bb87ebf790698cda, type: 3}
   - {fileID: 2132406895188350747, guid: 6acc0cd46ea86a64bb8b1d14b6ad3900, type: 3}
   - {fileID: 3911212924154988040, guid: b332e40e5765ac444ac7a45d54e2e08f, type: 3}
-  skillList: []
+  mainWeaponList:
+  - {fileID: 0}
+  - {fileID: 3179661334137346525, guid: 08e6340d679dfa348a47f702e12c12c1, type: 3}
+  - {fileID: 3179661334137346525, guid: bee3f987315576348b961b824bead6b0, type: 3}
+  - {fileID: 8830712857820811360, guid: 9fd13045bb6ddcc43a2c1a29d8b1083b, type: 3}
+  - {fileID: 8830712857820811360, guid: a707f653bd75c3540a3b0b9ecc5d74b5, type: 3}
+  - {fileID: 3179661334137346525, guid: aeda56e69af111849bb14b69868563da, type: 3}
+  - {fileID: 6144746033619172035, guid: bc2ad53431568914e8ff5ed1859683f2, type: 3}
+  - {fileID: 8830712857820811360, guid: bc7abc5e63adec44c8eea9ffb30d3e4c, type: 3}
+  skillList:
+  - {fileID: 0}
+  - {fileID: 5904743163423667712, guid: 802792bca37bf924cb2c71a0de292feb, type: 3}
+  - {fileID: 5904743163423667712, guid: 06470d1c572462842b0479996dc41400, type: 3}
+  - {fileID: 5904743163423667712, guid: 2baf7cec2b42d854389c6371941a4678, type: 3}
   testList: []
   passiveSkillList: []
 --- !u!1 &1252335859

@@ -37,7 +37,7 @@ public class Mission : MonoBehaviour
     private void OnEnable()
     {
         time = 0;
-        playerFirstHP = DataManager.instance.userData.playerHP;
+        playerFirstHP = Player.instance.stats.HP;
         StartCoroutine(CheckMissionEnd());
 
         if(MissionType.Dream == type) 
@@ -56,7 +56,7 @@ public class Mission : MonoBehaviour
         {  
             case MissionType.NoHurt:
                 //hurts --> fail
-                if (DataManager.instance.userData.playerHP < playerFirstHP)
+                if (Player.instance.stats.HP < playerFirstHP)
                 { 
                     print("no hurt mission fail!!"); 
                     roomScript.UnLockDoor();
@@ -136,7 +136,7 @@ public class Mission : MonoBehaviour
     private bool KillAll()
     {
         foreach (GameObject e in spawn.enemys)
-        { if (e.GetComponent<EnemyStatus>().health > 0) { return false; } }
+        { if (e.GetComponent<EnemyStats>().HP > 0) { return false; } }
         return true;
     }
 

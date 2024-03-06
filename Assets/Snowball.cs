@@ -15,10 +15,8 @@ public class Snowball : EnemyBasic
     void Update()
     {
         targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
-        if (targetDistance > GetComponent<EnemyStatus>().detectionDis)
-        { roll(); }
-        else 
-        { }
+        //if (targetDistance > GetComponent<EnemyStatus>().detectionDis)
+
     }
 
     private void roll()

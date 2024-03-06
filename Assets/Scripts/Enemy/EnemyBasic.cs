@@ -8,7 +8,7 @@ public class EnemyBasic : MonoBehaviour
     [HideInInspector]
     public Transform enemyTarget;
     [HideInInspector]
-    public EnemyStatus status;
+    public EnemyStats status;
     [HideInInspector]
     public Rigidbody2D rigid;
     [HideInInspector]
@@ -22,7 +22,7 @@ public class EnemyBasic : MonoBehaviour
     {
         enemyTarget = GameObject.FindWithTag("Player").transform;
         rigid = GetComponent<Rigidbody2D>();
-        status = GetComponent<EnemyStatus>();
+        status = GetComponent<EnemyStats>();
         sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -66,21 +66,22 @@ public class EnemyBasic : MonoBehaviour
                     default: att = "¹«¼Ó¼º"; break;
 
                 }
-                print(att + " enemy damaged : " + damage * status.resist[attackAttribute] / attackAttributes.Count);
-                status.health -= damage * status.resist[attackAttribute] / attackAttributes.Count;
+                float trueDamage = (damage * (1 - status.resist[attackAttribute]) / attackAttributes.Count) > 0 ? (damage * (1 - status.resist[attackAttribute]) / attackAttributes.Count) : 1f;
+                print(att + " enemy damaged : " + trueDamage);
+                status.HP -= trueDamage;
             }
         }
         else if(attackAttributes == null)
         {
             print("enemy damaged : " + damage);
-            status.health -= damage;
+            status.HP -= damage;
         }
         
         sprite.color = Color.red;
         Invoke("DamagedOut",0.05f);
-        if (status.health <= 0f)
+        if (status.HP <= 0f)
         {
-            DataManager.instance.userData.playerExp++;
+            Player.instance.stats.exp++;
             MapUIManager.instance.UpdateExpUI();
             EnemyDead();
         }
@@ -162,7 +163,7 @@ public class EnemyBasic : MonoBehaviour
     public void Chase()
     {
         Vector2 direction = enemyTarget.position - transform.position;
-        transform.Translate(direction * status.speed * Time.deltaTime);
+        transform.Translate(direction * status.defaultSpeed * Time.deltaTime);
 
     }
 

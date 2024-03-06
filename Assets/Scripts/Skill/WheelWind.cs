@@ -23,13 +23,13 @@ public class WheelWind : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            MeleeWeapon meleeWeapon = player.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
+            MeleeWeapon meleeWeapon = player.stats.mainWeapon.GetComponent<MeleeWeapon>();
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime + player.userData.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = skillDefalutCoolTime + player.stats.skillCoolTime * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
+            float attackRate = player.stats.attackSpeed * meleeWeapon.attackSpeed;
 
             // 선딜
             yield return new WaitForSeconds(preDelay / attackRate);
@@ -57,10 +57,10 @@ public class WheelWind : Skill
             */
             hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackRate),
              meleeWeapon.attackAttribute,
-             (meleeWeapon.damage + damage) * player.userData.playerPower,
+             (meleeWeapon.damage + damage) * player.stats.power,
              meleeWeapon.knockBack,
-             player.userData.playerCritical,
-             player.userData.playerCriticalDamage,
+             player.stats.critical,
+             player.stats.criticalDamage,
              meleeWeapon.deBuff);
         }
     }
@@ -76,9 +76,9 @@ public class WheelWind : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            MeleeWeapon meleeWeapon = player.mainWeaponController.mainWeapon.GetComponent<MeleeWeapon>();
+            MeleeWeapon meleeWeapon = player.stats.mainWeapon.GetComponent<MeleeWeapon>();
 
-            float attackRate = player.userData.playerAttackSpeed * meleeWeapon.attackSpeed;
+            float attackRate = player.stats.attackSpeed * meleeWeapon.attackSpeed;
 
             // rate 동안 유지
             Destroy(instant);

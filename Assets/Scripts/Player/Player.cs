@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public static Player instance { get; private set; }
     // player 현재 상태
     public  PlayerStatus status { get; private set; }
+    public PlayerStats stats {get; private set; }
 
     float hAxis;
     float vAxis;
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour
 
     public MainWeaponController mainWeaponController;
     public SkillController skillController;
-    public Armor armor;
+    public Armor[] armor = new Armor[3];
 
     public UserData userData { get; private set; }
 
@@ -52,7 +53,9 @@ public class Player : MonoBehaviour
         instance = this;
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+
         status = GetComponent<PlayerStatus>();
+        stats = GetComponent<PlayerStats>();
         
         mainWeaponController = GetComponent<MainWeaponController>();
         skillController = GetComponent<SkillController>();
@@ -125,7 +128,7 @@ public class Player : MonoBehaviour
         RaycastHit2D hit;
 
         // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-        float moveSpeed = userData.playerSpeed * userData.playerDefaultSpeed;
+        float moveSpeed = stats.speed * stats.defaultSpeed;
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
@@ -157,8 +160,8 @@ public class Player : MonoBehaviour
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            float moveSpeed = userData.playerSpeed * userData.playerDefaultSpeed;
-            rigid.velocity = moveVec * moveSpeed * (status.isSprint ? userData.playerRunSpeed : 1f);
+            float moveSpeed = stats.speed * stats.defaultSpeed;
+            rigid.velocity = moveVec * moveSpeed * (status.isSprint ? stats.runSpeed : 1f);
             
         }
     }
@@ -181,11 +184,11 @@ public class Player : MonoBehaviour
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
             // 회피 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 회피속도
-            float dodgeSpeed = userData.playerSpeed * userData.playerDefaultSpeed * userData.playerDodgeSpeed;
+            float dodgeSpeed = stats.speed * stats.defaultSpeed * stats.dodgeSpeed;
             rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
 
-            Invoke("DodgeOut", userData.playerDodgeTime);
+            Invoke("DodgeOut", stats.dodgeTime);
 
         }
     }
@@ -200,7 +203,7 @@ public class Player : MonoBehaviour
         if(status.isAttack || status.isSkill || status.isSkillHold)
         {
             status.isSprint = false;
-            status.runCurrentCoolTime = userData.playerRunCoolTime;
+            status.runCurrentCoolTime = stats.runCoolTime;
             return;
         }
 
@@ -214,37 +217,37 @@ public class Player : MonoBehaviour
 
     void Reload()
     {
-        if (mainWeaponController.mainWeapon == null)
+        if (stats.mainWeapon == null)
             return;
 
-        if (mainWeaponController.mainWeapon.maxAmmo < 0)
+        if (stats.mainWeapon.maxAmmo < 0)
             return;
 
-        if (mainWeaponController.mainWeapon.maxAmmo == mainWeaponController.mainWeapon.ammo)
+        if (stats.mainWeapon.maxAmmo == stats.mainWeapon.ammo)
             return;
 
         if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = mainWeaponController.mainWeapon.reloadTime / userData.playerAttackSpeed;
-            Invoke("ReloadOut", mainWeaponController.mainWeapon.reloadTime);
+            float reloadTime = stats.mainWeapon.reloadTime / stats.attackSpeed;
+            Invoke("ReloadOut", stats.mainWeapon.reloadTime);
         }
     }
 
     void ReloadOut()
     {
         Debug.Log("스킬 홀드 중단");
-        mainWeaponController.mainWeapon.Reload();
+        stats.mainWeapon.Reload();
         status.isReload = false;
     }
 
     void Attack()
     {
-        if (mainWeaponController.mainWeapon == null)
+        if (stats.mainWeapon == null)
             return;
 
-        if (mainWeaponController.mainWeapon.ammo == 0)
+        if (stats.mainWeapon.ammo == 0)
             return;
 
         status.attackDelay -= Time.deltaTime;
@@ -259,14 +262,14 @@ public class Player : MonoBehaviour
             // 클릭 한 위치로
             mainWeaponController.Use(status.mousePos);
             // 초당 공격 횟수 = 플레이어 공속 * 무기 공속
-            float attackRate = mainWeaponController.mainWeapon.attackSpeed * userData.playerAttackSpeed;
+            float attackRate = stats.mainWeapon.attackSpeed * stats.attackSpeed;
             AudioManager.instance.SFXPlay("attack_sword");
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
-            status.attackDelay = (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate + mainWeaponController.mainWeapon.postDelay) / attackRate;
+            status.attackDelay = (stats.mainWeapon.preDelay + stats.mainWeapon.rate + stats.mainWeapon.postDelay) / attackRate;
             // 공격 준비 안됨
             status.isAttackReady = false;
             // 공격 시간(움직이기까지 대기 시간) = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
-            Invoke("AttackOut", (mainWeaponController.mainWeapon.preDelay + mainWeaponController.mainWeapon.rate) / attackRate);
+            Invoke("AttackOut", (stats.mainWeapon.preDelay + stats.mainWeapon.rate) / attackRate);
         }
     }
 
@@ -281,26 +284,26 @@ public class Player : MonoBehaviour
 
     void Skill()
     {
-        if (skillController.skill == null)
+        if (stats.skill == null)
             return;
 
-        if (skillController.skill.skillCoolTime > 0)
+        if (stats.skill.skillCoolTime > 0)
             return;
 
-        if (skillController.skill.skillLimit != SkillLimit.None && mainWeaponController.mainWeapon == null)
+        if (stats.skill.skillLimit != SkillLimit.None && stats.mainWeapon == null)
         {
             Debug.Log("무기 없음");
             return;
         }
             
 
-        if (skillController.skill.skillLimit == SkillLimit.Shot && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Shot)
+        if (stats.skill.skillLimit == SkillLimit.Shot && stats.mainWeapon.weaponType != MainWeaponType.Shot)
         {
             Debug.Log("원거리 전용 스킬");
             return;
         }
 
-        if (skillController.skill.skillLimit == SkillLimit.Melee && mainWeaponController.mainWeapon.weaponType != MainWeaponType.Melee)
+        if (stats.skill.skillLimit == SkillLimit.Melee && stats.mainWeapon.weaponType != MainWeaponType.Melee)
         {
             Debug.Log("근거리 전용 스킬");
             return;
@@ -316,7 +319,7 @@ public class Player : MonoBehaviour
 
     void ReadyOut()
     {
-        if (skillController.skill == null)
+        if (stats.skill == null)
             return;
 
         // 스킬 준비 상태에서 공격 키 다운
@@ -328,7 +331,7 @@ public class Player : MonoBehaviour
 
     void HoldOut()
     {
-        if (skillController.skill == null)
+        if (stats.skill == null)
             return;
 
         //스킬 hold 상태에서 스킬 키 up
@@ -354,9 +357,9 @@ public class Player : MonoBehaviour
         {
             if (nearObject.tag == "Door")
             {
-                if (userData.key > 0) 
-                { 
-                    userData.key--;
+                if (stats.key > 0) 
+                {
+                    stats.key--;
                     MapUIManager.instance.UpdateKeyUI();
                     nearObject.GetComponent<Door>().DoorInteraction(); 
                 }
@@ -377,7 +380,7 @@ public class Player : MonoBehaviour
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
-            if (mainWeaponController.mainWeapon != null)
+            if (stats.mainWeapon != null)
             {
                 mainWeaponController.UnEquipWeapon();
             }
@@ -388,23 +391,23 @@ public class Player : MonoBehaviour
         {
             if (armor != null)
             {
-                armor.gameObject.transform.position = gameObject.transform.position;
-                armor.gameObject.SetActive(true);
+                armor[0].gameObject.transform.position = gameObject.transform.position;
+                armor[0].gameObject.SetActive(true);
 
                 // 무기 능력치 해제
-                armor.UnEquip();
+                armor[0].UnEquip();
 
                 // 무기 해제
                 armor = null;
             }
             // 무기 장비
-            armor = nearObject.GetComponent<Armor>();
-            armor.Equip();
-            armor.gameObject.SetActive(false);
+            armor[0] = nearObject.GetComponent<Armor>();
+            armor[0].Equip();
+            armor[0].gameObject.SetActive(false);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
-            if (skillController.skill != null)
+            if (stats.skill != null)
             {
                 skillController.UnEquipSkill();
             }
@@ -418,7 +421,7 @@ public class Player : MonoBehaviour
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            userData.playerItem = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
+            stats.item = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
             playerItem = selectItem.gameObject;
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
             playerItem.SetActive(false);
@@ -439,7 +442,7 @@ public class Player : MonoBehaviour
                 switch (playerItem.GetComponent<ItemInfo>().selectItemName)
                 {
                     case SelectItemName.HPPortion:
-                        userData.playerHP += 10;
+                        stats.HP += 10;
                         MapUIManager.instance.UpdateHealthUI();
                         break;
                     case SelectItemName.SpeedPortion:
@@ -448,21 +451,21 @@ public class Player : MonoBehaviour
                         break;
                     // 밑에 아이템들은 획득 즉시로 바꾸었으면 좋겠습니다.
                     case SelectItemName.Insam:
-                        userData.playerHP += 20;
+                        stats.HP += 20;
                         MapUIManager.instance.UpdateHealthUI();
                         break;
                     case SelectItemName.Sansam:
-                        userData.playerHP += 30;
+                        stats.HP += 30;
                         MapUIManager.instance.UpdateHealthUI();
                         break;
                     case SelectItemName.SmallArmor:
-                        userData.playerTempHP += 10;
+                        stats.tempHP += 10;
                         break;
                     case SelectItemName.LargeArmor:
-                        userData.playerTempHP += 20;
+                        stats.tempHP += 20;
                         break;
                     case SelectItemName.NormalArmor:
-                        userData.playerTempHP += 30;
+                        stats.tempHP += 30;
                         break;
 
 
@@ -477,7 +480,7 @@ public class Player : MonoBehaviour
             //"no item" status
             MapUIManager.instance.updateItemUI(null);
             playerItem = null;
-            userData.playerItem = "";
+            stats.item = "";
 
         }
 
@@ -498,27 +501,68 @@ public class Player : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //Debug.Log("Scene reloaded: " + scene.name);
-        //Scene reload 후에도 전에 얻은 아이템 유지
-        string playerItemName = DataManager.instance.userData.playerItem;
-
-        if (scene.name != "Main"&& playerItemName != "")
+        if (scene.name != "Main")
         {
-            
-            foreach (GameObject obj in DataManager.instance.gameData.selectItemList)
-            { 
-                if (obj.GetComponent<ItemInfo>().selectItemName.ToString() == playerItemName)
-                {
-                    playerItem = Instantiate(obj);
-                    MapUIManager.instance.updateItemUI(playerItem.gameObject);
-                    playerItem.SetActive(false);
-                    break;
-                }
+            stats.level = DataManager.instance.userData.playerLevel;
+            stats.exp = DataManager.instance.userData.playerExp;
+            stats.point = DataManager.instance.userData.playerPoint;
+
+            //Debug.Log("Scene reloaded: " + scene.name);
+            //Scene reload 후에도 전에 얻은 아이템 유지
+            string playerItemName = DataManager.instance.userData.playerItem;
+            int playerMainWeapon = DataManager.instance.userData.playerMainWeapon;
+            int playerSkill = DataManager.instance.userData.playerSkill;
+            int[] playerArmor = DataManager.instance.userData.playerArmor;
+
+            for(int i = 0;i<8;i++)
+            {
+                stats.playerStat[i] = DataManager.instance.userData.playerStat[i];
             }
 
-        
+            stats.coin = DataManager.instance.userData.playerCoin;
+            stats.key = DataManager.instance.userData.playerKey;
+
+            //아이템
+            if(playerItemName != "")
+            {
+                foreach (GameObject obj in DataManager.instance.gameData.selectItemList)
+                {
+                    if (obj.GetComponent<ItemInfo>().selectItemName.ToString() == playerItemName)
+                    {
+                        playerItem = Instantiate(obj);
+                        MapUIManager.instance.updateItemUI(playerItem.gameObject);
+                        playerItem.SetActive(false);
+                        break;
+                    }
+                }
+            }
+            // 무기
+            if (playerMainWeapon != 0)
+            {
+                mainWeaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.mainWeaponList[playerMainWeapon]).GetComponent<MainWeapon>());
+            }
+            // 스킬
+            if (playerSkill != 0)
+            {
+                skillController.EquipSkill(Instantiate(DataManager.instance.gameData.skillList[playerSkill]).GetComponent<Skill>());
+            }
+
+            statApply();
         }
 
+    }
+
+    public void statApply()
+    {
+        Player.instance.stats.HPMax = 100 + Player.instance.stats.playerStat[0] * 25;
+        MapUIManager.instance.UpdateHealthUI();
+        Player.instance.stats.power = 1 + Player.instance.stats.playerStat[1] * 0.20f;
+        Player.instance.stats.attackSpeed = 1 + Player.instance.stats.playerStat[2] * 0.20f;
+        Player.instance.stats.critical = Player.instance.stats.playerStat[3] * 0.10f;
+        Player.instance.stats.criticalDamage = 0.5f + Player.instance.stats.playerStat[4] * 0.05f;
+        Player.instance.stats.skillCoolTime = 0 - Player.instance.stats.playerStat[5] * 0.10f;
+        Player.instance.stats.skillPower = 1 + Player.instance.stats.playerStat[6] * 0.25f;
+        Player.instance.stats.speed = 1 + Player.instance.stats.playerStat[7] * 0.1f;
     }
     #endregion
 
@@ -534,8 +578,7 @@ public class Player : MonoBehaviour
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
 
-
-            Damaged(other.GetComponent<EnemyStatus>().damage);
+            Damaged(other.GetComponent<EnemyStats>().power);
             //Damaged(10);
             KnockBack(other.gameObject);
             Invincible();
@@ -571,14 +614,14 @@ public class Player : MonoBehaviour
             if (item.itemClass == ItemClass.Coin)
             {
                 Destroy(other.gameObject); //코인 오브젝트 삭제
-                userData.coin++;
+                stats.coin++;
                 MapUIManager.instance.UpdateCoinUI();
             }
 
             if (item.itemClass == ItemClass.Key)
             {
                 Destroy(other.gameObject); //키 오브젝트 삭제
-                userData.key++;
+                stats.key++;
                 MapUIManager.instance.UpdateKeyUI();
             }
         }
@@ -612,19 +655,20 @@ public class Player : MonoBehaviour
         }
 
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
-        damage = damage * (1 - DataManager.instance.userData.playerReductionRatio);
+        damage = damage * (1 - stats.reductionRatio);
 
         Debug.Log("Player Damaged" + damage);
-        userData.playerHP -= damage;
+        stats.HP -= damage;
+
         MapUIManager.instance.UpdateHealthUI();
 
         
-        if(userData.playerHP >= userData.playerHPMax)
+        if(stats.HP >= stats.HPMax)
         {
-            userData.playerHP = userData.playerHPMax;
+            stats.HP = stats.HPMax;
         }
 
-        if (userData.playerHP < 0)
+        if (stats.HP < 0)
         {
             Dead();
         }
@@ -634,7 +678,7 @@ public class Player : MonoBehaviour
     public void KnockBack(GameObject agent)
     {
         //튕겨나감
-        float distance = 10 * (1 - DataManager.instance.userData.playerReductionRatio);
+        float distance = 10 * (1 - stats.reductionRatio);
         Vector2 dir = (transform.position - agent.transform.position).normalized;
 
         //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
@@ -675,7 +719,7 @@ public class Player : MonoBehaviour
     {
         // 가지고 있는 버프인지 체크한다.
         StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
-        foreach (StatusEffect buff in status.activeEffects)
+        foreach (StatusEffect buff in stats.activeEffects)
         {
             // 가지고 있는 버프라면 갱신한다.
             if (buff.buffId == statusEffect.buffId)
@@ -691,7 +735,7 @@ public class Player : MonoBehaviour
         statusEffect.SetTarget(gameObject);
 
         statusEffect.ApplyEffect();
-        status.activeEffects.Add(statusEffect);
+        stats.activeEffects.Add(statusEffect);
         
         StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
@@ -707,18 +751,18 @@ public class Player : MonoBehaviour
             }
         }
         effect.RemoveEffect();
-        status.activeEffects.Remove(effect);
+        stats.activeEffects.Remove(effect);
 
         Destroy(effect.gameObject);
     }
 
     public void RemoveAllEffects()
     {
-        foreach (StatusEffect effect in status.activeEffects)
+        foreach (StatusEffect effect in stats.activeEffects)
         {
             effect.RemoveEffect();
         }
-        status.activeEffects.Clear();
+        stats.activeEffects.Clear();
     }
 
     #endregion

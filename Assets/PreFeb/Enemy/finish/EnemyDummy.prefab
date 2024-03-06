@@ -100,25 +100,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPMax: 10000
+  HP: 10000
+  tempHP: 0
+  reductionRatio: 0
   resist:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1.5
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  power: 10
+  defaultSpeed: 5
   activeEffects: []
-  maxHealth: 1000000
-  health: 1000000
-  speed: 5
-  damage: 10
   detectionDis: 5
-  attackSpeed: 0
+  exp: 0
 --- !u!58 &8127540157274700844
 CircleCollider2D:
   m_ObjectHideFlags: 0
