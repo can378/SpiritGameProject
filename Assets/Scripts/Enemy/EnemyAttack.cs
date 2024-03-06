@@ -4,7 +4,13 @@ using UnityEngine;
 
 
 public enum enemyAttack
-{ rushHit, multiShot, hitAndRun, rangeAttack, waveAttack,pop,chase,jump };
+{ 
+    rushHit, multiShot, hitAndRun, 
+    rangeAttack, waveAttack,
+    pop,
+    chase,jump ,None,
+    wander,crow, whiteFox
+};
 
 
 public class EnemyAttack : EnemyPattern
@@ -39,17 +45,34 @@ public class EnemyAttack : EnemyPattern
     {
         switch (enemyAttack)
         {
-            case enemyAttack.rushHit: StartCoroutine(rushHit()); break;
-            case enemyAttack.multiShot:StartCoroutine(multiShot(EnemyGunMuzzle.Count, EnemyGunMuzzle)); break;
-            case enemyAttack.hitAndRun: StartCoroutine(hitAndRun()); break;
-            case enemyAttack.rangeAttack: StartCoroutine(rangeAttack(roundAttackRange)); break;
-            case enemyAttack.waveAttack: StartCoroutine(waveAttack(donutAttackRange, donutInside)); break;
-            case enemyAttack.pop: StartCoroutine(pop()); break;
+            case enemyAttack.rushHit: StartCoroutine(rushHit(true)); break;
+            case enemyAttack.multiShot:StartCoroutine(multiShot(EnemyGunMuzzle.Count, EnemyGunMuzzle,true)); break;
+            case enemyAttack.hitAndRun: StartCoroutine(hitAndRun(true)); break;
+            case enemyAttack.rangeAttack: StartCoroutine(rangeAttack(roundAttackRange,true)); break;
+            case enemyAttack.waveAttack: StartCoroutine(waveAttack(donutAttackRange, donutInside,true)); break;
+            case enemyAttack.pop: StartCoroutine(pop(true)); break;
             case enemyAttack.chase:StartCoroutine(chasing());break;
-            case enemyAttack.jump: StartCoroutine(jump()); break;
+            case enemyAttack.jump: StartCoroutine(jump(true)); break;
+            case enemyAttack.wander:StartCoroutine(Wander(true));break;
+            case enemyAttack.crow:StartCoroutine(LRShot(true));break;
+            case enemyAttack.whiteFox:
+                StartCoroutine(whiteFox());
+                break;
             default: break;
         }
     }
-    
+    IEnumerator whiteFox() 
+    {
+
+        if (isCorRun == false)
+        { StartCoroutine(hitAndRun(false)); }
+        
+        yield return new WaitForSeconds(3f);
+
+        if (isCorRun == false)
+        { StartCoroutine(peripheralAttack(10, 5, false)); }        
+
+        StartCoroutine(whiteFox());
+    }
 
 }

@@ -166,4 +166,6 @@ public class EnemyBasic : MonoBehaviour
 
     }
 
+    
+
 }

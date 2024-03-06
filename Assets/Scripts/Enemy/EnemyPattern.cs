@@ -6,25 +6,31 @@ using UnityEngine;
 public class EnemyPattern : EnemyBasic
 {
 
+
     #region Long distance Attack
 
     
-    public IEnumerator LRShot()
+    public IEnumerator LRShot(bool isRepeat)
     {
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        for (int i = 0; i < 2; i++)
+        {
+            targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
 
-        rigid.velocity = Vector2.zero;
-        yield return new WaitForSeconds(0.1f);
+            rigid.velocity = Vector2.zero;
+            yield return new WaitForSeconds(0.1f);
 
-        for (int i = 0; i < 100; i++)
-        { rigid.AddForce(targetDirVec * status.speed); }
+            for (int j = 0; j < 100; j++)
+            { rigid.AddForce(targetDirVec * Mathf.Pow(-1,i) * status.speed*Mathf.Pow(3,i)); }
 
-        yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.1f);
+            rigid.velocity = Vector2.zero;
 
-        rigid.velocity = Vector2.zero;
-        shot();
+            shot();
+        }
+        
         yield return new WaitForSeconds(3);
-        StartCoroutine("LRShot");
+
+        if(isRepeat==true) StartCoroutine(LRShot(true));
     }
 
     private void shot()
@@ -39,28 +45,30 @@ public class EnemyPattern : EnemyBasic
 
 
     //multi shot=n갈래로 총을쏜다.
-    public IEnumerator multiShot(int gunNum, List<GameObject> GunMuzzle)
+    public IEnumerator multiShot(int gunNum, List<GameObject> GunMuzzle, bool isRepeat)
     {
 
         for (int i = 0; i < gunNum; i++)
         {
             GameObject bullet = ObjectPoolManager.instance.Get(0);
+
             bullet.transform.position = GunMuzzle[i].transform.position;
             bullet.transform.rotation = Quaternion.identity;
 
-            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-            Vector2 targetDirVec = new Vector2(
+            targetDirVec = new Vector2(
                 Mathf.Cos(Mathf.PI * 2 * i / gunNum),
                 Mathf.Sin(Mathf.PI * 2 * i / gunNum));
 
-            rigid.AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
+            bullet.GetComponent<Rigidbody2D>().
+                AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
             Vector3 rotVec = Vector3.forward * 260 * i / gunNum + Vector3.forward * 90;
             bullet.transform.Rotate(rotVec);
 
         }
 
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine(multiShot(gunNum, GunMuzzle));
+        if (isRepeat == true) 
+            StartCoroutine(multiShot(gunNum, GunMuzzle,true));
 
 
     }
@@ -69,7 +77,7 @@ public class EnemyPattern : EnemyBasic
     #region Melee Attack
 
 
-    public IEnumerator rushHit() //돌진 후 대기 (반복)
+    public IEnumerator rushHit(bool isRepeat) //돌진 후 대기 (반복)
     {
         //print("rushhit=" + status.damage);
         targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
@@ -84,19 +92,24 @@ public class EnemyPattern : EnemyBasic
 
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(3);
-        StartCoroutine("rushHit");
+
+
+        if (isRepeat == true) 
+            StartCoroutine(rushHit(true));
     }
 
 
 
 
-
-    public IEnumerator hitAndRun()
+    [HideInInspector]
+    public bool isHARRun = false;
+    public IEnumerator hitAndRun(bool isRepeat)
     {
+
         //print("hit and run=" + status.damage);
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
-        if (targetDistance < status.detectionDis)
-        {
+        //if (targetDistance < status.detectionDis)
+        //{
             //getting closer
             do
             {
@@ -115,17 +128,19 @@ public class EnemyPattern : EnemyBasic
                 yield return new WaitForSeconds(0.01f);
             } while (targetDistance < 10f);
 
-        }
+        //}
         yield return new WaitForSeconds(0.01f);
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(1f);
 
-        StartCoroutine("hitAndRun");
+        if (isRepeat == true)
+            StartCoroutine(hitAndRun(true));
+
     }
 
 
     //필요할 경우 활용? 아직 안씀
-    public IEnumerator moveEllipse() 
+    public IEnumerator moveEllipse(bool isRepeat) 
     {
         //targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
         int r = 10;
@@ -136,17 +151,37 @@ public class EnemyPattern : EnemyBasic
             yield return new WaitForSeconds(0.01f);
         }
 
-        StartCoroutine("moveEllipse");
+        if (isRepeat == true) 
+            StartCoroutine(moveEllipse(true));
     }
 
 
 
-    
+    //본인의 주변을 공격
+    public IEnumerator peripheralAttack(float radius,float attackTime, bool isRepeat)
+    {
+        isCorRun = true;
+        //extend collider itself
+
+        float originRadius=GetComponent<CircleCollider2D>().radius;
+        GetComponent<CircleCollider2D>().radius = radius;
+        //print("peripheralAttack");
+
+        yield return new WaitForSeconds(attackTime);
+
+        GetComponent<CircleCollider2D>().radius = originRadius;
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (isRepeat == true)
+            StartCoroutine(peripheralAttack(radius, attackTime, isRepeat));
+        else isCorRun = false;
+    }
 
 
 
     //range attack = 범위 공격
-    public IEnumerator rangeAttack(GameObject AttackRange) 
+    public IEnumerator rangeAttack(GameObject AttackRange, bool isRepeat) 
     {
         yield return new WaitForSeconds(3);
 
@@ -158,14 +193,15 @@ public class EnemyPattern : EnemyBasic
             AttackRange.transform.localScale = new Vector3(newScale, newScale, 1f);
             yield return new WaitForSeconds(0.02f);
         }
-        
-        
 
-        StartCoroutine(rangeAttack(AttackRange));
+
+
+        if (isRepeat == true) 
+            StartCoroutine(rangeAttack(AttackRange,true));
     }
 
     //wave attack = 파장 범위 공격
-    public IEnumerator waveAttack(GameObject AttackRange, GameObject NoAttackRange) 
+    public IEnumerator waveAttack(GameObject AttackRange, GameObject NoAttackRange, bool isRepeat) 
     {
         yield return new WaitForSeconds(3);
         //print("wave attack=" + status.damage);
@@ -192,13 +228,14 @@ public class EnemyPattern : EnemyBasic
                 = new Vector3(0.5f, 0.5f, 1f);
         AttackRange.transform.localScale
                 = new Vector3(1f, 1f, 1f);
-        StartCoroutine(waveAttack(AttackRange,NoAttackRange));
+        if (isRepeat == true) 
+            StartCoroutine(waveAttack(AttackRange,NoAttackRange,true));
 
     }
 
 
     bool isAttacking = false;
-    public IEnumerator pop()
+    public IEnumerator pop(bool isRepeat)
     {
         //print("pop=" + status.damage);
         if (isAttacking == false)
@@ -235,7 +272,9 @@ public class EnemyPattern : EnemyBasic
         }
 
         yield return new WaitForSeconds(1f);
-        StartCoroutine(pop());
+
+        if (isRepeat == true) 
+            StartCoroutine(pop(true));
     }
 
     public IEnumerator chasing() 
@@ -252,7 +291,7 @@ public class EnemyPattern : EnemyBasic
     }
 
     bool isJumping = false;
-    public IEnumerator jump()
+    public IEnumerator jump(bool isRepeat)
     {
         //print("jump=" + status.damage);
         float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
@@ -286,9 +325,36 @@ public class EnemyPattern : EnemyBasic
             }
         }
         yield return null;
-        StartCoroutine(jump());
+        if (isRepeat == true) 
+            StartCoroutine(jump(true));
     }
     #endregion
 
+    public IEnumerator Wander(bool isRepeat)
+    {
+        print("wander");
 
+        float randomX, randomY;
+        float time = 0;
+
+        while (time < 0.1f)
+        {
+            rigid.velocity = Vector2.zero;
+            yield return new WaitForSeconds(0.1f);
+
+
+            //range value 조절 필요
+            randomX = Random.Range(-25, 25);
+            randomY = Random.Range(-25, 25);
+            targetDirVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+            rigid.AddForce(targetDirVec * status.speed);
+            yield return new WaitForSeconds(0.1f);
+
+            time += Time.deltaTime;
+        }
+
+
+        if (isRepeat == true) 
+            StartCoroutine(Wander(true));
+    }
 }
