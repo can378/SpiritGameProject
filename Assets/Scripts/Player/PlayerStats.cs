@@ -35,8 +35,9 @@ public class PlayerStats : Stats
     public string item = "";
 
     //Equipments
-    public MainWeapon mainWeapon;
-    public Skill skill;
+    public MainWeapon mainWeapon = null;
+    public Skill skill = null;
+    public int maxArmor = 3;
     public Armor[] armors = new Armor[3];
 
     //Stat

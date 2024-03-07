@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum MainWeaponType { Melee, Shot }
 
-public class MainWeapon : Equipments
+public class MainWeapon : Equipment
 {
     [field: SerializeField] public MainWeaponType weaponType {get; private set;}
     [field: SerializeField] public int attackType { get; private set; }             //근거리 : 0 - 휘두르기, 1 - 찌르기, 2 - 기타
@@ -31,7 +31,7 @@ public class MainWeapon : Equipments
 
     public override void Equip()
     {
-        switch(equipmentsOption)
+        switch(equipmentOption)
         {
             case 0:
                 break;
@@ -61,13 +61,13 @@ public class MainWeapon : Equipments
     public override void RandomOption()
     {
         Equip();
-        equipmentsOption = Random.Range(1,6);
+        equipmentOption = Random.Range(1,6);
         UnEquip();
     }
 
     public override void UnEquip()
     {
-        switch (equipmentsOption)
+        switch (equipmentOption)
         {
             case 0:
                 break;

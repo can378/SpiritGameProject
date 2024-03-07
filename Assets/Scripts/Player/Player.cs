@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
 
     public MainWeaponController mainWeaponController;
     public SkillController skillController;
-    public Armor[] armor = new Armor[3];
 
     public UserData userData { get; private set; }
 
@@ -385,25 +384,18 @@ public class Player : MonoBehaviour
                 mainWeaponController.UnEquipWeapon();
             }
             // 무기 장비
-            mainWeaponController.EquipWeapon(nearObject.GetComponent<MainWeapon>());
+            mainWeaponController.EquipWeapon(selectItem.GetComponent<MainWeapon>());
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
-            if (armor != null)
+            for(int i = 0;i<3;i++)
             {
-                armor[0].gameObject.transform.position = gameObject.transform.position;
-                armor[0].gameObject.SetActive(true);
-
-                // 무기 능력치 해제
-                armor[0].UnEquip();
-
-                // 무기 해제
-                armor = null;
+                if(stats.armors[i] ==null)
+                {
+                    EquipArmor(selectItem.GetComponent<Armor>(),i);
+                    return;
+                }
             }
-            // 무기 장비
-            armor[0] = nearObject.GetComponent<Armor>();
-            armor[0].Equip();
-            armor[0].gameObject.SetActive(false);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
@@ -412,7 +404,7 @@ public class Player : MonoBehaviour
                 skillController.UnEquipSkill();
             }
             // 스킬 장착
-            skillController.EquipSkill(nearObject.GetComponent<Skill>());
+            skillController.EquipSkill(selectItem.GetComponent<Skill>());
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {
@@ -423,8 +415,9 @@ public class Player : MonoBehaviour
             //아이템 갱신
             stats.item = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
             playerItem = selectItem.gameObject;
-            MapUIManager.instance.updateItemUI(selectItem.gameObject);
             playerItem.SetActive(false);
+
+            MapUIManager.instance.updateItemUI(selectItem.gameObject);
         }
     }
 
@@ -486,6 +479,30 @@ public class Player : MonoBehaviour
 
     }
     
+    public void EquipArmor(Armor armor, int index)
+    {
+        stats.armors[index] = armor.GetComponent<Armor>();
+        stats.armors[index].Equip();
+        stats.armors[index].gameObject.SetActive(false);
+
+        MapUIManager.instance.UpdateArmorUI();
+    }
+
+    public void UnEquipArmor(int index)
+    {
+        if(stats.armors[index] == null)
+            return;
+        stats.armors[index].gameObject.transform.position = gameObject.transform.position;
+        stats.armors[index].gameObject.SetActive(true);
+
+        // 무기 능력치 해제
+        stats.armors[index].UnEquip();
+
+        // 무기 해제
+        stats.armors[index] = null;
+
+        MapUIManager.instance.UpdateArmorUI();
+    }
     #endregion
 
     #region SceneReload - item
@@ -507,11 +524,15 @@ public class Player : MonoBehaviour
             stats.exp = DataManager.instance.userData.playerExp;
             stats.point = DataManager.instance.userData.playerPoint;
 
+            stats.HP = DataManager.instance.userData.playerHP;
+            stats.tempHP = DataManager.instance.userData.playerTempHP;
+
             //Debug.Log("Scene reloaded: " + scene.name);
             //Scene reload 후에도 전에 얻은 아이템 유지
             string playerItemName = DataManager.instance.userData.playerItem;
             int playerMainWeapon = DataManager.instance.userData.playerMainWeapon;
             int playerSkill = DataManager.instance.userData.playerSkill;
+            int playerMaxArmor = DataManager.instance.userData.playerMaxArmor;
             int[] playerArmor = DataManager.instance.userData.playerArmor;
 
             for(int i = 0;i<8;i++)
@@ -546,7 +567,14 @@ public class Player : MonoBehaviour
             {
                 skillController.EquipSkill(Instantiate(DataManager.instance.gameData.skillList[playerSkill]).GetComponent<Skill>());
             }
-
+            // 방어구
+            
+            for(int i = 0;i< playerMaxArmor; i++)
+            {
+                if(playerArmor[i] != 0)
+                EquipArmor(Instantiate(DataManager.instance.gameData.armorList[playerArmor[i]]).GetComponent<Armor>(),i);
+            }
+            
             statApply();
         }
 

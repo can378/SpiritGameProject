@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Armor : Equipments
+public abstract class Armor : Equipment
 {
     protected abstract void EquipArmor();
 
@@ -10,7 +10,7 @@ public abstract class Armor : Equipments
 
     public override void Equip()
     {
-        switch (equipmentsOption)
+        switch (equipmentOption)
         {
             case 0:
                 break;
@@ -41,7 +41,7 @@ public abstract class Armor : Equipments
     public override void RandomOption()
     {
         Equip();
-        equipmentsOption = Random.Range(1, 6);
+        equipmentOption = Random.Range(1, 6);
         UnEquip();
     }
 
@@ -49,7 +49,7 @@ public abstract class Armor : Equipments
     {
         UnEquipArmor();
 
-        switch (equipmentsOption)
+        switch (equipmentOption)
         {
             case 0:
                 break;

@@ -75,20 +75,25 @@ public class DataManager : MonoBehaviour
         userData.playerExp = Player.instance.stats.exp;
         userData.playerPoint = Player.instance.stats.point;
 
-        userData.playerHP = Player.instance.stats.HPMax;
+        userData.playerHP = Player.instance.stats.HP;
         userData.playerTempHP = Player.instance.stats.tempHP;
 
         userData.playerCoin = Player.instance.stats.coin;
         userData.playerKey = Player.instance.stats.key;
         userData.playerDice = Player.instance.stats.dice;
 
-        if (Player.instance.stats.mainWeapon != null) userData.playerMainWeapon = Player.instance.stats.mainWeapon.equipmentsId;
-        // if (Player.instance.stats.playerArmor != null) userData.playerArmor = Player.instance.stats.armor.equipmentsId;
+        if (Player.instance.stats.mainWeapon != null) userData.playerMainWeapon = Player.instance.stats.mainWeapon.equipmentId;
         if (Player.instance.stats.skill != null) userData.playerSkill = Player.instance.stats.skill.skillID;
+    
+        for(int i = 0;i<Player.instance.stats.maxArmor;i++)
+        {
+            if(Player.instance.stats.armors[i] != null)
+                userData.playerArmor[i] = Player.instance.stats.armors[i].equipmentId;
+        }
 
         for (int i = 0; i < 8; i++)
         {
-            DataManager.instance.userData.playerStat[i] = Player.instance.stats.playerStat[i];
+            userData.playerStat[i] = Player.instance.stats.playerStat[i];
         }
 
         //파일 저장 경로
@@ -132,6 +137,7 @@ public class DataManager : MonoBehaviour
         userData.playerItem = "";
 
         userData.playerMainWeapon = 0;
+        userData.playerMaxArmor = 3;
         for (int i = 0; i < 3; i++)
         {
             userData.playerArmor[i] = 0;

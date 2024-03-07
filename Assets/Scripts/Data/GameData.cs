@@ -11,6 +11,7 @@ public class GameData : MonoBehaviour
 
     public List<GameObject> selectItemList;
     public List<GameObject> mainWeaponList;
+    public List<GameObject> armorList;
     public List<GameObject> skillList;
     public List<GameObject> testList;
     public List<GameObject> passiveSkillList;

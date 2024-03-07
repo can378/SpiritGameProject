@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEditor;
 
 public class MapUIManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject restartPanel;
     public GameObject resetPanel;
     public RectTransform sidePanel;
+    public RectTransform armorPanel;
 
     //Player status
     public Slider Hpslider;
@@ -32,12 +34,15 @@ public class MapUIManager : MonoBehaviour
     public TMP_Text SkillTxt;
     public TMP_Text PointTxt;
 
+    public TMP_Text[] armorTxt = new TMP_Text[3];
+
     //gameObject
     public TMP_Text chapterTxt;
 
 
 
     private bool sidePanelVisible = false;
+    private bool armorPanelVisible = false;
     UserData userData;
 
     private void Awake()
@@ -145,7 +150,7 @@ public class MapUIManager : MonoBehaviour
     {
         if (Player.instance.stats.mainWeapon != null)
         {
-            WeaponTxt.text = Player.instance.stats.mainWeapon.equipmentsName;
+            WeaponTxt.text = Player.instance.stats.mainWeapon.equipmentName;
         }
         else {WeaponTxt.text = "";}
     }
@@ -164,6 +169,16 @@ public class MapUIManager : MonoBehaviour
         PointTxt.text = Player.instance.stats.point.ToString();
     }
 
+    public void UpdateArmorUI()
+    {
+        for(int i = 0;i<Player.instance.stats.maxArmor;i++)
+        {
+            if(Player.instance.stats.armors[i] != null)
+                armorTxt[i].text = Player.instance.stats.armors[i].equipmentName;
+            else
+                armorTxt[i].text ="";
+        }
+    }
 
     #endregion
 
@@ -226,16 +241,19 @@ public class MapUIManager : MonoBehaviour
 
     public void SideBtn() 
     {
-        if(sidePanelVisible) 
+        UpdateArmorUI();
+        if (sidePanelVisible) 
         {
             // 패널을 오른쪽으로 이동시킴
             sidePanel.anchoredPosition += new Vector2(sidePanel.rect.width, 0);
+            armorPanel.anchoredPosition -= new Vector2(0, 900);
             sidePanelVisible = false;
         }
         else
         {
             // 패널을 왼쪽으로 이동시킴
             sidePanel.anchoredPosition -= new Vector2(sidePanel.rect.width, 0);
+            armorPanel.anchoredPosition += new Vector2(0, 900);
             sidePanelVisible = true;
         }
 
@@ -257,6 +275,13 @@ public class MapUIManager : MonoBehaviour
     {
         restartPanel.SetActive(true);
         esckeyPanel.SetActive(false);
+    }
+
+    public void ArmorUnEquipBtn(int index)
+    {
+        print("장비 해제");
+        Player.instance.UnEquipArmor(index);
+        UpdateArmorUI();
     }
 
     #endregion
