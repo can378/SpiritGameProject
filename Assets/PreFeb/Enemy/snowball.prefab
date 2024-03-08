@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4771821430859408182}
   - component: {fileID: 8189220749486769636}
+  - component: {fileID: 1538642115041353809}
   - component: {fileID: 1970378815811846781}
   - component: {fileID: 7037800743473113150}
   - component: {fileID: 6357870973008652518}
-  - component: {fileID: 7255526162848720560}
   m_Layer: 0
   m_Name: snowball
   m_TagString: Enemy
@@ -88,6 +88,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1538642115041353809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3899082299174955267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTarget: {fileID: 0}
+  status: {fileID: 0}
+  rigid: {fileID: 0}
+  sprite: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
+  timeValue: 0
+  isHARRun: 0
+  isPARun: 0
+  enemyAttack: 12
+  EnemyGunMuzzle: []
+  donutAttackRange: {fileID: 0}
+  donutInside: {fileID: 0}
+  roundAttackRange: {fileID: 0}
+  beam: {fileID: 0}
 --- !u!114 &1970378815811846781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  reductionRatio: 0
   resist:
   - 0
   - 0
@@ -111,13 +142,11 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  power: 1
+  defaultSpeed: 5
   activeEffects: []
-  maxHealth: 2
-  health: 2
-  speed: 1
-  damage: 1
-  detectionDis: 10
-  attackSpeed: 1
+  detectionDis: 20
+  exp: 0
 --- !u!58 &7037800743473113150
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -180,15 +209,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7255526162848720560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3899082299174955267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f208ecc57e32f14a9bda98202b2a2d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

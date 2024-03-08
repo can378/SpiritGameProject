@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2847707319134962963}
   - component: {fileID: 6232827733576483083}
   - component: {fileID: 8194432176129987292}
-  - component: {fileID: 6849621315255755640}
   - component: {fileID: 3390187105194360506}
+  - component: {fileID: 6510799521285227081}
   m_Layer: 0
   m_Name: broomStick
   m_TagString: Enemy
@@ -105,12 +105,17 @@ MonoBehaviour:
   rigid: {fileID: 0}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   timeValue: 0
-  enemyAttack: 0
+  isHARRun: 0
+  isPARun: 0
+  isBeamRun: 0
+  enemyAttack: 15
   EnemyGunMuzzle: []
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
+  beam: {fileID: 0}
 --- !u!114 &8194432176129987292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  reductionRatio: 0
   resist:
   - 0
   - 0
@@ -134,14 +143,40 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  maxHealth: 0
-  health: 0
-  speed: 0
-  damage: 0
-  detectionDis: 0
-  attackSpeed: 0
---- !u!61 &6849621315255755640
-BoxCollider2D:
+  power: 1
+  defaultSpeed: 5
+  activeEffects: []
+  detectionDis: 10
+  exp: 0
+--- !u!50 &3390187105194360506
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392377554197916130}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 10
+  m_AngularDrag: 2
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &6510799521285227081
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -173,42 +208,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.8, y: 6.53}
-    newSize: {x: 7.9, y: 11.69}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.8, y: 6.53}
-  m_EdgeRadius: 0
---- !u!50 &3390187105194360506
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392377554197916130}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 10
-  m_AngularDrag: 2
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Radius: 3.265

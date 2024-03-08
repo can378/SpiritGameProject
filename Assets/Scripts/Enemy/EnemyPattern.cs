@@ -106,37 +106,38 @@ public class EnemyPattern : EnemyBasic
     public bool isHARRun = false;
     public IEnumerator hitAndRun(bool isRepeat)
     {
-
+        isHARRun = true;
         //print("hit and run=" + status.damage);
-        float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
-        //if (targetDistance < status.detectionDis)
+        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        //if (targetDis < status.detectionDis)
         //{
             //getting closer
             do
             {
                 Chase();
-                targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 yield return new WaitForSeconds(0.01f);
-            } while (targetDistance > 1.2f);
+            } while (targetDis > 1.2f);
 
 
             //getting farther
             do
             {
                 rigid.AddForce(-targetDirVec * status.defaultSpeed, ForceMode2D.Impulse);
-                targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);
-            } while (targetDistance < 10f);
+            } while (targetDis < 10f);
 
         //}
         yield return new WaitForSeconds(0.01f);
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(1f);
 
+        
         if (isRepeat == true)
             StartCoroutine(hitAndRun(true));
-
+        isHARRun = false;
     }
 
 
@@ -159,8 +160,11 @@ public class EnemyPattern : EnemyBasic
 
 
     //본인의 주변을 공격
+    [HideInInspector]
+    public bool isPARun = false;
     public IEnumerator peripheralAttack(float radius,float attackTime, bool isRepeat)
     {
+        isPARun = true;
         //isCorRun = true;
         //extend collider itself
 
@@ -172,11 +176,20 @@ public class EnemyPattern : EnemyBasic
 
         GetComponent<CircleCollider2D>().radius = originRadius;
 
-        yield return new WaitForSeconds(0.1f);
+
 
         if (isRepeat == true)
+        {
+            for (int i = 0; i < 10; i++) { Chase(); }
+
+            yield return new WaitForSeconds(3f);
             StartCoroutine(peripheralAttack(radius, attackTime, isRepeat));
-        // isCorRun = false;
+            
+        }
+            
+
+        isPARun = false;
+        
     }
 
 
@@ -242,12 +255,12 @@ public class EnemyPattern : EnemyBasic
         if (isAttacking == false)
         {
 
-            float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+            targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-            if (targetDistance <= status.detectionDis)
+            if (targetDis <= status.detectionDis)
             {
                 //attack
-                if (targetDistance <= 0.7f)
+                if (targetDis <= 0.7f)
                 {
                     
                     isAttacking = true;
@@ -281,9 +294,9 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator chasing() 
     {
         //print("chasing=" + status.damage);
-        float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= status.detectionDis && targetDistance >= 1f)
+        if (targetDis <= status.detectionDis && targetDis >= 1f)
         {
             Chase();
         }
@@ -295,9 +308,9 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator jump(bool isRepeat)
     {
         //print("jump=" + status.damage);
-        float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= status.detectionDis && targetDistance >= 0.2f)
+        if (targetDis <= status.detectionDis && targetDis >= 0.2f)
         {
             if (isJumping == false)
             {
@@ -359,4 +372,41 @@ public class EnemyPattern : EnemyBasic
         if (isRepeat == true) 
             StartCoroutine(Wander(true));
     }
+
+
+    [HideInInspector]
+    public bool isBeamRun = false;
+    public IEnumerator Beam(GameObject beam,float time, float range, bool isRepeat,GameObject target)
+    {
+        isBeamRun = true;
+        float rangeScale = 0;
+
+        beam.SetActive(true);
+
+        targetDirVec = (enemyTarget.position - transform.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, targetDirVec);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, GetComponent<EnemyStats>().defaultSpeed * Time.deltaTime);
+    
+        
+        while (rangeScale <= range)
+        {
+            rangeScale += Time.deltaTime;
+            beam.transform.localScale += new Vector3(rangeScale, 0, 0);
+        }
+        
+        yield return new WaitForSeconds(1f);
+
+        while (rangeScale >=0)
+        {
+            rangeScale -= Time.deltaTime;
+            beam.transform.localScale += new Vector3(rangeScale, 0, 0);
+        }
+
+        beam.SetActive(false);
+
+        if (isRepeat == true) StartCoroutine(Beam(beam, time, range, isRepeat,target));
+        isBeamRun = false;
+    }
+
+
 }

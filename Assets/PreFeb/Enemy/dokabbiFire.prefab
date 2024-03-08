@@ -105,12 +105,16 @@ MonoBehaviour:
   rigid: {fileID: 0}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   timeValue: 0
+  isHARRun: 0
+  isPARun: 0
   enemyAttack: 6
   EnemyGunMuzzle: []
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
+  beam: {fileID: 0}
 --- !u!114 &5138180050735709106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  reductionRatio: 0
   resist:
   - 0
   - 0
@@ -134,12 +142,11 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  maxHealth: 2
-  health: 2
-  speed: 1
-  damage: 1
-  detectionDis: 10
-  attackSpeed: 1
+  power: 1
+  defaultSpeed: 1
+  activeEffects: []
+  detectionDis: 20
+  exp: 0
 --- !u!58 &9090248545798697406
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8335058811139818652}
   - component: {fileID: 8725639345462236127}
   - component: {fileID: 816111995634504219}
-  - component: {fileID: 1858447230543927282}
   - component: {fileID: 8718950150226916892}
   - component: {fileID: 7354948181115943604}
   - component: {fileID: 819063112093081390}
@@ -106,25 +105,16 @@ MonoBehaviour:
   rigid: {fileID: 0}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   timeValue: 0
-  enemyAttack: 6
+  isHARRun: 0
+  isPARun: 0
+  enemyAttack: 13
   EnemyGunMuzzle: []
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
---- !u!114 &1858447230543927282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9177392109174839894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f125b41d986ec4646ab03d845a794578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wormAttack: {fileID: 2191322330173509301, guid: 0be547e68a28a5448a7fc140d6695938, type: 3}
+  beam: {fileID: 0}
 --- !u!114 &8718950150226916892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  reductionRatio: 0
   resist:
   - 0
   - 0
@@ -148,13 +142,11 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  power: 1
+  defaultSpeed: 2
   activeEffects: []
-  maxHealth: 2
-  health: 2
-  speed: 1
-  damage: 1
   detectionDis: 10
-  attackSpeed: 1
+  exp: 0
 --- !u!58 &7354948181115943604
 CircleCollider2D:
   m_ObjectHideFlags: 0

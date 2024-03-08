@@ -16,6 +16,8 @@ public class EnemyBasic : MonoBehaviour
     [HideInInspector]
     public Vector2 targetDirVec;
     [HideInInspector]
+    public float targetDis;
+    [HideInInspector]
     public float timeValue=0;
 
     private void Awake()

@@ -13,9 +13,9 @@ public class EnemyMosquito : EnemyBasic
 
     private void FixedUpdate()
     {
-        float targetDistance = Vector2.Distance(transform.position, enemyTarget.position);
+        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDistance <= status.detectionDis && targetDistance >= 1f)
+        if (targetDis <= status.detectionDis && targetDis >= 1f)
         {
             //GetComponent<PathFinding>().StartFinding((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
             Chase();

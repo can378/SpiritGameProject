@@ -46,8 +46,8 @@ public class NPCbasic : MonoBehaviour
         /*
         if (isWalking)
         {
-            float targetDistance = Vector2.Distance(transform.position, NPCTarget.transform.position);
-            if (targetDistance >= 3f && !(targetDistance <= 1f))
+            float targetDis = Vector2.Distance(transform.position, NPCTarget.transform.position);
+            if (targetDis >= 3f && !(targetDis <= 1f))
             {
                 GetComponent<PathFinding>().StartFinding
                     ((Vector2)transform.position, (Vector2)NPCTarget.transform.position);
