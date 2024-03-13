@@ -6,7 +6,10 @@ public class SkillController : MonoBehaviour
 {
     PlayerStatus status;
     PlayerStats stats;
-    
+
+    // ½ºÅ³ ¸®½ºÆ®
+    [SerializeField] GameObject[] skillList;
+
     void Awake()
     {
         status = GetComponent<PlayerStatus>();
@@ -16,15 +19,15 @@ public class SkillController : MonoBehaviour
     // ½ºÅ³ È¹µæ
     public void EquipSkill(Skill gainSkill)
     {
-        stats.skill = gainSkill;
+        stats.skill = skillList[gainSkill.skillID].GetComponent<Skill>();
+        Destroy(gainSkill.gameObject);
         MapUIManager.instance.UpdateSkillUI();
-        //skill.gameObject.SetActive(false);
+        
     }
 
     public void UnEquipSkill()
     {
-        stats.skill.gameObject.transform.position = gameObject.transform.position;
-        //skill.gameObject.SetActive(true);
+        Instantiate(DataManager.instance.gameData.skillList[stats.skill.skillID],gameObject.transform.position,gameObject.transform.localRotation);
         stats.skill = null;
         MapUIManager.instance.UpdateSkillUI();
     }
@@ -69,7 +72,7 @@ public class SkillController : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(skillRate / stats.attackSpeed * stats.mainWeapon.attackSpeed);
+            yield return new WaitForSeconds(skillRate / stats.attackSpeed * stats.weapon.attackSpeed);
         }
 
         status.isSkill = false;

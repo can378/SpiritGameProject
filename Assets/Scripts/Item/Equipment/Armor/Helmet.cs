@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Helmet : Armor
+public class Helmet : Equipment
 {
-    protected override void EquipArmor()
+    public override void Equip()
     {
         Debug.Log("플레이어 주문력 증가");
         Player.instance.stats.skillPower += 1f;
     }
 
     // Update is called once per frame
-    protected override void UnEquipArmor()
+    public override void UnEquip()
     {
         Player.instance.stats.skillPower -= 1f;
     }

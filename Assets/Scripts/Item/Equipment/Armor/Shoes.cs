@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shoes : Armor
+public class Shoes : Equipment
 {
-    protected override void EquipArmor()
+    public override void Equip()
     {
         Debug.Log("플레이어 이동속도 증가");
         Player.instance.stats.speed += 0.5f;
     }
 
     // Update is called once per frame
-    protected override void UnEquipArmor()
+    public override void UnEquip()
     {
         Player.instance.stats.speed -= 0.5f;
     }

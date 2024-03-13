@@ -21,7 +21,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject restartPanel;
     public GameObject resetPanel;
     public RectTransform sidePanel;
-    public RectTransform armorPanel;
+    public RectTransform equipmentPanel;
 
     //Player status
     public Slider Hpslider;
@@ -34,7 +34,7 @@ public class MapUIManager : MonoBehaviour
     public TMP_Text SkillTxt;
     public TMP_Text PointTxt;
 
-    public TMP_Text[] armorTxt = new TMP_Text[3];
+    public TMP_Text[] EquipmentsTxt = new TMP_Text[3];
 
     //gameObject
     public TMP_Text chapterTxt;
@@ -42,7 +42,7 @@ public class MapUIManager : MonoBehaviour
 
 
     private bool sidePanelVisible = false;
-    private bool armorPanelVisible = false;
+    private bool EquipmentPanelVisible = false;
     UserData userData;
 
     private void Awake()
@@ -148,9 +148,9 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateWeaponUI() 
     {
-        if (Player.instance.stats.mainWeapon != null)
+        if (Player.instance.stats.weapon != null)
         {
-            WeaponTxt.text = Player.instance.stats.mainWeapon.equipmentName;
+            WeaponTxt.text = Player.instance.stats.weapon.equipmentName;
         }
         else {WeaponTxt.text = "";}
     }
@@ -169,14 +169,14 @@ public class MapUIManager : MonoBehaviour
         PointTxt.text = Player.instance.stats.point.ToString();
     }
 
-    public void UpdateArmorUI()
+    public void UpdateEquipmentUI()
     {
-        for(int i = 0;i<Player.instance.stats.maxArmor;i++)
+        for(int i = 0;i<Player.instance.stats.maxEquipment; i++)
         {
-            if(Player.instance.stats.armors[i] != null)
-                armorTxt[i].text = Player.instance.stats.armors[i].equipmentName;
+            if(Player.instance.stats.equipments[i] != null)
+                EquipmentsTxt[i].text = Player.instance.stats.equipments[i].equipmentName;
             else
-                armorTxt[i].text ="";
+                EquipmentsTxt[i].text ="";
         }
     }
 
@@ -241,19 +241,19 @@ public class MapUIManager : MonoBehaviour
 
     public void SideBtn() 
     {
-        UpdateArmorUI();
+        UpdateEquipmentUI();
         if (sidePanelVisible) 
         {
             // 패널을 오른쪽으로 이동시킴
             sidePanel.anchoredPosition += new Vector2(sidePanel.rect.width, 0);
-            armorPanel.anchoredPosition -= new Vector2(0, 900);
+            equipmentPanel.anchoredPosition -= new Vector2(0, 900);
             sidePanelVisible = false;
         }
         else
         {
             // 패널을 왼쪽으로 이동시킴
             sidePanel.anchoredPosition -= new Vector2(sidePanel.rect.width, 0);
-            armorPanel.anchoredPosition += new Vector2(0, 900);
+            equipmentPanel.anchoredPosition += new Vector2(0, 900);
             sidePanelVisible = true;
         }
 
@@ -277,11 +277,11 @@ public class MapUIManager : MonoBehaviour
         esckeyPanel.SetActive(false);
     }
 
-    public void ArmorUnEquipBtn(int index)
+    public void EquipmentUnEquipBtn(int index)
     {
         print("장비 해제");
-        Player.instance.UnEquipArmor(index);
-        UpdateArmorUI();
+        Player.instance.UnEquipEquipment(index);
+        UpdateEquipmentUI();
     }
 
     #endregion

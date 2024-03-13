@@ -1669,7 +1669,7 @@ MonoBehaviour:
     m_Bits: 0
   nearObject: {fileID: 0}
   playerItem: {fileID: 0}
-  mainWeaponController: {fileID: 0}
+  WeaponController: {fileID: 0}
   skillController: {fileID: 0}
 --- !u!114 &539968288
 MonoBehaviour:
@@ -1783,7 +1783,7 @@ MonoBehaviour:
   drain: 0
   attackSpeed: 1
   skillPower: 1
-  skillCoolTime: 0
+  decreasedSkillCoolTime: 0
   speed: 1
   runSpeed: 1.66
   runCoolTime: 5
@@ -1793,10 +1793,10 @@ MonoBehaviour:
   key: 0
   dice: 0
   item: 
-  mainWeapon: {fileID: 0}
+  weapon: {fileID: 0}
   skill: {fileID: 0}
-  maxArmor: 3
-  armors:
+  maxEquipment: 3
+  equipments:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -4153,16 +4153,16 @@ MonoBehaviour:
   - {fileID: 1035750178597986389, guid: e516990993600ce4bb87ebf790698cda, type: 3}
   - {fileID: 2132406895188350747, guid: 6acc0cd46ea86a64bb8b1d14b6ad3900, type: 3}
   - {fileID: 3911212924154988040, guid: b332e40e5765ac444ac7a45d54e2e08f, type: 3}
-  mainWeaponList:
+  weaponList:
   - {fileID: 0}
   - {fileID: 3179661334137346525, guid: 08e6340d679dfa348a47f702e12c12c1, type: 3}
   - {fileID: 3179661334137346525, guid: bee3f987315576348b961b824bead6b0, type: 3}
   - {fileID: 8830712857820811360, guid: 9fd13045bb6ddcc43a2c1a29d8b1083b, type: 3}
   - {fileID: 8830712857820811360, guid: a707f653bd75c3540a3b0b9ecc5d74b5, type: 3}
-  - {fileID: 3179661334137346525, guid: aeda56e69af111849bb14b69868563da, type: 3}
+  - {fileID: 0}
   - {fileID: 6144746033619172035, guid: bc2ad53431568914e8ff5ed1859683f2, type: 3}
   - {fileID: 8830712857820811360, guid: bc7abc5e63adec44c8eea9ffb30d3e4c, type: 3}
-  armorList:
+  equipmentList:
   - {fileID: 0}
   - {fileID: 3296880656510438592, guid: ec56bc7c8d4a24644b11384fbff4116b, type: 3}
   - {fileID: 5113255618567155932, guid: 37d36a43199a1cb42b8359f81752858c, type: 3}

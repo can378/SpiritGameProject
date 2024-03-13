@@ -82,13 +82,13 @@ public class DataManager : MonoBehaviour
         userData.playerKey = Player.instance.stats.key;
         userData.playerDice = Player.instance.stats.dice;
 
-        if (Player.instance.stats.mainWeapon != null) userData.playerMainWeapon = Player.instance.stats.mainWeapon.equipmentId;
+        if (Player.instance.stats.weapon != null) userData.playerWeapon = Player.instance.stats.weapon.equipmentId;
         if (Player.instance.stats.skill != null) userData.playerSkill = Player.instance.stats.skill.skillID;
     
-        for(int i = 0;i<Player.instance.stats.maxArmor;i++)
+        for(int i = 0;i<Player.instance.stats.maxEquipment; i++)
         {
-            if(Player.instance.stats.armors[i] != null)
-                userData.playerArmor[i] = Player.instance.stats.armors[i].equipmentId;
+            if(Player.instance.stats.equipments[i] != null)
+                userData.playerEquipments[i] = Player.instance.stats.equipments[i].equipmentId;
         }
 
         for (int i = 0; i < 8; i++)
@@ -126,7 +126,6 @@ public class DataManager : MonoBehaviour
         userData.playerExp = 1;
         userData.playerPoint = 5;
 
-        userData.playerHPMax = 100f;
         userData.playerHP = 100f;
         userData.playerTempHP = 0;
 
@@ -136,11 +135,11 @@ public class DataManager : MonoBehaviour
 
         userData.playerItem = "";
 
-        userData.playerMainWeapon = 0;
-        userData.playerMaxArmor = 3;
+        userData.playerWeapon = 0;
+        userData.playerMaxEquipment = 3;
         for (int i = 0; i < 3; i++)
         {
-            userData.playerArmor[i] = 0;
+            userData.playerEquipments[i] = 0;
         }
 
         userData.playerSkill = 0;

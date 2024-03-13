@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
 
-    public MainWeaponController mainWeaponController;
+    public WeaponController WeaponController;
     public SkillController skillController;
 
     public UserData userData { get; private set; }
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         status = GetComponent<PlayerStatus>();
         stats = GetComponent<PlayerStats>();
         
-        mainWeaponController = GetComponent<MainWeaponController>();
+        WeaponController = GetComponent<WeaponController>();
         skillController = GetComponent<SkillController>();
     }
 
@@ -216,37 +216,37 @@ public class Player : MonoBehaviour
 
     void Reload()
     {
-        if (stats.mainWeapon == null)
+        if (stats.weapon == null)
             return;
 
-        if (stats.mainWeapon.maxAmmo < 0)
+        if (stats.weapon.maxAmmo < 0)
             return;
 
-        if (stats.mainWeapon.maxAmmo == stats.mainWeapon.ammo)
+        if (stats.weapon.maxAmmo == stats.weapon.ammo)
             return;
 
         if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = stats.mainWeapon.reloadTime / stats.attackSpeed;
-            Invoke("ReloadOut", stats.mainWeapon.reloadTime);
+            float reloadTime = stats.weapon.reloadTime / stats.attackSpeed;
+            Invoke("ReloadOut", stats.weapon.reloadTime);
         }
     }
 
     void ReloadOut()
     {
         Debug.Log("스킬 홀드 중단");
-        stats.mainWeapon.Reload();
+        stats.weapon.Reload();
         status.isReload = false;
     }
 
     void Attack()
     {
-        if (stats.mainWeapon == null)
+        if (stats.weapon == null)
             return;
 
-        if (stats.mainWeapon.ammo == 0)
+        if (stats.weapon.ammo == 0)
             return;
 
         status.attackDelay -= Time.deltaTime;
@@ -259,16 +259,16 @@ public class Player : MonoBehaviour
             // 공격 방향
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
-            mainWeaponController.Use(status.mousePos);
+            WeaponController.Use(status.mousePos);
             // 초당 공격 횟수 = 플레이어 공속 * 무기 공속
-            float attackRate = stats.mainWeapon.attackSpeed * stats.attackSpeed;
+            float attackRate = stats.weapon.attackSpeed * stats.attackSpeed;
             AudioManager.instance.SFXPlay("attack_sword");
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
-            status.attackDelay = (stats.mainWeapon.preDelay + stats.mainWeapon.rate + stats.mainWeapon.postDelay) / attackRate;
+            status.attackDelay = (stats.weapon.preDelay + stats.weapon.rate + stats.weapon.postDelay) / attackRate;
             // 공격 준비 안됨
             status.isAttackReady = false;
             // 공격 시간(움직이기까지 대기 시간) = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
-            Invoke("AttackOut", (stats.mainWeapon.preDelay + stats.mainWeapon.rate) / attackRate);
+            Invoke("AttackOut", (stats.weapon.preDelay + stats.weapon.rate) / attackRate);
         }
     }
 
@@ -289,20 +289,19 @@ public class Player : MonoBehaviour
         if (stats.skill.skillCoolTime > 0)
             return;
 
-        if (stats.skill.skillLimit != SkillLimit.None && stats.mainWeapon == null)
+        if (stats.skill.skillLimit != SkillLimit.None && stats.weapon == null)
         {
             Debug.Log("무기 없음");
             return;
         }
-            
 
-        if (stats.skill.skillLimit == SkillLimit.Shot && stats.mainWeapon.weaponType != MainWeaponType.Shot)
+        if (stats.skill.skillLimit == SkillLimit.Shot &&  stats.weapon.weaponType < 10)
         {
             Debug.Log("원거리 전용 스킬");
             return;
         }
 
-        if (stats.skill.skillLimit == SkillLimit.Melee && stats.mainWeapon.weaponType != MainWeaponType.Melee)
+        if (stats.skill.skillLimit == SkillLimit.Melee && 10 <= stats.weapon.weaponType)
         {
             Debug.Log("근거리 전용 스킬");
             return;
@@ -379,20 +378,20 @@ public class Player : MonoBehaviour
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
-            if (stats.mainWeapon != null)
+            if (stats.weapon != null)
             {
-                mainWeaponController.UnEquipWeapon();
+                WeaponController.UnEquipWeapon();
             }
             // 무기 장비
-            mainWeaponController.EquipWeapon(selectItem.GetComponent<MainWeapon>());
+            WeaponController.EquipWeapon(selectItem.GetComponent<Weapon>());
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
             for(int i = 0;i<3;i++)
             {
-                if(stats.armors[i] ==null)
+                if(stats.equipments[i] ==null)
                 {
-                    EquipArmor(selectItem.GetComponent<Armor>(),i);
+                    EquipEquipment(selectItem.GetComponent<Equipment>(),i);
                     return;
                 }
             }
@@ -428,7 +427,7 @@ public class Player : MonoBehaviour
             Debug.Log("UseSelectItem");
             //Throwing Items
             if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
-            { mainWeaponController.UseItem(playerItem, status.mousePos); }
+            { WeaponController.UseItem(playerItem, status.mousePos); }
             //Consumable Item
             else 
             {
@@ -479,29 +478,29 @@ public class Player : MonoBehaviour
 
     }
     
-    public void EquipArmor(Armor armor, int index)
+    public void EquipEquipment(Equipment equipment, int index)
     {
-        stats.armors[index] = armor.GetComponent<Armor>();
-        stats.armors[index].Equip();
-        stats.armors[index].gameObject.SetActive(false);
+        stats.equipments[index] = equipment.GetComponent<Equipment>();
+        stats.equipments[index].Equip();
+        stats.equipments[index].gameObject.SetActive(false);
 
-        MapUIManager.instance.UpdateArmorUI();
+        MapUIManager.instance.UpdateEquipmentUI();
     }
 
-    public void UnEquipArmor(int index)
+    public void UnEquipEquipment(int index)
     {
-        if(stats.armors[index] == null)
+        if(stats.equipments[index] == null)
             return;
-        stats.armors[index].gameObject.transform.position = gameObject.transform.position;
-        stats.armors[index].gameObject.SetActive(true);
+        stats.equipments[index].gameObject.transform.position = gameObject.transform.position;
+        stats.equipments[index].gameObject.SetActive(true);
 
-        // 무기 능력치 해제
-        stats.armors[index].UnEquip();
+        // 장비 능력치 해제
+        stats.equipments[index].UnEquip();
 
-        // 무기 해제
-        stats.armors[index] = null;
+        // 장비 해제
+        stats.equipments[index] = null;
 
-        MapUIManager.instance.UpdateArmorUI();
+        MapUIManager.instance.UpdateEquipmentUI();
     }
     #endregion
 
@@ -530,15 +529,16 @@ public class Player : MonoBehaviour
             //Debug.Log("Scene reloaded: " + scene.name);
             //Scene reload 후에도 전에 얻은 아이템 유지
             string playerItemName = DataManager.instance.userData.playerItem;
-            int playerMainWeapon = DataManager.instance.userData.playerMainWeapon;
+            int playerWeapon = DataManager.instance.userData.playerWeapon;
             int playerSkill = DataManager.instance.userData.playerSkill;
-            int playerMaxArmor = DataManager.instance.userData.playerMaxArmor;
-            int[] playerArmor = DataManager.instance.userData.playerArmor;
+            int playerMaxEquipment = DataManager.instance.userData.playerMaxEquipment;
+            int[] playerEquipment = DataManager.instance.userData.playerEquipments;
 
             for(int i = 0;i<8;i++)
             {
                 stats.playerStat[i] = DataManager.instance.userData.playerStat[i];
             }
+            statApply();
 
             stats.coin = DataManager.instance.userData.playerCoin;
             stats.key = DataManager.instance.userData.playerKey;
@@ -558,9 +558,9 @@ public class Player : MonoBehaviour
                 }
             }
             // 무기
-            if (playerMainWeapon != 0)
+            if (playerWeapon != 0)
             {
-                mainWeaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.mainWeaponList[playerMainWeapon]).GetComponent<MainWeapon>());
+                WeaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]).GetComponent<Weapon>());
             }
             // 스킬
             if (playerSkill != 0)
@@ -569,13 +569,13 @@ public class Player : MonoBehaviour
             }
             // 방어구
             
-            for(int i = 0;i< playerMaxArmor; i++)
+            for(int i = 0;i< playerMaxEquipment; i++)
             {
-                if(playerArmor[i] != 0)
-                EquipArmor(Instantiate(DataManager.instance.gameData.armorList[playerArmor[i]]).GetComponent<Armor>(),i);
+                if(playerEquipment[i] != 0)
+                    EquipEquipment(Instantiate(DataManager.instance.gameData.equipmentList[playerEquipment[i]]).GetComponent<Equipment>(),i);
             }
             
-            statApply();
+            
         }
 
     }
@@ -588,7 +588,7 @@ public class Player : MonoBehaviour
         Player.instance.stats.attackSpeed = 1 + Player.instance.stats.playerStat[2] * 0.20f;
         Player.instance.stats.critical = Player.instance.stats.playerStat[3] * 0.10f;
         Player.instance.stats.criticalDamage = 0.5f + Player.instance.stats.playerStat[4] * 0.05f;
-        Player.instance.stats.skillCoolTime = 0 - Player.instance.stats.playerStat[5] * 0.10f;
+        Player.instance.stats.decreasedSkillCoolTime = 0 - Player.instance.stats.playerStat[5] * 0.10f;
         Player.instance.stats.skillPower = 1 + Player.instance.stats.playerStat[6] * 0.25f;
         Player.instance.stats.speed = 1 + Player.instance.stats.playerStat[7] * 0.1f;
     }

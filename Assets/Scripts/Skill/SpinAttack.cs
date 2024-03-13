@@ -21,13 +21,12 @@ public class SpinAttack : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            MeleeWeapon meleeWeapon = player.stats.mainWeapon.GetComponent<MeleeWeapon>();
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime + player.stats.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.stats.decreasedSkillCoolTime) * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.stats.attackSpeed * meleeWeapon.attackSpeed;
+            float attackRate = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
 
             // 선딜
             yield return new WaitForSeconds(preDelay / attackRate);
@@ -39,7 +38,7 @@ public class SpinAttack : Skill
             HitDetection hitDetection = instant.GetComponent<HitDetection>();
 
             // 크기 조정
-            instant.transform.localScale = new Vector3(size * meleeWeapon.weaponSize, size * meleeWeapon.weaponSize, 0);
+            instant.transform.localScale = new Vector3(size * player.stats.weapon.attackSize, size * player.stats.weapon.attackSize, 0);
 
             /*
             투사체 = false
@@ -54,12 +53,12 @@ public class SpinAttack : Skill
             디버프 = 없음
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
-             meleeWeapon.attackAttribute, 
-             (meleeWeapon.damage + damage) * player.stats.power, 
-             meleeWeapon.knockBack, 
+             player.stats.weapon.attackAttribute, 
+             (player.stats.weapon.damage + damage) * player.stats.power,
+             player.stats.weapon.knockBack, 
              player.stats.critical, 
              player.stats.criticalDamage,
-             meleeWeapon.deBuff);
+             player.stats.weapon.deBuff);
 
             // rate 동안 유지
             Destroy(instant, rate / attackRate);

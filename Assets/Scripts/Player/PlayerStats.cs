@@ -17,7 +17,7 @@ public class PlayerStats : Stats
 
     //Skill
     public float skillPower = 1;
-    public float skillCoolTime = 0; //쿨감
+    public float decreasedSkillCoolTime = 0; //재사용 대기시간 감소량
 
     //move speed
     public float speed = 1;
@@ -35,10 +35,10 @@ public class PlayerStats : Stats
     public string item = "";
 
     //Equipments
-    public MainWeapon mainWeapon = null;
+    public Weapon weapon = null;
     public Skill skill = null;
-    public int maxArmor = 3;
-    public Armor[] armors = new Armor[3];
+    public int maxEquipment = 3;
+    public Equipment[] equipments = new Equipment[3];
 
     //Stat
     public int[] playerStat = new int[8];

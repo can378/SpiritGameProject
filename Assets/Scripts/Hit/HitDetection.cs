@@ -37,6 +37,7 @@ public class HitDetection : MonoBehaviour
 
         if(isMultiHit)
             StartCoroutine(MultiHit());
+
     }
 
     IEnumerator MultiHit()

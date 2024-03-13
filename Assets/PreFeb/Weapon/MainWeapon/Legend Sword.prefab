@@ -42,10 +42,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2240183684125499985}
-  - component: {fileID: 7134848955563953320}
   - component: {fileID: 4326583180886243799}
+  - component: {fileID: 7176079039767583354}
   m_Layer: 10
-  m_Name: Sword
+  m_Name: Legend Sword
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,41 +67,6 @@ Transform:
   - {fileID: 7644411156738352893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7134848955563953320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemClass>k__BackingField: 1
-  <equipmentId>k__BackingField: 1
-  <equipmentName>k__BackingField: "\uD658\uB3C4"
-  <equipmentRating>k__BackingField: 0
-  <weaponType>k__BackingField: 0
-  <attackAttribute>k__BackingField: 01000000
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 12
-  <knockBack>k__BackingField: 1
-  <attackSpeed>k__BackingField: 1
-  <preDelay>k__BackingField: 0.4
-  <rate>k__BackingField: 0.4
-  <postDelay>k__BackingField: 0.2
-  <deBuff>k__BackingField: {fileID: 0}
-  <maxAmmo>k__BackingField: -1
-  <ammo>k__BackingField: -1
-  <reloadTime>k__BackingField: 0
-  <attackSize>k__BackingField: 1
-  <projectile>k__BackingField: {fileID: 0}
-  <projectileSpeed>k__BackingField: 0
-  <projectileTime>k__BackingField: 0
-  <penetrations>k__BackingField: 0
 --- !u!58 &4326583180886243799
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,6 +102,41 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &7176079039767583354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179661334137346525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f307305389d43142b442a0f45446ff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <selectItemClass>k__BackingField: 1
+  <equipmentId>k__BackingField: 8
+  <equipmentName>k__BackingField: "\uC804\uC124 \uD658\uB3C4"
+  <equipmentRating>k__BackingField: 0
+  <weaponType>k__BackingField: 0
+  <attackAttribute>k__BackingField: 
+  <isMultiHit>k__BackingField: 1
+  <DPS>k__BackingField: 10
+  <damage>k__BackingField: 5
+  <knockBack>k__BackingField: 0.1
+  <attackSpeed>k__BackingField: 1
+  <preDelay>k__BackingField: 0.3
+  <rate>k__BackingField: 0.4
+  <postDelay>k__BackingField: 0.3
+  <deBuff>k__BackingField: {fileID: 0}
+  <attackSize>k__BackingField: 2
+  <maxAmmo>k__BackingField: -1
+  <ammo>k__BackingField: -1
+  <reloadTime>k__BackingField: 0
+  <projectile>k__BackingField: {fileID: 0}
+  <projectileSpeed>k__BackingField: 0
+  <projectileTime>k__BackingField: 0
+  <penetrations>k__BackingField: 0
 --- !u!1 &7992468406502386881
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class FireBall : Skill
         {
             Player player = user.GetComponent<Player>();
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime + player.stats.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.stats.decreasedSkillCoolTime) * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
             float attackRate = player.stats.attackSpeed;
