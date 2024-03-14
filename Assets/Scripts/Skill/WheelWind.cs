@@ -6,9 +6,9 @@ public class WheelWind : Skill
 {
     [field: SerializeField] public int damage { get; private set; }     // 회당 기본 피해량
     [field: SerializeField] public int DPS { get; private set; }        // 초당 공격 속도
-    [field: SerializeField] public float size { get; private set; }
-    [field: SerializeField] public GameObject WheelWindEffect { get; private set; }
-    [field: SerializeField] public GameObject instant { get; private set; }
+    [field: SerializeField] public float size { get; private set; }     // 이펙트 크기
+    [field: SerializeField] public GameObject WheelWindEffect { get; private set; }     //휠윈드 prefep 이펙트
+    GameObject effect;      // 이펙트
 
     public override void Use(GameObject user)
     {
@@ -18,7 +18,7 @@ public class WheelWind : Skill
 
     IEnumerator Attack()
     {
-        Debug.Log("SpinAttack");
+        Debug.Log("WheelWind");
 
         if (user.tag == "Player")
         {
@@ -34,14 +34,16 @@ public class WheelWind : Skill
             yield return new WaitForSeconds(preDelay / attackRate);
 
             // 사용자 위치에 생성
-            instant = Instantiate(WheelWindEffect, user.transform.position, user.transform.rotation);
-            instant.transform.parent = user.transform;
+            if (effect != null)
+                Destroy(effect);
+            effect = Instantiate(WheelWindEffect, user.transform.position, user.transform.rotation);
+            effect.transform.parent = user.transform;
 
 
             // 공격 판정 조정
-            HitDetection hitDetection = instant.GetComponent<HitDetection>();
+            HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-            instant.transform.localScale = new Vector3(size * player.stats.weapon.attackSize, size * player.stats.weapon.attackSize, 0);
+            effect.transform.localScale = new Vector3(size * player.stats.weapon.attackSize, size * player.stats.weapon.attackSize, 0);
             /*
             투사체 = false
             관통력 = -1
@@ -67,7 +69,7 @@ public class WheelWind : Skill
     public override void Exit(GameObject user)
     {
         StartCoroutine("AttackOut");
-        
+
     }
 
     IEnumerator AttackOut()
@@ -78,12 +80,10 @@ public class WheelWind : Skill
 
             float attackRate = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
 
-            // rate 동안 유지
-            Destroy(instant);
-
-            //후딜
-            //없애도 될듯
             yield return new WaitForSeconds(postDelay / attackRate);
+
+            Destroy(effect);
+
         }
     }
 }

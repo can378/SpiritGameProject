@@ -22,16 +22,18 @@ public class SkillController : MonoBehaviour
         stats.skill = skillList[gainSkill.skillID].GetComponent<Skill>();
         Destroy(gainSkill.gameObject);
         MapUIManager.instance.UpdateSkillUI();
-        
+
     }
 
+    // 스킬 해제
     public void UnEquipSkill()
     {
-        Instantiate(DataManager.instance.gameData.skillList[stats.skill.skillID],gameObject.transform.position,gameObject.transform.localRotation);
+        Instantiate(DataManager.instance.gameData.skillList[stats.skill.skillID], gameObject.transform.position, gameObject.transform.localRotation);
         stats.skill = null;
         MapUIManager.instance.UpdateSkillUI();
     }
 
+    // 스킬키 입력
     public void SkillDown()
     {
         if (stats.skill.skillType == 0)
@@ -50,7 +52,7 @@ public class SkillController : MonoBehaviour
         {
             //홀드
             Debug.Log("스킬 홀드");
-            Hold();
+            StartCoroutine(Hold());
         }
 
     }
@@ -81,23 +83,36 @@ public class SkillController : MonoBehaviour
 
     void Ready()
     {
-        if(!status.isSkillReady)
+        if (!status.isSkillReady)
         {
             status.isSkillReady = true;
         }
-        else if(status.isSkillReady)
+        else if (status.isSkillReady)
         {
             status.isSkillReady = false;
             stats.skill.skillCoolTime = 0.5f;
         }
     }
 
-    void Hold()
+    public IEnumerator Hold()
     {
         status.isSkillHold = true;
         //player.RunDelay();
 
         stats.skill.Use(gameObject);
+
+        float timer = stats.skill.rate;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            timer -= 0.1f;
+            if (timer <= 0)
+            {
+                HoldOut();
+                break;
+            }
+        }
 
     }
 
