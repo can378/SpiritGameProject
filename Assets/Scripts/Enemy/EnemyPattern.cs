@@ -34,15 +34,7 @@ public class EnemyPattern : EnemyBasic
         if(isRepeat==true) StartCoroutine(LRShot(true));
     }
 
-    private void shot()
-    {
-        GameObject bullet = ObjectPoolManager.instance.Get(0);
-        Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-
-        bullet.transform.position = transform.position;
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-        rigid.AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
-    }
+    
 
 
     //multi shot=n°¥·¡·Î ÃÑÀ»½ð´Ù.

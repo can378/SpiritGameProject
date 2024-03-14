@@ -9,7 +9,7 @@ public enum enemyAttack
     rangeAttack, waveAttack,
     pop,
     chase,jump ,None,
-    wander,crow, whiteFox, snowBall,worm,frog,broomStick
+    wander,crow, whiteFox, snowBall,worm,frog,broomStick,head,pox
 };
 
 
@@ -65,6 +65,8 @@ public class EnemyAttack : EnemyPattern
             case enemyAttack.snowBall: StartCoroutine(snowBall());break;
             case enemyAttack.frog:StartCoroutine(frog());break;
             case enemyAttack.broomStick:StartCoroutine(peripheralAttack(20, 2, true));break;
+            case enemyAttack.head : StartCoroutine(head());break;
+            case enemyAttack.pox:break;
             default: break;
         }
     }
@@ -90,28 +92,23 @@ public class EnemyAttack : EnemyPattern
     IEnumerator snowBall() 
     { 
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        targetDirVec = (enemyTarget.position - transform.position).normalized;
 
         if (targetDis > GetComponent<EnemyStats>().detectionDis && isSnowBallAngry == false)
         {
             //roll
+            if (transform.localScale.x<=4)
+            { 
+                //stronger
+                for (float i = 0; i <= 10; i++)
+                {
+                    transform.Rotate(new Vector3(0, 0, i));
+                    rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultSpeed);
+                    transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
             print("Roll");
-            
-            float randomDirection = Random.Range(0f, 1f) < 0.5f ? -1f : 1f;
-            rigid.AddTorque(randomDirection * GetComponent<EnemyStats>().defaultSpeed*100);
-
-
-            targetDirVec = (enemyTarget.position - transform.position).normalized;
-            targetDirVec.y = 0;
-            var rotation = Quaternion.LookRotation(targetDirVec);
-
-
-            transform.Translate(Vector3.forward * Time.deltaTime * GetComponent<EnemyStats>().defaultSpeed);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
-
-
-            //stronger
-            transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
-            yield return new WaitForSeconds(1f);
         }
         else { isSnowBallAngry = true; } 
         
@@ -137,6 +134,13 @@ public class EnemyAttack : EnemyPattern
         }
         
         StartCoroutine(snowBall());
+    }
+
+    IEnumerator head() 
+    { 
+        
+        
+        yield return null; 
     }
 
 
