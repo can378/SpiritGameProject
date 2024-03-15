@@ -73,7 +73,7 @@ public class EnemyBasic : MonoBehaviour
                 status.HP -= trueDamage;
             }
         }
-        else if(attackAttributes == null)
+        else
         {
             print("enemy damaged : " + damage);
             status.HP -= damage;
