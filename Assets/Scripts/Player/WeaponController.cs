@@ -25,8 +25,7 @@ public class WeaponController : MonoBehaviour
     {
         // 무기 소유
         stats.weapon = gainWeapon;
-        MapUIManager.instance.UpdateWeaponUI();
-        // 장비 능력치 해제
+        // 장비 능력치 적용
         stats.weapon.Equip();
 
         if (stats.weapon.weaponType < 10)
@@ -41,6 +40,7 @@ public class WeaponController : MonoBehaviour
         
         // 장비 안보이게 하기
         stats.weapon.gameObject.SetActive(false);
+        MapUIManager.instance.UpdateWeaponUI();
     }
 
     public void UnEquipWeapon()
@@ -151,7 +151,7 @@ public class WeaponController : MonoBehaviour
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(false,-1, stats.weapon.isMultiHit, stats.weapon.DPS, stats.weapon.attackAttribute, stats.weapon.damage * Player.instance.stats.power, stats.weapon.knockBack, Player.instance.stats.critical, Player.instance.stats.criticalDamage,stats.weapon.deBuff);
+        hitDetection.SetHitDetection(false,-1, stats.weapon.isMultiHit, stats.weapon.DPS, stats.weapon.attackAttribute, Player.instance.stats.power, stats.weapon.knockBack, Player.instance.stats.critical, Player.instance.stats.criticalDamage,stats.weapon.deBuff);
 
         // 무기 방향 
         HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);
@@ -186,7 +186,7 @@ public class WeaponController : MonoBehaviour
 
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
-        hitDetection.SetHitDetection(true, stats.weapon.penetrations, stats.weapon.isMultiHit, stats.weapon.DPS, stats.weapon.attackAttribute, stats.weapon.damage * Player.instance.stats.power, stats.weapon.knockBack, Player.instance.stats.critical, Player.instance.stats.criticalDamage, stats.weapon.deBuff);
+        hitDetection.SetHitDetection(true, stats.weapon.penetrations, stats.weapon.isMultiHit, stats.weapon.DPS, stats.weapon.attackAttribute, Player.instance.stats.power, stats.weapon.knockBack, Player.instance.stats.critical, Player.instance.stats.criticalDamage, stats.weapon.deBuff);
         instantProjectile.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(stats.weapon.attackSize, stats.weapon.attackSize,1);
         bulletRigid.velocity = status.mouseDir * 10 * stats.weapon.projectileSpeed;  // 속도 설정

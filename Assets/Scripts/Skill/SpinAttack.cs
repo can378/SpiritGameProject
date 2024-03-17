@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SpinAttack : Skill
 {
-    [field: SerializeField] public int damage { get; private set; }
+    [field: SerializeField] public int defalutDamage { get; private set; }
+    [field: SerializeField] public float ratio { get; private set; }
     [field: SerializeField] public float size { get; private set; }
     [field: SerializeField] public GameObject spinEffect { get; private set; }
 
@@ -53,8 +54,8 @@ public class SpinAttack : Skill
             디버프 = 없음
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
-             player.stats.weapon.attackAttribute, 
-             (player.stats.weapon.damage + damage) * player.stats.power,
+             player.stats.weapon.attackAttribute,
+             defalutDamage + player.stats.power * ratio,
              player.stats.weapon.knockBack, 
              player.stats.critical, 
              player.stats.criticalDamage,

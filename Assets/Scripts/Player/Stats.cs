@@ -24,12 +24,13 @@ public class Stats : MonoBehaviour
     {
         get { return (1 + increasedReduction) * (0f + addReduction); }
     }
+    
     // 속성 저항
     public float[] resist = new float[11];  //저항은 무조선 덧셈 뺄셈으로
 
     //Attack
     //공격력
-    public float defaultPower = 1;
+    public float defaultPower = 0f;
     public float increasedPower { get; set; }
     public float addPower { get; set; }
     public float power

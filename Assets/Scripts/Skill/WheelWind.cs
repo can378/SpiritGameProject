@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WheelWind : Skill
 {
-    [field: SerializeField] public int damage { get; private set; }     // 회당 기본 피해량
+    [field: SerializeField] public int defaultDamage { get; private set; }     // 회당 기본 피해량
+    [field: SerializeField] public float ratio { get; private set; }
     [field: SerializeField] public int DPS { get; private set; }        // 초당 공격 속도
     [field: SerializeField] public float size { get; private set; }     // 이펙트 크기
     [field: SerializeField] public GameObject WheelWindEffect { get; private set; }     //휠윈드 prefep 이펙트
@@ -58,7 +59,7 @@ public class WheelWind : Skill
             */
             hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackRate),
              player.stats.weapon.attackAttribute,
-             (player.stats.weapon.damage + damage) * player.stats.power,
+             defaultDamage + player.stats.power * ratio,
              player.stats.weapon.knockBack,
              player.stats.critical,
              player.stats.criticalDamage,

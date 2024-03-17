@@ -581,13 +581,13 @@ public class Player : MonoBehaviour
     public void statApply()
     {
         Player.instance.stats.HPMax = 100 + Player.instance.stats.playerStat[0] * 25;
-        Player.instance.stats.addPower = Player.instance.stats.playerStat[1] * 0.20f;
-        Player.instance.stats.addAttackSpeed = Player.instance.stats.playerStat[2] * 0.20f;
+        Player.instance.stats.increasedPower = Player.instance.stats.playerStat[1] * 0.20f;
+        Player.instance.stats.increasedAttackSpeed = Player.instance.stats.playerStat[2] * 0.20f;
         Player.instance.stats.addCritical = Player.instance.stats.playerStat[3] * 0.10f;
         Player.instance.stats.addCriticalDamage = Player.instance.stats.playerStat[4] * 0.05f;
         Player.instance.stats.addSkillCoolTime = Player.instance.stats.playerStat[5] * 0.10f;
-        Player.instance.stats.addSkillPower = Player.instance.stats.playerStat[6] * 0.25f;
-        Player.instance.stats.addMoveSpeed = Player.instance.stats.playerStat[7] * 0.1f;
+        Player.instance.stats.addSkillPower = Player.instance.stats.playerStat[6] * 10f;
+        Player.instance.stats.increasedMoveSpeed = Player.instance.stats.playerStat[7] * 0.1f;
 
         MapUIManager.instance.UpdateHealthUI();
     }
