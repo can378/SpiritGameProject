@@ -103,7 +103,7 @@ MonoBehaviour:
   HPMax: 10000
   HP: 10000
   tempHP: 0
-  reductionRatio: 0
+  defaultReduction: 0
   resist:
   - 0
   - 0
@@ -116,8 +116,8 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  power: 10
-  defaultSpeed: 5
+  defaultPower: 10
+  defaultMoveSpeed: 5
   activeEffects: []
   detectionDis: 5
   exp: 0
@@ -200,4 +200,5 @@ MonoBehaviour:
   rigid: {fileID: 0}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   timeValue: 0

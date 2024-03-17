@@ -46,7 +46,7 @@ public class EnemyBasic : MonoBehaviour
 
     public void Damaged(float damage, float critical = 0, float criticalDamage = 0, List<int> attackAttributes = null)
     {
-        int criticalHit = Random.Range(0, 100) < critical ? 1 : 0;
+        int criticalHit = Random.Range(0, 100) < critical * 100 ? 1 : 0;
         damage = (int)(damage + criticalHit * criticalDamage * damage);
 
         if(attackAttributes != null)
