@@ -94,26 +94,31 @@ public class EnemyAttack : EnemyPattern
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
         targetDirVec = (enemyTarget.position - transform.position).normalized;
 
-        if (targetDis > GetComponent<EnemyStats>().detectionDis && isSnowBallAngry == false)
+
+
+        //ROLLING
+        if (targetDis > GetComponent<EnemyStats>().detectionDis)
         {
-            //roll
-            if (transform.localScale.x<=4)
-            { 
+            print("snow ball roll");
+            if (transform.localScale.x <= 4)
+            {
                 //stronger
-                for (float i = 0; i <= 10; i++)
+                for (float i = 0; i <= 360; i++)
                 {
                     transform.Rotate(new Vector3(0, 0, i));
-                    rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultMoveSpeed);
-                    transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+                    rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultMoveSpeed * 20);
+                    transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
                     yield return new WaitForSeconds(0.1f);
+                    print("stronger");
                 }
             }
-            print("Roll");
+            else 
+            { 
+                rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultMoveSpeed * 20); }
+            
         }
-        else { isSnowBallAngry = true; } 
-        
-        
-        if(isSnowBallAngry==true)
+        //ATTACK
+        else
         {
             print("snow ball attack");
             yield return new WaitForSeconds(3f);
@@ -127,12 +132,18 @@ public class EnemyAttack : EnemyPattern
             {
                 targetDirVec = (enemyTarget.position - transform.position).normalized;
                 rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
-                
+
                 yield return new WaitForSeconds(0.1f);
             }
-            
-        }
+            yield return new WaitForSeconds(3f);
+
+
+        } 
         
+        
+
+        //NEXT
+        yield return new WaitForSeconds(0.01f);
         StartCoroutine(snowBall());
     }
 
