@@ -16,7 +16,7 @@ public class PlayerStats : Stats
     public float increasedCritical { get; set; }
     public float addCritical { get; set; }
     public float critical {
-        get { return (1 + increasedCritical) * (defaultCritical + addCritical); }
+        get { return (1f + increasedCritical) * (defaultCritical + addCritical); }
     }
 
     //CriticalDamage

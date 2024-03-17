@@ -11,7 +11,7 @@ public class Weapon : Equipment
     
     [field: SerializeField] public bool isMultiHit { get; private set; }            // 다단히트 여부
     [field: SerializeField] public int DPS { get; private set; }                    // 초당 타격 횟수 필요 없을 시 음수
-    [field: SerializeField] public float damage { get; private set; }
+    [field: SerializeField] public float attackPower { get; private set; }
     [field: SerializeField] public float knockBack { get; private set; }
     [field: SerializeField] public float attackSpeed { get; private set; }          // 공격속도
 
@@ -35,7 +35,7 @@ public class Weapon : Equipment
 
     public override void Equip()
     {
-        Player.instance.stats.defaultPower = damage;
+        Player.instance.stats.addPower = attackPower;
     }
 
     public override void UnEquip()
