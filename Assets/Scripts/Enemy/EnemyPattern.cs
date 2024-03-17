@@ -79,7 +79,7 @@ public class EnemyPattern : EnemyBasic
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rigid.AddForce(targetDirVec * status.defaultSpeed); }
+        { rigid.AddForce(targetDirVec * status.defaultMoveSpeed); }
         
         yield return new WaitForSeconds(0.1f);
 
@@ -115,7 +115,7 @@ public class EnemyPattern : EnemyBasic
             //getting farther
             do
             {
-                rigid.AddForce(-targetDirVec * status.defaultSpeed, ForceMode2D.Impulse);
+                rigid.AddForce(-targetDirVec * status.defaultMoveSpeed, ForceMode2D.Impulse);
                 targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);
@@ -312,7 +312,7 @@ public class EnemyPattern : EnemyBasic
                 direction.Normalize();
 
                 // 이동 속도, 시간
-                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / status.defaultSpeed;
+                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / status.defaultMoveSpeed;
 
                 // 점프 시작
                 isJumping = true;
@@ -321,7 +321,7 @@ public class EnemyPattern : EnemyBasic
 
                 while (elapsedTime < jumpDuration)
                 {
-                    transform.Translate(direction * (Time.deltaTime / jumpDuration) * status.defaultSpeed);
+                    transform.Translate(direction * (Time.deltaTime / jumpDuration) * status.defaultMoveSpeed);
                     elapsedTime = Time.time - startTime;
                     yield return null;
                 }
@@ -377,7 +377,7 @@ public class EnemyPattern : EnemyBasic
 
         targetDirVec = (enemyTarget.position - transform.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(Vector3.forward, targetDirVec);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, GetComponent<EnemyStats>().defaultSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, GetComponent<EnemyStats>().defaultMoveSpeed * Time.deltaTime);
     
         
         while (rangeScale <= range)

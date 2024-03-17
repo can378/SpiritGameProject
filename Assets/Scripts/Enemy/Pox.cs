@@ -41,13 +41,13 @@ public class Pox : EnemyBasic
             yield return new WaitForSeconds(1f);
             rigid.velocity = new Vector3(0, 0, 0);
             yield return new WaitForSeconds(1f);
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultSpeed*5);
+            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 5);
             
 
             rigid.velocity = new Vector3(0,0,0);
             yield return new WaitForSeconds(1f);
 
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultSpeed*2);
+            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 2);
             
         }
         else
@@ -66,7 +66,7 @@ public class Pox : EnemyBasic
             //getting farther
             do
             {
-                rigid.AddForce(-targetDirVec * status.defaultSpeed, ForceMode2D.Impulse);
+                rigid.AddForce(-targetDirVec * status.defaultMoveSpeed, ForceMode2D.Impulse);
                 targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);

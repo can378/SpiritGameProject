@@ -127,11 +127,10 @@ public class Player : MonoBehaviour
         RaycastHit2D hit;
 
         // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-        float moveSpeed = stats.speed * stats.defaultSpeed;
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
-            new Vector2(playerPosition.x * moveSpeed, playerPosition.y * moveSpeed);
+            new Vector2(playerPosition.x * stats.moveSpeed, playerPosition.y * stats.moveSpeed);
         
 
         // 레이저 발사 (시작, 끝, 레이어마스크)
@@ -159,8 +158,7 @@ public class Player : MonoBehaviour
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            float moveSpeed = stats.speed * stats.defaultSpeed;
-            rigid.velocity = moveVec * moveSpeed * (status.isSprint ? stats.runSpeed : 1f);
+            rigid.velocity = moveVec * stats.moveSpeed * (status.isSprint ? stats.runSpeed : 1f);
             
         }
     }
@@ -183,7 +181,7 @@ public class Player : MonoBehaviour
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
             // 회피 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 회피속도
-            float dodgeSpeed = stats.speed * stats.defaultSpeed * stats.dodgeSpeed;
+            float dodgeSpeed = stats.moveSpeed * stats.dodgeSpeed;
             rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
 
@@ -583,14 +581,15 @@ public class Player : MonoBehaviour
     public void statApply()
     {
         Player.instance.stats.HPMax = 100 + Player.instance.stats.playerStat[0] * 25;
+        Player.instance.stats.addPower = Player.instance.stats.playerStat[1] * 0.20f;
+        Player.instance.stats.addAttackSpeed = Player.instance.stats.playerStat[2] * 0.20f;
+        Player.instance.stats.addCritical = Player.instance.stats.playerStat[3] * 0.10f;
+        Player.instance.stats.addCriticalDamage = Player.instance.stats.playerStat[4] * 0.05f;
+        Player.instance.stats.addSkillCoolTime = Player.instance.stats.playerStat[5] * 0.10f;
+        Player.instance.stats.addSkillPower = Player.instance.stats.playerStat[6] * 0.25f;
+        Player.instance.stats.addMoveSpeed = Player.instance.stats.playerStat[7] * 0.1f;
+
         MapUIManager.instance.UpdateHealthUI();
-        Player.instance.stats.power = 1 + Player.instance.stats.playerStat[1] * 0.20f;
-        Player.instance.stats.attackSpeed = 1 + Player.instance.stats.playerStat[2] * 0.20f;
-        Player.instance.stats.critical = Player.instance.stats.playerStat[3] * 0.10f;
-        Player.instance.stats.criticalDamage = 0.5f + Player.instance.stats.playerStat[4] * 0.05f;
-        Player.instance.stats.decreasedSkillCoolTime = 0 - Player.instance.stats.playerStat[5] * 0.10f;
-        Player.instance.stats.skillPower = 1 + Player.instance.stats.playerStat[6] * 0.25f;
-        Player.instance.stats.speed = 1 + Player.instance.stats.playerStat[7] * 0.1f;
     }
     #endregion
 
@@ -683,7 +682,7 @@ public class Player : MonoBehaviour
         }
 
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
-        damage = damage * (1 - stats.reductionRatio);
+        damage = damage * (1 - stats.reduction);
 
         Debug.Log("Player Damaged" + damage);
         stats.HP -= damage;
@@ -706,7 +705,7 @@ public class Player : MonoBehaviour
     public void KnockBack(GameObject agent)
     {
         //튕겨나감
-        float distance = 10 * (1 - stats.reductionRatio);
+        float distance = 10 * (1 - stats.reduction);
         Vector2 dir = (transform.position - agent.transform.position).normalized;
 
         //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);

@@ -21,7 +21,7 @@ public class EnemyBullet : MonoBehaviour
 
         //플레이어쪽으로 발사
         Vector2 direction = transform.position- playerPos.position;
-        transform.Translate(direction * status.defaultSpeed * Time.deltaTime);    
+        transform.Translate(direction * status.defaultMoveSpeed * Time.deltaTime);    
     }
 
 }

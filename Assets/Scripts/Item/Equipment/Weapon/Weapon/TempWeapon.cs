@@ -6,11 +6,11 @@ public class TempWeapon : Weapon
 {
     public override void Equip()
     {
-        Player.instance.stats.power+= 0.25f;
+        Player.instance.stats.addPower+= 0.25f;
     }
 
     public override void UnEquip()
     {
-        Player.instance.stats.power -= 0.25f;
+        Player.instance.stats.addPower -= 0.25f;
     }
 }

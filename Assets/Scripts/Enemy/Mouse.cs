@@ -60,7 +60,7 @@ public class Mouse : EnemyBasic
 
             //Run away
             targetDirVec = enemyTarget.position - transform.position;
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultSpeed * 1000);
+            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 1000);
 
 
         }

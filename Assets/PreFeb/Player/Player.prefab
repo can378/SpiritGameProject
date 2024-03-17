@@ -656,7 +656,7 @@ MonoBehaviour:
   HPMax: 100
   HP: 100
   tempHP: 0
-  reductionRatio: 0
+  defaultReduction: 0
   resist:
   - 0
   - 0
@@ -669,23 +669,12 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  power: 1
-  defaultSpeed: 5
+  defaultPower: 1
+  defaultMoveSpeed: 5
   activeEffects: []
   level: 1
   exp: 1
   point: 10
-  critical: 0
-  criticalDamage: 0.5
-  drain: 0
-  attackSpeed: 1
-  skillPower: 5
-  decreasedSkillCoolTime: 1
-  speed: 1
-  runSpeed: 1.66
-  runCoolTime: 5
-  dodgeSpeed: 2
-  dodgeTime: 0.5
   coin: 0
   key: 0
   dice: 0
@@ -937,6 +926,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <deBuff>k__BackingField: {fileID: 0}
   <enemies>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!60 &3481271467806886931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1435,6 +1425,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <deBuff>k__BackingField: {fileID: 0}
   <enemies>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!60 &919348861844483977
 PolygonCollider2D:
   m_ObjectHideFlags: 0

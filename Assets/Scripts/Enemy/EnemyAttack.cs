@@ -103,7 +103,7 @@ public class EnemyAttack : EnemyPattern
                 for (float i = 0; i <= 10; i++)
                 {
                     transform.Rotate(new Vector3(0, 0, i));
-                    rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultSpeed);
+                    rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultMoveSpeed);
                     transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
                     yield return new WaitForSeconds(0.1f);
                 }
@@ -120,13 +120,13 @@ public class EnemyAttack : EnemyPattern
             //attack
             targetDirVec = (enemyTarget.position - transform.position).normalized;
 
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultSpeed*3);
+            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 3);
             yield return new WaitForSeconds(3f);
 
             while (targetDis > 0.1f && isSnowBallAngry == true)
             {
                 targetDirVec = (enemyTarget.position - transform.position).normalized;
-                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultSpeed*10);
+                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
                 
                 yield return new WaitForSeconds(0.1f);
             }
@@ -166,9 +166,9 @@ public class EnemyAttack : EnemyPattern
         transform.parent = enemyTarget.transform;
         transform.position = enemyTarget.position;
         //player move slowly
-        enemyTarget.GetComponent<PlayerStats>().defaultSpeed -= 3;
+        enemyTarget.GetComponent<PlayerStats>().defaultMoveSpeed -= 3;
         yield return new WaitForSeconds(time);
-        enemyTarget.GetComponent<PlayerStats>().defaultSpeed += 3;
+        enemyTarget.GetComponent<PlayerStats>().defaultMoveSpeed += 3;
         Destroy(this.gameObject);
     }
 
@@ -181,7 +181,7 @@ public class EnemyAttack : EnemyPattern
         {
             //get closer to player
             targetDirVec = enemyTarget.position - transform.position;
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultSpeed);
+            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
 
         }
         else

@@ -165,7 +165,7 @@ public class EnemyBasic : MonoBehaviour
     public void Chase()
     {
         Vector2 direction = enemyTarget.position - transform.position;
-        transform.Translate(direction * status.defaultSpeed * Time.deltaTime);
+        transform.Translate(direction * status.defaultMoveSpeed * Time.deltaTime);
 
     }
 

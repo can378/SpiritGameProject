@@ -25,7 +25,7 @@ public class WheelWind : Skill
             Player player = this.user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.decreasedSkillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
             float attackRate = player.stats.attackSpeed * player.stats.weapon.attackSpeed;

@@ -30,7 +30,7 @@ public class Frog : EnemyBasic
             lineCreator.transform.gameObject.SetActive(false);
 
             //get closer to player
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultSpeed);
+            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
             yield return new WaitForSeconds(0.1f);
         }
         else
