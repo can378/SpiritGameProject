@@ -30,6 +30,7 @@ public class EnemyAttack : EnemyPattern
     [Header("Beam")]
     public GameObject beam;
 
+
     private void Start()
     {
         //if (this.transform.gameObject.activeSelf != false) { EnemyPatternStart(); }
@@ -62,7 +63,7 @@ public class EnemyAttack : EnemyPattern
             case enemyAttack.wander:StartCoroutine(Wander(true));break;
             case enemyAttack.crow:StartCoroutine(LRShot(true));break;
             case enemyAttack.whiteFox: StartCoroutine(whiteFox()); break;
-            case enemyAttack.snowBall: StartCoroutine(snowBall());break;
+            case enemyAttack.snowBall: StartCoroutine(snowBall(new Vector2(-1,0)));break;
             case enemyAttack.frog:StartCoroutine(frog());break;
             case enemyAttack.broomStick:StartCoroutine(peripheralAttack(20, 2, true));break;
             case enemyAttack.head : StartCoroutine(head());break;
@@ -89,63 +90,95 @@ public class EnemyAttack : EnemyPattern
     }
 
     private bool isSnowBallAngry = false;
-    IEnumerator snowBall() 
-    { 
+    private bool isHit = false;
+    //private bool isSnowBallPause = false;
+    IEnumerator snowBall(Vector2 dir) 
+    {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
 
-
-
+        
         //ROLLING
+        float rightOrLeft = Vector2.Dot(rigid.velocity.normalized, Vector2.right);
+        if (rightOrLeft > 0)
+        {
+            //move right
+            transform.Rotate(new Vector3(0, 0, -GetComponent<EnemyStats>().defaultMoveSpeed));
+        }
+        else if (rightOrLeft < 0)
+        {
+            //move left
+            transform.Rotate(new Vector3(0, 0, GetComponent<EnemyStats>().defaultMoveSpeed));
+        }
+
+
+
+
+        
+
+
         if (targetDis > GetComponent<EnemyStats>().detectionDis)
         {
-            print("snow ball roll");
+            //MOVE
+            //setting random dirVec
+            if (isHit == true)
+            {
+                rigid.velocity = new Vector2(0,0);
+                yield return new WaitForSeconds(0.1f);
+                //float randomAngle = Random.Range(0, 360);
+                dir *= -1;
+                //dir = Quaternion.Euler(0, 0, randomAngle) * Vector2.right;//random direction
+                dir += new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+                isHit = false;
+            }
+            rigid.AddForce(dir * GetComponent<EnemyStats>().defaultMoveSpeed * 20);
+            yield return new WaitForSeconds(0.1f);
+
+            //STRONGER
             if (transform.localScale.x <= 4)
             {
-                //stronger
-                for (float i = 0; i <= 360; i++)
-                {
-                    transform.Rotate(new Vector3(0, 0, i));
-                    rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultMoveSpeed * 20);
-                    transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
-                    yield return new WaitForSeconds(0.1f);
-                    print("stronger");
-                }
+                transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
             }
-            else 
-            { 
-                rigid.AddForce(new Vector3(-1, 0, 0) * GetComponent<EnemyStats>().defaultMoveSpeed * 20); }
-            
         }
         //ATTACK
         else
         {
             print("snow ball attack");
-            yield return new WaitForSeconds(3f);
-            //attack
+
+            isSnowBallAngry = true;
+
+            rigid.velocity = new Vector3(0,0,0);
+            yield return new WaitForSeconds(1f);
+
+            //move Backward
             targetDirVec = (enemyTarget.position - transform.position).normalized;
+            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 20);
 
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 3);
-            yield return new WaitForSeconds(3f);
-
-            while (targetDis > 0.1f && isSnowBallAngry == true)
+            //rush to target
+            while (targetDis > 0&&isSnowBallAngry==true)
             {
-                targetDirVec = (enemyTarget.position - transform.position).normalized;
-                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
-
+                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+                //targetDirVec = (enemyTarget.position - transform.position).normalized;
+                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 50);
                 yield return new WaitForSeconds(0.1f);
+                print("rush snowball");
             }
-            yield return new WaitForSeconds(3f);
 
+            //pause
+            rigid.velocity = new Vector3(0, 0, 0);
+            yield return new WaitForSeconds(4f);
+            isSnowBallAngry = false;
 
         } 
         
         
 
         //NEXT
-        yield return new WaitForSeconds(0.01f);
-        StartCoroutine(snowBall());
+        StartCoroutine(snowBall(dir));
     }
+
+
+
+
 
     IEnumerator head() 
     { 
@@ -161,6 +194,7 @@ public class EnemyAttack : EnemyPattern
         {
             //stop attacking if is hitted by something
             isSnowBallAngry = false;
+            isHit = true;
             transform.localScale = new Vector3(1, 1, 1);
         
         }
