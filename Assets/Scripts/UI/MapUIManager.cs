@@ -22,6 +22,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject resetPanel;
     public RectTransform sidePanel;
     public RectTransform equipmentPanel;
+    public GameObject minimapPanel;
 
     //Player status
     public Slider Hpslider;
@@ -98,7 +99,7 @@ public class MapUIManager : MonoBehaviour
     }
 
 
-    #region player UI
+    #region player UI Update
     public void UpdateHealthUI()
     {
 
@@ -178,6 +179,12 @@ public class MapUIManager : MonoBehaviour
             else
                 EquipmentsTxt[i].text ="";
         }
+    }
+
+    public void UpdateMinimapUI(bool tf)
+    {
+        minimapPanel.SetActive(tf);
+    
     }
 
     #endregion

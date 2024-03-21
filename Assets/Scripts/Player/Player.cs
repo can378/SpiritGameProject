@@ -651,6 +651,8 @@ public class Player : MonoBehaviour
                 stats.key++;
                 MapUIManager.instance.UpdateKeyUI();
             }
+
+            MapUIManager.instance.UpdateMinimapUI(false);
         }
 
     }

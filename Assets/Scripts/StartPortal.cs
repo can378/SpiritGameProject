@@ -14,6 +14,7 @@ public class StartPortal : Portal
     {
         if (other.gameObject.tag == "Player" && roomManager.finish==true)
         {
+            MapUIManager.instance.UpdateMinimapUI(true);
             Destination = roomManager.rooms[0].transform;
             other.transform.position = Destination.position;
             CameraManager.instance.CameraMove(other.gameObject);
