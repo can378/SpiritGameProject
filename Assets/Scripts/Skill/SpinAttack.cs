@@ -24,13 +24,13 @@ public class SpinAttack : Skill
             Player player = this.user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = player.stats.skillCoolTime * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
+            float attackSpeed = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
 
             // 선딜
-            yield return new WaitForSeconds(preDelay / attackRate);
+            yield return new WaitForSeconds(preDelay / attackSpeed);
 
             // 사용자 위치에 생성
             GameObject instant = Instantiate(spinEffect, user.transform.position, user.transform.rotation);
@@ -55,18 +55,18 @@ public class SpinAttack : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              player.stats.weapon.attackAttribute,
-             defalutDamage + player.stats.power * ratio,
+             defalutDamage + player.stats.attackPower * ratio,
              player.stats.weapon.knockBack, 
-             player.stats.critical, 
+             player.stats.criticalChance, 
              player.stats.criticalDamage,
              player.stats.weapon.deBuff);
 
             // rate 동안 유지
-            Destroy(instant, rate / attackRate);
+            Destroy(instant, rate / attackSpeed);
 
             // 후딜
             // 없애도 될 듯
-            yield return new WaitForSeconds(postDelay / attackRate);
+            yield return new WaitForSeconds(postDelay / attackSpeed);
         }
     }
 

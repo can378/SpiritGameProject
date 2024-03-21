@@ -8,7 +8,7 @@ public class EnemyBasic : MonoBehaviour
     [HideInInspector]
     public Transform enemyTarget;
     [HideInInspector]
-    public EnemyStats status;
+    public EnemyStats stats;
     [HideInInspector]
     public Rigidbody2D rigid;
     [HideInInspector]
@@ -24,7 +24,7 @@ public class EnemyBasic : MonoBehaviour
     {
         enemyTarget = GameObject.FindWithTag("Player").transform;
         rigid = GetComponent<Rigidbody2D>();
-        status = GetComponent<EnemyStats>();
+        stats = GetComponent<EnemyStats>();
         sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -46,8 +46,8 @@ public class EnemyBasic : MonoBehaviour
 
     public void Damaged(float damage, float critical = 0, float criticalDamage = 0, List<int> attackAttributes = null)
     {
-        int criticalHit = Random.Range(0, 100) < critical * 100 ? 1 : 0;
-        damage = (int)(damage + criticalHit * criticalDamage * damage);
+        bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;
+        damage = criticalHit ? damage * criticalDamage : damage;
 
         if(attackAttributes != null)
         {
@@ -68,20 +68,20 @@ public class EnemyBasic : MonoBehaviour
                     default: att = "무속성"; break;
 
                 }
-                float trueDamage = (damage * (1 - status.resist[attackAttribute]) / attackAttributes.Count) > 0 ? (damage * (1 - status.resist[attackAttribute]) / attackAttributes.Count) : 1f;
+                float trueDamage = (damage * stats.resist[attackAttribute] / attackAttributes.Count) > 0f ? (damage * stats.resist[attackAttribute] / attackAttributes.Count) : 1f;
                 print(att + " enemy damaged : " + trueDamage);
-                status.HP -= trueDamage;
+                stats.HP -= trueDamage;
             }
         }
         else
         {
             print("enemy damaged : " + damage);
-            status.HP -= damage;
+            stats.HP -= damage;
         }
         
         sprite.color = Color.red;
         Invoke("DamagedOut",0.05f);
-        if (status.HP <= 0f)
+        if (stats.HP <= 0f)
         {
             Player.instance.stats.exp++;
             MapUIManager.instance.UpdateExpUI();
@@ -104,7 +104,7 @@ public class EnemyBasic : MonoBehaviour
     {
         // 가지고 있는 버프인지 체크한다.
         StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
-        foreach (StatusEffect buff in status.activeEffects)
+        foreach (StatusEffect buff in stats.activeEffects)
         {
             // 가지고 있는 버프라면 갱신한다.
             if (buff.buffId == statusEffect.buffId)
@@ -120,7 +120,7 @@ public class EnemyBasic : MonoBehaviour
         statusEffect.SetTarget(gameObject);
 
         statusEffect.ApplyEffect();
-        status.activeEffects.Add(statusEffect);
+        stats.activeEffects.Add(statusEffect);
 
         StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
@@ -136,18 +136,18 @@ public class EnemyBasic : MonoBehaviour
             }
         }
         effect.RemoveEffect();
-        status.activeEffects.Remove(effect);
+        stats.activeEffects.Remove(effect);
 
         Destroy(effect.gameObject);
     }
 
     public void RemoveAllEffects()
     {
-        foreach (StatusEffect effect in status.activeEffects)
+        foreach (StatusEffect effect in stats.activeEffects)
         {
             effect.RemoveEffect();
         }
-        status.activeEffects.Clear();
+        stats.activeEffects.Clear();
     }
 
 
@@ -165,7 +165,7 @@ public class EnemyBasic : MonoBehaviour
     public void Chase()
     {
         Vector2 direction = enemyTarget.position - transform.position;
-        transform.Translate(direction * status.defaultMoveSpeed * Time.deltaTime);
+        transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
 
     }
 

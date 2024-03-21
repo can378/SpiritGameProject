@@ -7,12 +7,12 @@ public class TempWeapon : Weapon
     public override void Equip()
     {
         base.Equip();
-        Player.instance.stats.addPower+= 0.25f;
+        Player.instance.stats.increasedAttackPower += 0.25f;
     }
 
     public override void UnEquip()
     {
         base.UnEquip();
-        Player.instance.stats.addPower -= 0.25f;
+        Player.instance.stats.increasedAttackPower -= 0.25f;
     }
 }

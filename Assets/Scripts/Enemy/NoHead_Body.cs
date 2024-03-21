@@ -41,7 +41,7 @@ public class NoHead_Body : EnemyBasic
         {
             //chase player
             Vector2 direction = enemyTarget.position - transform.position;
-            transform.Translate(direction * status.defaultMoveSpeed * Time.deltaTime);
+            transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.1f);
 
         }

@@ -16,36 +16,45 @@ public class Stats : MonoBehaviour
     public float HP = 100;
     public float tempHP = 0;
 
-    // 피해 감소
-    public float defaultReduction = 0;
-    public float increasedReduction { get; set; }
-    public float addReduction { get; set; }
-    public float reduction
+    // 모든 받는 피해
+    // UI : 받는 피해 100%
+    // 받는 피해 = 피해량 * 받는 피해
+    public float defaultDefensivePower = 1f;
+    public float addDefensivePower { get; set; }
+    public float increasedDefensivePower { get; set; }
+    public float decreasedDefensivePower { get; set; }
+    public float defensivePower
     {
-        get { return (1 + increasedReduction) * (0f + addReduction); }
+        get { return (defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower); }
     }
     
-    // 속성 저항
-    public float[] resist = new float[11];  //저항은 무조선 덧셈 뺄셈으로
+    // 속성 받는 피해
+    public float[] resist = new float[11] {1,1,1,1,1,1,1,1,1,1,1};  //저항은 무조선 덧셈 뺄셈으로
 
-    //Attack
-    //공격력
-    public float defaultPower = 0f;
-    public float increasedPower { get; set; }
-    public float addPower { get; set; }
-    public float power
+    // Attack
+    // 공격력
+    // UI : 공격력 0
+    // 기본 공격 피해량 = 공격력
+    public float defaultAttackPower = 0f;
+    public float addAttackPower { get; set; }
+    public float increasedAttackPower { get; set; }
+    public float decreasedAttackPower { get; set; }
+    public float attackPower
     {
-        get { return (1 + increasedPower) * (defaultPower + addPower); }
+        get { return (defaultAttackPower + addAttackPower) * (1f + increasedAttackPower) * (1f - decreasedAttackPower); }
     }
 
-    //Speed
+    // Speed
+    // 이동 속도 5
+    // 이동 속도 = 이동속도
     public float defaultMoveSpeed = 5f;
-    public float increasedMoveSpeed { get; set; }
     public float addMoveSpeed { get; set; }
+    public float increasedMoveSpeed { get; set; }
+    public float decreasedMoveSpeed { get; set; }
     public float moveSpeed
     {
-        get { return (1 + increasedMoveSpeed) * (defaultMoveSpeed + addMoveSpeed); }
+        get { return (defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed); }
     }
 
-    public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
+    [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
 }

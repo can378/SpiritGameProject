@@ -8,23 +8,18 @@ public class DotDamageBuff : StatusEffect
     // dotDamage가 양수이면 피해
     // 음수이면 힐
     [field: SerializeField] public float damagePerSecond { get; set; }
-    private Coroutine dotDamageCoroutine;
 
     public override void ApplyEffect()
     {
         // 주기적으로 피해를 입히는 코루틴 시작
         ResetEffect();
-        dotDamageCoroutine = StartCoroutine(InflictDamageOverTime());
+        StartCoroutine(InflictDamageOverTime());
         //Debug.Log("DoT debuff applied: " + damagePerSecond + " damage per second");
     }
 
     public override void RemoveEffect()
     {
         // 디버프 종료 시 피해 코루틴 중단
-        if (dotDamageCoroutine != null)
-        {
-            StopCoroutine(dotDamageCoroutine);
-        }
         //Debug.Log("DoT debuff removed");
     }
 
@@ -47,8 +42,6 @@ public class DotDamageBuff : StatusEffect
 
             // 주기적으로 피해를 입히는 간격(예: 1초)을 기다립니다.
             yield return new WaitForSeconds(1f);
-
-            duration -= 1f;
         }
     }
 
@@ -64,7 +57,7 @@ public class DotDamageBuff : StatusEffect
             EnemyBasic enemy = target.GetComponent<EnemyBasic>();
             List<int> attributes = new List<int>();
             attributes.Add(0);
-            enemy.Damaged(enemy.status.HPMax * damage * overlap);
+            enemy.Damaged(enemy.stats.HPMax * damage * overlap);
         }
     }
 }

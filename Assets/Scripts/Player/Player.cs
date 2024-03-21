@@ -180,7 +180,7 @@ public class Player : MonoBehaviour
             
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
-            // 회피 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 회피속도
+            // 회피 속도 = 플레이어 이동속도 * 회피속도
             float dodgeSpeed = stats.moveSpeed * stats.dodgeSpeed;
             rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
@@ -580,14 +580,14 @@ public class Player : MonoBehaviour
 
     public void statApply()
     {
-        Player.instance.stats.HPMax = 100 + Player.instance.stats.playerStat[0] * 25;
-        Player.instance.stats.increasedPower = Player.instance.stats.playerStat[1] * 0.20f;
-        Player.instance.stats.increasedAttackSpeed = Player.instance.stats.playerStat[2] * 0.20f;
-        Player.instance.stats.addCritical = Player.instance.stats.playerStat[3] * 0.1f;
-        Player.instance.stats.addCriticalDamage = Player.instance.stats.playerStat[4] * 0.05f;
-        Player.instance.stats.addSkillPower = Player.instance.stats.playerStat[5] * 10f;
-        Player.instance.stats.addSkillCoolTime = Player.instance.stats.playerStat[6] * 0.10f;
-        Player.instance.stats.increasedMoveSpeed = Player.instance.stats.playerStat[7] * 0.1f;
+        Player.instance.stats.HPMax += Player.instance.stats.playerStat[0] * 25;
+        Player.instance.stats.addAttackPower += Player.instance.stats.playerStat[1] * 0.20f;
+        Player.instance.stats.addAttackSpeed += Player.instance.stats.playerStat[2] * 0.20f;
+        Player.instance.stats.addCriticalChance += Player.instance.stats.playerStat[3] * 0.1f;
+        Player.instance.stats.addCriticalDamage += Player.instance.stats.playerStat[4] * 0.05f;
+        Player.instance.stats.addSkillPower += Player.instance.stats.playerStat[5] * 10f;
+        Player.instance.stats.addSkillCoolTime -= Player.instance.stats.playerStat[6] * 0.10f;
+        Player.instance.stats.addMoveSpeed += Player.instance.stats.playerStat[7] * 0.1f;
 
         MapUIManager.instance.UpdateHealthUI();
     }
@@ -605,7 +605,7 @@ public class Player : MonoBehaviour
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
 
-            Damaged(other.GetComponent<EnemyStats>().power);
+            Damaged(other.GetComponent<EnemyStats>().attackPower);
             //Damaged(10);
             KnockBack(other.gameObject);
             Invincible();
@@ -682,7 +682,7 @@ public class Player : MonoBehaviour
         }
 
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
-        damage = damage * (1 - stats.reduction);
+        damage = damage * stats.defensivePower;
 
         Debug.Log("Player Damaged" + damage);
         stats.HP -= damage;
@@ -705,7 +705,7 @@ public class Player : MonoBehaviour
     public void KnockBack(GameObject agent)
     {
         //튕겨나감
-        float distance = 10 * (1 - stats.reduction);
+        float distance = 10 * (1 - stats.defensivePower);
         Vector2 dir = (transform.position - agent.transform.position).normalized;
 
         //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
@@ -772,6 +772,7 @@ public class Player : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(0.1f);
+            effect.duration -= 0.1f;
             if(effect.duration <= 0)
             {
                 break;

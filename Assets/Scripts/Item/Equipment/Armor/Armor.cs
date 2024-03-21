@@ -6,13 +6,13 @@ public class Armor : Equipment
 {
     public override void Equip()
     {
-        print("플레이어 피해 감소 증가");
-        Player.instance.stats.addReduction += 0.25f;
+        print("플레이어 받는 피해 +25% 증가");
+        Player.instance.stats.addDefensivePower -= 0.25f;
     }
 
     public override void UnEquip()
     {
-        Player.instance.stats.addReduction -= 0.25f;
+        Player.instance.stats.addDefensivePower -= 0.25f;
     }
 
 

@@ -11,97 +11,129 @@ public class PlayerStats : Stats
 
     //Attack
 
-    //Critical
-    public float defaultCritical = 0;
-    public float increasedCritical { get; set; }
-    public float addCritical { get; set; }
-    public float critical {
-        get { return (1f + increasedCritical) * (defaultCritical + addCritical); }
+    // Critical
+    // UI : 치명타 확률 0%
+    // 치명타 = 무작위(0 ~ 100) < 치명타 확률 * 100 ? 참 : 거짓
+    public float defaultCriticalChance = 0;
+    public float addCriticalChance { get; set; }
+    public float increasedCriticalChance { get; set; }
+    public float decreasedCriticalChance { get; set; }
+    public float criticalChance
+    {
+        get { return (defaultCriticalChance + addCriticalChance) * (1f + increasedCriticalChance) * (1f - decreasedCriticalChance); }
     }
 
     //CriticalDamage
+    // UI : 치명타 피해량 150%
+    // 피해량 = 치명타 ? 치명타 피해량 * 기본 피해량 : 기본 피해량
     public float defaultCriticalDamage = 0.5f;
-    public float increasedCriticalDamage { get; set; }
     public float addCriticalDamage { get; set; }
+    public float increasedCriticalDamage { get; set; }
+    public float decreasedCriticalDamage { get; set; }
     public float criticalDamage
     {
-        get { return (1 + increasedCriticalDamage) * (0.5f + addCriticalDamage); }
+        get { return (defaultCriticalDamage + addCriticalDamage) * (1f + increasedCriticalDamage) * (1f - decreasedCriticalDamage); }
     }
 
     //Drain
     public float defaultDrain = 0;
+    public float addDrain { get; set; }
     public float increasedDrain {  get; set; }
-    public float addDrain {  get; set; }
+    public float decreasedDrain { get; set; }
     public float drain
     {
-        get { return (1 + increasedDrain) * (0 + addDrain); }
+        get { return (defaultDrain + addDrain) * (1f + increasedDrain) * (1f - decreasedDrain); }
     }
 
     // attackSpeed
+    // UI 100%
     // 높을수록 빨라짐
+    // 초당 공격속도 = 무기 초당 공격 속도 * 플레이어 공격속도
     public float defaultAttackSpeed = 1;
+    public float addAttackSpeed { get; set; }
     public float increasedAttackSpeed {  get; set; }
-    public float addAttackSpeed {  get; set; }
+    public float decreasedAttackSpeed { get; set; }
     public float attackSpeed
     {
-        get { return (1 + increasedAttackSpeed) * (defaultAttackSpeed + addAttackSpeed); }
+        get { return (defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed); }
     }
 
-    //Skill
-    //SkillPower
+    // Skill
+    // SkillPower
+    // UI 도력 0
+    // 도술 피해량 = 도술 기본 피해량 + 도력 * 스킬 계수
     public float defaultSkillPower = 0;
-    public float increasedSkillPower {  get; set; }
-    public float addSkillPower {  get; set; }
+    public float addSkillPower { get; set; }
+    public float increasedSkillPower { get; set; }
+    public float decreasedSkillPower { get; set; }
     public float skillPower
     {
-        get { return (1 + increasedSkillPower) * (defaultSkillPower + addSkillPower); }
+        get { return (defaultSkillPower + addSkillPower) * (1f + increasedSkillPower) * (1f - decreasedSkillPower); }
     }
 
-    //SkillCoolTime
-    // 높을수록 스킬 자주 사용 가능
-    public float defaultSkillCoolTime = 0;
-    public float increasedSkillCoolTime {  get; set; }
-    public float addSkillCoolTime {  get; set; }
+    // SkillCoolTime
+    // 도술 재사용 대기 시간
+    // UI 재사용 대기 시간 100%
+    // 낮을수록 도술 자수 사용 가능
+    // 도술 재사용 대기 시간 = 도술 기본 재사용 대기 시간 * 재사용 대기시간
+    public float defaultSkillCoolTime = 1;
+    public float addSkillCoolTime { get; set; }
+    public float increasedSkillCoolTime { get; set; }
+    public float decreasedSkillCoolTime { get; set; }
     public float skillCoolTime
     {
-        get { return (1 + increasedSkillCoolTime) * (0 + addSkillCoolTime); }
+        get { return (defaultSkillCoolTime + addSkillCoolTime) * (1f + increasedSkillCoolTime) * (1f - decreasedSkillCoolTime); }
     }
 
-    //Move
-    //RunSpeed
+    // Move
+    // RunSpeed
+    // UI 달리기 시 이동속도 166%
+    // 달리기 시 속도
+    // 이동속도 = 이동속도 (달리기 ? 달리기 시 속도 : 1)
     public float defaultRunSpeed = 1.66f;
+    public float addRunSpeed { get; set; }
     public float increasedRunSpeed {  get; set; }
-    public float addRunSpeed {  get; set; }
+    public float decreasedRunSpeed { get; set; }
     public float runSpeed
     {
-        get { return (1 + increasedRunSpeed) * (defaultRunSpeed + addRunSpeed); }
+        get { return (defaultRunSpeed + addRunSpeed) * (1f + increasedRunSpeed) * (1f - decreasedRunSpeed); }
     }
+
     //RunCoolTime
+    // 달리기 재사용 대기 시간
+    // UI : 달리기 재사용 대기 시간 5초
+    // 달리기 재사용 대기 시간 = 달리기 재사용 대기 시간
     public float defaultRunCoolTime = 5;
+    public float addRunCoolTime { get; set; }
+    public float increasedRunCoolTime { get; set; }
     public float decreasedRunCoolTime {  get; set; }
-    public float subRunCoolTime {  get; set; }
     public float runCoolTime
     {
-        get { return (1 - decreasedRunCoolTime) * (defaultRunCoolTime - subRunCoolTime); }
+        get { return (defaultRunCoolTime + addRunCoolTime) * (1f + increasedRunCoolTime) * (1f - decreasedRunCoolTime); }
     }
 
-    //Dodge
+    // Dodge
     // 회피 속도
+    // UI : 회피 시 이동 속도 200%
     public float defaultDodgeSpeed = 2;
+    public float addDodgeSpeed { get; set; }
     public float increasedDodgeSpeed {  get; set; }
-    public float addDodgeSpeed {  get; set; }
+    public float decreasedDodgeSpeed { get; set; }
     public float dodgeSpeed
     {
-        get { return (1 + increasedDodgeSpeed) * (defaultDodgeSpeed + addDodgeSpeed); }
+        get { return (defaultDodgeSpeed + addDodgeSpeed) * (1f + increasedDodgeSpeed) * (1f - decreasedDodgeSpeed); }
     }
 
-    //회피 시간
+    // 회피 시간
+    // UI : 회피 시간 0.6초
+    // 회피 시간 = 회피 시간
     public float defaultDodgeTime = 0.6f;
+    public float addDodgeTime { get; set; }
     public float increasedDodgeTime {  get; set; }
-    public float addDodgeTime {  get; set; }
+    public float decreasedDodgeTime { get; set; }
     public float dodgeTime
     {
-        get { return (1 + increasedDodgeTime) * (defaultDodgeTime + addDodgeTime); }
+        get { return (defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime); }
     }
 
     //Item

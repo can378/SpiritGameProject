@@ -21,7 +21,7 @@ public class EnemyPattern : EnemyBasic
 
             for (int j = 0; j < 100; j++)
             { rigid.AddForce(targetDirVec * Mathf.Pow(-1, i) * 2 * Mathf.Pow(3, i)); }
-            //{ rigid.AddForce(targetDirVec * Mathf.Pow(-1,i) * status.speed*Mathf.Pow(3,i)); }
+            //{ rigid.AddForce(targetDirVec * Mathf.Pow(-1,i) * stats.speed*Mathf.Pow(3,i)); }
 
             yield return new WaitForSeconds(0.1f);
             rigid.velocity = Vector2.zero;
@@ -72,14 +72,14 @@ public class EnemyPattern : EnemyBasic
 
     public IEnumerator rushHit(bool isRepeat) //돌진 후 대기 (반복)
     {
-        //print("rushhit=" + status.damage);
+        //print("rushhit=" + stats.damage);
         targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
 
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rigid.AddForce(targetDirVec * status.defaultMoveSpeed); }
+        { rigid.AddForce(targetDirVec * stats.defaultMoveSpeed); }
         
         yield return new WaitForSeconds(0.1f);
 
@@ -99,9 +99,9 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator hitAndRun(bool isRepeat)
     {
         isHARRun = true;
-        //print("hit and run=" + status.damage);
+        //print("hit and run=" + stats.damage);
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-        //if (targetDis < status.detectionDis)
+        //if (targetDis < stats.detectionDis)
         //{
             //getting closer
             do
@@ -115,7 +115,7 @@ public class EnemyPattern : EnemyBasic
             //getting farther
             do
             {
-                rigid.AddForce(-targetDirVec * status.defaultMoveSpeed, ForceMode2D.Impulse);
+                rigid.AddForce(-targetDirVec * stats.defaultMoveSpeed, ForceMode2D.Impulse);
                 targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);
@@ -210,7 +210,7 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator waveAttack(GameObject AttackRange, GameObject NoAttackRange, bool isRepeat) 
     {
         yield return new WaitForSeconds(3);
-        //print("wave attack=" + status.damage);
+        //print("wave attack=" + stats.damage);
 
         float newScale = 1f;
         while (newScale <= 9f)
@@ -243,13 +243,13 @@ public class EnemyPattern : EnemyBasic
     bool isAttacking = false;
     public IEnumerator pop(bool isRepeat)
     {
-        //print("pop=" + status.damage);
+        //print("pop=" + stats.damage);
         if (isAttacking == false)
         {
 
             targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-            if (targetDis <= status.detectionDis)
+            if (targetDis <= stats.detectionDis)
             {
                 //attack
                 if (targetDis <= 0.7f)
@@ -285,10 +285,10 @@ public class EnemyPattern : EnemyBasic
 
     public IEnumerator chasing() 
     {
-        //print("chasing=" + status.damage);
+        //print("chasing=" + stats.damage);
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDis <= status.detectionDis && targetDis >= 1f)
+        if (targetDis <= stats.detectionDis && targetDis >= 1f)
         {
             Chase();
         }
@@ -299,10 +299,10 @@ public class EnemyPattern : EnemyBasic
     bool isJumping = false;
     public IEnumerator jump(bool isRepeat)
     {
-        //print("jump=" + status.damage);
+        //print("jump=" + stats.damage);
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDis <= status.detectionDis && targetDis >= 0.2f)
+        if (targetDis <= stats.detectionDis && targetDis >= 0.2f)
         {
             if (isJumping == false)
             {
@@ -312,7 +312,7 @@ public class EnemyPattern : EnemyBasic
                 direction.Normalize();
 
                 // 이동 속도, 시간
-                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / status.defaultMoveSpeed;
+                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / stats.defaultMoveSpeed;
 
                 // 점프 시작
                 isJumping = true;
@@ -321,7 +321,7 @@ public class EnemyPattern : EnemyBasic
 
                 while (elapsedTime < jumpDuration)
                 {
-                    transform.Translate(direction * (Time.deltaTime / jumpDuration) * status.defaultMoveSpeed);
+                    transform.Translate(direction * (Time.deltaTime / jumpDuration) * stats.defaultMoveSpeed);
                     elapsedTime = Time.time - startTime;
                     yield return null;
                 }
@@ -353,7 +353,7 @@ public class EnemyPattern : EnemyBasic
             randomX = Random.Range(-25, 25);
             randomY = Random.Range(-25, 25);
             targetDirVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
-            //rigid.AddForce(targetDirVec * status.speed);
+            //rigid.AddForce(targetDirVec * stats.speed);
             rigid.AddForce(targetDirVec * 2);
             yield return new WaitForSeconds(0.1f);
 

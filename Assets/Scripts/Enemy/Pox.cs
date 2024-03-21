@@ -66,7 +66,7 @@ public class Pox : EnemyBasic
             //getting farther
             do
             {
-                rigid.AddForce(-targetDirVec * status.defaultMoveSpeed, ForceMode2D.Impulse);
+                rigid.AddForce(-targetDirVec * stats.defaultMoveSpeed, ForceMode2D.Impulse);
                 targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);

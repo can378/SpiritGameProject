@@ -656,7 +656,7 @@ MonoBehaviour:
   HPMax: 100
   HP: 100
   tempHP: 0
-  defaultReduction: 0
+  defaultDefensivePower: 1
   resist:
   - 0
   - 0
@@ -669,18 +669,18 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  defaultPower: 0
+  defaultAttackPower: 0
   defaultMoveSpeed: 5
   activeEffects: []
   level: 1
   exp: 1
   point: 10
-  defaultCritical: 0
+  defaultCriticalChance: 0
   defaultCriticalDamage: 0.5
   defaultDrain: 0
   defaultAttackSpeed: 1
   defaultSkillPower: 0
-  defaultSkillCoolTime: 0
+  defaultSkillCoolTime: 1
   defaultRunSpeed: 1.66
   defaultRunCoolTime: 5
   defaultDodgeSpeed: 2
@@ -2042,6 +2042,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WheelWind
       objectReference: {fileID: 0}
+    - target: {fileID: 5904743163423667712, guid: 2baf7cec2b42d854389c6371941a4678, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2859637313133851327, guid: 2baf7cec2b42d854389c6371941a4678, type: 3}
     m_RemovedGameObjects:
@@ -2111,6 +2115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrieBall
       objectReference: {fileID: 0}
+    - target: {fileID: 5904743163423667712, guid: 802792bca37bf924cb2c71a0de292feb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2859637313133851327, guid: 802792bca37bf924cb2c71a0de292feb, type: 3}
     m_RemovedGameObjects:
@@ -2179,6 +2187,10 @@ PrefabInstance:
     - target: {fileID: 5904743163423667712, guid: 06470d1c572462842b0479996dc41400, type: 3}
       propertyPath: m_Name
       value: SpinAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904743163423667712, guid: 06470d1c572462842b0479996dc41400, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2859637313133851327, guid: 06470d1c572462842b0479996dc41400, type: 3}

@@ -35,12 +35,12 @@ public class Weapon : Equipment
 
     public override void Equip()
     {
-        Player.instance.stats.addPower = attackPower;
+        Player.instance.stats.addAttackPower = attackPower;
     }
 
     public override void UnEquip()
     {
-        Player.instance.stats.defaultPower = 0;
+        Player.instance.stats.addAttackPower -= attackPower;
     }
 
     public void Reload()

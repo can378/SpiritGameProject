@@ -6,7 +6,7 @@ public class Helmet : Equipment
 {
     public override void Equip()
     {
-        Debug.Log("플레이어 주문력 추가");
+        Debug.Log("플레이어 주문력 +10 증가");
         Player.instance.stats.addSkillPower += 10f;
     }
 

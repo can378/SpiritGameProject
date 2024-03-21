@@ -20,6 +20,7 @@ public class SkillController : MonoBehaviour
     public void EquipSkill(Skill gainSkill)
     {
         stats.skill = skillList[gainSkill.skillID].GetComponent<Skill>();
+        stats.skill.gameObject.SetActive(true);
         Destroy(gainSkill.gameObject);
         MapUIManager.instance.UpdateSkillUI();
 
@@ -29,6 +30,7 @@ public class SkillController : MonoBehaviour
     public void UnEquipSkill()
     {
         Instantiate(DataManager.instance.gameData.skillList[stats.skill.skillID], gameObject.transform.position, gameObject.transform.localRotation);
+        stats.skill.gameObject.SetActive(false);
         stats.skill = null;
         MapUIManager.instance.UpdateSkillUI();
     }
@@ -67,14 +69,15 @@ public class SkillController : MonoBehaviour
 
 
         // 스킬 시전 시간 (다음 움직이기 까지 대기 시간)
-        float skillRate = stats.skill.preDelay + stats.skill.rate + stats.skill.postDelay;
+        float skillUsedTime = stats.skill.preDelay + stats.skill.rate + stats.skill.postDelay;
+
         if (stats.skill.skillLimit == SkillLimit.None)
         {
-            yield return new WaitForSeconds(skillRate / stats.attackSpeed);
+            yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skillRate / stats.attackSpeed * stats.weapon.attackSpeed);
+            yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed * stats.weapon.attackSpeed);
         }
 
         status.isSkill = false;

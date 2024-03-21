@@ -26,13 +26,13 @@ public class WheelWind : Skill
             Player player = this.user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = player.stats.skillCoolTime * skillDefalutCoolTime;
 
             // 공속 = 플레이어 공속 * 무기 공속
-            float attackRate = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
+            float attackSpeed = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
 
             // 선딜
-            yield return new WaitForSeconds(preDelay / attackRate);
+            yield return new WaitForSeconds(preDelay / attackSpeed);
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -57,11 +57,11 @@ public class WheelWind : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackRate),
+            hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackSpeed),
              player.stats.weapon.attackAttribute,
-             defaultDamage + player.stats.power * ratio,
+             defaultDamage + player.stats.attackPower * ratio,
              player.stats.weapon.knockBack,
-             player.stats.critical,
+             player.stats.criticalChance,
              player.stats.criticalDamage,
              player.stats.weapon.deBuff);
         }
@@ -79,7 +79,7 @@ public class WheelWind : Skill
         {
             Player player = this.user.GetComponent<Player>();
 
-            float attackRate = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
+            float attackRate = (1 + player.stats.attackSpeed) * player.stats.weapon.attackSpeed;
 
             yield return new WaitForSeconds(postDelay / attackRate);
 
