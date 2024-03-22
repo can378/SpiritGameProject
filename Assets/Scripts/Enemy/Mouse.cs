@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Mouse : EnemyBasic
@@ -22,23 +23,38 @@ public class Mouse : EnemyBasic
     private bool isChange=false;
     IEnumerator mouse()
     {
+        targetDis=Vector2.Distance(transform.position, enemyTarget.position);
         if (isChange == false)
         {
             Chase();
+            yield return new WaitForSeconds(0.2f);
         }
         else
-        { 
+        {
             //Attack
-            /*
-            if(player스킬가지고 있음)
-            {player 스킬 모방 사용}
+            if (targetDis > 3f) { Chase(); yield return new WaitForSeconds(0.1f); }
             else
             {
-            가까이 접근
-            혼돈 부여
-            멀리 도망
+                print("user player skill");
+                /*
+                if (enemyTarget.GetComponent<PlayerStats>().skill != null)
+                {
+                    //mimic player skill
+                    
+                }
+                else 
+                {
+                    //혼돈
+                    print("chaos");
+                }
+                */
+
+                yield return new WaitForSeconds(0.1f);
+                //run away
+                rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+
             }
-            */
+
         }
         
         yield return null;
@@ -55,12 +71,12 @@ public class Mouse : EnemyBasic
 
             //Transform
             GetComponent<SpriteRenderer>().sprite = enemyTarget.GetComponent<SpriteRenderer>().sprite;
-            transform.localScale = enemyTarget.transform.localScale;
+            //transform.localScale = enemyTarget.transform.localScale;
             isChange = true;
 
             //Run away
             targetDirVec = enemyTarget.position - transform.position;
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 1000);
+            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
 
 
         }
