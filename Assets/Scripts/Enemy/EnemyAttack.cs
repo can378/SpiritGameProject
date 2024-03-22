@@ -9,7 +9,7 @@ public enum enemyAttack
     rangeAttack, waveAttack,
     pop,
     chase,jump ,None,
-    wander,crow, whiteFox, snowBall,worm,frog,broomStick,head,pox
+    wander,crow, whiteFox, snowBall,worm,frog,broomStick,pox
 };
 
 
@@ -30,6 +30,8 @@ public class EnemyAttack : EnemyPattern
     [Header("Beam")]
     public GameObject beam;
 
+
+    public GameObject buff;
 
     private void Start()
     {
@@ -65,8 +67,10 @@ public class EnemyAttack : EnemyPattern
             case enemyAttack.whiteFox: StartCoroutine(whiteFox()); break;
             case enemyAttack.snowBall: StartCoroutine(snowBall(new Vector2(-1,0)));break;
             case enemyAttack.frog:StartCoroutine(frog());break;
-            case enemyAttack.broomStick:StartCoroutine(peripheralAttack(20, 2, true));break;
-            case enemyAttack.head : StartCoroutine(head());break;
+            case enemyAttack.broomStick:
+                StartCoroutine(peripheralAttack(20, 2, true));
+                //두통 디버프 5초?
+                break;
             case enemyAttack.pox:break;
             default: break;
         }
@@ -180,13 +184,6 @@ public class EnemyAttack : EnemyPattern
 
 
 
-    IEnumerator head() 
-    { 
-        
-        
-        yield return null; 
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -203,6 +200,12 @@ public class EnemyAttack : EnemyPattern
             StopAllCoroutines();
             StartCoroutine(worm(3));
         
+        }
+        if (enemyAttack==enemyAttack.broomStick&&collision.tag=="Player") 
+        {
+            //두통 디버프 5초
+            ApplyBuff(buff);
+            //enemyTarget.GetComponent<Player>().ApplyBuff(buff);
         }
     }
     IEnumerator worm(float time) 
