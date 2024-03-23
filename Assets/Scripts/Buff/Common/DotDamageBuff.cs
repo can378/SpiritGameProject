@@ -7,7 +7,7 @@ public class DotDamageBuff : StatusEffect
     // 최대 체력 비례 %수치
     // dotDamage가 양수이면 피해
     // 음수이면 힐
-    [field: SerializeField] public float damagePerSecond { get; set; }
+    [field: SerializeField] public float damageSecond { get; set; }
 
     public override void ApplyEffect()
     {
@@ -38,7 +38,7 @@ public class DotDamageBuff : StatusEffect
         while (duration > 0)
         {
             // 피해를 입히는 부분
-            DealDamageToTarget(damagePerSecond);
+            DealDamageToTarget(damageSecond);
 
             // 주기적으로 피해를 입히는 간격(예: 1초)을 기다립니다.
             yield return new WaitForSeconds(1f);
@@ -50,14 +50,14 @@ public class DotDamageBuff : StatusEffect
         if(target.tag == "Player")
         {
             Player player = target.GetComponent<Player>();
-            player.Damaged(player.stats.HPMax * damage * overlap);
+            player.Damaged(damage * overlap);
         }
         else if(target.tag == "Enemy")
         {
             EnemyBasic enemy = target.GetComponent<EnemyBasic>();
             List<int> attributes = new List<int>();
             attributes.Add(0);
-            enemy.Damaged(enemy.stats.HPMax * damage * overlap);
+            enemy.Damaged(damage * overlap);
         }
     }
 }

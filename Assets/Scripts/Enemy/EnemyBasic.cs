@@ -68,7 +68,7 @@ public class EnemyBasic : MonoBehaviour
                     default: att = "¹«¼Ó¼º"; break;
 
                 }
-                float trueDamage = (damage * stats.resist[attackAttribute] / attackAttributes.Count) > 0f ? (damage * stats.resist[attackAttribute] / attackAttributes.Count) : 1f;
+                float trueDamage = (damage * (1 - stats.resist[attackAttribute]) / attackAttributes.Count) > 0f ? (damage * (1 - stats.resist[attackAttribute]) / attackAttributes.Count) : 1f;
                 print(att + " enemy damaged : " + trueDamage);
                 stats.HP -= trueDamage;
             }
