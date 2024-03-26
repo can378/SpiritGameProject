@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Tiger_head : EnemyBasic
 {
-    
+    public GameObject screamObj;
+    public GameObject screamBuff;
+    public GameObject scatterBuff;
+
+    private Transform parent;
+    private GameObject detectTiger;
     void Start()
     {
+        parent = transform.parent;
         StartCoroutine(tigerHead(new Vector2(1, 0)));
     }
     private void OnEnable()
@@ -22,6 +28,7 @@ public class Tiger_head : EnemyBasic
 
     private bool isPlayer = false;
     private bool isHit = false;
+    private bool isChaseTiger = false;
     IEnumerator tigerHead(Vector2 dir)
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
@@ -40,40 +47,49 @@ public class Tiger_head : EnemyBasic
             transform.Rotate(new Vector3(0, 0, GetComponent<EnemyStats>().defaultMoveSpeed));
         }
 
-
-
-        if (targetDis > GetComponent<EnemyStats>().detectionDis)
+        if (isChaseTiger)
         {
-            //MOVE
-            //setting random dirVec
-            if (isHit == true)
-            {
-                rigid.velocity = new Vector2(0, 0);
-                yield return new WaitForSeconds(0.1f);
-                dir *= -1;
-                dir += new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
-                isHit = false;
-            }
             rigid.AddForce(dir * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+            dir=(detectTiger.transform.position - transform.position).normalized;
             yield return new WaitForSeconds(0.1f);
-
         }
-        //ATTACK
-        else
-        {
-            print("tiger head attack");
+        else 
+        { 
+            if (targetDis > GetComponent<EnemyStats>().detectionDis)
+            {
+                //MOVE
+                //setting random dirVec
+                if (isHit == true)
+                {
+                    rigid.velocity = new Vector2(0, 0);
+                    yield return new WaitForSeconds(0.1f);
+                    dir *= -1;
+                    dir += new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+                    isHit = false;
+                }
+                rigid.AddForce(dir * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+                yield return new WaitForSeconds(0.1f);
 
-            rigid.velocity = new Vector3(0, 0, 0);
-            yield return new WaitForSeconds(1f);
+            }
+            //ATTACK
+            else
+            {
+                print("tiger head attack");
 
-            //scatter
+                rigid.velocity = new Vector3(0, 0, 0);
+                yield return new WaitForSeconds(1f);
 
+                //scatter
+                //enemyTarget.GetComponent<Player>().ApplyBuff(satterBuff);
 
-            //scream
-            
+                //scream
+                screamObj.SetActive(true);
+                yield return new WaitForSeconds(3f);
+                screamObj.SetActive(false);
+                //enemyTarget.GetComponent<Player>().ApplyBuff(screamBuff);
 
+            }
         }
-
 
         StartCoroutine(tigerHead(dir));
     }
@@ -82,20 +98,38 @@ public class Tiger_head : EnemyBasic
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        if (collision.tag == "Player")
+        if (collision.tag == "Player"&&isPlayer==false)
         {
             isPlayer = true;
-            
-            //check tiger
-            /*
-            if(tiger){
-            stopallcoroutines();
-            move toward tiger
-            
+
+            if (parent != null)
+            {
+                foreach (Transform sibling in parent)
+                {
+                    //find tiger
+                    if (sibling != transform && sibling.GetComponent<Tiger_tiger>()!=null)
+                    {
+                        if (sibling.GetComponent<Tiger_tiger>().isTransform == false)
+                        { 
+                            StopCoroutine(tigerHead(new Vector2(1,0)));
+                            print("???");
+                            //move toward tiger
+                            isChaseTiger = true;
+                            detectTiger = sibling.gameObject;
+                            Vector2 tigerDir = (detectTiger.transform.position - transform.position).normalized;
+                            StartCoroutine(tigerHead(tigerDir));
+
+                            break;
+                        }
+                    }
+                }
             }
             
+            
              
-             */
+            
+            
+            
         }
         else if (collision.tag == "Tiger" && isPlayer == true)
         {
