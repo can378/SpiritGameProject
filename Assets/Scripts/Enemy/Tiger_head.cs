@@ -26,7 +26,7 @@ public class Tiger_head : EnemyBasic
     }
 
 
-    private bool isPlayer = false;
+    public bool isDetectPlayer = false;
     private bool isHit = false;
     private bool isChaseTiger = false;
     IEnumerator tigerHead(Vector2 dir)
@@ -74,7 +74,7 @@ public class Tiger_head : EnemyBasic
             //ATTACK
             else
             {
-                print("tiger head attack");
+                //print("tiger head attack");
 
                 rigid.velocity = new Vector3(0, 0, 0);
                 yield return new WaitForSeconds(1f);
@@ -98,21 +98,26 @@ public class Tiger_head : EnemyBasic
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        if (collision.tag == "Player"&&isPlayer==false)
+        if (collision.tag == "Player"&&isDetectPlayer==false)
         {
-            isPlayer = true;
+            isHit = true;
+
+            isDetectPlayer = true;
 
             if (parent != null)
             {
                 foreach (Transform sibling in parent)
                 {
+                    //print("finding tiger now..................");
                     //find tiger
                     if (sibling != transform && sibling.GetComponent<Tiger_tiger>()!=null)
                     {
                         if (sibling.GetComponent<Tiger_tiger>().isTransform == false)
-                        { 
-                            StopCoroutine(tigerHead(new Vector2(1,0)));
-                            print("???");
+                        {
+                            //print("head found tiger");
+                            StopCoroutine(tigerHead(new Vector2(1, 0)));
+                           
+
                             //move toward tiger
                             isChaseTiger = true;
                             detectTiger = sibling.gameObject;
@@ -121,19 +126,12 @@ public class Tiger_head : EnemyBasic
 
                             break;
                         }
+                        
                     }
+                    
                 }
             }
             
-            
-             
-            
-            
-            
-        }
-        else if (collision.tag == "Tiger" && isPlayer == true)
-        {
-            transform.gameObject.SetActive(false);
         }
         else if(collision.tag !="Enemy")
         {

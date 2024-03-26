@@ -10,7 +10,7 @@ public class Tiger_tiger : EnemyBasic
     public bool isTransform=false;
 
     void Start()
-    {    StartCoroutine(tiger());    }
+    { isTransform = false; StartCoroutine(tiger());    }
     void OnEnable() { StartCoroutine(tiger()); }
     void OnDisable() { StopCoroutine(tiger()); }
 
@@ -35,7 +35,7 @@ public class Tiger_tiger : EnemyBasic
         while (targetDis > 2f)
         {
             targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
+            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed*50);
             targetDis = Vector2.Distance(transform.position, enemyTarget.position);
             yield return new WaitForSeconds(0.1f);
         }
@@ -59,15 +59,23 @@ public class Tiger_tiger : EnemyBasic
     {
         if (collision.tag == "Player")
         {
+            print("tiger attack player");
             //blood debuff
             //enemyTarget.GetComponent<Player>().ApplyBuff(bloodDebuff);
         }
-        if (collision.tag == "TigerHead" && isTransform == false)
+        if (
+            collision.tag == "Enemy" && 
+            isTransform == false && 
+            collision.GetComponent<EnemyStats>().enemyName=="headTiger"&&
+            collision.GetComponent<Tiger_head>().isDetectPlayer==true
+            )
         {
+            print("tiger meet head");
             //transform
             isTransform = true;
             trans.SetActive(true);
 
+            collision.gameObject.SetActive(false);
             //stronger
             //???????????????????
             GetComponent<EnemyStats>().defaultMoveSpeed += 5;
