@@ -154,19 +154,19 @@ public class EnemyPattern : EnemyBasic
     //본인의 주변을 공격
     [HideInInspector]
     public bool isPARun = false;
-    public IEnumerator peripheralAttack(float radius,float attackTime, bool isRepeat)
+    public IEnumerator peripheralAttack(GameObject colObj, float radius,float attackTime, bool isRepeat)
     {
         isPARun = true;
         //isCorRun = true;
         //extend collider itself
 
-        float originRadius=GetComponent<CircleCollider2D>().radius;
-        GetComponent<CircleCollider2D>().radius = radius;
+        float originRadius=colObj.GetComponent<CircleCollider2D>().radius;
+        colObj.GetComponent<CircleCollider2D>().radius = radius;
         //print("peripheralAttack");
 
         yield return new WaitForSeconds(attackTime);
 
-        GetComponent<CircleCollider2D>().radius = originRadius;
+        colObj.GetComponent<CircleCollider2D>().radius = originRadius;
 
 
 
@@ -175,7 +175,7 @@ public class EnemyPattern : EnemyBasic
             for (int i = 0; i < 10; i++) { Chase(); }
 
             yield return new WaitForSeconds(3f);
-            StartCoroutine(peripheralAttack(radius, attackTime, isRepeat));
+            StartCoroutine(peripheralAttack(colObj,radius, attackTime, isRepeat));
             
         }
             

@@ -30,6 +30,8 @@ public class EnemyAttack : EnemyPattern
     [Header("Beam")]
     public GameObject beam;
 
+    [Header("BroomStick")]
+    public GameObject colObj;
 
     public GameObject buff;
 
@@ -68,7 +70,7 @@ public class EnemyAttack : EnemyPattern
             case enemyAttack.snowBall: StartCoroutine(snowBall(new Vector2(-1,0)));break;
             case enemyAttack.frog:StartCoroutine(frog());break;
             case enemyAttack.broomStick:
-                StartCoroutine(peripheralAttack(20, 2, true));
+                StartCoroutine(peripheralAttack(colObj,20, 2, true));
                 //두통 디버프 5초?
                 break;
             case enemyAttack.pox:break;
@@ -83,7 +85,7 @@ public class EnemyAttack : EnemyPattern
         while (isHARRun == true) 
         { yield return new WaitForSeconds(0.1f); }
 
-        StartCoroutine(peripheralAttack(10, 5, false));
+        StartCoroutine(peripheralAttack(this.gameObject,10, 5, false));
 
         while (isPARun == true)
         { yield return new WaitForSeconds(0.1f); }
@@ -204,8 +206,8 @@ public class EnemyAttack : EnemyPattern
         if (enemyAttack==enemyAttack.broomStick&&collision.tag=="Player") 
         {
             //두통 디버프 5초
-            ApplyBuff(buff);
-            //enemyTarget.GetComponent<Player>().ApplyBuff(buff);
+            //ApplyBuff(buff);
+            enemyTarget.GetComponent<Player>().ApplyBuff(buff);
         }
     }
     IEnumerator worm(float time) 
