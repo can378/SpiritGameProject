@@ -23,6 +23,7 @@ public class MapUIManager : MonoBehaviour
     public RectTransform sidePanel;
     public RectTransform equipmentPanel;
     public GameObject minimapPanel;
+    public GameObject statSelectPanel;
 
     //Player status
     public Slider Hpslider;

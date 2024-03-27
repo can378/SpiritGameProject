@@ -351,7 +351,11 @@ public class Player : MonoBehaviour
         }
         if (iDown && nearObject != null && !status.isDodge && !status.isAttack && !status.isSkill && moveVec == Vector2.zero)
         {
-            if (nearObject.tag == "Door")
+            if(nearObject.tag == "Npc")
+            {
+                nearObject.GetComponent<NPCbasic>().Conversation();
+            }
+            else if (nearObject.tag == "Door")
             {
                 if (stats.key > 0) 
                 {
@@ -367,6 +371,7 @@ public class Player : MonoBehaviour
                 //nearObject.GetComponent<Wall>().WallInteraction();
             }
         }
+
     }
 
     #region Item
@@ -659,7 +664,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall")
+        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc")
         {
             nearObject = other.gameObject;
         }

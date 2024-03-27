@@ -21,8 +21,6 @@ public class NPCbasic : MonoBehaviour
 
     int index = 0;
 
-
-
     void Start()
     {
         isTalking = false;
@@ -31,16 +29,12 @@ public class NPCbasic : MonoBehaviour
         scriptManager = GetComponent<ScriptManager>();
     }
 
-
-
     void Update()
     {
         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
     }
 
-
-
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         //following player
         /*
@@ -56,13 +50,12 @@ public class NPCbasic : MonoBehaviour
         */
     }
 
-
-
-
+    /*
     IEnumerator startConveration()
     {
         while (true)
         {
+            print("대화");
             if (Input.GetKeyDown(KeyCode.F))
             {
                 DialogPanel.SetActive(!DialogPanel.activeSelf);
@@ -72,46 +65,51 @@ public class NPCbasic : MonoBehaviour
             yield return null;
         }
     }
+    */
 
     //대화
-    void Conversation(int i)
+    public virtual void Conversation()
     {
+        
         DialogPanel.SetActive(true);
 
-        if (scriptManager.NPCScript(chapter, i) == "border")
+        if (scriptManager.NPCScript(chapter, index) == "border")
         {
             index--;
-            DialogTextMesh.text = scriptManager.NPCScript(chapter, i - 1);
+            DialogTextMesh.text = scriptManager.NPCScript(chapter, index - 1);
         }
-        else if (scriptManager.NPCScript(chapter, i) == "wrong")
+        else if (scriptManager.NPCScript(chapter, index) == "wrong")
         {
             index++;
-            DialogTextMesh.text = scriptManager.NPCScript(chapter, i + 1);
+            DialogTextMesh.text = scriptManager.NPCScript(chapter, index + 1);
         }
         else
         {
-            DialogTextMesh.text = scriptManager.NPCScript(chapter, i);
+            DialogTextMesh.text = scriptManager.NPCScript(chapter, index);
         }
+        index++;
+    }
+
+    public virtual void ConversationOut()
+    {
+        StopAllCoroutines();
+        DialogPanel.SetActive(false);
     }
 
 
 
     //Trigger===================================================================================
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            StartCoroutine(startConveration());
-        }
+        
     }
 
-    public void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")&&DialogPanel!=null)
         {
-            StopAllCoroutines();
-            DialogPanel.SetActive(false);
+            ConversationOut();
         }
     }
 
