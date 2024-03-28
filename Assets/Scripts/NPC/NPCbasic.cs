@@ -21,7 +21,7 @@ public class NPCbasic : MonoBehaviour
 
     int index = 0;
 
-    void Start()
+    protected virtual void Start()
     {
         isTalking = false;
         sprite=GetComponent<SpriteRenderer>();

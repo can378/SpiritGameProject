@@ -77,8 +77,8 @@ public class WeaponController : MonoBehaviour
                 StartCoroutine("Shot");
         }
 
-        Debug.Log(stats.weapon.attackSpeed);
-        Debug.Log(stats.attackSpeed);
+        //Debug.Log(stats.weapon.attackSpeed);
+        //Debug.Log(stats.attackSpeed);
 
     }
 

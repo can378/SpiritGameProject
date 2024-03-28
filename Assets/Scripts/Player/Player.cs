@@ -1,4 +1,4 @@
-ï»¿using Newtonsoft.Json.Bson;
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,9 +8,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
-    // player í˜„ì¬ ëŠ¥ë ¥ì¹˜
+    // player ÇöÀç ´É·ÂÄ¡
     public static Player instance { get; private set; }
-    // player í˜„ì¬ ìƒíƒœ
+    // player ÇöÀç »óÅÂ
     public  PlayerStatus status { get; private set; }
     public PlayerStats stats {get; private set; }
 
@@ -19,18 +19,18 @@ public class Player : MonoBehaviour
 
     #region Key Input
 
-    bool rDown;            //ì¬ì¥ì „
-    bool dDown;           //íšŒí”¼
-    bool aDown;            //ê³µê²©
-    bool siDown;           // ì„ íƒ ì•„ì´í…œ
-    bool iDown;             //ìƒí˜¸ì‘ìš©
+    bool rDown;            //ÀçÀåÀü
+    bool dDown;           //È¸ÇÇ
+    bool aDown;            //°ø°İ
+    bool siDown;           // ¼±ÅÃ ¾ÆÀÌÅÛ
+    bool iDown;             //»óÈ£ÀÛ¿ë
 
     bool skDown;
     bool skUp;
 
     #endregion
 
-    public LayerMask layerMask;//ì ‘ê·¼ ë¶ˆê°€í•œ ë ˆì´ì–´ ì„¤ì •
+    public LayerMask layerMask;//Á¢±Ù ºÒ°¡ÇÑ ·¹ÀÌ¾î ¼³Á¤
     public GameObject nearObject;
     public GameObject playerItem;
 
@@ -123,41 +123,41 @@ public class Player : MonoBehaviour
 
     private bool isMoveable() 
     {
-        // ë ˆì´ì €ê°€ ì œëŒ€ë¡œ ë„ì°©í•˜ë©´ Null, ë§‰í˜”ì„ë•Œ ë°©í•´ë¬¼ Return
+        // ·¹ÀÌÀú°¡ Á¦´ë·Î µµÂøÇÏ¸é Null, ¸·ÇûÀ»¶§ ¹æÇØ¹° Return
         RaycastHit2D hit;
 
-        // ê¸°ë³¸ ì†ë„ = í”Œë ˆì´ì–´ ì´ë™ì†ë„ * í”Œë ˆì´ì–´ ë””í´íŠ¸ ì´ë™ì†ë„
+        // ±âº» ¼Óµµ = ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ * ÇÃ·¹ÀÌ¾î µğÆúÆ® ÀÌµ¿¼Óµµ
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
             new Vector2(playerPosition.x * stats.moveSpeed, playerPosition.y * stats.moveSpeed);
         
 
-        // ë ˆì´ì € ë°œì‚¬ (ì‹œì‘, ë, ë ˆì´ì–´ë§ˆìŠ¤í¬)
+        // ·¹ÀÌÀú ¹ß»ç (½ÃÀÛ, ³¡, ·¹ÀÌ¾î¸¶½ºÅ©)
         hit = Physics2D.Linecast(playerPosition, end, layerMask);
 
 
-        // ë²½ìœ¼ë¡œ ë§‰í˜”ì„ë•Œ ì‹¤í–‰í•˜ì§€ ì•Šê²Œ ì²˜ë¦¬
+        // º®À¸·Î ¸·ÇûÀ»¶§ ½ÇÇàÇÏÁö ¾Ê°Ô Ã³¸®
         if (hit.transform == null) {  return true;   }
         return false;
     }
 
-    void Move()     //ì´ë™
+    void Move()     //ÀÌµ¿
     {
         
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (status.isAttack || status.isReload || status.isSkill)       // ì •ì§€
+        if (status.isAttack || status.isReload || status.isSkill)       // Á¤Áö
         {
             moveVec = Vector2.zero;
         }
-        if (status.isDodge)             // íšŒí”¼ì‹œ í˜„ì¬ ì†ë„ ìœ ì§€
+        if (status.isDodge)             // È¸ÇÇ½Ã ÇöÀç ¼Óµµ À¯Áö
         {
             moveVec = dodgeVec;
         }
         else
         {
-            // ê¸°ë³¸ ì†ë„ = í”Œë ˆì´ì–´ ì´ë™ì†ë„ * í”Œë ˆì´ì–´ ë””í´íŠ¸ ì´ë™ì†ë„
+            // ±âº» ¼Óµµ = ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ * ÇÃ·¹ÀÌ¾î µğÆúÆ® ÀÌµ¿¼Óµµ
             rigid.velocity = moveVec * stats.moveSpeed * (status.isSprint ? stats.runSpeed : 1f);
             
         }
@@ -173,14 +173,14 @@ public class Player : MonoBehaviour
 
     }
  
-    void Dodge()    // íšŒí”¼
+    void Dodge()    // È¸ÇÇ
     {
         if (dDown && !status.isAttack && !status.isSkill && moveVec != Vector2.zero && !status.isDodge && !status.isSkillHold)
         {
             
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
-            // íšŒí”¼ ì†ë„ = í”Œë ˆì´ì–´ ì´ë™ì†ë„ * íšŒí”¼ì†ë„
+            // È¸ÇÇ ¼Óµµ = ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ * È¸ÇÇ¼Óµµ
             float dodgeSpeed = stats.moveSpeed * stats.dodgeSpeed;
             rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void DodgeOut() // íšŒí”¼ ë¹ ì ¸ë‚˜ê°€ê¸°
+    void DodgeOut() // È¸ÇÇ ºüÁ®³ª°¡±â
     {
         status.isDodge = false;
     }
@@ -226,7 +226,7 @@ public class Player : MonoBehaviour
         if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
-            //ì¥ì „ ì‹œê°„ = ë¬´ê¸° ì¥ì „ ì‹œê°„ / í”Œë ˆì´ì–´ ê³µê²© ì†ë„
+            //ÀåÀü ½Ã°£ = ¹«±â ÀåÀü ½Ã°£ / ÇÃ·¹ÀÌ¾î °ø°İ ¼Óµµ
             float reloadTime = stats.weapon.reloadTime / stats.attackSpeed;
             Invoke("ReloadOut", stats.weapon.reloadTime);
         }
@@ -234,7 +234,7 @@ public class Player : MonoBehaviour
 
     void ReloadOut()
     {
-        Debug.Log("ìŠ¤í‚¬ í™€ë“œ ì¤‘ë‹¨");
+        Debug.Log("½ºÅ³ È¦µå Áß´Ü");
         stats.weapon.Reload();
         status.isReload = false;
     }
@@ -254,18 +254,18 @@ public class Player : MonoBehaviour
         {
             status.isAttack = true;
 
-            // ê³µê²© ë°©í–¥
-            // í˜„ì¬ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ê°€ ì•„ë‹Œ
-            // í´ë¦­ í•œ ìœ„ì¹˜ë¡œ
+            // °ø°İ ¹æÇâ
+            // ÇöÀç ¸¶¿ì½º À§Ä¡°¡ ¾Æ´Ñ
+            // Å¬¸¯ ÇÑ À§Ä¡·Î
             WeaponController.Use(status.mousePos);
-            // ì´ˆë‹¹ ê³µê²© íšŸìˆ˜ = í”Œë ˆì´ì–´ ê³µì† * ë¬´ê¸° ê³µì†
+            // ÃÊ´ç °ø°İ È½¼ö = ÇÃ·¹ÀÌ¾î °ø¼Ó * ¹«±â °ø¼Ó
             float attackRate = stats.weapon.attackSpeed * stats.attackSpeed;
             AudioManager.instance.SFXPlay("attack_sword");
-            // ë‹¤ìŒ ê³µê²©ê¹Œì§€ ëŒ€ê¸° ì‹œê°„ = 1 / ì´ˆë‹¹ ê³µê²© íšŸìˆ˜
+            // ´ÙÀ½ °ø°İ±îÁö ´ë±â ½Ã°£ = 1 / ÃÊ´ç °ø°İ È½¼ö
             status.attackDelay = (stats.weapon.preDelay + stats.weapon.rate + stats.weapon.postDelay) / attackRate;
-            // ê³µê²© ì¤€ë¹„ ì•ˆë¨
+            // °ø°İ ÁØºñ ¾ÈµÊ
             status.isAttackReady = false;
-            // ê³µê²© ì‹œê°„(ì›€ì§ì´ê¸°ê¹Œì§€ ëŒ€ê¸° ì‹œê°„) = (ì„ ë”œë ˆì´ * ê³µê²© ì¤‘ì¸ ì‹œê°„) / ì´ˆë‹¹ ê³µê²© ì†ë„
+            // °ø°İ ½Ã°£(¿òÁ÷ÀÌ±â±îÁö ´ë±â ½Ã°£) = (¼±µô·¹ÀÌ * °ø°İ ÁßÀÎ ½Ã°£) / ÃÊ´ç °ø°İ ¼Óµµ
             Invoke("AttackOut", (stats.weapon.preDelay + stats.weapon.rate) / attackRate);
         }
     }
@@ -289,26 +289,27 @@ public class Player : MonoBehaviour
 
         if (stats.skill.skillLimit != SkillLimit.None && stats.weapon == null)
         {
-            Debug.Log("ë¬´ê¸° ì—†ìŒ");
+            Debug.Log("¹«±â ¾øÀ½");
             return;
         }
 
         if (stats.skill.skillLimit == SkillLimit.Shot &&  stats.weapon.weaponType < 10)
         {
-            Debug.Log("ì›ê±°ë¦¬ ì „ìš© ìŠ¤í‚¬");
+            Debug.Log("¿ø°Å¸® Àü¿ë ½ºÅ³");
             return;
         }
 
         if (stats.skill.skillLimit == SkillLimit.Melee && 10 <= stats.weapon.weaponType)
         {
-            Debug.Log("ê·¼ê±°ë¦¬ ì „ìš© ìŠ¤í‚¬");
+            Debug.Log("±Ù°Å¸® Àü¿ë ½ºÅ³");
             return;
         }
 
-        // ìŠ¤í‚¬ í‚¤ ë‹¤ìš´
+        // ½ºÅ³ Å° ´Ù¿î
         if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
         {
             skillController.SkillDown();
+            print(stats.skillCoolTime);
         }
 
     }
@@ -318,7 +319,7 @@ public class Player : MonoBehaviour
         if (stats.skill == null)
             return;
 
-        // ìŠ¤í‚¬ ì¤€ë¹„ ìƒíƒœì—ì„œ ê³µê²© í‚¤ ë‹¤ìš´
+        // ½ºÅ³ ÁØºñ »óÅÂ¿¡¼­ °ø°İ Å° ´Ù¿î
         if (aDown && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillReady)
         {
             StartCoroutine(skillController.Immediate());
@@ -330,7 +331,7 @@ public class Player : MonoBehaviour
         if (stats.skill == null)
             return;
 
-        //ìŠ¤í‚¬ hold ìƒíƒœì—ì„œ ìŠ¤í‚¬ í‚¤ up
+        //½ºÅ³ hold »óÅÂ¿¡¼­ ½ºÅ³ Å° up
         if (skUp && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
             skillController.HoldOut();
@@ -385,7 +386,7 @@ public class Player : MonoBehaviour
             {
                 WeaponController.UnEquipWeapon();
             }
-            // ë¬´ê¸° ì¥ë¹„
+            // ¹«±â Àåºñ
             WeaponController.EquipWeapon(selectItem.GetComponent<Weapon>());
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
@@ -405,16 +406,16 @@ public class Player : MonoBehaviour
             {
                 skillController.UnEquipSkill();
             }
-            // ìŠ¤í‚¬ ì¥ì°©
+            // ½ºÅ³ ÀåÂø
             skillController.EquipSkill(selectItem.GetComponent<Skill>());
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {
-            //ì „ì— ê°€ì§€ê³  ìˆë˜ ì•„ì´í…œ ë“œë
+            //Àü¿¡ °¡Áö°í ÀÖ´ø ¾ÆÀÌÅÛ µå¶ø
             if (playerItem != null)
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
-            //ì•„ì´í…œ ê°±ì‹ 
+            //¾ÆÀÌÅÛ °»½Å
             stats.item = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
             playerItem = selectItem.gameObject;
             playerItem.SetActive(false);
@@ -444,7 +445,7 @@ public class Player : MonoBehaviour
                         break;
                     case SelectItemName.SkillPortion:
                         break;
-                    // ë°‘ì— ì•„ì´í…œë“¤ì€ íšë“ ì¦‰ì‹œë¡œ ë°”ê¾¸ì—ˆìœ¼ë©´ ì¢‹ê² ìŠµë‹ˆë‹¤.
+                    // ¹Ø¿¡ ¾ÆÀÌÅÛµéÀº È¹µæ Áï½Ã·Î ¹Ù²Ù¾úÀ¸¸é ÁÁ°Ú½À´Ï´Ù.
                     case SelectItemName.Insam:
                         stats.HP += 20;
                         MapUIManager.instance.UpdateHealthUI();
@@ -497,10 +498,10 @@ public class Player : MonoBehaviour
         stats.equipments[index].gameObject.transform.position = gameObject.transform.position;
         stats.equipments[index].gameObject.SetActive(true);
 
-        // ì¥ë¹„ ëŠ¥ë ¥ì¹˜ í•´ì œ
+        // Àåºñ ´É·ÂÄ¡ ÇØÁ¦
         stats.equipments[index].UnEquip();
 
-        // ì¥ë¹„ í•´ì œ
+        // Àåºñ ÇØÁ¦
         stats.equipments[index] = null;
 
         MapUIManager.instance.UpdateEquipmentUI();
@@ -530,7 +531,7 @@ public class Player : MonoBehaviour
             stats.tempHP = DataManager.instance.userData.playerTempHP;
 
             //Debug.Log("Scene reloaded: " + scene.name);
-            //Scene reload í›„ì—ë„ ì „ì— ì–»ì€ ì•„ì´í…œ ìœ ì§€
+            //Scene reload ÈÄ¿¡µµ Àü¿¡ ¾òÀº ¾ÆÀÌÅÛ À¯Áö
             string playerItemName = DataManager.instance.userData.playerItem;
             int playerWeapon = DataManager.instance.userData.playerWeapon;
             int playerSkill = DataManager.instance.userData.playerSkill;
@@ -546,7 +547,7 @@ public class Player : MonoBehaviour
             stats.coin = DataManager.instance.userData.playerCoin;
             stats.key = DataManager.instance.userData.playerKey;
 
-            //ì•„ì´í…œ
+            //¾ÆÀÌÅÛ
             if(playerItemName != "")
             {
                 foreach (GameObject obj in DataManager.instance.gameData.selectItemList)
@@ -560,17 +561,17 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-            // ë¬´ê¸°
+            // ¹«±â
             if (playerWeapon != 0)
             {
                 WeaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]).GetComponent<Weapon>());
             }
-            // ìŠ¤í‚¬
+            // ½ºÅ³
             if (playerSkill != 0)
             {
                 skillController.EquipSkill(Instantiate(DataManager.instance.gameData.skillList[playerSkill]).GetComponent<Skill>());
             }
-            // ë°©ì–´êµ¬
+            // ¹æ¾î±¸
             
             for(int i = 0;i< playerMaxEquipment; i++)
             {
@@ -583,6 +584,8 @@ public class Player : MonoBehaviour
 
     }
 
+    // ¼öÁ¤ÇÒ °Í
+    // Áö±İ °ö¼ÁÀ¸·Î Àû¿ëµÅ¼­ ÀÌ»óÇÔ
     public void statApply()
     {
         Player.instance.stats.HPMax += Player.instance.stats.playerStat[0] * 25;
@@ -602,13 +605,13 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //ê³µê²©ë°›ìŒ
+        //°ø°İ¹ŞÀ½
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
-            // ì ì—ê²Œ ê³µê²© ë‹¹í• ì‹œ
-            // í”¼í•´ë¥¼ ì…ê³ 
-            // ë’¤ë¡œ ë°€ë ¤ë‚˜ë©°
-            // ì ì‹œ ë¬´ì ì´ ëœë‹¤.
+            // Àû¿¡°Ô °ø°İ ´çÇÒ½Ã
+            // ÇÇÇØ¸¦ ÀÔ°í
+            // µÚ·Î ¹Ğ·Á³ª¸ç
+            // Àá½Ã ¹«ÀûÀÌ µÈ´Ù.
 
             Damaged(other.GetComponent<EnemyStats>().attackPower);
             //Damaged(10);
@@ -645,14 +648,14 @@ public class Player : MonoBehaviour
 
             if (item.itemClass == ItemClass.Coin)
             {
-                Destroy(other.gameObject); //ì½”ì¸ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
+                Destroy(other.gameObject); //ÄÚÀÎ ¿ÀºêÁ§Æ® »èÁ¦
                 stats.coin++;
                 MapUIManager.instance.UpdateCoinUI();
             }
 
             if (item.itemClass == ItemClass.Key)
             {
-                Destroy(other.gameObject); //í‚¤ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
+                Destroy(other.gameObject); //Å° ¿ÀºêÁ§Æ® »èÁ¦
                 stats.key++;
                 MapUIManager.instance.UpdateKeyUI();
             }
@@ -678,7 +681,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    // ìƒíƒœ ê´€ë ¨
+    // »óÅÂ °ü·Ã
     #region Effect
     public void Damaged(float damage)
     {
@@ -688,7 +691,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        //ë°›ëŠ” í”¼í•´ = ê°ì†Œ ì „ í”¼í•´ * í”Œë ˆì´ì–´ í”¼í•´ ê°ì†Œìœ¨
+        //¹Ş´Â ÇÇÇØ = °¨¼Ò Àü ÇÇÇØ * ÇÃ·¹ÀÌ¾î ÇÇÇØ °¨¼ÒÀ²
         damage = damage * stats.defensivePower;
 
         Debug.Log("Player Damaged" + damage);
@@ -711,7 +714,7 @@ public class Player : MonoBehaviour
 
     public void KnockBack(GameObject agent)
     {
-        //íŠ•ê²¨ë‚˜ê°
+        //Æ¨°Ü³ª°¨
         float distance = 10 * (1 - stats.defensivePower);
         Vector2 dir = (transform.position - agent.transform.position).normalized;
 
@@ -735,7 +738,7 @@ public class Player : MonoBehaviour
 
     void OutInvincible()
     {
-        //ë¬´ì  í•´ì œ
+        //¹«Àû ÇØÁ¦
         sprite.color = new Color(1, 1, 1, 1);
         this.layerMask = 0;
         status.isInvincible = false;
@@ -751,11 +754,11 @@ public class Player : MonoBehaviour
 
     public void ApplyBuff(GameObject effect)
     {
-        // ê°€ì§€ê³  ìˆëŠ” ë²„í”„ì¸ì§€ ì²´í¬í•œë‹¤.
+        // °¡Áö°í ÀÖ´Â ¹öÇÁÀÎÁö Ã¼Å©ÇÑ´Ù.
         StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
         foreach (StatusEffect buff in stats.activeEffects)
         {
-            // ê°€ì§€ê³  ìˆëŠ” ë²„í”„ë¼ë©´ ê°±ì‹ í•œë‹¤.
+            // °¡Áö°í ÀÖ´Â ¹öÇÁ¶ó¸é °»½ÅÇÑ´Ù.
             if (buff.buffId == statusEffect.buffId)
             {
                 buff.ResetEffect();
@@ -763,7 +766,7 @@ public class Player : MonoBehaviour
             }
         }
         
-        // ê°€ì§€ê³  ìˆëŠ” ë²„í”„ê°€ ì•„ë‹ˆë¼ë©´ ìƒˆë¡œ ì¶”ê°€í•œë‹¤.
+        // °¡Áö°í ÀÖ´Â ¹öÇÁ°¡ ¾Æ´Ï¶ó¸é »õ·Î Ãß°¡ÇÑ´Ù.
         GameObject Buff = Instantiate(effect);
         statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);

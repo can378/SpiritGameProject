@@ -23,7 +23,7 @@ public class MapUIManager : MonoBehaviour
     public RectTransform sidePanel;
     public RectTransform equipmentPanel;
     public GameObject minimapPanel;
-    public GameObject statSelectPanel;
+    public GameObject statSelectPanel;                                  // 스탯 선택창
 
     //Player status
     public Slider Hpslider;
@@ -36,7 +36,9 @@ public class MapUIManager : MonoBehaviour
     public TMP_Text SkillTxt;
     public TMP_Text PointTxt;
 
-    public TMP_Text[] EquipmentsTxt = new TMP_Text[3];
+    public TMP_Text[] EquipmentsTxt = new TMP_Text[3];                  // 장비 이름
+
+    public StatSlot[] StatSlots = new StatSlot[3];                      // 스탯 선택창
 
     //gameObject
     public TMP_Text chapterTxt;
@@ -171,6 +173,7 @@ public class MapUIManager : MonoBehaviour
         PointTxt.text = Player.instance.stats.point.ToString();
     }
 
+    //장비창 업데이트
     public void UpdateEquipmentUI()
     {
         for(int i = 0;i<Player.instance.stats.maxEquipment; i++)
@@ -186,6 +189,45 @@ public class MapUIManager : MonoBehaviour
     {
         minimapPanel.SetActive(tf);
     
+    }
+
+    // 스탯 선택창 업데이트
+    public void UpdateStatSelectUI(List<int> table)
+    {
+        for(int i = 0;i<table.Count;i++)
+        {
+            TMP_Text StatTxt = StatSlots[i].GetComponentInChildren<TMP_Text>();
+            switch(table[i])
+            {
+                case 0 :
+                    StatTxt.text = "최대 체력 증가";
+                    break;
+                case 1:
+                    StatTxt.text = "공격력 증가";
+                    break;
+                case 2:
+                    StatTxt.text = "공격속도 증가";
+                    break;
+                case 3:
+                    StatTxt.text = "치명타 확률 증가";
+                    break;
+                case 4:
+                    StatTxt.text = "치명타 피해량 증가";
+                    break;
+                case 5:
+                    StatTxt.text = "도력 증가";
+                    break;
+                case 6:
+                    StatTxt.text = "도술 재사용 대기시간 감소";
+                    break;
+                case 7:
+                    StatTxt.text = "이동속도 증가";
+                    break;
+                default:
+                    break;
+            }
+            StatSlots[i].statIndex = table[i];
+        }
     }
 
     #endregion
