@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Mouse : EnemyBasic
 {
+    private List<GameObject> skillList;
+
     void Start()
     {
+        skillList = DataManager.instance.gameData.skillList;
         StartCoroutine(mouse());
     }
 
@@ -32,27 +35,50 @@ public class Mouse : EnemyBasic
         else
         {
             //Attack
-            if (targetDis > 3f) { Chase(); yield return new WaitForSeconds(0.1f); }
+            if (targetDis > 3f) 
+            { Chase(); yield return new WaitForSeconds(0.1f); }
             else
             {
-                print("user player skill");
-                /*
+
+                
                 if (enemyTarget.GetComponent<PlayerStats>().skill != null)
                 {
                     //mimic player skill
+                    print("mimic player skill");
                     
+                    for (int i = 0; i < skillList.Count; i++)
+                    {
+                        if (skillList[i].GetComponent<Skill>().skillName == 
+                            enemyTarget.GetComponent<PlayerStats>().skill.GetComponent<Skill>().skillName)
+                        {
+                            enemyTarget.GetComponent<PlayerStats>().skill.GetComponent<Skill>().Use(gameObject);
+                            break;
+                            //print("skill=" + skillList[i].GetComponent<Skill>().skillName); 
+                        
+                        }
+
+                    }
+
+                    yield return new WaitForSeconds(3f);
+                   
                 }
                 else 
                 {
-                    //È¥µ·
+                    //chaos
                     print("chaos");
                 }
-                */
 
+                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 yield return new WaitForSeconds(0.1f);
-                //run away
-                rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
 
+                //run away
+                while (targetDis<3f)
+                {
+                    targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+                    targetDirVec = enemyTarget.position - transform.position;
+                    rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
 
         }
