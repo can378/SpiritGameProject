@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEditor;
 
 /*
 public enum StatName 
@@ -13,35 +16,27 @@ public class StatSlot : MonoBehaviour
     public int statIndex;
     //public TMP_Text statLv;
 
-    private float clickTime;
-    public float minClickTime = 1;
-    private bool isClick;
+    public bool isClick = false;
+
+
+    TMP_Text statTitle;
+    Image statImage;
+
+    void Awake()
+    {
+        statTitle = GetComponentInChildren<TMP_Text>();
+        statImage = GetComponentInChildren<Image>();
+    }
     
     void Start()
     {
         //statLv.text = Player.instance.stats.playerStat[statIndex].ToString();
     }
 
-    void Update()
-    {
-        if (isClick)
-        {
-            clickTime += Time.deltaTime;
-            if (clickTime >= minClickTime)
-            {
-                print("ButtonHold");
-                statBtn();
-                isClick = false;
-            }
-        }
-        else {
-            clickTime = 0;
-        }
-    }
-
     public void ButtonDown()
     {
         isClick = true;
+        statBtn();
     }
 
     public void ButtonUp()
@@ -51,18 +46,45 @@ public class StatSlot : MonoBehaviour
 
     public void statBtn()
     {
-        if (Player.instance.stats.point > 0)
+        Player.instance.stats.playerStat[statIndex]++;
+        Player.instance.statApply();
+        MapUIManager.instance.UpdatePointUI();
+        print("띵");
+        //MapUIManager.instance.statSelectPanel.SetActive(false);
+        //Player.instance.nearObject.GetComponent<Altar>().check = true;
+    }
+
+    public void UpdateStatSelectUI(int statIndex)
+    {
+        this.statIndex = statIndex;
+        switch (this.statIndex)
         {
-
-            Player.instance.stats.playerStat[statIndex]++;
-            //statLv.text = Player.instance.stats.playerStat[statIndex].ToString();
-
-            //Player.instance.stats.point--;
-            MapUIManager.instance.UpdatePointUI();
-
-            Player.instance.statApply();
+            case 0:
+                statTitle.text = "최대 체력 증가";
+                break;
+            case 1:
+                statTitle.text = "공격력 증가";
+                break;
+            case 2:
+                statTitle.text = "공격속도 증가";
+                break;
+            case 3:
+                statTitle.text = "치명타 확률 증가";
+                break;
+            case 4:
+                statTitle.text = "치명타 피해량 증가";
+                break;
+            case 5:
+                statTitle.text = "도력 증가";
+                break;
+            case 6:
+                statTitle.text = "도술 재사용 대기시간 감소";
+                break;
+            case 7:
+                statTitle.text = "이동속도 증가";
+                break;
+            default:
+                break;
         }
-        else { print("no enough points"); }
-
     }
 }

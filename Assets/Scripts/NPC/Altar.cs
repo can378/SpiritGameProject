@@ -19,12 +19,13 @@ public class Altar : NPCbasic
         if (check)
             return;
         MapUIManager.instance.statSelectPanel.SetActive(true);
-        MapUIManager.instance.UpdateStatSelectUI(table);
+        MapUIManager.instance.statSelectPanel.GetComponent<StatSelectUI>().SetStatSelectUI(this);
     }
 
     public override void ConversationOut()
     {
         base.ConversationOut();
         MapUIManager.instance.statSelectPanel.SetActive(false);
+        MapUIManager.instance.statSelectPanel.GetComponent<StatSelectUI>().ExitStatSelectUI();
     }
 }
