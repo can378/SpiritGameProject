@@ -49,7 +49,6 @@ public class StatSlot : MonoBehaviour
         Player.instance.stats.playerStat[statIndex]++;
         Player.instance.statApply();
         MapUIManager.instance.UpdatePointUI();
-        print("¶ò");
         //MapUIManager.instance.statSelectPanel.SetActive(false);
         //Player.instance.nearObject.GetComponent<Altar>().check = true;
     }

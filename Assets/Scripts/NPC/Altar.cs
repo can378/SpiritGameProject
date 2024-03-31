@@ -6,6 +6,7 @@ public class Altar : NPCbasic
 {
     public bool check;      // 얻었으면 true;
     public List<int> table;
+    public int offering;
     
     protected override void Start()
     {
@@ -18,6 +19,10 @@ public class Altar : NPCbasic
         base.Conversation();
         if (check)
             return;
+        if(Player.instance.stats.coin < offering)
+            return;
+
+        Player.instance.stats.coin -= offering;
         MapUIManager.instance.statSelectPanel.SetActive(true);
         MapUIManager.instance.statSelectPanel.GetComponent<StatSelectUI>().SetStatSelectUI(this);
     }

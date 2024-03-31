@@ -342,17 +342,13 @@ public class Player : MonoBehaviour
 
     void Interaction()
     {
-        if (iDown && nearObject != null && !status.isDodge && !status.isAttack && moveVec == Vector2.zero
-        && !status.isAttack && !status.isSkill)
+        if (iDown && nearObject != null && !status.isDodge && !status.isAttack && !status.isSkill && moveVec == Vector2.zero)
         {
             if (nearObject.tag == "SelectItem")
             {
                 GainSelectItem();
             }
-        }
-        if (iDown && nearObject != null && !status.isDodge && !status.isAttack && !status.isSkill && moveVec == Vector2.zero)
-        {
-            if(nearObject.tag == "Npc")
+            else if (nearObject.tag == "Npc")
             {
                 nearObject.GetComponent<NPCbasic>().Conversation();
             }
