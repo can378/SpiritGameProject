@@ -106,6 +106,10 @@ public class Mouse : EnemyBasic
 
 
         }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
 
     }
 

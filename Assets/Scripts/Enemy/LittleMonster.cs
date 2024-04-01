@@ -91,5 +91,9 @@ public class LittleMonster : EnemyBasic
         }
         if (isEye&&collision.tag!="Enemy")
         { isHit = true; }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
     }
 }

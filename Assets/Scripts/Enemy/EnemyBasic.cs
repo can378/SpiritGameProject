@@ -29,21 +29,27 @@ public class EnemyBasic : MonoBehaviour
     }
 
 
+
     private void OnTriggerEnter2D (Collider2D collision) 
-{
+    {
         if (collision.tag == "PlayerAttack")
         {
-            //Damaged
-            HitDetection hitDetection = collision.GetComponent<HitDetection>();
-
-            Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage, hitDetection.attackAttributes);
-            if(hitDetection.deBuff != null) ApplyBuff(hitDetection.deBuff);
-            KnockBack(collision.gameObject, hitDetection.knockBack);
-
-
+            PlayerAttack(collision.gameObject);
         }
     }
+    //Player Attack tag를 가진 object와 충돌 시 사용
+    public void PlayerAttack(GameObject attacker) 
+    {
+        //Damaged
+        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
 
+        AudioManager.instance.SFXPlay("Hit_SFX");
+
+        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage, hitDetection.attackAttributes);
+        if (hitDetection.deBuff != null) ApplyBuff(hitDetection.deBuff);
+        KnockBack(attacker, hitDetection.knockBack);
+
+    }
     public void Damaged(float damage, float critical = 0, float criticalDamage = 0, List<int> attackAttributes = null)
     {
         bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;

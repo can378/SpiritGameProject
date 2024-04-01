@@ -209,6 +209,10 @@ public class EnemyAttack : EnemyPattern
             //ApplyBuff(buff);
             enemyTarget.GetComponent<Player>().ApplyBuff(buff);
         }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
     }
     IEnumerator worm(float time) 
     {

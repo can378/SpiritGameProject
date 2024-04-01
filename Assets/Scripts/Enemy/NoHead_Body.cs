@@ -72,8 +72,12 @@ public class NoHead_Body : EnemyBasic
             { isHit = true; }
 
         }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
 
-        
+
 
     }
 }

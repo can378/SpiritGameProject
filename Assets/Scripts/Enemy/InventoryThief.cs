@@ -55,5 +55,9 @@ public class InventoryThief : EnemyBasic
             }
             
         }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
     }
 }

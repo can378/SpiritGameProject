@@ -79,6 +79,10 @@ public class Tiger_tiger : EnemyBasic
             //stronger
             //???????????????????
             GetComponent<EnemyStats>().defaultMoveSpeed += 5;
-        }   
+        }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
     }
 }

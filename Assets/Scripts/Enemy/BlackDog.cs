@@ -52,10 +52,17 @@ public class BlackDog : EnemyBasic
     
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         { isRunaway = true; }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
     }
+
+
 
 }
