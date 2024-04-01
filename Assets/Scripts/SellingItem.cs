@@ -20,6 +20,7 @@ public class SellingItem : MonoBehaviour
     string thisItemName;
     int thisItemPrice;
 
+
     UserData userData;
 
     SpriteRenderer spriteRenderer;
@@ -87,16 +88,15 @@ public class SellingItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("enter");
         if (collision.tag == "Player")
         {
-            
-            print("start selling item");
             //check buying
             StartCoroutine(checkBuying());
 
             //show information
             info.SetActive(true);
+
+            
         }
     }
 
@@ -104,7 +104,8 @@ public class SellingItem : MonoBehaviour
     { 
         if(collision.tag=="Player")
         {
-            StopCoroutine(checkBuying());
+            print("stop check buying");
+            StopAllCoroutines();
             info.SetActive(false);
         }
         
@@ -115,9 +116,12 @@ public class SellingItem : MonoBehaviour
     {
         while (true) 
         {
-            
+            print("checkBuying");
             if (Input.GetKeyDown(KeyCode.F))
-            {  BuyItem();  }
+            {  
+                BuyItem(); 
+                break; 
+            }
             yield return null;
         }
 

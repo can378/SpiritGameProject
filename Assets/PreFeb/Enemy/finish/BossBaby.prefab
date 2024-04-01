@@ -350,10 +350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  status: {fileID: 0}
+  stats: {fileID: 0}
   rigid: {fileID: 134578144179405509}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   timeValue: 0
   floor: {fileID: 0}
   tear: {fileID: 7175259245655347033}
@@ -371,12 +372,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  health: 100
-  speed: 3000
-  damage: 10
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  defaultDefensivePower: 1
+  resist:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  defaultAttackPower: 0
+  defaultMoveSpeed: 5
+  activeEffects: []
   detectionDis: 0
-  attackSpeed: 0
+  exp: 0
+  enemyName: 
 --- !u!70 &5001535422959246571
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -438,7 +455,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &7175259245655347033
 GameObject:
   m_ObjectHideFlags: 0
