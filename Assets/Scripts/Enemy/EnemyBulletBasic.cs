@@ -7,7 +7,7 @@ public class EnemyBulletBasic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag !="Enemy")
+        if (other.tag =="Player"||other.tag=="Wall")
         {
             gameObject.SetActive(false);
         }

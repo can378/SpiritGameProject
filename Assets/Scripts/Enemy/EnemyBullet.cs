@@ -10,7 +10,7 @@ public class EnemyBullet : MonoBehaviour
 
     void Awake()
     {
-        playerPos = GameObject.Find("Player").GetComponent<Transform>();
+        playerPos=GameObject.FindWithTag("Player").GetComponent<Transform>();
         status = GetComponent<EnemyStats>();
     }
     private void Update()
@@ -20,8 +20,12 @@ public class EnemyBullet : MonoBehaviour
         if (time >= 5f) { this.gameObject.SetActive(false); time = 0; }
 
         //플레이어쪽으로 발사
-        Vector2 direction = transform.position- playerPos.position;
+        Vector2 direction = playerPos.position- transform.position;
         transform.Translate(direction * status.defaultMoveSpeed * Time.deltaTime);    
     }
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        { gameObject.SetActive(false); }
+    }
 }
