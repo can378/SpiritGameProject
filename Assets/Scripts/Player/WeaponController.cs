@@ -154,7 +154,7 @@ public class WeaponController : MonoBehaviour
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(false,-1, stats.weapon.isMultiHit, stats.weapon.DPS, stats.weapon.attackAttribute, stats.attackPower, stats.weapon.knockBack, stats.criticalChance, stats.criticalDamage,stats.weapon.deBuff);
+        hitDetection.SetHitDetection(false,-1, stats.weapon.isMultiHit, stats.weapon.DPS, stats.attackPower, stats.weapon.knockBack, stats.criticalChance, stats.criticalDamage,stats.weapon.statusEffect);
 
         // 무기 방향 
         HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);
@@ -189,7 +189,7 @@ public class WeaponController : MonoBehaviour
 
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
-        hitDetection.SetHitDetection(true, stats.weapon.penetrations, stats.weapon.isMultiHit, stats.weapon.DPS, stats.weapon.attackAttribute, stats.attackPower, stats.weapon.knockBack, stats.criticalChance, stats.criticalDamage, stats.weapon.deBuff);
+        hitDetection.SetHitDetection(true, stats.weapon.penetrations, stats.weapon.isMultiHit, stats.weapon.DPS, stats.attackPower, stats.weapon.knockBack, stats.criticalChance, stats.criticalDamage, stats.weapon.statusEffect);
         instantProjectile.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(stats.weapon.attackSize, stats.weapon.attackSize,1);
         bulletRigid.velocity = status.mouseDir * 10 * stats.weapon.projectileSpeed;  // 속도 설정

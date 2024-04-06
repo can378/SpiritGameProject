@@ -11,7 +11,6 @@ public abstract class StatusEffect : MonoBehaviour
     [field: SerializeField] public float duration {get; set;}               // 시간
     [field: SerializeField] public int maxOverlap { get; set; }             // 최대 중첩
     [field: SerializeField] public int overlap { get; set; }                // 현재 중첩
-    [field: SerializeField] public int resist { get; private set; }       // 저항
 
     public void SetTarget(GameObject target)
     {

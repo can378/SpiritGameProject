@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DotDamageBuff : StatusEffect
 {
-    // 최대 체력 비례 %수치
+    // 고정 수치 피해
     // dotDamage가 양수이면 피해
     // 음수이면 힐
     [field: SerializeField] public float damageSecond { get; set; }
@@ -29,7 +29,7 @@ public class DotDamageBuff : StatusEffect
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - (stats.resist[resist] * 2)) * defaultDuration;
+        duration = stats.SEResist * defaultDuration;
         //print(duration);
     }
 

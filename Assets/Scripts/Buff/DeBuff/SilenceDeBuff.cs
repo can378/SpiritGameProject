@@ -6,6 +6,8 @@ using UnityEngine;
 // 
 public class SilenceDeBuff : StatusEffect
 {
+    // 침묵
+    // 스킬 사용 불가
     private Coroutine skillCoolTimeCoroutine;
 
     public override void ApplyEffect()
@@ -17,7 +19,7 @@ public class SilenceDeBuff : StatusEffect
     public override void ResetEffect()
     {
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - (stats.resist[resist] * 2)) * defaultDuration;
+        duration = stats.SEResist * defaultDuration;
     }
 
     IEnumerator SkillCoolOverTime()

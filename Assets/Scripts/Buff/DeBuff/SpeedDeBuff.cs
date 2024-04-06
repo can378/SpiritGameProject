@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpeedDeBuff : StatusEffect
 {
     // 배율
+    // 이동속도, 공격속도 감소
     [field: SerializeField] public float decreasedMoveSpeed { get; set; }
     [field: SerializeField] public float decreasedAttackSpeed { get; set; }
 
@@ -27,7 +28,7 @@ public class SpeedDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - (playerStats.resist[resist] * 2)) * defaultDuration;
+            duration = playerStats.SEResist * defaultDuration;
 
             playerStats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed += overlap * decreasedAttackSpeed;
@@ -51,7 +52,7 @@ public class SpeedDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - (stats.resist[resist] * 2)) * defaultDuration;
+            duration = stats.SEResist * defaultDuration;
 
             stats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
             //stats.decreaseddAttackSpeed += overlap * decreasedAttackSpeed;

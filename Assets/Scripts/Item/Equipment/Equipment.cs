@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EquipmentsRating { Temporary, General, Rare, Unique }
+public enum EquipmentsRating {General, Rare, Unique, Legend }
 
 public abstract class Equipment : SelectItem
 {
