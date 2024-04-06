@@ -28,7 +28,7 @@ public class FakeTree : EnemyBasic
         if (targetDis > 5f)
         {
             //normal form
-            GetComponent<SpriteRenderer>().color = new Color(118, 85, 63);
+            GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
         
         }
         else 

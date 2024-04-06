@@ -13,6 +13,7 @@ public class coin : MonoBehaviour
     private int currentBounce = 0;
     private bool isGrounded = true;
 
+
     private float maxHeight;
     private float currentheight;
     public Transform sprite;
@@ -65,10 +66,16 @@ public class coin : MonoBehaviour
             shadow.localScale = Vector2.one;
 
             if (currentBounce < maxBounce) { Initialize(direction / 1.5f); }
-            else { isGrounded = true; }
-        
-        
+            else
+            {
+                isGrounded = true;
+            }
         }
-            
+
+        /*
+        if (GetComponent<AfterEffect>() != null)
+        { StartCoroutine(GetComponent<AfterEffect>().StartAfterEffect()); }
+        */
     }
+
 }
