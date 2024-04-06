@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerDeBuff : StatusEffect
 {
     // 배율
+    // 공격력, 도력 감소
     [field: SerializeField] public float decreasedAttackPower { get; set; }
     [field: SerializeField] public float decreasedSkillPower { get; set; }
 
@@ -27,7 +28,7 @@ public class PowerDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - (playerStats.resist[resist] * 2)) * defaultDuration;
+            duration = playerStats.SEResist * defaultDuration;
 
             playerStats.decreasedAttackPower += overlap * decreasedAttackPower;
             playerStats.decreasedSkillPower += overlap * decreasedSkillPower;
@@ -43,7 +44,7 @@ public class PowerDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - (stats.resist[resist] * 2)) * defaultDuration;
+            duration = stats.SEResist * defaultDuration;
 
             stats.decreasedAttackPower += overlap * decreasedAttackPower;
         }

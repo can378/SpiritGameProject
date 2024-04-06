@@ -61,21 +61,9 @@ public class Wall : MonoBehaviour
 
     public void Collapse(HitDetection hitDetection)
     {
-        // 0 : 무속성, 1 : 참격, 2 : 타격, 3 : 관통, 4 : 화염, 5 : 냉기, 6 : 전기, 7 : 역장, 8 : 신성, 9 : 어둠
-        foreach(int attackAttribute in hitDetection.attackAttributes)
+        if(hitDetection.damage >= 100)
         {
-            if ((attackAttribute == 2 || attackAttribute == 7))
-            {
-                if (hitDetection.damage < 20)
-                {
-                    Debug.Log("너무 약하다.");
-                }
-                else
-                {
-                    Debug.Log("벽이 무너졌다.");
-                    Destroy(this.gameObject);
-                }
-            }
+            Destroy(this.gameObject);
         }
     }
 }

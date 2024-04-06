@@ -45,46 +45,19 @@ public class EnemyBasic : MonoBehaviour
 
         AudioManager.instance.SFXPlay("Hit_SFX");
 
-        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage, hitDetection.attackAttributes);
-        if (hitDetection.deBuff != null) ApplyBuff(hitDetection.deBuff);
+        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
+        if (hitDetection.statusEffect != null) ApplyBuff(hitDetection.statusEffect);
         KnockBack(attacker, hitDetection.knockBack);
 
     }
-    public void Damaged(float damage, float critical = 0, float criticalDamage = 0, List<int> attackAttributes = null)
+    public void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
         bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
 
-        if(attackAttributes != null)
-        {
-            foreach (int attackAttribute in attackAttributes)
-            {
-                string att;
-                switch (attackAttribute)
-                {
-                    case 1: att = "참격"; break;
-                    case 2: att = "타격"; break;
-                    case 3: att = "관통"; break;
-                    case 4: att = "화염"; break;
-                    case 5: att = "냉기"; break;
-                    case 6: att = "전기"; break;
-                    case 7: att = "역장"; break;
-                    case 8: att = "신성"; break;
-                    case 9: att = "어둠"; break;
-                    default: att = "무속성"; break;
+        print("enemy damaged : " + damage);
+        stats.HP -= stats.addDefensivePower * damage;
 
-                }
-                float trueDamage = (damage * (1 - stats.resist[attackAttribute]) / attackAttributes.Count) > 0f ? (damage * (1 - stats.resist[attackAttribute]) / attackAttributes.Count) : 1f;
-                print(att + " enemy damaged : " + trueDamage);
-                stats.HP -= trueDamage;
-            }
-        }
-        else
-        {
-            print("enemy damaged : " + damage);
-            stats.HP -= damage;
-        }
-        
         sprite.color = Color.red;
         Invoke("DamagedOut",0.05f);
         if (stats.HP <= 0f)
@@ -136,6 +109,7 @@ public class EnemyBasic : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
+            effect.duration -= 0.1f;
             if (effect.duration <= 0)
             {
                 break;

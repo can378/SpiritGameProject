@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FireBall : Skill
 {
-    [field: SerializeField] public List<int> attackAttributes { get; private set; }
     [field: SerializeField] public int defalutDamage { get; private set; }
     [field: SerializeField] public float ratio { get; private set; }
     [field: SerializeField] public float size { get; private set; }
@@ -45,7 +44,7 @@ public class FireBall : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(false, -1, false, -1, attackAttributes, defalutDamage + player.stats.skillPower * ratio, knockBack,0,0, BurnDeBuff);
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack,0,0, BurnDeBuff);
 
             Destroy(instant, rate);
 

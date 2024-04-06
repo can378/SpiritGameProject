@@ -16,20 +16,47 @@ public class Stats : MonoBehaviour
     public float HP = 100;
     public float tempHP = 0;
 
-    // 모든 받는 피해
-    // UI : 받는 피해 100%
-    // 받는 피해 = 피해량 * 받는 피해
-    public float defaultDefensivePower = 1f;
+    // 피해감소
+    // UI : 피해감소 0%
+    // 받는 피해 = 피해량 * 피해감소
+    // 최대, 최소 75%
+    public float defaultDefensivePower = 0f;
     public float addDefensivePower { get; set; }
     public float increasedDefensivePower { get; set; }
     public float decreasedDefensivePower { get; set; }
     public float defensivePower
     {
-        get { return (defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower); }
+        get {
+            float DP = (defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower);
+            if (DP > 0.75f)
+                return 1 - 0.75f;
+            else if (DP < -0.75f)
+                return 1 + 0.75f;
+            else
+                return 1 - DP;
+        }
     }
-    
-    // 속성 받는 피해
-    public float[] resist = new float[11] {1,1,1,1,1,1,1,1,1,1,1};  //저항은 무조선 덧셈 뺄셈으로
+
+    // 상태이상 저항
+    // UI : 상태이상 저항 0%
+    // 상태이상 효과 = 지속시간 또는 피해량 * 상태이상 저항
+    // 최대,최소 75%
+    public float defaultSEResist = 0f;
+    public float addSEResist { get; set; }
+    public float increasedSEResist { get; set; }
+    public float decreasedSEResist { get; set; }
+    public float SEResist
+    {
+        get {
+            float SER = (defaultSEResist + addSEResist) * (1f + increasedSEResist) * (1f - decreasedSEResist);
+            if(SER > 0.75f)
+                return 1 - 0.75f;
+            else if(SER < -0.75f)
+                return 1 + 0.75f;
+            else 
+                return 1 - SER;
+        }
+    }
 
     // Attack
     // 공격력

@@ -58,12 +58,11 @@ public class WheelWind : Skill
             디버프 = 없음
             */
             hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackSpeed),
-             player.stats.weapon.attackAttribute,
              defaultDamage + player.stats.attackPower * ratio,
              player.stats.weapon.knockBack,
              player.stats.criticalChance,
              player.stats.criticalDamage,
-             player.stats.weapon.deBuff);
+             player.stats.weapon.statusEffect);
         }
     }
 

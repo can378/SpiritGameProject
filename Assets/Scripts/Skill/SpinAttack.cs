@@ -54,12 +54,11 @@ public class SpinAttack : Skill
             디버프 = 없음
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
-             player.stats.weapon.attackAttribute,
              defalutDamage + player.stats.attackPower * ratio,
              player.stats.weapon.knockBack, 
              player.stats.criticalChance, 
              player.stats.criticalDamage,
-             player.stats.weapon.deBuff);
+             player.stats.weapon.statusEffect);
 
             // rate 동안 유지
             Destroy(instant, rate / attackSpeed);

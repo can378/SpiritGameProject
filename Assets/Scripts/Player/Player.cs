@@ -85,8 +85,8 @@ public class Player : MonoBehaviour
         
         if (status.isAttackable)
         {
-            Attack();
             Reload();
+            Attack();
             Skill();
             ReadyOut();
             HoldOut();
@@ -177,7 +177,6 @@ public class Player : MonoBehaviour
     {
         if (dDown && !status.isAttack && !status.isSkill && moveVec != Vector2.zero && !status.isDodge && !status.isSkillHold)
         {
-            
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
             // 회피 속도 = 플레이어 이동속도 * 회피속도
@@ -197,7 +196,7 @@ public class Player : MonoBehaviour
 
     void RunCoolTime()
     {
-        if(status.isAttack || status.isSkill || status.isSkillHold)
+        if(status.isAttack || status.isSkillHold)
         {
             status.isSprint = false;
             status.runCurrentCoolTime = stats.runCoolTime;
@@ -228,26 +227,34 @@ public class Player : MonoBehaviour
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
             float reloadTime = stats.weapon.reloadTime / stats.attackSpeed;
-            Invoke("ReloadOut", stats.weapon.reloadTime);
+            Invoke("ReloadOut", reloadTime);
+        }
+
+        if (aDown && status.attackDelay < 0 && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold && stats.weapon.ammo == 0)
+        {
+            status.isReload = true;
+            //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
+            float reloadTime = stats.weapon.reloadTime / stats.attackSpeed;
+            Invoke("ReloadOut", reloadTime);
         }
     }
 
     void ReloadOut()
     {
-        Debug.Log("스킬 홀드 중단");
         stats.weapon.Reload();
         status.isReload = false;
     }
 
     void Attack()
     {
+        status.attackDelay -= Time.deltaTime;
+
         if (stats.weapon == null)
             return;
 
         if (stats.weapon.ammo == 0)
             return;
 
-        status.attackDelay -= Time.deltaTime;
         status.isAttackReady = status.attackDelay <= 0;
 
         if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady && !status.isSkillHold)
