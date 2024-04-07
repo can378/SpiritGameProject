@@ -14,7 +14,7 @@ public class GameData : MonoBehaviour
     public List<GameObject> equipmentList;
     public List<GameObject> skillList;
     public List<GameObject> testList;
-    public List<GameObject> passiveSkillList;
+    public List<GameObject> statusEffectList;
 
     void Start()
     {

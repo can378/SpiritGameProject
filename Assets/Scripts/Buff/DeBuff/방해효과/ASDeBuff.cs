@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+// 공격 및 스킬 불가
+public class ASDeBuff : StatusEffect
+{
+    // 공격 및 스킬 불가
+    // 공격 및 스킬 사용 불가
+    private Coroutine attackDelayTimeCoroutine;
+    float curSkillCoolTIme;
+    float curAttackDelay;
+
+    public override void ApplyEffect()
+    {
+        ResetEffect();
+        attackDelayTimeCoroutine = StartCoroutine(AttackDelayOverTime());
+    }
+
+    public override void ResetEffect()
+    {
+        Stats stats = target.GetComponent<Stats>();
+        duration = stats.SEResist * defaultDuration;
+    }
+
+    IEnumerator AttackDelayOverTime()
+    {
+        if (target.tag == "Player")
+        {
+            Player player = target.GetComponent<Player>();
+
+            while (duration > 0)
+            {
+                if (player.stats.weapon != null)
+                    player.status.attackDelay = 99f;
+                if (player.stats.skill != null)
+                    player.stats.skill.skillCoolTime = 99f;
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+    }
+
+    public override void RemoveEffect()
+    {
+        if (target.tag == "Player")
+        {
+            Player player = target.GetComponent<Player>();
+
+            if (player.stats.skill != null)
+            {
+                player.stats.skill.skillCoolTime = curSkillCoolTIme;
+            }
+
+            if (player.stats.weapon != null)
+            {
+                player.status.attackDelay = curAttackDelay;
+            }
+        }
+    }
+}
+

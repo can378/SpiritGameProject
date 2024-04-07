@@ -68,7 +68,13 @@ public class Stats : MonoBehaviour
     public float decreasedAttackPower { get; set; }
     public float attackPower
     {
-        get { return (defaultAttackPower + addAttackPower) * (1f + increasedAttackPower) * (1f - decreasedAttackPower); }
+        get
+        {
+            float AP = (defaultAttackPower + addAttackPower) * (1f + increasedAttackPower) * (1f - decreasedAttackPower);
+            if (AP <= 0)
+                return 0;
+            return AP;
+        }
     }
 
     // Speed
@@ -80,7 +86,13 @@ public class Stats : MonoBehaviour
     public float decreasedMoveSpeed { get; set; }
     public float moveSpeed
     {
-        get { return (defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed); }
+        get
+        {
+            float MS = (defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed);
+            if (MS <= 0)
+                return 0;
+            return MS;
+        }
     }
 
     [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
