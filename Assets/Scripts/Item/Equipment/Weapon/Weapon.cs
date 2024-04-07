@@ -10,14 +10,14 @@ public class Weapon : Equipment
     [field: SerializeField] public bool isMultiHit { get; private set; }            // 다단히트 여부
     [field: SerializeField] public int DPS { get; private set; }                    // 초당 타격 횟수 필요 없을 시 음수
     [field: SerializeField] public float attackPower { get; private set; }
-    [field: SerializeField] public float knockBack { get; private set; }
     [field: SerializeField] public float attackSpeed { get; private set; }          // 공격속도
+    [field: SerializeField] public float attackSize { get; private set; }       // 무기, 투사체 크기
+
+    [field: SerializeField] public float knockBack { get; private set; }
 
     [field: SerializeField] public float preDelay { get; private set; }             // 선딜레이
     [field: SerializeField] public float rate { get; private set; }                 // 공격 시간
     [field: SerializeField] public float postDelay { get; private set; }            // 대기 시간
-
-    [field: SerializeField] public float attackSize { get; private set; }       // 무기, 투사체 크기
 
     [field: SerializeField] public int maxAmmo { get; private set; }             // 재장전 필요 없는 무기는 음수로 표기
     [field: SerializeField] public int ammo { get; private set; }                // 재장전 필요 없는 무기는 음수로 표기
