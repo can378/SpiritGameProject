@@ -6,6 +6,10 @@ public class AfterEffect : MonoBehaviour
 {
     public GameObject firePlan;
 
+    private void OnDisable()
+    {
+        StopCoroutine(StartAfterEffect());
+    }
 
     public IEnumerator StartAfterEffect()
     {

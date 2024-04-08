@@ -11,7 +11,7 @@ public class coin : MonoBehaviour
 
     private Vector2 direction;
     private int currentBounce = 0;
-    private bool isGrounded = true;
+    private bool isGrounded;
 
 
     private float maxHeight;
@@ -27,6 +27,15 @@ public class coin : MonoBehaviour
         maxHeight = currentheight;
         Initialize(new Vector2(Random.Range(-xForce, xForce), Random.Range(-xForce, xForce)));
     }
+
+    private void OnEnable()
+    {
+        currentheight = Random.Range(yForce - 1, yForce);
+        maxHeight = currentheight;
+        Initialize(new Vector2(Random.Range(-xForce, xForce), Random.Range(-xForce, xForce)));
+    }
+
+
     private void Update()
     {
         //original form --> if (!isGrounded)
@@ -40,7 +49,7 @@ public class coin : MonoBehaviour
 
             float totalVelocity = Mathf.Abs(currentheight) + Mathf.Abs(maxHeight);
             float scaleXY = Mathf.Abs(currentheight) / totalVelocity;
-            shadow.localScale = Vector2.one * Mathf.Clamp(scaleXY, 0.5f, 1.0f);
+            //shadow.localScale = Vector2.one * Mathf.Clamp(scaleXY, 0.5f, 1.0f);
             CheckGroundHit();
 
 
@@ -56,6 +65,7 @@ public class coin : MonoBehaviour
         direction = _direction;
         currentheight = maxHeight;
         currentBounce++;
+        time = 0;
     }
 
     void CheckGroundHit() {
@@ -63,19 +73,21 @@ public class coin : MonoBehaviour
         if (sprite.position.y < shadow.position.y)
         {
             sprite.position = shadow.position;
-            shadow.localScale = Vector2.one;
+            //shadow.localScale = Vector2.one;
 
             if (currentBounce < maxBounce) { Initialize(direction / 1.5f); }
             else
             {
                 isGrounded = true;
+               
             }
+
+            if (GetComponent<AfterEffect>() != null)
+            { StartCoroutine(GetComponent<AfterEffect>().StartAfterEffect()); }
+
         }
 
-        /*
-        if (GetComponent<AfterEffect>() != null)
-        { StartCoroutine(GetComponent<AfterEffect>().StartAfterEffect()); }
-        */
+
     }
 
 }

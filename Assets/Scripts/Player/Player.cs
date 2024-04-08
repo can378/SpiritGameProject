@@ -14,8 +14,8 @@ public class Player : MonoBehaviour
     public  PlayerStatus status { get; private set; }
     public PlayerStats stats {get; private set; }
 
-    float hAxis;
-    float vAxis;
+    public float hAxis;
+    public float vAxis;
 
     #region Key Input
 
@@ -697,7 +697,7 @@ public class Player : MonoBehaviour
         //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
         damage = damage * stats.defensivePower;
 
-        Debug.Log("Player Damaged" + damage);
+        //Debug.Log("Player Damaged" + damage);
         stats.HP -= damage;
 
         MapUIManager.instance.UpdateHealthUI();

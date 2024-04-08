@@ -1597,6 +1597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436f0434039a7354fa325fa5e60a8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hAxis: 0
+  vAxis: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1693,18 +1695,7 @@ MonoBehaviour:
   HP: 100
   tempHP: 0
   defaultDefensivePower: 1
-  resist:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  defaultSEResist: 0
   defaultAttackPower: 0
   defaultMoveSpeed: 5
   activeEffects: []
@@ -4140,7 +4131,7 @@ MonoBehaviour:
   - {fileID: 5904743163423667712, guid: 06470d1c572462842b0479996dc41400, type: 3}
   - {fileID: 5904743163423667712, guid: 2baf7cec2b42d854389c6371941a4678, type: 3}
   testList: []
-  passiveSkillList: []
+  statusEffectList: []
 --- !u!1 &1252335859
 GameObject:
   m_ObjectHideFlags: 0
@@ -4713,6 +4704,7 @@ MonoBehaviour:
   - {fileID: 5940983208176413738, guid: d4f5937414f4256449bf70a503088d2a, type: 3}
   - {fileID: 7497321562072416978, guid: bbe829656ebc7d14e9f87775e3b4012f, type: 3}
   - {fileID: 5813673811457811203, guid: 47a1f9ecc259e654e9ef7f41ae13a325, type: 3}
+  - {fileID: 4724169368982175143, guid: a1e9ecbb28018484ca12be125400950d, type: 3}
 --- !u!4 &1760414292
 Transform:
   m_ObjectHideFlags: 0
