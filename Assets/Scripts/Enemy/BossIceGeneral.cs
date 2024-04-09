@@ -33,7 +33,7 @@ public class BossIceGeneral : EnemyBasic
         if (targetDis > 10f)
         {
             //shoot knife
-            GameObject bullet = ObjectPoolManager.instance.Get(0);
+            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
             bullet.transform.position = transform.position;
             Rigidbody2D bulletRigid = bullet.GetComponent<Rigidbody2D>();
             targetDirVec = enemyTarget.transform.position - transform.position;

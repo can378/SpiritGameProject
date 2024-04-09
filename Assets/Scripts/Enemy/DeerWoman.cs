@@ -23,7 +23,7 @@ public class DeerWoman : EnemyBasic
     IEnumerator deerWoman()
     {
         //shot arrow
-        GameObject bullet = ObjectPoolManager.instance.Get(0);
+        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
 
 

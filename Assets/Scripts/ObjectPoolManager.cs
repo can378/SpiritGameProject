@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ObjectPoolManager : MonoBehaviour
 {
@@ -53,6 +57,27 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
+    public GameObject Get2(string name) 
+    {
+        GameObject select = null;
+
+        for (int i = 0; i < prefabs.Length; i++)
+        {
+            if (prefabs[i].name == name)
+            {
+                select = prefabs[i];
+                select.SetActive(true);
+                select = Instantiate(prefabs[i], transform);
+                pools[i].Add(select);
+
+                return select;
+
+            }    
+        
+        }
+
+        return prefabs[0];
+    }
 
 
 

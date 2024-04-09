@@ -23,7 +23,7 @@ public class Dokkebie : EnemyBasic
     {
         if (index == 0)
         { //shot dokkebie fire
-            GameObject bullet = ObjectPoolManager.instance.Get(3);
+            GameObject bullet = ObjectPoolManager.instance.Get2("dokabbieFire");
             bullet.transform.position = transform.position;
 
 

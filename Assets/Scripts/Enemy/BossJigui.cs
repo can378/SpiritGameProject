@@ -30,7 +30,7 @@ public class BossJigui : EnemyBasic
         //Throw fire balls
         for (int i = 0; i < 20; i++)
         {
-            GameObject fireBall = ObjectPoolManager.instance.Get(4);
+            GameObject fireBall = ObjectPoolManager.instance.Get2("fireBall");
             fireBall.transform.position = transform.position;
             yield return new WaitForSeconds(0.2f);
         }

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1465481353037356265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: -30, z: 0}
+  m_LocalPosition: {x: -4.641631, y: -6.76495, z: 0}
   m_LocalScale: {x: 0.1521, y: 0.16825, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -112,12 +112,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  health: 0
-  speed: 0
-  damage: 1
+  HPMax: 100
+  HP: 100
+  tempHP: 0
+  defaultDefensivePower: 0
+  defaultSEResist: 0
+  defaultAttackPower: 0
+  defaultMoveSpeed: 5
+  activeEffects: []
   detectionDis: 0
-  attackSpeed: 0
+  exp: 0
+  enemyName: 
 --- !u!50 &7530864278459449910
 Rigidbody2D:
   serializedVersion: 4

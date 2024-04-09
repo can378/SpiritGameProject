@@ -152,7 +152,7 @@ public class EnemyBasic : MonoBehaviour
     public void shot()
     {
 
-        GameObject bullet = ObjectPoolManager.instance.Get(0);
+        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
         targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);

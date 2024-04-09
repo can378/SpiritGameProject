@@ -32,7 +32,7 @@ public class Pox : EnemyBasic
 
             //throwing stone
             yield return new WaitForSeconds(1f);
-            GameObject bullet = ObjectPoolManager.instance.Get(0);
+            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
             bullet.transform.position = transform.position;
             targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
             bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 7, ForceMode2D.Impulse);
