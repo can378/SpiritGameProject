@@ -11,7 +11,7 @@ public class BossJigui : EnemyBasic
     void Start()
     {
         StartCoroutine(jigui());
-        StartCoroutine(jiguiRaid());
+        StartCoroutine(jiguiRaidStart());
         StartCoroutine(playerEyeSight());
     }
 
@@ -23,6 +23,7 @@ public class BossJigui : EnemyBasic
     {
         StopAllCoroutines();
     }
+
 
 
     IEnumerator jigui()
@@ -39,7 +40,7 @@ public class BossJigui : EnemyBasic
 
         //Fire Area attack
         fire.SetActive(true);
-        fire.transform.position = new Vector3(0, 0, 0);
+        fire.transform.position = transform.position;
         fire.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
         yield return new WaitForSeconds(2f);
         fire.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
@@ -50,28 +51,36 @@ public class BossJigui : EnemyBasic
         StartCoroutine(jigui());
     }
 
+    IEnumerator jiguiRaidStart() 
+    {
+        yield return new WaitForSeconds(4f);
+        StartCoroutine(jiguiRaid());
+    }
     IEnumerator jiguiRaid()
     {
-        if (!eyeSight.GetComponent<EyeSight>().isPlayerSeeEnemy)
+        print("jigui raid="+ eyeSight.GetComponent<EyeSight>().isPlayerSeeEnemy);
+        if (eyeSight.GetComponent<EyeSight>().isPlayerSeeEnemy==false)
         {
             Vector2 originPos = transform.position;
 
             
             targetDis = Vector2.Distance(enemyTarget.transform.position, transform.position);
 
-            while (targetDis > 0.1f)
+            while (targetDis > 3f)
             {
+                print("jigui raid - run to player");
                 targetDirVec = enemyTarget.transform.position - transform.position;
                 targetDis = Vector2.Distance(enemyTarget.transform.position, transform.position);
-                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed*10);
+                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
                 yield return new WaitForSeconds(0.1f);
             }
 
             Vector2 currentPos = transform.position;
             Vector2 dirVec = (originPos - currentPos).normalized;
 
-            while (Vector2.Distance(transform.position, originPos)>0.1f)
+            while (Vector2.Distance(transform.position, originPos)>3f)
             {
+                print("jigui raid - run away");
                 rigid.AddForce(dirVec * GetComponent<EnemyStats>().defaultMoveSpeed*10);
                 currentPos = transform.position;
                 dirVec = (originPos - currentPos).normalized;
@@ -88,24 +97,31 @@ public class BossJigui : EnemyBasic
         eyeSight.transform.position = enemyTarget.transform.position;
 
         if (Player.instance.hAxis == -1) 
-        { 
-            eyeSight.GetComponent<SpriteRenderer>().flipX = true; 
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 0); 
+        {
+            //eyeSight.GetComponent<SpriteRenderer>().flipX = true;
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 180);
+            
         }
         else if (Player.instance.hAxis == 1) 
         { 
-            eyeSight.GetComponent<SpriteRenderer>().flipX = false;
+            //eyeSight.GetComponent<SpriteRenderer>().flipX = false;
+            transform.localScale = new Vector3(1f, 1f, 1f);
             eyeSight.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else if (Player.instance.vAxis == -1) 
         {
-            eyeSight.GetComponent<SpriteRenderer>().flipX = true;
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 90);
+            //eyeSight.GetComponent<SpriteRenderer>().flipX = true;
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            eyeSight.transform.rotation = Quaternion.Euler(0, 0, -90);
+            
         }
         else if (Player.instance.vAxis == 1) 
         {
-            eyeSight.GetComponent<SpriteRenderer>().flipX = true;
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, -90);
+            //eyeSight.GetComponent<SpriteRenderer>().flipX = true;
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 90);
+            
         }
 
 

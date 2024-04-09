@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class EyeSight : MonoBehaviour
 {
-    public bool isPlayerSeeEnemy = false;
+    public bool isPlayerSeeEnemy=true;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void Update()
+    {
+        print(isPlayerSeeEnemy);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Enemy") 
         {
-            isPlayerSeeEnemy = true;
-            print("player is seeing enemy");
+            if(collision.GetComponent<EnemyStats>().enemyName=="jigui")
+            { 
+                isPlayerSeeEnemy = true;
+            }
         }
     }
 
@@ -19,8 +27,10 @@ public class EyeSight : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            isPlayerSeeEnemy = false;
-            print("player is not seeing enemy");
+            if (collision.GetComponent<EnemyStats>().enemyName == "jigui")
+            {
+                isPlayerSeeEnemy = false;
+            }
         }
     }
 }

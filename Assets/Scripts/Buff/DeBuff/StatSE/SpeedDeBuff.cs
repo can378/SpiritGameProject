@@ -33,11 +33,12 @@ public class SpeedDeBuff : StatusEffect
             playerStats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed += overlap * decreasedAttackSpeed;
 
+            /*
             Debug.Log("MoveSpeed buff applied: " + overlap * decreasedMoveSpeed + "MoveSpeed");
             Debug.Log("MoveSpeed : " + playerStats.moveSpeed);
             Debug.Log("AttackSpeed buff applied: " + overlap * decreasedAttackSpeed + " AttackSpeed");
             Debug.Log("AttackSpeed : " + playerStats.attackSpeed);
-
+            */
             //print(duration);
         }
         else
