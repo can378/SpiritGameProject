@@ -159,9 +159,9 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateSkillUI() 
     {
-        if (Player.instance.stats.skill != 0)
+        if (Player.instance.stats.skill[Player.instance.status.skillIndex] != 0)
         {
-            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.stats.skill].skillName;
+            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.stats.skill[Player.instance.status.skillIndex]].skillName;
         }
         else {SkillTxt.text = "";}
     }

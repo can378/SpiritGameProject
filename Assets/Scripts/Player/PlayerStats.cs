@@ -145,8 +145,8 @@ public class PlayerStats : Stats
     //Equipments
     public int weapon = 0;
 
-    public int maxSkill = 1;
-    public int skill = 0;
+    public int maxSkillSlot = 1;
+    public int[] skill = {0, 0, 0, 0, 0};
 
     public int maxEquipment = 3;
     public Equipment[] equipments = new Equipment[3];

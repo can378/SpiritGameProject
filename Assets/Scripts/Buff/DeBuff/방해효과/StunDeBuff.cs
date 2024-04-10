@@ -43,8 +43,8 @@ public class StunDeBuff : StatusEffect
             {
                 if (player.stats.weapon != 0)
                     player.status.attackDelay = 99f;
-                if (player.stats.skill != 0)
-                    player.skillController.skillList[player.stats.skill].skillCoolTime = 99f;
+                if (player.stats.skill[player.status.skillIndex] != 0)
+                    player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime = 99f;
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -60,9 +60,9 @@ public class StunDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            if (player.stats.skill != 0)
+            if (player.stats.skill[player.status.skillIndex] != 0)
             {
-                player.skillController.skillList[player.stats.skill].skillCoolTime = curSkillCoolTIme;
+                player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime = curSkillCoolTIme;
             }
 
             if (player.stats.weapon != 0)

@@ -7,7 +7,7 @@ public class ASDeBuff : StatusEffect
 {
     // 공격 및 스킬 불가
     // 공격 및 스킬 사용 불가
-    private Coroutine attackDelayTimeCoroutine;
+    Coroutine attackDelayTimeCoroutine;
     float curSkillCoolTIme;
     float curAttackDelay;
 
@@ -33,8 +33,9 @@ public class ASDeBuff : StatusEffect
             {
                 if (player.stats.weapon != 0)
                     player.status.attackDelay = 99f;
-                if (player.stats.skill != 0)
-                    player.skillController.skillList[player.stats.skill].skillCoolTime = 99f;
+
+                if (player.stats.skill[player.status.skillIndex] != 0)
+                    player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime = 99f;
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -46,15 +47,16 @@ public class ASDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            if (player.stats.skill != 0)
+            if (player.stats.skill[player.status.skillIndex] != 0)
             {
-                player.skillController.skillList[player.stats.skill].skillCoolTime = curSkillCoolTIme;
+                player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime = curSkillCoolTIme;
             }
 
             if (player.stats.weapon != 0)
             {
                 player.status.attackDelay = curAttackDelay;
             }
+            StopCoroutine(attackDelayTimeCoroutine);
         }
     }
 }

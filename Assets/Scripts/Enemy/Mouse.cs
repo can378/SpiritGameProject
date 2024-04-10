@@ -26,6 +26,7 @@ public class Mouse : EnemyBasic
     private bool isChange=false;
     IEnumerator mouse()
     {
+        Player player = enemyTarget.GetComponent<Player>();
         targetDis=Vector2.Distance(transform.position, enemyTarget.position);
         if (isChange == false)
         {
@@ -39,18 +40,18 @@ public class Mouse : EnemyBasic
             { Chase(); yield return new WaitForSeconds(0.1f); }
             else
             {
-
                 
-                if (enemyTarget.GetComponent<PlayerStats>().skill != 0)
+                
+                if (player.stats.skill[player.status.skillIndex] != 0)
                 {
                     //mimic player skill
                     print("mimic player skill");
                     
                     for (int i = 0; i < skillList.Count; i++)
                     {
-                        if (skillList[i].GetComponent<Skill>().skillID == enemyTarget.GetComponent<PlayerStats>().skill)
+                        if (skillList[i].GetComponent<Skill>().skillID == player.stats.skill[player.status.skillIndex])
                         {
-                            enemyTarget.GetComponent<Player>().skillController.skillList[enemyTarget.GetComponent<Player>().stats.skill].GetComponent<Skill>().Use(gameObject);
+                            enemyTarget.GetComponent<Player>().skillController.skillList[player.stats.skill[player.status.skillIndex]].GetComponent<Skill>().Use(gameObject);
                             break;
                             //print("skill=" + skillList[i].GetComponent<Skill>().skillName); 
                         

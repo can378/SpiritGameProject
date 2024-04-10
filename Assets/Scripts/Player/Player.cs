@@ -290,25 +290,25 @@ public class Player : MonoBehaviour
 
     void Skill()
     {
-        if (stats.skill == 0)
+        if (stats.skill[status.skillIndex] == 0)
             return;
 
-        if (skillController.skillList[stats.skill].skillCoolTime > 0)
+        if (skillController.skillList[stats.skill[status.skillIndex]].skillCoolTime > 0)
             return;
 
-        if (skillController.skillList[stats.skill].skillLimit != SkillLimit.None && stats.weapon == 0)
+        if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit != SkillLimit.None && stats.weapon == 0)
         {
             Debug.Log("무기 없음");
             return;
         }
 
-        if (skillController.skillList[stats.skill].skillLimit == SkillLimit.Shot && weaponController.weaponList[stats.weapon].weaponType < 10)
+        if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit == SkillLimit.Shot && weaponController.weaponList[stats.weapon].weaponType < 10)
         {
             Debug.Log("원거리 전용 스킬");
             return;
         }
 
-        if (skillController.skillList[stats.skill].skillLimit == SkillLimit.Melee && 10 <= weaponController.weaponList[stats.weapon].weaponType)
+        if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit == SkillLimit.Melee && 10 <= weaponController.weaponList[stats.weapon].weaponType)
         {
             Debug.Log("근거리 전용 스킬");
             return;
@@ -325,7 +325,7 @@ public class Player : MonoBehaviour
 
     void ReadyOut()
     {
-        if (stats.skill == 0)
+        if (stats.skill[status.skillIndex] == 0)
             return;
 
         // 스킬 준비 상태에서 공격 키 다운
@@ -337,7 +337,7 @@ public class Player : MonoBehaviour
 
     void HoldOut()
     {
-        if (stats.skill == 0)
+        if (stats.skill[status.skillIndex] == 0)
             return;
 
         //스킬 hold 상태에서 스킬 키 up
@@ -407,7 +407,7 @@ public class Player : MonoBehaviour
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
-            if (stats.skill != 0)
+            if (stats.skill[status.skillIndex] != 0)
             {
                 skillController.UnEquipSkill();
             }
@@ -786,7 +786,7 @@ public class Player : MonoBehaviour
         StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
 
-    private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
+    IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
     {
         while(true)
         {

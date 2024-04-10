@@ -83,7 +83,11 @@ public class DataManager : MonoBehaviour
         userData.playerDice = Player.instance.stats.dice;
 
         if (Player.instance.stats.weapon != 0) userData.playerWeapon = Player.instance.stats.weapon;
-        if (Player.instance.stats.skill != 0) userData.playerSkill = Player.instance.stats.skill;
+        for(int i = 0;i<Player.instance.stats.skill.Length ; i++)
+        {
+            if (Player.instance.stats.skill[i] != 0)
+                userData.playerSkill = Player.instance.stats.skill[i];
+        }
     
         for(int i = 0;i<Player.instance.stats.maxEquipment; i++)
         {
