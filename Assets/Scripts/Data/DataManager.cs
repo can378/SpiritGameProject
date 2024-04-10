@@ -136,7 +136,6 @@ public class DataManager : MonoBehaviour
         userData.playerItem = "";
 
         userData.playerWeapon = 0;
-        userData.playerMaxEquipment = 3;
         for (int i = 0; i < 3; i++)
         {
             userData.playerEquipments[i] = 0;

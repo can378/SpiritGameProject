@@ -12,7 +12,6 @@ public abstract class Equipment : SelectItem
     protected Player target;        // 장착한 대상
 
     public abstract void Equip(Player target);
-    protected abstract void Passive();
     public abstract void UnEquip(Player target);
     
 }

@@ -14,11 +14,6 @@ public class Armor : Equipment
         }
     }
 
-    protected override void Passive()
-    {
-        
-    }
-
     public override void UnEquip(Player target)
     {
         if (target.tag == "Player")

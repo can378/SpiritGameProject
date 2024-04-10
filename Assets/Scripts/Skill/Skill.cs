@@ -28,15 +28,8 @@ public abstract class Skill : SelectItem
     public abstract void Exit(GameObject user);                                         //스킬 사용 끝
 
     void CoolDown()
-    {        
-        if (skillCoolTime > 0)
-        {
-            skillCoolTime -= Time.deltaTime;
-        }
-        else
-        {
-            skillCoolTime = 0;
-        }
+    {
+        skillCoolTime -= Time.deltaTime;
     }
 
 

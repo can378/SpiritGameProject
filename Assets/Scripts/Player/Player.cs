@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
 
     void RunCoolTime()
     {
-        if(status.isAttack || status.isSkillHold)
+        if(status.isAttack || status.isSkillHold || !status.isAttackReady)
         {
             status.isSprint = false;
             status.runCurrentCoolTime = stats.runCoolTime;
@@ -545,7 +545,6 @@ public class Player : MonoBehaviour
             string playerItemName = DataManager.instance.userData.playerItem;
             int playerWeapon = DataManager.instance.userData.playerWeapon;
             int playerSkill = DataManager.instance.userData.playerSkill;
-            int playerMaxEquipment = DataManager.instance.userData.playerMaxEquipment;
             int[] playerEquipment = DataManager.instance.userData.playerEquipments;
 
             for(int i = 0;i<stats.playerStat.Length;i++)
@@ -583,7 +582,7 @@ public class Player : MonoBehaviour
             }
             // ¹æ¾î±¸
             
-            for(int i = 0;i< playerMaxEquipment; i++)
+            for(int i = 0;i< playerEquipment.Length; i++)
             {
                 if(playerEquipment[i] != 0)
                     EquipEquipment(Instantiate(DataManager.instance.gameData.equipmentList[playerEquipment[i]]).GetComponent<Equipment>(),i);

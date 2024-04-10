@@ -14,11 +14,6 @@ public class Gloves : Equipment
         }
     }
 
-    protected override void Passive()
-    {
-
-    }
-
     // Update is called once per frame
     public override void UnEquip(Player target)
     {

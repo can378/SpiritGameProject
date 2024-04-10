@@ -34,16 +34,8 @@ public class Weapon : Equipment
     public override void Equip(Player target)
     {
         this.target = target;
-        if (target.tag == "Player")
-        {
-            Stats stats = target.GetComponent<Stats>();
-            stats.addAttackPower += attackPower;
-        }
-    }
-
-    protected override void Passive()
-    {
-        
+        Stats stats = target.GetComponent<Stats>();
+        stats.addAttackPower += attackPower;
     }
 
     public override void UnEquip(Player target)

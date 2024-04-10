@@ -27,7 +27,6 @@ public class UserData
 
     //Equipment
     public int playerWeapon;
-    public int playerMaxEquipment;
     public int[] playerEquipments = new int[3];
 
     //Skill

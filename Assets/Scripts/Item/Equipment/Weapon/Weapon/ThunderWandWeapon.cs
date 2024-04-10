@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThunderWand : Weapon
+public class ThunderWandWeapon : Weapon
 {
     public override void Equip(Player target)
     {
