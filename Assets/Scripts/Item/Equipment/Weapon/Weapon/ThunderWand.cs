@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ThunderWand : Weapon
 {
-    public override void Equip()
+    public override void Equip(Player target)
     {
-        base.Equip();
+        base.Equip(target);
         Player.instance.stats.addSkillPower += 10;
     }
 
-    public override void UnEquip()
+    public override void UnEquip(Player target)
     {
-        base.UnEquip();
+        base.UnEquip(target);
         Player.instance.stats.addSkillPower -= 10;
     }
 }

@@ -22,15 +22,16 @@ public class SpinAttack : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
+            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
 
             // 쿨타임 적용
             skillCoolTime = player.stats.skillCoolTime * skillDefalutCoolTime;
 
-            // 공속 = 플레이어 공속 * 무기 공속
-            float attackSpeed = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
+            // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
+            float attackRate = weapon.SPA / player.stats.attackSpeed;
 
             // 선딜
-            yield return new WaitForSeconds(preDelay / attackSpeed);
+            yield return new WaitForSeconds(preDelay * attackRate);
 
             // 사용자 위치에 생성
             GameObject instant = Instantiate(spinEffect, user.transform.position, user.transform.rotation);
@@ -39,7 +40,7 @@ public class SpinAttack : Skill
             HitDetection hitDetection = instant.GetComponent<HitDetection>();
 
             // 크기 조정
-            instant.transform.localScale = new Vector3(size * player.stats.weapon.attackSize, size * player.stats.weapon.attackSize, 0);
+            instant.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
 
             /*
             투사체 = false
@@ -55,17 +56,13 @@ public class SpinAttack : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              defalutDamage + player.stats.attackPower * ratio,
-             player.stats.weapon.knockBack, 
+             player.weaponController.weaponList[player.stats.weapon].knockBack, 
              player.stats.criticalChance, 
              player.stats.criticalDamage,
-             player.stats.weapon.statusEffect);
+             player.weaponController.weaponList[player.stats.weapon].statusEffect);
 
             // rate 동안 유지
-            Destroy(instant, rate / attackSpeed);
-
-            // 후딜
-            // 없애도 될 듯
-            yield return new WaitForSeconds(postDelay / attackSpeed);
+            Destroy(instant, rate * attackRate);
         }
     }
 

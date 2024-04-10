@@ -41,17 +41,16 @@ public class Mouse : EnemyBasic
             {
 
                 
-                if (enemyTarget.GetComponent<PlayerStats>().skill != null)
+                if (enemyTarget.GetComponent<PlayerStats>().skill != 0)
                 {
                     //mimic player skill
                     print("mimic player skill");
                     
                     for (int i = 0; i < skillList.Count; i++)
                     {
-                        if (skillList[i].GetComponent<Skill>().skillName == 
-                            enemyTarget.GetComponent<PlayerStats>().skill.GetComponent<Skill>().skillName)
+                        if (skillList[i].GetComponent<Skill>().skillID == enemyTarget.GetComponent<PlayerStats>().skill)
                         {
-                            enemyTarget.GetComponent<PlayerStats>().skill.GetComponent<Skill>().Use(gameObject);
+                            enemyTarget.GetComponent<Player>().skillController.skillList[enemyTarget.GetComponent<Player>().stats.skill].GetComponent<Skill>().Use(gameObject);
                             break;
                             //print("skill=" + skillList[i].GetComponent<Skill>().skillName); 
                         

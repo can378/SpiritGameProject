@@ -24,19 +24,17 @@ public class SkillDeBuff : StatusEffect
 
     IEnumerator SkillCoolOverTime()
     {
-        
-
         if(target.tag == "Player")
         {
-            PlayerStats playerStats = target.GetComponent<PlayerStats>();
+            Player player = target.GetComponent<Player>();
 
-            if (playerStats.skill != null)
-                playerStats.skill.skillCoolTime += 0.1f;
+            if (player.stats.skill != 0)
+                player.skillController.skillList[player.stats.skill].skillCoolTime += 0.1f;
 
             while (duration > 0)
             {
-                if (playerStats.skill != null)
-                    playerStats.skill.skillCoolTime += 0.1f;
+                if (player.stats.skill != 0)
+                    player.skillController.skillList[player.stats.skill].skillCoolTime += 0.1f;
                 yield return new WaitForSeconds(0.1f);
                 
             }

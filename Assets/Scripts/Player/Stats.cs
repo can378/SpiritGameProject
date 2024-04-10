@@ -16,9 +16,9 @@ public class Stats : MonoBehaviour
     public float HP = 100;
     public float tempHP = 0;
 
-    // 피해감소
-    // UI : 피해감소 0%
-    // 받는 피해 = 피해량 * 피해감소
+    // 방어력
+    // UI : 방어력 0%
+    // 받는 피해 = 피해량 * 방어력
     // 최대, 최소 75%
     public float defaultDefensivePower = 0f;
     public float addDefensivePower { get; set; }

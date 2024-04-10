@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
 
-    public WeaponController WeaponController;
+    public WeaponController weaponController;
     public SkillController skillController;
 
     public UserData userData { get; private set; }
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         status = GetComponent<PlayerStatus>();
         stats = GetComponent<PlayerStats>();
         
-        WeaponController = GetComponent<WeaponController>();
+        weaponController = GetComponent<WeaponController>();
         skillController = GetComponent<SkillController>();
     }
 
@@ -213,35 +213,35 @@ public class Player : MonoBehaviour
 
     void Reload()
     {
-        if (stats.weapon == null)
+        if (stats.weapon == 0)
             return;
 
-        if (stats.weapon.maxAmmo < 0)
+        if (weaponController.weaponList[stats.weapon].maxAmmo < 0)
             return;
 
-        if (stats.weapon.maxAmmo == stats.weapon.ammo)
+        if (weaponController.weaponList[stats.weapon].maxAmmo == weaponController.weaponList[stats.weapon].ammo)
             return;
 
         if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
-            //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = stats.weapon.reloadTime / stats.attackSpeed;
+            //장전에 걸리는 시간 = 무기 장전 시간 / 플레이어 공격 속도
+            float reloadTime = weaponController.weaponList[stats.weapon].reloadTime / stats.attackSpeed;
             Invoke("ReloadOut", reloadTime);
         }
 
-        if (aDown && status.attackDelay < 0 && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold && stats.weapon.ammo == 0)
+        if (aDown && status.attackDelay < 0 && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold && weaponController.weaponList[stats.weapon].ammo == 0)
         {
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = stats.weapon.reloadTime / stats.attackSpeed;
+            float reloadTime = weaponController.weaponList[stats.weapon].reloadTime / stats.attackSpeed;
             Invoke("ReloadOut", reloadTime);
         }
     }
 
     void ReloadOut()
     {
-        stats.weapon.Reload();
+        weaponController.weaponList[stats.weapon].Reload();
         status.isReload = false;
     }
 
@@ -249,10 +249,10 @@ public class Player : MonoBehaviour
     {
         status.attackDelay -= Time.deltaTime;
 
-        if (stats.weapon == null)
+        if (stats.weapon == 0)
             return;
 
-        if (stats.weapon.ammo == 0)
+        if (weaponController.weaponList[stats.weapon].ammo == 0)
             return;
 
         status.isAttackReady = status.attackDelay <= 0;
@@ -264,16 +264,18 @@ public class Player : MonoBehaviour
             // 공격 방향
             // 현재 마우스 위치가 아닌
             // 클릭 한 위치로
-            WeaponController.Use(status.mousePos);
-            // 초당 공격 횟수 = 플레이어 공속 * 무기 공속
-            float attackRate = stats.weapon.attackSpeed * stats.attackSpeed;
+            weaponController.Use(status.mousePos);
+
             AudioManager.instance.SFXPlay("attack_sword");
+
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
-            status.attackDelay = (stats.weapon.preDelay + stats.weapon.rate + stats.weapon.postDelay) / attackRate;
+            status.attackDelay = weaponController.weaponList[stats.weapon].SPA / stats.attackSpeed;
+
             // 공격 준비 안됨
             status.isAttackReady = false;
+
             // 공격 시간(움직이기까지 대기 시간) = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
-            Invoke("AttackOut", (stats.weapon.preDelay + stats.weapon.rate) / attackRate);
+            Invoke("AttackOut", (weaponController.weaponList[stats.weapon].preDelay + weaponController.weaponList[stats.weapon].rate) / stats.attackSpeed);
         }
     }
 
@@ -288,25 +290,25 @@ public class Player : MonoBehaviour
 
     void Skill()
     {
-        if (stats.skill == null)
+        if (stats.skill == 0)
             return;
 
-        if (stats.skill.skillCoolTime > 0)
+        if (skillController.skillList[stats.skill].skillCoolTime > 0)
             return;
 
-        if (stats.skill.skillLimit != SkillLimit.None && stats.weapon == null)
+        if (skillController.skillList[stats.skill].skillLimit != SkillLimit.None && stats.weapon == 0)
         {
             Debug.Log("무기 없음");
             return;
         }
 
-        if (stats.skill.skillLimit == SkillLimit.Shot &&  stats.weapon.weaponType < 10)
+        if (skillController.skillList[stats.skill].skillLimit == SkillLimit.Shot && weaponController.weaponList[stats.weapon].weaponType < 10)
         {
             Debug.Log("원거리 전용 스킬");
             return;
         }
 
-        if (stats.skill.skillLimit == SkillLimit.Melee && 10 <= stats.weapon.weaponType)
+        if (skillController.skillList[stats.skill].skillLimit == SkillLimit.Melee && 10 <= weaponController.weaponList[stats.weapon].weaponType)
         {
             Debug.Log("근거리 전용 스킬");
             return;
@@ -323,7 +325,7 @@ public class Player : MonoBehaviour
 
     void ReadyOut()
     {
-        if (stats.skill == null)
+        if (stats.skill == 0)
             return;
 
         // 스킬 준비 상태에서 공격 키 다운
@@ -335,7 +337,7 @@ public class Player : MonoBehaviour
 
     void HoldOut()
     {
-        if (stats.skill == null)
+        if (stats.skill == 0)
             return;
 
         //스킬 hold 상태에서 스킬 키 up
@@ -385,12 +387,12 @@ public class Player : MonoBehaviour
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
-            if (stats.weapon != null)
+            if (stats.weapon != 0)
             {
-                WeaponController.UnEquipWeapon();
+                weaponController.UnEquipWeapon();
             }
             // 무기 장비
-            WeaponController.EquipWeapon(selectItem.GetComponent<Weapon>());
+            weaponController.EquipWeapon(selectItem.GetComponent<Weapon>().equipmentId);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
@@ -405,12 +407,12 @@ public class Player : MonoBehaviour
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
-            if (stats.skill != null)
+            if (stats.skill != 0)
             {
                 skillController.UnEquipSkill();
             }
             // 스킬 장착
-            skillController.EquipSkill(selectItem.GetComponent<Skill>());
+            skillController.EquipSkill(selectItem.GetComponent<Skill>().skillID);
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {
@@ -425,6 +427,8 @@ public class Player : MonoBehaviour
 
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
         }
+
+        Destroy(selectItem.gameObject);
     }
 
     void UseItem()
@@ -434,7 +438,7 @@ public class Player : MonoBehaviour
             Debug.Log("UseSelectItem");
             //Throwing Items
             if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
-            { WeaponController.UseItem(playerItem, status.mousePos); }
+            { weaponController.UseItem(playerItem, status.mousePos); }
             //Consumable Item
             else 
             {
@@ -488,9 +492,11 @@ public class Player : MonoBehaviour
     public void EquipEquipment(Equipment equipment, int index)
     {
         stats.equipments[index] = equipment.GetComponent<Equipment>();
-        stats.equipments[index].Equip();
-        stats.equipments[index].gameObject.SetActive(false);
+        stats.equipments[index].Equip(this.gameObject.GetComponent<Player>());
 
+        stats.equipments[index].transform.parent = this.transform;
+        stats.equipments[index].gameObject.SetActive(false);
+        
         MapUIManager.instance.UpdateEquipmentUI();
     }
 
@@ -499,10 +505,11 @@ public class Player : MonoBehaviour
         if(stats.equipments[index] == null)
             return;
         stats.equipments[index].gameObject.transform.position = gameObject.transform.position;
+        stats.equipments[index].transform.parent = null;
         stats.equipments[index].gameObject.SetActive(true);
 
         // 장비 능력치 해제
-        stats.equipments[index].UnEquip();
+        stats.equipments[index].UnEquip(this.gameObject.GetComponent<Player>());
 
         // 장비 해제
         stats.equipments[index] = null;
@@ -567,12 +574,12 @@ public class Player : MonoBehaviour
             // 무기
             if (playerWeapon != 0)
             {
-                WeaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]).GetComponent<Weapon>());
+                weaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]).GetComponent<Weapon>().equipmentId);
             }
             // 스킬
             if (playerSkill != 0)
             {
-                skillController.EquipSkill(Instantiate(DataManager.instance.gameData.skillList[playerSkill]).GetComponent<Skill>());
+                skillController.EquipSkill(Instantiate(DataManager.instance.gameData.skillList[playerSkill]).GetComponent<Skill>().skillID);
             }
             // 방어구
             

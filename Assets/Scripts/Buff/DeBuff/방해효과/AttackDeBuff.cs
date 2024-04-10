@@ -27,12 +27,12 @@ public class AttackDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            if (player.stats.weapon != null)
+            if (player.stats.weapon != 0)
                 player.status.attackDelay += 0.1f;
 
             while (duration > 0)
             {
-                if (player.stats.weapon != null)
+                if (player.stats.weapon != 0)
                     player.status.attackDelay += 0.1f;
                 yield return new WaitForSeconds(0.1f);
 

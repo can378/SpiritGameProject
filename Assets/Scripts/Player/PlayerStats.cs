@@ -143,8 +143,8 @@ public class PlayerStats : Stats
     public string item = "";
 
     //Equipments
-    public Weapon weapon = null;
-    public Skill skill = null;
+    public int weapon = 0;
+    public int skill = 0;
     public int maxEquipment = 3;
     public Equipment[] equipments = new Equipment[3];
 

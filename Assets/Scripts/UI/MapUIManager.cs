@@ -150,18 +150,18 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateWeaponUI() 
     {
-        if (Player.instance.stats.weapon != null)
+        if (Player.instance.stats.weapon != 0)
         {
-            WeaponTxt.text = Player.instance.stats.weapon.equipmentName;
+            WeaponTxt.text = Player.instance.weaponController.weaponList[Player.instance.stats.weapon].equipmentName;
         }
         else {WeaponTxt.text = "";}
     }
 
     public void UpdateSkillUI() 
     {
-        if (Player.instance.stats.skill != null)
+        if (Player.instance.stats.skill != 0)
         {
-            SkillTxt.text = Player.instance.stats.skill.skillName;
+            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.stats.skill].skillName;
         }
         else {SkillTxt.text = "";}
     }

@@ -24,15 +24,16 @@ public class WheelWind : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
+            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
 
             // 쿨타임 적용
             skillCoolTime = player.stats.skillCoolTime * skillDefalutCoolTime;
 
-            // 공속 = 플레이어 공속 * 무기 공속
-            float attackSpeed = player.stats.attackSpeed * player.stats.weapon.attackSpeed;
+            // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
+            float attackRate = weapon.SPA / player.stats.attackSpeed;
 
             // 선딜
-            yield return new WaitForSeconds(preDelay / attackSpeed);
+            yield return new WaitForSeconds(preDelay * attackRate);
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -40,11 +41,10 @@ public class WheelWind : Skill
             effect = Instantiate(WheelWindEffect, user.transform.position, user.transform.rotation);
             effect.transform.parent = user.transform;
 
-
             // 공격 판정 조정
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-            effect.transform.localScale = new Vector3(size * player.stats.weapon.attackSize, size * player.stats.weapon.attackSize, 0);
+            effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
             /*
             투사체 = false
             관통력 = -1
@@ -57,12 +57,12 @@ public class WheelWind : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, true, (int)(DPS * attackSpeed),
+            hitDetection.SetHitDetection(false, -1, true, (int)(DPS / attackRate),
              defaultDamage + player.stats.attackPower * ratio,
-             player.stats.weapon.knockBack,
+             player.weaponController.weaponList[player.stats.weapon].knockBack,
              player.stats.criticalChance,
              player.stats.criticalDamage,
-             player.stats.weapon.statusEffect);
+             player.weaponController.weaponList[player.stats.weapon].statusEffect);
         }
     }
 
@@ -77,10 +77,12 @@ public class WheelWind : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
+            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
 
-            float attackRate = (1 + player.stats.attackSpeed) * player.stats.weapon.attackSpeed;
+            // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
+            float attackRate = weapon.SPA / player.stats.attackSpeed;
 
-            yield return new WaitForSeconds(postDelay / attackRate);
+            yield return new WaitForSeconds(postDelay * attackRate);
 
             Destroy(effect);
 

@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class Shoes : Equipment
 {
-    public override void Equip()
+    public override void Equip(Player target)
     {
-        Debug.Log("플레이어 이동속도 X50% 증가");
-        Player.instance.stats.increasedMoveSpeed += 0.5f;
+        if (target.tag == "Player")
+        {
+            Debug.Log("플레이어 이동속도 +50% 증가");
+            PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
+            plyaerStats.increasedMoveSpeed += 0.5f;
+        }
+    }
+
+    protected override void Passive()
+    {
+
     }
 
     // Update is called once per frame
-    public override void UnEquip()
+    public override void UnEquip(Player target)
     {
-        Player.instance.stats.increasedMoveSpeed -= 0.5f;
+        if (target.tag == "Player")
+        {
+            PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
+            plyaerStats.increasedMoveSpeed -= 0.5f;
+        }
     }
 }

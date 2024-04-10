@@ -8,7 +8,7 @@ public class SkillController : MonoBehaviour
     PlayerStats stats;
 
     // 스킬 리스트
-    [SerializeField] GameObject[] skillList;
+    public Skill[] skillList;
 
     void Awake()
     {
@@ -17,11 +17,11 @@ public class SkillController : MonoBehaviour
     }
 
     // 스킬 획득
-    public void EquipSkill(Skill gainSkill)
+    public void EquipSkill(int skillID)
     {
-        stats.skill = skillList[gainSkill.skillID].GetComponent<Skill>();
-        stats.skill.gameObject.SetActive(true);
-        Destroy(gainSkill.gameObject);
+        stats.skill = skillID;
+        skillList[skillID].gameObject.SetActive(true);
+        Destroy(gameObject);
         MapUIManager.instance.UpdateSkillUI();
 
     }
@@ -29,28 +29,28 @@ public class SkillController : MonoBehaviour
     // 스킬 해제
     public void UnEquipSkill()
     {
-        Instantiate(DataManager.instance.gameData.skillList[stats.skill.skillID], gameObject.transform.position, gameObject.transform.localRotation);
-        stats.skill.gameObject.SetActive(false);
-        stats.skill = null;
+        Instantiate(DataManager.instance.gameData.skillList[stats.skill], gameObject.transform.position, gameObject.transform.localRotation);
+        skillList[stats.skill].gameObject.SetActive(false);
+        stats.skill = 0;
         MapUIManager.instance.UpdateSkillUI();
     }
 
     // 스킬키 입력
     public void SkillDown()
     {
-        if (stats.skill.skillType == 0)
+        if (skillList[stats.skill].skillType == 0)
         {
             // 즉발
             Debug.Log("스킬 즉시 시전");
             StartCoroutine("Immediate");
         }
-        else if (stats.skill.skillType == 1)
+        else if (skillList[stats.skill].skillType == 1)
         {
             //준비
             Debug.Log("스킬 준비");
             StartCoroutine("Ready");
         }
-        else if (stats.skill.skillType == 2)
+        else if (skillList[stats.skill].skillType == 2)
         {
             //홀드
             Debug.Log("스킬 홀드");
@@ -65,19 +65,19 @@ public class SkillController : MonoBehaviour
         status.isSkillReady = false;
         status.isSkill = true;
 
-        stats.skill.Use(gameObject);
+        skillList[stats.skill].Use(gameObject);
 
 
         // 스킬 시전 시간 (다음 움직이기 까지 대기 시간)
-        float skillUsedTime = stats.skill.preDelay + stats.skill.rate + stats.skill.postDelay;
+        float skillUsedTime = skillList[stats.skill].preDelay + skillList[stats.skill].rate + skillList[stats.skill].postDelay;
 
-        if (stats.skill.skillLimit == SkillLimit.None)
+        if (skillList[stats.skill].skillLimit == SkillLimit.None)
         {
             yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
         }
         else
         {
-            yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed * stats.weapon.attackSpeed);
+            yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
         }
 
         status.isSkill = false;
@@ -93,7 +93,7 @@ public class SkillController : MonoBehaviour
         else if (status.isSkillReady)
         {
             status.isSkillReady = false;
-            stats.skill.skillCoolTime = 0.5f;
+            skillList[stats.skill].skillCoolTime = 0.5f;
         }
     }
 
@@ -102,9 +102,9 @@ public class SkillController : MonoBehaviour
         status.isSkillHold = true;
         //player.RunDelay();
 
-        stats.skill.Use(gameObject);
+        skillList[stats.skill].Use(gameObject);
 
-        float timer = stats.skill.rate;
+        float timer = skillList[stats.skill].rate;
 
         while (true)
         {
@@ -121,7 +121,7 @@ public class SkillController : MonoBehaviour
 
     public void HoldOut()
     {
-        stats.skill.Exit(gameObject);
+        skillList[stats.skill].Exit(gameObject);
         status.isSkillHold = false;
     }
 
