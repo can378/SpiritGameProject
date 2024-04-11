@@ -16,56 +16,27 @@ public class DefensiveDeBuff : StatusEffect
 
     public override void ResetEffect()      //지속시간 갱신
     {
-        if (target.tag == "Player")
-        {
-            PlayerStats playerStats = target.GetComponent<PlayerStats>();
+        Stats stats = target.GetComponent<Stats>();
 
-            // 효과 잠시 제거
-            playerStats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-            playerStats.decreasedSEResist -= overlap * decreasedSEResist;
+        // 효과 잠시 제거
+        stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
+        stats.decreasedSEResist -= overlap * decreasedSEResist;
 
-            // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+        // 중첩 
+        overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
-            // 저항에 따른 지속시간 적용
-            duration = playerStats.SEResist * defaultDuration;
+        // 저항에 따른 지속시간 적용
+        duration = (1 - stats.SEResist) * defaultDuration;
 
-            playerStats.decreasedDefensivePower += overlap * decreasedDefensivePower;
-            playerStats.decreasedSEResist += overlap * decreasedSEResist;
-        }
-        else
-        {
-            Stats stats = target.GetComponent<Stats>();
-
-            // 효과 잠시 제거
-            stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-
-            // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
-
-            // 저항에 따른 지속시간 적용
-            duration = stats.SEResist * defaultDuration;
-
-            stats.decreasedDefensivePower += overlap * decreasedDefensivePower;
-        }
+        stats.decreasedDefensivePower += overlap * decreasedDefensivePower;
+        stats.decreasedSEResist += overlap * decreasedSEResist;
     }
 
     public override void RemoveEffect()
     {
-        if (target.tag == "Player")
-        {
-            PlayerStats playerStats = target.GetComponent<PlayerStats>();
+        Stats stats = target.GetComponent<Stats>();
 
-            playerStats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-            playerStats.decreasedSEResist -= overlap * decreasedSEResist;
-
-        }
-        else
-        {
-            Stats stats = target.GetComponent<Stats>();
-
-            stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-        }
-
+        stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
+        stats.decreasedSEResist -= overlap * decreasedDefensivePower;
     }
 }

@@ -15,7 +15,8 @@ public class PowerDeBuff : StatusEffect
     }
 
     public override void ResetEffect()      //지속시간 갱신
-    {
+    {   
+        // 플레이어일시
         if (target.tag == "Player")
         {
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
@@ -28,11 +29,12 @@ public class PowerDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = playerStats.SEResist * defaultDuration;
+            duration = (1 - playerStats.SEResist) * defaultDuration;
 
             playerStats.decreasedAttackPower += overlap * decreasedAttackPower;
             playerStats.decreasedSkillPower += overlap * decreasedSkillPower;
         }
+        // 그 외에
         else
         {
             Stats stats = target.GetComponent<Stats>();
@@ -44,7 +46,7 @@ public class PowerDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = stats.SEResist * defaultDuration;
+            duration = (1 - stats.SEResist) * defaultDuration;
 
             stats.decreasedAttackPower += overlap * decreasedAttackPower;
         }

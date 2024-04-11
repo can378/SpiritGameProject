@@ -56,7 +56,7 @@ public class EnemyBasic : MonoBehaviour
         damage = criticalHit ? damage * criticalDamage : damage;
 
         print("enemy damaged : " + damage);
-        stats.HP -= stats.addDefensivePower * damage;
+        stats.HP -= (1 - stats.addDefensivePower) * damage;
 
         sprite.color = Color.red;
         Invoke("DamagedOut",0.05f);

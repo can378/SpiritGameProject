@@ -25,7 +25,7 @@ public class SpinAttack : Skill
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
 
             // 쿨타임 적용
-            skillCoolTime = player.stats.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
             // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
             float attackRate = weapon.SPA / player.stats.attackSpeed;

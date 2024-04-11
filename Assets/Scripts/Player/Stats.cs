@@ -19,7 +19,7 @@ public class Stats : MonoBehaviour
     // 방어력
     // UI : 방어력 0%
     // 받는 피해 = 피해량 * 방어력
-    // 최대, 최소 75%
+    // 최소 -75%, 최대 75%
     public float defaultDefensivePower = 0f;
     public float addDefensivePower { get; set; }
     public float increasedDefensivePower { get; set; }
@@ -29,18 +29,18 @@ public class Stats : MonoBehaviour
         get {
             float DP = (defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower);
             if (DP > 0.75f)
-                return 1 - 0.75f;
+                return 0.75f;
             else if (DP < -0.75f)
-                return 1 + 0.75f;
+                return -0.75f;
             else
-                return 1 - DP;
+                return DP;
         }
     }
 
     // 상태이상 저항
     // UI : 상태이상 저항 0%
     // 상태이상 효과 = 지속시간 또는 피해량 * 상태이상 저항
-    // 최대,최소 75%
+    // 최소 -75%, 최대 75%
     public float defaultSEResist = 0f;
     public float addSEResist { get; set; }
     public float increasedSEResist { get; set; }
@@ -50,11 +50,11 @@ public class Stats : MonoBehaviour
         get {
             float SER = (defaultSEResist + addSEResist) * (1f + increasedSEResist) * (1f - decreasedSEResist);
             if(SER > 0.75f)
-                return 1 - 0.75f;
+                return 0.75f;
             else if(SER < -0.75f)
-                return 1 + 0.75f;
+                return -0.75f;
             else 
-                return 1 - SER;
+                return SER;
         }
     }
 
@@ -62,6 +62,7 @@ public class Stats : MonoBehaviour
     // 공격력
     // UI : 공격력 0
     // 기본 공격 피해량 = 공격력
+    // 최소 0
     public float defaultAttackPower = 0f;
     public float addAttackPower { get; set; }
     public float increasedAttackPower { get; set; }
@@ -80,6 +81,7 @@ public class Stats : MonoBehaviour
     // Speed
     // 이동 속도 5
     // 이동 속도 = 이동속도
+    // 최소 0
     public float defaultMoveSpeed = 5f;
     public float addMoveSpeed { get; set; }
     public float increasedMoveSpeed { get; set; }

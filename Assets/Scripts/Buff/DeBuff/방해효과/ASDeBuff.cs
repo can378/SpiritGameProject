@@ -20,7 +20,7 @@ public class ASDeBuff : StatusEffect
     public override void ResetEffect()
     {
         Stats stats = target.GetComponent<Stats>();
-        duration = stats.SEResist * defaultDuration;
+        duration = (1 - stats.SEResist) * defaultDuration;
     }
 
     IEnumerator AttackDelayOverTime()

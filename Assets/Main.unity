@@ -1628,9 +1628,11 @@ MonoBehaviour:
   <isDodge>k__BackingField: 0
   <isInvincible>k__BackingField: 0
   <isAttackable>k__BackingField: 0
+  <isFlinch>k__BackingField: 0
   <isAttack>k__BackingField: 0
   <attackDelay>k__BackingField: 0
   <isAttackReady>k__BackingField: 0
+  <skillIndex>k__BackingField: 0
   <isSkill>k__BackingField: 0
   <isSkillReady>k__BackingField: 0
   <isSkillHold>k__BackingField: 0
@@ -1704,7 +1706,6 @@ MonoBehaviour:
   point: 10
   defaultCriticalChance: 0
   defaultCriticalDamage: 0.5
-  defaultDrain: 0
   defaultAttackSpeed: 0
   defaultSkillPower: 0
   defaultSkillCoolTime: 0
@@ -1717,7 +1718,8 @@ MonoBehaviour:
   dice: 0
   item: 
   weapon: 0
-  skill: 0
+  maxSkillSlot: 1
+  skill: 
   maxEquipment: 3
   equipments:
   - {fileID: 0}
@@ -4135,6 +4137,7 @@ MonoBehaviour:
   - {fileID: 101542831896684086, guid: 9b943c2dded19b442b452d8cc4aa6da7, type: 3}
   - {fileID: 3425369437513494681, guid: 4d289320fb0596c42b0d87d98c0a5729, type: 3}
   skillList:
+  - {fileID: 0}
   - {fileID: 5904743163423667712, guid: 802792bca37bf924cb2c71a0de292feb, type: 3}
   - {fileID: 5904743163423667712, guid: 06470d1c572462842b0479996dc41400, type: 3}
   - {fileID: 5904743163423667712, guid: 2baf7cec2b42d854389c6371941a4678, type: 3}

@@ -25,7 +25,7 @@ public class FireBall : Skill
         {
             Player player = user.GetComponent<Player>();
             // ÄðÅ¸ÀÓ Àû¿ë
-            skillCoolTime = player.stats.skillCoolTime * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
             // ¼±µô
             yield return new WaitForSeconds(preDelay / player.stats.attackSpeed);

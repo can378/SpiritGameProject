@@ -16,6 +16,7 @@ public class SpeedDeBuff : StatusEffect
 
     public override void ResetEffect()      //지속시간 갱신
     {
+        // 플레이어일 시
         if (target.tag == "Player")
         {
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
@@ -28,32 +29,25 @@ public class SpeedDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = playerStats.SEResist * defaultDuration;
+            duration = (1 - playerStats.SEResist) * defaultDuration;
 
             playerStats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed += overlap * decreasedAttackSpeed;
 
-            /*
-            Debug.Log("MoveSpeed buff applied: " + overlap * decreasedMoveSpeed + "MoveSpeed");
-            Debug.Log("MoveSpeed : " + playerStats.moveSpeed);
-            Debug.Log("AttackSpeed buff applied: " + overlap * decreasedAttackSpeed + " AttackSpeed");
-            Debug.Log("AttackSpeed : " + playerStats.attackSpeed);
-            */
-            //print(duration);
         }
+        // 그 외에
         else
         {
             Stats stats = target.GetComponent<Stats>();
 
             // 효과 잠시 제거
             stats.decreasedMoveSpeed -= overlap * decreasedMoveSpeed;
-            //stats.decreaseddAttackSpeed -= overlap * decreasedAttackSpeed;
 
             // 중첩 
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = stats.SEResist * defaultDuration;
+            duration = (1 - stats.SEResist) * defaultDuration;
 
             stats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
 

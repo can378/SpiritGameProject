@@ -31,13 +31,14 @@ public class GrowthDeBuff : StatusEffect
         }
 
         // 저항에 따른 지속시간 적용
-        duration = stats.SEResist * defaultDuration;
+        duration = (1 - stats.SEResist) * defaultDuration;
 
         stats.increasedAttackPower += overlap * increasedStat;
         stats.increasedMoveSpeed += overlap * increasedStat;
         target.transform.localScale = new Vector3(1 + overlap * increasedStat, 1 + overlap * increasedStat, 1 + overlap * increasedStat);
 
     }
+    
     public override void RemoveEffect()    //제거
     {
         if (overlap == maxOverlap)

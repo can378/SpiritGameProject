@@ -15,18 +15,19 @@ public class PlayerStatus : MonoBehaviour
          
     [field: SerializeField] public bool isPlayerMove { get; set; }
 
-    [field: SerializeField] public bool isReload {get; set;}                        //장전
-    [field: SerializeField] public bool isSprint { get; set; }                      //달리기
-    [field: SerializeField] public bool isDodge { get; set; }                       //회피
+    [field: SerializeField] public bool isReload {get; set;}                        // 장전
+    [field: SerializeField] public bool isSprint { get; set; }                      // 달리기
+    [field: SerializeField] public bool isDodge { get; set; }                       // 회피
 
-    [field: SerializeField] public bool isInvincible { get; set; }                  //무적 상태
-    [field: SerializeField] public bool isAttackable { get; set; }                  //공격가능 상태
+    [field: SerializeField] public bool isInvincible { get; set; }                  // 무적 상태
+    [field: SerializeField] public bool isAttackable { get; set; }                  // 공격가능 상태
+    [field: SerializeField] public bool isFlinch { get; set; }                  // 경직 상태 = 공격불가, 스킬 사용 불가, 이동불가, 회피 불가
 
     [field: SerializeField] public bool isAttack { get; set; }                      // 공격 중
     [field: SerializeField] public float attackDelay { get; set; }                  // 다음 공격까지 대기시간
     [field: SerializeField] public bool isAttackReady { get; set; }                 // 공격 준비 완료
 
-    [field: SerializeField] public int skillIndex { get; set; } = 0;                  // 현재 스킬 인덱스
+    [field: SerializeField] public int skillIndex { get; set; } = 0;                // 현재 스킬 인덱스
     [field: SerializeField] public bool isSkill { get; set; }                       // 스킬 사용 중
     [field: SerializeField] public bool isSkillReady { get; set; }                  // 스킬 준비 중
     [field: SerializeField] public bool isSkillHold { get; set; }                   // 스킬 홀드 중

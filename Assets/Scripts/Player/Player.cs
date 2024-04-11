@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
         
         if (isMoveable())
         {
-            RunCoolTime();
+            Run();
             Dodge();
             Move();  
         }
@@ -88,8 +88,8 @@ public class Player : MonoBehaviour
             Reload();
             Attack();
             Skill();
-            ReadyOut();
-            HoldOut();
+            SkillReadyOut();
+            SkillHoldOut();
         }
         
         Interaction();
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
         
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (status.isAttack || status.isReload || status.isSkill)       // 정지
+        if (status.isAttack || status.isReload || status.isSkill || status.isFlinch)       // 정지
         {
             moveVec = Vector2.zero;
         }
@@ -159,7 +159,6 @@ public class Player : MonoBehaviour
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
             rigid.velocity = moveVec * stats.moveSpeed * (status.isSprint ? stats.runSpeed : 1f);
-            
         }
     }
 
@@ -175,7 +174,10 @@ public class Player : MonoBehaviour
  
     void Dodge()    // 회피
     {
-        if (dDown && !status.isAttack && !status.isSkill && moveVec != Vector2.zero && !status.isDodge && !status.isSkillHold)
+        if(moveVec == Vector2.zero)
+            return;
+        
+        if (dDown && !status.isFlinch && !status.isAttack && !status.isSkill  && !status.isDodge && !status.isSkillHold)
         {
             sprite.color = Color.cyan;
             dodgeVec = moveVec;
@@ -194,9 +196,9 @@ public class Player : MonoBehaviour
         status.isDodge = false;
     }
 
-    void RunCoolTime()
+    void Run()
     {
-        if(status.isAttack || status.isSkillHold || !status.isAttackReady)
+        if(status.isAttack || status.isFlinch || status.isSkillHold || !status.isAttackReady )
         {
             status.isSprint = false;
             status.runCurrentCoolTime = stats.runCoolTime;
@@ -222,7 +224,7 @@ public class Player : MonoBehaviour
         if (weaponController.weaponList[stats.weapon].maxAmmo == weaponController.weaponList[stats.weapon].ammo)
             return;
 
-        if (rDown && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
+        if (rDown && !status.isFlinch && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
             //장전에 걸리는 시간 = 무기 장전 시간 / 플레이어 공격 속도
@@ -230,7 +232,7 @@ public class Player : MonoBehaviour
             Invoke("ReloadOut", reloadTime);
         }
 
-        if (aDown && status.attackDelay < 0 && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold && weaponController.weaponList[stats.weapon].ammo == 0)
+        if (aDown && !status.isFlinch && status.attackDelay < 0 && weaponController.weaponList[stats.weapon].ammo == 0 && !status.isDodge && !status.isReload && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
             //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
@@ -257,7 +259,7 @@ public class Player : MonoBehaviour
 
         status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady && !status.isSkillHold)
+        if (aDown && !status.isFlinch && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady && !status.isSkillHold)
         {
             status.isAttack = true;
 
@@ -315,7 +317,7 @@ public class Player : MonoBehaviour
         }
 
         // 스킬 키 다운
-        if (skDown && !status.isAttack && !status.isDodge && !status.isSkill)
+        if (skDown && !status.isFlinch && !status.isAttack && !status.isDodge && !status.isSkill)
         {
             skillController.SkillDown();
             print(stats.skillCoolTime);
@@ -323,7 +325,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void ReadyOut()
+    void SkillReadyOut()
     {
         if (stats.skill[status.skillIndex] == 0)
             return;
@@ -335,7 +337,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void HoldOut()
+    void SkillHoldOut()
     {
         if (stats.skill[status.skillIndex] == 0)
             return;
@@ -351,7 +353,10 @@ public class Player : MonoBehaviour
 
     void Interaction()
     {
-        if (iDown && nearObject != null && !status.isDodge && !status.isAttack && !status.isSkill && moveVec == Vector2.zero)
+        if(nearObject == null)
+            return;
+
+        if (iDown && !status.isFlinch && !status.isDodge && !status.isAttack && !status.isSkill)
         {
             if (nearObject.tag == "SelectItem")
             {
@@ -617,16 +622,17 @@ public class Player : MonoBehaviour
         //공격받음
         if (other.tag == "Enemy" || other.tag == "EnemyAttack")
         {
+            if(status.isInvincible)
+                return;
             // 적에게 공격 당할시
             // 피해를 입고
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
 
             Damaged(other.GetComponent<EnemyStats>().attackPower);
-            //Damaged(10);
+            Flinch(0.3f);
             KnockBack(other.gameObject);
-            Invincible();
-            Invoke("OutInvincible", 0.3f);
+            Invincible(0.3f);
         }
         else if (other.tag == "EnterDungeon")
         {
@@ -692,60 +698,70 @@ public class Player : MonoBehaviour
 
     // 상태 관련
     #region Effect
+
+    // 피해
     public void Damaged(float damage)
     {
         if (status.isInvincible)
         {
-            damage = 0;
             return;
         }
 
-        //받는 피해 = 감소 전 피해 * 플레이어 피해 감소율
-        damage = damage * stats.defensivePower;
-
-        //Debug.Log("Player Damaged" + damage);
-        stats.HP -= damage;
+        stats.HP -= damage * (1 - stats.defensivePower);
 
         MapUIManager.instance.UpdateHealthUI();
-
         
         if(stats.HP >= stats.HPMax)
         {
             stats.HP = stats.HPMax;
         }
-
-        if (stats.HP < 0)
+        else if(stats.HP < 0)
         {
             Dead();
         }
-
     }
 
-    public void KnockBack(GameObject agent)
+    // 뒤로 밀려남
+    public void KnockBack(GameObject agent, float distance = 10)
     {
-        //튕겨나감
-        float distance = 10 * (1 - stats.defensivePower);
-        Vector2 dir = (transform.position - agent.transform.position).normalized;
-
-        //rigid.AddForce(dir * (10 - (10 * subWeaponController.subWeapon.ratio)), ForceMode2D.Impulse);
-
-        if(status.isInvincible)
+        if (status.isInvincible)
         {
-            distance = 0;
+            return;
         }
 
-        rigid.AddForce(dir * (distance), ForceMode2D.Impulse);
+        Vector2 dir = (transform.position - agent.transform.position).normalized;
+
+        rigid.AddForce(dir * (distance * (1 - stats.defensivePower)), ForceMode2D.Impulse);
     }
 
-    public void Invincible()
+    // 경직됨(움직일 수 없음)
+    public void Flinch(float time)
+    {
+        if (status.isInvincible)
+        {
+            return;
+        }
+
+        status.isFlinch = true;
+        Invoke("FlinchOut",time);
+    }
+
+    void FlinchOut()
+    {
+        status.isFlinch = false;
+    }
+
+    // 무적(피해, 뒤로 밀려남, 경직 무시)
+    public void Invincible(float time)
     {
         status.isInvincible = true;
         int layerNum = LayerMask.NameToLayer("Invincible");
         this.layerMask = layerNum;
         sprite.color = new Color(1, 1, 1, 0.4f);
+        Invoke("InvincibleOut", time);
     }
 
-    void OutInvincible()
+    void InvincibleOut()
     {
         //무적 해제
         sprite.color = new Color(1, 1, 1, 1);

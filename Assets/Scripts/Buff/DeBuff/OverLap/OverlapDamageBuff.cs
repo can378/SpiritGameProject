@@ -17,7 +17,7 @@ public class OverlapDamageBuff : StatusEffect
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
         Stats stats = target.GetComponent<Stats>();
-        duration = stats.SEResist * defaultDuration;
+        duration = (1 - stats.SEResist) * defaultDuration;
         if (overlap == maxOverlap)
         {
             duration = 0;
