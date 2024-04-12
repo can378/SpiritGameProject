@@ -1442,7 +1442,6 @@ MonoBehaviour:
   point: 10
   defaultCriticalChance: 0
   defaultCriticalDamage: 0.5
-  defaultDrain: 0
   defaultAttackSpeed: 1
   defaultSkillPower: 0
   defaultSkillCoolTime: 1
@@ -1454,8 +1453,9 @@ MonoBehaviour:
   key: 0
   dice: 0
   item: 
-  weapon: {fileID: 0}
-  skill: {fileID: 0}
+  weapon: 0
+  maxSkillSlot: 1
+  skill: 00000000
   maxEquipment: 3
   equipments:
   - {fileID: 0}
@@ -3272,7 +3272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2823983748935989983, guid: 9a4ec09e29b9c36419b8e6465e801d43, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7042427028746147926, guid: 9a4ec09e29b9c36419b8e6465e801d43, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3522,7 +3522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2631852204514767454, guid: 814d356842fca8042bc3c59e5f2d03ae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6285885635237834792, guid: 814d356842fca8042bc3c59e5f2d03ae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4335,7 +4335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1786627948272666640, guid: 0552ee26856e2854a95cfa7cdc32dbfc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4124179873196935874, guid: 0552ee26856e2854a95cfa7cdc32dbfc, type: 3}
       propertyPath: m_LocalPosition.x

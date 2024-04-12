@@ -9,7 +9,7 @@ public class BossDarkGhost : EnemyBasic
     [Header("waveAttack")]
     public GameObject AttackRange;
     public GameObject NoAttackRange;
-
+    public List<GameObject> zones;
 
     void Start()
     {
@@ -28,6 +28,8 @@ public class BossDarkGhost : EnemyBasic
     IEnumerator darkGhost()
     {
         //Wave Attack
+        NoAttackRange.SetActive(true);
+        AttackRange.SetActive(true);
 
         NoAttackRange.transform.localScale = new Vector3(0f, 0f, 1f);
         AttackRange.transform.localScale = new Vector3(0f, 0f, 1f);
@@ -47,12 +49,28 @@ public class BossDarkGhost : EnemyBasic
             NoAttackRange.transform.localScale = new Vector3(newScale - 3f, newScale - 3f, 1f);
             yield return new WaitForSeconds(0.001f);
         }
-        yield return new WaitForSeconds(1f);
         
-        
-        //공격 저하 디버프
-        //????
 
+        NoAttackRange.SetActive(false);
+        AttackRange.SetActive(false);
+
+        yield return new WaitForSeconds(3f);
+
+        //Zone Attack
+        for (int i = 0; i < zones.Count; i++)
+        {
+            zones[i].SetActive(true);
+            zones[i].transform.position = enemyTarget.transform.position;
+            yield return new WaitForSeconds(1f);
+        
+        }
+
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < zones.Count; i++)
+        {
+            zones[i].SetActive(false);
+        }
+        yield return new WaitForSeconds(2f);
         StartCoroutine(darkGhost());
     }
 
