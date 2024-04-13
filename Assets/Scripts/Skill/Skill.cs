@@ -12,6 +12,7 @@ public abstract class Skill : SelectItem
     [field: SerializeField] public int skillType { get; private set; }                  // 0이면 즉발, 1이면 홀드
 
     [field: SerializeField] public float preDelay { get; private set; }                 //스킬 사용 전 대기 시간
+    [field: SerializeField] public float maxHold { get; private set; }     = 0f;        //홀드 시 최대 유지시간
     [field: SerializeField] public float rate { get; private set; }                     //스킬 사용 시간
     [field: SerializeField] public float postDelay { get; private set; }                //스킬 사용 후 대기 시간
 

@@ -73,25 +73,36 @@ public class SkillController : MonoBehaviour
 
         skillList[stats.skill[status.skillIndex]].Use(gameObject);
 
-        float timer = skillList[stats.skill[status.skillIndex]].rate;
+        float timer = skillList[stats.skill[status.skillIndex]].maxHold;
 
-        while (true)
+        while (status.isSkillHold)
         {
             yield return new WaitForSeconds(0.1f);
             timer -= 0.1f;
             if (timer <= 0)
             {
-                HoldOut();
+                StartCoroutine(HoldOut());
                 break;
             }
         }
 
     }
 
-    public void HoldOut()
+    public IEnumerator HoldOut()
     {
         skillList[stats.skill[status.skillIndex]].Exit(gameObject);
         status.isSkillHold = false;
+
+        status.isSkill = true;
+
+        float skillUsedTime = skillList[stats.skill[status.skillIndex]].postDelay;
+
+        yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
+
+        status.isSkill = false;
+
+        
+        
     }
 
 }

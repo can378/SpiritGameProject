@@ -26,6 +26,8 @@ public class WheelWind : Skill
             Player player = this.user.GetComponent<Player>();
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
 
+            player.stats.decreasedMoveSpeed += 0.5f;
+
             // 쿨타임 적용
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
@@ -79,6 +81,8 @@ public class WheelWind : Skill
         {
             Player player = this.user.GetComponent<Player>();
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
+
+            player.stats.decreasedMoveSpeed -= 0.5f;
 
             // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
             float attackRate = weapon.SPA / player.stats.attackSpeed;
