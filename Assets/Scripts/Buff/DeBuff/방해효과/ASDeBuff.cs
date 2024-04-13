@@ -20,6 +20,11 @@ public class ASDeBuff : StatusEffect
     public override void ResetEffect()
     {
         Stats stats = target.GetComponent<Stats>();
+        
+        // 중첩 
+        overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+
+        // 저항에 따른 지속시간 적용
         duration = (1 - stats.SEResist) * defaultDuration;
     }
 

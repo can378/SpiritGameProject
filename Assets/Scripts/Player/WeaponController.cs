@@ -185,7 +185,6 @@ public class WeaponController : MonoBehaviour
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
         HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
-
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
         hitDetection.SetHitDetection(true, weaponList[stats.weapon].penetrations, weaponList[stats.weapon].isMultiHit, weaponList[stats.weapon].DPS, stats.attackPower, weaponList[stats.weapon].knockBack, stats.criticalChance, stats.criticalDamage, weaponList[stats.weapon].statusEffect);

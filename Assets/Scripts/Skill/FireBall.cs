@@ -9,7 +9,7 @@ public class FireBall : Skill
     [field: SerializeField] public float size { get; private set; }
     [field: SerializeField] public float knockBack { get; private set; }
     [field: SerializeField] public GameObject FireBallEffect { get; private set; }
-    [field: SerializeField] public GameObject BurnDeBuff { get; private set; }
+    [field: SerializeField] public GameObject[] StatusEffect { get; private set; }
 
     public override void Use(GameObject user)
     {
@@ -30,8 +30,9 @@ public class FireBall : Skill
             // 선딜
             yield return new WaitForSeconds(preDelay / player.stats.attackSpeed);
 
-            GameObject instant = Instantiate(FireBallEffect, player.status.mousePos, Quaternion.identity);
-            HitDetection hitDetection = instant.GetComponent<HitDetection>();
+            GameObject effect = Instantiate(FireBallEffect, player.status.mousePos, Quaternion.identity);
+            effect.transform.localScale = new Vector3(size, size, 0);
+            HitDetection hitDetection = effect.GetComponent<HitDetection>();
             /*
             투사체 = false
             관통력 = -1
@@ -44,12 +45,9 @@ public class FireBall : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack,0,0, BurnDeBuff);
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack,0,0, StatusEffect);
 
-            Destroy(instant, rate);
-
-            // 후딜
-            yield return new WaitForSeconds(postDelay / player.stats.attackSpeed);
+            Destroy(effect, rate);
         }
     }
 

@@ -40,16 +40,10 @@ public class SkillController : MonoBehaviour
         if (skillList[stats.skill[status.skillIndex]].skillType == 0)
         {
             // 즉발
-            Debug.Log("스킬 즉시 시전");
-            StartCoroutine("Immediate");
+            Debug.Log("스킬 시전");
+            StartCoroutine(Action());
         }
         else if (skillList[stats.skill[status.skillIndex]].skillType == 1)
-        {
-            //준비
-            Debug.Log("스킬 준비");
-            StartCoroutine("Ready");
-        }
-        else if (skillList[stats.skill[status.skillIndex]].skillType == 2)
         {
             //홀드
             Debug.Log("스킬 홀드");
@@ -58,48 +52,24 @@ public class SkillController : MonoBehaviour
 
     }
 
-    public IEnumerator Immediate()
+    public IEnumerator Action()
     {
-        Debug.Log("스킬 시전");
-        status.isSkillReady = false;
         status.isSkill = true;
 
         skillList[stats.skill[status.skillIndex]].Use(gameObject);
 
-
         // 스킬 시전 시간 (다음 움직이기 까지 대기 시간)
         float skillUsedTime = skillList[stats.skill[status.skillIndex]].preDelay + skillList[stats.skill[status.skillIndex]].rate + skillList[stats.skill[status.skillIndex]].postDelay;
 
-        if (skillList[stats.skill[status.skillIndex]].skillLimit == SkillLimit.None)
-        {
-            yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
-        }
-        else
-        {
-            yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
-        }
+        yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
 
         status.isSkill = false;
 
     }
 
-    void Ready()
-    {
-        if (!status.isSkillReady)
-        {
-            status.isSkillReady = true;
-        }
-        else if (status.isSkillReady)
-        {
-            status.isSkillReady = false;
-            skillList[stats.skill[status.skillIndex]].skillCoolTime = 0.5f;
-        }
-    }
-
     public IEnumerator Hold()
     {
         status.isSkillHold = true;
-        //player.RunDelay();
 
         skillList[stats.skill[status.skillIndex]].Use(gameObject);
 

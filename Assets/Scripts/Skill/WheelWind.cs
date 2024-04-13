@@ -30,6 +30,7 @@ public class WheelWind : Skill
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
             // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
+            // 낮을 수록 빨리 공격
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
             // 선딜

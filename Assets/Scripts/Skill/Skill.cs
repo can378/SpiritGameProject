@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SkillLimit {None, Melee, Shot}
-
 public abstract class Skill : SelectItem
 {
     [field: SerializeField] public string skillName { get; private set; }
     [field: SerializeField] public int skillID { get; private set; }
-    [field: SerializeField] public SkillLimit skillLimit { get; private set; }
-    [field: SerializeField] public int skillType { get; private set; }                  // 0이면 즉발, 1이면 준비, 2이면 홀드
+    [field: SerializeField] public int[] skillLimit { get; private set; }               //근거리 : 0 - 베기, 1 - 찌르기, 2 - 휘두르기
+                                                                                        //원거리 : 10 - 총, 11 - 활, 12 - 던지기, 13 - 범위 공격
+
+    [field: SerializeField] public int skillType { get; private set; }                  // 0이면 즉발, 1이면 홀드
 
     [field: SerializeField] public float preDelay { get; private set; }                 //스킬 사용 전 대기 시간
     [field: SerializeField] public float rate { get; private set; }                     //스킬 사용 시간

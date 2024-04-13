@@ -46,7 +46,10 @@ public class EnemyBasic : MonoBehaviour
         AudioManager.instance.SFXPlay("Hit_SFX");
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
-        if (hitDetection.statusEffect != null) ApplyBuff(hitDetection.statusEffect);
+        for (int i = 0; i < hitDetection.statusEffect.Length; i++)
+        {
+            ApplyBuff(hitDetection.statusEffect[i]);
+        }
         KnockBack(attacker, hitDetection.knockBack);
 
     }

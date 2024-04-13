@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.GraphicsBuffer;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -88,7 +89,6 @@ public class Player : MonoBehaviour
             Reload();
             Attack();
             Skill();
-            SkillReadyOut();
             SkillHoldOut();
         }
         
@@ -259,7 +259,7 @@ public class Player : MonoBehaviour
 
         status.isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !status.isFlinch && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillReady && !status.isSkillHold)
+        if (aDown && !status.isFlinch && !status.isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillHold)
         {
             status.isAttack = true;
 
@@ -298,43 +298,20 @@ public class Player : MonoBehaviour
         if (skillController.skillList[stats.skill[status.skillIndex]].skillCoolTime > 0)
             return;
 
-        if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit != SkillLimit.None && stats.weapon == 0)
-        {
-            Debug.Log("무기 없음");
-            return;
-        }
-
-        if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit == SkillLimit.Shot && weaponController.weaponList[stats.weapon].weaponType < 10)
-        {
-            Debug.Log("원거리 전용 스킬");
-            return;
-        }
-
-        if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit == SkillLimit.Melee && 10 <= weaponController.weaponList[stats.weapon].weaponType)
-        {
-            Debug.Log("근거리 전용 스킬");
-            return;
-        }
-
         // 스킬 키 다운
         if (skDown && !status.isFlinch && !status.isAttack && !status.isDodge && !status.isSkill)
         {
+            if(skillController.skillList[stats.skill[status.skillIndex]].skillLimit.Length == 0)
+            {
+                skillController.SkillDown();
+            }
+            else if (Array.IndexOf(skillController.skillList[stats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[stats.weapon].weaponType) == -1)
+            {
+                return;
+            }
             skillController.SkillDown();
-            print(stats.skillCoolTime);
         }
 
-    }
-
-    void SkillReadyOut()
-    {
-        if (stats.skill[status.skillIndex] == 0)
-            return;
-
-        // 스킬 준비 상태에서 공격 키 다운
-        if (aDown && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillReady)
-        {
-            StartCoroutine(skillController.Immediate());
-        }
     }
 
     void SkillHoldOut()
@@ -343,7 +320,7 @@ public class Player : MonoBehaviour
             return;
 
         //스킬 hold 상태에서 스킬 키 up
-        if (skUp && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
+        if ((status.isFlinch || skUp) && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
             skillController.HoldOut();
         }

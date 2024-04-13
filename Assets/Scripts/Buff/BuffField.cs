@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class BuffField : MonoBehaviour
 {
-    public GameObject Buff;
+    public GameObject[] Buff;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
-            player.ApplyBuff(Buff);
+            for(int i = 0 ; i<Buff.Length;i++)
+            {
+                player.ApplyBuff(Buff[i]);
+            }
+            
         }
         else if(other.tag == "Enemy")
         {
             EnemyBasic enemy = other.GetComponent<EnemyBasic>();
-            enemy.ApplyBuff(Buff);
+            for (int i = 0; i < Buff.Length; i++)
+            {
+                enemy.ApplyBuff(Buff[i]);
+            }
         }
     }
 }

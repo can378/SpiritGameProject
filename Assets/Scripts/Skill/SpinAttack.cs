@@ -28,26 +28,27 @@ public class SpinAttack : Skill
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
             // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
+            // 낮을 수록 빨리
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
             // 선딜
             yield return new WaitForSeconds(preDelay * attackRate);
 
             // 사용자 위치에 생성
-            GameObject instant = Instantiate(spinEffect, user.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(spinEffect, user.transform.position, user.transform.rotation);
+            effect.transform.parent = user.transform;
 
             // 공격 판정 조정
-            HitDetection hitDetection = instant.GetComponent<HitDetection>();
+            HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 크기 조정
-            instant.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
+            effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
 
             /*
             투사체 = false
             관통력 = -1
             다단히트 = false
             초당 타격 횟수 = -1 
-            속성 = 무기 속성
             피해량 = (기본 피해량 + 무기 피해량) * 플레이어 공격력
             넉백 = 무기 넉백
             치확 = 플레이어 치확
@@ -56,13 +57,13 @@ public class SpinAttack : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              defalutDamage + player.stats.attackPower * ratio,
-             player.weaponController.weaponList[player.stats.weapon].knockBack, 
+             player.weaponController.weaponList[player.stats.weapon].knockBack * 10, 
              player.stats.criticalChance, 
              player.stats.criticalDamage,
              player.weaponController.weaponList[player.stats.weapon].statusEffect);
 
             // rate 동안 유지
-            Destroy(instant, rate * attackRate);
+            Destroy(effect, rate * attackRate);
         }
     }
 

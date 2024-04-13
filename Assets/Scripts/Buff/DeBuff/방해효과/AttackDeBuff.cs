@@ -40,6 +40,6 @@ public class AttackDeBuff : StatusEffect
 
     public override void RemoveEffect()
     {
-
+        StopCoroutine(ASTimeCoroutine);
     }
 }

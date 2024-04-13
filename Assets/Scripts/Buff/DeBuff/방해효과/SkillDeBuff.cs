@@ -8,7 +8,7 @@ public class SkillDeBuff : StatusEffect
 {
     // 침묵
     // 스킬 사용 불가
-    private Coroutine skillCoolTimeCoroutine;
+    Coroutine skillCoolTimeCoroutine;
 
     public override void ApplyEffect()
     {
@@ -34,13 +34,12 @@ public class SkillDeBuff : StatusEffect
             {
                 player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime += 0.1f;
                 yield return new WaitForSeconds(0.1f);
-                
             }
         }
     }
 
     public override void RemoveEffect()
     {
-        
+        StopCoroutine(skillCoolTimeCoroutine);
     }
 }

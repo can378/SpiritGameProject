@@ -215,6 +215,7 @@ Transform:
   - {fileID: 6209858068139568928}
   - {fileID: 7257004451527387434}
   - {fileID: 7036630685313148479}
+  - {fileID: 4922048535838174329}
   m_Father: {fileID: 8884761542970708304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3504708173630329506
@@ -384,11 +385,10 @@ MonoBehaviour:
   exp: 1
   point: 10
   defaultCriticalChance: 0
-  defaultCriticalDamage: 0.5
-  defaultDrain: 0
+  defaultCriticalDamage: 1.5
   defaultAttackSpeed: 1
   defaultSkillPower: 0
-  defaultSkillCoolTime: 1
+  defaultSkillCoolTime: 0
   defaultRunSpeed: 1.66
   defaultRunCoolTime: 5
   defaultDodgeSpeed: 2
@@ -428,12 +428,12 @@ MonoBehaviour:
   <isDodge>k__BackingField: 0
   <isInvincible>k__BackingField: 0
   <isAttackable>k__BackingField: 1
+  <isFlinch>k__BackingField: 0
   <isAttack>k__BackingField: 0
   <attackDelay>k__BackingField: 0
   <isAttackReady>k__BackingField: 0
   <skillIndex>k__BackingField: 0
   <isSkill>k__BackingField: 0
-  <isSkillReady>k__BackingField: 0
   <isSkillHold>k__BackingField: 0
 --- !u!114 &8114064950361091504
 MonoBehaviour:
@@ -487,6 +487,7 @@ MonoBehaviour:
   - {fileID: 6281730061239119007}
   - {fileID: 1931653265619403985}
   - {fileID: 6018577512984366216}
+  - {fileID: 2199920813160736526}
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -745,7 +746,8 @@ MonoBehaviour:
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: {fileID: 0}
+  <statusEffect>k__BackingField:
+  - {fileID: 0}
   <enemies>k__BackingField: []
   multiHitDurationTime: 0
 --- !u!60 &3481271467806886931
@@ -879,7 +881,8 @@ MonoBehaviour:
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: {fileID: 0}
+  <statusEffect>k__BackingField:
+  - {fileID: 0}
   <enemies>k__BackingField: []
   multiHitDurationTime: 0
 --- !u!58 &4414942471104923482
@@ -1398,7 +1401,8 @@ MonoBehaviour:
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: {fileID: 0}
+  <statusEffect>k__BackingField:
+  - {fileID: 0}
   <enemies>k__BackingField: []
   multiHitDurationTime: 0
 --- !u!60 &919348861844483977
@@ -2898,6 +2902,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &4942172626970274338
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 788934946776095346}
+    m_Modifications:
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904743163423667712, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_Name
+      value: 04_Icicle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904743163423667712, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2859637313133851327, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 8075409604938925239, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+--- !u!114 &2199920813160736526 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6490161515786128684, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+  m_PrefabInstance: {fileID: 4942172626970274338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6f2980dd2e8d542864a3f15896d1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &4922048535838174329 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 61008333135758939, guid: 18768ace8d616554baa1898245125bfe, type: 3}
+  m_PrefabInstance: {fileID: 4942172626970274338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5104355560308050967
 PrefabInstance:
   m_ObjectHideFlags: 0
