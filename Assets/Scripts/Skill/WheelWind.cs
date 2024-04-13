@@ -11,7 +11,7 @@ public class WheelWind : Skill
     [field: SerializeField] public GameObject WheelWindEffect { get; private set; }     //휠윈드 prefep 이펙트
     GameObject effect;      // 이펙트
 
-    public override void Use(GameObject user)
+    public override void Enter(GameObject user)
     {
         this.user = user;
         StartCoroutine("Attack");
@@ -35,8 +35,7 @@ public class WheelWind : Skill
             // 낮을 수록 빨리 공격
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
-            // 선딜
-            yield return new WaitForSeconds(preDelay * attackRate);
+            yield return new WaitForSeconds(0.8f * attackRate);
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -71,7 +70,7 @@ public class WheelWind : Skill
 
     public override void Exit(GameObject user)
     {
-        StartCoroutine("AttackOut");
+        StartCoroutine(AttackOut());
 
     }
 
@@ -81,15 +80,15 @@ public class WheelWind : Skill
         {
             Player player = this.user.GetComponent<Player>();
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
-
-            player.stats.decreasedMoveSpeed -= 0.5f;
-
-            // 공격에 걸리는 시간 = 공격 1회당 걸리는 시간 / 플레이어 공격속도
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
-            yield return new WaitForSeconds(postDelay * attackRate);
-
             Destroy(effect);
+
+            yield return new WaitForSeconds(0.5f * attackRate);
+
+            player.stats.decreasedMoveSpeed -= 0.8f;
+
+            
 
         }
     }

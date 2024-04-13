@@ -7,13 +7,15 @@ public class SpinAttack : Skill
     [field: SerializeField] public int defalutDamage { get; private set; }
     [field: SerializeField] public float ratio { get; private set; }
     [field: SerializeField] public float size { get; private set; }
+    [field: SerializeField] public float time { get; private set; }
     [field: SerializeField] public GameObject spinEffect { get; private set; }
+    
     [field: SerializeField] public float maxHoldPower { get; private set; }
     [field: SerializeField] public float holdPower { get; private set; }
 
     Coroutine HoldCoroutine;
 
-    public override void Use(GameObject user)
+    public override void Enter(GameObject user)
     {
         this.user = user;
         HoldCoroutine = StartCoroutine(Hold());
@@ -87,7 +89,7 @@ public class SpinAttack : Skill
              player.weaponController.weaponList[player.stats.weapon].statusEffect);
 
             // rate 동안 유지
-            Destroy(effect, rate * attackRate);
+            Destroy(effect, time * attackRate);
         }
     }
 

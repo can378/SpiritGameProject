@@ -322,7 +322,7 @@ public class Player : MonoBehaviour
         //스킬 hold 상태에서 스킬 키 up
         if ((status.isFlinch || skUp) && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
-            StartCoroutine(skillController.HoldOut());
+            StartCoroutine(skillController.Exit());
         }
     }
 

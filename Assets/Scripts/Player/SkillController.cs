@@ -37,43 +37,17 @@ public class SkillController : MonoBehaviour
     // 스킬키 입력
     public void SkillDown()
     {
-        if (skillList[stats.skill[status.skillIndex]].skillType == 0)
-        {
-            // 즉발
-            Debug.Log("스킬 시전");
-            StartCoroutine(Action());
-        }
-        else if (skillList[stats.skill[status.skillIndex]].skillType == 1)
-        {
-            //홀드
-            Debug.Log("스킬 홀드");
-            StartCoroutine(Hold());
-        }
-
+        StartCoroutine(Enter());
     }
 
-    public IEnumerator Action()
+    public IEnumerator Enter()
     {
-        status.isSkill = true;
-
-        skillList[stats.skill[status.skillIndex]].Use(gameObject);
-
-        // 스킬 시전 시간 (다음 움직이기 까지 대기 시간)
-        float skillUsedTime = skillList[stats.skill[status.skillIndex]].preDelay + skillList[stats.skill[status.skillIndex]].rate + skillList[stats.skill[status.skillIndex]].postDelay;
-
-        yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
-
-        status.isSkill = false;
-
-    }
-
-    public IEnumerator Hold()
-    {
+        // 홀드 중
         status.isSkillHold = true;
 
-        skillList[stats.skill[status.skillIndex]].Use(gameObject);
+        skillList[stats.skill[status.skillIndex]].Enter(gameObject);
 
-        float timer = skillList[stats.skill[status.skillIndex]].maxHold;
+        float timer = skillList[stats.skill[status.skillIndex]].maxHoldTime;
 
         while (status.isSkillHold)
         {
@@ -81,23 +55,28 @@ public class SkillController : MonoBehaviour
             timer -= 0.1f;
             if (timer <= 0)
             {
-                StartCoroutine(HoldOut());
+                StartCoroutine(Exit());
                 break;
             }
         }
 
     }
 
-    public IEnumerator HoldOut()
+    public IEnumerator Exit()
     {
-        skillList[stats.skill[status.skillIndex]].Exit(gameObject);
         status.isSkillHold = false;
 
+        // 선딜
         status.isSkill = true;
 
-        float skillUsedTime = skillList[stats.skill[status.skillIndex]].postDelay;
+        yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].preDelay / stats.attackSpeed);
 
-        yield return new WaitForSeconds(skillUsedTime / stats.attackSpeed);
+        // 사용
+        skillList[stats.skill[status.skillIndex]].Exit(gameObject);
+
+        // 후딜
+
+        yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].postDelay / stats.attackSpeed);
 
         status.isSkill = false;
 

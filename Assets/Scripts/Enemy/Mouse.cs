@@ -51,7 +51,7 @@ public class Mouse : EnemyBasic
                     {
                         if (skillList[i].GetComponent<Skill>().skillID == player.stats.skill[player.status.skillIndex])
                         {
-                            enemyTarget.GetComponent<Player>().skillController.skillList[player.stats.skill[player.status.skillIndex]].GetComponent<Skill>().Use(gameObject);
+                            enemyTarget.GetComponent<Player>().skillController.skillList[player.stats.skill[player.status.skillIndex]].GetComponent<Skill>().Enter(gameObject);
                             break;
                             //print("skill=" + skillList[i].GetComponent<Skill>().skillName); 
                         

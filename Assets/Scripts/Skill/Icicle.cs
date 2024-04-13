@@ -13,13 +13,17 @@ public class Icicle : Skill
     [field: SerializeField] public GameObject icicleEffect { get; private set; }
     [field: SerializeField] public GameObject[] statusEffect { get; private set; }
 
-    public override void Use(GameObject user)
+    public override void Enter(GameObject user)
     {
         this.user = user;
-        StartCoroutine("Fire");
     }
 
-    IEnumerator Fire()
+    public override void Exit(GameObject user)
+    {
+        Fire();
+    }
+
+    void Fire()
     {
         Debug.Log("Icicle");
 
@@ -28,9 +32,6 @@ public class Icicle : Skill
             Player player = user.GetComponent<Player>();
             // 쿨타임 적용
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
-
-            // 선딜
-            yield return new WaitForSeconds(preDelay / player.stats.attackSpeed);
 
             GameObject instantProjectile = Instantiate(icicleEffect, transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
@@ -46,17 +47,10 @@ public class Icicle : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack,0,0, statusEffect);
+            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack, 0, 0, statusEffect);
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 270, Vector3.forward);  // 방향 설정
             bulletRigid.velocity = player.status.mouseDir * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정
-
-            Destroy(instantProjectile, rate);
         }
-    }
-
-    public override void Exit(GameObject user)
-    {
-
     }
 }
