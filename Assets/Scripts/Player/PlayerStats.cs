@@ -21,16 +21,7 @@ public class PlayerStats : Stats
     public float decreasedCriticalChance { get; set; }
     public float criticalChance
     {
-        get
-        {
-            float CC = (defaultCriticalChance + addCriticalChance) * (1f + increasedCriticalChance) * (1f - decreasedCriticalChance);
-            if (CC > 1f)
-                return 1f;
-            else if (CC <= 0)
-                return 0;
-            else
-                return CC;
-        }
+        get { return Mathf.Clamp((defaultCriticalChance + addCriticalChance) * (1f + increasedCriticalChance) * (1f - decreasedCriticalChance), 0, 1f); }
     }
 
     //CriticalDamage
@@ -43,16 +34,7 @@ public class PlayerStats : Stats
     public float decreasedCriticalDamage { get; set; }
     public float criticalDamage
     {
-        get
-        {
-            float CD = (defaultCriticalDamage + addCriticalDamage) * (1f + increasedCriticalDamage) * (1f - decreasedCriticalDamage);
-            if (CD > 3f)
-                return 3f;
-            else if (CD <= 1)
-                return 1;
-            else
-                return CD;
-        }
+        get { return Mathf.Clamp((defaultCriticalDamage + addCriticalDamage) * (1f + increasedCriticalDamage) * (1f - decreasedCriticalDamage), 1f, 3f); }
     }
 
     // attackSpeed
@@ -66,16 +48,7 @@ public class PlayerStats : Stats
     public float decreasedAttackSpeed { get; set; }
     public float attackSpeed
     {
-        get
-        {
-            float AS = (defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed);
-            if (AS > 3f)
-                return 3f;
-            else if (AS <= 0)
-                return 0;
-            else
-                return AS;
-        }
+        get { return Mathf.Clamp((defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f, 4f); }
     }
 
     // Skill
@@ -89,13 +62,7 @@ public class PlayerStats : Stats
     public float decreasedSkillPower { get; set; }
     public float skillPower
     {
-        get
-        {
-            float SP = (defaultSkillPower + addSkillPower) * (1f + increasedSkillPower) * (1f - decreasedSkillPower);
-            if (SP <= 0)
-                return 0;
-            return SP;
-        }
+        get { return Mathf.Clamp((defaultSkillPower + addSkillPower) * (1f + increasedSkillPower) * (1f - decreasedSkillPower), 0f, 9999f); }
     }
 
     // SkillCoolTime
@@ -110,16 +77,7 @@ public class PlayerStats : Stats
     public float decreasedSkillCoolTime { get; set; }
     public float skillCoolTime
     {
-        get
-        {
-            float SCT = (defaultSkillCoolTime + addSkillCoolTime) * (1f + increasedSkillCoolTime) * (1f - decreasedSkillCoolTime);
-            if (SCT > 0.8f)
-                return 0.8f;
-            else if (SCT <= -0.8f)
-                return -0.8f;
-            else
-                return SCT;
-        }
+        get { return Mathf.Clamp((defaultSkillCoolTime + addSkillCoolTime) * (1f + increasedSkillCoolTime) * (1f - decreasedSkillCoolTime), -0.8f, 0.8f); }
     }
 
     // Move
@@ -134,13 +92,7 @@ public class PlayerStats : Stats
     public float decreasedRunSpeed { get; set; }
     public float runSpeed
     {
-        get
-        {
-            float RP = (defaultRunSpeed + addRunSpeed) * (1f + increasedRunSpeed) * (1f - decreasedRunSpeed);
-            if (RP <= 1.0f)
-                return 1.0f;
-            return RP;
-        }
+        get { return Mathf.Clamp((defaultRunSpeed + addRunSpeed) * (1f + increasedRunSpeed) * (1f - decreasedRunSpeed), 1f, 5f); }
     }
 
     //RunCoolTime
@@ -154,13 +106,7 @@ public class PlayerStats : Stats
     public float decreasedRunCoolTime {  get; set; }
     public float runCoolTime
     {
-        get
-        {
-            float RCT = (defaultRunCoolTime + addRunCoolTime) * (1f + increasedRunCoolTime) * (1f - decreasedRunCoolTime);
-            if (RCT <= 0f)
-                return 0f;
-            return RCT;
-        }
+        get { return Mathf.Clamp((defaultRunCoolTime + addRunCoolTime) * (1f + increasedRunCoolTime) * (1f - decreasedRunCoolTime), 0f, 10f); }
     }
 
     // Dodge
@@ -173,13 +119,7 @@ public class PlayerStats : Stats
     public float decreasedDodgeSpeed { get; set; }
     public float dodgeSpeed
     {
-        get
-        {
-            float DS = (defaultDodgeSpeed + addDodgeSpeed) * (1f + increasedDodgeSpeed) * (1f - decreasedDodgeSpeed);
-            if (DS <= 0.5f)
-                return 0.5f;
-            return DS;
-        }
+        get { return Mathf.Clamp((defaultDodgeSpeed + addDodgeSpeed) * (1f + increasedDodgeSpeed) * (1f - decreasedDodgeSpeed), 0.5f, 2f); }
     }
 
     // 회피 시간
@@ -192,13 +132,7 @@ public class PlayerStats : Stats
     public float decreasedDodgeTime { get; set; }
     public float dodgeTime
     {
-        get
-        {
-            float DT = (defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime);
-            if (DT <= 0.2f)
-                return 0.2f;
-            return DT;
-        }
+        get { return Mathf.Clamp((defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime), 0.1f, 0.6f); }
     }
 
     //Item

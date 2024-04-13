@@ -40,11 +40,8 @@ public class Weapon : Equipment
 
     public override void UnEquip(Player target)
     {
-        if (target.tag == "Player")
-        {
-            Stats stats = target.GetComponent<Stats>();
-            stats.addAttackPower -= attackPower;
-        }
+        Stats stats = target.GetComponent<Stats>();
+        stats.addAttackPower -= attackPower;
         this.target = null;
 
     }

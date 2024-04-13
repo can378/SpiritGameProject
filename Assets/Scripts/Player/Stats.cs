@@ -26,15 +26,7 @@ public class Stats : MonoBehaviour
     public float decreasedDefensivePower { get; set; }
     public float defensivePower
     {
-        get {
-            float DP = (defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower);
-            if (DP > 0.75f)
-                return 0.75f;
-            else if (DP < -0.75f)
-                return -0.75f;
-            else
-                return DP;
-        }
+        get { return Mathf.Clamp((defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower), -0.5f, 0.5f); }
     }
 
     // 상태이상 저항
@@ -47,15 +39,7 @@ public class Stats : MonoBehaviour
     public float decreasedSEResist { get; set; }
     public float SEResist
     {
-        get {
-            float SER = (defaultSEResist + addSEResist) * (1f + increasedSEResist) * (1f - decreasedSEResist);
-            if(SER > 0.75f)
-                return 0.75f;
-            else if(SER < -0.75f)
-                return -0.75f;
-            else 
-                return SER;
-        }
+        get { return Mathf.Clamp((defaultSEResist + addSEResist) * (1f + increasedSEResist) * (1f - decreasedSEResist), -0.75f,0.75f); }
     }
 
     // Attack
@@ -69,13 +53,7 @@ public class Stats : MonoBehaviour
     public float decreasedAttackPower { get; set; }
     public float attackPower
     {
-        get
-        {
-            float AP = (defaultAttackPower + addAttackPower) * (1f + increasedAttackPower) * (1f - decreasedAttackPower);
-            if (AP <= 0)
-                return 0;
-            return AP;
-        }
+        get{ return Mathf.Clamp((defaultAttackPower + addAttackPower) * (1f + increasedAttackPower) * (1f - decreasedAttackPower), 0, 9999f); }
     }
 
     // Speed
@@ -88,13 +66,7 @@ public class Stats : MonoBehaviour
     public float decreasedMoveSpeed { get; set; }
     public float moveSpeed
     {
-        get
-        {
-            float MS = (defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed);
-            if (MS <= 0)
-                return 0;
-            return MS;
-        }
+        get { return Mathf.Clamp((defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed), 0, 9999f); }
     }
 
     [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프

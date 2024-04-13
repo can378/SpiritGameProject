@@ -250,6 +250,7 @@ public class Player : MonoBehaviour
     void Attack()
     {
         status.attackDelay -= Time.deltaTime;
+        print(stats.attackPower);
 
         if (stats.weapon == 0)
             return;
@@ -301,11 +302,9 @@ public class Player : MonoBehaviour
         // 스킬 키 다운
         if (skDown && !status.isFlinch && !status.isAttack && !status.isDodge && !status.isSkill)
         {
-            if(skillController.skillList[stats.skill[status.skillIndex]].skillLimit.Length == 0)
-            {
-                skillController.SkillDown();
-            }
-            else if (Array.IndexOf(skillController.skillList[stats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[stats.weapon].weaponType) == -1)
+            //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
+            if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit.Length != 0 && 
+            Array.IndexOf(skillController.skillList[stats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[stats.weapon].weaponType) == -1)
             {
                 return;
             }
@@ -684,7 +683,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        stats.HP -= damage * (1 - stats.defensivePower);
+        stats.HP -= damage * (1f - stats.defensivePower);
 
         MapUIManager.instance.UpdateHealthUI();
         

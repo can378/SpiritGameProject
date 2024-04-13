@@ -27,7 +27,13 @@ public abstract class Skill : SelectItem
 
     void CoolDown()
     {
+        if(skillCoolTime == 0)
+        {
+            return;
+        }
+
         skillCoolTime -= Time.deltaTime;
+        skillCoolTime = Mathf.Clamp(skillCoolTime,0,skillDefalutCoolTime * 2);
     }
 
 
