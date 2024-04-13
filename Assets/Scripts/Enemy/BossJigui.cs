@@ -10,6 +10,7 @@ public class BossJigui : EnemyBasic
 
     void Start()
     {
+        eyeSight.SetActive(true); 
         StartCoroutine(jigui());
         StartCoroutine(jiguiRaidStart());
         StartCoroutine(playerEyeSight());
@@ -17,10 +18,14 @@ public class BossJigui : EnemyBasic
 
     private void OnEnable()
     {
-        //StartCoroutine(jigui());
+        eyeSight.SetActive(true);
+        StartCoroutine(jigui());
+        StartCoroutine(jiguiRaidStart());
+        StartCoroutine(playerEyeSight());
     }
     private void OnDisable()
     {
+        eyeSight.SetActive(false);
         StopAllCoroutines();
     }
 
