@@ -4,21 +4,46 @@ using UnityEngine;
 
 public class FireBall : Skill
 {
-    [field: SerializeField] public int defalutDamage { get; private set; }
+    // 피해량
+    [field: SerializeField] public int defalutDamage {get; private set;}
     [field: SerializeField] public float ratio { get; private set; }
-    [field: SerializeField] public float size { get; private set; }
-    [field: SerializeField] public float knockBack { get; private set; }
-    [field: SerializeField] public float time { get; private set; }
-    [field: SerializeField] public GameObject FireBallEffect { get; private set; }
-    [field: SerializeField] public GameObject[] StatusEffect { get; private set; }
+
+    // 크기, 넉백, 이펙트 유지시간, 이펙트, 상태이상
+    [field: SerializeField] float size;
+    [field: SerializeField] float knockBack;
+    [field: SerializeField] float time;
+    [field: SerializeField] GameObject fireBallEffect;
+    [field: SerializeField] int[] statusEffect;
+
+    GameObject simul;                                                       //발동 전 효과 범위 시뮬
+    
 
     public override void Enter(GameObject user)
     {
-        this.user = user;
-        
+        base.Enter(user);
+        StartCoroutine(Simulation());
     }
 
-    public override void Exit(GameObject user)
+    IEnumerator Simulation()
+    {
+        if(user.tag == "Player")
+        {
+            Player player = user.GetComponent<Player>();
+
+            simul = Instantiate(GameData.instance.simulEffect[1], player.status.mousePos, Quaternion.identity);
+            simul.transform.localScale = new Vector3(size, size, 0);
+            
+            while (player.status.isSkillHold)
+            {
+                // 나중에 원 형태로 최대 범위 제한하기
+                // 나중에 원 형태로 최대 범위 표시하기
+                simul.transform.position = player.status.mousePos;
+                yield return null;
+            }
+        }
+    }
+
+    public override void Exit()
     {
         Fire();
     }
@@ -34,7 +59,9 @@ public class FireBall : Skill
             // 쿨타임 적용
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
-            GameObject effect = Instantiate(FireBallEffect, player.status.mousePos, Quaternion.identity);
+            // 이펙트 적용
+            GameObject effect = Instantiate(fireBallEffect, simul.transform.position, Quaternion.identity);
+            Destroy(simul);
             effect.transform.localScale = new Vector3(size, size, 0);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
             /*
@@ -48,7 +75,7 @@ public class FireBall : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack, 0, 0, StatusEffect);
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack, 0, 0, statusEffect);
 
             Destroy(effect, time);
         }

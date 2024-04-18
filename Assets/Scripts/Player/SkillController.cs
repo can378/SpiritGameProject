@@ -45,8 +45,25 @@ public class SkillController : MonoBehaviour
         // È¦µå Áß
         status.isSkillHold = true;
 
+        if(skillList[stats.skill[status.skillIndex]].skillType == 0)
+        {
+            status.isSkill = true;
+            yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].preDelay);
+        }
+
         skillList[stats.skill[status.skillIndex]].Enter(gameObject);
 
+        if (skillList[stats.skill[status.skillIndex]].skillType == 0)
+        {
+            yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].postDelay);
+            status.isSkill = false;
+        }
+
+        StartCoroutine(Stay());
+    }
+
+    public IEnumerator Stay()
+    {
         float timer = skillList[stats.skill[status.skillIndex]].maxHoldTime;
 
         while (status.isSkillHold)
@@ -59,29 +76,29 @@ public class SkillController : MonoBehaviour
                 break;
             }
         }
-
     }
 
     public IEnumerator Exit()
     {
         status.isSkillHold = false;
+        
+        if (skillList[stats.skill[status.skillIndex]].skillType == 2)
+        {
+            status.isSkill = true;
+            yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].preDelay);
+        }
 
-        // ¼±µô
-        status.isSkill = true;
+        skillList[stats.skill[status.skillIndex]].Exit();
 
-        yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].preDelay / stats.attackSpeed);
-
-        // »ç¿ë
-        skillList[stats.skill[status.skillIndex]].Exit(gameObject);
-
-        // ÈÄµô
-
-        yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].postDelay / stats.attackSpeed);
-
-        status.isSkill = false;
+        if (skillList[stats.skill[status.skillIndex]].skillType == 2)
+        {
+            yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].postDelay);
+            status.isSkill = false;
+        }
 
         
-        
+
+
     }
 
 }

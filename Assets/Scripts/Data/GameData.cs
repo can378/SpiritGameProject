@@ -15,6 +15,7 @@ public class GameData : MonoBehaviour
     public List<GameObject> skillList;
     public List<GameObject> testList;
     public List<GameObject> statusEffectList;
+    public List<GameObject> simulEffect;            // 0은 동그라미, 1은 방향
 
     void Start()
     {

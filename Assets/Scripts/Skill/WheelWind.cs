@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WheelWind : Skill
 {
-    [field: SerializeField] public int defaultDamage { get; private set; }     // 회당 기본 피해량
-    [field: SerializeField] public float ratio { get; private set; }
-    [field: SerializeField] public int DPS { get; private set; }        // 초당 공격 속도
-    [field: SerializeField] public float size { get; private set; }     // 이펙트 크기
-    [field: SerializeField] public GameObject WheelWindEffect { get; private set; }     //휠윈드 prefep 이펙트
+    [field: SerializeField] int defaultDamage;// 회당 기본 피해량
+    [field: SerializeField] float ratio;
+    [field: SerializeField] int DPS;       // 초당 공격 속도
+    [field: SerializeField] float size;     // 이펙트 크기
+    [field: SerializeField] GameObject WheelWindEffect;     //휠윈드 prefep 이펙트
     GameObject effect;      // 이펙트
 
     public override void Enter(GameObject user)
@@ -35,7 +35,7 @@ public class WheelWind : Skill
             // 낮을 수록 빨리 공격
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
-            yield return new WaitForSeconds(0.8f * attackRate);
+            yield return new WaitForSeconds(preDelay * attackRate);
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -68,7 +68,8 @@ public class WheelWind : Skill
         }
     }
 
-    public override void Exit(GameObject user)
+
+    public override void Exit()
     {
         StartCoroutine(AttackOut());
 
@@ -84,9 +85,9 @@ public class WheelWind : Skill
 
             Destroy(effect);
 
-            yield return new WaitForSeconds(0.5f * attackRate);
+            yield return new WaitForSeconds(postDelay * attackRate);
 
-            player.stats.decreasedMoveSpeed -= 0.8f;
+            player.stats.decreasedMoveSpeed -= 0.5f;
 
             
 

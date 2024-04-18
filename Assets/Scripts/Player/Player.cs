@@ -88,8 +88,8 @@ public class Player : MonoBehaviour
         {
             Reload();
             Attack();
-            Skill();
-            SkillHoldOut();
+            SkillDown();
+            SkillUp();
         }
         
         Interaction();
@@ -250,7 +250,6 @@ public class Player : MonoBehaviour
     void Attack()
     {
         status.attackDelay -= Time.deltaTime;
-        print(stats.attackPower);
 
         if (stats.weapon == 0)
             return;
@@ -291,7 +290,7 @@ public class Player : MonoBehaviour
 
     #region Skill
 
-    void Skill()
+    void SkillDown()
     {
         if (stats.skill[status.skillIndex] == 0)
             return;
@@ -313,7 +312,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void SkillHoldOut()
+    void SkillUp()
     {
         if (stats.skill[status.skillIndex] == 0)
             return;

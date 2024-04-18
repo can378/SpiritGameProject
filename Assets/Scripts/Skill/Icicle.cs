@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Icicle : Skill
 {
-    [field: SerializeField] public int defalutDamage { get; private set; }
-    [field: SerializeField] public float ratio { get; private set; }
-    [field: SerializeField] public float size { get; private set; }
-    [field: SerializeField] public float knockBack { get; private set; }
-    [field: SerializeField] public float speed {get; private set;}
-    [field: SerializeField] public float time { get; private set; }
-    [field: SerializeField] public GameObject icicleEffect { get; private set; }
-    [field: SerializeField] public GameObject[] statusEffect { get; private set; }
+    [field: SerializeField] int defalutDamage;
+    [field: SerializeField] float ratio;
+    [field: SerializeField] float size;
+    [field: SerializeField] float knockBack;
+    [field: SerializeField] float speed;
+    [field: SerializeField] float time;
+    [field: SerializeField] GameObject icicleEffect;
+    [field: SerializeField] int[] statusEffect;
 
     public override void Enter(GameObject user)
     {
         this.user = user;
     }
 
-    public override void Exit(GameObject user)
+    public override void Exit()
     {
         Fire();
     }
@@ -30,9 +30,11 @@ public class Icicle : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
+
             // ÄðÅ¸ÀÓ Àû¿ë
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
+            // ÀÌÆåÆ® Àû¿ë
             GameObject instantProjectile = Instantiate(icicleEffect, transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();

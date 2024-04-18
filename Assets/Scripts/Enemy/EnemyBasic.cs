@@ -48,7 +48,7 @@ public class EnemyBasic : MonoBehaviour
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
         for (int i = 0; i < hitDetection.statusEffect.Length; i++)
         {
-            ApplyBuff(hitDetection.statusEffect[i]);
+            ApplyBuff(GameData.instance.statusEffectList[hitDetection.statusEffect[i]]);
         }
         KnockBack(attacker, hitDetection.knockBack);
 
