@@ -25,7 +25,8 @@ public class WheelWind : Skill
         {
             Player player = this.user.GetComponent<Player>();
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
-
+            
+            // 먼저 속도 감소
             player.stats.decreasedMoveSpeed += 0.5f;
 
             // 쿨타임 적용
@@ -35,6 +36,7 @@ public class WheelWind : Skill
             // 낮을 수록 빨리 공격
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
+            // 시간이 조금 지난 후 회전 시작
             yield return new WaitForSeconds(preDelay * attackRate);
 
             // 사용자 위치에 생성
@@ -83,8 +85,10 @@ public class WheelWind : Skill
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
+            // 회전 멈춤
             Destroy(effect);
 
+            // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(postDelay * attackRate);
 
             player.stats.decreasedMoveSpeed -= 0.5f;

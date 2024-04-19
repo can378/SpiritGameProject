@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Icicle : Skill
 {
+    // 피해량
     [field: SerializeField] int defalutDamage;
     [field: SerializeField] float ratio;
+
+    // 크기, 넉백, 속도, 이펙트 유지시간, 이펙트, 상태이상
     [field: SerializeField] float size;
     [field: SerializeField] float knockBack;
     [field: SerializeField] float speed;
@@ -13,13 +16,37 @@ public class Icicle : Skill
     [field: SerializeField] GameObject icicleEffect;
     [field: SerializeField] int[] statusEffect;
 
+    //방향 표시기
+    GameObject simul;
+
     public override void Enter(GameObject user)
     {
         this.user = user;
+        StartCoroutine(Simulation());
+    }
+
+    IEnumerator Simulation()
+    {
+        if (user.tag == "Player")
+        {
+            Player player = user.GetComponent<Player>();
+
+            simul = Instantiate(GameData.instance.simulEffect[2], user.gameObject.transform.position, Quaternion.identity);
+            simul.transform.parent = user.transform;
+
+            while (player.status.isSkillHold)
+            {
+                // 나중에 원 형태로 최대 범위 제한하기
+                // 나중에 원 형태로 최대 범위 표시하기
+                simul.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);
+                yield return null;
+            }
+        }
     }
 
     public override void Exit()
     {
+        StopCoroutine(Simulation());
         Fire();
     }
 
@@ -36,6 +63,7 @@ public class Icicle : Skill
 
             // 이펙트 적용
             GameObject instantProjectile = Instantiate(icicleEffect, transform.position, transform.rotation);
+            Destroy(simul);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             /*

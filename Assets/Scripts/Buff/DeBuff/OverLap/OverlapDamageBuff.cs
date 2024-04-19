@@ -30,12 +30,12 @@ public class OverlapDamageBuff : StatusEffect
             if (target.tag == "Player")
             {
                 Player player = target.GetComponent<Player>();
-                player.Damaged(player.stats.HPMax * player.stats.SEResist * damagePer);
+                player.Damaged(player.stats.HPMax * (1 - player.stats.SEResist) * damagePer);
             }
             else if (target.tag == "Enemy")
             {
                 EnemyBasic enemy = target.GetComponent<EnemyBasic>();
-                enemy.Damaged(enemy.stats.HPMax * enemy.stats.SEResist * damagePer);
+                enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist) * damagePer);
             }
         }
         

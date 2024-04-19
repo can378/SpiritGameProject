@@ -146,6 +146,8 @@ public class WeaponController : MonoBehaviour
     {
         Debug.Log("Swing");
 
+        float attackDir = status.mouseAngle;
+
         //선딜
         yield return new WaitForSeconds(weaponList[stats.weapon].preDelay / stats.attackSpeed);
 
@@ -157,7 +159,7 @@ public class WeaponController : MonoBehaviour
         hitDetection.SetHitDetection(false,-1, weaponList[stats.weapon].isMultiHit, weaponList[stats.weapon].DPS, stats.attackPower, weaponList[stats.weapon].knockBack, stats.criticalChance, stats.criticalDamage,weaponList[stats.weapon].statusEffect);
 
         // 무기 방향 
-        HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);
+        HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(attackDir - 90, Vector3.forward);
 
         // 무기 이펙트 실행
         HitDetectionGameObject.SetActive(true);
@@ -175,6 +177,9 @@ public class WeaponController : MonoBehaviour
     IEnumerator Shot()
     {
         Debug.Log("Shot");
+
+        float attackDir = status.mouseAngle;
+
         // 선딜
         yield return new WaitForSeconds(weaponList[stats.weapon].preDelay / stats.attackSpeed);
 
@@ -188,7 +193,7 @@ public class WeaponController : MonoBehaviour
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
         hitDetection.SetHitDetection(true, weaponList[stats.weapon].penetrations, weaponList[stats.weapon].isMultiHit, weaponList[stats.weapon].DPS, stats.attackPower, weaponList[stats.weapon].knockBack, stats.criticalChance, stats.criticalDamage, weaponList[stats.weapon].statusEffect);
-        instantProjectile.transform.rotation = Quaternion.AngleAxis(status.mouseAngle - 90, Vector3.forward);  // 방향 설정
+        instantProjectile.transform.rotation = Quaternion.AngleAxis(attackDir - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(weaponList[stats.weapon].attackSize, weaponList[stats.weapon].attackSize,1);
         bulletRigid.velocity = status.mouseDir * 10 * weaponList[stats.weapon].projectileSpeed;  // 속도 설정
         Destroy(instantProjectile, weaponList[stats.weapon].projectileTime);  //사거리 설정

@@ -15,7 +15,8 @@ public class FireBall : Skill
     [field: SerializeField] GameObject fireBallEffect;
     [field: SerializeField] int[] statusEffect;
 
-    GameObject simul;                                                       //발동 전 효과 범위 시뮬
+    //발동 전 효과 범위 시뮬
+    GameObject simul;
     
 
     public override void Enter(GameObject user)
@@ -45,6 +46,7 @@ public class FireBall : Skill
 
     public override void Exit()
     {
+        StopCoroutine(Simulation());
         Fire();
     }
 
