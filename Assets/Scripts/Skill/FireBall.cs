@@ -42,6 +42,23 @@ public class FireBall : Skill
                 yield return null;
             }
         }
+        else if (user.tag == "Enemy")
+        {
+            EnemyBasic enemy = user.GetComponent<EnemyBasic>();
+            float timer = 0;
+
+            simul = Instantiate(GameData.instance.simulEffect[1], enemy.enemyTarget.transform.position, Quaternion.identity);
+            simul.transform.localScale = new Vector3(size, size, 0);
+
+            while (timer <= maxHoldTime/2)
+            {
+                // 나중에 원 형태로 최대 범위 제한하기
+                // 나중에 원 형태로 최대 범위 표시하기
+                simul.transform.position = enemy.enemyTarget.transform.position;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+        }
     }
 
     public override void Exit()
@@ -57,15 +74,18 @@ public class FireBall : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
+            GameObject effect = Instantiate(fireBallEffect, simul.transform.position, Quaternion.identity);
+            HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
 
-            // 이펙트 적용
-            GameObject effect = Instantiate(fireBallEffect, simul.transform.position, Quaternion.identity);
             Destroy(simul);
+            Destroy(effect, time);
+
             effect.transform.localScale = new Vector3(size, size, 0);
-            HitDetection hitDetection = effect.GetComponent<HitDetection>();
+            effect.tag = "PlayerAttack";
+
             /*
             투사체 = false
             관통력 = -1
@@ -79,7 +99,37 @@ public class FireBall : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack, 0, 0, statusEffect);
 
+            
+        }
+        else if(user.tag == "Enemy")
+        {
+            EnemyBasic enemy = user.GetComponent<EnemyBasic>();
+            GameObject effect = Instantiate(fireBallEffect, simul.transform.position, Quaternion.identity);
+            HitDetection hitDetection = effect.GetComponent<HitDetection>();
+
+            skillCoolTime = skillDefalutCoolTime;
+
+            // 이펙트 적용
+            Destroy(simul);
             Destroy(effect, time);
+
+            effect.transform.localScale = new Vector3(size, size, 0);
+            effect.tag = "EnemyAttack";
+            
+            /*
+            투사체 = false
+            관통력 = -1
+            다단히트 = false
+            초당 타격 횟수 = -1 
+            피해량 = 피해량 * 플레이어 주문력
+            넉백 = 넉백
+            치확 = 0
+            치뎀 = 0
+            디버프 = 화상
+            */
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
+
+           
         }
     }
 }

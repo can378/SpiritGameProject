@@ -25,7 +25,8 @@ public class WheelWind : Skill
         {
             Player player = this.user.GetComponent<Player>();
             Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
-            
+            HitDetection hitDetection;
+
             // 먼저 속도 감소
             player.stats.decreasedMoveSpeed += 0.5f;
 
@@ -46,7 +47,7 @@ public class WheelWind : Skill
             effect.transform.parent = user.transform;
 
             // 공격 판정 조정
-            HitDetection hitDetection = effect.GetComponent<HitDetection>();
+            hitDetection = effect.GetComponent<HitDetection>();
 
             effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
             /*

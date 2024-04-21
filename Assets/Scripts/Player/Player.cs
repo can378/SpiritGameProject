@@ -595,7 +595,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //공격받음
-        if (other.tag == "Enemy" || other.tag == "EnemyAttack")
+        if (other.tag == "EnemyAttack")
         {
             if(status.isInvincible)
                 return;
@@ -603,11 +603,8 @@ public class Player : MonoBehaviour
             // 피해를 입고
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
+            EnemyAttack(other.gameObject);
 
-            Damaged(other.GetComponent<EnemyStats>().attackPower);
-            Flinch(0.3f);
-            KnockBack(other.gameObject);
-            Invincible(0.3f);
         }
         else if (other.tag == "EnterDungeon")
         {
@@ -673,6 +670,16 @@ public class Player : MonoBehaviour
 
     // 상태 관련
     #region Effect
+
+    //적에게 피격
+    public void EnemyAttack(GameObject attacker)
+    {
+        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
+        Damaged(hitDetection.damage);
+        Flinch(0.3f);
+        KnockBack(attacker.gameObject, hitDetection.knockBack);
+        Invincible(0.3f);
+    }
 
     // 피해
     public void Damaged(float damage)

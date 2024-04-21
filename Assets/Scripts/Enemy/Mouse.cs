@@ -5,13 +5,8 @@ using UnityEngine;
 
 public class Mouse : EnemyBasic
 {
-    private List<GameObject> skillList;
-
-    void Start()
-    {
-        skillList = DataManager.instance.gameData.skillList;
-        StartCoroutine(mouse());
-    }
+    [field : SerializeField] public List<Skill> skillList {get; private set;}
+    [field: SerializeField] public int skill {get; private set;}
 
     private void OnEnable()
     {
@@ -24,67 +19,53 @@ public class Mouse : EnemyBasic
     }
 
     private bool isChange=false;
+
     IEnumerator mouse()
     {
         Player player = enemyTarget.GetComponent<Player>();
-        targetDis=Vector2.Distance(transform.position, enemyTarget.position);
-        if (isChange == false)
+
+        while (true)
         {
-            Chase();
-            yield return new WaitForSeconds(0.2f);
-        }
-        else
-        {
-            //Attack
-            if (targetDis > 3f) 
-            { Chase(); yield return new WaitForSeconds(0.1f); }
+            targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+            if (isChange == false)
+            {
+                Chase();
+            }
             else
             {
-                
-                
-                if (player.stats.skill[player.status.skillIndex] != 0)
+                //Attack
+                if(skill != 0 && skillList[skill].skillCoolTime <= 0)
                 {
                     //mimic player skill
                     print("mimic player skill");
-                    
-                    for (int i = 0; i < skillList.Count; i++)
-                    {
-                        if (skillList[i].GetComponent<Skill>().skillID == player.stats.skill[player.status.skillIndex])
-                        {
-                            enemyTarget.GetComponent<Player>().skillController.skillList[player.stats.skill[player.status.skillIndex]].GetComponent<Skill>().Enter(gameObject);
-                            break;
-                            //print("skill=" + skillList[i].GetComponent<Skill>().skillName); 
-                        
-                        }
 
-                    }
+                    yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
-                    yield return new WaitForSeconds(3f);
-                   
+                    skillList[skill].Enter(gameObject);
+
+                    yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
+
+                    yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+
+                    yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
+
+                    skillList[skill].Exit();
+
+                    yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
+
                 }
-                else 
+                else if (targetDis >= 3f)
+                { Chase(); }
+                else if (targetDis < 3f)
                 {
-                    //chaos
-                    print("chaos");
-                }
-
-                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-                yield return new WaitForSeconds(0.1f);
-
-                //run away
-                while (targetDis<3f)
-                {
-                    targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                     targetDirVec = enemyTarget.position - transform.position;
-                    rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
-                    yield return new WaitForSeconds(0.1f);
+                    transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime);
                 }
+
             }
 
+            yield return null;
         }
-        
-        yield return null;
-        StartCoroutine(mouse());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -99,6 +80,9 @@ public class Mouse : EnemyBasic
             GetComponent<SpriteRenderer>().sprite = enemyTarget.GetComponent<SpriteRenderer>().sprite;
             //transform.localScale = enemyTarget.transform.localScale;
             isChange = true;
+
+            skill = enemyTarget.GetComponent<Player>().stats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
+            skillList[skill].gameObject.SetActive(true);
 
             //Run away
             targetDirVec = enemyTarget.position - transform.position;

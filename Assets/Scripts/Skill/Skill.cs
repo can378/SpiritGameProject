@@ -30,6 +30,7 @@ public abstract class Skill : SelectItem
     public virtual void Enter(GameObject user)
     {
         this.user = user;
+        print(user.name + " : " + this.name);
     }
     public abstract void Exit();                                                            //스킬 사용 끝
 
