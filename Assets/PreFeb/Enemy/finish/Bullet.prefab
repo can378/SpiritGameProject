@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3214235305519029506}
   - component: {fileID: 3347979801488068503}
-  - component: {fileID: 6266424549933134781}
-  - component: {fileID: -587354190876685427}
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
+  - component: {fileID: 7960110977832000347}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: EnemyAttack
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1465481353037356265}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 120, y: -87, z: 0}
+  m_LocalPosition: {x: 29.97, y: -34.41, z: 0}
   m_LocalScale: {x: 0.1521, y: 0.16825, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,41 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6266424549933134781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43073fd0dadf9b41a104743ad884734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-587354190876685427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HPMax: 100
-  HP: 100
-  tempHP: 0
-  defaultDefensivePower: 0
-  defaultSEResist: 0
-  defaultAttackPower: 0
-  defaultMoveSpeed: 5
-  activeEffects: []
-  detectionDis: 0
-  exp: 0
-  enemyName: 
 --- !u!50 &7530864278459449910
 Rigidbody2D:
   serializedVersion: 4
@@ -185,3 +149,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &7960110977832000347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 10
+  <knockBack>k__BackingField: 10
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0

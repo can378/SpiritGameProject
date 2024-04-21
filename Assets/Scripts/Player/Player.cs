@@ -553,12 +553,12 @@ public class Player : MonoBehaviour
             // 무기
             if (playerWeapon != 0)
             {
-                weaponController.EquipWeapon(Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]).GetComponent<Weapon>().equipmentId);
+                weaponController.EquipWeapon(playerWeapon);
             }
             // 스킬
             if (playerSkill != 0)
             {
-                skillController.EquipSkill(Instantiate(DataManager.instance.gameData.skillList[playerSkill]).GetComponent<Skill>().skillID);
+                skillController.EquipSkill(playerSkill);
             }
             // 방어구
             
@@ -675,9 +675,21 @@ public class Player : MonoBehaviour
     public void EnemyAttack(GameObject attacker)
     {
         HitDetection hitDetection = attacker.GetComponent<HitDetection>();
+
         Damaged(hitDetection.damage);
-        Flinch(0.3f);
+
+        if (hitDetection.statusEffect != null)
+        {
+            foreach (int statusEffectIndex in hitDetection.statusEffect)
+            {
+                ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
+            }
+        }
+
         KnockBack(attacker.gameObject, hitDetection.knockBack);
+
+        Flinch(0.3f);
+
         Invincible(0.3f);
     }
 
@@ -689,6 +701,7 @@ public class Player : MonoBehaviour
             return;
         }
 
+        Debug.Log(damage * (1f - stats.defensivePower));
         stats.HP -= damage * (1f - stats.defensivePower);
 
         MapUIManager.instance.UpdateHealthUI();
@@ -719,10 +732,8 @@ public class Player : MonoBehaviour
     // 경직됨(움직일 수 없음)
     public void Flinch(float time)
     {
-        if (status.isInvincible)
-        {
+        if(status.isFlinch)
             return;
-        }
 
         status.isFlinch = true;
         Invoke("FlinchOut",time);

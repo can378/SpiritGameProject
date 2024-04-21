@@ -37,6 +37,7 @@ public class EnemyBasic : MonoBehaviour
             PlayerAttack(collision.gameObject);
         }
     }
+
     //Player Attack tag를 가진 object와 충돌 시 사용
     public void PlayerAttack(GameObject attacker) 
     {
@@ -46,10 +47,13 @@ public class EnemyBasic : MonoBehaviour
         AudioManager.instance.SFXPlay("Hit_SFX");
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
-        
-        for (int i = 0; i < hitDetection.statusEffect.Length; i++)
+
+        if(hitDetection.statusEffect != null)
         {
-            ApplyBuff(GameData.instance.statusEffectList[hitDetection.statusEffect[i]]);
+            foreach (int statusEffectIndex in hitDetection.statusEffect)
+            {
+                ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
+            }
         }
 
         KnockBack(attacker, hitDetection.knockBack);
@@ -149,8 +153,7 @@ public class EnemyBasic : MonoBehaviour
 
     public void Chase()
     {
-        Vector2 direction = enemyTarget.position - transform.position;
-        direction = direction.normalized;
+        Vector2 direction = (enemyTarget.position - transform.position).normalized;
         transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
 
     }

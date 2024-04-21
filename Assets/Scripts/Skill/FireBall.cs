@@ -15,7 +15,7 @@ public class FireBall : Skill
     [field: SerializeField] GameObject fireBallEffect;
     [field: SerializeField] int[] statusEffect;
 
-    //발동 전 효과 범위 시뮬
+    //발동 전 효과 범위 표시기
     GameObject simul;
     
 

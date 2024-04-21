@@ -16,14 +16,14 @@ public class SpinAttack : Skill
     [field: SerializeField] float time;
     [field: SerializeField] GameObject spinEffect;
 
+    // 강화 수치
     float holdPower;
     GameObject simul;
-    Coroutine HoldCoroutine;
 
     public override void Enter(GameObject user)
     {
         base.Enter(user);
-        HoldCoroutine = StartCoroutine(Simulation());
+        StartCoroutine(Simulation());
     }
 
     IEnumerator Simulation()
@@ -69,7 +69,7 @@ public class SpinAttack : Skill
 
     public override void Exit()
     {
-        StopCoroutine(HoldCoroutine);
+        StopCoroutine(Simulation());
         Attack();
     }
 
