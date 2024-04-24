@@ -15,6 +15,7 @@ public class Icicle : Skill
     [field: SerializeField] float speed;
     [field: SerializeField] float time;
     [field: SerializeField] GameObject icicleEffect;
+    [field: SerializeField] GameObject fireSimul;
     [field: SerializeField] int[] statusEffect;
 
     //방향 표시기
@@ -32,7 +33,7 @@ public class Icicle : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            simul = Instantiate(GameData.instance.simulEffect[2], user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             while (player.status.isSkillHold)
@@ -49,7 +50,7 @@ public class Icicle : Skill
             float angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
 
-            simul = Instantiate(GameData.instance.simulEffect[2], user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             while (timer <= maxHoldTime / 2)

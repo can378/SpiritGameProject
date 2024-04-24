@@ -13,6 +13,7 @@ public class FireBall : Skill
     [field: SerializeField] float knockBack;
     [field: SerializeField] float time;
     [field: SerializeField] GameObject fireBallEffect;
+    [field: SerializeField] GameObject fireBallEffectSimul;
     [field: SerializeField] int[] statusEffect;
 
     //발동 전 효과 범위 표시기
@@ -31,7 +32,7 @@ public class FireBall : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            simul = Instantiate(GameData.instance.simulEffect[1], player.status.mousePos, Quaternion.identity);
+            simul = Instantiate(fireBallEffectSimul, player.status.mousePos, Quaternion.identity);
             simul.transform.localScale = new Vector3(size, size, 0);
             
             while (player.status.isSkillHold)
@@ -47,7 +48,7 @@ public class FireBall : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            simul = Instantiate(GameData.instance.simulEffect[1], enemy.enemyTarget.transform.position, Quaternion.identity);
+            simul = Instantiate(fireBallEffectSimul, enemy.enemyTarget.transform.position, Quaternion.identity);
             simul.transform.localScale = new Vector3(size, size, 0);
 
             while (timer <= maxHoldTime/2)

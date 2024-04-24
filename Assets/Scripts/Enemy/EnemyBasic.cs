@@ -25,7 +25,7 @@ public class EnemyBasic : MonoBehaviour
         enemyTarget = GameObject.FindWithTag("Player").transform;
         rigid = GetComponent<Rigidbody2D>();
         stats = GetComponent<EnemyStats>();
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
 
@@ -67,7 +67,8 @@ public class EnemyBasic : MonoBehaviour
         print("enemy damaged : " + damage);
         stats.HP -= (1 - stats.addDefensivePower) * damage;
 
-        sprite.color = Color.red;
+        sprite.color = 0 < (1 - stats.addDefensivePower) * damage ? Color.red : Color.green;
+
         Invoke("DamagedOut",0.05f);
         if (stats.HP <= 0f)
         {
@@ -155,7 +156,6 @@ public class EnemyBasic : MonoBehaviour
     {
         Vector2 direction = (enemyTarget.position - transform.position).normalized;
         transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
-
     }
 
     public void shot()

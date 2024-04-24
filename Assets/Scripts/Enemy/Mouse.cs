@@ -54,13 +54,15 @@ public class Mouse : EnemyBasic
                     yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
 
                 }
-                else if (targetDis >= 3f)
-                { Chase(); }
-                else if (targetDis < 3f)
+                else if (targetDis < 6f)
                 {
                     targetDirVec = enemyTarget.position - transform.position;
-                    transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime);
+                    transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime * 2f);
                 }
+                else if (targetDis >= 7f)
+                {
+                    Chase(); }
+                
 
             }
 
@@ -77,12 +79,12 @@ public class Mouse : EnemyBasic
             //print("Bite");
 
             //Transform
-            GetComponent<SpriteRenderer>().sprite = enemyTarget.GetComponent<SpriteRenderer>().sprite;
-            //transform.localScale = enemyTarget.transform.localScale;
+            GetComponentInChildren<SpriteRenderer>().sprite = enemyTarget.GetComponentInChildren<SpriteRenderer>().sprite;
+            GetComponentInChildren<SpriteRenderer>().transform.localScale = enemyTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
             isChange = true;
 
             skill = enemyTarget.GetComponent<Player>().stats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
-            skillList[skill].gameObject.SetActive(true);
+            if(skill != 0) skillList[skill].gameObject.SetActive(true);
 
             //Run away
             targetDirVec = enemyTarget.position - transform.position;

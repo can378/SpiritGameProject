@@ -15,6 +15,7 @@ public class SpinAttack : Skill
     [field: SerializeField] float size;
     [field: SerializeField] float time;
     [field: SerializeField] GameObject spinEffect;
+    [field: SerializeField] GameObject spinEffectSimul;
 
     // 강화 수치
     float holdPower;
@@ -31,11 +32,10 @@ public class SpinAttack : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
             player.stats.decreasedMoveSpeed += 0.5f;
             holdPower = 1f;
 
-            simul = Instantiate(GameData.instance.simulEffect[1], user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(spinEffectSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             while (holdPower < maxHoldPower && player.status.isSkillHold)
@@ -52,13 +52,13 @@ public class SpinAttack : Skill
 
             enemy.stats.decreasedMoveSpeed += 0.5f;
 
-            simul = Instantiate(GameData.instance.simulEffect[1], user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(spinEffectSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             holdPower = 1f;
             timer = 0;
 
-            while (holdPower < maxHoldPower && timer <= maxHoldTime)
+            while (holdPower < maxHoldPower && timer <= maxHoldTime / 2)
             {
                 holdPower += 0.05f;
                 simul.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);

@@ -27,6 +27,7 @@ public class OverlapDamageBuff : StatusEffect
     {
         if(overlap == maxOverlap)
         {
+            Debug.Log(target.name +":ÃâÇ÷!");
             if (target.tag == "Player")
             {
                 Player player = target.GetComponent<Player>();

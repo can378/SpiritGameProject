@@ -66,7 +66,7 @@ public class WheelWind : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, true, (int)(DPS / attackRate),
+            hitDetection.SetHitDetection(false, -1, true, (int)((float)DPS / attackRate),
              defaultDamage + player.stats.attackPower * ratio,
              player.weaponController.weaponList[player.stats.weapon].knockBack,
              player.stats.criticalChance,

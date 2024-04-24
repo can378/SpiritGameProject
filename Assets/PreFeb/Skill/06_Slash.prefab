@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9147811283743728293}
   - component: {fileID: 8749222640510642469}
   m_Layer: 10
-  m_Name: Spin
+  m_Name: Slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367828322707153480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7609938119087157406}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!212 &8749222640510642469
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 79ac2c02cfe6a1f4380b23efbc0ada92, type: 3}
-  m_Color: {r: 0.3480331, g: 0.49650663, b: 0.9339623, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 8a0e076a273fb0048a4aef9862d9492f, type: 3}
+  m_Color: {r: 0.759434, g: 1, b: 0.9927101, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -94,9 +94,9 @@ GameObject:
   m_Component:
   - component: {fileID: 61008333135758939}
   - component: {fileID: 2859637313133851327}
-  - component: {fileID: 9124343084025736096}
+  - component: {fileID: 291397637846962740}
   m_Layer: 10
-  m_Name: 02_SpinAttack
+  m_Name: 06_Slash
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &9124343084025736096
+--- !u!114 &291397637846962740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,27 +162,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 5904743163423667712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1dd5da91295a6e4aa78c0b0d4b6c701, type: 3}
+  m_Script: {fileID: 11500000, guid: 073eeb4af558774409833240b554b84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <selectItemClass>k__BackingField: 3
-  <skillName>k__BackingField: "\uD68C\uC804\uBCA0\uAE30"
-  <skillID>k__BackingField: 2
+  <skillName>k__BackingField: "\uCC38\uACA9"
+  <skillID>k__BackingField: 6
   <skillType>k__BackingField: 2
-  <skillLimit>k__BackingField: 0000000002000000
+  <skillLimit>k__BackingField: 00000000
   <maxHoldTime>k__BackingField: 5
-  <preDelay>k__BackingField: 0
-  <postDelay>k__BackingField: 0.5
-  <skillDefalutCoolTime>k__BackingField: 5
+  <preDelay>k__BackingField: 0.2
+  <postDelay>k__BackingField: 0.2
+  <skillDefalutCoolTime>k__BackingField: 15
   <skillCoolTime>k__BackingField: 0
   <user>k__BackingField: {fileID: 0}
-  <defalutDamage>k__BackingField: 10
-  <ratio>k__BackingField: 1
-  <maxHoldPower>k__BackingField: 2
-  size: 3
-  time: 0.3
-  spinEffect: {fileID: 8986035067505207802, guid: 91aa2908377a19946af27e0c84c3978e, type: 3}
-  spinEffectSimul: {fileID: 8986035067505207802, guid: 9e138b0cb8e23a34daf5cad3cae5bc48, type: 3}
+  defalutDamage: 2
+  ratio: 0.2
+  <maxHoldPower>k__BackingField: 1.5
+  DPS: 10
+  size: 0.8
+  speed: 1
+  time: 3
+  slashEffect: {fileID: 8986035067505207802, guid: 575985268547e2c4c901f40f7d138c6a, type: 3}
+  slashEffectSimul: {fileID: 8986035067505207802, guid: f2770462b4d69044a88e7fb36c10ad63, type: 3}
 --- !u!1 &6746357915241212528
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     {
         instance = this;
         rigid = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
 
         status = GetComponent<PlayerStatus>();
         stats = GetComponent<PlayerStats>();
@@ -147,11 +147,11 @@ public class Player : MonoBehaviour
         
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (status.isAttack || status.isReload || status.isSkill || status.isFlinch)       // 정지
+        if (status.isAttack || status.isReload || status.isSkill)       // 정지
         {
             moveVec = Vector2.zero;
         }
-        if (status.isDodge)             // 회피시 현재 속도 유지
+        if (status.isDodge || status.isFlinch)             // 회피시 현재 속도 유지
         {
             moveVec = dodgeVec;
         }
@@ -597,8 +597,6 @@ public class Player : MonoBehaviour
         //공격받음
         if (other.tag == "EnemyAttack")
         {
-            if(status.isInvincible)
-                return;
             // 적에게 공격 당할시
             // 피해를 입고
             // 뒤로 밀려나며
@@ -674,6 +672,11 @@ public class Player : MonoBehaviour
     //적에게 피격
     public void EnemyAttack(GameObject attacker)
     {
+        if (status.isInvincible)
+        {
+            return;
+        }
+
         HitDetection hitDetection = attacker.GetComponent<HitDetection>();
 
         Damaged(hitDetection.damage);
@@ -690,21 +693,18 @@ public class Player : MonoBehaviour
 
         Flinch(0.3f);
 
-        Invincible(0.3f);
+        //Invincible(0.1f);
     }
 
     // 피해
     public void Damaged(float damage)
     {
-        if (status.isInvincible)
-        {
-            return;
-        }
-
         Debug.Log(damage * (1f - stats.defensivePower));
         stats.HP -= damage * (1f - stats.defensivePower);
 
         MapUIManager.instance.UpdateHealthUI();
+        sprite.color = 0 < (1 - stats.addDefensivePower) * damage ? Color.red : Color.green;
+        Invoke("DamagedOut",0.1f);
         
         if(stats.HP >= stats.HPMax)
         {
@@ -716,25 +716,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    void DamagedOut()
+    {
+        sprite.color = Color.white;
+    }
+
     // 뒤로 밀려남
     public void KnockBack(GameObject agent, float distance = 10)
     {
-        if (status.isInvincible)
-        {
-            return;
-        }
-
         Vector2 dir = (transform.position - agent.transform.position).normalized;
 
         rigid.AddForce(dir * (distance * (1 - stats.defensivePower)), ForceMode2D.Impulse);
     }
 
     // 경직됨(움직일 수 없음)
-    public void Flinch(float time)
+    public void Flinch(float time = 0)
     {
-        if(status.isFlinch)
-            return;
-
         status.isFlinch = true;
         Invoke("FlinchOut",time);
     }
@@ -744,8 +741,8 @@ public class Player : MonoBehaviour
         status.isFlinch = false;
     }
 
-    // 무적(피해, 뒤로 밀려남, 경직 무시)
-    public void Invincible(float time)
+    // 무적(적 공격 무시)
+    public void Invincible(float time = 0)
     {
         status.isInvincible = true;
         int layerNum = LayerMask.NameToLayer("Invincible");

@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  status: {fileID: 0}
+  stats: {fileID: 0}
   rigid: {fileID: 0}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
@@ -184,6 +184,8 @@ MonoBehaviour:
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
   beam: {fileID: 0}
+  colObj: {fileID: 0}
+  buff: {fileID: 0}
 --- !u!114 &1970378815811846781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,23 +201,14 @@ MonoBehaviour:
   HPMax: 100
   HP: 100
   tempHP: 0
-  defaultReduction: 0
-  resist:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  defaultPower: 0
+  defaultDefensivePower: 0
+  defaultSEResist: 0
+  defaultAttackPower: 0
   defaultMoveSpeed: 5
   activeEffects: []
   detectionDis: 20
   exp: 0
+  enemyName: 
 --- !u!58 &7037800743473113150
 CircleCollider2D:
   m_ObjectHideFlags: 0
