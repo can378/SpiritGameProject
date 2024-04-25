@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     public LayerMask layerMask;//접근 불가한 레이어 설정
     public GameObject nearObject;
     public GameObject playerItem;
+    public Coroutine FlinchCoroutine;
 
     Vector2 playerPosition;
     
@@ -144,16 +145,18 @@ public class Player : MonoBehaviour
 
     void Move()     //이동
     {
-        
+        if(status.isFlinch)
+            return;
+
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
         if (status.isAttack || status.isReload || status.isSkill)       // 정지
         {
             moveVec = Vector2.zero;
         }
-        if (status.isDodge || status.isFlinch)             // 회피시 현재 속도 유지
+        if (status.isDodge)             // 회피시 현재 속도 유지
         {
-            moveVec = dodgeVec;
+            rigid.velocity  = dodgeVec * stats.moveSpeed * stats.dodgeSpeed; ;
         }
         else
         {
@@ -179,11 +182,7 @@ public class Player : MonoBehaviour
         
         if (dDown && !status.isFlinch && !status.isAttack && !status.isSkill  && !status.isDodge && !status.isSkillHold)
         {
-            sprite.color = Color.cyan;
             dodgeVec = moveVec;
-            // 회피 속도 = 플레이어 이동속도 * 회피속도
-            float dodgeSpeed = stats.moveSpeed * stats.dodgeSpeed;
-            rigid.velocity = moveVec * dodgeSpeed;
             status.isDodge = true;
 
             Invoke("DodgeOut", stats.dodgeTime);
@@ -681,6 +680,13 @@ public class Player : MonoBehaviour
 
         Damaged(hitDetection.damage);
 
+        KnockBack(attacker.gameObject, hitDetection.knockBack);
+
+        if(FlinchCoroutine != null) StopCoroutine(FlinchCoroutine);
+        FlinchCoroutine = StartCoroutine(Flinch(0.3f));
+
+        Invincible(0.1f);
+
         if (hitDetection.statusEffect != null)
         {
             foreach (int statusEffectIndex in hitDetection.statusEffect)
@@ -689,11 +695,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        KnockBack(attacker.gameObject, hitDetection.knockBack);
-
-        Flinch(0.3f);
-
-        //Invincible(0.1f);
     }
 
     // 피해
@@ -730,14 +731,12 @@ public class Player : MonoBehaviour
     }
 
     // 경직됨(움직일 수 없음)
-    public void Flinch(float time = 0)
+    public IEnumerator Flinch(float time = 0)
     {
         status.isFlinch = true;
-        Invoke("FlinchOut",time);
-    }
 
-    void FlinchOut()
-    {
+        yield return new WaitForSeconds(time);
+
         status.isFlinch = false;
     }
 

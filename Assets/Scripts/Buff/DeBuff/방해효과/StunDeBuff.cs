@@ -8,12 +8,9 @@ public class StunDeBuff : StatusEffect
     // 공격 및 스킬, 이동 불가
     // 피격 시 해제
 
-    Coroutine StunCoroutine;
-
     public override void ApplyEffect()
     {
         ResetEffect();
-        StunCoroutine = StartCoroutine(Stun());
     }
 
     public override void ResetEffect()
@@ -30,6 +27,11 @@ public class StunDeBuff : StatusEffect
 
             // 저항에 따른 지속시간 적용
             duration = (1 - player.stats.SEResist) * defaultDuration;
+
+            if (player.FlinchCoroutine != null) player.StopCoroutine(player.FlinchCoroutine);
+            player.FlinchCoroutine =  StartCoroutine(player.Flinch(duration));
+
+            StartCoroutine(Stun());
         }
         
     }
@@ -40,15 +42,12 @@ public class StunDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            while (duration > 0)
+            while(player.status.isFlinch)
             {
-                if(!player.status.isFlinch)
-                {
-                    duration = 0;
-                    break;
-                }
                 yield return null;
             }
+
+            duration = 0;
         }
     }
 
@@ -58,10 +57,7 @@ public class StunDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            // 효과 적용
-            player.status.isFlinch = false;
-
-            StopCoroutine(Stun());
+            if (player.FlinchCoroutine != null) StopCoroutine(player.FlinchCoroutine);
         }
     }
 }
