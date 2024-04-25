@@ -34,11 +34,10 @@ public class WheelWind : Skill
             HitDetection hitDetection;
             float attackRate = weapon.SPA / player.stats.attackSpeed;
 
+            skillCoolTime = 99;
+
             // 먼저 속도 감소
             player.stats.decreasedMoveSpeed += 0.5f;
-
-            // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
             
             // 시간이 조금 지난 후 회전 시작
             yield return new WaitForSeconds(preDelay * attackRate);
@@ -77,6 +76,8 @@ public class WheelWind : Skill
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             HitDetection hitDetection;
+
+            skillCoolTime = 99;
 
             // 먼저 속도 감소
             enemy.stats.decreasedMoveSpeed += 0.5f;
@@ -140,6 +141,9 @@ public class WheelWind : Skill
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(postDelay * attackRate);
 
+            // 쿨타임 적용
+            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+
             player.stats.decreasedMoveSpeed -= 0.5f;
         }
         else if(user.tag == "Enemy")
@@ -153,6 +157,9 @@ public class WheelWind : Skill
 
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(postDelay);
+
+            // 쿨타임 적용
+            skillCoolTime = skillDefalutCoolTime;
 
             enemy.stats.decreasedMoveSpeed -= 0.5f;
         }

@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         iDown = Input.GetButtonDown("Interaction"); //f
         siDown = Input.GetButtonDown("SelectItem"); //h
 
-        skDown = Input.GetButtonDown("Skill");      //e Down
+        skDown = Input.GetButton("Skill");          //e Down
         skUp = Input.GetButtonUp("Skill");          //e Up
         
     }
@@ -298,7 +298,7 @@ public class Player : MonoBehaviour
             return;
 
         // 스킬 키 다운
-        if (skDown && !status.isFlinch && !status.isAttack && !status.isDodge && !status.isSkill)
+        if (skDown && !status.isFlinch && !status.isAttack && !status.isDodge && !status.isSkill && !status.isSkillHold)
         {
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
             if (skillController.skillList[stats.skill[status.skillIndex]].skillLimit.Length != 0 && 
@@ -317,7 +317,7 @@ public class Player : MonoBehaviour
             return;
 
         //스킬 hold 상태에서 스킬 키 up
-        if ((status.isFlinch || skUp) && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
+        if ((status.isFlinch || skUp || !skDown) && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
             StartCoroutine(skillController.Exit());
         }
