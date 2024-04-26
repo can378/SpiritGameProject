@@ -22,7 +22,6 @@ public class SkillController : MonoBehaviour
         stats.skill[status.skillIndex] = skillID;
         skillList[skillID].gameObject.SetActive(true);
         MapUIManager.instance.UpdateSkillUI();
-
     }
 
     // 스킬 해제

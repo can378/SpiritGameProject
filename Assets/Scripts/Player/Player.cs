@@ -20,14 +20,14 @@ public class Player : MonoBehaviour
 
     #region Key Input
 
-    bool rDown;            //재장전
-    bool dDown;           //회피
-    bool aDown;            //공격
-    bool siDown;           // 선택 아이템
-    bool iDown;             //상호작용
+    bool rDown;                 // 재장전
+    bool dDown;                 // 회피
+    bool aDown;                 // 공격
+    bool siDown;                // 선택 아이템
+    bool iDown;                 // 상호작용
 
-    bool skDown;
-    bool skUp;
+    float skcDown;               // 스킬 변경
+    bool skDown;                // 스킬 키 다운 중
 
     #endregion
 
@@ -91,6 +91,7 @@ public class Player : MonoBehaviour
             Attack();
             SkillDown();
             SkillUp();
+            SkillChange();
         }
         
         Interaction();
@@ -114,8 +115,8 @@ public class Player : MonoBehaviour
         iDown = Input.GetButtonDown("Interaction"); //f
         siDown = Input.GetButtonDown("SelectItem"); //h
 
+        skcDown = Input.GetAxisRaw("Mouse ScrollWheel");
         skDown = Input.GetButton("Skill");          //e Down
-        skUp = Input.GetButtonUp("Skill");          //e Up
         
     }
 
@@ -317,9 +318,27 @@ public class Player : MonoBehaviour
             return;
 
         //스킬 hold 상태에서 스킬 키 up
-        if ((status.isFlinch || skUp || !skDown) && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
+        if ((status.isFlinch || !skDown) && !status.isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
             StartCoroutine(skillController.Exit());
+        }
+    }
+
+    void SkillChange()
+    {
+        status.skillChangeDelay -= Time.deltaTime;
+
+        if (skcDown != 0f && !status.isFlinch && !status.isSkill && !status.isSkillHold && status.skillChangeDelay <= 0f)
+        {
+            status.skillChangeDelay = 0.1f;
+            if(skcDown > 0f)
+            {
+                status.skillIndex = status.skillIndex + 1 > stats.maxSkillSlot - 1 ? stats.maxSkillSlot - 1 : status.skillIndex + 1;
+            }
+            else if(skcDown < 0f)
+            {
+                status.skillIndex = 0 > status.skillIndex - 1 ? 0 : status.skillIndex - 1;
+            }
         }
     }
 

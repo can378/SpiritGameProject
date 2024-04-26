@@ -15,7 +15,7 @@ public class PlayerStats : Stats
     // UI : 치명타 확률 0%
     // 치명타 = 무작위(0 ~ 100) < 치명타 확률 * 100 ? 참 : 거짓
     // 최소 0%, 최대 100%
-    public float defaultCriticalChance = 0;
+    [field: SerializeField] public float defaultCriticalChance { get; set; } = 0;
     public float addCriticalChance { get; set; }
     public float increasedCriticalChance { get; set; }
     public float decreasedCriticalChance { get; set; }
@@ -28,7 +28,7 @@ public class PlayerStats : Stats
     // UI : 치명타 피해량 150%
     // 피해량 = 치명타 ? 치명타 피해량 * 기본 피해량 : 기본 피해량
     // 최소 100%, 최대 300%
-    public float defaultCriticalDamage = 1.5f;
+    [field: SerializeField] public float defaultCriticalDamage { get; set; } = 1.5f;
     public float addCriticalDamage { get; set; }
     public float increasedCriticalDamage { get; set; }
     public float decreasedCriticalDamage { get; set; }
@@ -42,7 +42,7 @@ public class PlayerStats : Stats
     // 높을수록 빨라짐
     // 초당 공격속도 = 무기 초당 공격 속도 * 플레이어 공격속도
     // 최소 0%, 최대 300%
-    public float defaultAttackSpeed = 1;
+    [field: SerializeField] public float defaultAttackSpeed { get; set; } = 1;
     public float addAttackSpeed { get; set; }
     public float increasedAttackSpeed {  get; set; }
     public float decreasedAttackSpeed { get; set; }
@@ -56,7 +56,7 @@ public class PlayerStats : Stats
     // UI 도력 0
     // 도술 피해량 = 도술 기본 피해량 + 도력 * 스킬 계수
     // 최소 0
-    public float defaultSkillPower = 0;
+    [field: SerializeField] public float defaultSkillPower { get; set; } = 0;
     public float addSkillPower { get; set; }
     public float increasedSkillPower { get; set; }
     public float decreasedSkillPower { get; set; }
@@ -71,7 +71,7 @@ public class PlayerStats : Stats
     // 낮을수록 도술 자수 사용 가능
     // 도술 재사용 대기 시간 = 도술 기본 재사용 대기 시간 * 재사용 대기시간
     // 최소 -80% ,최대 80%
-    public float defaultSkillCoolTime = 0;
+    [field: SerializeField] public float defaultSkillCoolTime { get; set; } = 0;
     public float addSkillCoolTime { get; set; }
     public float increasedSkillCoolTime { get; set; }
     public float decreasedSkillCoolTime { get; set; }
@@ -86,7 +86,7 @@ public class PlayerStats : Stats
     // 달리기 시 속도
     // 이동속도 = 이동속도 (달리기 ? 달리기 시 속도 : 1)
     // 최소 100%
-    public float defaultRunSpeed = 1.66f;
+    [field: SerializeField] public float defaultRunSpeed { get; set; } = 1.66f;
     public float addRunSpeed { get; set; }
     public float increasedRunSpeed {  get; set; }
     public float decreasedRunSpeed { get; set; }
@@ -100,7 +100,7 @@ public class PlayerStats : Stats
     // UI : 달리기 재사용 대기 시간 5초
     // 달리기 재사용 대기 시간 = 달리기 재사용 대기 시간
     // 최소 0초
-    public float defaultRunCoolTime = 5f;
+    [field: SerializeField] public float defaultRunCoolTime { get; set; } = 5f;
     public float addRunCoolTime { get; set; }
     public float increasedRunCoolTime { get; set; }
     public float decreasedRunCoolTime {  get; set; }
@@ -113,7 +113,7 @@ public class PlayerStats : Stats
     // 회피 속도
     // UI : 회피 시 이동 속도 200%
     // 최소 50%
-    public float defaultDodgeSpeed = 2;
+    [field: SerializeField] public float defaultDodgeSpeed { get; set; } = 2;
     public float addDodgeSpeed { get; set; }
     public float increasedDodgeSpeed {  get; set; }
     public float decreasedDodgeSpeed { get; set; }
@@ -126,7 +126,7 @@ public class PlayerStats : Stats
     // UI : 회피 시간 0.6초
     // 회피 시간 = 회피 시간
     // 최소 0.2초
-    public float defaultDodgeTime = 0.6f;
+    [field: SerializeField] public float defaultDodgeTime { get; set; }  = 0.6f;
     public float addDodgeTime { get; set; }
     public float increasedDodgeTime {  get; set; }
     public float decreasedDodgeTime { get; set; }
