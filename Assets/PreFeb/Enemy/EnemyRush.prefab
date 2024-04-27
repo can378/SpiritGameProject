@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 1886751891195185771}
   - component: {fileID: 8887605781958776637}
   - component: {fileID: 7716365934509816265}
+  - component: {fileID: 2259210113640758368}
   m_Layer: 8
   m_Name: EnemyRush
   m_TagString: Enemy
@@ -179,16 +180,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
-  status: {fileID: 0}
+  stats: {fileID: 0}
   rigid: {fileID: 0}
   sprite: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   timeValue: 0
+  isHARRun: 0
+  isPARun: 0
+  isBeamRun: 0
   enemyAttack: 0
   EnemyGunMuzzle: []
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
+  beam: {fileID: 0}
+  colObj: {fileID: 0}
+  buff: {fileID: 0}
 --- !u!114 &1886751891195185771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,12 +209,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  health: 3
-  speed: 3
-  damage: 1
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField: 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
+  activeEffects: []
   detectionDis: 5
-  attackSpeed: 0
+  exp: 0
+  enemyName: 
 --- !u!60 &8887605781958776637
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -284,3 +297,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2259210113640758368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953014201203086649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 5
+  <knockBack>k__BackingField: 5
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0

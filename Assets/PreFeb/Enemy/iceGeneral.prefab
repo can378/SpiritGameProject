@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 2682288509803798225}
   - component: {fileID: 1955016287622037034}
   - component: {fileID: 8592457730544931815}
+  - component: {fileID: 5745553459585834380}
   m_Layer: 0
   m_Name: iceGeneral
   m_TagString: Enemy
@@ -206,13 +207,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPMax: 100
-  HP: 100
-  tempHP: 0
-  defaultDefensivePower: 1
-  defaultSEResist: 0
-  defaultAttackPower: 0
-  defaultMoveSpeed: 5
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField: 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   detectionDis: 0
   exp: 0
@@ -279,6 +280,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5745553459585834380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4968330734252803232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 5
+  <knockBack>k__BackingField: 5
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!1 &8061854797132362945
 GameObject:
   m_ObjectHideFlags: 0

@@ -613,7 +613,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //공격받음
-        if (other.tag == "EnemyAttack")
+        if (other.tag == "EnemyAttack"||other.tag=="Enemy")
         {
             // 적에게 공격 당할시
             // 피해를 입고

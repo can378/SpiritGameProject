@@ -216,9 +216,10 @@ public class EnemyAttack : EnemyPattern
     }
     IEnumerator worm(float time) 
     {
-        sprite.sortingOrder = enemyTarget.GetComponent<SpriteRenderer>().sortingOrder + 1;
-        transform.parent = enemyTarget.transform;
-        transform.position = enemyTarget.position;
+        //sprite.sortingOrder = enemyTarget.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        //transform.parent = enemyTarget.transform;
+        //transform.position = enemyTarget.position;
+
         //player move slowly
         enemyTarget.GetComponent<PlayerStats>().defaultMoveSpeed -= 3;
         yield return new WaitForSeconds(time);

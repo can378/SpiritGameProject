@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7671026463152467353}
   - component: {fileID: 8366843435267718557}
   - component: {fileID: 3415628108008075770}
+  - component: {fileID: -5757987294770340914}
   m_Layer: 0
   m_Name: dokkebie
   m_TagString: Enemy
@@ -120,13 +121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPMax: 10
-  HP: 10
-  tempHP: 0
-  defaultDefensivePower: 1
-  defaultSEResist: 0
-  defaultAttackPower: 0
-  defaultMoveSpeed: 5
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField: 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   detectionDis: 0
   exp: 0
@@ -193,6 +194,29 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6399999, y: 0.64}
   m_Direction: 0
+--- !u!114 &-5757987294770340914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786627948272666640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 5
+  <knockBack>k__BackingField: 5
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!1 &5609241198509262613
 GameObject:
   m_ObjectHideFlags: 0

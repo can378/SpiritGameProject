@@ -37,7 +37,8 @@ public class ShamanDoll : EnemyBasic
         yield return new WaitForSeconds(2f);
         */
 
-        enemyTarget.GetComponent<PlayerStats>().HP -= GetComponent<EnemyStats>().attackPower;
+        //enemyTarget.GetComponent<PlayerStats>().HP -= GetComponent<EnemyStats>().attackPower;
+        enemyTarget.GetComponent<Player>().EnemyAttack(this.gameObject);
         print("doll is killing hershelf");
 
         StartCoroutine(shamanDoll());

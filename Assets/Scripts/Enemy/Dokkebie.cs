@@ -22,27 +22,29 @@ public class Dokkebie : EnemyBasic
     IEnumerator dokkebie()
     {
         if (index == 0)
-        { //shot dokkebie fire
-            GameObject bullet = ObjectPoolManager.instance.Get2("dokabbieFire");
+        { 
+            //shot dokkebie fire
+            GameObject bullet = ObjectPoolManager.instance.Get2("dokabbiFire");
             bullet.transform.position = transform.position;
 
 
-            Rigidbody2D rigidBullet = bullet.GetComponent<Rigidbody2D>();
-
             targetDirVec = (enemyTarget.position - transform.position).normalized;
-            rigidBullet.AddForce(targetDirVec.normalized * 3, ForceMode2D.Impulse);
+            bullet.GetComponent<Rigidbody2D>().
+                AddForce(targetDirVec.normalized * 3, ForceMode2D.Impulse);
             yield return new WaitForSeconds(4f);
             
         }
         else 
         {
+            //Chase
             targetDirVec = (enemyTarget.position - transform.position).normalized;
             targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 20);
             yield return new WaitForSeconds(0.1f);
             
         }
         index++;
+        
         if (index == 100) { index = 0; }
 
         
