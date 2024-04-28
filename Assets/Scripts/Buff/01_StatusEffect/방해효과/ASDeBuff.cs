@@ -44,6 +44,16 @@ public class ASDeBuff : StatusEffect
                 yield return new WaitForSeconds(0.1f);
             }
         }
+        else if (target.tag == "Enemy")
+        {
+            EnemyStats stats = target.GetComponent<EnemyStats>();
+            while (duration > 0)
+            {
+                stats.isEnemyAttackable = false;
+                yield return new WaitForSeconds(0.1f);
+            }
+
+        }
     }
 
     public override void RemoveEffect()
@@ -61,6 +71,12 @@ public class ASDeBuff : StatusEffect
             {
                 player.status.attackDelay = curAttackDelay;
             }
+            StopCoroutine(attackDelayTimeCoroutine);
+        }
+        else if (target.tag == "Enemy")
+        {
+            EnemyStats stats = target.GetComponent<EnemyStats>();
+            stats.isEnemyAttackable = true;
             StopCoroutine(attackDelayTimeCoroutine);
         }
     }

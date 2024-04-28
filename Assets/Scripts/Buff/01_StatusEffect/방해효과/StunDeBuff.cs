@@ -15,7 +15,7 @@ public class StunDeBuff : StatusEffect
 
     public override void ResetEffect()
     {
-        if(target.tag == "Player")
+        if (target.tag == "Player")
         {
             Player player = target.GetComponent<Player>();
 
@@ -29,10 +29,12 @@ public class StunDeBuff : StatusEffect
             duration = (1 - player.stats.SEResist) * defaultDuration;
 
             if (player.FlinchCoroutine != null) player.StopCoroutine(player.FlinchCoroutine);
-            player.FlinchCoroutine =  StartCoroutine(player.Flinch(duration));
+            player.FlinchCoroutine = StartCoroutine(player.Flinch(duration));
 
             StartCoroutine(Stun());
         }
+        else if (target.tag == "Enemy")
+        { }
         
     }
 
@@ -49,6 +51,8 @@ public class StunDeBuff : StatusEffect
 
             duration = 0;
         }
+        else if (target.tag == "Enemy")
+        { }
     }
 
     public override void RemoveEffect()
@@ -59,6 +63,8 @@ public class StunDeBuff : StatusEffect
 
             if (player.FlinchCoroutine != null) StopCoroutine(player.FlinchCoroutine);
         }
+        else if (target.tag == "Enemy")
+        { }
     }
 }
 

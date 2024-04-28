@@ -7,4 +7,6 @@ public class EnemyStats : Stats
     public int detectionDis;
     public int exp;
     public string enemyName;
+    public bool isEnemyAttackable;
+    public bool isEnemyMoveable;
 }

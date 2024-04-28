@@ -26,6 +26,9 @@ public class EnemyBasic : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         stats = GetComponent<EnemyStats>();
         sprite = GetComponentInChildren<SpriteRenderer>();
+
+        GetComponent<EnemyStats>().isEnemyAttackable = true;
+        GetComponent<EnemyStats>().isEnemyMoveable = true;
     }
 
 
@@ -38,6 +41,7 @@ public class EnemyBasic : MonoBehaviour
         }
     }
 
+    //Player에게 공격받음
     //Player Attack tag를 가진 object와 충돌 시 사용
     public void PlayerAttack(GameObject attacker) 
     {
