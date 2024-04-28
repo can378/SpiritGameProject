@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6386239198572128288}
   - component: {fileID: 2847707319134962963}
-  - component: {fileID: 6232827733576483083}
+  - component: {fileID: 3047610224500551563}
   - component: {fileID: 8194432176129987292}
   - component: {fileID: 1889583865854150144}
   - component: {fileID: 3390187105194360506}
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6232827733576483083
+--- !u!114 &3047610224500551563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1392377554197916130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d160dba0073974419d69ce25670ad82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyTarget: {fileID: 0}
@@ -110,17 +110,8 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
-  isHARRun: 0
-  isPARun: 0
-  isBeamRun: 0
-  enemyAttack: 15
-  EnemyGunMuzzle: []
-  donutAttackRange: {fileID: 0}
-  donutInside: {fileID: 0}
-  roundAttackRange: {fileID: 0}
-  beam: {fileID: 0}
   colObj: {fileID: 7504143490791978497}
-  buff: {fileID: 5535729302175816803, guid: 7d29c26b2232e76428a30d90011b1bc2, type: 3}
+  buff: {fileID: 5535729302175816803, guid: 8c3f99a4aa75b5749887dfefbc59d4dc, type: 3}
 --- !u!114 &8194432176129987292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +130,7 @@ MonoBehaviour:
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 20
   activeEffects: []
   detectionDis: 10
   exp: 0
@@ -238,8 +229,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7495577407702074116}
-  - component: {fileID: 2029279449454453303}
+  - component: {fileID: 6649815533822564539}
   - component: {fileID: 8305305456943294107}
+  - component: {fileID: 4559856481410343201}
+  - component: {fileID: 8235136459186266818}
+  - component: {fileID: 7156203727508979765}
   m_Layer: 0
   m_Name: colObj
   m_TagString: EnemyAttack
@@ -262,7 +256,105 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6386239198572128288}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &2029279449454453303
+--- !u!212 &6649815533822564539
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7504143490791978497}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.48, y: 0.47}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &8305305456943294107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7504143490791978497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField: 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 10
+  activeEffects: []
+  detectionDis: 0
+  exp: 0
+  enemyName: 
+--- !u!114 &4559856481410343201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7504143490791978497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 1
+  <knockBack>k__BackingField: 1
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0
+--- !u!58 &8235136459186266818
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,30 +388,34 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.62
---- !u!114 &8305305456943294107
-MonoBehaviour:
+  m_Radius: 0.1
+--- !u!50 &7156203727508979765
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7504143490791978497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
-  <HP>k__BackingField: 100
-  <tempHP>k__BackingField: 0
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
-  activeEffects: []
-  detectionDis: 0
-  exp: 0
-  enemyName: 
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &7636404177991613673
 GameObject:
   m_ObjectHideFlags: 0

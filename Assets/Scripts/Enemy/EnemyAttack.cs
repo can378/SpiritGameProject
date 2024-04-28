@@ -9,7 +9,7 @@ public enum enemyAttack
     rangeAttack, waveAttack,
     pop,
     chase,jump ,None,
-    wander,crow, whiteFox, snowBall,worm,frog,broomStick,pox
+    wander,crow, whiteFox, snowBall,worm,pox
 };
 
 
@@ -30,10 +30,9 @@ public class EnemyAttack : EnemyPattern
     [Header("Beam")]
     public GameObject beam;
 
-    [Header("BroomStick")]
-    public GameObject colObj;
+   
 
-    public GameObject buff;
+
 
     private void Start()
     {
@@ -68,11 +67,6 @@ public class EnemyAttack : EnemyPattern
             case enemyAttack.crow:StartCoroutine(LRShot(true));break;
             case enemyAttack.whiteFox: StartCoroutine(whiteFox()); break;
             case enemyAttack.snowBall: StartCoroutine(snowBall(new Vector2(-1,0)));break;
-            case enemyAttack.frog:StartCoroutine(frog());break;
-            case enemyAttack.broomStick:
-                StartCoroutine(peripheralAttack(colObj,20, 2, true));
-                //두통 디버프 5초?
-                break;
             case enemyAttack.pox:break;
             default: break;
         }
@@ -203,12 +197,6 @@ public class EnemyAttack : EnemyPattern
             StartCoroutine(worm(3));
         
         }
-        if (enemyAttack==enemyAttack.broomStick&&collision.tag=="Player") 
-        {
-            //두통 디버프 5초
-            //ApplyBuff(buff);
-            enemyTarget.GetComponent<Player>().ApplyBuff(buff);
-        }
         if (collision.tag == "PlayerAttack")
         {
             PlayerAttack(collision.gameObject);
@@ -227,44 +215,6 @@ public class EnemyAttack : EnemyPattern
         Destroy(this.gameObject);
     }
 
-    IEnumerator frog()
-    {
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-        
-
-        if (targetDis > GetComponent<EnemyStats>().detectionDis)
-        {
-            //get closer to player
-            targetDirVec = enemyTarget.position - transform.position;
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
-
-        }
-        else
-        {
-
-            //attack
-            yield return new WaitForSeconds(2f);
-            targetDirVec = enemyTarget.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(targetDirVec);
-            transform.rotation = rotation;
-
-            //StartCoroutine(Beam(beam, 2, 10, false,enemyTarget.gameObject));
-
-            /*
-            yield return new WaitForSeconds(2f);
-
-            while (isBeamRun == true) { yield return new WaitForSeconds(1f); }
-            
-            //run away
-            targetDirVec = (enemyTarget.position - transform.position).normalized;
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultSpeed * 3);
-            yield return new WaitForSeconds(1f);
-            */
-
-        }
-
-        StartCoroutine(frog());
-    
-    }
+   
 
 }

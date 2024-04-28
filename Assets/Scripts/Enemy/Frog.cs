@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Frog : EnemyBasic
 {
+    public GameObject laser;
     public LineCreator lineCreator;
 
     void Start()
@@ -24,10 +25,11 @@ public class Frog : EnemyBasic
 
         if (targetDis > GetComponent<EnemyStats>().detectionDis)
         {
+            //no laser shooting
             lineCreator.currentLineLength = 0f;
             StopCoroutine(lineCreator.laserBeam());
             lineCreator.isLaserBeamRun = false;
-            lineCreator.transform.gameObject.SetActive(false);
+            laser.SetActive(false);
 
             //get closer to player
             rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
@@ -37,7 +39,8 @@ public class Frog : EnemyBasic
         {
             if (lineCreator.isLaserBeamRun==false)
             {
-                //attack
+                //shooting laser
+                laser.SetActive(true);
                 StartCoroutine(lineCreator.laserBeam());
                 //run away
                 /*

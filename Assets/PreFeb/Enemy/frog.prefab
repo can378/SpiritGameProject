@@ -109,6 +109,7 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  laser: {fileID: 6954628706603954248}
   lineCreator: {fileID: 7280153012244028381}
 --- !u!114 &5137501389812435259
 MonoBehaviour:
@@ -379,12 +380,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4859161798495353759, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
   m_PrefabInstance: {fileID: 2531512077953462316}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6954628706603954248 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4873582149000364132, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
+  m_PrefabInstance: {fileID: 2531512077953462316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7280153012244028381 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5055836236821654513, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
   m_PrefabInstance: {fileID: 2531512077953462316}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6954628706603954248}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16852e75239e6b244badc66697ac6366, type: 3}

@@ -8,6 +8,7 @@ public class BossJigui : EnemyBasic
     public GameObject fire;
     public GameObject eyeSight;
 
+
     void Start()
     {
         eyeSight.SetActive(true); 
@@ -101,29 +102,28 @@ public class BossJigui : EnemyBasic
     {
         eyeSight.transform.position = enemyTarget.transform.position;
 
-        if (Player.instance.hAxis == -1) 
+
+        if (Player.instance.hAxis == 1) 
         {
-            //eyeSight.GetComponent<SpriteRenderer>().flipX = true;
+
             transform.localScale = new Vector3(-1f, 1f, 1f);
             eyeSight.transform.rotation = Quaternion.Euler(0, 0, 180);
             
         }
-        else if (Player.instance.hAxis == 1) 
+        else if (Player.instance.hAxis == -1) 
         { 
-            //eyeSight.GetComponent<SpriteRenderer>().flipX = false;
-            transform.localScale = new Vector3(1f, 1f, 1f);
+
+            transform.localScale = new Vector3(-1f, 1f, 1f);
             eyeSight.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (Player.instance.vAxis == -1) 
+        else if (Player.instance.vAxis == 1) 
         {
-            //eyeSight.GetComponent<SpriteRenderer>().flipX = true;
             transform.localScale = new Vector3(-1f, 1f, 1f);
             eyeSight.transform.rotation = Quaternion.Euler(0, 0, -90);
             
         }
-        else if (Player.instance.vAxis == 1) 
+        else if (Player.instance.vAxis == -1) 
         {
-            //eyeSight.GetComponent<SpriteRenderer>().flipX = true;
             transform.localScale = new Vector3(-1f, 1f, 1f);
             eyeSight.transform.rotation = Quaternion.Euler(0, 0, 90);
             

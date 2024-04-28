@@ -6,6 +6,7 @@ public class NoHead_Body : EnemyBasic
 {
     private bool isTransform=false;
     public GameObject headPos;
+    public GameObject head;
 
     void Start()
     { StartCoroutine(body(Vector2.right)); }
@@ -40,6 +41,7 @@ public class NoHead_Body : EnemyBasic
         else 
         {
             //chase player
+            head.transform.position = headPos.transform.position;
             Vector2 direction = enemyTarget.position - transform.position;
             transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.1f);
@@ -57,12 +59,13 @@ public class NoHead_Body : EnemyBasic
     {
         if (isTransform == false)
         {
-            if (collision.name == "head")
+            if (collision.tag == "Enemy" && collision.GetComponent<EnemyStats>().enemyName=="head")
             {
                 //transform
-                collision.gameObject.transform.parent = transform;
-                collision.transform.position = headPos.transform.position;
                 isTransform = true;
+                head.transform.parent = headPos.transform;
+                head.transform.position = headPos.transform.position;
+
             }
             else if (collision.tag == "Player")
             {

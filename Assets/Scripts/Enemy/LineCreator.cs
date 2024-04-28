@@ -5,8 +5,7 @@ using UnityEngine;
 public class LineCreator : MonoBehaviour
 {
     public GameObject startObj;
-    GameObject targetObj;
-    
+
     public float lineLength;
     public float lineGrowSpeed;
 
@@ -15,11 +14,12 @@ public class LineCreator : MonoBehaviour
     public float currentLineLength = 0f;
     public bool isLaserBeamRun=false;
 
-    void Awake()
+
+    float distance;
+    Transform target;
+
+    void Start()
     {
-        targetObj = GameObject.FindWithTag("Player");
-
-
         lineRenderer = transform.GetComponent<LineRenderer>();
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
@@ -34,16 +34,16 @@ public class LineCreator : MonoBehaviour
     public IEnumerator laserBeam() 
     {
         isLaserBeamRun = true;
-
-        Vector3 targetPos=targetObj.transform.position;
-        float distance;
-
         transform.gameObject.SetActive(true);
+        
+        target= GameObject.FindWithTag("Player").transform;
+        
+
 
         while (true)
         {
             
-            distance = Vector3.Distance(startObj.transform.position, targetPos);
+            distance = Vector3.Distance(startObj.transform.position, target.position);
 
             if (currentLineLength >= distance || 
                 currentLineLength >= lineLength) 
@@ -57,17 +57,18 @@ public class LineCreator : MonoBehaviour
             // 시작점과 끝점 설정
             Vector3 startPoint = startObj.transform.position;
             Vector3 endPoint = startPoint +
-                (targetPos - startObj.transform.position).normalized
+                (target.position - startObj.transform.position).normalized
                 * currentLineLength;
             lineRenderer.SetPosition(0, startPoint);
             lineRenderer.SetPosition(1, endPoint);
 
         }
-        transform.gameObject.SetActive(false);
-        //lineRenderer.material.color = Color.red;
+        
+        
 
-        yield return null;
+        transform.gameObject.SetActive(false);
         isLaserBeamRun = false;
+        yield return null;
     }
 
 }
