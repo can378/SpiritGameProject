@@ -33,8 +33,7 @@ public class StunDeBuff : StatusEffect
 
             StartCoroutine(Stun());
         }
-        else if (target.tag == "Enemy")
-        { }
+
         
     }
 
@@ -52,7 +51,19 @@ public class StunDeBuff : StatusEffect
             duration = 0;
         }
         else if (target.tag == "Enemy")
-        { }
+        {
+            EnemyStats stats = target.GetComponent<EnemyStats>();
+            stats.isEnemyStun = true;
+            target.GetComponent<EnemyBasic>().StopAllCoroutines();
+
+            while (duration > 0)
+            {
+                target.GetComponent<EnemyBasic>().runAway();
+                //player에서 isEnemyAttackalve false이면 피해안받게 하기
+                yield return new WaitForSeconds(0.1f);
+            }
+
+        }
     }
 
     public override void RemoveEffect()
@@ -64,7 +75,12 @@ public class StunDeBuff : StatusEffect
             if (player.FlinchCoroutine != null) StopCoroutine(player.FlinchCoroutine);
         }
         else if (target.tag == "Enemy")
-        { }
+        {
+            EnemyStats stats = target.GetComponent<EnemyStats>();
+            target.GetComponent<EnemyBasic>().RestartAllCoroutines();
+
+            stats.isEnemyStun = false;
+        }
     }
 }
 

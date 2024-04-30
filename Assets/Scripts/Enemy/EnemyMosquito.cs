@@ -5,13 +5,14 @@ using UnityEngine;
 public class EnemyMosquito : EnemyBasic
 {
 
-    private void Start()
+
+    private void OnEnable()
     {
-        //GetComponent<PathFinding>().seeker = transform;
+        StartNamedCoroutine("attack", attack());
     }
 
 
-    private void FixedUpdate()
+    IEnumerator attack() 
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
@@ -20,8 +21,10 @@ public class EnemyMosquito : EnemyBasic
             //GetComponent<PathFinding>().StartFinding((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
             Chase();
         }
-
+        yield return new WaitForSeconds(0.1f);
+    
     }
+
 
 
 }

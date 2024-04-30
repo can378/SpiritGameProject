@@ -5,20 +5,11 @@ using UnityEngine;
 public class FakeTree : EnemyBasic
 {
 
-    private void Start()
-    {
-        StartCoroutine(fakeTree());
-    }
-
     private void OnEnable()
     {
-        StartCoroutine(fakeTree());
+        StartNamedCoroutine("fakeTree", fakeTree());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(fakeTree());
-    }
 
     IEnumerator fakeTree()
     {

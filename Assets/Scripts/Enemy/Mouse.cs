@@ -7,18 +7,17 @@ public class Mouse : EnemyBasic
 {
     [field : SerializeField] public List<Skill> skillList {get; private set;}
     [field: SerializeField] public int skill {get; private set;}
+    private bool isChange = false;
+
 
     private void OnEnable()
     {
-        StartCoroutine(mouse());
+        StartNamedCoroutine("mouse", mouse());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(mouse());
-    }
 
-    private bool isChange=false;
+
+
 
     IEnumerator mouse()
     {

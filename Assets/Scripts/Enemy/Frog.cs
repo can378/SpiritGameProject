@@ -7,14 +7,11 @@ public class Frog : EnemyBasic
     public GameObject laser;
     public LineCreator lineCreator;
 
-    void Start()
-    {    StartCoroutine(frog());   }
+
 
     private void OnEnable()
-    {    StartCoroutine(frog());    }
+    { StartNamedCoroutine("frog", frog()); }
 
-    private void OnDisable()
-    {    StopCoroutine(frog());    }
 
 
     IEnumerator frog()

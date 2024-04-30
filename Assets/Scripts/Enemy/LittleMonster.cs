@@ -12,22 +12,15 @@ public class LittleMonster : EnemyBasic
 
     private bool isDetected;
     private bool isHit=false;
-    void Start()
-    {
-        if(isEye) { StartCoroutine(eye(new Vector2(1,0))); }
-        if (isMouth) { StartCoroutine(mouth()); }
-    }
+    private Vector2 dir = new Vector2(1, 0);
+
+
     private void OnEnable()
     {
 
-        if (isEye) { StartCoroutine(eye(new Vector2(1, 0))); }
-        if (isMouth) { StartCoroutine(mouth()); }
+        if (isEye) { StartNamedCoroutine("eye", eye()); }
+        if (isMouth) { StartNamedCoroutine("mouth", mouth()); }
 
-    }
-
-    private void OnDisable()
-    {
-        StopAllCoroutines();
     }
 
 
@@ -43,7 +36,7 @@ public class LittleMonster : EnemyBasic
         yield return null; 
     }
 
-    IEnumerator eye(Vector2 dir) 
+    IEnumerator eye() 
     { 
         if(isDetected) 
         {
@@ -69,7 +62,7 @@ public class LittleMonster : EnemyBasic
         }
 
         yield return null; 
-        StartCoroutine(eye(dir));
+        StartCoroutine(eye());
     }
 
 

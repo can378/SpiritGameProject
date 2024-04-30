@@ -11,12 +11,12 @@ public class BossBaby : EnemyBasic
 
     private int patternIndex = 0;
     private bool isHitWall;
-    void Start()
+
+    private void OnEnable()
     {
         patternIndex = 0;
-        StartCoroutine(StartAttack());
+        StartNamedCoroutine("StartAttack", StartAttack());
     }
-
 
     IEnumerator StartAttack()
     {
@@ -260,5 +260,10 @@ public class BossBaby : EnemyBasic
         {
             isHitWall = true;
         }
+        if (collision.tag == "PlayerAttack")
+        {
+            PlayerAttack(collision.gameObject);
+        }
+
     }
 }

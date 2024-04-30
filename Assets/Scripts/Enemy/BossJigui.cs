@@ -9,21 +9,14 @@ public class BossJigui : EnemyBasic
     public GameObject eyeSight;
 
 
-    void Start()
-    {
-        eyeSight.SetActive(true); 
-        StartCoroutine(jigui());
-        StartCoroutine(jiguiRaidStart());
-        StartCoroutine(playerEyeSight());
-    }
-
     private void OnEnable()
     {
         eyeSight.SetActive(true);
-        StartCoroutine(jigui());
-        StartCoroutine(jiguiRaidStart());
-        StartCoroutine(playerEyeSight());
+        StartNamedCoroutine("jigui", jigui());
+        StartCoroutine("jiguiRaidStart", jiguiRaidStart());
+        StartCoroutine("playerEyeSight", playerEyeSight());
     }
+
     private void OnDisable()
     {
         eyeSight.SetActive(false);

@@ -7,22 +7,20 @@ public class BroomStick : EnemyBasic
 
     public GameObject colObj;
     public GameObject buff;
+    float radius = 50;
+    float attackTime = 2;
 
-    void Start()
-    {
-        StartCoroutine(peripheralAttack(colObj, 50, 2));
-    }
+
+
     private void OnEnable()
     {
-        StartCoroutine(peripheralAttack(colObj, 50, 2));
-    }
-    private void OnDisable()
-    {
-        StopAllCoroutines();
+        StartNamedCoroutine("peripheralAttack", peripheralAttack());
+        StartNamedCoroutine("headache", headache());
     }
 
+
     //본인의 주변을 공격
-    public IEnumerator peripheralAttack(GameObject colObj, float radius, float attackTime)
+    public IEnumerator peripheralAttack()
     {
         //attack
         colObj.transform.position = transform.position;
@@ -50,20 +48,22 @@ public class BroomStick : EnemyBasic
         yield return new WaitForSeconds(2f);
 
 
-        StartCoroutine(peripheralAttack(colObj, radius, attackTime));
+        StartCoroutine(peripheralAttack());
 
     }
 
-
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    IEnumerator headache() 
     {
-        if (collision.tag == "Player")
+
+        if (Vector2.Distance(enemyTarget.position, transform.position) < 1f)
         {
             //두통 디버프 5초
             enemyTarget.GetComponent<Player>().ApplyBuff(buff);
 
         }
+        yield return new WaitForSeconds(0.01f);
+        StartCoroutine(headache());
     }
+
+
 }

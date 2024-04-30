@@ -77,9 +77,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4771821430859408182}
   - component: {fileID: 8189220749486769636}
-  - component: {fileID: 1538642115041353809}
   - component: {fileID: 1970378815811846781}
   - component: {fileID: 7037800743473113150}
+  - component: {fileID: 6805283559688333167}
   - component: {fileID: 6357870973008652518}
   - component: {fileID: -6196027981493876048}
   m_Layer: 0
@@ -157,36 +157,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1538642115041353809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3899082299174955267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
-  stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  timeValue: 0
-  isHARRun: 0
-  isPARun: 0
-  isBeamRun: 0
-  enemyAttack: 12
-  EnemyGunMuzzle: []
-  donutAttackRange: {fileID: 0}
-  donutInside: {fileID: 0}
-  roundAttackRange: {fileID: 0}
-  beam: {fileID: 0}
-  colObj: {fileID: 0}
-  buff: {fileID: 0}
 --- !u!114 &1970378815811846781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +180,8 @@ MonoBehaviour:
   detectionDis: 20
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!58 &7037800743473113150
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -245,6 +217,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.67
+--- !u!114 &6805283559688333167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3899082299174955267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a60b986c97feb746a7bb45b603db0c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTarget: {fileID: 0}
+  stats: {fileID: 0}
+  rigid: {fileID: 0}
+  sprite: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
+  timeValue: 0
 --- !u!50 &6357870973008652518
 Rigidbody2D:
   serializedVersion: 4

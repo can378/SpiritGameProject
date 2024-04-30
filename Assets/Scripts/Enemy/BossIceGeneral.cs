@@ -8,20 +8,12 @@ public class BossIceGeneral : EnemyBasic
 
     private int attackIndex;
     public GameObject iceBlast;
-    void Start()
+
+
+    private void OnEnable() 
     {
         attackIndex = 0;
-        StartCoroutine(IceGerneral());
-    }
-    private void OnEnable() 
-    { 
-        attackIndex = 0; 
-        //StartCoroutine(IceGerneral()); 
-    }
-
-    private void OnDisable()
-    {
-        StopCoroutine(IceGerneral());
+        StartNamedCoroutine("IceGerneral", IceGerneral());
     }
 
 

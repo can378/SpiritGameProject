@@ -49,7 +49,12 @@ public class ASDeBuff : StatusEffect
             EnemyStats stats = target.GetComponent<EnemyStats>();
             while (duration > 0)
             {
-                stats.isEnemyAttackable = false;
+                stats.isEnemyFear = true;
+                
+                target.GetComponent<EnemyBasic>().StopAllCoroutines();
+                target.GetComponent<EnemyBasic>().runAway();
+
+                //player에서 isEnemyAttackalve false이면 피해안받게 하기
                 yield return new WaitForSeconds(0.1f);
             }
 
@@ -76,7 +81,9 @@ public class ASDeBuff : StatusEffect
         else if (target.tag == "Enemy")
         {
             EnemyStats stats = target.GetComponent<EnemyStats>();
-            stats.isEnemyAttackable = true;
+            target.GetComponent<EnemyBasic>().RestartAllCoroutines();
+           
+            stats.isEnemyFear=false;
             StopCoroutine(attackDelayTimeCoroutine);
         }
     }

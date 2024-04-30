@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7036557452942694889}
   - component: {fileID: 3796409841912997637}
-  - component: {fileID: 5082630496976249131}
   - component: {fileID: 6360330638373099078}
+  - component: {fileID: 4278051864775572363}
   - component: {fileID: 7875017551484753222}
   - component: {fileID: 3994815513577111045}
   - component: {fileID: 5138292762730337989}
@@ -89,36 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5082630496976249131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642521718709155923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
-  stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  timeValue: 0
-  isHARRun: 0
-  isPARun: 0
-  isBeamRun: 0
-  enemyAttack: 6
-  EnemyGunMuzzle: []
-  donutAttackRange: {fileID: 0}
-  donutInside: {fileID: 0}
-  roundAttackRange: {fileID: 0}
-  beam: {fileID: 0}
-  colObj: {fileID: 0}
-  buff: {fileID: 0}
 --- !u!114 &6360330638373099078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +112,27 @@ MonoBehaviour:
   detectionDis: 10
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
+--- !u!114 &4278051864775572363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642521718709155923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278857d8f61a14843b3a3afbe3cb17f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTarget: {fileID: 0}
+  stats: {fileID: 0}
+  rigid: {fileID: 0}
+  sprite: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
+  timeValue: 0
 --- !u!58 &7875017551484753222
 CircleCollider2D:
   m_ObjectHideFlags: 0

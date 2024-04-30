@@ -690,14 +690,22 @@ public class Player : MonoBehaviour
     //적에게 피격
     public void EnemyAttack(GameObject attacker)
     {
-        if (status.isInvincible)
+        if (
+            status.isInvincible||
+            (attacker.tag == "Enemy" &&
+            ( attacker.GetComponent<EnemyStats>().isEnemyFear == false ||
+            attacker.GetComponent<EnemyStats>().isEnemyStun == false))
+            )
         {
             return;
         }
 
         HitDetection hitDetection = attacker.GetComponent<HitDetection>();
 
+
         Damaged(hitDetection.damage);
+
+
 
         KnockBack(attacker.gameObject, hitDetection.knockBack);
 

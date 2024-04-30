@@ -11,19 +11,12 @@ public class BossDarkGhost : EnemyBasic
     public GameObject NoAttackRange;
     public List<GameObject> zones;
 
-    void Start()
-    {
-        StartCoroutine(darkGhost());
-    }
 
     private void OnEnable() 
     {
-        StartCoroutine(darkGhost());
+        StartNamedCoroutine("darkGhost", darkGhost());
     }
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
+
 
     IEnumerator darkGhost()
     {

@@ -6,26 +6,33 @@ public class InventoryThief : EnemyBasic
 {
     private bool isSteal=false;
     
-    void Start()
-    {
-        StartCoroutine(stealItem());
-    }
+
 
     private void OnEnable()
     {
-        StartCoroutine(stealItem());
+        StartNamedCoroutine("stealItem", stealItem());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(stealItem());
-    }
+
 
     IEnumerator stealItem() 
     {
         if (isSteal==false)
         {
             Chase();
+
+            //steal success!
+            if (Vector2.Distance(enemyTarget.transform.position, transform.position) < 1f)
+            {
+                if (enemyTarget.GetComponent<Player>().playerItem != null)
+                {
+
+                    Destroy(enemyTarget.GetComponent<Player>().playerItem);
+                    enemyTarget.GetComponent<Player>().playerItem = null;
+                    MapUIManager.instance.updateItemUI(null);
+                    isSteal = true;
+                }
+            }
         }
         else 
         {
@@ -41,23 +48,5 @@ public class InventoryThief : EnemyBasic
         StartCoroutine(stealItem());
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            if (enemyTarget.GetComponent<Player>().playerItem != null)
-            {
-
-                Destroy(enemyTarget.GetComponent<Player>().playerItem);
-                enemyTarget.GetComponent<Player>().playerItem = null;
-                MapUIManager.instance.updateItemUI(null);
-                isSteal = true;
-            }
-            
-        }
-        if (collision.tag == "PlayerAttack")
-        {
-            PlayerAttack(collision.gameObject);
-        }
-    }
+    
 }

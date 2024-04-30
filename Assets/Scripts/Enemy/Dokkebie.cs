@@ -5,19 +5,12 @@ using UnityEngine;
 public class Dokkebie : EnemyBasic
 {
     private int index = 0;
-    void Start()
-    {
-        StartCoroutine(dokkebie());
-    }
+
     private void OnEnable()
     {
-        StartCoroutine(dokkebie());
+        StartNamedCoroutine("dokkebie", dokkebie());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(dokkebie());
-    }
 
     IEnumerator dokkebie()
     {
