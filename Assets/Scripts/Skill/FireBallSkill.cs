@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBall : Skill
+public class FireBallSkill : Skill
 {
     // ÇÇÇØ·®
     [field: SerializeField] public int defalutDamage {get; private set;}

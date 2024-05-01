@@ -17,11 +17,16 @@ public class SkillController : MonoBehaviour
     }
 
     // 스킬 획득
-    public void EquipSkill(int skillID)
+    public bool EquipSkill(int skillID)
     {
+        // 이미 보유한 스킬이라면
+        if(skillList[skillID].gameObject.activeSelf == true)
+            return false;
+            
         stats.skill[status.skillIndex] = skillID;
         skillList[skillID].gameObject.SetActive(true);
         MapUIManager.instance.UpdateSkillUI();
+        return true;
     }
 
     // 스킬 해제

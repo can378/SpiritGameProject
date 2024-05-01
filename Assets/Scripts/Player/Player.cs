@@ -349,7 +349,7 @@ public class Player : MonoBehaviour
         if(nearObject == null)
             return;
 
-        if (iDown && !status.isFlinch && !status.isDodge && !status.isAttack && !status.isSkill)
+        if (iDown && !status.isFlinch && !status.isDodge && !status.isAttack && !status.isSkill && !status.isSkillHold)
         {
             if (nearObject.tag == "SelectItem")
             {
@@ -383,6 +383,7 @@ public class Player : MonoBehaviour
     void GainSelectItem()
     {
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
+        bool gainItem = false;
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
             if (stats.weapon != 0)
@@ -390,7 +391,7 @@ public class Player : MonoBehaviour
                 weaponController.UnEquipWeapon();
             }
             // 무기 장비
-            weaponController.EquipWeapon(selectItem.GetComponent<Weapon>().equipmentId);
+            gainItem = weaponController.EquipWeapon(selectItem.GetComponent<Weapon>().equipmentId);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
@@ -405,12 +406,13 @@ public class Player : MonoBehaviour
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
+
             if (stats.skill[status.skillIndex] != 0)
             {
                 skillController.UnEquipSkill();
             }
             // 스킬 장착
-            skillController.EquipSkill(selectItem.GetComponent<Skill>().skillID);
+            gainItem = skillController.EquipSkill(selectItem.GetComponent<Skill>().skillID);
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
         {
@@ -426,7 +428,8 @@ public class Player : MonoBehaviour
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
         }
 
-        Destroy(selectItem.gameObject);
+        if(gainItem)
+            Destroy(selectItem.gameObject);
     }
 
     void UseItem()
@@ -613,7 +616,7 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //공격받음
-        if (other.tag == "EnemyAttack" || other.tag=="Enemy" || other.tag == "AllAttack")
+        if (other.tag == "EnemyAttack" || other.tag == "AllAttack")
         {
             // 적에게 공격 당할시
             // 피해를 입고
@@ -690,12 +693,7 @@ public class Player : MonoBehaviour
     //적에게 피격
     public void EnemyAttack(GameObject attacker)
     {
-        if (
-            status.isInvincible||
-            (attacker.tag == "Enemy" &&
-            ( attacker.GetComponent<EnemyStats>().isEnemyFear == false ||
-            attacker.GetComponent<EnemyStats>().isEnemyStun == false))
-            )
+        if (status.isInvincible)
         {
             return;
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpinAttack : Skill
+public class SpinAttackSkill : Skill
 {
     // ÇÇÇØ·®
     [field: SerializeField] public int defalutDamage { get; private set; }

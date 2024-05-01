@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 8056939154375420388}
   - component: {fileID: 7343399755032385016}
   - component: {fileID: 786419763627698833}
+  - component: {fileID: 7961500466865806215}
   m_Layer: 0
   m_Name: Wave
   m_TagString: PlayerAttack
@@ -165,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -176,3 +178,16 @@ MonoBehaviour:
   <statusEffect>k__BackingField: 04000000
   <target>k__BackingField: []
   multiHitDurationTime: 0
+--- !u!114 &7961500466865806215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8986035067505207802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c32d78885d725441aa0758ea2089693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ratio: 5

@@ -7,6 +7,7 @@ public class Mouse : EnemyBasic
 {
     [field : SerializeField] public List<Skill> skillList {get; private set;}
     [field: SerializeField] public int skill {get; private set;}
+    public GameObject biteArea;
     private bool isChange = false;
 
 
@@ -14,10 +15,6 @@ public class Mouse : EnemyBasic
     {
         StartNamedCoroutine("mouse", mouse());
     }
-
-
-
-
 
     IEnumerator mouse()
     {
@@ -28,7 +25,31 @@ public class Mouse : EnemyBasic
             targetDis = Vector2.Distance(transform.position, enemyTarget.position);
             if (isChange == false)
             {
-                Chase();
+
+                if(targetDis < 2f)
+                {
+                    // 물기
+
+                    yield return new WaitForSeconds(0.5f);
+
+                    biteArea.SetActive(true);
+
+                    yield return new WaitForSeconds(2f);
+
+                    biteArea.SetActive(false);
+
+                    yield return new WaitForSeconds(1f);
+
+                    // 플레이어 공격 성공 시
+                    if(biteArea.GetComponent<HitDetection>().hitSuccess)
+                    {
+                        Change();
+                    }
+                }
+                else 
+                {
+                    Chase();
+                }
             }
             else
             {
@@ -60,7 +81,8 @@ public class Mouse : EnemyBasic
                 }
                 else if (targetDis >= 7f)
                 {
-                    Chase(); }
+                    Chase();
+                }
                 
 
             }
@@ -69,32 +91,22 @@ public class Mouse : EnemyBasic
         }
     }
 
+    void Change()
+    {
+        GetComponentInChildren<SpriteRenderer>().sprite = enemyTarget.GetComponentInChildren<SpriteRenderer>().sprite;
+        GetComponentInChildren<SpriteRenderer>().transform.localScale = enemyTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
+        isChange = true;
+
+        skill = enemyTarget.GetComponent<Player>().stats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
+        if (skill != 0) skillList[skill].gameObject.SetActive(true);
+
+        //Run away
+        targetDirVec = enemyTarget.position - transform.position;
+        rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && isChange == false)
-        {
-
-            //Bite
-            //print("Bite");
-
-            //Transform
-            GetComponentInChildren<SpriteRenderer>().sprite = enemyTarget.GetComponentInChildren<SpriteRenderer>().sprite;
-            GetComponentInChildren<SpriteRenderer>().transform.localScale = enemyTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
-            isChange = true;
-
-            skill = enemyTarget.GetComponent<Player>().stats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
-            if(skill != 0) skillList[skill].gameObject.SetActive(true);
-
-            //Run away
-            targetDirVec = enemyTarget.position - transform.position;
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
-
-
-        }
-        if (collision.tag == "PlayerAttack")
-        {
-            PlayerAttack(collision.gameObject);
-        }
 
     }
 

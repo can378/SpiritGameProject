@@ -24,7 +24,7 @@ public class WeaponController : MonoBehaviour
     }
 
     // 무기를 획득
-    public void EquipWeapon(int weaponID)
+    public bool EquipWeapon(int weaponID)
     {
         // 무기 소유
         stats.weapon = weaponID;
@@ -43,6 +43,7 @@ public class WeaponController : MonoBehaviour
 
         // 장비 UI 적용
         MapUIManager.instance.UpdateWeaponUI();
+        return true;
     }
 
     public void UnEquipWeapon()
