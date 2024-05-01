@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 2866315741150197865}
   - component: {fileID: 3978095356988821543}
   - component: {fileID: 7373249481174834579}
-  - component: {fileID: 981010454650114471}
   - component: {fileID: 8510872055871966389}
+  - component: {fileID: 1155601300136009129}
   m_Layer: 0
-  m_Name: StunField
-  m_TagString: Untagged
+  m_Name: 07_FearField
+  m_TagString: AllAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.5235849, b: 0.96577054, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -114,19 +114,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &981010454650114471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5535729302175816803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3623eaa232df5849acaa46580e7ecc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Buff: {fileID: 5535729302175816803, guid: d86f808ffa6a24a40bddcd68f0eb41eb, type: 3}
 --- !u!58 &8510872055871966389
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -162,3 +149,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1155601300136009129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535729302175816803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 07000000
+  <target>k__BackingField: []
+  multiHitDurationTime: 0

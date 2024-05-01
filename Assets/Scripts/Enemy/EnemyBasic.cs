@@ -41,7 +41,7 @@ public class EnemyBasic : MonoBehaviour
 
     private void OnTriggerEnter2D (Collider2D collision) 
     {
-        if (collision.tag == "PlayerAttack")
+        if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
             PlayerAttack(collision.gameObject);
         }
@@ -112,19 +112,16 @@ public class EnemyBasic : MonoBehaviour
                 return;
             }
         }
-
         // 가지고 있는 버프가 아니라면 새로 추가한다.
         GameObject Buff = Instantiate(effect);
         statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);
-
         statusEffect.ApplyEffect();
         stats.activeEffects.Add(statusEffect);
-
         StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
 
-    private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
+    IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
     {
         while (true)
         {
