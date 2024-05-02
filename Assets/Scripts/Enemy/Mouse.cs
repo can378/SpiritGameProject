@@ -25,25 +25,25 @@ public class Mouse : EnemyBasic
             targetDis = Vector2.Distance(transform.position, enemyTarget.position);
             if (isChange == false)
             {
-
                 if(targetDis < 2f)
                 {
                     // 물기
-
+                    // 물기 전 대기 시간
                     yield return new WaitForSeconds(0.5f);
 
+                    biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
                     biteArea.SetActive(true);
-
-                    yield return new WaitForSeconds(2f);
+                    
+                    // 물기 판정 유지 시간
+                    yield return new WaitForSeconds(0.5f);
 
                     biteArea.SetActive(false);
-
-                    yield return new WaitForSeconds(1f);
 
                     // 플레이어 공격 성공 시
                     if(biteArea.GetComponent<HitDetection>().hitSuccess)
                     {
                         Change();
+                        yield return new WaitForSeconds(1f);
                     }
                 }
                 else 
@@ -102,12 +102,7 @@ public class Mouse : EnemyBasic
 
         //Run away
         targetDirVec = enemyTarget.position - transform.position;
-        rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
+        rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
     }
 
 }

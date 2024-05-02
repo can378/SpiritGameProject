@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,16 +46,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
-  <attackAttributes>k__BackingField: 06000000
   <damage>k__BackingField: 10
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <deBuff>k__BackingField: {fileID: 0}
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!212 &5931487878609602813
 SpriteRenderer:
   m_ObjectHideFlags: 0
