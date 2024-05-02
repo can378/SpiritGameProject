@@ -19,6 +19,7 @@ public class EnemyBasic : MonoBehaviour
     public float targetDis;
     [HideInInspector]
     public float timeValue=0;
+    
 
     private Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
 
