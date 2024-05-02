@@ -41,6 +41,7 @@ public class EnemyBasic : MonoBehaviour
 
     private void OnTriggerEnter2D (Collider2D collision) 
     {
+        print(collision.tag);
         if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
             PlayerAttack(collision.gameObject);
