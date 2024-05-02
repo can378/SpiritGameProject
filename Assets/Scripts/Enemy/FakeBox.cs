@@ -5,20 +5,13 @@ using UnityEngine;
 public class FakeBox : EnemyBasic
 {
     public GameObject mouth;
-    void Start()
-    {
-        StartCoroutine(fakeBox());
-    }
+
 
     private void OnEnable()
     {
-        StartCoroutine(fakeBox());
+        StartNamedCoroutine("fakeBox", fakeBox());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(fakeBox());
-    }
     IEnumerator fakeBox() 
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);

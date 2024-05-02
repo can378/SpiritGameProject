@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class Pox : EnemyBasic
 {
-    void Start()
-    {
-        StartCoroutine(pox());
-    }
 
     private void OnEnable()
     {
-        StartCoroutine(pox());
+        StartNamedCoroutine("pox", pox());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(pox());
-    }
+
 
 
     IEnumerator pox()

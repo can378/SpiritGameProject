@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Icicle : Skill
+public class IcicleSkill : Skill
 {
     // ÇÇÇØ·®
     [field: SerializeField] int defalutDamage;

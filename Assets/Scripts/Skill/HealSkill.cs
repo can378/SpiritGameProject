@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : Skill
+public class HealSkill : Skill
 {
     // È¸º¹·®
     [field: SerializeField] float defaultHeal;

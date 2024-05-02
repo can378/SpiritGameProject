@@ -20,6 +20,9 @@ public class EnemyBasic : MonoBehaviour
     [HideInInspector]
     public float timeValue=0;
 
+    private Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
+
+
     private void Awake()
     {
         enemyTarget = GameObject.FindWithTag("Player").transform;
@@ -27,15 +30,18 @@ public class EnemyBasic : MonoBehaviour
         stats = GetComponent<EnemyStats>();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
-        GetComponent<EnemyStats>().isEnemyAttackable = true;
-        GetComponent<EnemyStats>().isEnemyMoveable = true;
+        GetComponent<EnemyStats>().isEnemyFear = false;
+        GetComponent<EnemyStats>().isEnemyStun = false;
     }
 
-
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
     private void OnTriggerEnter2D (Collider2D collision) 
     {
-        if (collision.tag == "PlayerAttack")
+        if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
             PlayerAttack(collision.gameObject);
         }
@@ -106,19 +112,16 @@ public class EnemyBasic : MonoBehaviour
                 return;
             }
         }
-
         // 가지고 있는 버프가 아니라면 새로 추가한다.
         GameObject Buff = Instantiate(effect);
         statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);
-
         statusEffect.ApplyEffect();
         stats.activeEffects.Add(statusEffect);
-
         StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
 
-    private IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
+    IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
     {
         while (true)
         {
@@ -172,4 +175,65 @@ public class EnemyBasic : MonoBehaviour
 
     }
 
+
+
+    #region coroutine Manager
+
+    public void StartNamedCoroutine(string coroutineName, IEnumerator routine)
+    {
+        if (!runningCoroutines.ContainsKey(coroutineName))
+        {
+            Coroutine newCoroutine = StartCoroutine(routine);
+            runningCoroutines.Add(coroutineName, newCoroutine);
+        }
+        else
+        {
+            Debug.LogWarning("Coroutine with name " + coroutineName + " is already running.");
+        }
+    }
+
+
+    public void StopNamedCoroutine(string coroutineName)
+    {
+        if (runningCoroutines.ContainsKey(coroutineName))
+        {
+            StopCoroutine(runningCoroutines[coroutineName]);
+            //runningCoroutines.Remove(coroutineName);
+        }
+        else
+        {
+            Debug.LogWarning("Coroutine with name " + coroutineName + " is not running.");
+        }
+    }
+
+
+    public void StopAllCoroutinesAndGetNames()
+    {
+        //List<string> stoppedCoroutineNames = new List<string>();
+
+        foreach (KeyValuePair<string, Coroutine> kvp in runningCoroutines)
+        {
+            //stoppedCoroutineNames.Add(kvp.Key);
+            StopCoroutine(kvp.Value);
+        }
+
+        //runningCoroutines.Clear(); // Clear the dictionary since all coroutines are stopped
+
+    }
+
+    public void RestartAllCoroutines() 
+    {
+        foreach (KeyValuePair<string, Coroutine> kvp in runningCoroutines)
+        {
+            StartCoroutine(kvp.Key);
+        }
+
+    }
+    #endregion
+
+    public void runAway() 
+    {
+        print("enemy runaway");
+
+    }
 }

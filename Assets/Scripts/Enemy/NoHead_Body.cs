@@ -7,19 +7,17 @@ public class NoHead_Body : EnemyBasic
     private bool isTransform=false;
     public GameObject headPos;
     public GameObject head;
+    private Vector2 dir = new Vector2(1, 0);
 
-    void Start()
-    { StartCoroutine(body(Vector2.right)); }
+
 
     private void OnEnable()
-    { StartCoroutine(body(Vector2.right)); }
+    { StartNamedCoroutine("body", body()); }
 
-    private void OnDisable()
-    { StopCoroutine(body(Vector2.right)); }
 
 
     private bool isHit = false;
-    public IEnumerator body(Vector2 dir) 
+    public IEnumerator body() 
     {
         if (isTransform == false)
         {
@@ -51,7 +49,7 @@ public class NoHead_Body : EnemyBasic
 
         yield return new WaitForSeconds(0.01f);
 
-        StartCoroutine(body(dir));
+        StartCoroutine(body());
     }
 
 

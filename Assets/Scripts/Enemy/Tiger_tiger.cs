@@ -9,10 +9,9 @@ public class Tiger_tiger : EnemyBasic
     public GameObject trans;
     public bool isTransform=false;
 
-    void Start()
-    { isTransform = false; StartCoroutine(tiger());    }
-    void OnEnable() { StartCoroutine(tiger()); }
-    void OnDisable() { StopCoroutine(tiger()); }
+
+    void OnEnable() 
+    { StartNamedCoroutine("tiger", tiger()); }
 
 
 

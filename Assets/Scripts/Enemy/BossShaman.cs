@@ -5,24 +5,38 @@ using UnityEngine;
 
 public class BossShaman : EnemyBasic
 {
+    private int attackNum=0;
     public GameObject dollPrefab;
-    void Start()
-    {
-
-        StartCoroutine(SummonGhost());
-    }
 
     private void OnEnable()
     {
-        //StartCoroutine(SummonGhost());
+        StartNamedCoroutine("bossShaman", bossShaman());
     }
 
     private void OnDisable()
     {
+        attackNum = 0;
         StopAllCoroutines();
     }
 
-
+    IEnumerator bossShaman()
+    {
+        switch (attackNum)
+        {
+            case 0:
+                StartCoroutine(SummonGhost());
+                break;
+            case 1:
+                StartCoroutine(SummonDoll());
+                break;
+            case 2:
+                StartCoroutine(ShotKnife());
+                break;
+            default:
+                break;
+        }
+        yield return null;
+    }
 
     IEnumerator SummonGhost()
     {
@@ -34,7 +48,8 @@ public class BossShaman : EnemyBasic
         }
         yield return new WaitForSeconds(2f);
 
-        StartCoroutine(SummonDoll());
+        attackNum = 1;
+        StartCoroutine(bossShaman());
     }
 
     IEnumerator SummonDoll()
@@ -42,7 +57,9 @@ public class BossShaman : EnemyBasic
         GameObject doll=Instantiate(dollPrefab);
         doll.transform.position=transform.position;
         yield return new WaitForSeconds(3f);
-        StartCoroutine(ShotKnife());
+
+        attackNum = 2;
+        StartCoroutine(bossShaman());
     }
 
     IEnumerator ShotKnife()
@@ -55,7 +72,8 @@ public class BossShaman : EnemyBasic
         }
         yield return new WaitForSeconds(2f);
 
-        StartCoroutine(SummonGhost());
+        attackNum = 0;
+        StartCoroutine(bossShaman());
     }
 
 }

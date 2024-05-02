@@ -6,14 +6,10 @@ public class NoHead_Head : EnemyBasic
 {
     public LineCreator lineCreator;
     public GameObject vomit;
-    void Start()
-    { StartCoroutine(head()); }
-
+   
     private void OnEnable()
-    { StartCoroutine(head()); }
+    { StartNamedCoroutine("head", head()); }
 
-    private void OnDisable()
-    { StopCoroutine(head()); }
 
 
 

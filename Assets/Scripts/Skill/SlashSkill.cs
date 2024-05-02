@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Slash : Skill
+public class SlashSkill : Skill
 {
     // ÇÇÇØ·®
     [field: SerializeField] int defalutDamage;

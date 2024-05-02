@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class DeerWoman : EnemyBasic
 {
-    void Start()
-    {
-        StartCoroutine(deerWoman());
-    }
+
 
     private void OnEnable()
     {
-        StartCoroutine(deerWoman());
+        StartNamedCoroutine("deerWoman", deerWoman());
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(deerWoman());
-    }
 
 
     IEnumerator deerWoman()

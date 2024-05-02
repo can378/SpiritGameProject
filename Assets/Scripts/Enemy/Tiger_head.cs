@@ -10,26 +10,21 @@ public class Tiger_head : EnemyBasic
 
     private Transform parent;
     private GameObject detectTiger;
-    void Start()
-    {
-        parent = transform.parent;
-        StartCoroutine(tigerHead(new Vector2(1, 0)));
-    }
+    private Vector2 dir = new Vector2(1, 0);
+
+
     private void OnEnable()
     {
-        StartCoroutine(tigerHead(new Vector2(1,0)));
+        parent = transform.parent;
+        StartNamedCoroutine("tigerHead", tigerHead());
     }
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
 
 
     public bool isDetectPlayer = false;
     private bool isHit = false;
     private bool isChaseTiger = false;
-    IEnumerator tigerHead(Vector2 dir)
+    IEnumerator tigerHead()
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
@@ -91,7 +86,7 @@ public class Tiger_head : EnemyBasic
             }
         }
 
-        StartCoroutine(tigerHead(dir));
+        StartCoroutine(tigerHead());
     }
 
 
@@ -115,14 +110,13 @@ public class Tiger_head : EnemyBasic
                         if (sibling.GetComponent<Tiger_tiger>().isTransform == false)
                         {
                             //print("head found tiger");
-                            StopCoroutine(tigerHead(new Vector2(1, 0)));
+                            StopAllCoroutines();
                            
 
                             //move toward tiger
                             isChaseTiger = true;
                             detectTiger = sibling.gameObject;
-                            Vector2 tigerDir = (detectTiger.transform.position - transform.position).normalized;
-                            StartCoroutine(tigerHead(tigerDir));
+                            dir = (detectTiger.transform.position - transform.position).normalized;
 
                             break;
                         }

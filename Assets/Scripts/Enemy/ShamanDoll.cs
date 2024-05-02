@@ -5,20 +5,13 @@ using UnityEngine;
 
 public class ShamanDoll : EnemyBasic
 {
-    void Start()
-    {
-        StartCoroutine(shamanDoll());
-    }
 
     private void OnEnable()
     {
-        StartCoroutine(shamanDoll());
+        StartNamedCoroutine("shamanDoll", shamanDoll());
     }
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
+
 
     IEnumerator shamanDoll()
     {

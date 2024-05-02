@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wave : Skill
+public class WaveSkill : Skill
 {
     // 피해량
     [field: SerializeField] public int defalutDamage { get; private set; }
@@ -59,15 +59,8 @@ public class Wave : Skill
              0,
              statusEffect);
 
-            while(timer < time)
-            {
-                effect.transform.localScale = new Vector3(1 + timer * 10, 1 + timer * 10, 1);
-                timer += Time.deltaTime;
-                yield return null;
-            }
-
             // rate 동안 유지
-            Destroy(effect);
+            Destroy(effect,time);
         }
         else if (user.tag == "Enemy")
         {

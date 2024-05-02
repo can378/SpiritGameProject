@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpottingWeakness : Skill
+public class SpottingWeaknessSkill : Skill
 {
     // ÇÇÇØ·®
     [field: SerializeField] GameObject spottingWeaknessBuff;

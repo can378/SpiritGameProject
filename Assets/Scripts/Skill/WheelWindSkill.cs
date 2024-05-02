@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WheelWind : Skill
+public class WheelWindSkill : Skill
 {
     //ÇÇÇØ·®
     [field: SerializeField] int defaultDamage;

@@ -9,19 +9,11 @@ public class EnemyShooter : EnemyBasic
     public int curPatternCount;
     public int[] maxPatternCount;
 
-    private void Start()
-    {
-        Rigidbody2D rigid = GetComponent<Rigidbody2D>();
-        rigid.velocity = Vector2.zero;
-    }
 
     private void OnEnable()
     {
-        StartCoroutine(Think());
-    }
-    private void OnDisable()
-    {
-        StopAllCoroutines();
+        rigid.velocity = Vector2.zero;
+        StartNamedCoroutine("Think", Think());
     }
 
 
