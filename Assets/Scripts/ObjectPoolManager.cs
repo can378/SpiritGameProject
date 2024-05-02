@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using static UnityEditor.Progress;
@@ -60,26 +61,24 @@ public class ObjectPoolManager : MonoBehaviour
     public GameObject Get2(string name) 
     {
         GameObject select = null;
-
+       
         for (int i = 0; i < prefabs.Length; i++)
         {
             if (prefabs[i].name == name)
             {
-                select = prefabs[i];
-                select.SetActive(true);
-                select = Instantiate(prefabs[i], transform);
-                pools[i].Add(select);
-
+                select=Get(i);
                 return select;
-
             }    
         
         }
 
-        return prefabs[0];
+        print("WARNING:there is no name!!!");
+        select = Instantiate(prefabs[0]);
+        pools[0].Add(select);
+        return select;
     }
 
-
+    public void test() { print("object pool manger test"); }
 
     public void Clear(int index)
     {

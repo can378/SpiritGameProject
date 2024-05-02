@@ -81,7 +81,7 @@ public class BossBaby : EnemyBasic
         Vector3 corner = FindCorner();
         targetDirVec=(corner-transform.position).normalized;
 
-        while(Vector2.Distance(transform.position, corner) > 30f) 
+        while(Vector2.Distance(transform.position, corner) > 50f) 
         {
             yield return new WaitForSeconds(0.1f);
             rigid.AddForce(targetDirVec*stats.defaultMoveSpeed);
