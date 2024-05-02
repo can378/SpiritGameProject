@@ -15,6 +15,7 @@ public class DeerWoman : EnemyBasic
 
     IEnumerator deerWoman()
     {
+        
         //shot arrow
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
@@ -24,6 +25,7 @@ public class DeerWoman : EnemyBasic
 
         targetDirVec = (enemyTarget.position - transform.position).normalized;
         rigidBullet.AddForce(targetDirVec.normalized * 3, ForceMode2D.Impulse);
+        
         yield return new WaitForSeconds(2f);
 
         StartCoroutine(deerWoman());
