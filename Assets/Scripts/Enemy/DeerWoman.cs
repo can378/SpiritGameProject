@@ -22,15 +22,18 @@ public class DeerWoman : EnemyBasic
 
     IEnumerator deerWoman()
     {
-        //shot arrow
-        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
-        bullet.transform.position = transform.position;
+        if (GetComponent<EnemyStats>().isEnemyAttackable)
+        {
+            //shot arrow
+            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            bullet.transform.position = transform.position;
 
 
-        Rigidbody2D rigidBullet = bullet.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigidBullet = bullet.GetComponent<Rigidbody2D>();
 
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
-        rigidBullet.AddForce(targetDirVec.normalized * 3, ForceMode2D.Impulse);
+            targetDirVec = (enemyTarget.position - transform.position).normalized;
+            rigidBullet.AddForce(targetDirVec.normalized * 3, ForceMode2D.Impulse);
+        }
         yield return new WaitForSeconds(2f);
 
         StartCoroutine(deerWoman());
