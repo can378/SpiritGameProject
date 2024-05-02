@@ -41,7 +41,6 @@ public class EnemyBasic : MonoBehaviour
 
     private void OnTriggerEnter2D (Collider2D collision) 
     {
-        print(collision.tag);
         if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
             PlayerAttack(collision.gameObject);
@@ -70,15 +69,16 @@ public class EnemyBasic : MonoBehaviour
         KnockBack(attacker, hitDetection.knockBack);
 
     }
+
     public void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
         bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
 
-        print("enemy damaged : " + damage);
-        stats.HP -= (1 - stats.addDefensivePower) * damage;
+        print(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        stats.HP -= (1 - stats.defensivePower) * damage;
 
-        sprite.color = 0 < (1 - stats.addDefensivePower) * damage ? Color.red : Color.green;
+        sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
 
         Invoke("DamagedOut",0.05f);
         if (stats.HP <= 0f)

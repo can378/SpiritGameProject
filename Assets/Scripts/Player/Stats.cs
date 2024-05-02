@@ -19,7 +19,7 @@ public class Stats : MonoBehaviour
     // 방어력
     // UI : 방어력 0%
     // 받는 피해 = 피해량 * 방어력
-    // 최소 -75%, 최대 75%
+    // 최소 -50%, 최대 50%
     [field: SerializeField] public float defaultDefensivePower { get; set; } = 0f;
     public float addDefensivePower { get; set; }
     public float increasedDefensivePower { get; set; }

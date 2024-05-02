@@ -729,7 +729,7 @@ public class Player : MonoBehaviour
         stats.HP -= damage * (1f - stats.defensivePower);
 
         MapUIManager.instance.UpdateHealthUI();
-        sprite.color = 0 < (1 - stats.addDefensivePower) * damage ? Color.red : Color.green;
+        sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
         Invoke("DamagedOut",0.1f);
         
         if(stats.HP >= stats.HPMax)
