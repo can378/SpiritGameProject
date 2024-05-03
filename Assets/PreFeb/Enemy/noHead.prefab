@@ -136,6 +136,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: head
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!114 &5715792012506409519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -560,7 +563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7304187313316644801}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: noHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,6 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -718,6 +722,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!61 &1837450301324951422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1010,6 +1016,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: body
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!114 &563733388900568141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,6 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -1156,6 +1165,10 @@ PrefabInstance:
     - target: {fileID: 4873582149000364132, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
       propertyPath: m_Name
       value: laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873582149000364132, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4873582149000364132, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
       propertyPath: m_IsActive

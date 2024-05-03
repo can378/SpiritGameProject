@@ -194,9 +194,6 @@ MonoBehaviour:
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
-  beam: {fileID: 0}
-  colObj: {fileID: 0}
-  buff: {fileID: 0}
 --- !u!114 &-2792008934239224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +217,8 @@ MonoBehaviour:
   detectionDis: 5
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!58 &8127540157274700844
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -294,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3190090719039794946}
   - component: {fileID: 490919376907538645}
   - component: {fileID: 5614151683344576347}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: blackDog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -209,6 +209,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!114 &3190090719039794946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

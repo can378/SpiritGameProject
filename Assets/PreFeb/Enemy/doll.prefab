@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2660188753817144381}
   - component: {fileID: 2399028934464656598}
   - component: {fileID: -3539691174756508520}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: doll
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -209,6 +209,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!70 &2660188753817144381
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -283,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

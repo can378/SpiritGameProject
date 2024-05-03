@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 6237550864698581202}
   - component: {fileID: 1614426928314397307}
   - component: {fileID: 3046059504245645251}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Eye
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -295,6 +295,8 @@ MonoBehaviour:
   detectionDis: 10
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!58 &6237550864698581202
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -369,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

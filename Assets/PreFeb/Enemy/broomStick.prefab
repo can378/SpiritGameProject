@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1889583865854150144}
   - component: {fileID: 3390187105194360506}
   - component: {fileID: 7933446974346287564}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: broomStick
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -135,6 +135,8 @@ MonoBehaviour:
   detectionDis: 10
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!114 &1889583865854150144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -331,6 +334,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!114 &4559856481410343201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

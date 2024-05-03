@@ -33,6 +33,8 @@ public class IcicleSkill : Skill
         {
             Player player = user.GetComponent<Player>();
 
+            if(simul != null)
+                Destroy(simul);
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
@@ -50,6 +52,8 @@ public class IcicleSkill : Skill
             float angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
 
+            if (simul != null)
+                Destroy(simul);
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
@@ -88,7 +92,6 @@ public class IcicleSkill : Skill
             instantProjectile.transform.localScale = new Vector3(size, size, 0);
             instantProjectile.tag = "PlayerAttack";
 
-            
             Destroy(simul);
             
             /*

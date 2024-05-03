@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class StatusEffect : MonoBehaviour
@@ -11,6 +12,11 @@ public abstract class StatusEffect : MonoBehaviour
     [field: SerializeField] public float duration {get; set;}               // ½Ã°£
     [field: SerializeField] public int maxOverlap { get; set; }             // ÃÖ´ë ÁßÃ¸
     [field: SerializeField] public int overlap { get; set; }                // ÇöÀç ÁßÃ¸
+
+    void Update() {
+        if(this.target == null)
+            Destroy(this.gameObject);
+    }
 
     public void SetTarget(GameObject target)
     {

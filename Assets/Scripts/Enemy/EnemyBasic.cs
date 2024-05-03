@@ -76,7 +76,7 @@ public class EnemyBasic : MonoBehaviour
         bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
 
-        print(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
         stats.HP -= (1 - stats.defensivePower) * damage;
 
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;

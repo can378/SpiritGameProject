@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9090248545798697406}
   - component: {fileID: 5796419177314312464}
   - component: {fileID: -3698621439545957137}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: dokabbiFire
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -117,9 +117,6 @@ MonoBehaviour:
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
-  beam: {fileID: 0}
-  colObj: {fileID: 0}
-  buff: {fileID: 0}
 --- !u!114 &5138180050735709106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +140,8 @@ MonoBehaviour:
   detectionDis: 20
   exp: 0
   enemyName: dokabbiFire
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!58 &9090248545798697406
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -217,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

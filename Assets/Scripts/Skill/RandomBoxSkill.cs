@@ -67,78 +67,47 @@ public class RandomBoxSkill : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
-            GameObject box = Instantiate(randomBox, simul.transform.position, Quaternion.identity);
 
             // ÄðÅ¸ÀÓ Àû¿ë
             skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
-
-            Destroy(simul);
-
-            List<int> items = box.GetComponent<RewardBox>().items;
-
-            int num = Random.Range(itemRangeMin,itemRangeMax);
-
-            for(int i = 0 ; i<num ; i++)
-            {
-                int itemCode = Random.Range(1,5);
-                switch (itemCode)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.selectItemList.Count);
-                        break;
-                    case 2:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.weaponList.Count);
-                        break;
-                    case 3:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.equipmentList.Count);
-                        break;
-                    case 4:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.skillList.Count);
-                        break;
-                    default:
-                        break;
-                }
-                items.Add(itemCode);
-            }
         }
         else if(user.tag == "Enemy")
         {
-            GameObject box = Instantiate(randomBox, simul.transform.position, Quaternion.identity);
-
             // ÄðÅ¸ÀÓ Àû¿ë
             skillCoolTime = skillDefalutCoolTime;
+        }
 
-            Destroy(simul);
+        GameObject box = Instantiate(randomBox, simul.transform.position, Quaternion.identity);
 
-            List<int> items = box.GetComponent<RewardBox>().items;
+        Destroy(simul);
 
-            int num = Random.Range(itemRangeMin, itemRangeMax);
+        List<int> items = box.GetComponent<RewardBox>().items;
 
-            for (int i = 0; i < num; i++)
+        int num = Random.Range(itemRangeMin, itemRangeMax);
+
+        for (int i = 0; i < num; i++)
+        {
+            int itemCode = Random.Range(1, 5);
+            switch (itemCode)
             {
-                int itemCode = Random.Range(1, 5);
-                switch (itemCode)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.selectItemList.Count);
-                        break;
-                    case 2:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.weaponList.Count);
-                        break;
-                    case 3:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.equipmentList.Count);
-                        break;
-                    case 4:
-                        itemCode = itemCode * 100 + Random.Range(1, GameData.instance.skillList.Count);
-                        break;
-                    default:
-                        break;
-                }
+                case 0:
+                    break;
+                case 1:
+                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.selectItemList.Count);
+                    break;
+                case 2:
+                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.weaponList.Count);
+                    break;
+                case 3:
+                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.equipmentList.Count);
+                    break;
+                case 4:
+                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.skillList.Count);
+                    break;
+                default:
+                    break;
             }
+            items.Add(itemCode);
         }
     }
 }

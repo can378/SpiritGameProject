@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1652085905615357529}
   - component: {fileID: 2056888292332731791}
   - component: {fileID: 1846563147135880474}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rabbit
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -116,9 +116,6 @@ MonoBehaviour:
   donutAttackRange: {fileID: 0}
   donutInside: {fileID: 0}
   roundAttackRange: {fileID: 0}
-  beam: {fileID: 0}
-  colObj: {fileID: 0}
-  buff: {fileID: 0}
 --- !u!114 &8922797344239923678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +139,8 @@ MonoBehaviour:
   detectionDis: 0
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!61 &1652085905615357529
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -226,6 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0

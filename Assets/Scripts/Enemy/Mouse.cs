@@ -77,14 +77,12 @@ public class Mouse : EnemyBasic
                 else if (targetDis < 6f)
                 {
                     targetDirVec = enemyTarget.position - transform.position;
-                    transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime * 2f);
+                    transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime * 0.5f);
                 }
                 else if (targetDis >= 7f)
                 {
                     Chase();
                 }
-                
-
             }
 
             yield return null;

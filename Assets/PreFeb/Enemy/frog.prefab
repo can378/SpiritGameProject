@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6851136926891473217}
   - component: {fileID: 6130774709892884949}
   - component: {fileID: -904985664260554491}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: frog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -134,6 +134,8 @@ MonoBehaviour:
   detectionDis: 10
   exp: 0
   enemyName: 
+  isEnemyStun: 0
+  isEnemyFear: 0
 --- !u!61 &6851136926891473217
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -218,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -365,6 +368,10 @@ PrefabInstance:
     - target: {fileID: 4873582149000364132, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
       propertyPath: m_Name
       value: laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873582149000364132, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5055836236821654513, guid: 956402773c7380d4eae4e0cb631b411f, type: 3}
       propertyPath: startObj

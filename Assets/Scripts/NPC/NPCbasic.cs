@@ -8,25 +8,28 @@ public class NPCbasic : MonoBehaviour
 {
     public GameObject NPCTarget;
     //public string NPCName;
-    private SpriteRenderer sprite;
-    public bool isTalking;
     public GameObject DialogPanel;
     public TMP_Text DialogTextMesh;
+    public int chapter = 0;
 
+    public bool isTalking;
     public bool isWalking;
+    public bool isInvincible;
 
-
-    ScriptManager scriptManager;
-    public int chapter=0;
-
+    protected ScriptManager scriptManager;
+    protected SpriteRenderer sprite;
+    protected Stats stats;
+    
     int index = 0;
 
     protected virtual void Start()
     {
         isTalking = false;
         sprite=GetComponent<SpriteRenderer>();
-        //GetComponent<PathFinding>().seeker = this.transform;
         scriptManager = GetComponent<ScriptManager>();
+        stats = GetComponent<Stats>();
+        //GetComponent<PathFinding>().seeker = this.transform;
+
     }
 
     void Update()
@@ -100,17 +103,61 @@ public class NPCbasic : MonoBehaviour
 
     //Trigger===================================================================================
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.tag == "PlayerAttack")
+        {
+            PlayerAttack(other.gameObject);
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")&&DialogPanel!=null)
+        if (collision.CompareTag("Player") && DialogPanel != null)
         {
             ConversationOut();
         }
+    }
+
+    public virtual void PlayerAttack(GameObject attacker)
+    {
+        if(isInvincible)
+            return;
+
+        //Damaged
+        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
+
+        AudioManager.instance.SFXPlay("Hit_SFX");
+
+        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
+
+    }
+
+    public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)
+    {
+        bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;
+        damage = criticalHit ? damage * criticalDamage : damage;
+
+        print(this.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        stats.HP -= (1 - stats.defensivePower) * damage;
+
+        sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
+
+        Invoke("DamagedOut", 0.05f);
+        if (stats.HP <= 0f)
+        {
+            Dead();
+        }
+    }
+
+    void DamagedOut()
+    {
+        sprite.color = Color.white;
+    }
+
+    public virtual void Dead()
+    {
+        Destroy(this.gameObject);
     }
 
 

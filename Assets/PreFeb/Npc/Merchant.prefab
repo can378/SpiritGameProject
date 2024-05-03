@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 677907075764217255}
   - component: {fileID: 105901273986435457}
   - component: {fileID: 8573825823018942501}
+  - component: {fileID: -6160922463541586628}
   m_Layer: 0
   m_Name: Merchant
   m_TagString: Npc
@@ -312,11 +313,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPCTarget: {fileID: 0}
-  isTalking: 0
   DialogPanel: {fileID: 143811616464636645}
   DialogTextMesh: {fileID: 3598807940189196384}
-  isWalking: 0
   chapter: 0
+  isTalking: 0
+  isWalking: 0
+  isInvincible: 1
 --- !u!114 &8573825823018942501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +332,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txt: {fileID: 4900000, guid: 1bb91bd7bf41eef4c990445e8e2407aa, type: 3}
+--- !u!114 &-6160922463541586628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111119890032751850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 407b79e2d6adf3249a4e6b9a65482809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField: 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
+  activeEffects: []
 --- !u!1 &4771656577134882808
 GameObject:
   m_ObjectHideFlags: 0

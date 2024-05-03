@@ -8,9 +8,6 @@ public class RewardBox : NPCbasic
     [field: SerializeField] bool isLock;
     [field: SerializeField] public List<int> items {get; set; }
 
-    Stats stats;
-    SpriteRenderer sprite;
-
     public override void Conversation()
     {
         base.Conversation();
@@ -21,12 +18,6 @@ public class RewardBox : NPCbasic
     public override void ConversationOut()
     {
         base.ConversationOut();
-    }
-
-    private void Awake()
-    {
-        sprite = GetComponentInChildren<SpriteRenderer>();
-        stats = GetComponent<Stats>();
     }
 
     public void UnLock()
@@ -101,46 +92,9 @@ public class RewardBox : NPCbasic
         isOpen = true;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public override void Dead()
     {
-        if (other.tag == "PlayerAttack")
-        {
-            PlayerAttack(other.gameObject);
-        }
-    }
-
-    public void PlayerAttack(GameObject attacker)
-    {
-        //Damaged
-        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
-
-        AudioManager.instance.SFXPlay("Hit_SFX");
-
-        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
-
-    }
-
-    public void Damaged(float damage, float critical = 0, float criticalDamage = 0)
-    {
-        bool criticalHit = Random.Range(0, 100) < critical * 100 ? true : false;
-        damage = criticalHit ? damage * criticalDamage : damage;
-
-        print(this.name +" damaged : " + (1 - stats.defensivePower) * damage);
-        stats.HP -= (1 - stats.defensivePower) * damage;
-
-        sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
-
-        Invoke("DamagedOut", 0.05f);
-        if (stats.HP <= 0f)
-        {
-            Player.instance.stats.exp++;
-            MapUIManager.instance.UpdateExpUI();
-            Break();
-        }
-    }
-
-    void DamagedOut()
-    {
-        sprite.color = Color.white;
+        base.Dead();
+        Break();
     }
 }
