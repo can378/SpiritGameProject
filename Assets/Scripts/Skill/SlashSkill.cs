@@ -96,7 +96,7 @@ public class SlashSkill : Skill
 
     void Fire()
     {
-        Debug.Log("Icicle");
+        Debug.Log("Slash");
 
         if (user.tag == "Player")
         {
@@ -116,6 +116,8 @@ public class SlashSkill : Skill
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
             instantProjectile.transform.localScale = simul.transform.lossyScale;
             instantProjectile.tag = "PlayerAttack";
+            instantProjectile.layer = LayerMask.NameToLayer("PlayerAttack");
+
             /*
             투사체 = true
             관통력 = -1
@@ -155,6 +157,7 @@ public class SlashSkill : Skill
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // 방향 설정
             instantProjectile.transform.localScale = simul.transform.lossyScale;
             instantProjectile.tag = "EnemyAttack";
+            instantProjectile.layer = LayerMask.NameToLayer("EnemyAttack");
             /*
             투사체 = true
             관통력 = -1

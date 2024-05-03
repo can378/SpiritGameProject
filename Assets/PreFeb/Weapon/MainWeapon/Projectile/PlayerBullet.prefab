@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
   - component: {fileID: 4363247923933824874}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlayerBullet
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
@@ -161,13 +161,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <hitSuccess>k__BackingField: 0
   <isProjectile>k__BackingField: 1
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
-  <attackAttributes>k__BackingField: 
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <deBuff>k__BackingField: {fileID: 0}
+  <statusEffect>k__BackingField: 
+  <target>k__BackingField: []
+  multiHitDurationTime: 0

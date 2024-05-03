@@ -105,9 +105,9 @@ public class NPCbasic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "PlayerAttack")
+        if (other.tag == "PlayerAttack" || other.tag == "EnemyAttack")
         {
-            PlayerAttack(other.gameObject);
+            Attacked(other.gameObject);
         }
     }
 
@@ -119,7 +119,7 @@ public class NPCbasic : MonoBehaviour
         }
     }
 
-    public virtual void PlayerAttack(GameObject attacker)
+    public virtual void Attacked(GameObject attacker)
     {
         if(isInvincible)
             return;

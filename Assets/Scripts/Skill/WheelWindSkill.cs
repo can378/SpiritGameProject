@@ -50,6 +50,7 @@ public class WheelWindSkill : Skill
             effect.transform.parent = user.transform;
             effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
             effect.tag = "PlayerAttack";
+            effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             // 공격 판정 조정
             hitDetection = effect.GetComponent<HitDetection>();
@@ -96,6 +97,7 @@ public class WheelWindSkill : Skill
             effect.transform.parent = user.transform;
             effect.transform.localScale = new Vector3(size, size, 0);
             effect.tag = "EnemyAttack";
+            effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             // 공격 판정 조정
             hitDetection = effect.GetComponent<HitDetection>();

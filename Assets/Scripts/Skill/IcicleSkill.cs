@@ -91,6 +91,7 @@ public class IcicleSkill : Skill
 
             instantProjectile.transform.localScale = new Vector3(size, size, 0);
             instantProjectile.tag = "PlayerAttack";
+            instantProjectile.layer = LayerMask.NameToLayer("PlayerAttack");
 
             Destroy(simul);
             
@@ -123,6 +124,7 @@ public class IcicleSkill : Skill
 
             instantProjectile.transform.localScale = new Vector3(size, size,0);
             instantProjectile.tag = "EnemyAttack";
+            instantProjectile.layer = LayerMask.NameToLayer("EnemyAttack");
 
             // 이펙트 적용
             Destroy(simul);

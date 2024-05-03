@@ -61,6 +61,7 @@ public class ThunderboltSkill : Skill
 
                 effect.transform.localScale = new Vector3(size, size, 0);
                 effect.tag = "PlayerAttack";
+                effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
                 hitDetection.SetHitDetection(false, -1, false, -1,
                 defaultDamage + player.stats.skillPower * ratio,
@@ -107,6 +108,7 @@ public class ThunderboltSkill : Skill
 
                 effect.transform.localScale = new Vector3(size, size, 0);
                 effect.tag = "EnemyAttack";
+                effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
                 hitDetection.SetHitDetection(false, -1, false, -1,
                 defaultDamage,

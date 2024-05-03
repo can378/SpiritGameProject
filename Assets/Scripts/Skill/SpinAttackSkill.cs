@@ -93,7 +93,7 @@ public class SpinAttackSkill : Skill
             effect.transform.parent = user.transform;
             effect.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.stats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
             effect.tag = "PlayerAttack";
-
+            effect.layer = LayerMask.NameToLayer("PlayerAttack");
             /*
             투사체 = false
             관통력 = -1
@@ -130,6 +130,7 @@ public class SpinAttackSkill : Skill
             effect.transform.parent = user.transform;
             effect.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);
             effect.tag = "EnemyAttack";
+            effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             /*
             투사체 = false

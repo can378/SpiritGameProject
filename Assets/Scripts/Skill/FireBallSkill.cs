@@ -86,6 +86,7 @@ public class FireBallSkill : Skill
 
             effect.transform.localScale = new Vector3(size, size, 0);
             effect.tag = "PlayerAttack";
+            effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             /*
             투사체 = false
@@ -116,7 +117,8 @@ public class FireBallSkill : Skill
 
             effect.transform.localScale = new Vector3(size, size, 0);
             effect.tag = "EnemyAttack";
-            
+            effect.layer = LayerMask.NameToLayer("EnemyAttack");
+
             /*
             투사체 = false
             관통력 = -1

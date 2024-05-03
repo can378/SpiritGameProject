@@ -39,6 +39,7 @@ public class WaveSkill : Skill
 
             effect.transform.localScale = new Vector3(1, 1, 1);
             effect.tag = "PlayerAttack";
+            effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             /*
             투사체 = false
@@ -74,6 +75,7 @@ public class WaveSkill : Skill
 
             effect.transform.localScale = new Vector3(1, 1, 1);
             effect.tag = "EnemyAttack";
+            effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             /*
             투사체 = false
