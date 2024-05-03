@@ -723,20 +723,18 @@ public class Player : MonoBehaviour
     }
 
     // 피해
-    public void Damaged(float damage)
+    public void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
-        Debug.Log(damage * (1f - stats.defensivePower));
-        stats.HP -= damage * (1f - stats.defensivePower);
+        bool criticalHit = UnityEngine.Random.Range(0,100) < critical * 100 ? true : false;
+        damage = criticalHit ? damage * criticalDamage : damage;
 
-        MapUIManager.instance.UpdateHealthUI();
+        Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        stats.HP -= (1 - stats.defensivePower) * damage;
+
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
-        Invoke("DamagedOut",0.1f);
-        
-        if(stats.HP >= stats.HPMax)
-        {
-            stats.HP = stats.HPMax;
-        }
-        else if(stats.HP < 0)
+
+        Invoke("DamagedOut", 0.05f);
+        if (stats.HP <= 0f)
         {
             Dead();
         }
@@ -779,7 +777,7 @@ public class Player : MonoBehaviour
     {
         //무적 해제
         sprite.color = new Color(1, 1, 1, 1);
-        this.layerMask = 0;
+        this.layerMask = LayerMask.NameToLayer("Player");
         status.isInvincible = false;
     }
 
