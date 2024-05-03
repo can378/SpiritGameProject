@@ -59,10 +59,10 @@ public class SellingItem : MonoBehaviour
     {
         int cost = thisItemPrice;
 
-        if (Player.instance.stats.coin >= cost)
+        if (Player.instance.playerStats.coin >= cost)
         {
-            Player.instance.stats.coin -= cost;
-            Player.instance.stats.item = thisItemName;
+            Player.instance.playerStats.coin -= cost;
+            Player.instance.playerStats.item = thisItemName;
 
             //전에 가지고 있던 아이템 드랍
             if (Player.instance.playerItem != null)

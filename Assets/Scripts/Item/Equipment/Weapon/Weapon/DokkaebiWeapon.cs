@@ -26,17 +26,17 @@ public class DokkaebiWeapon : Weapon
         if (target == null)
             return;
 
-        if (target.status.isAttack)
+        if (target.isAttack)
         {
             attacking = true;
         }
 
-        if (attacking == true && target.status.isAttack == false)
+        if (attacking == true && target.isAttack == false)
         {
             attacking = false;
             if (coinDelay <= 0)
             {
-                target.stats.coin += gainCoin;
+                target.playerStats.coin += gainCoin;
                 MapUIManager.instance.UpdateCoinUI();
                 coinDelay = coinCoolTime;
             }

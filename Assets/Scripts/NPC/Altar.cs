@@ -8,10 +8,9 @@ public class Altar : NPCbasic
     public List<int> table;
     public int offering;
     
-    protected override void Start()
+    void Start()
     {
-        base.Start();
-        table = CombinationRandom.CombRandom(3,0,Player.instance.stats.playerStat.Length);
+        table = CombinationRandom.CombRandom(3, 0, Player.instance.playerStats.playerStat.Length);
     }
 
     public override void Conversation()
@@ -19,10 +18,10 @@ public class Altar : NPCbasic
         base.Conversation();
         if (check)
             return;
-        if(Player.instance.stats.coin < offering)
+        if(Player.instance.playerStats.coin < offering)
             return;
 
-        Player.instance.stats.coin -= offering;
+        Player.instance.playerStats.coin -= offering;
         MapUIManager.instance.statSelectPanel.SetActive(true);
         MapUIManager.instance.statSelectPanel.GetComponent<StatSelectUI>().SetStatSelectUI(this);
     }

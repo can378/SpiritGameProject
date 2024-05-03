@@ -7,12 +7,12 @@ public class ThunderWandWeapon : Weapon
     public override void Equip(Player target)
     {
         base.Equip(target);
-        Player.instance.stats.addSkillPower += 10;
+        Player.instance.playerStats.addSkillPower += 10;
     }
 
     public override void UnEquip(Player target)
     {
         base.UnEquip(target);
-        Player.instance.stats.addSkillPower -= 10;
+        Player.instance.playerStats.addSkillPower -= 10;
     }
 }

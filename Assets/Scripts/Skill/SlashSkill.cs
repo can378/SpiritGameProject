@@ -42,14 +42,14 @@ public class SlashSkill : Skill
 
             simul = Instantiate(slashEffectSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
-            simul.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.stats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
+            simul.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
 
             while (player.status.isSkillHold)
             {
                 if (holdPower < maxHoldPower && powerTimer > 0.1f)
                 {
                     holdPower += 0.025f;
-                    simul.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.stats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
+                    simul.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
                     powerTimer = 0;
                 }
                 simul.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);
@@ -101,16 +101,16 @@ public class SlashSkill : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
+            Weapon weapon = player.weaponController.weaponList[player.playerStats.weapon];
             GameObject instantProjectile = Instantiate(slashEffect, transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            float attackRate = weapon.SPA / player.stats.attackSpeed;                               // 공격 1회당 걸리는 시간
+            float attackRate = weapon.SPA / player.playerStats.attackSpeed;                               // 공격 1회당 걸리는 시간
 
             player.stats.decreasedMoveSpeed -= 0.5f;
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             //이펙트 설정
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
@@ -131,10 +131,10 @@ public class SlashSkill : Skill
             */
             hitDetection.SetHitDetection(true, -1, true, (int)((float)DPS / attackRate),
                 (int)((defalutDamage + player.stats.attackPower * ratio) * holdPower),
-                player.weaponController.weaponList[player.stats.weapon].knockBack * holdPower,
-                player.stats.criticalChance,
-                player.stats.criticalDamage,
-                player.weaponController.weaponList[player.stats.weapon].statusEffect);
+                player.weaponController.weaponList[player.playerStats.weapon].knockBack * holdPower,
+                player.playerStats.criticalChance,
+                player.playerStats.criticalDamage,
+                player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
             bulletRigid.velocity = player.status.mouseDir * 10 * speed;
 
             Destroy(simul);

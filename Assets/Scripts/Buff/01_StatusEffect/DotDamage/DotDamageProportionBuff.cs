@@ -47,16 +47,14 @@ public class DotDamageProportionBuff : StatusEffect
 
     private void DealDamageToTarget(float damage)
     {
-        if(target.tag == "Player")
+        if(target.tag == "Player" || target.tag == "Npc")
         {
-            Player player = target.GetComponent<Player>();
-            player.Damaged(player.stats.HPMax * damage * overlap);
+            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
+            objectBasic.Damaged(objectBasic.stats.HPMax * damage * overlap);
         }
         else if(target.tag == "Enemy")
         {
             EnemyBasic enemy = target.GetComponent<EnemyBasic>();
-            List<int> attributes = new List<int>();
-            attributes.Add(0);
             enemy.Damaged(enemy.stats.HPMax * damage * overlap);
         }
     }

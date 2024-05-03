@@ -79,7 +79,7 @@ public class FireBallSkill : Skill
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             Destroy(simul);
             Destroy(effect, time);
@@ -99,7 +99,7 @@ public class FireBallSkill : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
 
             
         }

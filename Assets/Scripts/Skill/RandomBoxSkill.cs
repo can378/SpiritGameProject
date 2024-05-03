@@ -69,7 +69,7 @@ public class RandomBoxSkill : Skill
             Player player = user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
         }
         else if(user.tag == "Enemy")
         {

@@ -25,10 +25,10 @@ public class RewardBox : NPCbasic
         if(!isLock)
             return;
         
-        if(Player.instance.stats.key < 1)
+        if(Player.instance.playerStats.key < 1)
             return;
 
-        Player.instance.stats.key--;
+        Player.instance.playerStats.key--;
         isLock = false;
     }
 

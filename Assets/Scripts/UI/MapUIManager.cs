@@ -62,7 +62,7 @@ public class MapUIManager : MonoBehaviour
         //UpdateWeaponUI();
         //UpdateSkillUI();
         UpdatePointUI();
-        if (Player.instance.stats.item == "")
+        if (Player.instance.playerStats.item == "")
         { updateItemUI(null); }
 
         setUpgradePanel();
@@ -111,19 +111,19 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateExpUI()
     {
-        if(Player.instance.stats.exp%10==0) 
+        if(Player.instance.playerStats.exp%10==0) 
         {
-            Player.instance.stats.level++;
-            Player.instance.stats.point++;
-            Player.instance.stats.exp = 0;
+            Player.instance.playerStats.level++;
+            Player.instance.playerStats.point++;
+            Player.instance.playerStats.exp = 0;
             UpdatePointUI();
         }
         
-        float normalizedEXP = Player.instance.stats.exp;
+        float normalizedEXP = Player.instance.playerStats.exp;
         ExpSlider.value = normalizedEXP;
 
         //print("update exp ui" + normalizedEXP);
-        ExpTxt.text = Player.instance.stats.exp.ToString();
+        ExpTxt.text = Player.instance.playerStats.exp.ToString();
     }
 
     public void updateItemUI(GameObject obj) 
@@ -139,45 +139,45 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateCoinUI() 
     {
-        CoinTxt.text = Player.instance.stats.coin.ToString();
+        CoinTxt.text = Player.instance.playerStats.coin.ToString();
     }
 
     public void UpdateKeyUI()
     {
-        KeyTxt.text = Player.instance.stats.key.ToString();
+        KeyTxt.text = Player.instance.playerStats.key.ToString();
     }
 
 
     public void UpdateWeaponUI() 
     {
-        if (Player.instance.stats.weapon != 0)
+        if (Player.instance.playerStats.weapon != 0)
         {
-            WeaponTxt.text = Player.instance.weaponController.weaponList[Player.instance.stats.weapon].equipmentName;
+            WeaponTxt.text = Player.instance.weaponController.weaponList[Player.instance.playerStats.weapon].equipmentName;
         }
         else {WeaponTxt.text = "";}
     }
 
     public void UpdateSkillUI() 
     {
-        if (Player.instance.stats.skill[Player.instance.status.skillIndex] != 0)
+        if (Player.instance.playerStats.skill[Player.instance.status.skillIndex] != 0)
         {
-            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.stats.skill[Player.instance.status.skillIndex]].skillName;
+            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.playerStats.skill[Player.instance.status.skillIndex]].skillName;
         }
         else {SkillTxt.text = "";}
     }
 
     public void UpdatePointUI()
     {
-        PointTxt.text = Player.instance.stats.point.ToString();
+        PointTxt.text = Player.instance.playerStats.point.ToString();
     }
 
     //장비창 업데이트
     public void UpdateEquipmentUI()
     {
-        for(int i = 0;i<Player.instance.stats.maxEquipment; i++)
+        for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
         {
-            if(Player.instance.stats.equipments[i] != null)
-                EquipmentsTxt[i].text = Player.instance.stats.equipments[i].equipmentName;
+            if(Player.instance.playerStats.equipments[i] != null)
+                EquipmentsTxt[i].text = Player.instance.playerStats.equipments[i].equipmentName;
             else
                 EquipmentsTxt[i].text ="";
         }

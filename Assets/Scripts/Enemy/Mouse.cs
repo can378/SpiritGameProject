@@ -95,7 +95,7 @@ public class Mouse : EnemyBasic
         GetComponentInChildren<SpriteRenderer>().transform.localScale = enemyTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
         isChange = true;
 
-        skill = enemyTarget.GetComponent<Player>().stats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
+        skill = enemyTarget.GetComponent<Player>().playerStats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
         if (skill != 0) skillList[skill].gameObject.SetActive(true);
 
         //Run away

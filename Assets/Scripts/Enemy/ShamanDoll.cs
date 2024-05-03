@@ -31,7 +31,7 @@ public class ShamanDoll : EnemyBasic
         */
 
         //enemyTarget.GetComponent<PlayerStats>().HP -= GetComponent<EnemyStats>().attackPower;
-        enemyTarget.GetComponent<Player>().EnemyAttack(this.gameObject);
+        enemyTarget.GetComponent<Player>().Attacked(this.gameObject);
         print("doll is killing hershelf");
 
         StartCoroutine(shamanDoll());

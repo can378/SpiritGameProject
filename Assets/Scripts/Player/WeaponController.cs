@@ -96,7 +96,7 @@ public class WeaponController : MonoBehaviour
     // 아이템을 투사체로 날림
     IEnumerator ShotItem(GameObject explosive)
     {
-        Debug.Log("ShotItem");
+        //Debug.Log("ShotItem");
 
         yield return new WaitForSeconds(0.1f);
 
@@ -145,7 +145,7 @@ public class WeaponController : MonoBehaviour
     // 클릭한 방향으로 이펙트 생성
     IEnumerator Swing()
     {
-        Debug.Log("Swing");
+        //Debug.Log("Swing");
 
         float attackDir = status.mouseAngle;
 
@@ -177,7 +177,7 @@ public class WeaponController : MonoBehaviour
     // 투사체를 클릭한 방향으로 발사
     IEnumerator Shot()
     {
-        Debug.Log("Shot");
+        //Debug.Log("Shot");
 
         float attackDir = status.mouseAngle;
 

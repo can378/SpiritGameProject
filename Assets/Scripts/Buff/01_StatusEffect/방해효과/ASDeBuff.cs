@@ -36,11 +36,11 @@ public class ASDeBuff : StatusEffect
 
             while (duration > 0)
             {
-                if (player.stats.weapon != 0)
+                if (player.playerStats.weapon != 0)
                     player.status.attackDelay = 99f;
 
-                if (player.stats.skill[player.status.skillIndex] != 0)
-                    player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime = 99f;
+                if (player.playerStats.skill[player.status.skillIndex] != 0)
+                    player.skillController.skillList[player.playerStats.skill[player.status.skillIndex]].skillCoolTime = 99f;
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -67,12 +67,12 @@ public class ASDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            if (player.stats.skill[player.status.skillIndex] != 0)
+            if (player.playerStats.skill[player.status.skillIndex] != 0)
             {
-                player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime = curSkillCoolTIme;
+                player.skillController.skillList[player.playerStats.skill[player.status.skillIndex]].skillCoolTime = curSkillCoolTIme;
             }
 
-            if (player.stats.weapon != 0)
+            if (player.playerStats.weapon != 0)
             {
                 player.status.attackDelay = curAttackDelay;
             }

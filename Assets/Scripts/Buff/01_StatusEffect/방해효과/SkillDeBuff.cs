@@ -28,11 +28,11 @@ public class SkillDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime += 0.1f;
+            player.skillController.skillList[player.playerStats.skill[player.status.skillIndex]].skillCoolTime += 0.1f;
 
             while (duration > 0)
             {
-                player.skillController.skillList[player.stats.skill[player.status.skillIndex]].skillCoolTime += 0.1f;
+                player.skillController.skillList[player.playerStats.skill[player.status.skillIndex]].skillCoolTime += 0.1f;
                 yield return new WaitForSeconds(0.1f);
             }
         }

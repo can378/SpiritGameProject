@@ -87,7 +87,7 @@ public class IcicleSkill : Skill
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             instantProjectile.transform.localScale = new Vector3(size, size, 0);
             instantProjectile.tag = "PlayerAttack";
@@ -106,7 +106,7 @@ public class IcicleSkill : Skill
             치뎀 = 0
             디버프 = 화상
             */
-            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.stats.skillPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
             bulletRigid.velocity = player.status.mouseDir * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정

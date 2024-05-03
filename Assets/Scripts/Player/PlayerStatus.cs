@@ -21,9 +21,7 @@ public class PlayerStatus : MonoBehaviour
 
     [field: SerializeField] public bool isInvincible { get; set; }                  // 무적 상태
     [field: SerializeField] public bool isAttackable { get; set; }                  // 공격가능 상태
-    [field: SerializeField] public bool isFlinch { get; set; }                      // 경직 상태 = 공격불가, 스킬 사용 불가, 이동불가, 회피 불가
 
-    [field: SerializeField] public bool isAttack { get; set; }                      // 공격 중
     [field: SerializeField] public float attackDelay { get; set; }                  // 다음 공격까지 대기시간
     [field: SerializeField] public bool isAttackReady { get; set; }                 // 공격 준비 완료
 

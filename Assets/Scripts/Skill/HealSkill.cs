@@ -44,7 +44,7 @@ public class HealSkill : Skill
             while(player.status.isSkillHold)
             {
                 player.Damaged(-player.stats.HPMax * dotHeal * 0.1f);
-                yield return new WaitForSeconds(0.1f / player.stats.attackSpeed);
+                yield return new WaitForSeconds(0.1f / player.playerStats.attackSpeed);
             }
 
         }
@@ -85,7 +85,7 @@ public class HealSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
             player.stats.decreasedMoveSpeed -= 0.9f;
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")

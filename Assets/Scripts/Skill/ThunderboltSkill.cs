@@ -64,7 +64,7 @@ public class ThunderboltSkill : Skill
                 effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
                 hitDetection.SetHitDetection(false, -1, false, -1,
-                defaultDamage + player.stats.skillPower * ratio,
+                defaultDamage + player.playerStats.skillPower * ratio,
                 knockBack,
                 0,
                 0,
@@ -146,7 +146,7 @@ public class ThunderboltSkill : Skill
             yield return new WaitForSeconds(postDelay);
 
             // ÄðÅ¸ÀÓ Àû¿ë
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             player.stats.decreasedMoveSpeed -= 99f;
         }

@@ -20,7 +20,7 @@ public class StunDeBuff : StatusEffect
             Player player = target.GetComponent<Player>();
 
             // 효과 적용
-            player.status.isFlinch = true;
+            player.isFlinch = true;
 
             // 중첩 
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
@@ -43,7 +43,7 @@ public class StunDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            while(player.status.isFlinch)
+            while(player.isFlinch)
             {
                 yield return null;
             }

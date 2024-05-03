@@ -84,7 +84,7 @@ public class EnemyBasic : MonoBehaviour
         Invoke("DamagedOut",0.05f);
         if (stats.HP <= 0f)
         {
-            Player.instance.stats.exp++;
+            Player.instance.playerStats.exp++;
             MapUIManager.instance.UpdateExpUI();
             EnemyDead();
         }

@@ -11,10 +11,16 @@ public class ObjectBasic : MonoBehaviour
     public bool isFlinch;       // 경직 중
     public bool isInvincible;   // 무적 상태
 
-    SpriteRenderer sprite;
-    Rigidbody2D rigid;
+    protected SpriteRenderer sprite;
+    protected Rigidbody2D rigid;
 
     Coroutine flinchCoroutine;
+
+    protected virtual void Awake()
+    {
+        sprite = GetComponent<SpriteRenderer>();
+        rigid = GetComponent<Rigidbody2D>();
+    }
 
     public virtual void Attacked(GameObject attacker)
     {
@@ -24,6 +30,8 @@ public class ObjectBasic : MonoBehaviour
         }
 
         HitDetection hitDetection = attacker.GetComponent<HitDetection>();
+
+        AudioManager.instance.SFXPlay("Hit_SFX");
 
         Damaged(hitDetection.damage);
 

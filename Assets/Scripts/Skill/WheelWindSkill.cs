@@ -30,9 +30,9 @@ public class WheelWindSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
+            Weapon weapon = player.weaponController.weaponList[player.playerStats.weapon];
             HitDetection hitDetection;
-            float attackRate = weapon.SPA / player.stats.attackSpeed;
+            float attackRate = weapon.SPA / player.playerStats.attackSpeed;
 
             skillCoolTime = 99;
 
@@ -48,7 +48,7 @@ public class WheelWindSkill : Skill
                 
             effect = Instantiate(WheelWindEffect, user.transform.position, user.transform.rotation);
             effect.transform.parent = user.transform;
-            effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.stats.weapon].attackSize, size * player.weaponController.weaponList[player.stats.weapon].attackSize, 0);
+            effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
             effect.tag = "PlayerAttack";
             effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
@@ -68,10 +68,10 @@ public class WheelWindSkill : Skill
             */
             hitDetection.SetHitDetection(false, -1, true, (int)((float)DPS / attackRate),
              defaultDamage + player.stats.attackPower * ratio,
-             player.weaponController.weaponList[player.stats.weapon].knockBack,
-             player.stats.criticalChance,
-             player.stats.criticalDamage,
-             player.weaponController.weaponList[player.stats.weapon].statusEffect);
+             player.weaponController.weaponList[player.playerStats.weapon].knockBack,
+             player.playerStats.criticalChance,
+             player.playerStats.criticalDamage,
+             player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
         }
         else if (user.tag == "Enemy")
         {
@@ -133,8 +133,8 @@ public class WheelWindSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.stats.weapon];
-            float attackRate = weapon.SPA / player.stats.attackSpeed;
+            Weapon weapon = player.weaponController.weaponList[player.playerStats.weapon];
+            float attackRate = weapon.SPA / player.playerStats.attackSpeed;
 
             yield return new WaitForSeconds(0.5f * attackRate);
 
@@ -144,7 +144,7 @@ public class WheelWindSkill : Skill
             yield return new WaitForSeconds(postDelay * attackRate);
 
             // ÄðÅ¸ÀÓ Àû¿ë
-            skillCoolTime = (1 - player.stats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             player.stats.decreasedMoveSpeed -= 0.5f;
         }

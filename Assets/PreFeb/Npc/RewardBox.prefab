@@ -347,13 +347,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dad1b6fb2c4bd4abfa31f0c2b6cc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  isMove: 0
+  isAttack: 0
+  isFlinch: 0
+  isInvincible: 0
+  isTalking: 0
   NPCTarget: {fileID: 0}
   DialogPanel: {fileID: 795303487623088352}
   DialogTextMesh: {fileID: 4774389298625159125}
   chapter: 0
-  isTalking: 0
-  isWalking: 0
-  isInvincible: 0
+  side: 0
   isOpen: 0
   isLock: 0
   <items>k__BackingField: 
@@ -386,7 +390,7 @@ MonoBehaviour:
   <HP>k__BackingField: 50
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 1
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField: 1
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []

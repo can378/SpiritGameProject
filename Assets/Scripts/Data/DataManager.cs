@@ -71,33 +71,33 @@ public class DataManager : MonoBehaviour
     public void SaveUserData()
     {
         // userData를 player 스탯으로 덮어씌우기
-        userData.playerLevel = Player.instance.stats.level;
-        userData.playerExp = Player.instance.stats.exp;
-        userData.playerPoint = Player.instance.stats.point;
+        userData.playerLevel = Player.instance.playerStats.level;
+        userData.playerExp = Player.instance.playerStats.exp;
+        userData.playerPoint = Player.instance.playerStats.point;
 
-        userData.playerHP = Player.instance.stats.HP;
-        userData.playerTempHP = Player.instance.stats.tempHP;
+        userData.playerHP = Player.instance.playerStats.HP;
+        userData.playerTempHP = Player.instance.playerStats.tempHP;
 
-        userData.playerCoin = Player.instance.stats.coin;
-        userData.playerKey = Player.instance.stats.key;
-        userData.playerDice = Player.instance.stats.dice;
+        userData.playerCoin = Player.instance.playerStats.coin;
+        userData.playerKey = Player.instance.playerStats.key;
+        userData.playerDice = Player.instance.playerStats.dice;
 
-        if (Player.instance.stats.weapon != 0) userData.playerWeapon = Player.instance.stats.weapon;
-        for(int i = 0;i<Player.instance.stats.skill.Length ; i++)
+        if (Player.instance.playerStats.weapon != 0) userData.playerWeapon = Player.instance.playerStats.weapon;
+        for(int i = 0;i<Player.instance.playerStats.skill.Length ; i++)
         {
-            if (Player.instance.stats.skill[i] != 0)
-                userData.playerSkill = Player.instance.stats.skill[i];
+            if (Player.instance.playerStats.skill[i] != 0)
+                userData.playerSkill = Player.instance.playerStats.skill[i];
         }
     
-        for(int i = 0;i<Player.instance.stats.maxEquipment; i++)
+        for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
         {
-            if(Player.instance.stats.equipments[i] != null)
-                userData.playerEquipments[i] = Player.instance.stats.equipments[i].equipmentId;
+            if(Player.instance.playerStats.equipments[i] != null)
+                userData.playerEquipments[i] = Player.instance.playerStats.equipments[i].equipmentId;
         }
 
         for (int i = 0; i < 8; i++)
         {
-            userData.playerStat[i] = Player.instance.stats.playerStat[i];
+            userData.playerStat[i] = Player.instance.playerStats.playerStat[i];
         }
 
         //파일 저장 경로

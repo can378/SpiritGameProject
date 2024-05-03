@@ -28,10 +28,10 @@ public class OverlapDamageBuff : StatusEffect
         if(overlap == maxOverlap)
         {
             Debug.Log(target.name +":ÃâÇ÷!");
-            if (target.tag == "Player")
+            if (target.tag == "Player" || target.tag == "Npc")
             {
-                Player player = target.GetComponent<Player>();
-                player.Damaged(player.stats.HPMax * (1 - player.stats.SEResist) * damagePer);
+                ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
+                objectBasic.Damaged(objectBasic.stats.HPMax * (1 - objectBasic.stats.SEResist) * damagePer);
             }
             else if (target.tag == "Enemy")
             {

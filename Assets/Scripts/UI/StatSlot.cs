@@ -46,7 +46,7 @@ public class StatSlot : MonoBehaviour
 
     public void statBtn()
     {
-        Player.instance.stats.playerStat[statIndex]++;
+        Player.instance.playerStats.playerStat[statIndex]++;
         Player.instance.statApply();
         MapUIManager.instance.UpdatePointUI();
         //MapUIManager.instance.statSelectPanel.SetActive(false);
