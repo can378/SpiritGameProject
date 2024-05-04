@@ -5,11 +5,18 @@ using UnityEngine;
 public class ObjectBasic : MonoBehaviour
 {
     public Stats stats;
-    
-    public bool isMove;         // 이동중
-    public bool isAttack;       // 공격중
-    public bool isFlinch;       // 경직 중
-    public bool isInvincible;   // 무적 상태
+
+    // 이동관련
+    public Vector2 moveVec;
+
+    // 피격 관련
+    public bool isFlinch;           // 경직 중
+    public bool isInvincible;       // 무적 상태
+
+    // 공격 관련 
+    public bool isAttack;           // 공격중
+    public float attackDelay;       // 공격중 시간
+    public bool isAttackReady;      // 공격 준비 완료
 
     protected SpriteRenderer sprite;
     protected Rigidbody2D rigid;
@@ -18,9 +25,11 @@ public class ObjectBasic : MonoBehaviour
 
     protected virtual void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
     }
+
+    #region Effect
 
     public virtual void Attacked(GameObject attacker)
     {
@@ -74,7 +83,7 @@ public class ObjectBasic : MonoBehaviour
         sprite.color = Color.white;
     }
 
-    public virtual void KnockBack(GameObject agent, float knockBack)
+    public void KnockBack(GameObject agent, float knockBack)
     {
         Vector2 dir = (transform.position - agent.transform.position).normalized;
         rigid.AddForce(dir * (knockBack * (1 - stats.defensivePower)), ForceMode2D.Impulse);
@@ -89,7 +98,7 @@ public class ObjectBasic : MonoBehaviour
         isFlinch = false;
     }
 
-    public virtual void Invincible(float time = 0)
+    public void Invincible(float time = 0)
     {
         isInvincible = true;
         sprite.color = new Color(1, 1, 1, 0.4f);
@@ -162,4 +171,6 @@ public class ObjectBasic : MonoBehaviour
         }
         stats.activeEffects.Clear();
     }
+
+    #endregion
 }

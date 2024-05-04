@@ -7,11 +7,21 @@ using UnityEngine.U2D;
 public class NPCbasic : ObjectBasic
 {
     public bool isTalking;
+    public bool isFollow;
+    public bool isChase;
 
-    public GameObject NPCTarget;
-    //public string NPCName;
+    // 적
+    public Transform enemyTarget;
+    public float enemyTargetDis = 99f;
+    public float maxEnemyTargetDis;         // 적에게 공격할 수 있는 최대 거리
+
+    // 동료
+    public Transform companionTarget;
+    public float companionTargetDis = 99f;
+    public float maxCompanionTargetDis;     // 동료와 최대로 떨어질 수 있는 거리
+
     public GameObject DialogPanel;
-    public TMP_Text DialogTextMesh;
+    //public TMP_Text DialogTextMesh;
     public int chapter = 0;
     public int side = 0;
     int index = 0;
@@ -21,50 +31,122 @@ public class NPCbasic : ObjectBasic
     protected override void Awake()
     {
         base.Awake();
-        isTalking = false;
         stats = GetComponent<Stats>();
         scriptManager = GetComponent<ScriptManager>();
+
         //GetComponent<PathFinding>().seeker = this.transform;
+    }
+
+    protected virtual void Start()
+    {
+        isTalking = false;
+    }
+
+    protected virtual void Update()
+    {
+        Attack();
+        Move();
+        ChaseEnemy();
+        FollowCompanion();
+    }
+
+    #region Attack
+
+    protected virtual void Attack()
+    {
 
     }
 
-    void Update()
+    protected void AttackOut()
     {
-        sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
+        print("AttackOut");
+        isAttack = false;
     }
 
-    void FixedUpdate()
+    #endregion Attack
+
+    #region Move
+
+    protected virtual void Move()
     {
-        //following player
-        /*
-        if (isWalking)
+        // 경직과 공격 중에는 직접 이동 불가
+        if (isFlinch || isAttack)
+            return;
+
+        // 대화 중 이동 불가
+        if (isTalking)
         {
-            float targetDis = Vector2.Distance(transform.position, NPCTarget.transform.position);
-            if (targetDis >= 3f && !(targetDis <= 1f))
-            {
-                GetComponent<PathFinding>().StartFinding
-                    ((Vector2)transform.position, (Vector2)NPCTarget.transform.position);
-            }
+            moveVec = Vector3.zero;
         }
-        */
+
+        if(isChase && isFollow)
+        {
+            moveVec = (companionTarget.position - transform.position).normalized;
+        }
+        else if(isChase)
+        {
+            moveVec = (enemyTarget.position - transform.position).normalized;
+        }
+        else if(isFollow)
+        {
+            moveVec = (companionTarget.position - transform.position).normalized;
+        }
+
+        rigid.velocity = moveVec * stats.moveSpeed;
+
     }
 
-    /*
-    IEnumerator startConveration()
+    void ChaseEnemy()
     {
-        while (true)
+        //타겟이 없으면 반환
+        if (!enemyTarget)
         {
-            print("대화");
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                DialogPanel.SetActive(!DialogPanel.activeSelf);
-                Conversation(index);
-                index++;
-            }
-            yield return null;
+            enemyTargetDis = 99f;
+            return;
+        }
+
+        enemyTargetDis = Vector2.Distance(transform.position, enemyTarget.position);
+
+        // 적과 너무 가깝거나
+        if (enemyTargetDis <= 2f || enemyTargetDis <= maxEnemyTargetDis)
+        {
+            isChase = false;
+        }
+        // 적군이 충분히 가까이 있으면 추적
+        else
+        {
+            isChase = true;
+        }
+
+
+    }
+
+    void FollowCompanion()
+    {
+        // 아군이 없으면 반환
+        if (!companionTarget)
+        {
+            companionTargetDis = 99f;
+            return;
+        }
+
+        companionTargetDis = Vector2.Distance(transform.position, companionTarget.position);
+        
+        //아군과 너무 가깝거나
+        if (companionTargetDis <= 5f)
+        {
+            isFollow = false;
+        }
+        //아군과 너무 멀리 떨어져있으면 따라가기
+        else if (maxCompanionTargetDis <= companionTargetDis)
+        {
+            isFollow = true;
         }
     }
-    */
+
+    #endregion Move
+
+    #region Interaction
 
     //대화
     public virtual void Conversation()
@@ -75,16 +157,16 @@ public class NPCbasic : ObjectBasic
         if (scriptManager.NPCScript(chapter, index) == "border")
         {
             index--;
-            DialogTextMesh.text = scriptManager.NPCScript(chapter, index - 1);
+            DialogPanel.GetComponent<TMP_Text>().text = scriptManager.NPCScript(chapter, index - 1);
         }
         else if (scriptManager.NPCScript(chapter, index) == "wrong")
         {
             index++;
-            DialogTextMesh.text = scriptManager.NPCScript(chapter, index + 1);
+            DialogPanel.GetComponent<TMP_Text>().text = scriptManager.NPCScript(chapter, index + 1);
         }
         else
         {
-            DialogTextMesh.text = scriptManager.NPCScript(chapter, index);
+            DialogPanel.GetComponent<TMP_Text>().text = scriptManager.NPCScript(chapter, index);
         }
         index++;
     }
@@ -95,7 +177,7 @@ public class NPCbasic : ObjectBasic
         DialogPanel.SetActive(false);
     }
 
-
+    #endregion Interaction
 
     //Trigger===================================================================================
 
@@ -103,6 +185,7 @@ public class NPCbasic : ObjectBasic
     {
         if (((side == 0 || side == 2) && other.tag == "PlayerAttack") || ((side == 0 || side == 1) && other.tag == "EnemyAttack"))
         {
+            print(((side == 0 || side == 2) && other.tag == "PlayerAttack"));
             Attacked(other.gameObject);
         }
     }

@@ -38,7 +38,6 @@ public class Player : ObjectBasic
 
     Vector2 playerPosition;
     
-    Vector2 moveVec;
     Vector2 dodgeVec;
 
     public WeaponController weaponController;
@@ -151,7 +150,7 @@ public class Player : ObjectBasic
 
     void Move()     //이동
     {
-        if(isFlinch)
+        if( isFlinch )
             return;
 
         moveVec = new Vector2(hAxis, vAxis).normalized;
@@ -160,6 +159,7 @@ public class Player : ObjectBasic
         {
             moveVec = Vector2.zero;
         }
+        
         if (status.isDodge)             // 회피시 현재 속도 유지
         {
             rigid.velocity  = dodgeVec * playerStats.moveSpeed * playerStats.dodgeSpeed; ;
@@ -266,6 +266,8 @@ public class Player : ObjectBasic
 
         if (aDown && !isFlinch && !isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillHold)
         {
+            // 공격 준비 안됨
+            status.isAttackReady = false;
             isAttack = true;
 
             // 공격 방향
@@ -277,9 +279,6 @@ public class Player : ObjectBasic
 
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
             status.attackDelay = weaponController.weaponList[playerStats.weapon].SPA / playerStats.attackSpeed;
-
-            // 공격 준비 안됨
-            status.isAttackReady = false;
 
             // 공격 시간(움직이기까지 대기 시간) = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
             Invoke("AttackOut", (weaponController.weaponList[playerStats.weapon].preDelay + weaponController.weaponList[playerStats.weapon].rate) / playerStats.attackSpeed);
@@ -362,7 +361,7 @@ public class Player : ObjectBasic
             }
             else if (nearObject.tag == "Npc")
             {
-                nearObject.GetComponent<NPCbasic>().Conversation();
+                nearObject.GetComponentInParent<NPCbasic>().Conversation();
             }
             else if (nearObject.tag == "Door")
             {
