@@ -111,6 +111,7 @@ public class SpinAttackSkill : Skill
              player.playerStats.criticalChance, 
              player.playerStats.criticalDamage,
              player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.user = user;
 
             // rate 동안 유지
             player.stats.decreasedMoveSpeed -= 0.5f;
@@ -149,6 +150,7 @@ public class SpinAttackSkill : Skill
              0,
              0,
              null);
+            hitDetection.user = user;
 
             // rate 동안 유지
             enemy.stats.decreasedMoveSpeed -= 0.5f;

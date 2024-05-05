@@ -28,8 +28,8 @@ public class StunDeBuff : StatusEffect
             // 저항에 따른 지속시간 적용
             duration = (1 - player.stats.SEResist) * defaultDuration;
 
-            if (player.FlinchCoroutine != null) player.StopCoroutine(player.FlinchCoroutine);
-            player.FlinchCoroutine = StartCoroutine(player.Flinch(duration));
+            player.StopCoroutine(player.flinchCoroutine);
+            player.flinchCoroutine = StartCoroutine(player.Flinch(duration));
 
             StartCoroutine(Stun());
         }
@@ -72,7 +72,7 @@ public class StunDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            if (player.FlinchCoroutine != null) StopCoroutine(player.FlinchCoroutine);
+            if (player.flinchCoroutine != null) StopCoroutine(player.flinchCoroutine);
         }
         else if (target.tag == "Enemy")
         {

@@ -100,7 +100,7 @@ public class FireBallSkill : Skill
             디버프 = 화상
             */
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
-
+            hitDetection.user = user;
             
         }
         else if(user.tag == "Enemy")
@@ -131,8 +131,7 @@ public class FireBallSkill : Skill
             디버프 = 화상
             */
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
-
-           
+            hitDetection.user = user;
         }
     }
 }

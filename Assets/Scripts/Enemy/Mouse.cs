@@ -27,9 +27,12 @@ public class Mouse : EnemyBasic
             {
                 if(targetDis < 2f)
                 {
+                    HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
                     // 물기
                     // 물기 전 대기 시간
                     yield return new WaitForSeconds(0.5f);
+
+                    hitDetection.user = this.gameObject;
 
                     biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
                     biteArea.SetActive(true);
@@ -40,11 +43,15 @@ public class Mouse : EnemyBasic
                     biteArea.SetActive(false);
 
                     // 플레이어 공격 성공 시
-                    if(biteArea.GetComponent<HitDetection>().hitSuccess)
+                    if(this.hitTarget)
                     {
-                        Change();
-                        yield return new WaitForSeconds(1f);
+                        if (this.hitTarget.tag == "Player")
+                        {
+                            Change();
+                            yield return new WaitForSeconds(1f);
+                        }
                     }
+                    
                 }
                 else 
                 {
@@ -84,22 +91,22 @@ public class Mouse : EnemyBasic
                     Chase();
                 }
             }
-
+            hitTarget = null;
             yield return null;
         }
     }
 
     void Change()
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = enemyTarget.GetComponentInChildren<SpriteRenderer>().sprite;
-        GetComponentInChildren<SpriteRenderer>().transform.localScale = enemyTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
+        GetComponentInChildren<SpriteRenderer>().sprite = hitTarget.GetComponentInChildren<SpriteRenderer>().sprite;
+        GetComponentInChildren<SpriteRenderer>().transform.localScale = hitTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
         isChange = true;
 
-        skill = enemyTarget.GetComponent<Player>().playerStats.skill[enemyTarget.GetComponent<Player>().status.skillIndex];
+        skill = hitTarget.GetComponent<Player>().playerStats.skill[hitTarget.GetComponent<Player>().status.skillIndex];
         if (skill != 0) skillList[skill].gameObject.SetActive(true);
 
         //Run away
-        targetDirVec = enemyTarget.position - transform.position;
+        targetDirVec = hitTarget.transform.position - transform.position;
         rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
     }
 

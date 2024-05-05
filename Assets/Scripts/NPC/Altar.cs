@@ -8,8 +8,9 @@ public class Altar : NPCbasic
     public List<int> table;
     public int offering;
     
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         table = CombinationRandom.CombRandom(3, 0, Player.instance.playerStats.playerStat.Length);
     }
 

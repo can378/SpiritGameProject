@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class TempWeapon : Weapon
 {
-    public override void Equip(Player target)
+    public override void Equip(Player user)
     {
-        base.Equip(target);
+        base.Equip(user);
         Player.instance.stats.increasedAttackPower += 0.25f;
     }
 
-    public override void UnEquip(Player target)
+    public override void UnEquip(Player user)
     {
-        base.UnEquip(target);
+        base.UnEquip(user);
         Player.instance.stats.increasedAttackPower -= 0.25f;
     }
 }

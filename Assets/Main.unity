@@ -1598,10 +1598,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  isMove: 0
-  isAttack: 0
+  moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  isAttack: 0
+  attackDelay: 0
+  isAttackReady: 0
   hAxis: 0
   vAxis: 0
   layerMask:
@@ -5960,7 +5962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1522175050513423334, guid: fa1b6330840d87d4d96655521cb6553b, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 2684370939
+      value: 2684387323
       objectReference: {fileID: 0}
     - target: {fileID: 4732917231684399056, guid: fa1b6330840d87d4d96655521cb6553b, type: 3}
       propertyPath: fade

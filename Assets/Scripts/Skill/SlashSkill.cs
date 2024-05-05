@@ -135,6 +135,7 @@ public class SlashSkill : Skill
                 player.playerStats.criticalChance,
                 player.playerStats.criticalDamage,
                 player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.user = user;
             bulletRigid.velocity = player.status.mouseDir * 10 * speed;
 
             Destroy(simul);
@@ -175,6 +176,7 @@ public class SlashSkill : Skill
                 0,
                 0,
                 null);
+            hitDetection.user = user;
             bulletRigid.velocity = (enemy.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
 
             Destroy(simul);

@@ -31,18 +31,18 @@ public class Weapon : Equipment
     [field: SerializeField] public int[] statusEffect {get; private set;}
 
 
-    public override void Equip(Player target)
+    public override void Equip(Player user)
     {
-        this.target = target;
-        Stats stats = target.GetComponent<Stats>();
+        this.user = user;
+        Stats stats = user.GetComponent<Stats>();
         stats.addAttackPower += attackPower;
     }
 
-    public override void UnEquip(Player target)
+    public override void UnEquip(Player user)
     {
-        Stats stats = target.GetComponent<Stats>();
+        Stats stats = user.GetComponent<Stats>();
         stats.addAttackPower -= attackPower;
-        this.target = null;
+        this.user = null;
 
     }
 

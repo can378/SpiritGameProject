@@ -4,29 +4,35 @@ using UnityEngine;
 
 public class ObjectBasic : MonoBehaviour
 {
+    //스탯
     public Stats stats;
 
     // 이동관련
     public Vector2 moveVec;
 
     // 피격 관련
-    public bool isFlinch;           // 경직 중
-    public bool isInvincible;       // 무적 상태
+    public bool isFlinch;                   // 경직 중
+    public Coroutine flinchCoroutine;
+    public bool isInvincible;               // 무적 상태
 
     // 공격 관련 
-    public bool isAttack;           // 공격중
-    public float attackDelay;       // 공격중 시간
-    public bool isAttackReady;      // 공격 준비 완료
+    public bool isAttack;                   // 공격중
+    public float attackDelay;               // 공격중 시간
+    public bool isAttackReady;              // 공격 준비 완료
+    public GameObject hitTarget;            // 공격 성공
 
     protected SpriteRenderer sprite;
     protected Rigidbody2D rigid;
-
-    Coroutine flinchCoroutine;
-
+    
     protected virtual void Awake()
     {
         sprite = GetComponentInChildren<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
+    }
+
+    protected virtual void LateUpdate()
+    {
+        hitTarget = null;
     }
 
     #region Effect
@@ -58,7 +64,6 @@ public class ObjectBasic : MonoBehaviour
                 ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
             }
         }
-
     }
 
     public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)

@@ -20,21 +20,20 @@ public class Player : ObjectBasic
 
     #region Key Input
 
-    bool rDown;                 // 재장전
-    bool dDown;                 // 회피
-    bool aDown;                 // 공격
-    bool siDown;                // 선택 아이템
-    bool iDown;                 // 상호작용
+    bool rDown;                             // 재장전
+    bool dDown;                             // 회피
+    bool aDown;                             // 공격
+    bool siDown;                            // 선택 아이템
+    bool iDown;                             // 상호작용
 
-    float skcDown;               // 스킬 변경
-    bool skDown;                // 스킬 키 다운 중
+    float skcDown;                          // 스킬 변경
+    bool skDown;                            // 스킬 키 다운 중
 
     #endregion
 
-    public LayerMask layerMask;//접근 불가한 레이어 설정
+    public LayerMask layerMask;             //접근 불가한 레이어 설정
     public GameObject nearObject;
     public GameObject playerItem;
-    public Coroutine FlinchCoroutine;
 
     Vector2 playerPosition;
     
@@ -70,8 +69,6 @@ public class Player : ObjectBasic
         sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
         GetInput();
 
-        Turn();
-        
         /*
         if (isMoveable())
         {
@@ -81,11 +78,10 @@ public class Player : ObjectBasic
         }
         */
 
+        Turn();
         Run();
         Dodge();
         Move();
-        
-
         UseItem();
         
         if (status.isAttackable)
@@ -101,11 +97,6 @@ public class Player : ObjectBasic
 
         string layerName = LayerMask.LayerToName(gameObject.layer);
         //Debug.Log("My layer name is: " + layerName);
-    }
-    
-    void FixedUpdate()
-    {
-
     }
 
     void GetInput()
@@ -694,7 +685,7 @@ public class Player : ObjectBasic
     // 상태 관련
     #region Effect
 
-/*
+    /*
     //적에게 피격
     public void EnemyAttack(GameObject attacker)
     {
@@ -722,27 +713,17 @@ public class Player : ObjectBasic
                 ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
             }
         }
-
     }
-
+    */
+    
     // 피해
-    public void Damaged(float damage, float critical = 0, float criticalDamage = 0)
+    public override void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
-        bool criticalHit = UnityEngine.Random.Range(0,100) < critical * 100 ? true : false;
-        damage = criticalHit ? damage * criticalDamage : damage;
-
-        Debug.Log(this.gameObject.name + " damaged : " + (1 - playerStats.defensivePower) * damage);
-        playerStats.HP -= (1 - playerStats.defensivePower) * damage;
-
-        sprite.color = 0 < (1 - playerStats.defensivePower) * damage ? Color.red : Color.green;
-
-        Invoke("DamagedOut", 0.05f);
-        if (playerStats.HP <= 0f)
-        {
-            Dead();
-        }
+        base.Damaged(damage,critical,criticalDamage);
+        MapUIManager.instance.UpdateHealthUI();
     }
 
+    /*
     void DamagedOut()
     {
         sprite.color = Color.white;

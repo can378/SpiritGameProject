@@ -72,6 +72,7 @@ public class WheelWindSkill : Skill
              player.playerStats.criticalChance,
              player.playerStats.criticalDamage,
              player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.user = user;
         }
         else if (user.tag == "Enemy")
         {
@@ -119,6 +120,7 @@ public class WheelWindSkill : Skill
              0,
              0,
              null);
+            hitDetection.user = user;
         }
     }
 

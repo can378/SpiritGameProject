@@ -5,47 +5,34 @@ using UnityEngine;
 
 public class DokkaebiWeapon : Weapon
 {
-    // 5초 마다 무기를 휘두르고 공격을 마치면 코인을 획득한다.
-    [SerializeField] float coinCoolTime;
-    [SerializeField] int gainCoin;
-
-    float coinDelay;
-    bool attacking;
-
-    public override void Equip(Player target)
+    // 기본 공격 적중 시 재화 + 1
+    void Update()
     {
-        base.Equip(target);
-    }
-
-    void Update() {
         Passive();
     }
 
     void Passive()
     {
-        if (target == null)
+        if (user == null || !user.hitTarget)
             return;
 
-        if (target.isAttack)
-        {
-            attacking = true;
-        }
+        if (user.hitTarget.layer == LayerMask.NameToLayer("Wall"))
+            return;
 
-        if (attacking == true && target.isAttack == false)
-        {
-            attacking = false;
-            if (coinDelay <= 0)
-            {
-                target.playerStats.coin += gainCoin;
-                MapUIManager.instance.UpdateCoinUI();
-                coinDelay = coinCoolTime;
-            }
-        }
-        coinDelay -= Time.deltaTime;
+        if (!user.hitTarget.GetComponent<ObjectBasic>().isAttack)
+            return;
+        
+        user.playerStats.coin += 1;
+        MapUIManager.instance.UpdateCoinUI();
     }
 
-    public override void UnEquip(Player target)
+    public override void Equip(Player user)
     {
-        base.UnEquip(target);
+        base.Equip(user);
+    }
+
+    public override void UnEquip(Player user)
+    {
+        base.UnEquip(user);
     }
 }

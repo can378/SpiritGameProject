@@ -57,6 +57,7 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  hitTarget: {fileID: 0}
   <skillList>k__BackingField:
   - {fileID: 0}
   - {fileID: 3455611008669616765}
@@ -180,7 +181,7 @@ GameObject:
   - component: {fileID: 100355367255602241}
   - component: {fileID: 4037746150098232319}
   - component: {fileID: 4414855049052467967}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bite
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
@@ -242,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -253,7 +254,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!61 &4414855049052467967
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -309,7 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1871583351741193509}
   - component: {fileID: 2805639989366019052}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}

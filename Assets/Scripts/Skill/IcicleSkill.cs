@@ -107,6 +107,7 @@ public class IcicleSkill : Skill
             디버프 = 화상
             */
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
             bulletRigid.velocity = player.status.mouseDir * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정
@@ -142,6 +143,7 @@ public class IcicleSkill : Skill
             디버프 = 화상
             */
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // 방향 설정
             bulletRigid.velocity = (enemy.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정

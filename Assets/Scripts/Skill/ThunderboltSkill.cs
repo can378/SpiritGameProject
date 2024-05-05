@@ -116,6 +116,7 @@ public class ThunderboltSkill : Skill
                 0,
                 0,
                 statusEffect);
+                hitDetection.user = user;
 
                 Destroy(effect, time);
 

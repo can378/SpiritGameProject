@@ -42,7 +42,7 @@ public class NPCbasic : ObjectBasic
         isTalking = false;
     }
 
-    protected virtual void Update()
+    void Update()
     {
         Attack();
         Move();
@@ -59,7 +59,6 @@ public class NPCbasic : ObjectBasic
 
     protected void AttackOut()
     {
-        print("AttackOut");
         isAttack = false;
     }
 
@@ -173,7 +172,6 @@ public class NPCbasic : ObjectBasic
 
     public virtual void ConversationOut()
     {
-        StopAllCoroutines();
         DialogPanel.SetActive(false);
     }
 
@@ -185,7 +183,6 @@ public class NPCbasic : ObjectBasic
     {
         if (((side == 0 || side == 2) && other.tag == "PlayerAttack") || ((side == 0 || side == 1) && other.tag == "EnemyAttack"))
         {
-            print(((side == 0 || side == 2) && other.tag == "PlayerAttack"));
             Attacked(other.gameObject);
         }
     }

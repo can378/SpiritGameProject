@@ -13,15 +13,6 @@ public class Wolf : NPCbasic
     public float jumpDelay;
     public GameObject jumpArea;
 
-    public bool testCoroutine;
-    public float timer = 0;
-
-    protected override void Update()
-    {
-        base.Update();
-        timer += Time.deltaTime;
-    }
-
     protected override void Attack()
     {
         attackDelay -= Time.deltaTime;
@@ -32,7 +23,7 @@ public class Wolf : NPCbasic
 
         if (!isFlinch && !isAttack && isAttackReady && enemyTargetDis <= maxEnemyTargetDis)
         {
-            print("Attack");
+            //print("Attack");
             moveVec = Vector2.zero;
             isAttack = true;
             isAttackReady = false;
@@ -79,34 +70,22 @@ public class Wolf : NPCbasic
 
     IEnumerator Jump()
     {
-        if(testCoroutine)
-            print("코루틴 재시작됨");
-
-
-        testCoroutine = true;
-        Debug.Log("Jump");
 
         Vector2 direction = (enemyTarget.position - transform.position).normalized;
 
         yield return new WaitForSeconds(0.3f);
-        print(timer);
 
         stats.increasedMoveSpeed += 3f;
         moveVec = direction;
 
         yield return new WaitForSeconds(0.3f);
-        print(timer);
         stats.increasedMoveSpeed -= 3f;
         moveVec = Vector2.zero;
 
         jumpArea.SetActive(true);
 
         yield return new WaitForSeconds(0.3f);
-        print(timer);
 
         jumpArea.SetActive(false);
-
-        Debug.Log("JumpOut");
-        testCoroutine = false;
     }
 }

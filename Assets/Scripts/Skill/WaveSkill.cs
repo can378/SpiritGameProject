@@ -58,6 +58,7 @@ public class WaveSkill : Skill
              0, 
              0,
              statusEffect);
+            hitDetection.user = user;
 
             // rate 동안 유지
             Destroy(effect,time);
@@ -94,6 +95,7 @@ public class WaveSkill : Skill
              0,
              0,
              statusEffect);
+            hitDetection.user = user;
 
             while (timer < time)
             {
