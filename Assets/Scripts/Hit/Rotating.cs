@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotate : MonoBehaviour
+public class Rotating : MonoBehaviour
 {
     Rigidbody2D rigid;
     public float angular;
