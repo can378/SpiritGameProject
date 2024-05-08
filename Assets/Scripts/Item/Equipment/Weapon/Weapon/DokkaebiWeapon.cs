@@ -18,9 +18,6 @@ public class DokkaebiWeapon : Weapon
 
         if (user.hitTarget.layer == LayerMask.NameToLayer("Wall"))
             return;
-
-        if (!user.hitTarget.GetComponent<ObjectBasic>().isAttack)
-            return;
         
         user.playerStats.coin += 1;
         MapUIManager.instance.UpdateCoinUI();

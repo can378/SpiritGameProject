@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjetileRotate : MonoBehaviour
+public class Rotate : MonoBehaviour
 {
     Rigidbody2D rigid;
+    public float angular;
 
     void Awake() {
         rigid = GetComponent<Rigidbody2D>();
@@ -13,7 +14,7 @@ public class ProjetileRotate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigid.angularVelocity = 1440f;
+        rigid.angularVelocity = angular;
         //rigid.AddTorque(90,ForceMode2D.Force);
     }
 

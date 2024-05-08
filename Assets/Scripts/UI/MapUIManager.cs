@@ -44,7 +44,7 @@ public class MapUIManager : MonoBehaviour
 
 
     private bool sidePanelVisible = false;
-    private bool EquipmentPanelVisible = false;
+    //private bool EquipmentPanelVisible = false;
     UserData userData;
 
     private void Awake()

@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 3214235305519029506}
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
-  - component: {fileID: 4635446497630190785}
-  - component: {fileID: 647234047308338238}
+  - component: {fileID: 3591179236587915755}
+  - component: {fileID: 8463777130386602006}
+  - component: {fileID: 6475669372283048094}
   m_Layer: 11
-  m_Name: Dagger
+  m_Name: Little Star
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6620673133359856174}
+  - {fileID: 4797476252280252185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &7530864278459449910
@@ -98,7 +99,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &4635446497630190785
+--- !u!114 &3591179236587915755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,9 +112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
-  <isProjectile>k__BackingField: 1
+  <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 1
+  <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
   <damage>k__BackingField: 0
   <knockBack>k__BackingField: 0
@@ -121,7 +122,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
---- !u!114 &647234047308338238
+--- !u!114 &8463777130386602006
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,11 +131,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1465481353037356265}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052a6d8e0b39b4845b5bccb6ac7f591f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guidingTarget: {fileID: 0}
+  speed: 5
+  angular: 10
+--- !u!114 &6475669372283048094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7f96b6228a0ac94e8cf13a4f5463343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angular: 1440
---- !u!1 &8147254618273612027
+  angular: 360
+--- !u!1 &7984515985627358397
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,37 +158,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6620673133359856174}
-  - component: {fileID: 3377112507311863791}
-  m_Layer: 10
+  - component: {fileID: 4797476252280252185}
+  - component: {fileID: 981083969397330637}
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6620673133359856174
+--- !u!4 &4797476252280252185
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147254618273612027}
+  m_GameObject: {fileID: 7984515985627358397}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3214235305519029506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3377112507311863791
+--- !u!212 &981083969397330637
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8147254618273612027}
+  m_GameObject: {fileID: 7984515985627358397}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -207,12 +223,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 00797bcf1252fa143addfa01a305d745, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4782eca0c5d55b1469e397f1faf177e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 20, y: 20}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
