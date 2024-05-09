@@ -27,7 +27,7 @@ public class LittleStarSkill : Skill
 
     void Summon()
     {
-        Debug.Log("Wave");
+        Debug.Log("LittleStar");
 
         if(user.tag == "Player")
         {
@@ -50,6 +50,9 @@ public class LittleStarSkill : Skill
             foreach (GameObject littleStar in littleStarOrbit.littleStars)
             {
                 HitDetection hitDetection = littleStar.GetComponent<HitDetection>();
+
+                littleStar.tag = "PlayerAttack";
+                littleStar.layer = LayerMask.NameToLayer("PlayerAttack");
                 hitDetection.SetHitDetection(false,-1,false,-1,(defalutDamage + ratio * player.playerStats.skillPower) * 0.5f, knockBack, 0,0,null);
             }
 
@@ -58,16 +61,31 @@ public class LittleStarSkill : Skill
         }
         else if (user.tag == "Enemy")
         {
-            GameObject effect = Instantiate(littleStarOrbitPrefab, user.transform.position, user.transform.rotation);
+
+            ObjectBasic objectBasic = this.user.GetComponent<ObjectBasic>();
+            LittleStarOrbit littleStarOrbit;
 
             // 쿨타임 적용
             skillCoolTime = skillDefalutCoolTime;
 
-
+            // 이펙트 생성
+            if (effect)
+                Destroy(effect);
+            effect = Instantiate(littleStarOrbitPrefab, user.transform.position, user.transform.rotation);
             effect.transform.localScale = new Vector3(1, 1, 1);
 
-            // rate 동안 유지
-            Destroy(effect);
+            // 공전 설정
+            littleStarOrbit = effect.GetComponent<LittleStarOrbit>();
+            littleStarOrbit.user = user.GetComponent<ObjectBasic>();
+
+            foreach (GameObject littleStar in littleStarOrbit.littleStars)
+            {
+                HitDetection hitDetection = littleStar.GetComponent<HitDetection>();
+
+                littleStar.tag = "EnemyAttack";
+                littleStar.layer = LayerMask.NameToLayer("EnemyAttack");
+                hitDetection.SetHitDetection(false, -1, false, -1, (defalutDamage) * 0.5f, knockBack, 0, 0, null);
+            }
         }
     }
 

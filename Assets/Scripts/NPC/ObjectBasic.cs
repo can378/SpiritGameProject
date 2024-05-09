@@ -37,7 +37,7 @@ public class ObjectBasic : MonoBehaviour
 
     #region Effect
 
-    public virtual void Attacked(GameObject attacker)
+    public virtual void BeAttacked(GameObject attacker)
     {
         if (isInvincible)
         {
@@ -164,17 +164,14 @@ public class ObjectBasic : MonoBehaviour
         foreach (StatusEffect effect in stats.activeEffects)
         {
             effect.RemoveEffect();
+            Destroy(effect.gameObject);
         }
         stats.activeEffects.Clear();
     }
 
     public virtual void Dead()
     {
-        foreach (StatusEffect effect in stats.activeEffects)
-        {
-            effect.RemoveEffect();
-        }
-        stats.activeEffects.Clear();
+        RemoveAllEffects();
     }
 
     #endregion

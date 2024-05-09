@@ -15,7 +15,7 @@ public class SpottingWeaknessSkill : Skill
 
     void Buff()
     {
-        Debug.Log("Wave");
+        Debug.Log("SpottingWeakness");
 
         if(user.tag == "Player")
         {

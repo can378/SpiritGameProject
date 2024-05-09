@@ -249,7 +249,7 @@ public class EnemyPattern : EnemyBasic
 
             targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-            if (targetDis <= stats.detectionDis)
+            if (targetDis <= enemyStats.detectionDis)
             {
                 //attack
                 if (targetDis <= 0.7f)
@@ -288,7 +288,7 @@ public class EnemyPattern : EnemyBasic
         //print("chasing=" + stats.damage);
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDis <= stats.detectionDis && targetDis >= 1f)
+        if (targetDis <= enemyStats.detectionDis && targetDis >= 1f)
         {
             Chase();
         }
@@ -302,7 +302,7 @@ public class EnemyPattern : EnemyBasic
         //print("jump=" + stats.damage);
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
-        if (targetDis <= stats.detectionDis && targetDis >= 0.2f)
+        if (targetDis <= enemyStats.detectionDis && targetDis >= 0.2f)
         {
             if (isJumping == false)
             {

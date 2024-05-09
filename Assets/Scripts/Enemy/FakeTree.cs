@@ -13,6 +13,7 @@ public class FakeTree : EnemyBasic
 
     IEnumerator fakeTree()
     {
+        print("coroutine");
         targetDirVec = (enemyTarget.position - transform.position).normalized;
         targetDis = Vector2.Distance(enemyTarget.position, transform.position);
 

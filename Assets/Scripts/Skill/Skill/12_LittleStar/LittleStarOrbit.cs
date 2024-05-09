@@ -38,7 +38,6 @@ public class LittleStarOrbit : MonoBehaviour
             return;
 
         OnTarget(user.hitTarget.transform);
-            
     }
 
     // Å¸°Ù °¨Áö

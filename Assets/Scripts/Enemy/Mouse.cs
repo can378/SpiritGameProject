@@ -10,104 +10,137 @@ public class Mouse : EnemyBasic
     public GameObject biteArea;
     private bool isChange = false;
 
-
-    private void OnEnable()
+    void Update()
     {
-        StartNamedCoroutine("mouse", mouse());
+        targetDis = Vector2.Distance(transform.position,enemyTarget.position);
+        Move();
+        Attack();
+        Change();
     }
 
-    IEnumerator mouse()
+    void Move()
     {
-        Player player = enemyTarget.GetComponent<Player>();
+        if (isAttack || isFlinch)
+            return;
 
-        while (true)
+        if (!isChange)
         {
-            targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-            if (isChange == false)
-            {
-                if(targetDis < 2f)
-                {
-                    HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
-                    // 물기
-                    // 물기 전 대기 시간
-                    yield return new WaitForSeconds(0.5f);
-
-                    hitDetection.user = this.gameObject;
-
-                    biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
-                    biteArea.SetActive(true);
-                    
-                    // 물기 판정 유지 시간
-                    yield return new WaitForSeconds(0.5f);
-
-                    biteArea.SetActive(false);
-
-                    // 플레이어 공격 성공 시
-                    if(this.hitTarget)
-                    {
-                        if (this.hitTarget.tag == "Player")
-                        {
-                            Change();
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    
-                }
-                else 
-                {
-                    Chase();
-                }
-            }
-            else
-            {
-                //Attack
-                if(skill != 0 && skillList[skill].skillCoolTime <= 0)
-                {
-                    //mimic player skill
-                    print("mimic player skill");
-
-                    yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
-
-                    skillList[skill].Enter(gameObject);
-
-                    yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
-
-                    yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
-
-                    yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
-
-                    skillList[skill].Exit();
-
-                    yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
-
-                }
-                else if (targetDis < 6f)
-                {
-                    targetDirVec = enemyTarget.position - transform.position;
-                    transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime * 0.5f);
-                }
-                else if (targetDis >= 7f)
-                {
-                    Chase();
-                }
-            }
-            hitTarget = null;
-            yield return null;
+           Chase();
         }
+        else
+        {
+            if (targetDis < 6f)
+            {
+                Run();
+            }
+            else if (targetDis >= 7f)
+            {
+                Chase();
+            }
+        }
+    }
+
+    void Attack()
+    {
+        if(isAttack || isFlinch)
+            return;
+
+        if(!isChange)
+        {
+            if (targetDis < 2f)
+            {
+                StartCoroutine(Bite());
+            }
+        }
+        else 
+        {
+            if (skill != 0 && skillList[skill].skillCoolTime <= 0)
+            {
+                StartCoroutine(Skill()); 
+            }
+            else if (targetDis < 2f)
+            {
+                StartCoroutine(Bite());
+            }
+        }
+    }
+
+    IEnumerator Bite()
+    {
+        print("Bite");
+
+        isAttack = true;
+
+        HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
+
+        // 물기 전 대기 시간
+        yield return new WaitForSeconds(0.5f);
+
+        hitDetection.user = this.gameObject;
+
+        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        biteArea.SetActive(true);
+
+        // 물기 판정 유지 시간
+        yield return new WaitForSeconds(0.5f);
+
+        biteArea.SetActive(false);
+
+        isAttack = false;
+    }
+
+    IEnumerator Skill()
+    {
+        print("Skill");
+
+        isAttack = true;
+
+        //mimic player skill
+        print("mimic player skill");
+
+        yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
+
+        skillList[skill].Enter(gameObject);
+
+        yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
+
+        yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+
+        yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
+
+        skillList[skill].Exit();
+
+        yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
+
+        isAttack = false;
+
+    }
+
+    void Run()
+    {
+        targetDirVec = enemyTarget.position - transform.position;
+        transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime * 0.5f);
     }
 
     void Change()
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = hitTarget.GetComponentInChildren<SpriteRenderer>().sprite;
-        GetComponentInChildren<SpriteRenderer>().transform.localScale = hitTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
-        isChange = true;
+        if(isChange || !hitTarget || isFlinch)
+            return;
 
-        skill = hitTarget.GetComponent<Player>().playerStats.skill[hitTarget.GetComponent<Player>().status.skillIndex];
-        if (skill != 0) skillList[skill].gameObject.SetActive(true);
+        if (hitTarget.tag == "Player")
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = hitTarget.GetComponentInChildren<SpriteRenderer>().sprite;
+            GetComponentInChildren<SpriteRenderer>().transform.localScale = hitTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
+            isChange = true;
 
-        //Run away
-        targetDirVec = hitTarget.transform.position - transform.position;
-        rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+            skill = hitTarget.GetComponent<Player>().playerStats.skill[hitTarget.GetComponent<Player>().status.skillIndex];
+            if (skill != 0) skillList[skill].gameObject.SetActive(true);
+
+            //Run away
+            targetDirVec = hitTarget.transform.position - transform.position;
+            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+        }
+
     }
 
 }

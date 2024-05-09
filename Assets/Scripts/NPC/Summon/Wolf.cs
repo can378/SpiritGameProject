@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Rider.Unity.Editor;
 using UnityEngine;
 
-public class Wolf : NPCbasic
+public class Haetae : NPCbasic
 {
     // 물기
     public float biteDelay;
@@ -28,10 +28,6 @@ public class Wolf : NPCbasic
             isAttack = true;
             isAttackReady = false;
 
-            StartCoroutine("Jump");
-            attackDelay = jumpDelay;
-
-            /*
             if (enemyTargetDis <= 3f)
             {
                 StartCoroutine("Bite");
@@ -42,8 +38,6 @@ public class Wolf : NPCbasic
                 StartCoroutine("Jump");
                 attackDelay = jumpDelay * 1.5f;
             }
-            */
-
 
             Invoke("AttackOut", attackDelay);
         }
@@ -56,8 +50,29 @@ public class Wolf : NPCbasic
 
         float angle = Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
 
-        yield return new WaitForSeconds(biteDelay * 0.3f);
+        yield return new WaitForSeconds(biteDelay * 0.5f);
 
+        switch(side)
+        {
+            case 0:
+            {
+                biteArea.tag = "AllAttack";
+                biteArea.layer = LayerMask.NameToLayer("AllAttack");
+                break;
+            }
+            case 1:
+            {
+                biteArea.tag = "PlayerAttack";
+                biteArea.layer = LayerMask.NameToLayer("PlayerAttack");
+                break;
+            }
+            case 2:
+            {
+                biteArea.tag = "EnemyAttack";
+                biteArea.layer = LayerMask.NameToLayer("EnemyAttack");
+                break;
+            }
+        }
         biteArea.SetActive(true);
         biteArea.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // 방향 설정
 
@@ -71,20 +86,42 @@ public class Wolf : NPCbasic
     IEnumerator Jump()
     {
 
-        Vector2 direction = (enemyTarget.position - transform.position).normalized;
+        Vector2 direction = (enemyTarget.transform.position - transform.position).normalized;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(jumpDelay * 0.3f);
 
         stats.increasedMoveSpeed += 3f;
         moveVec = direction;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(jumpDelay * 0.4f);
         stats.increasedMoveSpeed -= 3f;
         moveVec = Vector2.zero;
 
+        
+        switch (side)
+        {
+            case 0:
+                {
+                    jumpArea.tag = "AllAttack";
+                    jumpArea.layer = LayerMask.NameToLayer("AllAttack");
+                    break;
+                }
+            case 1:
+                {
+                    jumpArea.tag = "PlayerAttack";
+                    jumpArea.layer = LayerMask.NameToLayer("PlayerAttack");
+                    break;
+                }
+            case 2:
+                {
+                    jumpArea.tag = "EnemyAttack";
+                    jumpArea.layer = LayerMask.NameToLayer("EnemyAttack");
+                    break;
+                }
+        }
         jumpArea.SetActive(true);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(jumpDelay * 0.3f);
 
         jumpArea.SetActive(false);
     }

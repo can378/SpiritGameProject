@@ -133,7 +133,7 @@ public class Tiger_head : EnemyBasic
         }
         if (collision.tag == "PlayerAttack")
         {
-            PlayerAttack(collision.gameObject);
+            BeAttacked(collision.gameObject);
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -11,19 +12,19 @@ public class NPCbasic : ObjectBasic
     public bool isChase;
 
     // 적
-    public Transform enemyTarget;
+    public ObjectBasic enemyTarget;
     public float enemyTargetDis = 99f;
     public float maxEnemyTargetDis;         // 적에게 공격할 수 있는 최대 거리
 
     // 동료
-    public Transform companionTarget;
+    public ObjectBasic companionTarget;
     public float companionTargetDis = 99f;
     public float maxCompanionTargetDis;     // 동료와 최대로 떨어질 수 있는 거리
 
     public GameObject DialogPanel;
     //public TMP_Text DialogTextMesh;
     public int chapter = 0;
-    public int side = 0;
+    public int side = 0;    // 0 : 중립, 1 : 아군, 2 : 적군
     int index = 0;
 
     protected ScriptManager scriptManager;
@@ -48,6 +49,7 @@ public class NPCbasic : ObjectBasic
         Move();
         ChaseEnemy();
         FollowCompanion();
+        WaitTarget();
     }
 
     #region Attack
@@ -69,30 +71,46 @@ public class NPCbasic : ObjectBasic
     protected virtual void Move()
     {
         // 경직과 공격 중에는 직접 이동 불가
-        if (isFlinch || isAttack)
+        if (isFlinch || isAttack || isTalking)
+        {
+            rigid.velocity = moveVec * stats.moveSpeed;
             return;
+        }
+            
 
-        // 대화 중 이동 불가
-        if (isTalking)
+        if(isFollow)
+        {
+            moveVec = (companionTarget.transform.position - transform.position).normalized;
+        }
+        else if(isChase)
+        {
+            moveVec = (enemyTarget.transform.position - transform.position).normalized;
+        }
+        else
         {
             moveVec = Vector3.zero;
         }
 
-        if(isChase && isFollow)
-        {
-            moveVec = (companionTarget.position - transform.position).normalized;
-        }
-        else if(isChase)
-        {
-            moveVec = (enemyTarget.position - transform.position).normalized;
-        }
-        else if(isFollow)
-        {
-            moveVec = (companionTarget.position - transform.position).normalized;
-        }
-
         rigid.velocity = moveVec * stats.moveSpeed;
 
+    }
+
+    // 타겟 대기중
+    void WaitTarget()
+    {
+        if (!companionTarget)
+            return;
+
+        if (companionTarget.hitTarget == null)
+            return;
+
+        OnTarget(companionTarget.hitTarget.GetOrAddComponent<ObjectBasic>());
+    }
+
+    // 타겟 감지
+    void OnTarget(ObjectBasic target)
+    {
+        enemyTarget = target;
     }
 
     void ChaseEnemy()
@@ -100,18 +118,18 @@ public class NPCbasic : ObjectBasic
         //타겟이 없으면 반환
         if (!enemyTarget)
         {
+            isChase = false;
             enemyTargetDis = 99f;
             return;
         }
 
-        enemyTargetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        enemyTargetDis = Vector2.Distance(transform.position, enemyTarget.transform.position);
 
         // 적과 너무 가깝거나
-        if (enemyTargetDis <= 2f || enemyTargetDis <= maxEnemyTargetDis)
+        if (enemyTargetDis <= 2f)
         {
             isChase = false;
         }
-        // 적군이 충분히 가까이 있으면 추적
         else
         {
             isChase = true;
@@ -125,21 +143,25 @@ public class NPCbasic : ObjectBasic
         // 아군이 없으면 반환
         if (!companionTarget)
         {
+            isFollow = false;
             companionTargetDis = 99f;
             return;
         }
 
-        companionTargetDis = Vector2.Distance(transform.position, companionTarget.position);
+        companionTargetDis = Vector2.Distance(transform.position, companionTarget.transform.position);
         
-        //아군과 너무 가깝거나
         if (companionTargetDis <= 5f)
         {
             isFollow = false;
         }
-        //아군과 너무 멀리 떨어져있으면 따라가기
+        else if (companionTargetDis < maxCompanionTargetDis)
+        {
+            isFollow = true;
+        }
         else if (maxCompanionTargetDis <= companionTargetDis)
         {
             isFollow = true;
+            enemyTarget = null;
         }
     }
 
@@ -183,13 +205,13 @@ public class NPCbasic : ObjectBasic
     {
         if (((side == 0 || side == 2) && other.tag == "PlayerAttack") || ((side == 0 || side == 1) && other.tag == "EnemyAttack"))
         {
-            Attacked(other.gameObject);
+            BeAttacked(other.gameObject);
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && DialogPanel != null)
+        if (collision.gameObject.CompareTag("Player") && DialogPanel != null)
         {
             ConversationOut();
         }

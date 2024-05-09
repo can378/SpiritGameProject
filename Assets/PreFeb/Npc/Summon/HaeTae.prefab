@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3914781216643376746}
   - component: {fileID: 6860700408598411508}
   m_Layer: 10
-  m_Name: Wolf
+  m_Name: HaeTae
   m_TagString: Npc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,6 +121,7 @@ MonoBehaviour:
   isAttack: 0
   attackDelay: 0
   isAttackReady: 0
+  hitTarget: {fileID: 0}
   isTalking: 0
   isFollow: 0
   isChase: 0
@@ -129,16 +130,14 @@ MonoBehaviour:
   maxEnemyTargetDis: 7
   companionTarget: {fileID: 0}
   companionTargetDis: 99
-  maxCompanionTargetDis: 5
+  maxCompanionTargetDis: 15
   DialogPanel: {fileID: 3813097672330723979}
   chapter: 0
   side: 1
-  biteDelay: 2
+  biteDelay: 1
   biteArea: {fileID: 1348825966630806443}
-  jumpDelay: 1
+  jumpDelay: 2
   jumpArea: {fileID: 6224584500903210548}
-  testCoroutine: 0
-  timer: 0
 --- !u!114 &3914781216643376746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -302,7 +301,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!1 &3640970505204565102
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -816,4 +814,3 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0

@@ -262,7 +262,7 @@ public class BossBaby : EnemyBasic
         }
         if (collision.tag == "PlayerAttack")
         {
-            PlayerAttack(collision.gameObject);
+            BeAttacked(collision.gameObject);
         }
 
     }

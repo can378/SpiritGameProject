@@ -617,7 +617,7 @@ public class Player : ObjectBasic
             // 피해를 입고
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
-            Attacked(other.gameObject);
+            BeAttacked(other.gameObject);
 
         }
         else if (other.tag == "EnterDungeon")
