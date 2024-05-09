@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class FireBallSkill : Skill
 {
-    // 피해량
+    // 피해량, 밀려남
     [field: SerializeField] public int defalutDamage {get; private set;}
     [field: SerializeField] public float ratio { get; private set; }
+    [field: SerializeField] float knockBack;
 
     // 크기, 넉백, 이펙트 유지시간, 이펙트, 상태이상
     [field: SerializeField] float size;
-    [field: SerializeField] float knockBack;
     [field: SerializeField] float time;
     [field: SerializeField] GameObject fireBallEffect;
     [field: SerializeField] GameObject fireBallEffectSimul;

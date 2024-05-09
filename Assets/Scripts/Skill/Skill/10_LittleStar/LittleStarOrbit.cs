@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LittleStarOrbit : MonoBehaviour
 {
-    [field: SerializeField] public ObjectBasic user;
-    [field: SerializeField] GameObject[] littleStars = new GameObject[3];
+    [field: SerializeField] public ObjectBasic user {get; set;}
+    [field: SerializeField] public GameObject[] littleStars = new GameObject[3];
     [field: SerializeField] float angular;
 
     Rigidbody2D rigid;
@@ -48,13 +48,14 @@ public class LittleStarOrbit : MonoBehaviour
 
         foreach (GameObject littleStar in littleStars)
         {
-            HitDetection hitDetection = littleStar.GetComponent<HitDetection>();   
             Guiding guiding = littleStar.GetComponent<Guiding>();
+            HitDetection hitDetection = littleStar.GetComponent<HitDetection>();
 
-            hitDetection.SetHitDetection(true,0,false,-1,10,10,0,0,null);
             guiding.guidingTarget = target;
+            hitDetection.SetHitDetection(true, 0, false, -1, hitDetection.damage * 2, hitDetection.knockBack, 0, 0, null);
 
             littleStar.transform.parent = null;
+            Destroy(this.gameObject, 5f);
         }
 
         Destroy(this.gameObject);
