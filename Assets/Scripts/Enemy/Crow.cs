@@ -5,10 +5,13 @@ using UnityEngine;
 public class Crow : EnemyBasic
 {
 
-
-    private void OnEnable()
+    private void Start()
     {
         StartNamedCoroutine("LRShot", LRShot());
+    }
+    private void OnEnable()
+    {
+        RestartAllCoroutines();
     }
 
     public IEnumerator LRShot()

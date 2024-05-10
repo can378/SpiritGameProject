@@ -102,10 +102,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  attackDelay: 0
+  isAttackReady: 0
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
@@ -137,7 +143,7 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 20
+  detectionDis: 5
   exp: 0
   enemyName: dokabbiFire
   isEnemyStun: 0
@@ -174,9 +180,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.073669635, y: -0.63089126}
   serializedVersion: 2
-  m_Radius: 1.315
+  m_Radius: 0.7447715
 --- !u!50 &5796419177314312464
 Rigidbody2D:
   serializedVersion: 4
@@ -216,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -227,7 +233,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!1 &6996745110343587680
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +297,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.057051986, y: -0.8590466}
+  m_Offset: {x: -0.0092509985, y: -0.6709924}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -303,5 +308,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4727187, y: 0.75839305}
+  m_Size: {x: 1.1043696, y: 0.6492002}
   m_EdgeRadius: 0

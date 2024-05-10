@@ -81,7 +81,8 @@ public class EnemyBasic : ObjectBasic
         }
         else
         {
-            Debug.LogWarning("Coroutine with name " + coroutineName + " is already running.");
+            Coroutine newCoroutine = StartCoroutine(routine);
+            //Debug.LogWarning("Coroutine with name " + coroutineName + " is already running.");
         }
     }
 

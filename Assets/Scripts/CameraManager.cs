@@ -13,6 +13,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     Vector2 center;                 
     public Vector2 postCenter;
+
     [SerializeField]
     public Vector2 mapSize;
 
@@ -74,6 +75,7 @@ public class CameraManager : MonoBehaviour
     
 
 
+    //Directly move to "obj.transform.position"/////////////////////////////////////////
     public void CameraMove(GameObject obj) 
     {
         transform.position = obj.transform.position;
