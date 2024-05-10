@@ -49,6 +49,7 @@ public class ASDeBuff : StatusEffect
             EnemyStats stats = target.GetComponent<EnemyStats>();
             while (duration > 0)
             {
+                print("enemy fear");
                 stats.isEnemyFear = true;
                 
                 target.GetComponent<EnemyBasic>().StopAllCoroutines();

@@ -33,7 +33,13 @@ public class StunDeBuff : StatusEffect
 
             StartCoroutine(Stun());
         }
+        else if (target.tag == "Enemy")
+        {
+            print("enemy stun - reset effect");
+            EnemyStats enemy = target.GetComponent<EnemyStats>();
 
+        
+        }
         
     }
 
@@ -52,6 +58,7 @@ public class StunDeBuff : StatusEffect
         }
         else if (target.tag == "Enemy")
         {
+            print("enemy stun");
             EnemyStats stats = target.GetComponent<EnemyStats>();
             stats.isEnemyStun = true;
             target.GetComponent<EnemyBasic>().StopAllCoroutines();
