@@ -104,10 +104,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7205fa54aa1da5c4d9860b6e500e0212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  attackDelay: 0
+  isAttackReady: 0
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
@@ -150,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -161,7 +167,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!58 &4187560812547875970
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -601,7 +606,7 @@ GameObject:
   - component: {fileID: 7949730488954737367}
   - component: {fileID: 1837450301324951422}
   - component: {fileID: 7189256037864274094}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: vomit
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
@@ -687,7 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -698,7 +703,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!114 &7949730488954737367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -984,10 +988,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7725e94c6f81544da4aa7c2193c1764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  attackDelay: 0
+  isAttackReady: 0
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
@@ -1030,7 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -1041,7 +1051,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!61 &8846544621905052270
 BoxCollider2D:
   m_ObjectHideFlags: 0

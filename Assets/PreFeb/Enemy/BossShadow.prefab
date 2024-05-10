@@ -206,9 +206,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5088865351912084448}
   - component: {fileID: 11376069866164788}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,10 +449,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700de1b6855473348a6c5e38725531b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  attackDelay: 0
+  isAttackReady: 0
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
@@ -476,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -487,7 +493,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!114 &3365422374356263887
 MonoBehaviour:
   m_ObjectHideFlags: 0

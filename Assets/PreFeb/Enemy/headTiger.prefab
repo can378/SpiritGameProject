@@ -103,10 +103,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd6be54038880f4aa37ea91a3b33084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  attackDelay: 0
+  isAttackReady: 0
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
@@ -223,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -234,7 +240,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!1 &4569186869722290163
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +251,7 @@ GameObject:
   - component: {fileID: 6888049753821744329}
   - component: {fileID: 4955245423706281105}
   - component: {fileID: 6574415172610969186}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square
   m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
