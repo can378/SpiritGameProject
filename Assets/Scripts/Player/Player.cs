@@ -41,6 +41,8 @@ public class Player : ObjectBasic
 
     public WeaponController weaponController;
     public SkillController skillController;
+    public Equipment[] equipmentList;
+
 
     public UserData userData { get; private set; }
 
@@ -390,14 +392,7 @@ public class Player : ObjectBasic
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
-            for(int i = 0;i<3;i++)
-            {
-                if(playerStats.equipments[i] ==null)
-                {
-                    EquipEquipment(selectItem.GetComponent<Equipment>(),i);
-                    return;
-                }
-            }
+            gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentId);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
@@ -485,32 +480,49 @@ public class Player : ObjectBasic
 
     }
     
-    public void EquipEquipment(Equipment equipment, int index)
+    // 장착할 장비의 index
+    public bool EquipEquipment(int equipmentId)
     {
-        playerStats.equipments[index] = equipment.GetComponent<Equipment>();
-        playerStats.equipments[index].Equip(this.gameObject.GetComponent<Player>());
+        bool equipOK = false;
 
-        playerStats.equipments[index].transform.parent = this.transform;
-        playerStats.equipments[index].gameObject.SetActive(false);
-        
+        for(int i = 0 ; i < playerStats.equipments.Length ; i++)
+        {
+            if(playerStats.equipments[i] != 0)
+                continue;
+
+            playerStats.equipments[i] = equipmentId;
+            equipOK = true;
+            break;
+        }
+
+        if(!equipOK)
+            return false;
+
+        equipmentList[equipmentId].gameObject.SetActive(true);
+        equipmentList[equipmentId].Equip(this.gameObject.GetComponent<Player>());
+
         MapUIManager.instance.UpdateEquipmentUI();
+
+        return true;
     }
 
-    public void UnEquipEquipment(int index)
+    // 현재 장착한 장비 중 해제할 index
+    public bool UnEquipEquipment(int index)
     {
-        if(playerStats.equipments[index] == null)
-            return;
-        playerStats.equipments[index].gameObject.transform.position = gameObject.transform.position;
-        playerStats.equipments[index].transform.parent = null;
-        playerStats.equipments[index].gameObject.SetActive(true);
+        if(playerStats.equipments[index] == 0)
+            return false;
 
-        // 장비 능력치 해제
-        playerStats.equipments[index].UnEquip(this.gameObject.GetComponent<Player>());
+        // 현재 위치에 장비를 놓는다.
+        Instantiate(GameData.instance.equipmentList[playerStats.equipments[index]], gameObject.transform.position, gameObject.transform.localRotation);
 
-        // 장비 해제
-        playerStats.equipments[index] = null;
+        // 무기 능력치 해제
+        equipmentList[playerStats.equipments[index]].UnEquip(this.gameObject.GetComponent<Player>());
+        equipmentList[playerStats.equipments[index]].gameObject.SetActive(false);
 
+        // 무기 해제
+        playerStats.equipments[index] = 0;
         MapUIManager.instance.UpdateEquipmentUI();
+        return true;
     }
     #endregion
 
@@ -581,7 +593,7 @@ public class Player : ObjectBasic
             for(int i = 0;i< playerEquipment.Length; i++)
             {
                 if(playerEquipment[i] != 0)
-                    EquipEquipment(Instantiate(DataManager.instance.gameData.equipmentList[playerEquipment[i]]).GetComponent<Equipment>(),i);
+                    EquipEquipment(playerEquipment[i]);
             }
             
             

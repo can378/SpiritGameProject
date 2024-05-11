@@ -148,7 +148,7 @@ public class PlayerStats : Stats
     public int[] skill = {0, 0, 0, 0, 0};
 
     public int maxEquipment = 3;
-    public Equipment[] equipments = new Equipment[3];
+    public int[] equipments = {0,0,0};
 
     //Stat
     public int[] playerStat = new int[8];

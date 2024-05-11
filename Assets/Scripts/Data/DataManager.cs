@@ -91,8 +91,8 @@ public class DataManager : MonoBehaviour
     
         for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
         {
-            if(Player.instance.playerStats.equipments[i] != null)
-                userData.playerEquipments[i] = Player.instance.playerStats.equipments[i].equipmentId;
+            if(Player.instance.playerStats.equipments[i] != 0)
+                userData.playerEquipments[i] = Player.instance.playerStats.equipments[i];
         }
 
         for (int i = 0; i < 8; i++)

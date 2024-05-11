@@ -175,8 +175,8 @@ public class MapUIManager : MonoBehaviour
     {
         for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
         {
-            if(Player.instance.playerStats.equipments[i] != null)
-                EquipmentsTxt[i].text = Player.instance.playerStats.equipments[i].equipmentName;
+            if(Player.instance.playerStats.equipments[i] != 0)
+                EquipmentsTxt[i].text = Player.instance.equipmentList[Player.instance.playerStats.equipments[i]].equipmentName;
             else
                 EquipmentsTxt[i].text ="";
         }
@@ -250,7 +250,6 @@ public class MapUIManager : MonoBehaviour
     public void SideBtn() 
     {
         UpdateEquipmentUI();
-        print(sidePanelVisible);
         if (sidePanelVisible) 
         {
             // 패널을 오른쪽으로 이동시킴
