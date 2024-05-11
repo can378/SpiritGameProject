@@ -21,7 +21,6 @@ public class MapUIManager : MonoBehaviour
     public GameObject restartPanel;
     public GameObject resetPanel;
     public RectTransform sidePanel;
-    public RectTransform equipmentPanel;
     public GameObject minimapPanel;
     public GameObject statSelectPanel;                                  // 스탯 선택창
 
@@ -251,18 +250,17 @@ public class MapUIManager : MonoBehaviour
     public void SideBtn() 
     {
         UpdateEquipmentUI();
+        print(sidePanelVisible);
         if (sidePanelVisible) 
         {
             // 패널을 오른쪽으로 이동시킴
             sidePanel.anchoredPosition += new Vector2(sidePanel.rect.width, 0);
-            equipmentPanel.anchoredPosition -= new Vector2(0, 900);
             sidePanelVisible = false;
         }
         else
         {
             // 패널을 왼쪽으로 이동시킴
             sidePanel.anchoredPosition -= new Vector2(sidePanel.rect.width, 0);
-            equipmentPanel.anchoredPosition += new Vector2(0, 900);
             sidePanelVisible = true;
         }
 
