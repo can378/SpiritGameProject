@@ -40,7 +40,7 @@ public class EnemyBasic : ObjectBasic
     {
         if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
-            BeAttacked(collision.gameObject);
+            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
     }
 

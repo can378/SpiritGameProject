@@ -205,7 +205,7 @@ public class NPCbasic : ObjectBasic
     {
         if (((side == 0 || side == 2) && other.tag == "PlayerAttack") || ((side == 0 || side == 1) && other.tag == "EnemyAttack"))
         {
-            BeAttacked(other.gameObject);
+            BeAttacked(other.gameObject.GetComponent<HitDetection>());
         }
     }
 

@@ -81,7 +81,7 @@ public class Tiger_tiger : EnemyBasic
         }
         if (collision.tag == "PlayerAttack")
         {
-            BeAttacked(collision.gameObject);
+            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
     }
 }

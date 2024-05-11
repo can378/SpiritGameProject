@@ -164,8 +164,8 @@ public class Player : ObjectBasic
 
     void Turn()
     {
-        status.mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        status.mouseDir = (status.mousePos - (Vector2)transform.position).normalized;
+        status.mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        status.mouseDir = (Vector2)(status.mousePos - transform.position).normalized;
 
         status.mouseAngle = Mathf.Atan2(status.mousePos.y - transform.position.y, status.mousePos.x - transform.position.x) * Mathf.Rad2Deg;
         //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
@@ -617,7 +617,7 @@ public class Player : ObjectBasic
             // 피해를 입고
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
-            BeAttacked(other.gameObject);
+            BeAttacked(other.gameObject.GetComponent<HitDetection>());
 
         }
         else if (other.tag == "EnterDungeon")

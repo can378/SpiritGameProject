@@ -262,7 +262,7 @@ public class BossBaby : EnemyBasic
         }
         if (collision.tag == "PlayerAttack")
         {
-            BeAttacked(collision.gameObject);
+            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
 
     }

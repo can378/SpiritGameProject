@@ -12,10 +12,10 @@ public class WheelWindSkill : Skill
     // 초당 타격 횟수, 크기, 이펙트
     [field: SerializeField] int DPS;
     [field: SerializeField] float size;
-    [field: SerializeField] GameObject WheelWindEffect;
+    [field: SerializeField] GameObject WheelWindPrefab;
 
     //이펙트
-    GameObject effect;
+    GameObject WheelWindEffect;
 
     public override void Enter(GameObject user)
     {
@@ -43,17 +43,17 @@ public class WheelWindSkill : Skill
             yield return new WaitForSeconds(preDelay * attackRate);
 
             // 사용자 위치에 생성
-            if (effect != null)
-                Destroy(effect);
-                
-            effect = Instantiate(WheelWindEffect, user.transform.position, user.transform.rotation);
-            effect.transform.parent = user.transform;
-            effect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
-            effect.tag = "PlayerAttack";
-            effect.layer = LayerMask.NameToLayer("PlayerAttack");
+            if (WheelWindEffect != null)
+                Destroy(WheelWindEffect);
+
+            WheelWindEffect = Instantiate(WheelWindPrefab, user.transform.position, user.transform.rotation);
+            WheelWindEffect.transform.parent = user.transform;
+            WheelWindEffect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
+            WheelWindEffect.tag = "PlayerAttack";
+            WheelWindEffect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             // 공격 판정 조정
-            hitDetection = effect.GetComponent<HitDetection>();
+            hitDetection = WheelWindEffect.GetComponent<HitDetection>();
             /*
             투사체 = false
             관통력 = -1
@@ -91,17 +91,17 @@ public class WheelWindSkill : Skill
             yield return new WaitForSeconds(preDelay);
 
             // 사용자 위치에 생성
-            if (effect != null)
-                Destroy(effect);
+            if (WheelWindEffect != null)
+                Destroy(WheelWindEffect);
 
-            effect = Instantiate(WheelWindEffect, user.transform.position, user.transform.rotation);
-            effect.transform.parent = user.transform;
-            effect.transform.localScale = new Vector3(size, size, 0);
-            effect.tag = "EnemyAttack";
-            effect.layer = LayerMask.NameToLayer("EnemyAttack");
+            WheelWindEffect = Instantiate(WheelWindPrefab, user.transform.position, user.transform.rotation);
+            WheelWindEffect.transform.parent = user.transform;
+            WheelWindEffect.transform.localScale = new Vector3(size, size, 0);
+            WheelWindEffect.tag = "EnemyAttack";
+            WheelWindEffect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             // 공격 판정 조정
-            hitDetection = effect.GetComponent<HitDetection>();
+            hitDetection = WheelWindEffect.GetComponent<HitDetection>();
             /*
             투사체 = false
             관통력 = -1
@@ -140,7 +140,7 @@ public class WheelWindSkill : Skill
 
             yield return new WaitForSeconds(0.5f * attackRate);
 
-            Destroy(effect);
+            Destroy(WheelWindEffect);
 
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(postDelay * attackRate);
@@ -157,7 +157,7 @@ public class WheelWindSkill : Skill
             yield return new WaitForSeconds(0.5f);
 
             // 회전 멈춤
-            Destroy(effect);
+            Destroy(WheelWindEffect);
 
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(postDelay);

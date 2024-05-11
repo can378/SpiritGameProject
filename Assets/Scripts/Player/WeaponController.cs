@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     PlayerStatus status;
-    PlayerStats stats;
+    PlayerStats playerStats;
 
     // 공격 정보
     [SerializeField] GameObject HitDetectionGameObject;
@@ -20,25 +20,25 @@ public class WeaponController : MonoBehaviour
     void Awake()
     {
         status = GetComponent<PlayerStatus>();
-        stats = GetComponent<PlayerStats>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     // 무기를 획득
     public bool EquipWeapon(int weaponID)
     {
         // 무기 소유
-        stats.weapon = weaponID;
+        playerStats.weapon = weaponID;
         // 장비 능력치 적용
-        weaponList[stats.weapon].gameObject.SetActive(true);
-        weaponList[stats.weapon].Equip(this.gameObject.GetComponent<Player>());
+        weaponList[playerStats.weapon].gameObject.SetActive(true);
+        weaponList[playerStats.weapon].Equip(this.gameObject.GetComponent<Player>());
 
-        if (weaponList[stats.weapon].weaponType < 10)
+        if (weaponList[playerStats.weapon].weaponType < 10)
         {
-            HitDetectionGameObject = meleeEffectList[weaponList[stats.weapon].weaponType];
+            HitDetectionGameObject = meleeEffectList[weaponList[playerStats.weapon].weaponType];
         }
-        else if (10 <= weaponList[stats.weapon].weaponType)
+        else if (10 <= weaponList[playerStats.weapon].weaponType)
         {
-            projectileGameObject = weaponList[stats.weapon].projectile;
+            projectileGameObject = weaponList[playerStats.weapon].projectile;
         }
 
         // 장비 UI 적용
@@ -52,36 +52,36 @@ public class WeaponController : MonoBehaviour
         projectileGameObject = null;
 
         // 현재 위치에 장비를 놓는다.
-        Instantiate(GameData.instance.weaponList[stats.weapon],gameObject.transform.position,gameObject.transform.localRotation);
+        Instantiate(GameData.instance.weaponList[playerStats.weapon],gameObject.transform.position,gameObject.transform.localRotation);
 
         // 무기 능력치 해제
-        weaponList[stats.weapon].UnEquip(this.gameObject.GetComponent<Player>());
-        weaponList[stats.weapon].gameObject.SetActive(false);
+        weaponList[playerStats.weapon].UnEquip(this.gameObject.GetComponent<Player>());
+        weaponList[playerStats.weapon].gameObject.SetActive(false);
         
         // 무기 해제
-        stats.weapon = 0;
+        playerStats.weapon = 0;
         MapUIManager.instance.UpdateWeaponUI();
     }
 
     public void Use(Vector3 clickPos)
     {
-        weaponList[stats.weapon].ConsumeAmmo();
-        if (weaponList[stats.weapon].weaponType < 10 )
+        weaponList[playerStats.weapon].ConsumeAmmo();
+        if (weaponList[playerStats.weapon].weaponType < 10 )
         {
             // 플레이어 애니메이션 실행
             StartCoroutine("Swing");
         }
-        else if ( 10 <= weaponList[stats.weapon].weaponType)
+        else if ( 10 <= weaponList[playerStats.weapon].weaponType)
         {
             // 플레이어 애니메이션 실행
-            if(weaponList[stats.weapon].weaponType == 13)
+            if(weaponList[playerStats.weapon].weaponType == 13)
                 StartCoroutine("Throw", clickPos);
             else 
                 StartCoroutine("Shot");
         }
 
-        //Debug.Log(stats.weapon.attackSpeed);
-        //Debug.Log(stats.attackSpeed);
+        //Debug.Log(playerStats.weapon.attackSpeed);
+        //Debug.Log(playerStats.attackSpeed);
 
     }
 
@@ -151,14 +151,14 @@ public class WeaponController : MonoBehaviour
         //Vector2 attackDir = status.mouseDir;
 
         //선딜
-        yield return new WaitForSeconds(weaponList[stats.weapon].preDelay / stats.attackSpeed);
+        yield return new WaitForSeconds(weaponList[playerStats.weapon].preDelay / playerStats.attackSpeed);
 
         // 무기 이펙트 크기 설정
-        HitDetectionGameObject.transform.localScale = new Vector3(weaponList[stats.weapon].attackSize, weaponList[stats.weapon].attackSize, 1);
+        HitDetectionGameObject.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize, 1);
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-        hitDetection.SetHitDetection(false,-1, weaponList[stats.weapon].isMultiHit, weaponList[stats.weapon].DPS, stats.attackPower, weaponList[stats.weapon].knockBack, stats.criticalChance, stats.criticalDamage,weaponList[stats.weapon].statusEffect);
+        hitDetection.SetHitDetection(false,-1, weaponList[playerStats.weapon].isMultiHit, weaponList[playerStats.weapon].DPS, playerStats.attackPower, weaponList[playerStats.weapon].knockBack, playerStats.criticalChance, playerStats.criticalDamage,weaponList[playerStats.weapon].statusEffect);
         hitDetection.user = this.gameObject;
         
         // 무기 방향 
@@ -168,7 +168,7 @@ public class WeaponController : MonoBehaviour
         HitDetectionGameObject.SetActive(true);
 
         // 공격 시간
-        yield return new WaitForSeconds(weaponList[stats.weapon].rate / stats.attackSpeed);
+        yield return new WaitForSeconds(weaponList[playerStats.weapon].rate / playerStats.attackSpeed);
 
         // 무기 이펙트 해제
         HitDetectionGameObject.SetActive(false);
@@ -185,7 +185,7 @@ public class WeaponController : MonoBehaviour
         Vector2 attackDir = status.mouseDir;
 
         // 선딜
-        yield return new WaitForSeconds(weaponList[stats.weapon].preDelay / stats.attackSpeed);
+        yield return new WaitForSeconds(weaponList[playerStats.weapon].preDelay / playerStats.attackSpeed);
 
         // 무기 투사체 적용
         GameObject instantProjectile = Instantiate(projectileGameObject, transform.position, transform.rotation);
@@ -196,16 +196,16 @@ public class WeaponController : MonoBehaviour
 
         //bulletRigid.velocity = shotPos.up * 25;
         // 투사체 설정
-        hitDetection.SetHitDetection(true, weaponList[stats.weapon].penetrations, weaponList[stats.weapon].isMultiHit, weaponList[stats.weapon].DPS, stats.attackPower, weaponList[stats.weapon].knockBack, stats.criticalChance, stats.criticalDamage, weaponList[stats.weapon].statusEffect);
+        hitDetection.SetHitDetection(true, weaponList[playerStats.weapon].penetrations, weaponList[playerStats.weapon].isMultiHit, weaponList[playerStats.weapon].DPS, playerStats.attackPower, weaponList[playerStats.weapon].knockBack, playerStats.criticalChance, playerStats.criticalDamage, weaponList[playerStats.weapon].statusEffect);
         hitDetection.user = this.gameObject;
         instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);  // 방향 설정
-        instantProjectile.transform.localScale = new Vector3(weaponList[stats.weapon].attackSize, weaponList[stats.weapon].attackSize,1);
-        bulletRigid.velocity = attackDir * 10 * weaponList[stats.weapon].projectileSpeed;  // 속도 설정
-        Destroy(instantProjectile, weaponList[stats.weapon].projectileTime);  //사거리 설정
+        instantProjectile.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize,1);
+        bulletRigid.velocity = attackDir * 10 * weaponList[playerStats.weapon].projectileSpeed;  // 속도 설정
+        Destroy(instantProjectile, weaponList[playerStats.weapon].projectileTime);  //사거리 설정
 
         // 후딜
         // 없애도 될듯
-        yield return new WaitForSeconds(weaponList[stats.weapon].postDelay / stats.attackSpeed);
+        yield return new WaitForSeconds(weaponList[playerStats.weapon].postDelay / playerStats.attackSpeed);
 
         yield return null;
     }

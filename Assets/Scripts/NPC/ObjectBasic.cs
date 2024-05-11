@@ -37,20 +37,19 @@ public class ObjectBasic : MonoBehaviour
 
     #region Effect
 
-    public virtual void BeAttacked(GameObject attacker)
+    public virtual void BeAttacked(HitDetection hitDetection)
     {
         if (isInvincible)
         {
             return;
         }
 
-        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
 
         AudioManager.instance.SFXPlay("Hit_SFX");
 
-        Damaged(hitDetection.damage);
+        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
-        KnockBack(attacker.gameObject, hitDetection.knockBack);
+        KnockBack(hitDetection.gameObject, hitDetection.knockBack);
 
         if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
         flinchCoroutine = StartCoroutine(Flinch(0.3f));

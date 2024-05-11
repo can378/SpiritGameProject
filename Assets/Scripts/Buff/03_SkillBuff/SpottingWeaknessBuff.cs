@@ -26,8 +26,7 @@ public class SpottingWeaknessBuff : StatusEffect
             // 중첩 
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
-            // 저항에 따른 지속시간 적용
-            duration = (1 - playerStats.SEResist) * defaultDuration;
+            duration = defaultDuration;
 
             playerStats.addCriticalChance += overlap * addCC;
         }
@@ -42,8 +41,7 @@ public class SpottingWeaknessBuff : StatusEffect
             // 중첩 
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
-            // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist) * defaultDuration;
+            duration = defaultDuration;
 
             stats.increasedAttackPower += overlap * 0.5f;
         }

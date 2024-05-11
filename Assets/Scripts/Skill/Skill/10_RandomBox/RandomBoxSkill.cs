@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class RandomBoxSkill : Skill
 {
-    [field: SerializeField] GameObject randomBox;
-    [field: SerializeField] GameObject randomBoxSimul;
+
+    [field: SerializeField] float range;
+    [field: SerializeField] GameObject randomBoxPrefab;
+    [field: SerializeField] GameObject simulPrefab;
     [field: SerializeField] int itemRangeMin;
     [field: SerializeField] int itemRangeMax;
+
     //발동 전 효과 범위 표시기
-    GameObject simul;
-    
+    Transform randomBoxSimul;
+    Transform rangeSimul;
+
 
     public override void Enter(GameObject user)
     {
@@ -24,14 +28,18 @@ public class RandomBoxSkill : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            simul = Instantiate(randomBoxSimul, player.status.mousePos, Quaternion.identity);
-            simul.transform.localScale = new Vector3(1, 1, 0);
-            
+            // 소환될 위치 표시기
+            randomBoxSimul = Instantiate(simulPrefab, player.status.mousePos, Quaternion.identity).transform;
+            randomBoxSimul.localScale = new Vector3(1, 1, 0);
+
+            // 사거리 표시기
+            rangeSimul = Instantiate(simulPrefab, player.transform.position, Quaternion.identity).transform;
+            rangeSimul.parent = player.transform;
+            rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
+
             while (player.status.isSkillHold)
             {
-                // 나중에 원 형태로 최대 범위 제한하기
-                // 나중에 원 형태로 최대 범위 표시하기
-                simul.transform.position = player.status.mousePos;
+                randomBoxSimul.position = player.transform.position + Vector3.ClampMagnitude(player.status.mousePos - player.transform.position, range);
                 yield return null;
             }
         }
@@ -40,14 +48,17 @@ public class RandomBoxSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            simul = Instantiate(randomBoxSimul, enemy.enemyTarget.transform.position, Quaternion.identity);
-            simul.transform.localScale = new Vector3(1, 1, 0);
+            randomBoxSimul = Instantiate(simulPrefab, enemy.enemyTarget.transform.position, Quaternion.identity).transform;
+            randomBoxSimul.localScale = new Vector3(1, 1, 0);
+
+            // 사거리 표시기
+            rangeSimul = Instantiate(simulPrefab, enemy.transform.position, Quaternion.identity).transform;
+            rangeSimul.parent = enemy.transform;
+            rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
 
             while (timer <= maxHoldTime/2)
             {
-                // 나중에 원 형태로 최대 범위 제한하기
-                // 나중에 원 형태로 최대 범위 표시하기
-                simul.transform.position = enemy.enemyTarget.transform.position;
+                randomBoxSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyTarget.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -77,9 +88,10 @@ public class RandomBoxSkill : Skill
             skillCoolTime = skillDefalutCoolTime;
         }
 
-        GameObject box = Instantiate(randomBox, simul.transform.position, Quaternion.identity);
+        GameObject box = Instantiate(randomBoxPrefab, randomBoxSimul.position, Quaternion.identity);
 
-        Destroy(simul);
+        Destroy(randomBoxSimul.gameObject);
+        Destroy(rangeSimul.gameObject);
 
         List<int> items = box.GetComponent<RewardBox>().items;
 

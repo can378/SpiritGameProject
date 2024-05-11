@@ -7,8 +7,8 @@ public class PlayerStatus : MonoBehaviour
     // 외부에서 접근 할 수도 있는 플레이어 정보들
     // 유저데이터에 넣기 애매한 것들은 우선 여기로
 
-    [field: SerializeField] public Vector2 mousePos { get; set; }
-    [field: SerializeField] public Vector2 mouseDir { get; set; }
+    [field: SerializeField] public Vector3 mousePos { get; set; }
+    [field: SerializeField] public Vector3 mouseDir { get; set; }
     [field: SerializeField] public float mouseAngle { get; set; }
 
     [field: SerializeField] public float runCurrentCoolTime { get; set; }           // 달리기 대기시간
