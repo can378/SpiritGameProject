@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class EnemyBasic : ObjectBasic
@@ -125,9 +126,17 @@ public class EnemyBasic : ObjectBasic
     }
     #endregion
 
-    public void runAway() 
+    public IEnumerator runAway() 
     {
         print("enemy runaway");
 
+        Vector2 playerPos1 = enemyTarget.transform.position;
+        yield return new WaitForSeconds(2f);
+        Vector2 playerPos2 = enemyTarget.transform.position;
+
+        Vector2 playerPath = playerPos1 - playerPos2;
+        Vector2 perpendicularDir = new Vector2(playerPath.y, -playerPath.x).normalized;
+        rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+        StartCoroutine(runAway());
     }
 }

@@ -37,8 +37,11 @@ public class StunDeBuff : StatusEffect
         {
             print("enemy stun - reset effect");
             EnemyStats enemy = target.GetComponent<EnemyStats>();
-
-        
+            
+            enemy.isEnemyStun = true;
+            duration = 4;
+            
+            StartCoroutine(Stun());
         }
         
     }
@@ -58,18 +61,12 @@ public class StunDeBuff : StatusEffect
         }
         else if (target.tag == "Enemy")
         {
+            //player에서 isEnemyAttackalve false이면 피해안받게 하기!!!!!!!!!!
             print("enemy stun");
-            EnemyStats stats = target.GetComponent<EnemyStats>();
-            stats.isEnemyStun = true;
             target.GetComponent<EnemyBasic>().StopAllCoroutines();
+            yield return new WaitForSeconds(duration);
 
-            while (duration > 0)
-            {
-                target.GetComponent<EnemyBasic>().runAway();
-                //player에서 isEnemyAttackalve false이면 피해안받게 하기
-                yield return new WaitForSeconds(0.1f);
-            }
-
+            
         }
     }
 
@@ -84,9 +81,10 @@ public class StunDeBuff : StatusEffect
         else if (target.tag == "Enemy")
         {
             EnemyStats stats = target.GetComponent<EnemyStats>();
-            target.GetComponent<EnemyBasic>().RestartAllCoroutines();
-
             stats.isEnemyStun = false;
+            duration = 0;
+            target.GetComponent<EnemyBasic>().RestartAllCoroutines();
+            
         }
     }
 }

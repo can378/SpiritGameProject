@@ -19,13 +19,24 @@ public class ASDeBuff : StatusEffect
 
     public override void ResetEffect()
     {
-        Stats stats = target.GetComponent<Stats>();
-        
-        // 중첩 
-        overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+        if (target.tag == "Player")
+        {
+            Stats stats = target.GetComponent<Stats>();
 
-        // 저항에 따른 지속시간 적용
-        duration = (1 - stats.SEResist) * defaultDuration;
+            // 중첩 
+            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+
+            // 저항에 따른 지속시간 적용
+            duration = (1 - stats.SEResist) * defaultDuration;
+
+        }
+        else if (target.tag == "Enemy")
+        {
+
+            duration = 5;
+        
+        }
+        
     }
 
     IEnumerator AttackDelayOverTime()
@@ -47,17 +58,15 @@ public class ASDeBuff : StatusEffect
         else if (target.tag == "Enemy")
         {
             EnemyStats stats = target.GetComponent<EnemyStats>();
-            while (duration > 0)
-            {
-                print("enemy fear");
-                stats.isEnemyFear = true;
-                
-                target.GetComponent<EnemyBasic>().StopAllCoroutines();
-                target.GetComponent<EnemyBasic>().runAway();
 
-                //player에서 isEnemyAttackalve false이면 피해안받게 하기
-                yield return new WaitForSeconds(0.1f);
-            }
+            //player에서 isEnemyAttackalve false이면 피해안받게 하기
+            print("enemy fear");
+            stats.isEnemyFear = true;
+
+            target.GetComponent<EnemyBasic>().StopAllCoroutines();
+            StartCoroutine(target.GetComponent<EnemyBasic>().runAway());
+            yield return new WaitForSeconds(duration);
+
 
         }
     }
@@ -82,10 +91,14 @@ public class ASDeBuff : StatusEffect
         else if (target.tag == "Enemy")
         {
             EnemyStats stats = target.GetComponent<EnemyStats>();
+
+            StopCoroutine(attackDelayTimeCoroutine);
+            StopCoroutine(target.GetComponent<EnemyBasic>().runAway());
+            
             target.GetComponent<EnemyBasic>().RestartAllCoroutines();
            
             stats.isEnemyFear=false;
-            StopCoroutine(attackDelayTimeCoroutine);
+            
         }
     }
 }
