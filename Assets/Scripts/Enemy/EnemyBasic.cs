@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 
@@ -17,7 +18,6 @@ public class EnemyBasic : ObjectBasic
     [HideInInspector]
     public float timeValue=0;
     
-
     Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
 
 
@@ -49,19 +49,23 @@ public class EnemyBasic : ObjectBasic
         base.Dead();
 
         //drop coin
-        int dropCoinNum = 10;
-        GameManager.instance.dropCoin(dropCoinNum, transform.position);
+        int dropCoinNum = 3;
+        Vector3 coinDropPoint = transform.position;
+        GameManager.instance.dropCoin(dropCoinNum, coinDropPoint);
 
         //enemy disappear
+        StopAllCoroutines();
         this.gameObject.SetActive(false);
     }
 
+    #region Often used Pattern
     public void Chase()
     {
         Vector2 direction = (enemyTarget.position - transform.position).normalized;
         //rigid.velocity = direction * enemyStats.moveSpeed;
         transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
     }
+
 
     public void shot()
     {
@@ -71,7 +75,23 @@ public class EnemyBasic : ObjectBasic
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
     }
 
-    #region coroutine Manager
+    public IEnumerator runAway()
+    {
+        print("enemy runaway");
+
+        Vector2 playerPos1 = enemyTarget.transform.position;
+        yield return new WaitForSeconds(2f);
+        Vector2 playerPos2 = enemyTarget.transform.position;
+
+        Vector2 playerPath = playerPos1 - playerPos2;
+        Vector2 perpendicularDir = new Vector2(playerPath.y, -playerPath.x).normalized;
+        rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+        StartCoroutine(runAway());
+    }
+    #endregion
+
+
+    #region Coroutine Manager
 
     public void StartNamedCoroutine(string coroutineName, IEnumerator routine)
     {
@@ -126,17 +146,5 @@ public class EnemyBasic : ObjectBasic
     }
     #endregion
 
-    public IEnumerator runAway() 
-    {
-        print("enemy runaway");
-
-        Vector2 playerPos1 = enemyTarget.transform.position;
-        yield return new WaitForSeconds(2f);
-        Vector2 playerPos2 = enemyTarget.transform.position;
-
-        Vector2 playerPath = playerPos1 - playerPos2;
-        Vector2 perpendicularDir = new Vector2(playerPath.y, -playerPath.x).normalized;
-        rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
-        StartCoroutine(runAway());
-    }
+    
 }
