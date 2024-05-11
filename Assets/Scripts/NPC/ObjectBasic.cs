@@ -17,8 +17,9 @@ public class ObjectBasic : MonoBehaviour
 
     // 공격 관련 
     public bool isAttack;                   // 공격중
-    public float attackDelay;               // 공격중 시간
-    public bool isAttackReady;              // 공격 준비 완료
+    public bool isAttackReady = true;              // 공격 준비 완료
+    //public float attackDelay;               // 공격중 시간
+
     public GameObject hitTarget;            // 공격 성공
 
     protected SpriteRenderer sprite;

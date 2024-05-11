@@ -116,7 +116,7 @@ public class SummonSkill : Skill
             summonBasic.stats.HPMax += player.stats.HPMax * HPRatio;
             summonBasic.stats.HP = summonBasic.stats.HPMax;
 
-            summonBasic.stats.defaultAttackPower += player.stats.attackPower * HPRatio;
+            summonBasic.stats.defaultAttackPower += player.stats.attackPower * damageRatio;
 
             // rate 동안 유지
             Destroy(summon, time);
@@ -159,7 +159,7 @@ public class SummonSkill : Skill
             summonBasic.stats.HPMax += objectBasic.stats.HPMax * HPRatio;
             summonBasic.stats.HP = summonBasic.stats.HPMax;
 
-            summonBasic.stats.defaultAttackPower += objectBasic.stats.attackPower * HPRatio;
+            summonBasic.stats.defaultAttackPower += objectBasic.stats.attackPower * damageRatio;
 
             // rate 동안 유지
             Destroy(summon, time);

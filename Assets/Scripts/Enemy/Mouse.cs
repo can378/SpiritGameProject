@@ -45,18 +45,24 @@ public class Mouse : EnemyBasic
         if(isAttack || isFlinch)
             return;
 
-        if(!isChange)
+        Pattern();
+
+    }
+
+    void Pattern()
+    {
+        if (!isChange)
         {
             if (targetDis < 2f)
             {
                 StartCoroutine(Bite());
             }
         }
-        else 
+        else
         {
             if (skill != 0 && skillList[skill].skillCoolTime <= 0)
             {
-                StartCoroutine(Skill()); 
+                StartCoroutine(Skill());
             }
             else if (targetDis < 2f)
             {

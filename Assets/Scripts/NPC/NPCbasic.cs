@@ -14,7 +14,7 @@ public class NPCbasic : ObjectBasic
     // 적
     public ObjectBasic enemyTarget;
     public float enemyTargetDis = 99f;
-    public float maxEnemyTargetDis;         // 적에게 공격할 수 있는 최대 거리
+    public float maxEnemyTargetDis;         // 사정거리
 
     // 동료
     public ObjectBasic companionTarget;
@@ -54,37 +54,45 @@ public class NPCbasic : ObjectBasic
 
     #region Attack
 
-    protected virtual void Attack()
+    void Attack()
     {
+        if (!enemyTarget)
+            return;
 
+        if (!isFlinch && !isAttack && isAttackReady && enemyTargetDis <= maxEnemyTargetDis)
+        {
+            moveVec = Vector2.zero;
+            Pattern();
+        }
     }
 
-    protected void AttackOut()
+    protected virtual void Pattern()
     {
         isAttack = false;
+        isAttackReady = false;
     }
+
 
     #endregion Attack
 
     #region Move
 
-    protected virtual void Move()
+    void Move()
     {
         // 경직과 공격 중에는 직접 이동 불가
-        if (isFlinch || isAttack || isTalking)
+        if (isFlinch || isTalking || isAttack)
         {
             rigid.velocity = moveVec * stats.moveSpeed;
             return;
         }
-            
-
-        if(isFollow)
-        {
-            moveVec = (companionTarget.transform.position - transform.position).normalized;
-        }
-        else if(isChase)
+       
+        if(isChase)
         {
             moveVec = (enemyTarget.transform.position - transform.position).normalized;
+        }
+        else if (isFollow)
+        {
+            moveVec = (companionTarget.transform.position - transform.position).normalized;
         }
         else
         {
@@ -102,6 +110,9 @@ public class NPCbasic : ObjectBasic
             return;
 
         if (companionTarget.hitTarget == null)
+            return;
+        
+        if(companionTarget.hitTarget == this.gameObject)
             return;
 
         OnTarget(companionTarget.hitTarget.GetOrAddComponent<ObjectBasic>());
@@ -125,8 +136,8 @@ public class NPCbasic : ObjectBasic
 
         enemyTargetDis = Vector2.Distance(transform.position, enemyTarget.transform.position);
 
-        // 적과 너무 가깝거나
-        if (enemyTargetDis <= 2f)
+        // 적이 사정거리 내에 있을 시
+        if (enemyTargetDis <= maxEnemyTargetDis )
         {
             isChase = false;
         }

@@ -13,43 +13,26 @@ public class Haetae : NPCbasic
     public float jumpDelay;
     public GameObject jumpArea;
 
-    protected override void Attack()
+    protected override void Pattern()
     {
-        attackDelay -= Time.deltaTime;
-        isAttackReady = attackDelay < 0;
-
-        if (!enemyTarget)
-            return;
-
-        if (!isFlinch && !isAttack && isAttackReady && enemyTargetDis <= maxEnemyTargetDis)
+        if (enemyTargetDis <= 3f)
         {
-            //print("Attack");
-            moveVec = Vector2.zero;
-            isAttack = true;
-            isAttackReady = false;
-
-            if (enemyTargetDis <= 3f)
-            {
-                StartCoroutine("Bite");
-                attackDelay = biteDelay * 1.5f;
-            }
-            else
-            {
-                StartCoroutine("Jump");
-                attackDelay = jumpDelay * 1.5f;
-            }
-
-            Invoke("AttackOut", attackDelay);
+            StartCoroutine("Bite");
+        }
+        else
+        {
+            StartCoroutine("Jump");
         }
     }
 
     // Start is called before the first frame update
     IEnumerator Bite()
     {
-        Debug.Log("Bite");
-
+        print("bite");
         float angle = Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
 
+        isAttack = true;
+        isAttackReady = false;
         yield return new WaitForSeconds(biteDelay * 0.5f);
 
         switch(side)
@@ -74,30 +57,32 @@ public class Haetae : NPCbasic
             }
         }
         biteArea.SetActive(true);
+        biteArea.GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,stats.attackPower,5,0,0,null);
         biteArea.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // 방향 설정
-
         yield return new WaitForSeconds(biteDelay * 0.5f);
 
+        isAttack = false;
+        isAttackReady = true;
         biteArea.SetActive(false);
-
-        Debug.Log("BiteOut");
     }
 
     IEnumerator Jump()
     {
-
+        print("Jump");
         Vector2 direction = (enemyTarget.transform.position - transform.position).normalized;
 
+        // 점프 전 준비
+        isAttack = true;
+        isAttackReady = false;
         yield return new WaitForSeconds(jumpDelay * 0.3f);
 
+        // 점프
         stats.increasedMoveSpeed += 3f;
         moveVec = direction;
-
         yield return new WaitForSeconds(jumpDelay * 0.4f);
-        stats.increasedMoveSpeed -= 3f;
-        moveVec = Vector2.zero;
 
-        
+        // 착지 피해
+        stats.increasedMoveSpeed -= 3f;
         switch (side)
         {
             case 0:
@@ -120,9 +105,11 @@ public class Haetae : NPCbasic
                 }
         }
         jumpArea.SetActive(true);
-
+        jumpArea.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, stats.attackPower * 0.6f, 20, 0, 0, null);
         yield return new WaitForSeconds(jumpDelay * 0.3f);
 
         jumpArea.SetActive(false);
+        isAttack = false;
+        isAttackReady = true;
     }
 }
