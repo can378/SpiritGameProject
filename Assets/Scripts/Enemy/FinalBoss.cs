@@ -158,8 +158,8 @@ public class FinalBoss : EnemyBasic
 
         }
 
-
-        curPatternCount++;
+        yield return new WaitForSeconds(1.5f);
+        //curPatternCount++;
         StartCoroutine(finalBoss());
         
         
