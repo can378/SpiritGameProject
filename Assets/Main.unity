@@ -1602,7 +1602,6 @@ MonoBehaviour:
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
   hAxis: 0
@@ -1614,6 +1613,7 @@ MonoBehaviour:
   playerItem: {fileID: 0}
   weaponController: {fileID: 0}
   skillController: {fileID: 0}
+  equipmentList: []
 --- !u!114 &539968288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1626,8 +1626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ab0145e2a78be499a07c26b80dfc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <mousePos>k__BackingField: {x: 0, y: 0}
-  <mouseDir>k__BackingField: {x: 0, y: 0}
+  <mousePos>k__BackingField: {x: 0, y: 0, z: 0}
+  <mouseDir>k__BackingField: {x: 0, y: 0, z: 0}
   <mouseAngle>k__BackingField: 0
   <runCurrentCoolTime>k__BackingField: 0
   <isPlayerMove>k__BackingField: 0
@@ -1727,10 +1727,7 @@ MonoBehaviour:
   maxSkillSlot: 1
   skill: 
   maxEquipment: 3
-  equipments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  equipments: 000000000000000000000000
   playerStat: 0000000000000000000000000000000000000000000000000000000000000000
 --- !u!70 &539968291
 CapsuleCollider2D:

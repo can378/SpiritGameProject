@@ -78,6 +78,7 @@ public class FinalBoss : EnemyBasic
     #region Phase1
     IEnumerator rushSwing() 
     {
+        print("rush and swing");
         //targeting
         Vector3 targetPos=enemyTarget.position;
         //wait
@@ -89,6 +90,7 @@ public class FinalBoss : EnemyBasic
 
     IEnumerator shotKnife() 
     {
+        print("shot knife");
         for(int i=0;i<3;i++) 
         {
             shot();
@@ -99,13 +101,16 @@ public class FinalBoss : EnemyBasic
 
     IEnumerator rushThrow() 
     {
+        print("rush throw");
         time = 6000;
         while(time>0) 
         {
-            if (Vector2.Distance(enemyTarget.transform.position,transform.position)<1f)
+            if (Vector2.Distance(enemyTarget.transform.position,transform.position)<5f)
             {
                 //grab player and throw away
-                //???????????
+                targetDirVec = (enemyTarget.position - transform.position).normalized;
+                enemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce(targetDirVec * 50);
+                yield return new WaitForSeconds(3f);
                 break;
             }
             time--;
@@ -116,7 +121,8 @@ public class FinalBoss : EnemyBasic
     }
 
     IEnumerator hitGround() 
-    { 
+    {
+        print("hit ground");
         hitGroundCol.SetActive(true);
         yield return new WaitForSeconds(5f);
         hitGroundCol.SetActive(false);
@@ -126,6 +132,7 @@ public class FinalBoss : EnemyBasic
 
     IEnumerator fireShot() 
     {
+        //print("fire shot");
         if (!gameObject.activeSelf) yield break;
 
         //원형 발사
