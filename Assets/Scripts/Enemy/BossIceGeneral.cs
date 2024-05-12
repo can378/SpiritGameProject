@@ -13,7 +13,7 @@ public class BossIceGeneral : EnemyBasic
     private void OnEnable() 
     {
         attackIndex = 0;
-        StartNamedCoroutine("IceGerneral", IceGerneral());
+        //StartNamedCoroutine("IceGerneral", IceGerneral());
     }
 
 

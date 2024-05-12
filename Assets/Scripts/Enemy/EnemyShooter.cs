@@ -13,7 +13,7 @@ public class EnemyShooter : EnemyBasic
     private void OnEnable()
     {
         rigid.velocity = Vector2.zero;
-        StartNamedCoroutine("Think", Think());
+        //StartNamedCoroutine("Think", Think());
     }
 
 

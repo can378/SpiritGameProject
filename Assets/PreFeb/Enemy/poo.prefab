@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6143043015294699043}
   - component: {fileID: 2198229184835337156}
-  - component: {fileID: 6332010596391428624}
+  - component: {fileID: 4425346596907691044}
   - component: {fileID: 6059479966666769969}
   - component: {fileID: 8152342561663690571}
   - component: {fileID: 286843030813587767}
-  - component: {fileID: 5929948562458773850}
   m_Layer: 8
   m_Name: poo
   m_TagString: Enemy
@@ -34,7 +33,8 @@ Transform:
   m_LocalPosition: {x: 5.577, y: -0.4917, z: 0}
   m_LocalScale: {x: 0.5448, y: 0.5416, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6916714966392325289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2198229184835337156
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6332010596391428624
+--- !u!114 &4425346596907691044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,24 +98,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1997188540857653842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
+  m_Script: {fileID: 11500000, guid: febdd1c319086fc4ba787c9bb7c0dc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
-  isHARRun: 0
-  isPARun: 0
-  isBeamRun: 0
-  enemyAttack: 6
-  EnemyGunMuzzle: []
-  donutAttackRange: {fileID: 0}
-  donutInside: {fileID: 0}
-  roundAttackRange: {fileID: 0}
+  isChase: 0
+  isRun: 0
 --- !u!114 &6059479966666769969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,13 +133,11 @@ MonoBehaviour:
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 1
   activeEffects: []
   detectionDis: 10
-  exp: 0
-  enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  maxAttackRange: 0
+  enemyName: "\uB625"
 --- !u!58 &8152342561663690571
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -203,27 +200,94 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5929948562458773850
+--- !u!1 &6425500129360686181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6916714966392325289}
+  - component: {fileID: 5400239753199429134}
+  - component: {fileID: 6666704503909228979}
+  m_Layer: 12
+  m_Name: EnemyAttack
+  m_TagString: EnemyAttack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6916714966392325289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6425500129360686181}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6143043015294699043}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &5400239753199429134
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6425500129360686181}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.765
+--- !u!114 &6666704503909228979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1997188540857653842}
+  m_GameObject: {fileID: 6425500129360686181}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
+  <penetrations>k__BackingField: -1
   <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
+  <DPS>k__BackingField: -1
   <damage>k__BackingField: 5
   <knockBack>k__BackingField: 5
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
+  <statusEffect>k__BackingField: 05000000
   <target>k__BackingField: []
-  multiHitDurationTime: 0

@@ -15,7 +15,7 @@ public class BossBaby : EnemyBasic
     private void OnEnable()
     {
         patternIndex = 0;
-        StartNamedCoroutine("StartAttack", StartAttack());
+        //StartNamedCoroutine("StartAttack", StartAttack());
     }
 
     IEnumerator StartAttack()

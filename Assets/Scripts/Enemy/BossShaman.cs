@@ -10,7 +10,7 @@ public class BossShaman : EnemyBasic
 
     private void OnEnable()
     {
-        StartNamedCoroutine("bossShaman", bossShaman());
+        //StartNamedCoroutine("bossShaman", bossShaman());
     }
 
     private void OnDisable()

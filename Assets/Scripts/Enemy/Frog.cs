@@ -7,13 +7,37 @@ public class Frog : EnemyBasic
     public GameObject laser;
     public LineCreator lineCreator;
 
+    protected override void AttackPattern()
+    {
+        if (targetDis <= enemyStats.maxAttackRange)
+        {
+            StartCoroutine(Laser());
+            return;
+        }
+    }
 
+    // 멀리 있으면 다가옴
+    // 어느정도 가까이 있으면 혓바닥 공격
 
-    private void OnEnable()
-    { StartNamedCoroutine("frog", frog()); }
+    IEnumerator Laser()
+    {
+        isAttack = true;
+        isAttackReady = false;
 
+        //shooting laser
+        laser.SetActive(true);
+        lineCreator.StartCoroutine(lineCreator.laserBeam());
+        yield return new WaitForSeconds(1f);
 
+        lineCreator.StopCoroutine(lineCreator.laserBeam());
+        laser.SetActive(false);
+        yield return new WaitForSeconds(1f);
 
+        isAttack = false;
+        isAttackReady = true;
+    }
+
+    /*
     IEnumerator frog()
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
@@ -40,10 +64,10 @@ public class Frog : EnemyBasic
                 laser.SetActive(true);
                 StartCoroutine(lineCreator.laserBeam());
                 //run away
-                /*
+                
                 rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultSpeed * 10);
                 yield return new WaitForSeconds(0.1f);
-                */
+                
             }
         }
 
@@ -52,6 +76,7 @@ public class Frog : EnemyBasic
 
 
     }
+    */
 
 
 }

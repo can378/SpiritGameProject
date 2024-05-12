@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1660978796799637127}
   - component: {fileID: 3914431217769459977}
   - component: {fileID: 4691231705658497611}
-  - component: {fileID: 5425517668367509795}
   - component: {fileID: 4835372784051673281}
   - component: {fileID: 621937159333925520}
   m_Layer: 8
@@ -101,13 +100,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86c5b62c5256ca6479c1a8b2f46dd2ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  isChase: 0
+  isRun: 0
 --- !u!114 &4691231705658497611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,37 +132,11 @@ MonoBehaviour:
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 20
+  <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   detectionDis: 0
-  exp: 0
+  maxAttackRange: 10
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
---- !u!114 &5425517668367509795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7847644084495854624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 5
-  <knockBack>k__BackingField: 5
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!61 &4835372784051673281
 BoxCollider2D:
   m_ObjectHideFlags: 0

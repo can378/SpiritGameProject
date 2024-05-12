@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EnemyMosquito : EnemyBasic
 {
-
-
+    /*
     private void OnEnable()
     {
         StartNamedCoroutine("attack", attack());
     }
+    
+    */
 
 
     IEnumerator attack() 
@@ -19,7 +20,7 @@ public class EnemyMosquito : EnemyBasic
         if (targetDis <= enemyStats.detectionDis && targetDis >= 1f)
         {
             //GetComponent<PathFinding>().StartFinding((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
-            Chase();
+            //Chase();
         }
         yield return new WaitForSeconds(0.1f);
     

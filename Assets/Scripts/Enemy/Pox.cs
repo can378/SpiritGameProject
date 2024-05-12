@@ -1,18 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pox : EnemyBasic
 {
+    [SerializeField] GameObject HitArea;
+    //수두 걸린 사람
+    //거리가 어느정도 있으면 총알 던짐
+    //가까이 있다면 때리고 튄다.
 
-    private void OnEnable()
+    protected override void MovePattern()
     {
-        StartNamedCoroutine("pox", pox());
+
+    }
+
+    protected override void AttackPattern()
+    {
+        // 근거리 공격
+        if(targetDis <= 7f)
+        {
+            StartCoroutine(HitAndRun());
+        }
+        // 원거리 공격
+        else if( targetDis <= enemyStats.maxAttackRange)
+        {
+            StartCoroutine(Throw());
+        }
+    }
+
+    IEnumerator HitAndRun()
+    {
+        isAttack = true;
+        isAttackReady = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        HitDetection hitDetection = HitArea.GetComponent<HitDetection>();
+        hitDetection.user = this.gameObject;
+
+        HitArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        HitArea.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
+        HitArea.SetActive(false);
+        isAttack = false;
+        isAttackReady = true;
+
+        isRun = true;
+        yield return new WaitForSeconds(2f);
+
+        isRun = false;
+    }
+
+    IEnumerator Throw()
+    {
+        //throwing stone
+        isAttack = true;
+        isAttackReady = false;
+        yield return new WaitForSeconds(1f);
+
+        GameObject bullet = Instantiate(ObjectPoolManager.instance.Get2("Bullet"),transform.position,Quaternion.identity);
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 7, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(1f);
+
+        isAttack = false;
+        isAttackReady = true;
+
     }
 
 
-
-
+    /*
     IEnumerator pox()
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
@@ -73,4 +132,5 @@ public class Pox : EnemyBasic
         StartCoroutine(pox());
 
     }
+    */
 }

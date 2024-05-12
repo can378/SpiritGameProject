@@ -5,10 +5,7 @@ using UnityEngine;
 public class EnemyStats : Stats
 {
     public int detectionDis;
-    public int exp;
+    public int maxAttackRange;
     public string enemyName;
 
-    //debuff
-    public bool isEnemyStun;
-    public bool isEnemyFear;
 }

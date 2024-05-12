@@ -6,8 +6,8 @@ public class BossShadowDummy : EnemyBasic
 {
     private void OnEnable()
     {
-        StartNamedCoroutine("shadowDummy", shadowDummy());
-        StartNamedCoroutine("shadowShot", shadowShot());
+        //StartNamedCoroutine("shadowDummy", shadowDummy());
+        //StartNamedCoroutine("shadowShot", shadowShot());
     }
     private void OnDisable()
     {
@@ -16,7 +16,7 @@ public class BossShadowDummy : EnemyBasic
 
     IEnumerator shadowDummy() 
     {
-        Chase();
+        //Chase();
         yield return new WaitForSeconds(0.01f);
         StartCoroutine(shadowDummy());
     }

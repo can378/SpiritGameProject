@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrowthDeBuff : StatusEffect
 {
     [field: SerializeField] public float increasedStat { get; set; }
-    [field:SerializeField] public GameObject addDeBuff {get; set; }
+    [field:SerializeField] public int addDeBuff {get; set; }
     // 최대 중첩 시 피해를 주고 제거되는 디버프 
     // 저항에 따라 피해량이 감소
 

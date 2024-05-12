@@ -12,6 +12,7 @@ public enum enemyAttack
     wander
 };
 
+//없다 치고
 
 public class EnemyAttack : EnemyPattern
 {
@@ -28,11 +29,12 @@ public class EnemyAttack : EnemyPattern
     public GameObject roundAttackRange;
 
 
-
+    /*
     private void OnEnable()
     {
         StartNamedCoroutine("EnemyPatternStart", EnemyPatternStart());
     }
+    */
 
 
     IEnumerator EnemyPatternStart()

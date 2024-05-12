@@ -6,12 +6,14 @@ public class NoHead_Head : EnemyBasic
 {
     public LineCreator lineCreator;
     public GameObject vomit;
-   
-    private void OnEnable()
-    { StartNamedCoroutine("head", head()); }
 
 
+    //움직이지는 않고 토만 함
 
+    protected override void AttackPattern()
+    {
+        StartCoroutine(head());
+    }
 
     IEnumerator head() 
     {
@@ -29,13 +31,16 @@ public class NoHead_Head : EnemyBasic
        // Quaternion rotation = Quaternion.LookRotation(0,0,targetDirVec.z);
         //vomit.transform.rotation = rotation;
 
-
+        isAttack = true;
+        isAttackReady = false;
         vomit.SetActive(true);
         yield return new WaitForSeconds(3f);
+
+        isAttack = false;
+        isAttackReady = true;
         vomit.SetActive(false);
         yield return new WaitForSeconds(3f);
 
-        StartCoroutine(head());
     }
     
 }

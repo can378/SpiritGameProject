@@ -5,18 +5,45 @@ using UnityEngine;
 public class NoHead_Body : EnemyBasic
 {
     private bool isTransform=false;
+    bool isHit = false;
     public GameObject headPos;
     public GameObject head;
     private Vector2 dir = new Vector2(1, 0);
 
 
+    protected override void MovePattern()
+    {
+        if(isTransform)
+        {
+            isChase = true;
+        }
+    }
 
-    private void OnEnable()
-    { StartNamedCoroutine("body", body()); }
+    protected override void AttackPattern()
+    {
+        StartCoroutine(ChangeMove());
+    }
+
+    IEnumerator ChangeMove()
+    {
+        isAttack = true;
+        isAttackReady = false;
+        yield return new WaitForSeconds(0.1f);
+
+        moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+        isAttack = false;
+
+        yield return new WaitForSeconds(5f);
+
+        isAttackReady = false;
+    }
 
 
+    // 머리 없는 사람 몸
+    // 그냥 무작위로 돌아다님
+    // 머리랑 합체하면 플레이어를 쫒음
 
-    private bool isHit = false;
+    /*
     public IEnumerator body() 
     {
         if (isTransform == false)
@@ -52,9 +79,11 @@ public class NoHead_Body : EnemyBasic
         StartCoroutine(body());
     }
 
+    */
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (isTransform == false)
         {
             if (collision.tag == "Enemy" && collision.GetComponent<EnemyStats>().enemyName=="head")
@@ -73,12 +102,6 @@ public class NoHead_Body : EnemyBasic
             { isHit = true; }
 
         }
-        if (collision.tag == "PlayerAttack")
-        {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
-        }
-
-
 
     }
 }

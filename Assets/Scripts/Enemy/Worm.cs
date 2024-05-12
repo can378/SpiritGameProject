@@ -4,36 +4,31 @@ using UnityEngine;
 
 public class Worm : EnemyBasic
 {
-    private void OnEnable()
+    protected override void AttackPattern()
     {
-        StartNamedCoroutine("worm", worm());
-
+        // 근거리 공격
+        if (targetDis <= 2f)
+        {
+            StartCoroutine(worm());
+        }
     }
-    
 
     IEnumerator worm()
     {
-        if (Vector2.Distance(enemyTarget.transform.position, transform.position) < 1f)
-        {
-            //stick to player
-            transform.position = enemyTarget.transform.position;
-            sprite.sortingOrder = enemyTarget.GetComponent<SpriteRenderer>().sortingOrder + 1;
+        //stick to player
+        isAttack = true;
+        isAttackReady = false;
 
-            //player move slowly
-            enemyTarget.GetComponent<PlayerStats>().defaultMoveSpeed -= 3;
-            yield return new WaitForSeconds(3f);
-            enemyTarget.GetComponent<PlayerStats>().defaultMoveSpeed += 3;
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            //chase
-            Chase();
-            yield return new WaitForSeconds(0.1f);
-        }
+        transform.position = enemyTarget.transform.position;
+        transform.parent = enemyTarget.gameObject.transform;
+        sprite.sortingOrder = enemyTarget.GetComponentInChildren<SpriteRenderer>().sortingOrder + 1;
 
-        StartCoroutine(worm());
-        
+        //player move slowly
+        enemyTarget.GetComponent<PlayerStats>().decreasedMoveSpeed += 0.5f;
+        yield return new WaitForSeconds(3f);
+        enemyTarget.GetComponent<PlayerStats>().decreasedMoveSpeed -= 0.5f;
+        Destroy(this.gameObject);
+
     }
 
    

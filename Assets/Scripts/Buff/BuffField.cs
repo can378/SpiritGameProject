@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuffField : MonoBehaviour
 {
-    public GameObject[] Buff;
+    public int[] Buff;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.tag == "Player")

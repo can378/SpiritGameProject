@@ -14,7 +14,7 @@ public class BossDarkGhost : EnemyBasic
 
     private void OnEnable() 
     {
-        StartNamedCoroutine("darkGhost", darkGhost());
+        //StartNamedCoroutine("darkGhost", darkGhost());
     }
 
 

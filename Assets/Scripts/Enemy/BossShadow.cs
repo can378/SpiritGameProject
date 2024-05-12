@@ -14,8 +14,8 @@ public class BossShadow : EnemyBasic
     private void OnEnable()
     {
         patternNum = 0;
-        StartNamedCoroutine("bossShadow",bossShadow());
-        StartNamedCoroutine("hpRecovery_", hpRecovery_());
+        //StartNamedCoroutine("bossShadow",bossShadow());
+        //StartNamedCoroutine("hpRecovery_", hpRecovery_());
     }
 
     private void OnDisable()
@@ -124,7 +124,7 @@ public class BossShadow : EnemyBasic
         while(isDummiesAllDie==false)
         {
             //attack
-            Chase();
+            //Chase();
             shot();
 
             //check dummy

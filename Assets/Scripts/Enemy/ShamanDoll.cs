@@ -5,13 +5,58 @@ using UnityEngine;
 
 public class ShamanDoll : EnemyBasic
 {
+    [SerializeField] int curseDefaulCoolTime;
+    float curseCoolTime = 0;
+
+    protected override void Update()
+    {
+        base.Update();
+        curseCoolTime -= Time.deltaTime;
+    }
+
+    protected override void MovePattern()
+    {
+        if(curseCoolTime <= 0f)
+        {
+            isRun = false;
+        }
+        else {
+            isRun = true;
+        }
+        
+    }
+
+    protected override void AttackPattern()
+    {
+        if(curseCoolTime <= 0f)
+        {
+            StartCoroutine(Curse());
+        }
+    }
+
+    IEnumerator Curse()
+    {
+        isAttack = true;
+        isAttackReady = false;
+        yield return new WaitForSeconds(1f);
+
+        enemyTarget.gameObject.GetComponent<Player>().Damaged(5f);
+        yield return new WaitForSeconds(1f);
+
+        isAttack = false;
+        isAttackReady = true;
+        curseCoolTime = curseDefaulCoolTime;
+    }
+
+    /*
 
     private void OnEnable()
     {
         StartNamedCoroutine("shamanDoll", shamanDoll());
     }
 
-
+    // 무당 인형
+    // 기본적으로 도망다니며 플레이어에게 지속적인 피해
 
     IEnumerator shamanDoll()
     {
@@ -24,11 +69,11 @@ public class ShamanDoll : EnemyBasic
         Vector2 perpendicularDir = new Vector2(playerPath.y, -playerPath.x).normalized;
         rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
 
-        /*
+        
         targetDirVec = enemyTarget.transform.position - transform.position;
         rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().moveSpeed*10f);
         yield return new WaitForSeconds(2f);
-        */
+        
 
         //enemyTarget.GetComponent<PlayerStats>().HP -= GetComponent<EnemyStats>().attackPower;
         enemyTarget.GetComponent<Player>().BeAttacked(this.gameObject.GetComponent<HitDetection>());
@@ -37,4 +82,5 @@ public class ShamanDoll : EnemyBasic
         StartCoroutine(shamanDoll());
         
     }
+    */
 }

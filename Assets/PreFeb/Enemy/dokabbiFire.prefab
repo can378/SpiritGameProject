@@ -10,14 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7052137158220848993}
   - component: {fileID: 943013110386236663}
-  - component: {fileID: 7466605639568740545}
-  - component: {fileID: 5138180050735709106}
   - component: {fileID: 9090248545798697406}
   - component: {fileID: 5796419177314312464}
   - component: {fileID: -3698621439545957137}
-  m_Layer: 8
+  - component: {fileID: 7265625048058152278}
+  m_Layer: 12
   m_Name: dokabbiFire
-  m_TagString: Enemy
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,8 +33,7 @@ Transform:
   m_LocalPosition: {x: -1.5624, y: 1.0696, z: 0}
   m_LocalScale: {x: 0.3773, y: 0.4582, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 365034727236361244}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &943013110386236663
@@ -90,64 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7466605639568740545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5813673811457811203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  isAttack: 0
-  attackDelay: 0
-  isAttackReady: 0
-  hitTarget: {fileID: 0}
-  enemyTarget: {fileID: 0}
-  enemyStats: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  timeValue: 0
-  isHARRun: 0
-  isPARun: 0
-  isBeamRun: 0
-  enemyAttack: 6
-  EnemyGunMuzzle: []
-  donutAttackRange: {fileID: 0}
-  donutInside: {fileID: 0}
-  roundAttackRange: {fileID: 0}
---- !u!114 &5138180050735709106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5813673811457811203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
-  <HP>k__BackingField: 100
-  <tempHP>k__BackingField: 0
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
-  activeEffects: []
-  detectionDis: 5
-  exp: 0
-  enemyName: dokabbiFire
-  isEnemyStun: 0
-  isEnemyFear: 0
 --- !u!58 &9090248545798697406
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -223,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
+  <isProjectile>k__BackingField: 1
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
@@ -233,80 +173,18 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
---- !u!1 &6996745110343587680
-GameObject:
+--- !u!114 &7265625048058152278
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 365034727236361244}
-  - component: {fileID: 8426849488827114815}
-  m_Layer: 0
-  m_Name: collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &365034727236361244
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6996745110343587680}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7052137158220848993}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8426849488827114815
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6996745110343587680}
+  m_GameObject: {fileID: 5813673811457811203}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0092509985, y: -0.6709924}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.1043696, y: 0.6492002}
-  m_EdgeRadius: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052a6d8e0b39b4845b5bccb6ac7f591f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guidingTarget: {fileID: 0}
+  speed: 5
+  angular: 10

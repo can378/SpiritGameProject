@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpottingWeaknessSkill : Skill
 {
     // ÇÇÇØ·®
-    [field: SerializeField] GameObject spottingWeaknessBuff;
+    [field: SerializeField] int spottingWeaknessBuff;
 
     public override void Enter(GameObject user)
     {

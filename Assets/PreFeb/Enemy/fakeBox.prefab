@@ -10,13 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7066327026649164893}
   - component: {fileID: 7547314502801554536}
-  - component: {fileID: 7837284434418758122}
   - component: {fileID: 6814027438109273820}
   - component: {fileID: 4283936751430933090}
   - component: {fileID: 1118319235261970662}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: mouth
-  m_TagString: Enemy
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,31 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7837284434418758122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 27390529734516364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
-  <HP>k__BackingField: 100
-  <tempHP>k__BackingField: 0
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
-  activeEffects: []
-  detectionDis: 0
-  exp: 0
-  enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
 --- !u!61 &6814027438109273820
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -197,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -208,7 +182,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!1 &3781250920144780951
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,14 +285,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be09ce768f1b146499b8fb591f6a62a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  isChase: 0
+  isRun: 0
   mouth: {fileID: 27390529734516364}
+  player: {fileID: 0}
 --- !u!114 &3268998551143446660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,13 +319,11 @@ MonoBehaviour:
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 1
   activeEffects: []
   detectionDis: 0
-  exp: 0
+  maxAttackRange: 3
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
 --- !u!50 &7574480824551784167
 Rigidbody2D:
   serializedVersion: 4
@@ -429,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -440,7 +419,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0
 --- !u!1 &7434410163456262947
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,13 +13,6 @@ public class Tiger_head : EnemyBasic
     private Vector2 dir = new Vector2(1, 0);
 
 
-    private void OnEnable()
-    {
-        parent = transform.parent;
-        StartNamedCoroutine("tigerHead", tigerHead());
-    }
-
-
 
     public bool isDetectPlayer = false;
     private bool isHit = false;

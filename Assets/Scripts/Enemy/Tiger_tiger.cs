@@ -11,7 +11,8 @@ public class Tiger_tiger : EnemyBasic
 
 
     void OnEnable() 
-    { StartNamedCoroutine("tiger", tiger()); }
+    { //StartNamedCoroutine("tiger", tiger()); 
+    }
 
 
 

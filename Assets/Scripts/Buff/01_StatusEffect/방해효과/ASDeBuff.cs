@@ -57,15 +57,18 @@ public class ASDeBuff : StatusEffect
         }
         else if (target.tag == "Enemy")
         {
-            EnemyStats stats = target.GetComponent<EnemyStats>();
+            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
 
             //player에서 isEnemyAttackalve false이면 피해안받게 하기
             print("enemy fear");
-            stats.isEnemyFear = true;
+            enemy.isAttackReady = false;
 
-            target.GetComponent<EnemyBasic>().StopAllCoroutines();
-            StartCoroutine(target.GetComponent<EnemyBasic>().runAway());
-            yield return new WaitForSeconds(duration);
+            while (duration > 0)
+            {
+                enemy.isAttackReady = false;
+                enemy.isRun = true;
+                yield return new WaitForSeconds(0.1f);
+            }
 
 
         }
@@ -90,15 +93,13 @@ public class ASDeBuff : StatusEffect
         }
         else if (target.tag == "Enemy")
         {
-            EnemyStats stats = target.GetComponent<EnemyStats>();
+            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
 
+            enemy.isAttackReady = true;
+            enemy.isRun = false;
+            
             StopCoroutine(attackDelayTimeCoroutine);
-            StopCoroutine(target.GetComponent<EnemyBasic>().runAway());
-            
-            target.GetComponent<EnemyBasic>().RestartAllCoroutines();
-           
-            stats.isEnemyFear=false;
-            
+
         }
     }
 }

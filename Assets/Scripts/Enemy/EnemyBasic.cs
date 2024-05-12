@@ -7,18 +7,21 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBasic : ObjectBasic
 {
+    public bool isChase;        // 적 추적 : 적에게 가까이 다가감
+    public bool isRun;          // 도망 중 : 공격 할 수 없으며 적에게서 멀어짐
+
     //[HideInInspector]
     public Transform enemyTarget;
     [HideInInspector]
     public EnemyStats enemyStats;
     [HideInInspector]
     public Vector2 targetDirVec;
-    [HideInInspector]
+    //[HideInInspector]
     public float targetDis;
     [HideInInspector]
     public float timeValue=0;
     
-    Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
+    //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
 
 
     protected override void Awake()
@@ -26,17 +29,94 @@ public class EnemyBasic : ObjectBasic
         base.Awake();
         enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;
         stats = enemyStats = GetComponent<EnemyStats>();
-
-        GetComponent<EnemyStats>().isEnemyFear = false;
-        GetComponent<EnemyStats>().isEnemyStun = false;
     }
 
+    protected virtual void Update()
+    {
+        Attack();
+        Move();
+    }
+
+    /*
     private void OnDisable()
     {
         StopAllCoroutines();
     }
+    */
 
-    private void OnTriggerEnter2D (Collider2D collision) 
+    #region  Attack
+
+    void Attack()
+    {
+        if (!enemyTarget)
+            return;
+        
+        targetDis = Vector2.Distance(this.transform.position,enemyTarget.position);
+
+        if ( !isRun && !isFlinch && !isAttack && isAttackReady && (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        {
+            moveVec = Vector2.zero;
+            AttackPattern();
+        }
+    }
+
+    protected virtual void AttackPattern()
+    {
+        isAttack = false;
+        isAttackReady = false;
+    }
+
+    #endregion Attack
+
+    #region Move
+
+    void Move()
+    {
+        // 경직과 공격 중에는 직접 이동 불가
+        if (isFlinch)
+        {
+            return;
+        }
+        else if(isAttack)
+        {
+            rigid.velocity = moveVec * stats.moveSpeed;
+            return;
+        }
+
+        MovePattern();
+
+
+        if (isRun)
+        {
+            moveVec = -(enemyTarget.transform.position - transform.position).normalized * 0.5f;
+        }
+        else if (isChase)
+        {
+            moveVec = (enemyTarget.transform.position - transform.position).normalized;
+        }
+
+        rigid.velocity = moveVec * stats.moveSpeed;
+
+    }
+
+    protected virtual void MovePattern()
+    {
+        // 적이 공격 사정거리 내에 있을 시
+        if (targetDis <= enemyStats.maxAttackRange)
+        {
+            isChase = false;
+        }
+        else
+        {
+            isChase = true;
+        }
+    }
+
+    #endregion Move
+
+    #region Effect
+
+    protected virtual void OnTriggerEnter2D (Collider2D collision) 
     {
         if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
@@ -58,14 +138,16 @@ public class EnemyBasic : ObjectBasic
         this.gameObject.SetActive(false);
     }
 
-    #region Often used Pattern
+    #endregion Effect
+
+    /*
     public void Chase()
     {
         Vector2 direction = (enemyTarget.position - transform.position).normalized;
         //rigid.velocity = direction * enemyStats.moveSpeed;
         transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);
     }
-
+    */
 
     public void shot()
     {
@@ -75,6 +157,7 @@ public class EnemyBasic : ObjectBasic
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
     }
 
+    /*
     public IEnumerator runAway()
     {
         print("enemy runaway");
@@ -88,10 +171,11 @@ public class EnemyBasic : ObjectBasic
         rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
         StartCoroutine(runAway());
     }
-    #endregion
+    */
 
 
     #region Coroutine Manager
+    /*
 
     public void StartNamedCoroutine(string coroutineName, IEnumerator routine)
     {
@@ -144,7 +228,10 @@ public class EnemyBasic : ObjectBasic
         }
 
     }
+
+    */
+
     #endregion
 
-    
+
 }

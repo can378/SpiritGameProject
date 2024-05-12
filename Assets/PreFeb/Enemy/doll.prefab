@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 4529116099240296461}
   - component: {fileID: 2660188753817144381}
   - component: {fileID: 2399028934464656598}
-  - component: {fileID: -3539691174756508520}
   m_Layer: 8
   m_Name: doll
   m_TagString: Enemy
@@ -179,13 +178,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f492c9dffd554540a9375def75dd404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  isChase: 0
+  isRun: 0
+  curseDefaulCoolTime: 10
+  curseCoolTime: 0
 --- !u!114 &4529116099240296461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,10 +215,8 @@ MonoBehaviour:
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   detectionDis: 0
-  exp: 0
+  maxAttackRange: -1
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
 --- !u!70 &2660188753817144381
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -273,27 +279,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-3539691174756508520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8128793878538749382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 2
-  <knockBack>k__BackingField: 2
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
-  multiHitDurationTime: 0

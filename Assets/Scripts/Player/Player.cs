@@ -12,7 +12,7 @@ public class Player : ObjectBasic
     // player 현재 능력치
     public static Player instance { get; private set; }
     // player 현재 상태
-    public  PlayerStatus status { get; private set; }
+    public PlayerStatus status { get; private set; }
     public PlayerStats playerStats {get; private set; }
 
     public float hAxis;
@@ -20,14 +20,14 @@ public class Player : ObjectBasic
 
     #region Key Input
 
-    bool rDown;                             // 재장전
-    bool dDown;                             // 회피
-    bool aDown;                             // 공격
-    bool siDown;                            // 선택 아이템
-    bool iDown;                             // 상호작용
+    public bool rDown { get; private set; }                             // 재장전
+    public bool dDown { get; private set; }                             // 회피
+    public bool aDown { get; private set; }                            // 공격
+    public bool siDown { get; private set; }                           // 선택 아이템
+    public bool iDown { get; private set; }                           // 상호작용
 
-    float skcDown;                          // 스킬 변경
-    bool skDown;                            // 스킬 키 다운 중
+    public float skcDown { get; private set; }                        // 스킬 변경
+    public bool skDown { get; private set; }              // 스킬 키 다운 중
 
     #endregion
 
@@ -735,6 +735,14 @@ public class Player : ObjectBasic
         MapUIManager.instance.UpdateHealthUI();
     }
 
+    public override void Dead()
+    {
+        Debug.Log("player dead");
+        base.Dead();
+        DataManager.instance.InitData();
+        DataManager.instance.SaveUserData();
+        MapUIManager.instance.diePanel.SetActive(true);
+    }
     /*
     void DamagedOut()
     {

@@ -10,63 +10,55 @@ public class Mouse : EnemyBasic
     public GameObject biteArea;
     private bool isChange = false;
 
-    void Update()
+    protected override void Update()
     {
-        targetDis = Vector2.Distance(transform.position,enemyTarget.position);
-        Move();
-        Attack();
+        base.Update();
         Change();
     }
 
-    void Move()
+    protected override void MovePattern()
     {
-        if (isAttack || isFlinch)
-            return;
-
         if (!isChange)
         {
-           Chase();
+            isChase = true;
         }
         else
         {
             if (targetDis < 6f)
             {
-                Run();
+                isRun = true;
+                isChase = false;
             }
             else if (targetDis >= 7f)
             {
-                Chase();
+                isChase = true;
+                isRun = false;
             }
-        }
-    }
-
-    void Attack()
-    {
-        if(isAttack || isFlinch)
-            return;
-
-        Pattern();
-
-    }
-
-    void Pattern()
-    {
-        if (!isChange)
-        {
-            if (targetDis < 2f)
+            else
             {
-                StartCoroutine(Bite());
+                isChase = false;
+                isRun = false;
+                moveVec = Vector3.zero;
             }
         }
-        else
+    }
+
+    protected override void AttackPattern()
+    {
+        // 가까이 있으면 깨문다.
+        if(targetDis < 2f)
         {
+            StartCoroutine(Bite());
+            return;
+        }
+
+        // 변신 상태라면
+        if (isChange)
+        {
+            // 스킬 사용이 가능하면 스킬 사용
             if (skill != 0 && skillList[skill].skillCoolTime <= 0)
             {
                 StartCoroutine(Skill());
-            }
-            else if (targetDis < 2f)
-            {
-                StartCoroutine(Bite());
             }
         }
     }
@@ -76,12 +68,12 @@ public class Mouse : EnemyBasic
         print("Bite");
 
         isAttack = true;
-
-        HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
+        isAttackReady = false;
 
         // 물기 전 대기 시간
         yield return new WaitForSeconds(0.5f);
 
+        HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
 
         biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
@@ -93,6 +85,7 @@ public class Mouse : EnemyBasic
         biteArea.SetActive(false);
 
         isAttack = false;
+        isAttackReady = true;
     }
 
     IEnumerator Skill()
@@ -100,6 +93,7 @@ public class Mouse : EnemyBasic
         print("Skill");
 
         isAttack = true;
+        isAttackReady = false;
 
         //mimic player skill
         print("mimic player skill");
@@ -119,13 +113,8 @@ public class Mouse : EnemyBasic
         yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
 
         isAttack = false;
+        isAttackReady = true;
 
-    }
-
-    void Run()
-    {
-        targetDirVec = enemyTarget.position - transform.position;
-        transform.Translate(-targetDirVec.normalized * stats.defaultMoveSpeed * Time.deltaTime * 0.5f);
     }
 
     void Change()
@@ -146,7 +135,6 @@ public class Mouse : EnemyBasic
             targetDirVec = hitTarget.transform.position - transform.position;
             rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
         }
-
     }
 
 }

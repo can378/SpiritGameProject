@@ -16,7 +16,7 @@ public class BossWhiteTiger : EnemyBasic
     {
         patternNum = 0;
         time = 0;
-        StartNamedCoroutine("whiteTiger", whiteTiger());
+        //StartNamedCoroutine("whiteTiger", whiteTiger());
     }
 
     private void OnDisable()
@@ -59,7 +59,7 @@ public class BossWhiteTiger : EnemyBasic
     {
         while (Vector2.Distance(enemyTarget.transform.position, transform.position) > 5f)
         { 
-            Chase();
+            //Chase();
             yield return new WaitForSeconds(0.1f);
         }
         
@@ -117,7 +117,7 @@ public class BossWhiteTiger : EnemyBasic
         while (isDummiesAllDie == false)
         {
             //attack
-            Chase();
+            //Chase();
             shot();
 
             //check dummy

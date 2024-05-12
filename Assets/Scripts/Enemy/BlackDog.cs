@@ -6,11 +6,18 @@ public class BlackDog : EnemyBasic
 {
     private bool isRunaway=false;
 
-    private void OnEnable()
+    protected override void MovePattern()
     {
-        StartNamedCoroutine("blackDog", blackDog());
+        
     }
 
+    protected override void AttackPattern()
+    {
+
+    }
+
+    //플레이어 마우스가 근처에 있으면 원형으로 도망간다.
+    // 플레이어 마우스가 근처에 없다면 슬금슬금 다가오다 한대 치고 도망간다.
 
 
     IEnumerator blackDog() 
@@ -47,7 +54,9 @@ public class BlackDog : EnemyBasic
                 { isRunaway = false;}
             }
             else 
-            { Chase(); }
+            {
+                //Chase(); 
+            }
             yield return new WaitForSeconds(0.1f);
         }
 

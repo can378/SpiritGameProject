@@ -4,17 +4,101 @@ using UnityEngine;
 
 public class SnowBall : EnemyBasic
 {
-    private Vector2 dir=new Vector2(1,0);
+    float randomMove = 0;
+    float size = 1f;
+    bool isHit;
+    [SerializeField] HitDetection snowballHitDetection;
 
-
-    private void OnEnable()
+    protected override void Update()
     {
-        StartNamedCoroutine("snowBall", snowBall());
+        base.Update();
+        Size();
+        randomMove -= Time.deltaTime;
     }
 
-    private bool isSnowBallAngry = false;
-    private bool isHit = false;
-    //private bool isSnowBallPause = false;
+    void Size()
+    {
+        if (moveVec != Vector2.zero && size < 4f && !isAttack)
+        {
+            size += Time.deltaTime * 0.1f;
+        }
+
+        if(hitTarget)
+        {
+            isHit = true;
+            if (size >= 1f)
+            {
+                size -= 0.5f;
+            }
+            else
+            {
+                Dead();
+            }
+        }
+
+        transform.localScale = new Vector3(size, size, 1f);
+        enemyStats.increasedAttackPower = size - 1f;
+        snowballHitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * size, 10, 0, 0, null);
+
+    }
+
+    protected override void MovePattern()
+    {
+        if (-1f < randomMove && randomMove < 0f)
+        {
+            moveVec = Vector2.zero;
+            randomMove -= 1;
+        }
+        else if(randomMove < -3f)
+        {
+            moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;
+            randomMove = Random.Range(2, 5);
+        }
+    }
+
+    protected override void AttackPattern()
+    {
+        if (targetDis <= enemyStats.maxAttackRange)
+        {
+            StartCoroutine(Tackle());
+        }
+    }
+
+    IEnumerator Tackle()
+    {
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+
+        // µ¹Áø Àü ÁØºñ
+        isAttack = true;
+        isAttackReady = false;
+        snowballHitDetection.gameObject.SetActive(true);
+        snowballHitDetection.SetHitDetection(false,-1,false,-1,enemyStats.attackPower * size,20,0,0,null);
+        snowballHitDetection.user = this.gameObject;
+        yield return new WaitForSeconds(0.6f);
+
+        moveVec = targetDirVec * 5;
+        for(int i = 0; i < 10 ;i++)
+        {
+            moveVec -= moveVec * 0.1f;
+            if(isHit)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        // ¸ØÃã
+        moveVec = new Vector3(0, 0, 0);
+        snowballHitDetection.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
+        isAttack = false;
+        isAttackReady = true;
+        isHit = false;
+        
+    }
+
+    /*
     IEnumerator snowBall()
     {
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
@@ -98,25 +182,6 @@ public class SnowBall : EnemyBasic
         //NEXT
         StartCoroutine(snowBall());
     }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-        //stop attacking if is hitted by something
-        isSnowBallAngry = false;
-        isHit = true;
-        transform.localScale = new Vector3(1, 1, 1);
-
-        
-        
-        if (collision.tag == "PlayerAttack")
-        {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
-        }
-    }
-
-
-
+*/
 
 }

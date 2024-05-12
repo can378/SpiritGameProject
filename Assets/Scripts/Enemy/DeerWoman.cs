@@ -5,17 +5,23 @@ using UnityEngine;
 public class DeerWoman : EnemyBasic
 {
 
+    // 플레이어한테 천천히 다가가면 총 쏨
 
-    private void OnEnable()
+    protected override void AttackPattern()
     {
-        StartNamedCoroutine("deerWoman", deerWoman());
+        if (targetDis <= enemyStats.maxAttackRange)
+        {
+            StartCoroutine(deerWoman());
+            return;
+        }
     }
-
 
 
     IEnumerator deerWoman()
     {
-        
+        isAttack = true;
+        isAttackReady = false;
+
         //shot arrow
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
@@ -28,7 +34,8 @@ public class DeerWoman : EnemyBasic
         
         yield return new WaitForSeconds(2f);
 
-        StartCoroutine(deerWoman());
+        isAttack = false;
+        isAttackReady = true;
 
     }
 }

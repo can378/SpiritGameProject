@@ -6,21 +6,20 @@ public class ObjectBasic : MonoBehaviour
 {
     //스탯
     public Stats stats;
+    public GameObject hitTarget;            // 공격 성공
 
     // 이동관련
     public Vector2 moveVec;
 
     // 피격 관련
-    public bool isFlinch;                   // 경직 중
+    public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public Coroutine flinchCoroutine;
-    public bool isInvincible;               // 무적 상태
+    public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
 
     // 공격 관련 
-    public bool isAttack;                   // 공격중
-    public bool isAttackReady = true;              // 공격 준비 완료
+    public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
+    public bool isAttackReady = true;       // 공격 준비 : false일 시 공격은 할 수 없으나 스스로 이동은 가능
     //public float attackDelay;               // 공격중 시간
-
-    public GameObject hitTarget;            // 공격 성공
 
     protected SpriteRenderer sprite;
     protected Rigidbody2D rigid;
@@ -45,7 +44,6 @@ public class ObjectBasic : MonoBehaviour
             return;
         }
 
-
         AudioManager.instance.SFXPlay("Hit_SFX");
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
@@ -61,7 +59,7 @@ public class ObjectBasic : MonoBehaviour
         {
             foreach (int statusEffectIndex in hitDetection.statusEffect)
             {
-                ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
+                ApplyBuff(statusEffectIndex);
             }
         }
     }
@@ -117,10 +115,37 @@ public class ObjectBasic : MonoBehaviour
         isInvincible = false;
     }
 
+    public void ApplyBuff(int buffIndex)
+    {
+        GameObject effect = GameData.instance.statusEffectList[buffIndex];
+
+        // 가지고 있는 버프인지 체크한다.
+        StatusEffect statusEffect = Instantiate(effect, Vector3.zero,Quaternion.identity).GetComponent<StatusEffect>();
+        foreach (StatusEffect buff in stats.activeEffects)
+        {
+            // 가지고 있는 버프라면 갱신한다.
+            if (buff.buffId == statusEffect.buffId)
+            {
+                buff.ResetEffect();
+                return;
+            }
+        }
+
+        // 가지고 있는 버프가 아니라면 새로 추가한다.
+        GameObject Buff = Instantiate(effect);
+        statusEffect = Buff.GetComponent<StatusEffect>();
+        statusEffect.SetTarget(gameObject);
+
+        statusEffect.ApplyEffect();
+        stats.activeEffects.Add(statusEffect);
+
+        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
+    }
+
     public void ApplyBuff(GameObject effect)
     {
         // 가지고 있는 버프인지 체크한다.
-        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
+        StatusEffect statusEffect = Instantiate(effect, Vector3.zero, Quaternion.identity).GetComponent<StatusEffect>();
         foreach (StatusEffect buff in stats.activeEffects)
         {
             // 가지고 있는 버프라면 갱신한다.

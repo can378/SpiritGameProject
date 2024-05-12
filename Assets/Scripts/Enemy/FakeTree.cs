@@ -4,33 +4,34 @@ using UnityEngine;
 
 public class FakeTree : EnemyBasic
 {
-
-    private void OnEnable()
+    protected override void MovePattern()
     {
-        StartNamedCoroutine("fakeTree", fakeTree());
+        isChase = false;
+        isRun = false;
     }
 
+    protected override void AttackPattern()
+    {
+        if (targetDis <= enemyStats.maxAttackRange)
+        {
+            StartCoroutine(fakeTree());
+            return;
+        }
+    }
+
+    // 근처에 있으면 공격
 
     IEnumerator fakeTree()
     {
-        print("coroutine");
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
-        targetDis = Vector2.Distance(enemyTarget.position, transform.position);
+        isAttack = true;
+        isAttackReady = false;
+        sprite.color = new Color(255, 0, 0);
+        yield return new WaitForSeconds(2f);
 
-        if (targetDis > 5f)
-        {
-            //normal form
-            GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
-        
-        }
-        else 
-        {
-            //transform
-            GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        }
+        isAttack = false;
+        isAttackReady = true;
+        sprite.color = new Color(255, 255, 255);
 
-        yield return new WaitForSeconds(0.3f);
-        StartCoroutine(fakeTree());
 
     }
 

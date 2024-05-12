@@ -15,76 +15,48 @@ public class StunDeBuff : StatusEffect
 
     public override void ResetEffect()
     {
-        if (target.tag == "Player")
+        if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
-            Player player = target.GetComponent<Player>();
+            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
             // 효과 적용
-            player.isFlinch = true;
+            objectBasic.isFlinch = true;
 
             // 중첩 
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - player.stats.SEResist) * defaultDuration;
+            duration = (1 - objectBasic.stats.SEResist) * defaultDuration;
 
-            player.StopCoroutine(player.flinchCoroutine);
-            player.flinchCoroutine = StartCoroutine(player.Flinch(duration));
+            objectBasic.StopCoroutine(objectBasic.flinchCoroutine);
+            objectBasic.flinchCoroutine = StartCoroutine(objectBasic.Flinch(duration));
 
             StartCoroutine(Stun());
         }
-        else if (target.tag == "Enemy")
-        {
-            print("enemy stun - reset effect");
-            EnemyStats enemy = target.GetComponent<EnemyStats>();
-            
-            enemy.isEnemyStun = true;
-            duration = 4;
-            
-            StartCoroutine(Stun());
-        }
-        
     }
 
     IEnumerator Stun()
     {
-        if(target.tag == "Player")
+        if(target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
-            Player player = target.GetComponent<Player>();
+            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
-            while(player.isFlinch)
+            while (objectBasic.isFlinch)
             {
                 yield return null;
             }
 
             duration = 0;
         }
-        else if (target.tag == "Enemy")
-        {
-            //player에서 isEnemyAttackalve false이면 피해안받게 하기!!!!!!!!!!
-            print("enemy stun");
-            target.GetComponent<EnemyBasic>().StopAllCoroutines();
-            yield return new WaitForSeconds(duration);
-
-            
-        }
     }
 
     public override void RemoveEffect()
     {
-        if (target.tag == "Player")
+        if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
-            Player player = target.GetComponent<Player>();
+            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
-            if (player.flinchCoroutine != null) StopCoroutine(player.flinchCoroutine);
-        }
-        else if (target.tag == "Enemy")
-        {
-            EnemyStats stats = target.GetComponent<EnemyStats>();
-            stats.isEnemyStun = false;
-            duration = 0;
-            target.GetComponent<EnemyBasic>().RestartAllCoroutines();
-            
+            if (objectBasic.flinchCoroutine != null) StopCoroutine(objectBasic.flinchCoroutine);
         }
     }
 }

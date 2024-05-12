@@ -19,7 +19,7 @@ public class FinalBoss : EnemyBasic
     {
         count = 0;
         chapterNum = 1;
-        StartNamedCoroutine("finalBoss", finalBoss());
+        //StartNamedCoroutine("finalBoss", finalBoss());
     }
 
     public IEnumerator finalBoss() 
@@ -114,7 +114,7 @@ public class FinalBoss : EnemyBasic
                 break;
             }
             time--;
-            Chase();
+            //Chase();
             yield return new WaitForSeconds(0.01f);
         }
         StartCoroutine(finalBoss());

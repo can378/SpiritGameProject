@@ -179,13 +179,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8879a6c720ea96b4cb4b1042073bb0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  isChase: 0
+  isRun: 0
 --- !u!114 &2140425140646609850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,10 +214,8 @@ MonoBehaviour:
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   detectionDis: 0
-  exp: 0
+  maxAttackRange: 5
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
 --- !u!50 &3169180777656970135
 Rigidbody2D:
   serializedVersion: 4
@@ -295,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -306,4 +311,3 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <target>k__BackingField: []
-  multiHitDurationTime: 0

@@ -145,8 +145,6 @@ public class NPCbasic : ObjectBasic
         {
             isChase = true;
         }
-
-
     }
 
     void FollowCompanion()

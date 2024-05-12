@@ -18,8 +18,8 @@ public class LittleMonster : EnemyBasic
     private void OnEnable()
     {
 
-        if (isEye) { StartNamedCoroutine("eye", eye()); }
-        if (isMouth) { StartNamedCoroutine("mouth", mouth()); }
+        //if (isEye) { StartNamedCoroutine("eye", eye()); }
+        //if (isMouth) { StartNamedCoroutine("mouth", mouth()); }
 
     }
 
@@ -28,7 +28,7 @@ public class LittleMonster : EnemyBasic
     {
         if (isDetected) 
         {
-            Chase();
+            //Chase();
             print("im mouth");
             yield return new WaitForSeconds(0.2f);
             StartCoroutine(mouth());

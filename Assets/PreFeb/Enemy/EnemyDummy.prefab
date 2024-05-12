@@ -106,13 +106,11 @@ MonoBehaviour:
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 0
   activeEffects: []
   detectionDis: 5
-  exp: 0
+  maxAttackRange: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
 --- !u!114 &-385527214193204063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,13 +123,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febdd1c319086fc4ba787c9bb7c0dc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTarget: {fileID: 0}
   stats: {fileID: 0}
-  rigid: {fileID: 0}
-  sprite: {fileID: 0}
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
+  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   timeValue: 0
+  isChase: 0
+  isRun: 0
 --- !u!58 &8127540157274700844
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -4,65 +4,77 @@ using UnityEngine;
 
 public class BroomStick : EnemyBasic
 {
-
     public GameObject colObj;
-    public GameObject buff;
+    int[] debuff = {7};
     float radius = 50;
     float attackTime = 2;
 
-
-
-    private void OnEnable()
+    protected override void AttackPattern()
     {
-        StartNamedCoroutine("peripheralAttack", peripheralAttack());
-        StartNamedCoroutine("headache", headache());
+        if (targetDis <= 1f)
+        {
+            StartCoroutine(headache());   
+        }
+        else
+        {
+            StartCoroutine(peripheralAttack());
+        }
     }
 
 
-    //본인의 주변을 공격
-    public IEnumerator peripheralAttack()
+    IEnumerator peripheralAttack()
     {
+        isAttack = true;
+        isAttackReady = false;
+        yield return new WaitForSeconds(0.5f);
+
         //attack
-        colObj.transform.position = transform.position;
+        //colObj.transform.position = transform.position;
+        colObj.transform.localScale = new Vector3(0.1f, 0.1f, 1);
+        colObj.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 0, 0, 0, debuff);
+        colObj.GetComponent<SpriteRenderer>().color = Color.white;
         colObj.SetActive(true);
         
         float r = 1;
         while (r < radius)
         {
-            colObj.transform.localScale = new Vector3(r, r, 1);
+            colObj.transform.localScale = new Vector3(0.1f * r, 0.1f * r, 1);
             r += 1f;
             yield return new WaitForSeconds(0.01f);
         }
         yield return new WaitForSeconds(attackTime);
 
         //no attack
-        colObj.transform.localScale = new Vector3(1,1, 1);
         colObj.SetActive(false);
-
-        //chase
-        for (int i = 0; i < 10; i++) 
-        { 
-            Chase();
-            yield return new WaitForSeconds(0.01f);
-        }
         yield return new WaitForSeconds(2f);
 
-
-        StartCoroutine(peripheralAttack());
-
+        isAttack = false;
+        yield return new WaitForSeconds(0.1f);
+        isAttackReady = true;
     }
+
 
     IEnumerator headache() 
     {
+        isAttack = true;
+        isAttackReady = false;
 
-        if (Vector2.Distance(enemyTarget.position, transform.position) < 1f)
+        colObj.transform.localScale = new Vector3(0.1f * radius, 0.1f * radius, 1);
+        colObj.GetComponent<HitDetection>().SetHitDetection(false,-1,true,2,0,0,0,0, debuff);
+        colObj.GetComponent<SpriteRenderer>().color = Color.magenta;
+        colObj.SetActive(true);
+
+        while(targetDis <= 1f)
         {
-            //두통 디버프 5초
-            enemyTarget.GetComponent<Player>().ApplyBuff(buff);
-
+            yield return null;
         }
-        yield return new WaitForSeconds(0.01f);
-        StartCoroutine(headache());
+
+        colObj.SetActive(false);
+
+        yield return new WaitForSeconds(0.5f);
+        isAttack = false;
+        isAttackReady = true;
+
     }
 
 
