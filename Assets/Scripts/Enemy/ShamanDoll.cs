@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ShamanDoll : EnemyBasic
 {
-    [SerializeField] int curseDefaulCoolTime;
-    float curseCoolTime = 0;
+    [SerializeField] int defaulCurseCoolTime;
+    [SerializeField] float curseCoolTime = 0;
 
     protected override void Update()
     {
@@ -16,12 +16,9 @@ public class ShamanDoll : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(curseCoolTime <= 0f)
+        if(0f < curseCoolTime )
         {
-            isRun = false;
-        }
-        else {
-            isRun = true;
+            Run();
         }
         
     }
@@ -40,12 +37,12 @@ public class ShamanDoll : EnemyBasic
         isAttackReady = false;
         yield return new WaitForSeconds(1f);
 
-        enemyTarget.gameObject.GetComponent<Player>().Damaged(5f);
+        enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(5f);
         yield return new WaitForSeconds(1f);
 
         isAttack = false;
         isAttackReady = true;
-        curseCoolTime = curseDefaulCoolTime;
+        curseCoolTime = defaulCurseCoolTime;
     }
 
     /*

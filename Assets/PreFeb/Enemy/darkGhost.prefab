@@ -108,11 +108,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!114 &3337367932025242564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,18 +305,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  hitTarget: {fileID: 0}
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
-  hitTarget: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 1032
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   AttackRange: {fileID: 216568115441948312}
   NoAttackRange: {fileID: 3229456068265919806}
   zones:
@@ -344,11 +346,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!114 &8207308201083225660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,11 +542,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!58 &639911401988937875
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -795,11 +795,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!58 &5647541433627034266
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1042,11 +1041,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!58 &8872578582682521045
 CircleCollider2D:
   m_ObjectHideFlags: 0

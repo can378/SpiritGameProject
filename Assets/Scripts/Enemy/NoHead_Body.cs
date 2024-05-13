@@ -15,7 +15,7 @@ public class NoHead_Body : EnemyBasic
     {
         if(isTransform)
         {
-            isChase = true;
+           Chase();
         }
     }
 

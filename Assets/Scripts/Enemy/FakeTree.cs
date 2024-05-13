@@ -6,7 +6,6 @@ public class FakeTree : EnemyBasic
 {
     protected override void MovePattern()
     {
-        isChase = false;
         isRun = false;
     }
 

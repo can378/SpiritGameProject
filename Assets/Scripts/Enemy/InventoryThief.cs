@@ -15,20 +15,21 @@ public class InventoryThief : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(isSteal)
+        if (!enemyTarget)
         {
-            isRun = true;
-            return;
+            RandomMove();
         }
-
-        // 적이 사정거리 내에 있을 시
-        if (targetDis <= enemyStats.maxAttackRange)
+        else if (isSteal)
         {
-            isChase = false;
+            Run();
+        }
+        else if (targetDis <= enemyStats.maxAttackRange)
+        {
+            
         }
         else
         {
-            isChase = true;
+            Chase();
         }
     }
 

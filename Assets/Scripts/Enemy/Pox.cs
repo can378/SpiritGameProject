@@ -33,24 +33,24 @@ public class Pox : EnemyBasic
     {
         isAttack = true;
         isAttackReady = false;
-
+        Vector3 hitPos = enemyTarget.transform.position;
         yield return new WaitForSeconds(0.5f);
 
         HitDetection hitDetection = HitArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
 
-        HitArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        HitArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(hitPos.y - transform.position.y, hitPos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
         HitArea.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
         HitArea.SetActive(false);
         isAttack = false;
         isAttackReady = true;
-
         isRun = true;
         yield return new WaitForSeconds(2f);
 
         isRun = false;
+
     }
 
     IEnumerator Throw()
@@ -58,10 +58,11 @@ public class Pox : EnemyBasic
         //throwing stone
         isAttack = true;
         isAttackReady = false;
+        Vector3 throwPos = enemyTarget.transform.position;
         yield return new WaitForSeconds(1f);
 
         GameObject bullet = Instantiate(ObjectPoolManager.instance.Get2("Bullet"),transform.position,Quaternion.identity);
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        targetDirVec = (throwPos - transform.position).normalized;
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 7, ForceMode2D.Impulse);
         yield return new WaitForSeconds(1f);
 

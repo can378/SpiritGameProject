@@ -19,13 +19,9 @@ public class Dokkebie : EnemyBasic
     protected override void MovePattern()
     {
         // 적이 공격 사정거리 내에 있을 시
-        if (targetDis <= 3f)
+        if (targetDis >= 3f)
         {
-            isChase = false;
-        }
-        else
-        {
-            isChase = true;
+            Chase();
         }
     }
 
@@ -49,8 +45,7 @@ public class Dokkebie : EnemyBasic
         isAttackReady = false;
         yield return new WaitForSeconds(1f);
 
-        GameObject bullet = Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
-        bullet.GetComponent<Guiding>().guidingTarget = enemyTarget;
+        Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
         
         yield return new WaitForSeconds(3f);
 
@@ -62,6 +57,7 @@ public class Dokkebie : EnemyBasic
     IEnumerator Hammer()
     {
         print("Hammer");
+        Vector3 hammgerPos = enemyTarget.transform.position;
 
         isAttack = true;
         isAttackReady = false;
@@ -72,7 +68,7 @@ public class Dokkebie : EnemyBasic
         HitDetection hitDetection = hammerArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
 
-        hammerArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        hammerArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(hammgerPos.y - transform.position.y, hammgerPos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
         hammerArea.SetActive(true);
 
         // 물기 판정 유지 시간

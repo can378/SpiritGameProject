@@ -57,13 +57,15 @@ MonoBehaviour:
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  isChase: 0
   isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 1032
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   colObj: {fileID: 7504143490791978497}
 --- !u!114 &8194432176129987292
 MonoBehaviour:
@@ -85,9 +87,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 1
   <defaultMoveSpeed>k__BackingField: 20
   activeEffects: []
-  detectionDis: 10
-  maxAttackRange: -1
   enemyName: 
+  detectionDis: 30
+  detectionKeepDis: -1
+  maxAttackRange: -1
 --- !u!50 &3390187105194360506
 Rigidbody2D:
   serializedVersion: 4

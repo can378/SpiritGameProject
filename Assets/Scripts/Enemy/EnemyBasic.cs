@@ -7,19 +7,18 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBasic : ObjectBasic
 {
-    public bool isChase;        // 적 추적 : 적에게 가까이 다가감
-    public bool isRun;          // 도망 중 : 공격 할 수 없으며 적에게서 멀어짐
+    public bool isRun;                  // 도망 중 : 공격 할 수 없으며 적에게서 멀어짐
+    public float randomMove = 0;
 
+    public LayerMask detectEnemy;
     //[HideInInspector]
-    public Transform enemyTarget;
+    public Transform enemyTarget;       // 현재 타겟
     [HideInInspector]
-    public EnemyStats enemyStats;
+    public EnemyStats enemyStats;       // 적 스탯
     [HideInInspector]
-    public Vector2 targetDirVec;
+    public Vector2 targetDirVec;        // 적 방향
     //[HideInInspector]
-    public float targetDis;
-    [HideInInspector]
-    public float timeValue=0;
+    public float targetDis;             // 적과의 거리
     
     //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
 
@@ -27,14 +26,17 @@ public class EnemyBasic : ObjectBasic
     protected override void Awake()
     {
         base.Awake();
-        enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;
+        //enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;
         stats = enemyStats = GetComponent<EnemyStats>();
+        
     }
 
     protected virtual void Update()
     {
         Attack();
         Move();
+        Detect();
+        randomMove -= Time.deltaTime;
     }
 
     /*
@@ -52,6 +54,7 @@ public class EnemyBasic : ObjectBasic
             return;
         
         targetDis = Vector2.Distance(this.transform.position,enemyTarget.position);
+        targetDirVec = (enemyTarget.position - transform.position).normalized;
 
         if ( !isRun && !isFlinch && !isAttack && isAttackReady && (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
@@ -64,6 +67,30 @@ public class EnemyBasic : ObjectBasic
     {
         isAttack = false;
         isAttackReady = false;
+    }
+
+    void Detect()
+    {
+        // 타겟이 있을 때
+        if (enemyTarget != null)
+        {
+            // 타겟 유지 거리가 양수 이고 타겟이 유지거리보다 멀리 있다면 타겟 해제
+            if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < targetDis)
+            {
+                enemyTarget = null;
+                return;
+            }
+            return;
+        }
+
+        var target = Physics2D.OverlapCircle(transform.position, enemyStats.detectionDis, detectEnemy);
+
+        if (target == null)
+        {
+            return;
+        }
+
+        enemyTarget = target.transform;
     }
 
     #endregion Attack
@@ -82,18 +109,16 @@ public class EnemyBasic : ObjectBasic
             rigid.velocity = moveVec * stats.moveSpeed;
             return;
         }
+        else if (isRun)
+        {
+            if(enemyTarget)
+            {
+                rigid.velocity = -(enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+            }
+            return;
+        }
 
         MovePattern();
-
-
-        if (isRun)
-        {
-            moveVec = -(enemyTarget.transform.position - transform.position).normalized * 0.5f;
-        }
-        else if (isChase)
-        {
-            moveVec = (enemyTarget.transform.position - transform.position).normalized;
-        }
 
         rigid.velocity = moveVec * stats.moveSpeed;
 
@@ -101,15 +126,52 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void MovePattern()
     {
-        // 적이 공격 사정거리 내에 있을 시
-        if (targetDis <= enemyStats.maxAttackRange)
+        
+        if(!enemyTarget)
         {
-            isChase = false;
+            RandomMove();
+        }
+        // 적이 공격 사정거리 내에 있을 시
+        else if (targetDis <= enemyStats.maxAttackRange)
+        {
+            
         }
         else
         {
-            isChase = true;
+            Chase();
         }
+    }
+
+    protected void RandomMove()
+    {
+        if (-1f < randomMove && randomMove < 0f)
+        {
+            moveVec = Vector2.zero;
+            randomMove -= 1;
+        }
+        else if (randomMove < -3f)
+        {
+            moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;
+            randomMove = Random.Range(2, 5);
+        }
+    }
+
+    protected void Chase()
+    {
+        if (!enemyTarget)
+        {
+            return;
+        }
+
+        moveVec = (enemyTarget.transform.position - transform.position).normalized;
+    }
+
+    protected void Run()
+    {
+        if (!enemyTarget)
+            return;
+
+        moveVec = -(enemyTarget.transform.position - transform.position).normalized * 0.5f;
     }
 
     #endregion Move
@@ -135,10 +197,17 @@ public class EnemyBasic : ObjectBasic
 
         //enemy disappear
         StopAllCoroutines();
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 
     #endregion Effect
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionDis);
+    }
 
     /*
     public void Chase()

@@ -20,24 +20,31 @@ public class Mouse : EnemyBasic
     {
         if (!isChange)
         {
-            isChase = true;
-        }
-        else
-        {
-            if (targetDis < 6f)
+            if(!enemyTarget)
             {
-                isRun = true;
-                isChase = false;
-            }
-            else if (targetDis >= 7f)
-            {
-                isChase = true;
-                isRun = false;
+                RandomMove();
             }
             else
             {
-                isChase = false;
-                isRun = false;
+                Chase();
+            }
+        }
+        else
+        {
+            if (!enemyTarget)
+            {
+                RandomMove();
+            }
+            else if (targetDis < 6f)
+            {
+                Run();
+            }
+            else if (targetDis >= 7f)
+            {
+                Chase();
+            }
+            else
+            {
                 moveVec = Vector3.zero;
             }
         }
@@ -66,6 +73,7 @@ public class Mouse : EnemyBasic
     IEnumerator Bite()
     {
         print("Bite");
+        Vector3 bitePos = enemyTarget.transform.position;
 
         isAttack = true;
         isAttackReady = false;
@@ -76,7 +84,7 @@ public class Mouse : EnemyBasic
         HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
 
-        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(bitePos.y - transform.position.y, bitePos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
         biteArea.SetActive(true);
 
         // 물기 판정 유지 시간

@@ -9,9 +9,14 @@ public class BroomStick : EnemyBasic
     float radius = 50;
     float attackTime = 2;
 
+    protected override void MovePattern()
+    {
+        Chase();
+    }
+
     protected override void AttackPattern()
     {
-        if (targetDis <= 1f)
+        if (targetDis <= 2f)
         {
             StartCoroutine(headache());   
         }
@@ -46,7 +51,7 @@ public class BroomStick : EnemyBasic
 
         //no attack
         colObj.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         isAttack = false;
         yield return new WaitForSeconds(0.1f);
@@ -64,7 +69,7 @@ public class BroomStick : EnemyBasic
         colObj.GetComponent<SpriteRenderer>().color = Color.magenta;
         colObj.SetActive(true);
 
-        while(targetDis <= 1f)
+        while(targetDis <= 2f)
         {
             yield return null;
         }

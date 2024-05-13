@@ -11,7 +11,7 @@ public class FakeBox : EnemyBasic
     protected override void Update()
     {
         base.Update();
-        if (player != null)
+        if (!isWakeUp && player != null)
         {
             if (player.iDown)
             {
@@ -24,7 +24,7 @@ public class FakeBox : EnemyBasic
     {
         if(isWakeUp)
         {
-            isChase = true;
+            Chase();
         }
     }
 
@@ -47,8 +47,11 @@ public class FakeBox : EnemyBasic
         yield return new WaitForSeconds(1f);
 
         mouth.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        
         isAttack = false;
         isAttackReady = true;
+        
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)

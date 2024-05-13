@@ -38,14 +38,14 @@ public class whiteFox : EnemyBasic
     {
         isAttack = true;
         isAttackReady = false;
-
+        Vector3 hitPos = enemyTarget.transform.position;
         yield return new WaitForSeconds(biteTime * 0.3f);
 
         HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
         hitDetection.SetHitDetection(false,-1,false,-1,enemyStats.attackPower,10,0,0,null);
 
-        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(hitPos.y - transform.position.y, hitPos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
         biteArea.SetActive(true);
         yield return new WaitForSeconds(biteTime * 0.4f);
 

@@ -20,6 +20,7 @@ public class IcicleSkill : Skill
 
     //방향 표시기
     GameObject simul;
+    Vector3 simulVector;
 
     public override void Enter(GameObject user)
     {
@@ -42,6 +43,7 @@ public class IcicleSkill : Skill
             {
                 // 나중에 원 형태로 최대 범위 제한하기
                 // 나중에 원 형태로 최대 범위 표시하기
+                simulVector = player.status.mousePos;
                 simul.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);
                 yield return null;
             }
@@ -57,11 +59,12 @@ public class IcicleSkill : Skill
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
-            while (timer <= maxHoldTime / 2)
+            while (timer <= maxHoldTime / 2 && enemy.enemyTarget != null )
             {
                 // 나중에 원 형태로 최대 범위 제한하기
                 // 나중에 원 형태로 최대 범위 표시하기
                 angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+                simulVector = enemy.enemyTarget.transform.position;
                 simul.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
                 timer += Time.deltaTime;
                 yield return null;
@@ -109,7 +112,7 @@ public class IcicleSkill : Skill
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
-            bulletRigid.velocity = player.status.mouseDir * 10 * speed;  // 속도 설정
+            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정
         }
         else if (user.tag == "Enemy")
@@ -118,7 +121,7 @@ public class IcicleSkill : Skill
             GameObject instantProjectile = Instantiate(icicleEffect, transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            float angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(simulVector.y - user.transform.position.y, simulVector.x - user.transform.position.x) * Mathf.Rad2Deg;
 
             // 쿨타임 적용
             skillCoolTime = skillDefalutCoolTime;
@@ -145,7 +148,7 @@ public class IcicleSkill : Skill
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // 방향 설정
-            bulletRigid.velocity = (enemy.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
+            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정
         }
     }

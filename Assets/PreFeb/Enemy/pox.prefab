@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1500740073097307438}
   - component: {fileID: 2909536061303903219}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,19 +348,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  hitTarget: {fileID: 0}
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  hitTarget: {fileID: 0}
-  isChase: 0
   isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 1032
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   HitArea: {fileID: 4755532602011828085}
 --- !u!114 &2568458734840514807
 MonoBehaviour:
@@ -382,9 +384,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 3
   activeEffects: []
-  detectionDis: 10
-  maxAttackRange: 20
   enemyName: 
+  detectionDis: 7
+  detectionKeepDis: 15
+  maxAttackRange: 10
 --- !u!50 &7338967536234966317
 Rigidbody2D:
   serializedVersion: 4

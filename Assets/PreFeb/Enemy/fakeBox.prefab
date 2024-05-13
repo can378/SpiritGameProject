@@ -286,19 +286,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  hitTarget: {fileID: 0}
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  hitTarget: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 8
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
-  isChase: 0
-  isRun: 0
   mouth: {fileID: 27390529734516364}
   player: {fileID: 0}
 --- !u!114 &3268998551143446660
@@ -321,9 +323,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 1
   activeEffects: []
-  detectionDis: 0
-  maxAttackRange: 3
   enemyName: 
+  detectionDis: 3
+  detectionKeepDis: -1
+  maxAttackRange: 3
 --- !u!50 &7574480824551784167
 Rigidbody2D:
   serializedVersion: 4
@@ -429,6 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7194151982772470280}
   - component: {fileID: 3809959427654203402}
+  - component: {fileID: 525588867125305450}
   m_Layer: 0
   m_Name: collider
   m_TagString: Untagged
@@ -496,3 +500,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.360535, y: 2.3027697}
   m_EdgeRadius: 0
+--- !u!50 &525588867125305450
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434410163456262947}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class DeerWoman : EnemyBasic
 {
-
-    // 플레이어한테 천천히 다가가면 총 쏨
-
     protected override void AttackPattern()
     {
         if (targetDis <= enemyStats.maxAttackRange)

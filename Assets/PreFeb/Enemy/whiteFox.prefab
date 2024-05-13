@@ -396,11 +396,12 @@ MonoBehaviour:
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 10
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 3
   activeEffects: []
-  detectionDis: 10
-  maxAttackRange: 0
   enemyName: 
+  detectionDis: 10
+  detectionKeepDis: 10
+  maxAttackRange: 5
 --- !u!114 &4278051864775572363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,13 +421,15 @@ MonoBehaviour:
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  isChase: 0
   isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 1032
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   blizzardArea: {fileID: 3179628487731707738}
   defaulBlizzardCoolTime: 10
   blizzardDebuff: 0100000003000000
@@ -476,7 +479,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3642521718709155923}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

@@ -103,19 +103,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  hitTarget: {fileID: 0}
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  hitTarget: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 1032
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
-  isChase: 0
-  isRun: 0
   laser: {fileID: 6954628706603954248}
   lineCreator: {fileID: 7280153012244028381}
 --- !u!114 &5137501389812435259
@@ -138,9 +140,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 15
-  maxAttackRange: 10
   enemyName: 
+  detectionDis: 15
+  detectionKeepDis: 0
+  maxAttackRange: 10
 --- !u!61 &6851136926891473217
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -106,7 +106,7 @@ public class EnemyPattern : EnemyBasic
             //getting closer
             do
             {
-                isChase = true;
+                Chase();
                 targetDis = Vector2.Distance(transform.position, enemyTarget.position);
                 yield return new WaitForSeconds(0.01f);
             } while (targetDis > 1.2f);
@@ -172,7 +172,7 @@ public class EnemyPattern : EnemyBasic
 
         if (isRepeat == true)
         {
-            for (int i = 0; i < 10; i++) { isChase = true; }
+            for (int i = 0; i < 10; i++) { Chase(); }
 
             yield return new WaitForSeconds(3f);
             StartCoroutine(peripheralAttack(colObj,radius, attackTime, isRepeat));
@@ -266,7 +266,7 @@ public class EnemyPattern : EnemyBasic
                 //chase
                 else
                 {
-                    isChase = true;
+                    Chase();
                     sprite.color = new Color(1f, 1f, 1f, 0.5f);
                 }
             }
@@ -290,7 +290,7 @@ public class EnemyPattern : EnemyBasic
 
         if (targetDis <= enemyStats.detectionDis && targetDis >= 1f)
         {
-            isChase = true;
+            Chase();
         }
         yield return null;
         StartCoroutine(chasing());

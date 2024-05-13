@@ -264,19 +264,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  hitTarget: {fileID: 0}
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  hitTarget: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 8
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
-  isChase: 0
-  isRun: 0
   stealArea: {fileID: 4378144185537871819}
 --- !u!114 &6999155443043462775
 MonoBehaviour:
@@ -290,17 +292,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
-  <HP>k__BackingField: 100
+  <HPMax>k__BackingField: 50
+  <HP>k__BackingField: 50
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  maxAttackRange: 3
   enemyName: 
+  detectionDis: 10
+  detectionKeepDis: 15
+  maxAttackRange: 3
 --- !u!50 &1215649603935797206
 Rigidbody2D:
   serializedVersion: 4

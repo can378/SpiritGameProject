@@ -48,10 +48,10 @@ public class ObjectBasic : MonoBehaviour
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
-        KnockBack(hitDetection.gameObject, hitDetection.knockBack);
-
         if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
         flinchCoroutine = StartCoroutine(Flinch(0.3f));
+
+        KnockBack(hitDetection.gameObject, hitDetection.knockBack);
 
         Invincible(0.1f);
 

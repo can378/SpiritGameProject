@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SnowBall : EnemyBasic
 {
-    float randomMove = 0;
     float size = 1f;
     bool isHit;
     [SerializeField] HitDetection snowballHitDetection;
@@ -13,7 +12,6 @@ public class SnowBall : EnemyBasic
     {
         base.Update();
         Size();
-        randomMove -= Time.deltaTime;
     }
 
     void Size()
@@ -28,7 +26,7 @@ public class SnowBall : EnemyBasic
             isHit = true;
             if (size >= 1f)
             {
-                size -= 0.5f;
+                size -= 1f;
             }
             else
             {
@@ -42,20 +40,6 @@ public class SnowBall : EnemyBasic
 
     }
 
-    protected override void MovePattern()
-    {
-        if (-1f < randomMove && randomMove < 0f)
-        {
-            moveVec = Vector2.zero;
-            randomMove -= 1;
-        }
-        else if(randomMove < -3f)
-        {
-            moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;
-            randomMove = Random.Range(2, 5);
-        }
-    }
-
     protected override void AttackPattern()
     {
         if (targetDis <= enemyStats.maxAttackRange)
@@ -66,8 +50,6 @@ public class SnowBall : EnemyBasic
 
     IEnumerator Tackle()
     {
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-
         // 돌진 전 준비
         isAttack = true;
         isAttackReady = false;

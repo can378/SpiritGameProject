@@ -102,19 +102,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  hitTarget: {fileID: 0}
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
-  hitTarget: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 1032
   enemyTarget: {fileID: 0}
   enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  timeValue: 0
-  isChase: 0
-  isRun: 0
+  targetDis: -1
 --- !u!114 &6059479966666769969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,9 +137,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 1
   activeEffects: []
-  detectionDis: 10
-  maxAttackRange: 0
   enemyName: "\uB625"
+  detectionDis: 7
+  detectionKeepDis: 7
+  maxAttackRange: 0
 --- !u!58 &8152342561663690571
 CircleCollider2D:
   m_ObjectHideFlags: 0
