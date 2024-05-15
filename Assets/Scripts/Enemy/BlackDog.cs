@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class BlackDog : EnemyBasic
 {
-    [SerializeField] LayerMask detectLayer;
-    [SerializeField] int attackDetectRange;       //공격 감지 범위
-    [SerializeField] float dodgeTime;
-    [SerializeField] bool isDodge;
-    [SerializeField] bool isDetectAttack;
+    [SerializeField] LayerMask detectLayer;         //공격 탐지 레이어
+    [SerializeField] int attackDetectRange;         //공격 감지 범위
+    [SerializeField] bool isDodge;                  // 회피중
+    [SerializeField] bool isDetectAttack;           // 공격 탐지
 
     [SerializeField] GameObject biteArea;
     [SerializeField] float biteTime;
@@ -52,24 +51,24 @@ public class BlackDog : EnemyBasic
     {
         isDodge = true;
         isAttackReady = false;
+        //적 방향 수직으로 회피
         if(Random.Range(0,2) == 0)
         {
-            moveVec = new Vector2(targetDirVec.y, -targetDirVec.x);
+            moveVec = new Vector2(targetDirVec.y, -targetDirVec.x).normalized;
         }
         else
         {
-            moveVec = new Vector2(-targetDirVec.y, targetDirVec.x);
+            moveVec = new Vector2(-targetDirVec.y, targetDirVec.x).normalized;
         }
         enemyStats.increasedMoveSpeed += 10f;
-        yield return new WaitForSeconds(0.3f);
 
+        yield return new WaitForSeconds(0.3f);
         moveVec = Vector2.zero;
         enemyStats.increasedMoveSpeed -= 10f;
-        yield return new WaitForSeconds(0.3f);
 
+        yield return new WaitForSeconds(0.7f);
         isDodge = false;
         isAttackReady = true;
-        yield return new WaitForSeconds(0.4f);
 
     }
 
@@ -101,28 +100,27 @@ public class BlackDog : EnemyBasic
 
     IEnumerator HitAndRun()
     {
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
+        yield return new WaitForSeconds(biteTime * 0.4f);
 
-        yield return new WaitForSeconds(biteTime * 0.3f);
-
-        HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
+        hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
-
-        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         biteArea.SetActive(true);
-        yield return new WaitForSeconds(biteTime * 0.4f);
+        yield return new WaitForSeconds(biteTime * 0.6f);
 
         biteArea.SetActive(false);
         isAttack = false;
-        yield return new WaitForSeconds(biteTime * 0.3f);
-
+        isAttackReady = true;
         isRun = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         isRun = false;
-        isAttackReady = true;
     }
 
     /*

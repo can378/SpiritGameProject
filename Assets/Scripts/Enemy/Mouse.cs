@@ -72,26 +72,21 @@ public class Mouse : EnemyBasic
 
     IEnumerator Bite()
     {
-        print("Bite");
-        Vector3 bitePos = enemyTarget.transform.position;
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
 
         isAttack = true;
         isAttackReady = false;
-
-        // 물기 전 대기 시간
         yield return new WaitForSeconds(0.5f);
 
-        HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
+        hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
-
-        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(bitePos.y - transform.position.y, bitePos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         biteArea.SetActive(true);
-
-        // 물기 판정 유지 시간
         yield return new WaitForSeconds(0.5f);
 
         biteArea.SetActive(false);
-
         isAttack = false;
         isAttackReady = true;
     }

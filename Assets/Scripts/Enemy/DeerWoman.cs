@@ -16,19 +16,20 @@ public class DeerWoman : EnemyBasic
 
     IEnumerator deerWoman()
     {
+        Vector3 shotDir = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
+        yield return new WaitForSeconds(0.5f);
 
         //shot arrow
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
 
-
         Rigidbody2D rigidBullet = bullet.GetComponent<Rigidbody2D>();
 
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
-        rigidBullet.AddForce(targetDirVec.normalized * 3, ForceMode2D.Impulse);
-        
+        rigidBullet.AddForce(shotDir.normalized * 3, ForceMode2D.Impulse);
+    
         yield return new WaitForSeconds(2f);
 
         isAttack = false;

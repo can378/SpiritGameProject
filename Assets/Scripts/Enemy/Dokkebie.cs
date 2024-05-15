@@ -5,21 +5,21 @@ using UnityEngine;
 public class Dokkebie : EnemyBasic
 {
     [SerializeField] GameObject hammerArea;
-    [SerializeField] int defaultCoolTime;
-    float coolTime = 0;
+    [SerializeField] int defaultFireCoolTime;
+    float fireCoolTime = 0;
 
     //도깨비불을 쏘면서 천천히 다가옴
 
     protected override void Update()
     {
         base.Update();
-        coolTime -= Time.deltaTime;
+        fireCoolTime -= Time.deltaTime;
     }
 
     protected override void MovePattern()
     {
         // 적이 공격 사정거리 내에 있을 시
-        if (targetDis >= 3f)
+        if (targetDis >= 5f)
         {
             Chase();
         }
@@ -27,11 +27,11 @@ public class Dokkebie : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (targetDis <= enemyStats.maxAttackRange && coolTime <= 0)
+        if (targetDis <= enemyStats.maxAttackRange && fireCoolTime <= 0)
         {
             StartCoroutine(Fire());
         }
-        else if (targetDis <= 3f)
+        else if (targetDis <= 5f)
         {
             StartCoroutine(Hammer());
         }
@@ -47,35 +47,30 @@ public class Dokkebie : EnemyBasic
 
         Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
         
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         isAttack = false;
         isAttackReady = true;
-        coolTime = defaultCoolTime;
+        fireCoolTime = defaultFireCoolTime;
     }
 
     IEnumerator Hammer()
     {
-        print("Hammer");
-        Vector3 hammgerPos = enemyTarget.transform.position;
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
 
         isAttack = true;
         isAttackReady = false;
-
-        // 물기 전 대기 시간
         yield return new WaitForSeconds(1f);
 
-        HitDetection hitDetection = hammerArea.GetComponent<HitDetection>();
+        hitDetection = hammerArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
-
-        hammerArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(hammgerPos.y - transform.position.y, hammgerPos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
+        hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         hammerArea.SetActive(true);
-
-        // 물기 판정 유지 시간
         yield return new WaitForSeconds(2f);
 
         hammerArea.SetActive(false);
-
         isAttack = false;
         isAttackReady = true;
     }

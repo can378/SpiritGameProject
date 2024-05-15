@@ -16,8 +16,6 @@ public class Crow : EnemyBasic
 
         for (int i = 0; i < 2; i++)
         {
-            targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-
             shot();
             yield return new WaitForSeconds(0.2f);
         }

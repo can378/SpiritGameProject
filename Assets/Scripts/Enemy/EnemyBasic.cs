@@ -10,14 +10,12 @@ public class EnemyBasic : ObjectBasic
     public bool isRun;                  // 도망 중 : 공격 할 수 없으며 적에게서 멀어짐
     public float randomMove = 0;
 
-    public LayerMask detectEnemy;
-    //[HideInInspector]
-    public Transform enemyTarget;       // 현재 타겟
-    [HideInInspector]
     public EnemyStats enemyStats;       // 적 스탯
-    [HideInInspector]
-    public Vector2 targetDirVec;        // 적 방향
-    //[HideInInspector]
+
+    public LayerMask detectEnemy;
+    public Transform enemyTarget;       // 현재 타겟
+    public Vector2 targetDirVec;        // 공격 방향
+    // 벡터 -> rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90)
     public float targetDis;             // 적과의 거리
     
     //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
@@ -36,7 +34,6 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
-        randomMove -= Time.deltaTime;
     }
 
     /*
@@ -63,6 +60,7 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
+    // 적 공격 패턴(기본 패턴 : 공격 안함)
     protected virtual void AttackPattern()
     {
         isAttack = false;
@@ -124,26 +122,24 @@ public class EnemyBasic : ObjectBasic
 
     }
 
+    // 이동 패턴(기본 패턴 : 타겟이 없으면 무작위 이동, 타겟이 있으면 사정거리 까지 추적)
     protected virtual void MovePattern()
     {
-        
         if(!enemyTarget)
         {
             RandomMove();
         }
-        // 적이 공격 사정거리 내에 있을 시
-        else if (targetDis <= enemyStats.maxAttackRange)
-        {
-            
-        }
-        else
+        // 적이 공격 사정거리 밖에 있을 시
+        else if (targetDis > enemyStats.maxAttackRange)
         {
             Chase();
         }
     }
 
+    // 무작위 이동
     protected void RandomMove()
     {
+        randomMove -= Time.deltaTime;
         if (-1f < randomMove && randomMove < 0f)
         {
             moveVec = Vector2.zero;
@@ -156,6 +152,7 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
+    // 적 추적
     protected void Chase()
     {
         if (!enemyTarget)
@@ -166,6 +163,7 @@ public class EnemyBasic : ObjectBasic
         moveVec = (enemyTarget.transform.position - transform.position).normalized;
     }
 
+    // 도망치기 공격 가능
     protected void Run()
     {
         if (!enemyTarget)
@@ -222,7 +220,6 @@ public class EnemyBasic : ObjectBasic
     {
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
     }
 

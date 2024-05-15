@@ -59,15 +59,15 @@ MonoBehaviour:
   isAttackReady: 1
   isRun: 0
   randomMove: 0
+  enemyStats: {fileID: 0}
   detectEnemy:
     serializedVersion: 2
     m_Bits: 1032
   enemyTarget: {fileID: 0}
-  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   hammerArea: {fileID: 2862370349361042020}
-  defaultCoolTime: 10
+  defaultFireCoolTime: 10
 --- !u!114 &7671026463152467353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +90,7 @@ MonoBehaviour:
   activeEffects: []
   enemyName: 
   detectionDis: 10
+  detectionKeepDis: 0
   maxAttackRange: 10
 --- !u!50 &8366843435267718557
 Rigidbody2D:

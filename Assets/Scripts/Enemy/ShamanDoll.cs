@@ -16,7 +16,7 @@ public class ShamanDoll : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(0f < curseCoolTime )
+        if(0f < curseCoolTime && targetDis <= 20f)
         {
             Run();
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pox : EnemyBasic
 {
-    [SerializeField] GameObject HitArea;
+    [SerializeField] GameObject hitArea;
     //수두 걸린 사람
     //거리가 어느정도 있으면 총알 던짐
     //가까이 있다면 때리고 튄다.
@@ -31,26 +31,27 @@ public class Pox : EnemyBasic
 
     IEnumerator HitAndRun()
     {
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
-        Vector3 hitPos = enemyTarget.transform.position;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.8f);
 
-        HitDetection hitDetection = HitArea.GetComponent<HitDetection>();
+        hitDetection = hitArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5, 0, 0, null);
+        hitArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
+        hitArea.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
 
-        HitArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(hitPos.y - transform.position.y, hitPos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
-        HitArea.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-
-        HitArea.SetActive(false);
+        hitArea.SetActive(false);
         isAttack = false;
         isAttackReady = true;
         isRun = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         isRun = false;
-
     }
 
     IEnumerator Throw()

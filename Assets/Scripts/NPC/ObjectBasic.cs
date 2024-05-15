@@ -196,7 +196,7 @@ public class ObjectBasic : MonoBehaviour
 
     public virtual void Dead()
     {
-        RemoveAllEffects();
+        //RemoveAllEffects();
     }
 
     #endregion

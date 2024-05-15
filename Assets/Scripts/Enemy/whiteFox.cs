@@ -10,7 +10,7 @@ public class whiteFox : EnemyBasic
     [SerializeField] float blizzardTime = 5;
 
     [SerializeField] GameObject biteArea;
-    [SerializeField] float biteTime = 5;
+    [SerializeField] float biteTime = 1;
 
     float blizzardCoolTime;
 
@@ -36,28 +36,27 @@ public class whiteFox : EnemyBasic
 
     IEnumerator HitAndRun()
     {
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
-        Vector3 hitPos = enemyTarget.transform.position;
-        yield return new WaitForSeconds(biteTime * 0.3f);
+        yield return new WaitForSeconds(biteTime * 0.2f);
 
-        HitDetection hitDetection = biteArea.GetComponent<HitDetection>();
+        hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false,-1,false,-1,enemyStats.attackPower,10,0,0,null);
-
-        biteArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(hitPos.y - transform.position.y, hitPos.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         biteArea.SetActive(true);
-        yield return new WaitForSeconds(biteTime * 0.4f);
+        yield return new WaitForSeconds(biteTime * 0.8f);
 
         biteArea.SetActive(false);
         isAttack = false;
-        yield return new WaitForSeconds(biteTime * 0.3f);
-
+        isAttackReady = true;
         isRun = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         isRun = false;
-        isAttackReady = true;
     }
 
     IEnumerator PeripheralAttack()

@@ -40,18 +40,24 @@ public class FakeBox : EnemyBasic
 
     IEnumerator fakeBox() 
     {
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
+        yield return new WaitForSeconds(0.5f);
+
+        hitDetection = mouth.GetComponent<HitDetection>();
+        hitDetection.user = this.gameObject;
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5, 0, 0, null);
+        mouth.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         mouth.SetActive(true);
-        mouth.GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower,10,0,0,null);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         mouth.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        
         isAttack = false;
         isAttackReady = true;
-        
+
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)

@@ -31,10 +31,8 @@ public class BroomStick : EnemyBasic
     {
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(0.5f);
 
-        //attack
-        //colObj.transform.position = transform.position;
+        yield return new WaitForSeconds(0.5f);
         colObj.transform.localScale = new Vector3(0.1f, 0.1f, 1);
         colObj.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 0, 0, 0, debuff);
         colObj.GetComponent<SpriteRenderer>().color = Color.white;

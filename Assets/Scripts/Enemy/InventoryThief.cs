@@ -10,7 +10,7 @@ public class InventoryThief : EnemyBasic
     protected override void Update()
     {
         base.Update();
-        StealItem();
+        Steal();
     }
 
     protected override void MovePattern()
@@ -38,35 +38,35 @@ public class InventoryThief : EnemyBasic
     {
         if (isSteal == false)
         {
-            StartCoroutine(stealItem());
+            StartCoroutine(StealAttack());
             return;
         }
     }
 
     // µµµÏÁú
 
-    IEnumerator stealItem()
+    IEnumerator StealAttack()
     {
+        HitDetection hitDetection;
+        Vector3 hitDir = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
+        yield return new WaitForSeconds(0.3f);
 
-        yield return new WaitForSeconds(0.5f);
-
-        HitDetection hitDetection = stealArea.GetComponent<HitDetection>();
+        hitDetection = stealArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
-
-        stealArea.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(enemyTarget.transform.position.y - transform.position.y, enemyTarget.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90, Vector3.forward);
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        stealArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         stealArea.SetActive(true);
-
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
 
         stealArea.SetActive(false);
-
         isAttack = false;
         isAttackReady = true;
     }
 
-    void StealItem()
+    void Steal()
     {
         if (isSteal || !hitTarget)
             return;
