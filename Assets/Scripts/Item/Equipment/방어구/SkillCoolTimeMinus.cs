@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Helmet : Equipment
+public class SkillCoolTimeMinus : Equipment
 {
+    // 증가
+    // + 수치
+    float variation;
+
     public override void Equip(Player target)
     {
         if (target.tag == "Player")
         {
-            Debug.Log("플레이어 주문력 +50% 증가");
+            Debug.Log("플레이어 도술 재사용 대기시간 +" + variation * 100+ "% 감소");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addSkillPower += 10f;
+            plyaerStats.addSkillCoolTime -= variation;
         }
     }
 
@@ -20,7 +24,7 @@ public class Helmet : Equipment
         if (target.tag == "Player")
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addSkillPower -= 10f;
+            plyaerStats.addSkillCoolTime += variation;
         }
     }
 }
