@@ -23,7 +23,6 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public bool isAttackable { get; set; }                  // 공격가능 상태
 
     [field: SerializeField] public float attackDelay { get; set; }                  // 다음 공격까지 대기시간
-    [field: SerializeField] public bool isAttackReady { get; set; }                 // 공격 준비 완료
 
     [field: SerializeField] public int skillIndex { get; set; } = 0;                // 현재 스킬 인덱스
     [field: SerializeField] public float skillChangeDelay { get; set; }

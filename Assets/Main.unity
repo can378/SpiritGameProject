@@ -1637,7 +1637,6 @@ MonoBehaviour:
   <isInvincible>k__BackingField: 0
   <isAttackable>k__BackingField: 0
   <attackDelay>k__BackingField: 0
-  <isAttackReady>k__BackingField: 0
   <skillIndex>k__BackingField: 0
   <skillChangeDelay>k__BackingField: 0
   <isSkill>k__BackingField: 0
@@ -1707,18 +1706,15 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  level: 1
-  exp: 1
-  point: 10
   <defaultCriticalChance>k__BackingField: 0
   <defaultCriticalDamage>k__BackingField: 1.5
   <defaultAttackSpeed>k__BackingField: 1
   <defaultSkillPower>k__BackingField: 0
   <defaultSkillCoolTime>k__BackingField: 0
-  <defaultRunSpeed>k__BackingField: 1.66
+  <defaultRunSpeed>k__BackingField: 0.5
   <defaultRunCoolTime>k__BackingField: 5
-  <defaultDodgeSpeed>k__BackingField: 2
-  <defaultDodgeTime>k__BackingField: 0.6
+  <defaultDodgeSpeed>k__BackingField: 0.66
+  <defaultDodgeTime>k__BackingField: 0.4
   coin: 0
   key: 0
   dice: 0
@@ -5890,7 +5886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: equipmentList.Array.size
-      value: 80
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: equipmentList.Array.data[0]
@@ -6008,6 +6004,70 @@ PrefabInstance:
       propertyPath: equipmentList.Array.data[27]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[28]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: b42259b7e8638dd4b98e86a81650efa2, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[29]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: c5f86678f76edf340add36b89f5b8d8b, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[30]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: ff0452a869b9a1a44aded2e114036570, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[31]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 76488ada8cc8da440bf5b72d55a7d1f8, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[32]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 8fcda0600d0ae7e4789f8b9daf2fc521, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[33]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 4eb314a351203a744a06b2d1b499ab76, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[34]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 56101dcca22eaf442999c747476d663b, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[35]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: d061e2dec0c6c994bacc9b690f1a23e2, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[40]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[41]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[42]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: ff0452a869b9a1a44aded2e114036570, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[43]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 76488ada8cc8da440bf5b72d55a7d1f8, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[44]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 8fcda0600d0ae7e4789f8b9daf2fc521, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[45]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 4eb314a351203a744a06b2d1b499ab76, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[46]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 56101dcca22eaf442999c747476d663b, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[47]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: d061e2dec0c6c994bacc9b690f1a23e2, type: 3}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: statusEffectList.Array.data[11]
       value: 

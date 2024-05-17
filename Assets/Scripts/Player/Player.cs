@@ -155,12 +155,12 @@ public class Player : ObjectBasic
         
         if (status.isDodge)             // 회피시 현재 속도 유지
         {
-            rigid.velocity  = dodgeVec * playerStats.moveSpeed * playerStats.dodgeSpeed; ;
+            rigid.velocity  = dodgeVec * playerStats.moveSpeed * (1 + playerStats.dodgeSpeed);
         }
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            rigid.velocity = moveVec * playerStats.moveSpeed * (status.isSprint ? playerStats.runSpeed : 1f);
+            rigid.velocity = moveVec * playerStats.moveSpeed * (status.isSprint ? 1 + playerStats.runSpeed : 1f);
         }
     }
 
@@ -196,7 +196,7 @@ public class Player : ObjectBasic
 
     void Run()
     {
-        if(isAttack || isFlinch || status.isSkillHold || !status.isAttackReady )
+        if(isAttack || isFlinch || status.isSkillHold || status.isDodge)
         {
             status.isSprint = false;
             status.runCurrentCoolTime = playerStats.runCoolTime;
@@ -204,7 +204,7 @@ public class Player : ObjectBasic
         }
 
         status.runCurrentCoolTime -= Time.deltaTime;
-        status.isSprint = status.runCurrentCoolTime > 0 ? false : true;
+        status.isSprint = status.runCurrentCoolTime <= 0 ? true : false;
     }
 
     #endregion
@@ -255,12 +255,12 @@ public class Player : ObjectBasic
         if (weaponController.weaponList[playerStats.weapon].ammo == 0)
             return;
 
-        status.isAttackReady = status.attackDelay <= 0;
+        isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !isFlinch && !isAttack && !status.isDodge && status.isAttackReady && !status.isSkill && !status.isSkillHold)
+        if (aDown && !isFlinch && !isAttack && !status.isDodge && isAttackReady && !status.isSkill && !status.isSkillHold)
         {
             // 공격 준비 안됨
-            status.isAttackReady = false;
+            isAttackReady = false;
             isAttack = true;
 
             // 공격 방향

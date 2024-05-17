@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SkillCoolTimeMinus : Equipment
 {
-    // 증가
-    // + 수치
+    // 도술 대기 시간 감소
+    // -%p
     [SerializeField] float variation;
 
     public override void Equip(Player target)

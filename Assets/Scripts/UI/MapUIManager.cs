@@ -36,7 +36,7 @@ public class MapUIManager : MonoBehaviour
     public TMP_Text PointTxt;
 
     public TMP_Text[] EquipmentsTxt = new TMP_Text[3];                  // 장비 이름
-    public TMP_Text[] StatsValueTxt = new TMP_Text[9];                                    // 스탯 수치
+    public TMP_Text[] StatsValueTxt = new TMP_Text[10];                                    // 스탯 수치
 
     //gameObject
     public TMP_Text chapterTxt;
@@ -115,13 +115,14 @@ public class MapUIManager : MonoBehaviour
     {
         StatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
         StatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
-        StatsValueTxt[2].text = (Player.instance.playerStats.attackSpeed - 1).ToString();
-        StatsValueTxt[3].text = Player.instance.playerStats.criticalChance.ToString();
-        StatsValueTxt[4].text = Player.instance.playerStats.criticalDamage.ToString();
+        StatsValueTxt[2].text = (Player.instance.playerStats.attackSpeed - 1).ToString() + " %";
+        StatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
+        StatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
         StatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
-        StatsValueTxt[6].text = Player.instance.playerStats.skillCoolTime.ToString();
-        StatsValueTxt[7].text = Player.instance.playerStats.defensivePower.ToString();
-        StatsValueTxt[8].text = Player.instance.playerStats.moveSpeed.ToString();
+        StatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
+        StatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
+        StatsValueTxt[8].text = (Player.instance.playerStats.SEResist * 100).ToString() + " %";
+        StatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
     }
 
     public void UpdateHealthUI()

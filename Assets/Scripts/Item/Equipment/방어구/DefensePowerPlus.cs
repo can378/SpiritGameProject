@@ -5,14 +5,14 @@ using UnityEngine;
 public class DefensivePowerPlus : Equipment
 {
     // 방어력 증가
-    // +% 수치
+    // +%p 수치
     [SerializeField] float variation;
 
     public override void Equip(Player target)
     {
         if(target.tag == "Player")
         {
-            Debug.Log("플레이어 방어력+" + variation * 100 + "% 증가");
+            Debug.Log("플레이어 방어력+" + variation * 100 + "%p 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addDefensivePower += variation;
         }
