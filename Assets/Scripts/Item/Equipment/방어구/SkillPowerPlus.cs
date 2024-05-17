@@ -6,7 +6,7 @@ public class SkillPowerPlus : Equipment
 {
     // 도력 증가
     // + 수치
-    int variation;
+    [SerializeField] int variation;
 
     public override void Equip(Player target)
     {

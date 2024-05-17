@@ -6,7 +6,7 @@ public class MoveSpeedPlus : Equipment
 {
     // 이동속도 증가
     // +
-    int variation;
+    [SerializeField] int variation;
 
     public override void Equip(Player target)
     {

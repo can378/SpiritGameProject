@@ -6,7 +6,7 @@ public class MaxHPPlus : Equipment
 {
     // 최대 체력 증가
     // + 수치
-    int variation;
+    [SerializeField] int variation;
 
     public override void Equip(Player target)
     {

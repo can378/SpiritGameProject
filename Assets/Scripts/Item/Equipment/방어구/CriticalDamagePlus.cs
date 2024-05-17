@@ -7,7 +7,7 @@ public class CriticalDamagePlus : Equipment
     // 치명타 피해량 증가
     // +
 
-    float variation;
+    [SerializeField] float variation;
 
     public override void Equip(Player target)
     {

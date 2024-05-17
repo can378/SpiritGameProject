@@ -7,7 +7,7 @@ public class CriticalChancePlus : Equipment
     // 치명타 확률 증가
     // +
 
-    float variation;
+    [SerializeField] float variation;
 
     public override void Equip(Player target)
     {

@@ -7,7 +7,7 @@ public class AttackSpeedUp : Equipment
     // 공격속도 증가
     // +%
 
-    float variation;
+    [SerializeField] float variation;
 
     public override void Equip(Player target)
     {

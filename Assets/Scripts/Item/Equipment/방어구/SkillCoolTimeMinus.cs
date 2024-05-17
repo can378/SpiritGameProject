@@ -6,7 +6,7 @@ public class SkillCoolTimeMinus : Equipment
 {
     // 증가
     // + 수치
-    float variation;
+    [SerializeField] float variation;
 
     public override void Equip(Player target)
     {
