@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerStats : Stats
 {
     //EXP
-    public int level = 1;
-    public int exp = 1;
-    public int point = 10;
+    //public int level = 1;
+    //public int exp = 1;
+    //public int point = 10;
 
     //Attack
 

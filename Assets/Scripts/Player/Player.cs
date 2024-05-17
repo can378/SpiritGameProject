@@ -541,9 +541,9 @@ public class Player : ObjectBasic
     {
         if (scene.name != "Main")
         {
-            playerStats.level = DataManager.instance.userData.playerLevel;
-            playerStats.exp = DataManager.instance.userData.playerExp;
-            playerStats.point = DataManager.instance.userData.playerPoint;
+            //playerStats.level = DataManager.instance.userData.playerLevel;
+            //playerStats.exp = DataManager.instance.userData.playerExp;
+            //playerStats.point = DataManager.instance.userData.playerPoint;
 
             playerStats.HP = DataManager.instance.userData.playerHP;
             playerStats.tempHP = DataManager.instance.userData.playerTempHP;

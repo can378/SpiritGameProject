@@ -71,9 +71,9 @@ public class DataManager : MonoBehaviour
     public void SaveUserData()
     {
         // userData¸¦ player ½ºÅÈÀ¸·Î µ¤¾î¾º¿ì±â
-        userData.playerLevel = Player.instance.playerStats.level;
-        userData.playerExp = Player.instance.playerStats.exp;
-        userData.playerPoint = Player.instance.playerStats.point;
+        //userData.playerLevel = Player.instance.playerStats.level;
+        //userData.playerExp = Player.instance.playerStats.exp;
+        //userData.playerPoint = Player.instance.playerStats.point;
 
         userData.playerHP = Player.instance.playerStats.HP;
         userData.playerTempHP = Player.instance.playerStats.tempHP;
@@ -82,7 +82,8 @@ public class DataManager : MonoBehaviour
         userData.playerKey = Player.instance.playerStats.key;
         userData.playerDice = Player.instance.playerStats.dice;
 
-        if (Player.instance.playerStats.weapon != 0) userData.playerWeapon = Player.instance.playerStats.weapon;
+        userData.playerWeapon = Player.instance.playerStats.weapon;
+
         for(int i = 0;i<Player.instance.playerStats.skill.Length ; i++)
         {
             if (Player.instance.playerStats.skill[i] != 0)
@@ -126,9 +127,9 @@ public class DataManager : MonoBehaviour
 
     public void InitData()
     {
-        userData.playerLevel = 1;
-        userData.playerExp = 1;
-        userData.playerPoint = 5;
+        //userData.playerLevel = 1;
+        //userData.playerExp = 1;
+        //userData.playerPoint = 5;
 
         userData.playerHP = 100f;
         userData.playerTempHP = 0;

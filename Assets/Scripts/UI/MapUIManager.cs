@@ -36,6 +36,7 @@ public class MapUIManager : MonoBehaviour
     public TMP_Text PointTxt;
 
     public TMP_Text[] EquipmentsTxt = new TMP_Text[3];                  // 장비 이름
+    public TMP_Text[] StatsValueTxt = new TMP_Text[9];                                    // 스탯 수치
 
     //gameObject
     public TMP_Text chapterTxt;
@@ -57,10 +58,10 @@ public class MapUIManager : MonoBehaviour
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();
-        UpdateExpUI();
+        //UpdateExpUI();
         //UpdateWeaponUI();
         //UpdateSkillUI();
-        UpdatePointUI();
+        //UpdatePointUI();
         if (Player.instance.playerStats.item == "")
         { updateItemUI(null); }
 
@@ -93,6 +94,15 @@ public class MapUIManager : MonoBehaviour
         else { Time.timeScale = 1f; }
     }
 
+    void FixedUpdate() {
+        UpdateHealthUI();
+        UpdateCoinUI();
+        UpdateKeyUI();
+        UpdateStatUI();
+        if (Player.instance.playerStats.item == "")
+        { updateItemUI(null); }
+    }
+
     void setUpgradePanel()
     {
         chapterTxt.text = "Chapter " + DataManager.instance.userData.nowChapter.ToString();
@@ -100,6 +110,20 @@ public class MapUIManager : MonoBehaviour
 
 
     #region player UI Update
+
+    public void UpdateStatUI()
+    {
+        StatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
+        StatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
+        StatsValueTxt[2].text = (Player.instance.playerStats.attackSpeed - 1).ToString();
+        StatsValueTxt[3].text = Player.instance.playerStats.criticalChance.ToString();
+        StatsValueTxt[4].text = Player.instance.playerStats.criticalDamage.ToString();
+        StatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
+        StatsValueTxt[6].text = Player.instance.playerStats.skillCoolTime.ToString();
+        StatsValueTxt[7].text = Player.instance.playerStats.defensivePower.ToString();
+        StatsValueTxt[8].text = Player.instance.playerStats.moveSpeed.ToString();
+    }
+
     public void UpdateHealthUI()
     {
 
@@ -108,6 +132,7 @@ public class MapUIManager : MonoBehaviour
 
     }
 
+    /*
     public void UpdateExpUI()
     {
         if(Player.instance.playerStats.exp%10==0) 
@@ -124,6 +149,7 @@ public class MapUIManager : MonoBehaviour
         //print("update exp ui" + normalizedEXP);
         ExpTxt.text = Player.instance.playerStats.exp.ToString();
     }
+    */
 
     public void updateItemUI(GameObject obj) 
     {
@@ -165,10 +191,12 @@ public class MapUIManager : MonoBehaviour
         else {SkillTxt.text = "";}
     }
 
+    /*
     public void UpdatePointUI()
     {
         PointTxt.text = Player.instance.playerStats.point.ToString();
     }
+    */
 
     //장비창 업데이트
     public void UpdateEquipmentUI()
