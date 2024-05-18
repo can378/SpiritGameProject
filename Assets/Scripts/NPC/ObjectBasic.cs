@@ -6,7 +6,7 @@ public class ObjectBasic : MonoBehaviour
 {
     //스탯
     public Stats stats;
-    public GameObject hitTarget;            // 공격 성공
+    public int defaultLayer;
 
     // 이동관련
     public Vector2 moveVec;
@@ -19,9 +19,10 @@ public class ObjectBasic : MonoBehaviour
     // 공격 관련 
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
     public bool isAttackReady = true;       // 공격 준비 : false일 시 공격은 할 수 없으나 스스로 이동은 가능
+    public GameObject hitTarget;            // 공격 성공
     //public float attackDelay;               // 공격중 시간
 
-    protected SpriteRenderer sprite;
+    public SpriteRenderer sprite;
     protected Rigidbody2D rigid;
     
     protected virtual void Awake()
@@ -104,7 +105,7 @@ public class ObjectBasic : MonoBehaviour
     public void Invincible(float time = 0)
     {
         isInvincible = true;
-        sprite.color = new Color(1, 1, 1, 0.4f);
+        sprite.color = Color.white;
         Invoke("InvincibleOut", time);
     }
 

@@ -12,6 +12,7 @@ public class RunSpeedPlus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 달리기 이동속도 +" + variation * 100 + "%p 증가");
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
             playerStats.addRunSpeed += variation;
@@ -25,6 +26,7 @@ public class RunSpeedPlus : Equipment
         {
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
             playerStats.addRunSpeed -= variation;
+            this.user = null;
         }
     }
 }

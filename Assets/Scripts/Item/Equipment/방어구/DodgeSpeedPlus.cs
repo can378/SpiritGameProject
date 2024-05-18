@@ -15,6 +15,7 @@ public class DodgeSpeedPlus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 회피 시 추가 이동속도 +" + speedVariation * 100 + "%p 증가");
             Debug.Log("플레이어 회피 시간 -" + timeVariation * 100 + "% 감소");
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
@@ -31,6 +32,7 @@ public class DodgeSpeedPlus : Equipment
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
             playerStats.increasedDodgeSpeed -= speedVariation;
             playerStats.decreasedDodgeTime -= timeVariation;
+            this.user = null;
         }
     }
 }

@@ -15,6 +15,7 @@ public class RunCoolTimeZero : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 달리기 이동속도 +" + speedVariation + "% 감소");
             Debug.Log("플레이어 대기 시간 +" + coolTimeVariation + "초 감소");
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
@@ -31,6 +32,7 @@ public class RunCoolTimeZero : Equipment
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
             playerStats.decreasedRunSpeed -= speedVariation;
             playerStats.addRunCoolTime += coolTimeVariation;
+            this.user = null;
         }
     }
 }

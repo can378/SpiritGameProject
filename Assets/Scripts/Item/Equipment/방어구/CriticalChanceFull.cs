@@ -16,6 +16,7 @@ public class CriticalChanceFull : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 치명타 확률 +" + chanceVariation * 100 +"%p 증가");
             Debug.Log("플레이어 치명타 피해량 +" + damageVariation * 100 + "%p 감소");
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
@@ -32,6 +33,7 @@ public class CriticalChanceFull : Equipment
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
             playerStats.addCriticalChance -= chanceVariation;
             playerStats.addCriticalDamage += damageVariation;
+            this.user = null;
         }
     }
 }

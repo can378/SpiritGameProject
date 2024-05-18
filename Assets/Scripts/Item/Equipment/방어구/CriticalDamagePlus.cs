@@ -13,6 +13,7 @@ public class CriticalDamagePlus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 치명타 피해량 +" + variation * 100 +"% 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addCriticalDamage += variation;
@@ -26,6 +27,7 @@ public class CriticalDamagePlus : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addCriticalDamage -= variation;
+            this.user = null;
         }
     }
 }

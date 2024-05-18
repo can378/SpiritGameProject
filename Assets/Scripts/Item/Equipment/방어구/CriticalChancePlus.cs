@@ -13,6 +13,7 @@ public class CriticalChancePlus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 치명타확률 +" + variation * 100 +"%p 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addCriticalChance += variation;
@@ -26,6 +27,7 @@ public class CriticalChancePlus : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addCriticalChance -= variation;
+            this.user = null;
         }
     }
 }

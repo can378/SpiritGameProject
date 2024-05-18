@@ -12,6 +12,7 @@ public class SEResistPlus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 상태이상 저항 +" + variation * 100 + "%p 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addSEResist += variation;
@@ -25,6 +26,7 @@ public class SEResistPlus : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addSEResist -= variation;
+            this.user = null;
         }
     }
 }

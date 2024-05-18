@@ -29,6 +29,11 @@ public class EnemyBasic : ObjectBasic
         
     }
 
+    void Start()
+    {
+        defaultLayer = this.gameObject.layer;
+    }
+
     protected virtual void Update()
     {
         Attack();

@@ -12,6 +12,7 @@ public class MaxHPPlus : Equipment
     {
         if(target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 최대체력 +" + variation + " 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.HPMax += variation;
@@ -24,6 +25,7 @@ public class MaxHPPlus : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.HPMax -= variation;
+            this.user = null;
         }
     }
 

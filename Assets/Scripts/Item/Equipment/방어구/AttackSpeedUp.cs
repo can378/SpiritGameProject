@@ -13,6 +13,7 @@ public class AttackSpeedUp : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 공격속도 +" + variation * 100 +"% 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.increasedAttackSpeed += variation;
@@ -26,6 +27,7 @@ public class AttackSpeedUp : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.increasedAttackSpeed -= variation;
+            this.user = null;
         }
     }
 }

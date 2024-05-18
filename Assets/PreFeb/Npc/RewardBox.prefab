@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 7480251713736024505}
   - component: {fileID: 3192924332714559612}
   - component: {fileID: 752095715924702944}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: RewardBox
   m_TagString: Npc
   m_Icon: {fileID: 0}
@@ -335,12 +335,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
+  hitTarget: {fileID: 0}
   isTalking: 0
   isFollow: 0
   isChase: 0

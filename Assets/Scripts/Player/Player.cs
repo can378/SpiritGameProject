@@ -43,7 +43,6 @@ public class Player : ObjectBasic
     public SkillController skillController;
     public Equipment[] equipmentList;
 
-
     public UserData userData { get; private set; }
 
     protected override void Awake()
@@ -62,8 +61,7 @@ public class Player : ObjectBasic
     void Start()
     {
         userData = DataManager.instance.userData;
-        int layerNum = LayerMask.NameToLayer("Player");
-        this.layerMask = layerNum;
+        defaultLayer = this.gameObject.layer;
     }
 
     void Update()

@@ -12,6 +12,7 @@ public class SkillCoolTimeMinus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 도술 재사용 대기시간 +" + variation * 100+ "% 감소");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addSkillCoolTime += variation;
@@ -25,6 +26,7 @@ public class SkillCoolTimeMinus : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addSkillCoolTime -= variation;
+            this.user = null;
         }
     }
 }

@@ -40,7 +40,7 @@ public class NPCbasic : ObjectBasic
 
     protected virtual void Start()
     {
-        isTalking = false;
+        defaultLayer = this.gameObject.layer;
     }
 
     void Update()

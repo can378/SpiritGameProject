@@ -12,6 +12,7 @@ public class RunCoolTimeMinus : Equipment
     {
         if (target.tag == "Player")
         {
+            this.user = target;
             Debug.Log("플레이어 달리기 대기시간 +" + variation + " 감소");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addRunCoolTime -= variation;
@@ -25,6 +26,7 @@ public class RunCoolTimeMinus : Equipment
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
             plyaerStats.addRunCoolTime += variation;
+            this.user = null;
         }
     }
 }
