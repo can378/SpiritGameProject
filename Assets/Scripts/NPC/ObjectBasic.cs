@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectBasic : MonoBehaviour
@@ -118,6 +119,16 @@ public class ObjectBasic : MonoBehaviour
 
     public void ApplyBuff(int buffIndex)
     {
+        if (0 < stats.immunity[buffIndex])
+        {
+            // 저주 디버프일 시 피해를 입고 사라짐
+            if (buffIndex == 10)
+            {
+                Damaged(stats.HPMax * 0.1f);
+            }
+            return;
+        }
+
         GameObject effect = GameData.instance.statusEffectList[buffIndex];
 
         // 가지고 있는 버프인지 체크한다.
@@ -145,8 +156,19 @@ public class ObjectBasic : MonoBehaviour
 
     public void ApplyBuff(GameObject effect)
     {
-        // 가지고 있는 버프인지 체크한다.
+        if (0 < stats.immunity[effect.GetComponent<StatusEffect>().buffId] )
+        {
+            // 저주 디버프일 시 피해를 입고 사라짐
+            if (effect.GetComponent<StatusEffect>().buffId == 10)
+            {
+                Damaged(stats.HPMax * 0.1f);
+            }
+            return;
+        }
+
         StatusEffect statusEffect = Instantiate(effect, Vector3.zero, Quaternion.identity).GetComponent<StatusEffect>();
+
+        // 가지고 있는 버프인지 체크한다.
         foreach (StatusEffect buff in stats.activeEffects)
         {
             // 가지고 있는 버프라면 갱신한다.

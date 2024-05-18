@@ -42,6 +42,9 @@ public class Stats : MonoBehaviour
         get { return Mathf.Clamp((defaultSEResist + addSEResist) * (1f + increasedSEResist) * (1f - decreasedSEResist), -0.75f,0.75f); }
     }
 
+    // 0이면 면역 아님, 1이상이면 면역
+    [field: SerializeField] public int[] immunity { get; set;} = new int[11];
+
     // Attack
     // 공격력
     // UI : 공격력 0
