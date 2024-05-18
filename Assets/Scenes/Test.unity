@@ -1434,12 +1434,10 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
+  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  level: 1
-  exp: 1
-  point: 10
   <defaultCriticalChance>k__BackingField: 0
   <defaultCriticalDamage>k__BackingField: 1.5
   <defaultAttackSpeed>k__BackingField: 1
@@ -1457,10 +1455,7 @@ MonoBehaviour:
   maxSkillSlot: 1
   skill: 00000000
   maxEquipment: 3
-  equipments:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  equipments: 000000000000000000000000
   playerStat: 0000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &572450561 stripped
 Transform:
@@ -1813,6 +1808,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7304187313316644801, guid: 4234e638a18a6074a8838522c781b581, type: 3}
   m_PrefabInstance: {fileID: 238272116}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &823933155
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.570423
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.3063755
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 719926463281466553, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 974839499037157393, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: floor
+      value: 
+      objectReference: {fileID: 23356908}
+    - target: {fileID: 5030433763933493535, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_Name
+      value: BossBaby
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
 --- !u!1 &859875199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,14 +1980,14 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
+  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!114 &859875203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3439,7 +3495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1943004348
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3529,14 +3585,14 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
+  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!114 &1943004351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3573,18 +3629,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
-  enemyTarget: {fileID: 0}
+  sprite: {fileID: 0}
+  isRun: 0
+  randomMove: 0
   enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   splitSnowArea: {fileID: 0}
   attackArea: {fileID: 0}
   screamArea: {fileID: 0}
@@ -5145,3 +5206,4 @@ SceneRoots:
   - {fileID: 1943004354}
   - {fileID: 859875206}
   - {fileID: 1713065408220060638}
+  - {fileID: 823933155}

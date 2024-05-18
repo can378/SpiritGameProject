@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6384888669552173612}
   - component: {fileID: 6554198906567495451}
-  - component: {fileID: 601397854402709644}
+  - component: {fileID: 8652020559128830605}
   - component: {fileID: 8922797344239923678}
   - component: {fileID: 1652085905615357529}
   - component: {fileID: 2056888292332731791}
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &601397854402709644
+--- !u!114 &8652020559128830605
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,33 +98,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 6391367683111479881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d2566d1abef91c41b70befd435b9e3c, type: 3}
+  m_Script: {fileID: 11500000, guid: a8ef3c4be5cffe041bb78c85016ec626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  hitTarget: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
+  hitTarget: {fileID: 0}
+  sprite: {fileID: 0}
   isRun: 0
   randomMove: 0
+  enemyStats: {fileID: 0}
   detectEnemy:
     serializedVersion: 2
-    m_Bits: 1032
+    m_Bits: 0
   enemyTarget: {fileID: 0}
-  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isHARRun: 0
-  isPARun: 0
-  isBeamRun: 0
-  enemyAttack: 0
-  EnemyGunMuzzle: []
-  donutAttackRange: {fileID: 0}
-  donutInside: {fileID: 0}
-  roundAttackRange: {fileID: 0}
 --- !u!114 &8922797344239923678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,13 +136,14 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField: 0
+  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   enemyName: 
-  detectionDis: 0
-  detectionKeepDis: 0
-  maxAttackRange: 0
+  detectionDis: 30
+  detectionKeepDis: 30
+  maxAttackRange: 30
 --- !u!61 &1652085905615357529
 BoxCollider2D:
   m_ObjectHideFlags: 0

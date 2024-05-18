@@ -12,14 +12,17 @@ public class BossDarkGhost : EnemyBasic
     public List<GameObject> zones;
 
 
-    private void OnEnable() 
+    protected override void AttackPattern()
     {
-        //StartNamedCoroutine("darkGhost", darkGhost());
+        StartCoroutine(darkGhost());
     }
 
 
     IEnumerator darkGhost()
     {
+        isAttack = true;
+        isAttackReady = false;
+
         //Wave Attack
         NoAttackRange.SetActive(true);
         AttackRange.SetActive(true);
@@ -64,7 +67,12 @@ public class BossDarkGhost : EnemyBasic
             zones[i].SetActive(false);
         }
         yield return new WaitForSeconds(2f);
-        StartCoroutine(darkGhost());
+
+
+        //END
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 

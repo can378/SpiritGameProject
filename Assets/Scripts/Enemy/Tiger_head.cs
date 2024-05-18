@@ -17,8 +17,18 @@ public class Tiger_head : EnemyBasic
     public bool isDetectPlayer = false;
     private bool isHit = false;
     private bool isChaseTiger = false;
+
+    protected override void AttackPattern()
+    {
+        StartCoroutine(tigerHead());
+    }
+
+
     IEnumerator tigerHead()
     {
+        isAttack = true;
+        isAttackReady = false;
+
         targetDis = Vector2.Distance(transform.position, enemyTarget.position);
 
 
@@ -79,7 +89,9 @@ public class Tiger_head : EnemyBasic
             }
         }
 
-        StartCoroutine(tigerHead());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 

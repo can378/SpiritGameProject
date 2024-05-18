@@ -12,14 +12,16 @@ public class BossBaby : EnemyBasic
     private int patternIndex = 0;
     private bool isHitWall;
 
-    private void OnEnable()
+    protected override void AttackPattern()
     {
-        patternIndex = 0;
-        //StartNamedCoroutine("StartAttack", StartAttack());
+        StartCoroutine(StartAttack());
     }
 
     IEnumerator StartAttack()
     {
+        isAttack = true;
+        isAttackReady = false;
+
         switch (patternIndex)
         { 
             case 0: yield return StartCoroutine(Rush()); break;
@@ -32,7 +34,7 @@ public class BossBaby : EnemyBasic
         if (patternIndex == 4) { patternIndex = 0; }
         else { patternIndex++; }
 
-        StartCoroutine(StartAttack());
+        
     }
 
 
@@ -68,7 +70,10 @@ public class BossBaby : EnemyBasic
         yield return new WaitForSeconds(0.1f);
 
         rigid.velocity = Vector2.zero;
-        
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 
@@ -97,6 +102,9 @@ public class BossBaby : EnemyBasic
             yield return new WaitForSeconds(0.5f);
         }
 
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 
@@ -113,8 +121,10 @@ public class BossBaby : EnemyBasic
         thisTear.GetComponent<SpriteRenderer>().color=Color.white;
         yield return new WaitForSeconds(0.5f);
         thisTear.GetComponent<SpriteRenderer>().color = Color.red;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(thisTear);
+
+
     }
 
 
@@ -158,6 +168,10 @@ public class BossBaby : EnemyBasic
 
         rigid.velocity = Vector2.zero;
 
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
+
     }
 
 
@@ -174,6 +188,10 @@ public class BossBaby : EnemyBasic
 
         SafeArea.SetActive(false);
         DamageArea.SetActive(false);
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
 
     }
 
@@ -196,8 +214,8 @@ public class BossBaby : EnemyBasic
             DamageArea.transform.localScale *= scaleFactor;
             yield return new WaitForSeconds(0.1f);
         }
-        
-        
+
+
     }
 
 
@@ -206,7 +224,10 @@ public class BossBaby : EnemyBasic
         print("Screaming");
         this.GetComponent<SpriteRenderer>().color = Color.white;
         yield return new WaitForSeconds(1f);
-        
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 

@@ -24,7 +24,7 @@ public class EnemyBasic : ObjectBasic
     protected override void Awake()
     {
         base.Awake();
-        //enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;
+        enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;//이거 넣으면 안되는거야?
         stats = enemyStats = GetComponent<EnemyStats>();
         
     }
@@ -36,6 +36,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Update()
     {
+        print("update");
         Attack();
         Move();
         Detect();
@@ -58,8 +59,11 @@ public class EnemyBasic : ObjectBasic
         targetDis = Vector2.Distance(this.transform.position,enemyTarget.position);
         targetDirVec = (enemyTarget.position - transform.position).normalized;
 
+        print("attack1");
+
         if ( !isRun && !isFlinch && !isAttack && isAttackReady && (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
+            print("attack2");
             moveVec = Vector2.zero;
             AttackPattern();
         }

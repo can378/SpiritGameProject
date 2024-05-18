@@ -8,20 +8,16 @@ public class BossShadow : EnemyBasic
     public List<GameObject> dummies = new List<GameObject>();
     public List<GameObject> circles = new List<GameObject>();
 
-    private int patternNum;
+    private int patternNum=0;
     int time = 0;
 
-    private void OnEnable()
+
+    protected override void AttackPattern()
     {
-        patternNum = 0;
-        //StartNamedCoroutine("bossShadow",bossShadow());
-        //StartNamedCoroutine("hpRecovery_", hpRecovery_());
+        StartCoroutine(bossShadow());
+        //StartCoroutine(hpRecovery_());
     }
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
 
     IEnumerator hpRecovery_() 
     {
@@ -35,12 +31,14 @@ public class BossShadow : EnemyBasic
             yield return new WaitForSeconds(30f);
         }
         yield return new WaitForSeconds(0.01f);
-        StartCoroutine(hpRecovery_());
     }
 
 
     IEnumerator bossShadow() 
     {
+        isAttack = true;
+        isAttackReady = false;
+
         patternNum++;
         
         switch (patternNum)
@@ -59,7 +57,6 @@ public class BossShadow : EnemyBasic
                 break;
             default:
                 patternNum = 0;
-                StartCoroutine(bossShadow());
                 break;
         
         }
@@ -80,7 +77,11 @@ public class BossShadow : EnemyBasic
             time++;
         }
         sightBlock.SetActive(false);
-        StartCoroutine(bossShadow());
+        
+        
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator shot_() 
@@ -102,9 +103,10 @@ public class BossShadow : EnemyBasic
             sprite.color = new Color(255f, 255f, 255f, alpha);
             alpha--;
         }
-        
-        yield return null;
-        StartCoroutine(bossShadow());
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
 
     }
     IEnumerator spawnDummy_() 
@@ -143,7 +145,9 @@ public class BossShadow : EnemyBasic
 
         //Boss shadow vincible
         //????????
-        StartCoroutine(bossShadow());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
   
@@ -159,7 +163,9 @@ public class BossShadow : EnemyBasic
         {
             circles[i].SetActive(false);
         }
-        StartCoroutine(bossShadow());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
 
     }
 

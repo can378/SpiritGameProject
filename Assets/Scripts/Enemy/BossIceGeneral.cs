@@ -10,16 +10,18 @@ public class BossIceGeneral : EnemyBasic
     public GameObject iceBlast;
 
 
-    private void OnEnable() 
+    protected override void AttackPattern()
     {
-        attackIndex = 0;
-        //StartNamedCoroutine("IceGerneral", IceGerneral());
+        StartCoroutine(IceGerneral());
     }
 
 
     IEnumerator IceGerneral() 
     {
-        targetDis=Vector2.Distance(enemyTarget.transform.position,transform.position);
+        isAttack = true;
+        isAttackReady = false;
+
+        targetDis =Vector2.Distance(enemyTarget.transform.position,transform.position);
 
 
         if (targetDis > 10f)
@@ -69,8 +71,10 @@ public class BossIceGeneral : EnemyBasic
             yield return new WaitForSeconds(2f);
         }
 
-        
-        StartCoroutine(IceGerneral());
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 

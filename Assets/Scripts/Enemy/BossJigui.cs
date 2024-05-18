@@ -7,26 +7,56 @@ public class BossJigui : EnemyBasic
 {
     public GameObject fire;
     public GameObject eyeSight;
+    private bool isTouchPlayer=true;
 
-
-    private void OnEnable()
+    protected override void AttackPattern()
     {
         eyeSight.SetActive(true);
-        //StartNamedCoroutine("jigui", jigui());
-        StartCoroutine("jiguiRaidStart", jiguiRaidStart());
-        StartCoroutine("playerEyeSight", playerEyeSight());
+        StartCoroutine(fireBall());
     }
 
     private void OnDisable()
     {
         eyeSight.SetActive(false);
-        StopAllCoroutines();
+    }
+
+    protected override void MovePattern()
+    {
+        if (!enemyTarget)
+        {
+            RandomMove();
+            print("enemyTarget is null");
+        }
+        else 
+        {
+            if (eyeSight.GetComponent<EyeSight>().isPlayerSeeEnemy == false)
+            {
+                Chase();
+            }
+            
+            if (targetDis <= 3f)
+            {
+                isTouchPlayer = true;
+            }
+            else if (targetDis >= 10f && isTouchPlayer == true)
+            {
+                isTouchPlayer = false;
+            }
+
+            if (isTouchPlayer == true)
+            { Run(); }
+
+        }
+        
     }
 
 
-
-    IEnumerator jigui()
+    IEnumerator fireBall()
     {
+
+        isAttack = true;
+        isAttackReady = false;
+
         //Throw fire balls
         for (int i = 0; i < 20; i++)
         {
@@ -47,85 +77,16 @@ public class BossJigui : EnemyBasic
         fire.SetActive(false);
         //fire에 플레이어가 닿으면 불붙게하는 너프 적용!!!!!!!!!!!!!
 
-        StartCoroutine(jigui());
+
+        //END
+        isAttack = false;
+        yield return new WaitForSeconds(5f);
+        isAttackReady = true;
     }
 
-    IEnumerator jiguiRaidStart() 
-    {
-        yield return new WaitForSeconds(4f);
-        StartCoroutine(jiguiRaid());
-    }
-    IEnumerator jiguiRaid()
-    {
-        print("jigui raid="+ eyeSight.GetComponent<EyeSight>().isPlayerSeeEnemy);
-        if (eyeSight.GetComponent<EyeSight>().isPlayerSeeEnemy==false)
-        {
-            Vector2 originPos = transform.position;
-
-            
-            targetDis = Vector2.Distance(enemyTarget.transform.position, transform.position);
-
-            while (targetDis > 3f)
-            {
-                print("jigui raid - run to player");
-                targetDirVec = enemyTarget.transform.position - transform.position;
-                targetDis = Vector2.Distance(enemyTarget.transform.position, transform.position);
-                rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed);
-                yield return new WaitForSeconds(0.1f);
-            }
-
-            Vector2 currentPos = transform.position;
-            Vector2 dirVec = (originPos - currentPos).normalized;
-
-            while (Vector2.Distance(transform.position, originPos)>3f)
-            {
-                print("jigui raid - run away");
-                rigid.AddForce(dirVec * GetComponent<EnemyStats>().defaultMoveSpeed*10);
-                currentPos = transform.position;
-                dirVec = (originPos - currentPos).normalized;
-                yield return new WaitForSeconds(0.1f);
-            }
-
-        }
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(jiguiRaid());
-    }
-
-    IEnumerator playerEyeSight() 
-    {
-        eyeSight.transform.position = enemyTarget.transform.position;
 
 
-        if (Player.instance.hAxis == 1) 
-        {
-
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 180);
-            
-        }
-        else if (Player.instance.hAxis == -1) 
-        { 
-
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (Player.instance.vAxis == 1) 
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, -90);
-            
-        }
-        else if (Player.instance.vAxis == -1) 
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            eyeSight.transform.rotation = Quaternion.Euler(0, 0, 90);
-            
-        }
-
-
-        yield return new WaitForSeconds(0.1f);
-        StartCoroutine(playerEyeSight());
-    }
+    
 
 
 }

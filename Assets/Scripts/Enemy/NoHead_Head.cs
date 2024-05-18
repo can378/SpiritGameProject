@@ -28,7 +28,7 @@ public class NoHead_Head : EnemyBasic
         vomit.transform.rotation = Quaternion.Euler(0, 0, angle-180);
 
 
-       // Quaternion rotation = Quaternion.LookRotation(0,0,targetDirVec.z);
+        // Quaternion rotation = Quaternion.LookRotation(0,0,targetDirVec.z);
         //vomit.transform.rotation = rotation;
 
         isAttack = true;

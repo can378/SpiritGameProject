@@ -8,19 +8,18 @@ public class BossShaman : EnemyBasic
     private int attackNum=0;
     public GameObject dollPrefab;
 
-    private void OnEnable()
+    protected override void AttackPattern()
     {
-        //StartNamedCoroutine("bossShaman", bossShaman());
+        StartCoroutine(bossShaman());
     }
 
-    private void OnDisable()
-    {
-        attackNum = 0;
-        StopAllCoroutines();
-    }
+
 
     IEnumerator bossShaman()
     {
+        isAttack = true;
+        isAttackReady = false;
+
         switch (attackNum)
         {
             case 0:
@@ -49,7 +48,9 @@ public class BossShaman : EnemyBasic
         yield return new WaitForSeconds(2f);
 
         attackNum = 1;
-        StartCoroutine(bossShaman());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator SummonDoll()
@@ -59,7 +60,9 @@ public class BossShaman : EnemyBasic
         yield return new WaitForSeconds(3f);
 
         attackNum = 2;
-        StartCoroutine(bossShaman());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator ShotKnife()
@@ -73,7 +76,9 @@ public class BossShaman : EnemyBasic
         yield return new WaitForSeconds(2f);
 
         attackNum = 0;
-        StartCoroutine(bossShaman());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
 }

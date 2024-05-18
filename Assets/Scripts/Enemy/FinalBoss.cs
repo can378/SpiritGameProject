@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class FinalBoss : EnemyBasic
 {
-    private int chapterNum;
+    private int phaseNum = 1;
+    private int patternNum=1;
     private int time;
-    private int count;
+    private int count=0;
 
     
     public GameObject circularCector;
@@ -15,23 +16,34 @@ public class FinalBoss : EnemyBasic
     public GameObject fist;
     public GameObject knife;
     public GameObject thorn;
-    void Start()
+
+
+    protected override void AttackPattern()
     {
-        count = 0;
-        chapterNum = 1;
-        //StartNamedCoroutine("finalBoss", finalBoss());
+        print("final boss");
+        StartCoroutine(finalBoss());
     }
+
+
 
     public IEnumerator finalBoss() 
     {
-        if (GetComponent<EnemyStats>().HP>=GetComponent<EnemyStats>().HPMax/2)
+        isAttack = true;
+        isAttackReady = false;
+
+        if (
+            GetComponent<EnemyStats>().HP <= GetComponent<EnemyStats>().HPMax / 2
+            && phaseNum==1
+            )
+        { phaseNum = 2; patternNum = 1; }
+
+
+        if (phaseNum==1)
         {
-            switch (chapterNum)
+            switch (patternNum)
             {
                 case 1:
-                    
                     StartCoroutine(rushSwing());
-                    
                     break;
                 case 2:
                     StartCoroutine(shotKnife());
@@ -51,15 +63,18 @@ public class FinalBoss : EnemyBasic
         }
         else 
         {
-            switch (chapterNum)
+            switch (patternNum)
             {
-                case 1:
+                case 1:StartCoroutine(punchFist());
                     break;
                 case 2:
+                    StartCoroutine(knifeRun());
                     break;
                 case 3:
+                    StartCoroutine(wind());
                     break;
                 case 4:
+                    StartCoroutine(faces());
                     break;
                 case 5:
                     break;
@@ -69,8 +84,8 @@ public class FinalBoss : EnemyBasic
         }
 
 
-        if (chapterNum == 5) { chapterNum = 1; }
-        else { chapterNum++; }
+        if (patternNum == 5) { patternNum = 1; }
+        else { patternNum++; }
         
         yield return null;
     }
@@ -78,30 +93,34 @@ public class FinalBoss : EnemyBasic
     #region Phase1
     IEnumerator rushSwing() 
     {
-        print("rush and swing");
+        print("1. rush and swing");
         //targeting
         Vector3 targetPos=enemyTarget.position;
         //wait
         yield return new WaitForSeconds(3f);
         //swing knife(circular cector)
         //?????????????????
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator shotKnife() 
     {
-        print("shot knife");
+        print("2. shot knife");
         for(int i=0;i<3;i++) 
         {
             shot();
             yield return new WaitForSeconds(1f);
         }
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator rushThrow() 
     {
-        print("rush throw");
+        print("3. rush throw");
         time = 6000;
         while(time>0) 
         {
@@ -117,22 +136,26 @@ public class FinalBoss : EnemyBasic
             //Chase();
             yield return new WaitForSeconds(0.01f);
         }
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator hitGround() 
     {
-        print("hit ground");
+        print("4. hit ground");
         hitGroundCol.SetActive(true);
         yield return new WaitForSeconds(5f);
         hitGroundCol.SetActive(false);
 
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator fireShot() 
     {
-        //print("fire shot");
+        print("5. fire shot");
         if (!gameObject.activeSelf) yield break;
 
         //원형 발사
@@ -160,11 +183,13 @@ public class FinalBoss : EnemyBasic
 
         yield return new WaitForSeconds(1.5f);
         //curPatternCount++;
-        StartCoroutine(finalBoss());
-        
-        
-        //yield return new WaitForSeconds(1.5f); StartCoroutine(fireShot());
-        
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
+
+
+
     }
     #endregion
 
@@ -173,30 +198,36 @@ public class FinalBoss : EnemyBasic
     { 
         fist.SetActive(true);
 
+        print("1. punchFist");
         //????????????????????????
         yield return new WaitForSeconds(1f);
         time = 0;
         count = 0;
         fist.SetActive(false);
-
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator knifeRun() 
     {
         knife.SetActive(true);
 
+        print("2. knife run");
         //????????????????????????????
         yield return new WaitForSeconds(1f);
 
 
         knife.SetActive(false);
 
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator wind() 
     {
+        print("3. wind");
         thorn.SetActive(true);
         yield return new WaitForSeconds(2f);
 
@@ -212,15 +243,20 @@ public class FinalBoss : EnemyBasic
         yield return new WaitForSeconds(2f);
         thorn.SetActive(false);
 
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     IEnumerator faces() 
     {
+        print("4. faces");
         //????????????????????????
         yield return null;
 
-        StartCoroutine(finalBoss());
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
     }
 
     #endregion

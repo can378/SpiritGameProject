@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crow : EnemyBasic
+public class Rabbit : EnemyBasic
 {
     protected override void AttackPattern()
     {
-        StartCoroutine(LRShot());
+        StartCoroutine(rabbit());
     }
 
-    IEnumerator LRShot()
+    IEnumerator rabbit()
     {
         isAttack = true;
         isAttackReady = false;
