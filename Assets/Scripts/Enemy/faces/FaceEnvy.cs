@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceEnvy : MonoBehaviour
+public class FaceEnvy : EnemyBasic
 {
-    // Start is called before the first frame update
-    void Start()
+    //질투=스킬모방(쥐 처럼 대신 강도는 더 강하게)
+
+    protected override void AttackPattern()
     {
-        
+        StartCoroutine(envy());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator envy()
     {
-        
+        isAttack = true;
+        isAttackReady = false;
+
+
+
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
+
     }
 }

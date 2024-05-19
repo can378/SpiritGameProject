@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceDelusion : MonoBehaviour
+public class FaceDelusion : EnemyBasic
 {
-    // Start is called before the first frame update
-    void Start()
+    //Âø°¢=¹«ÀÛÀ§·Î ÃÑ ¹ß»ç
+
+    protected override void AttackPattern()
     {
-        
+        StartCoroutine(delusion());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator delusion()
     {
-        
+        isAttack = true;
+        isAttackReady = false;
+
+
+
+
+        isAttack = false;
+        yield return new WaitForSeconds(3f);
+        isAttackReady = true;
+
     }
 }
