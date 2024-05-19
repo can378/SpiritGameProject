@@ -17,7 +17,7 @@ public class EnemyBasic : ObjectBasic
     public Vector2 targetDirVec;        // 공격 방향
     // 벡터 -> rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90)
     public float targetDis;             // 적과의 거리
-    
+
     //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
 
 
@@ -26,7 +26,7 @@ public class EnemyBasic : ObjectBasic
         base.Awake();
         enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;//이거 넣으면 안되는거야?
         stats = enemyStats = GetComponent<EnemyStats>();
-        
+
     }
 
     void Start()
@@ -36,7 +36,6 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Update()
     {
-        print("update");
         Attack();
         Move();
         Detect();
@@ -55,15 +54,14 @@ public class EnemyBasic : ObjectBasic
     {
         if (!enemyTarget)
             return;
-        
-        targetDis = Vector2.Distance(this.transform.position,enemyTarget.position);
+
+        targetDis = Vector2.Distance(this.transform.position, enemyTarget.position);
         targetDirVec = (enemyTarget.position - transform.position).normalized;
 
-        print("attack1");
+        //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if ( !isRun && !isFlinch && !isAttack && isAttackReady && (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        if (!isRun && !isFlinch && !isAttack && isAttackReady && (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
-            print("attack2");
             moveVec = Vector2.zero;
             AttackPattern();
         }
@@ -111,14 +109,14 @@ public class EnemyBasic : ObjectBasic
         {
             return;
         }
-        else if(isAttack)
+        else if (isAttack)
         {
             rigid.velocity = moveVec * stats.moveSpeed;
             return;
         }
         else if (isRun)
         {
-            if(enemyTarget)
+            if (enemyTarget)
             {
                 rigid.velocity = -(enemyTarget.position - transform.position).normalized * stats.moveSpeed;
             }
@@ -134,7 +132,7 @@ public class EnemyBasic : ObjectBasic
     // 이동 패턴(기본 패턴 : 타겟이 없으면 무작위 이동, 타겟이 있으면 사정거리 까지 추적)
     protected virtual void MovePattern()
     {
-        if(!enemyTarget)
+        if (!enemyTarget)
         {
             RandomMove();
         }
@@ -181,11 +179,12 @@ public class EnemyBasic : ObjectBasic
         moveVec = -(enemyTarget.transform.position - transform.position).normalized * 0.5f;
     }
 
+
     #endregion Move
 
     #region Effect
 
-    protected virtual void OnTriggerEnter2D (Collider2D collision) 
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
         {
@@ -213,7 +212,7 @@ public class EnemyBasic : ObjectBasic
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionDis);
+        //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionDis);
     }
 
     /*
@@ -230,6 +229,14 @@ public class EnemyBasic : ObjectBasic
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
+    }
+
+    public void shotWhat(string name)
+    {
+        GameObject bullet = ObjectPoolManager.instance.Get2(name);
+        bullet.transform.position = transform.position;
+        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
+
     }
 
     /*

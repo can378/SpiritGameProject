@@ -7,9 +7,9 @@ public class FinalBoss : EnemyBasic
     private int phaseNum = 1;
     private int patternNum=1;
     private int time;
-    private int count=0;
 
-    
+
+
     public GameObject circularCector;
     public GameObject hitGroundCol;
     
@@ -17,10 +17,12 @@ public class FinalBoss : EnemyBasic
     public GameObject knife;
     public GameObject thorn;
 
+    public GameObject fistWave;
+
+    public GameObject allFaces;
 
     protected override void AttackPattern()
     {
-        print("final boss");
         StartCoroutine(finalBoss());
     }
 
@@ -43,9 +45,11 @@ public class FinalBoss : EnemyBasic
             switch (patternNum)
             {
                 case 1:
+                    
                     StartCoroutine(rushSwing());
                     break;
                 case 2:
+                    
                     StartCoroutine(shotKnife());
                     break;
                 case 3:
@@ -77,7 +81,9 @@ public class FinalBoss : EnemyBasic
                     StartCoroutine(faces());
                     break;
                 case 5:
-                    break;
+                    isAttack = false;
+                    isAttackReady = true;
+            break;
                 default:
                     break;
             }
@@ -94,25 +100,47 @@ public class FinalBoss : EnemyBasic
     IEnumerator rushSwing() 
     {
         print("1. rush and swing");
-        //targeting
-        Vector3 targetPos=enemyTarget.position;
-        //wait
-        yield return new WaitForSeconds(3f);
+
+        //isChase = true;
+
         //swing knife(circular cector)
-        //?????????????????
+        time = 1000;
+        while (time > 0)
+        {
+            if (targetDis < 5f)
+            {
+                //print("swing");
+                circularCector.transform.rotation =
+                    Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg);
+                circularCector.transform.position = transform.position;
+                circularCector.SetActive(true);
+                yield return new WaitForSeconds(2f);
+                circularCector.SetActive(false);
+            }
+            else { rigid.AddForce(targetDirVec * 20); }
+
+            yield return new WaitForSeconds(0.01f);
+            time--;
+        }
+       
+
+        //END
         isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         isAttackReady = true;
     }
 
     IEnumerator shotKnife() 
     {
         print("2. shot knife");
+
         for(int i=0;i<3;i++) 
         {
-            shot();
-            yield return new WaitForSeconds(1f);
+            shotWhat("knife");
+            yield return new WaitForSeconds(2f);
         }
+
+        //END
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
@@ -124,18 +152,27 @@ public class FinalBoss : EnemyBasic
         time = 6000;
         while(time>0) 
         {
-            if (Vector2.Distance(enemyTarget.transform.position,transform.position)<5f)
+            if (targetDis<5f)
             {
                 //grab player and throw away
-                targetDirVec = (enemyTarget.position - transform.position).normalized;
-                enemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce(targetDirVec * 50);
+                //print("grab and throw away");
+
+                for (int i = 0; i < 10; i++)
+                {
+                    enemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce((enemyTarget.position - transform.position).normalized * 10000);
+                    yield return new WaitForSeconds(0.01f);
+                }
+                
                 yield return new WaitForSeconds(3f);
                 break;
             }
+            else { rigid.AddForce(targetDirVec * 50); }
             time--;
-            //Chase();
+
             yield return new WaitForSeconds(0.01f);
         }
+
+        //END
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
@@ -144,6 +181,7 @@ public class FinalBoss : EnemyBasic
     IEnumerator hitGround() 
     {
         print("4. hit ground");
+
         hitGroundCol.SetActive(true);
         yield return new WaitForSeconds(5f);
         hitGroundCol.SetActive(false);
@@ -184,6 +222,8 @@ public class FinalBoss : EnemyBasic
         yield return new WaitForSeconds(1.5f);
         //curPatternCount++;
 
+
+        //END
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
@@ -193,17 +233,51 @@ public class FinalBoss : EnemyBasic
     }
     #endregion
 
+
+
+
     #region Phase2
     IEnumerator punchFist() 
     { 
-        fist.SetActive(true);
-
+        
         print("1. punchFist");
-        //????????????????????????
-        yield return new WaitForSeconds(1f);
-        time = 0;
-        count = 0;
+
+        fist.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
+        Vector3 aboveTarget;
+        time = 100;
+
+        while (time > 0)
+        {
+            aboveTarget = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, 0);
+
+            //if find Player!
+            if (MoveTo(fist, 100, fist.transform.position, aboveTarget) == true) 
+            {
+                Vector3 tar = enemyTarget.position;
+                fist.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                yield return new WaitForSeconds(2f);
+
+                //내리친다
+                while (time>0 && MoveTo(fist, 100, fist.transform.position, tar) == false) 
+                { yield return new WaitForSeconds(0.01f); time--; }
+
+                
+                fistWave.SetActive(true);
+                fistWave.transform.position = tar;
+                fist.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                yield return new WaitForSeconds(2f);
+                fistWave.SetActive(false);
+            }
+            time--;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+
         fist.SetActive(false);
+
+        //END
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
@@ -211,15 +285,14 @@ public class FinalBoss : EnemyBasic
 
     IEnumerator knifeRun() 
     {
-        knife.SetActive(true);
-
         print("2. knife run");
-        //????????????????????????????
-        yield return new WaitForSeconds(1f);
 
-
+        knife.SetActive(true);
+        yield return new WaitForSeconds(10f);
         knife.SetActive(false);
 
+
+        //END
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
@@ -235,7 +308,7 @@ public class FinalBoss : EnemyBasic
         while (time > 0)
         {
             enemyTarget.GetComponent<Rigidbody2D>().
-                AddForce(new Vector3(-1, 0, 0) * 2);
+                AddForce(new Vector3(0, -1, 0) * 200);
             time--;
             yield return new WaitForSeconds(0.01f);
         }
@@ -251,13 +324,41 @@ public class FinalBoss : EnemyBasic
     IEnumerator faces() 
     {
         print("4. faces");
-        //????????????????????????
-        yield return null;
+        //기독교 7가지 대죄+불교 3독
+
+        //교만=투명해진다. 잠시 반투명하게 보인다. 1초 뒤에 튀어나와서 공격. 다시 투명해진다. 반복
+        //질투=스킬모방(쥐 처럼)
+        //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님
+        //나태=아무것도 안함(공격안함. 쉬어가는 타이밍)
+        //탐욕=
+        //무지=막 돌아다님
+        //착각=무작위로 총 발사
+        //적대감=총 부채꼴 모양으로 발사
+
+
+        allFaces.SetActive(true);
+        yield return new WaitForSeconds(10f);
+        allFaces.SetActive(false);
 
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
+        
     }
 
     #endregion
+
+
+
+    bool MoveTo(GameObject obj, float speed, Vector3 from, Vector3 to)
+    {
+        Vector3 vec = (to - from).normalized;
+        obj.GetComponent<Rigidbody2D>().AddForce(vec * speed);
+        if (Vector2.Distance(obj.transform.position, to) < 3f)
+        { return true; }
+        return false;
+    }
+
+
+
 }
