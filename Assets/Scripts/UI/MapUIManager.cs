@@ -114,7 +114,8 @@ public class MapUIManager : MonoBehaviour
     public void UpdateStatUI()
     {
         //오류나서 잠깐 주석처리해놨음
-        /*
+        // Main 씬 안거치고 Map 들어가면 걸리는 듯
+        
         StatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
         StatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
         StatsValueTxt[2].text = (Player.instance.playerStats.attackSpeed - 1).ToString() + " %";
@@ -125,7 +126,7 @@ public class MapUIManager : MonoBehaviour
         StatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
         StatsValueTxt[8].text = (Player.instance.playerStats.SEResist * 100).ToString() + " %";
         StatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
-        */
+        
     }
 
     public void UpdateHealthUI()
