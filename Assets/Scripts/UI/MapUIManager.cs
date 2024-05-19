@@ -98,7 +98,7 @@ public class MapUIManager : MonoBehaviour
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();
-        UpdateStatUI();
+        //UpdateStatUI();
         if (Player.instance.playerStats.item == "")
         { updateItemUI(null); }
     }
@@ -114,8 +114,9 @@ public class MapUIManager : MonoBehaviour
     public void UpdateStatUI()
     {
         //오류나서 잠깐 주석처리해놨음
-        // Main 씬 안거치고 Map 들어가면 걸리는 듯
-        
+        // Main 씬 안거치고 Map 씬 들어가면 걸리는 듯
+        // 아니면 final 씬 에서 설정을 안해서 일 듯
+
         StatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
         StatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
         StatsValueTxt[2].text = (Player.instance.playerStats.attackSpeed - 1).ToString() + " %";
