@@ -202,12 +202,6 @@ public class WeaponController : MonoBehaviour
         instantProjectile.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize,1);
         bulletRigid.velocity = attackDir * 10 * weaponList[playerStats.weapon].projectileSpeed;  // 속도 설정
         Destroy(instantProjectile, weaponList[playerStats.weapon].projectileTime);  //사거리 설정
-
-        // 후딜
-        // 없애도 될듯
-        yield return new WaitForSeconds(weaponList[playerStats.weapon].postDelay / playerStats.attackSpeed);
-
-        yield return null;
     }
 
     // 범위 공격

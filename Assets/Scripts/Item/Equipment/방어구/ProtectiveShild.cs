@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProtectiveFilm : Equipment
+public class ProtectiveShild : Equipment
 {
-    [SerializeField] float shildCoolTime = 100f;
+    [SerializeField] float shildCoolTime = 0f;
     [SerializeField] GameObject shildPrefab;
     GameObject shild;
 
@@ -46,7 +46,7 @@ public class ProtectiveFilm : Equipment
         if (target.tag == "Player")
         {
             this.user = target;
-            Debug.Log("10초 동안 전투 중이 아니면 은신");
+            Debug.Log("보호막 생성");
         }
     }
 
