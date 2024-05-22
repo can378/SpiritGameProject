@@ -20,16 +20,22 @@ public class DefensiveDeBuff : StatusEffect
 
         // 효과 잠시 제거
         stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-        stats.decreasedSEResist -= overlap * decreasedSEResist;
+        for(int i = 0; i < stats.defaultSEResist.Length ; i++ )
+        {
+            stats.decreasedSEResist[i] -= overlap * decreasedSEResist;
+        }
 
         // 중첩 
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
         // 저항에 따른 지속시간 적용
-        duration = (1 - stats.SEResist) * defaultDuration;
+        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
 
         stats.decreasedDefensivePower += overlap * decreasedDefensivePower;
-        stats.decreasedSEResist += overlap * decreasedSEResist;
+        for (int i = 0; i < stats.defaultSEResist.Length; i++)
+        {
+            stats.decreasedSEResist[i] += overlap * decreasedSEResist;
+        }
     }
 
     public override void RemoveEffect()
@@ -37,6 +43,9 @@ public class DefensiveDeBuff : StatusEffect
         Stats stats = target.GetComponent<Stats>();
 
         stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-        stats.decreasedSEResist -= overlap * decreasedDefensivePower;
+        for (int i = 0; i < stats.defaultSEResist.Length; i++)
+        {
+            stats.decreasedSEResist[i] -= overlap * decreasedSEResist;
+        }
     }
 }

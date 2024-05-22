@@ -31,7 +31,7 @@ public class GrowthDeBuff : StatusEffect
         }
 
         // 저항에 따른 지속시간 적용
-        duration = (1 - stats.SEResist) * defaultDuration;
+        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
 
         stats.increasedAttackPower += overlap * increasedStat;
         stats.increasedMoveSpeed += overlap * increasedStat;

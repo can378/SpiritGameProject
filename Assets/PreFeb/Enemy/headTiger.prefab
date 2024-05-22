@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1991921852180261567}
   - component: {fileID: 5423275348722893502}
   - component: {fileID: 1840558631015232718}
-  - component: {fileID: 2103761271710932876}
   m_Layer: 8
   m_Name: headTiger
   m_TagString: Enemy
@@ -104,19 +103,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  hitTarget: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 0
+  hitTarget: {fileID: 0}
+  sprite: {fileID: 0}
   isRun: 0
   randomMove: 0
+  enemyStats: {fileID: 0}
   detectEnemy:
     serializedVersion: 2
     m_Bits: 1032
   enemyTarget: {fileID: 0}
-  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   screamObj: {fileID: 4569186869722290163}
@@ -139,7 +140,18 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -219,29 +231,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2103761271710932876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710032249449154739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 5
-  <knockBack>k__BackingField: 5
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
 --- !u!1 &4569186869722290163
 GameObject:
   m_ObjectHideFlags: 0

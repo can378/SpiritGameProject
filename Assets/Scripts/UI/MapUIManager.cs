@@ -98,7 +98,7 @@ public class MapUIManager : MonoBehaviour
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();
-        //UpdateStatUI();
+        UpdateStatUI();
         if (Player.instance.playerStats.item == "")
         { updateItemUI(null); }
     }
@@ -125,7 +125,7 @@ public class MapUIManager : MonoBehaviour
         StatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
         StatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
         StatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
-        StatsValueTxt[8].text = (Player.instance.playerStats.SEResist * 100).ToString() + " %";
+        //StatsValueTxt[8].text = (Player.instance.playerStats.SEResist * 100).ToString() + " %";
         StatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
         
     }

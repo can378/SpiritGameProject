@@ -29,7 +29,7 @@ public class PowerDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - playerStats.SEResist) * defaultDuration;
+            duration = (1 - playerStats.SEResist(buffId)) * defaultDuration;
 
             playerStats.decreasedAttackPower += overlap * decreasedAttackPower;
             playerStats.decreasedSkillPower += overlap * decreasedSkillPower;
@@ -46,7 +46,7 @@ public class PowerDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist) * defaultDuration;
+            duration = (1 - stats.SEResist(buffId)) * defaultDuration;
 
             stats.decreasedAttackPower += overlap * decreasedAttackPower;
         }

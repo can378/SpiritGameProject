@@ -19,7 +19,7 @@ public class SkillDeBuff : StatusEffect
     public override void ResetEffect()
     {
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - stats.SEResist) * defaultDuration;
+        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
     }
 
     IEnumerator SkillCoolOverTime()

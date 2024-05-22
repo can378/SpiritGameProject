@@ -173,7 +173,18 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 5
   <defaultMoveSpeed>k__BackingField: 3
   activeEffects: []
@@ -229,19 +240,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  hitTarget: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
+  hitTarget: {fileID: 0}
+  sprite: {fileID: 0}
   isRun: 0
   randomMove: 0
+  enemyStats: {fileID: 0}
   detectEnemy:
     serializedVersion: 2
     m_Bits: 8
   enemyTarget: {fileID: 0}
-  enemyStats: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   snowballHitDetection: {fileID: 5533794121055610907}

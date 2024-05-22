@@ -26,7 +26,7 @@ public class StunDeBuff : StatusEffect
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - objectBasic.stats.SEResist) * defaultDuration;
+            duration = (1 - objectBasic.stats.SEResist(buffId)) * defaultDuration;
 
             objectBasic.StopCoroutine(objectBasic.flinchCoroutine);
             objectBasic.flinchCoroutine = StartCoroutine(objectBasic.Flinch(duration));

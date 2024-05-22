@@ -33,17 +33,14 @@ public class Stats : MonoBehaviour
     // UI : 상태이상 저항 0%
     // 상태이상 효과 = 지속시간 또는 피해량 * 상태이상 저항
     // 최소 -75%, 최대 75%
-    [field: SerializeField] public float defaultSEResist { get; set; } = 0f;
-    public float addSEResist { get; set; }
-    public float increasedSEResist { get; set; }
-    public float decreasedSEResist { get; set; }
-    public float SEResist
+    [field: SerializeField] public float[] defaultSEResist { get; set; } = new float[11];
+    public float[] addSEResist { get; set; } = new float[11];
+    public float[] increasedSEResist { get; set; } = new float[11];
+    public float[] decreasedSEResist { get; set; } = new float[11];
+    public float SEResist(int index)
     {
-        get { return Mathf.Clamp((defaultSEResist + addSEResist) * (1f + increasedSEResist) * (1f - decreasedSEResist), -0.75f,0.75f); }
+        return Mathf.Clamp((defaultSEResist[index] + addSEResist[index]) * (1f + increasedSEResist[index]) * (1f - decreasedSEResist[index]), -1f, 1f);
     }
-
-    // 0이면 면역 아님, 1이상이면 면역
-    [field: SerializeField] public int[] immunity { get; set;} = new int[11];
 
     // Attack
     // 공격력

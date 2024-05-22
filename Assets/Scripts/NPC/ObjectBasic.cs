@@ -119,7 +119,8 @@ public class ObjectBasic : MonoBehaviour
 
     public void ApplyBuff(int buffIndex)
     {
-        if (0 < stats.immunity[buffIndex])
+        
+        if (0 < stats.SEResist(buffIndex))
         {
             // 저주 디버프일 시 피해를 입고 사라짐
             if (buffIndex == 10)
@@ -128,6 +129,7 @@ public class ObjectBasic : MonoBehaviour
             }
             return;
         }
+        
 
         GameObject effect = GameData.instance.statusEffectList[buffIndex];
 
@@ -156,7 +158,8 @@ public class ObjectBasic : MonoBehaviour
 
     public void ApplyBuff(GameObject effect)
     {
-        if (0 < stats.immunity[effect.GetComponent<StatusEffect>().buffId] )
+        
+        if (0 < stats.SEResist(effect.GetComponent<StatusEffect>().buffId) )
         {
             // 저주 디버프일 시 피해를 입고 사라짐
             if (effect.GetComponent<StatusEffect>().buffId == 10)
@@ -165,6 +168,7 @@ public class ObjectBasic : MonoBehaviour
             }
             return;
         }
+        
 
         StatusEffect statusEffect = Instantiate(effect, Vector3.zero, Quaternion.identity).GetComponent<StatusEffect>();
 

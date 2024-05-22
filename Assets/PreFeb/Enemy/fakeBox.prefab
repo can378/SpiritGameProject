@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3268998551143446660}
   - component: {fileID: 7574480824551784167}
   - component: {fileID: 8859216149603576356}
-  - component: {fileID: 1759691456791546818}
   m_Layer: 8
   m_Name: fakeBox
   m_TagString: Untagged
@@ -104,12 +103,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  hitTarget: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
+  hitTarget: {fileID: 0}
+  sprite: {fileID: 0}
   isRun: 0
   randomMove: 0
   enemyStats: {fileID: 0}
@@ -137,7 +138,7 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 1
   activeEffects: []
@@ -217,29 +218,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.4, y: 8.87}
   m_EdgeRadius: 0
---- !u!114 &1759691456791546818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3781250920144780951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 5
-  <knockBack>k__BackingField: 5
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
 --- !u!1 &3866375539027576972
 GameObject:
   m_ObjectHideFlags: 0

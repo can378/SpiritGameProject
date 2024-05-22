@@ -14,7 +14,7 @@ public class ImmunityEquipment : Equipment
             this.user = target;
             for(int i = 0; i < statusEffectID.Length;i++)
             {
-                user.stats.immunity[statusEffectID[i]]++;
+                user.stats.addSEResist[statusEffectID[i]]++;
                 Debug.Log(statusEffectID[i] + "번호 디버프에 면역");
             }
             
@@ -28,7 +28,7 @@ public class ImmunityEquipment : Equipment
         {
             for (int i = 0; i < statusEffectID.Length; i++)
             {
-                user.stats.immunity[statusEffectID[i]]--;
+                user.stats.addSEResist[statusEffectID[i]]--;
             }
             this.user = null;
         }

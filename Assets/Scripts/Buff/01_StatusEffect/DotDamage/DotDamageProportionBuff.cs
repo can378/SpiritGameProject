@@ -29,7 +29,7 @@ public class DotDamageProportionBuff : StatusEffect
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - stats.SEResist) * defaultDuration;
+        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
         //print(duration);
     }
 

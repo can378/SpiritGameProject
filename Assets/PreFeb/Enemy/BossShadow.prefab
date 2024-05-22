@@ -450,18 +450,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
-  enemyTarget: {fileID: 0}
+  sprite: {fileID: 0}
+  isRun: 0
+  randomMove: 0
   enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   sightBlock: {fileID: 1707718157729224152}
   dummies:
   - {fileID: 9054062907636419184}
@@ -509,15 +514,25 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!50 &5192649963609469419
 Rigidbody2D:
   serializedVersion: 4
@@ -638,6 +653,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <defaultSEResist>k__BackingField.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
       value: shadowdummy (3)
@@ -712,6 +731,10 @@ PrefabInstance:
     - target: {fileID: 2194577495062764656, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <defaultSEResist>k__BackingField.Array.size
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
@@ -788,6 +811,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <defaultSEResist>k__BackingField.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
       value: shadowdummy
@@ -858,6 +885,10 @@ PrefabInstance:
     - target: {fileID: 2194577495062764656, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <defaultSEResist>k__BackingField.Array.size
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name

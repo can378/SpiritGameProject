@@ -17,7 +17,7 @@ public class OverlapDamageBuff : StatusEffect
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
 
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - stats.SEResist) * defaultDuration;
+        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
         if (overlap == maxOverlap)
         {
             duration = 0;
@@ -31,12 +31,12 @@ public class OverlapDamageBuff : StatusEffect
             if (target.tag == "Player" || target.tag == "Npc")
             {
                 ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
-                objectBasic.Damaged(objectBasic.stats.HPMax * (1 - objectBasic.stats.SEResist) * damagePer);
+                objectBasic.Damaged(objectBasic.stats.HPMax * (1 - objectBasic.stats.SEResist(buffId)) * damagePer);
             }
             else if (target.tag == "Enemy")
             {
                 EnemyBasic enemy = target.GetComponent<EnemyBasic>();
-                enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist) * damagePer);
+                enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist(buffId)) * damagePer);
             }
         }
         

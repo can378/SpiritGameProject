@@ -105,18 +105,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
-  enemyTarget: {fileID: 0}
+  sprite: {fileID: 0}
+  isRun: 0
+  randomMove: 0
   enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   lineCreator: {fileID: 8616510663914450631}
   vomit: {fileID: 6292871832969511673}
 --- !u!114 &469099274013212526
@@ -135,15 +140,25 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: head
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!114 &5715792012506409519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,15 +734,14 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!61 &1837450301324951422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -989,18 +1003,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
-  attackDelay: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
-  enemyTarget: {fileID: 0}
+  sprite: {fileID: 0}
+  isRun: 0
+  randomMove: 0
   enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
   headPos: {fileID: 6635568187769577678}
   head: {fileID: 4122553533884944491}
 --- !u!114 &1520746615692352254
@@ -1019,15 +1038,25 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: body
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!114 &563733388900568141
 MonoBehaviour:
   m_ObjectHideFlags: 0
