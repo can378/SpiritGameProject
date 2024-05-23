@@ -220,7 +220,7 @@ public class NPCbasic : ObjectBasic
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && DialogPanel != null)
+        if (collision.gameObject.CompareTag("Interaction") && DialogPanel != null)
         {
             ConversationOut();
         }

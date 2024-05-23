@@ -431,6 +431,7 @@ MonoBehaviour:
   stats: {fileID: 0}
   defaultLayer: 0
   moveVec: {x: 0, y: 0}
+  isHide: 0
   isFlinch: 0
   isInvincible: 0
   isAttack: 0
@@ -845,7 +846,7 @@ GameObject:
   - component: {fileID: 3279172400100275085}
   m_Layer: 16
   m_Name: Interaction
-  m_TagString: Untagged
+  m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -957,7 +958,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 00000000
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!60 &3481271467806886931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1091,7 +1092,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 00000000
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!58 &4414942471104923482
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1634,7 +1635,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 00000000
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!60 &919348861844483977
 PolygonCollider2D:
   m_ObjectHideFlags: 0

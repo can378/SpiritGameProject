@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1711866502859185947}
   - component: {fileID: 7547268499302607480}
   - component: {fileID: 8983104758440613179}
+  - component: {fileID: -1192987079018899415}
   m_Layer: 11
   m_Name: Bomb
   m_TagString: PlayerAttack
@@ -110,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 1
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -120,7 +121,6 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
   multiHitDurationTime: 0
 --- !u!114 &8983104758440613179
 MonoBehaviour:
@@ -136,6 +136,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <explosionTime>k__BackingField: 1
   <explosionField>k__BackingField: {fileID: 5651732826295342366, guid: 0da9c40e202b4234e8c0fde660e542e1, type: 3}
+--- !u!114 &-1192987079018899415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237688199151948138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315cff1768063c2449ab260350e30b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <index>k__BackingField: 0
 --- !u!1 &9154743223894945601
 GameObject:
   m_ObjectHideFlags: 0

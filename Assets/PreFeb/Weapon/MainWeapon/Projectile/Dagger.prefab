@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2622631770527259423}
   - component: {fileID: 4635446497630190785}
   - component: {fileID: 647234047308338238}
+  - component: {fileID: 6312787589905839786}
   m_Layer: 11
   m_Name: Dagger
   m_TagString: PlayerAttack
@@ -120,7 +121,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!114 &647234047308338238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +135,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angular: 1440
+--- !u!114 &6312787589905839786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315cff1768063c2449ab260350e30b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <index>k__BackingField: 0
 --- !u!1 &8147254618273612027
 GameObject:
   m_ObjectHideFlags: 0

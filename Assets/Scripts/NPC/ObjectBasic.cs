@@ -55,7 +55,7 @@ public class ObjectBasic : MonoBehaviour
 
         KnockBack(hitDetection.gameObject, hitDetection.knockBack);
 
-        Invincible(0.1f);
+        //Invincible(0.1f);
 
         if (hitDetection.statusEffect != null)
         {
@@ -72,7 +72,7 @@ public class ObjectBasic : MonoBehaviour
         damage = criticalHit ? damage * criticalDamage : damage;
 
         Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
-        stats.HP -= (1 - stats.defensivePower) * damage;
+        stats.HP = Mathf.Clamp(stats.HP - ((1 - stats.defensivePower) * damage), 0,stats.HPMax);
 
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
 

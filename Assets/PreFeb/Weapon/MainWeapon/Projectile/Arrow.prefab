@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4795214577067854906}
   - component: {fileID: 6900096828389256611}
   - component: {fileID: 2339166584673235170}
+  - component: {fileID: -1996565808621347797}
   m_Layer: 11
   m_Name: Arrow
   m_TagString: PlayerAttack
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 1
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -129,8 +130,20 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
   multiHitDurationTime: 0
+--- !u!114 &-1996565808621347797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831173352780998368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315cff1768063c2449ab260350e30b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <index>k__BackingField: 0
 --- !u!1 &8172994953639201744
 GameObject:
   m_ObjectHideFlags: 0
