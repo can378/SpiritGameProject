@@ -35,7 +35,8 @@ public class Enchant : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Thunderbolt();
+        if(index == 11)
+            Thunderbolt(other.transform.position);
     }
 
     void OnDestroy()
@@ -47,17 +48,24 @@ public class Enchant : MonoBehaviour
     #region Effect
 
     //11
-    void Thunderbolt()
+    void Thunderbolt(Vector3 pos)
     {
         Debug.Log("Crack");
-        //Destroy(Instantiate(explosionField, gameObject.transform.position, gameObject.transform.rotation), explosionTime);
+        GameObject thunderboltGO = Instantiate(ObjectPoolManager.instance.prefabs[9], pos, gameObject.transform.rotation);
+        thunderboltGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 5 + this.hitDetection.user.GetComponent<Player>().playerStats.skillPower * 0.1f, 0, 0, 0, null);
+        Destroy(thunderboltGO, 0.1f);
     }
 
     //21
     void Explosion()
     {
+        if(!hitDetection.isProjectile)
+            return;
+
         Debug.Log("Bomb");
-        //Destroy(Instantiate(explosionField, gameObject.transform.position, gameObject.transform.rotation), explosionTime);
+        GameObject explosionGO = Instantiate(ObjectPoolManager.instance.prefabs[8], gameObject.transform.position, gameObject.transform.rotation);
+        explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0, 0, 0, null);
+        Destroy(explosionGO, 0.5f);
     }
 
     #endregion Effect

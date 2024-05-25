@@ -1704,8 +1704,7 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -5192,6 +5191,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 378131458237147292, guid: 10d6d48ff6d2058429da820eea624298, type: 3}
+      propertyPath: prefabs.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 378131458237147292, guid: 10d6d48ff6d2058429da820eea624298, type: 3}
+      propertyPath: prefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 5651732826295342366, guid: 0da9c40e202b4234e8c0fde660e542e1, type: 3}
+    - target: {fileID: 378131458237147292, guid: 10d6d48ff6d2058429da820eea624298, type: 3}
+      propertyPath: prefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 5651732826295342366, guid: a1d331c36d6daca48a9ea8cb69e6ecaf, type: 3}
     - target: {fileID: 2897131948215464109, guid: 10d6d48ff6d2058429da820eea624298, type: 3}
       propertyPath: m_Name
       value: ObjectPoolManager
@@ -6103,6 +6114,10 @@ PrefabInstance:
       propertyPath: equipmentList.Array.data[57]
       value: 
       objectReference: {fileID: 3296880656510438592, guid: 21e5864137a50c34bbc262216c954a0e, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: equipmentList.Array.data[58]
+      value: 
+      objectReference: {fileID: 3296880656510438592, guid: 15eb922d7a0ce1d44a223d61f6a02d3a, type: 3}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: statusEffectList.Array.data[11]
       value: 

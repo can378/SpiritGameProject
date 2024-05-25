@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
     PlayerStats playerStats;
 
     // 공격 정보
+    public int enchant;
     [SerializeField] GameObject HitDetectionGameObject;
     [SerializeField] GameObject projectileGameObject;
 
@@ -155,12 +156,13 @@ public class WeaponController : MonoBehaviour
 
         // 무기 이펙트 크기 설정
         HitDetectionGameObject.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize, 1);
+        HitDetectionGameObject.GetComponentInChildren<Enchant>().index = enchant;
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
         hitDetection.SetHitDetection(false,-1, weaponList[playerStats.weapon].isMultiHit, weaponList[playerStats.weapon].DPS, playerStats.attackPower, weaponList[playerStats.weapon].knockBack, playerStats.criticalChance, playerStats.criticalDamage,weaponList[playerStats.weapon].statusEffect);
         hitDetection.user = this.gameObject;
-        
+
         // 무기 방향 
         HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);
 
@@ -172,6 +174,7 @@ public class WeaponController : MonoBehaviour
 
         // 무기 이펙트 해제
         HitDetectionGameObject.SetActive(false);
+        HitDetectionGameObject.GetComponentInChildren<Enchant>().index = 0;
 
     }
 
@@ -189,6 +192,7 @@ public class WeaponController : MonoBehaviour
 
         // 무기 투사체 적용
         GameObject instantProjectile = Instantiate(projectileGameObject, transform.position, transform.rotation);
+        instantProjectile.GetComponent<Enchant>().index = enchant;
 
         //투사체 설정
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
