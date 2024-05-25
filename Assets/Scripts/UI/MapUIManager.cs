@@ -119,7 +119,7 @@ public class MapUIManager : MonoBehaviour
 
         StatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
         StatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
-        StatsValueTxt[2].text = (Player.instance.playerStats.attackSpeed - 1).ToString() + " %";
+        StatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
         StatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
         StatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
         StatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();

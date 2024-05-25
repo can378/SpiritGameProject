@@ -237,7 +237,7 @@ public class Player : ObjectBasic
         }
     }
 
-    void ReloadOut()
+    public void ReloadOut()
     {
         weaponController.weaponList[playerStats.weapon].Reload();
         status.isReload = false;

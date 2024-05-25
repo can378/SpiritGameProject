@@ -38,7 +38,7 @@ public class PlayerStats : Stats
     }
 
     // attackSpeed
-    // UI 100%
+    // UI 0%
     // 높을수록 빨라짐
     // 초당 공격속도 = 무기 초당 공격 속도 * 플레이어 공격속도
     // 최소 0%, 최대 300%
