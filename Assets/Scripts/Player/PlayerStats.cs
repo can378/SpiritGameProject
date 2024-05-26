@@ -48,7 +48,7 @@ public class PlayerStats : Stats
     public float decreasedAttackSpeed { get; set; }
     public float attackSpeed
     {
-        get { return Mathf.Clamp((defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f, 4f); }
+        get { return Mathf.Clamp((defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f, 3f); }
     }
 
     // Skill

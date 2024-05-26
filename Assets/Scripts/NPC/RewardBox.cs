@@ -94,7 +94,7 @@ public class RewardBox : NPCbasic
 
     public override void Dead()
     {
-        base.Dead();
         Break();
+        base.Dead();
     }
 }

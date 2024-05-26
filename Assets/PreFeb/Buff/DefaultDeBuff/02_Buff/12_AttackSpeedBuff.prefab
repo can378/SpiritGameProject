@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2866315741150197865}
-  - component: {fileID: 7226329298004739480}
+  - component: {fileID: 2590943958235073564}
   m_Layer: 0
-  m_Name: 11_SpottingWeakness
+  m_Name: 12_AttackSpeedBuff
   m_TagString: Buff
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7226329298004739480
+--- !u!114 &2590943958235073564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,14 +41,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5535729302175816803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 746e9ee82921bd14bbd8ec9a4c8c3043, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d90691bc78f9134899cef1889e85ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <icon>k__BackingField: {fileID: 0}
   <target>k__BackingField: {fileID: 0}
-  <buffId>k__BackingField: 11
+  <buffId>k__BackingField: 12
   <defaultDuration>k__BackingField: 10
   <duration>k__BackingField: 0
   <maxOverlap>k__BackingField: 1
   <overlap>k__BackingField: 0
-  <addCC>k__BackingField: 100
+  <increasedAttackSpeed>k__BackingField: 0.5

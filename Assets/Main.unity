@@ -1602,10 +1602,12 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  deadDelay: 0
   isAttack: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
   sprite: {fileID: 0}
+  rigid: {fileID: 0}
   hAxis: 0
   vAxis: 0
   layerMask:
@@ -1634,6 +1636,7 @@ MonoBehaviour:
   <runCurrentCoolTime>k__BackingField: 0
   <isPlayerMove>k__BackingField: 0
   <isReload>k__BackingField: 0
+  <reloadDelay>k__BackingField: 0
   <isSprint>k__BackingField: 0
   <isDodge>k__BackingField: 0
   <isInvincible>k__BackingField: 0
@@ -5944,7 +5947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: statusEffectList.Array.size
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: equipmentList.Array.data[10]
@@ -6061,7 +6064,7 @@ PrefabInstance:
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: equipmentList.Array.data[38]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3296880656510438592, guid: fb34ed07b9f40b747b27e9c5212b1692, type: 3}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: equipmentList.Array.data[39]
       value: 
@@ -6134,6 +6137,10 @@ PrefabInstance:
       propertyPath: statusEffectList.Array.data[11]
       value: 
       objectReference: {fileID: 5535729302175816803, guid: 41f07424e68e1564eb47884b4ce199d5, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: statusEffectList.Array.data[12]
+      value: 
+      objectReference: {fileID: 5535729302175816803, guid: c786342dc3a4bb84c960b1d248bff730, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

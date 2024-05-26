@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuickReload : Equipment
+public class RevivalEquipment : Equipment
 {
-    bool isQuick = false;
+    [SerializeField] float revivalCoolTime = 0f;
 
     void Update()
     {
@@ -18,20 +18,19 @@ public class QuickReload : Equipment
             return;
         }
 
-        if(!isQuick && user.status.isReload)
+        revivalCoolTime -= Time.deltaTime;
+
+        if (revivalCoolTime <= 0f && user.stats.HP <= 0f)
         {
-            print("buff");
-            isQuick = true;
-            GameObject attackSpeedBuff = Instantiate(GameData.instance.statusEffectList[12]);
-            AttackSpeedBuff ASBSE = attackSpeedBuff.GetComponent<AttackSpeedBuff>();
-            ASBSE.SetDefaultDuration(2f);
-            ASBSE.increasedAttackSpeed = 0.5f;
-            user.ApplyBuff(attackSpeedBuff);
+            Revival();
         }
-        else if(isQuick && !user.status.isReload)
-        {
-            isQuick = false;
-        }
+    }
+
+    void Revival()
+    {
+        revivalCoolTime = 20f;
+        Debug.Log("부활!!!!");
+        user.stats.HP = user.stats.HPMax * 0.5f;
     }
 
     public override void Equip(Player target)
@@ -39,6 +38,7 @@ public class QuickReload : Equipment
         if (target.tag == "Player")
         {
             this.user = target;
+            Debug.Log("부활");
         }
     }
 

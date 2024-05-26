@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpottingWeaknessBuff : StatusEffect
+public class CriticalChanceBuff : StatusEffect
 {
     // 배율
     // 치명타 확률

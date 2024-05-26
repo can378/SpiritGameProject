@@ -50,6 +50,7 @@ public class NPCbasic : ObjectBasic
         ChaseEnemy();
         FollowCompanion();
         WaitTarget();
+        HalfDead();
     }
 
     #region Attack
@@ -229,7 +230,6 @@ public class NPCbasic : ObjectBasic
     public override void Dead()
     {
         base.Dead();
-        Destroy(this.gameObject);
     }
 
 
