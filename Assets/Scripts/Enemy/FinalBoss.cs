@@ -69,7 +69,8 @@ public class FinalBoss : EnemyBasic
         {
             switch (patternNum)
             {
-                case 1:StartCoroutine(punchFist());
+                case 1:
+                    StartCoroutine(faces()); 
                     break;
                 case 2:
                     StartCoroutine(knifeRun());
@@ -78,7 +79,7 @@ public class FinalBoss : EnemyBasic
                     StartCoroutine(wind());
                     break;
                 case 4:
-                    StartCoroutine(faces());
+                    StartCoroutine(punchFist());
                     break;
                 case 5:
                     isAttack = false;

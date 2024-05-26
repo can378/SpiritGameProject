@@ -4,11 +4,35 @@ using UnityEngine;
 
 public class FaceHostility : EnemyBasic
 {
+    int bulletCount = 5; // 발사할 총알의 수
+    float spreadAngle = 45f; // 부채꼴의 총 각도
+    float bulletSpeed = 3f; // 총알의 속도
+    float radius;
+    float angleStep;
+    float startAngle;
 
+    Vector2 circleCenter;
+    Vector2 playerCenter;
+    Vector2 startPoint;
+    Vector2 startDir;
     //적대감=총 부채꼴 모양으로 발사
+
+    private void Start()
+    {
+        radius = 6;
+        angleStep = spreadAngle / (bulletCount - 1);
+        startAngle = -spreadAngle / 2;
+    }
     protected override void AttackPattern()
     {
+        print("hostility");
         StartCoroutine(hostility());
+    }
+
+
+    protected override void MovePattern()
+    {
+        //Chase();
     }
 
     IEnumerator hostility()
@@ -16,27 +40,38 @@ public class FaceHostility : EnemyBasic
         isAttack = true;
         isAttackReady = false;
 
-        if (!gameObject.activeSelf)
-            yield break;
+        //START//////////////////////////////////
 
-        //여러개 한번에 발사
-        for (int i = 0; i < 5; i++)
+        // 가장 가까운 지점 계산
+        circleCenter = transform.position;
+        startPoint = circleCenter + targetDirVec * radius;
+
+        // 시작 방향 설정
+        playerCenter=enemyTarget.transform.position;
+        startDir = (playerCenter - startPoint).normalized;
+        float angleStep = spreadAngle / (bulletCount - 1);
+        float startAngle = -spreadAngle / 2;
+
+
+        for (int i = 0; i < bulletCount; i++)
         {
             GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
-            bullet.transform.position = transform.position;
-            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+            bullet.transform.position = startPoint;
+            Rigidbody2D bulletRigid = bullet.GetComponent<Rigidbody2D>();
 
+            // 각도를 계산하여 벡터를 만듭니다.
+            float currentAngle = startAngle + angleStep * i;
+            Vector2 dirVec = Quaternion.Euler(0, 0, currentAngle) * startDir;
 
-            Vector2 dirVec = enemyTarget.transform.position - transform.position;
-            Vector2 ranVec = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(0f, 2f));
-            dirVec += ranVec;
-            rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
-
+            bulletRigid.AddForce(dirVec.normalized * bulletSpeed, ForceMode2D.Impulse);
         }
 
 
 
-        //Repeat
+
+
+
+        //END
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;

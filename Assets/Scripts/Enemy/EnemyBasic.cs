@@ -27,12 +27,9 @@ public class EnemyBasic : ObjectBasic
         enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;//이거 넣으면 안되는거야?
         stats = enemyStats = GetComponent<EnemyStats>();
 
-    }
-
-    void Start()
-    {
         defaultLayer = this.gameObject.layer;
     }
+
 
     protected virtual void Update()
     {
@@ -41,16 +38,11 @@ public class EnemyBasic : ObjectBasic
         Detect();
     }
 
-    /*
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
-    */
+
 
     #region  Attack
 
-    void Attack()
+    protected virtual void Attack()
     {
         if (!enemyTarget)
             return;
@@ -102,7 +94,7 @@ public class EnemyBasic : ObjectBasic
 
     #region Move
 
-    void Move()
+    protected virtual void Move()
     {
         // 경직과 공격 중에는 직접 이동 불가
         if (isFlinch)
