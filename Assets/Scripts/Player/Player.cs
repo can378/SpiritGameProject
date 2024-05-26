@@ -83,7 +83,9 @@ public class Player : ObjectBasic
         Dodge();
         Move();
         UseItem();
-        
+        Interaction();
+        HalfDead();
+
         if (status.isAttackable)
         {
             Reload();
@@ -94,8 +96,6 @@ public class Player : ObjectBasic
             SkillChange();
         }
         
-        Interaction();
-
         string layerName = LayerMask.LayerToName(gameObject.layer);
         //Debug.Log("My layer name is: " + layerName);
     }
@@ -739,11 +739,10 @@ public class Player : ObjectBasic
 
     public override void Dead()
     {
-        Debug.Log("player dead");
-        base.Dead();
         DataManager.instance.InitData();
         DataManager.instance.SaveUserData();
         MapUIManager.instance.diePanel.SetActive(true);
+        base.Dead();
     }
     /*
     void DamagedOut()

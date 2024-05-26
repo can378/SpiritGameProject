@@ -39,6 +39,7 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
+        HalfDead();
     }
 
     /*
@@ -170,7 +171,7 @@ public class EnemyBasic : ObjectBasic
         moveVec = (enemyTarget.transform.position - transform.position).normalized;
     }
 
-    // 도망치기 공격 가능
+    // 도망치기
     protected void Run()
     {
         if (!enemyTarget)
@@ -194,8 +195,6 @@ public class EnemyBasic : ObjectBasic
 
     public override void Dead()
     {
-        base.Dead();
-
         //drop coin
         int dropCoinNum = 3;
         Vector3 coinDropPoint = transform.position;
@@ -204,7 +203,7 @@ public class EnemyBasic : ObjectBasic
         //enemy disappear
         StopAllCoroutines();
         //this.gameObject.SetActive(false);
-        Destroy(this.gameObject);
+        base.Dead();
     }
 
     #endregion Effect

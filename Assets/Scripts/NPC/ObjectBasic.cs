@@ -16,6 +16,7 @@ public class ObjectBasic : MonoBehaviour
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public Coroutine flinchCoroutine;
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
+    public float deadDelay = 0;
 
     // 공격 관련 
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
@@ -24,7 +25,7 @@ public class ObjectBasic : MonoBehaviour
     //public float attackDelay;               // 공격중 시간
 
     public SpriteRenderer sprite;
-    protected Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     
     protected virtual void Awake()
     {
@@ -42,9 +43,7 @@ public class ObjectBasic : MonoBehaviour
     public virtual void BeAttacked(HitDetection hitDetection)
     {
         if (isInvincible)
-        {
             return;
-        }
 
         AudioManager.instance.SFXPlay("Hit_SFX");
 
@@ -68,6 +67,9 @@ public class ObjectBasic : MonoBehaviour
 
     public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
+        if(isInvincible)
+            return;
+
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
 
@@ -77,10 +79,6 @@ public class ObjectBasic : MonoBehaviour
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
 
         Invoke("DamagedOut", 0.05f);
-        if (stats.HP <= 0f)
-        {
-            Dead();
-        }
     }
 
     protected virtual void DamagedOut()
@@ -119,7 +117,9 @@ public class ObjectBasic : MonoBehaviour
 
     public void ApplyBuff(int buffIndex)
     {
-        
+        if (isInvincible)
+            return;
+
         if (buffIndex <= 10 && 0 < stats.SEResist(buffIndex))
         {
             // 저주 디버프일 시 피해를 입고 사라짐
@@ -158,6 +158,9 @@ public class ObjectBasic : MonoBehaviour
 
     public void ApplyBuff(GameObject effect)
     {
+        if (isInvincible)
+            return;
+
         if (effect.GetComponent<StatusEffect>().buffId <=10 &&  0 < stats.SEResist(effect.GetComponent<StatusEffect>().buffId) )
         {
             // 저주 디버프일 시 피해를 입고 사라짐
@@ -169,7 +172,7 @@ public class ObjectBasic : MonoBehaviour
         }
         
 
-        StatusEffect statusEffect = Instantiate(effect, Vector3.zero, Quaternion.identity).GetComponent<StatusEffect>();
+        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
 
         // 가지고 있는 버프인지 체크한다.
         foreach (StatusEffect buff in stats.activeEffects)
@@ -220,9 +223,36 @@ public class ObjectBasic : MonoBehaviour
         stats.activeEffects.Clear();
     }
 
+    // 빈사 상태로
+    // 회복되면 죽지 않음
+    protected void HalfDead()
+    {
+        if (stats.HP > 0 && deadDelay == 0)
+            return;
+
+        isFlinch = true;
+        isInvincible = true;
+        //StopAllCoroutines();
+        deadDelay += Time.deltaTime;
+
+        if(deadDelay >= 5f && stats.HP <= 0)
+            Dead();
+        else if (deadDelay >= 5f && 0 < stats.HP)
+        {
+            isFlinch = false;
+            isInvincible = false;
+            deadDelay = 0f;
+        }
+            
+
+
+    }
+
+    // 완전 죽음
     public virtual void Dead()
     {
-        //RemoveAllEffects();
+        print(this.name + " Dead");
+        Destroy(this.gameObject);
     }
 
     #endregion
