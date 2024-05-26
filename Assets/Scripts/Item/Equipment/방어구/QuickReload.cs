@@ -20,7 +20,13 @@ public class QuickReload : Equipment
 
         if(!isQuick && user.status.isReload)
         {
+            print("buff");
             isQuick = true;
+            GameObject attackSpeedBuff = Instantiate(GameData.instance.statusEffectList[12]);
+            AttackSpeedBuff ASBSE = attackSpeedBuff.GetComponent<AttackSpeedBuff>();
+            ASBSE.SetDefaultDuration(2f);
+            ASBSE.increasedAttackSpeed = 0.5f;
+            user.ApplyBuff(attackSpeedBuff);
         }
         else if(isQuick && !user.status.isReload)
         {

@@ -16,6 +16,7 @@ public class PlayerStatus : MonoBehaviour
     [field: SerializeField] public bool isPlayerMove { get; set; }
 
     [field: SerializeField] public bool isReload {get; set;}                        // 장전
+    [field: SerializeField] public float reloadDelay {get; set;}
     [field: SerializeField] public bool isSprint { get; set; }                      // 달리기
     [field: SerializeField] public bool isDodge { get; set; }                       // 회피
 

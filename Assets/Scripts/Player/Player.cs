@@ -87,6 +87,7 @@ public class Player : ObjectBasic
         if (status.isAttackable)
         {
             Reload();
+            ReloadOut();
             Attack();
             SkillDown();
             SkillUp();
@@ -146,7 +147,7 @@ public class Player : ObjectBasic
 
         moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (isAttack || status.isReload || status.isSkill)       // 정지
+        if (isAttack || status.isSkill)       // 정지
         {
             moveVec = Vector2.zero;
         }
@@ -181,6 +182,7 @@ public class Player : ObjectBasic
         {
             dodgeVec = moveVec;
             status.isDodge = true;
+            status.isReload = false;
 
             Invoke("DodgeOut", playerStats.dodgeTime);
 
@@ -223,24 +225,28 @@ public class Player : ObjectBasic
         if (rDown && !isFlinch && !status.isDodge && !status.isReload && !isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
-            //장전에 걸리는 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = weaponController.weaponList[playerStats.weapon].reloadTime / playerStats.attackSpeed;
-            Invoke("ReloadOut", reloadTime);
+            status.reloadDelay = 0f;
         }
 
         if (aDown && !isFlinch && status.attackDelay < 0 && weaponController.weaponList[playerStats.weapon].ammo == 0 && !status.isDodge && !status.isReload && !isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
-            //장전 시간 = 무기 장전 시간 / 플레이어 공격 속도
-            float reloadTime = weaponController.weaponList[playerStats.weapon].reloadTime / playerStats.attackSpeed;
-            Invoke("ReloadOut", reloadTime);
+            status.reloadDelay = 0f;
         }
     }
 
-    public void ReloadOut()
+    void ReloadOut()
     {
-        weaponController.weaponList[playerStats.weapon].Reload();
-        status.isReload = false;
+        if (!status.isReload)
+            return;
+
+        status.reloadDelay += Time.deltaTime * (playerStats.attackSpeed);
+
+        if(status.reloadDelay >= weaponController.weaponList[playerStats.weapon].reloadTime)
+        {
+            weaponController.weaponList[playerStats.weapon].Reload();
+            status.isReload = false;
+        }
     }
 
     void Attack()
@@ -255,15 +261,12 @@ public class Player : ObjectBasic
 
         isAttackReady = status.attackDelay <= 0;
 
-        if (aDown && !isFlinch && !isAttack && !status.isDodge && isAttackReady && !status.isSkill && !status.isSkillHold)
+        if (aDown && !isFlinch && !isAttack && !status.isReload && !status.isDodge && isAttackReady && !status.isSkill && !status.isSkillHold )
         {
             // 공격 준비 안됨
             isAttackReady = false;
             isAttack = true;
 
-            // 공격 방향
-            // 현재 마우스 위치가 아닌
-            // 클릭 한 위치로
             weaponController.Use(status.mousePos);
 
             AudioManager.instance.SFXPlay("attack_sword");
@@ -294,7 +297,7 @@ public class Player : ObjectBasic
             return;
 
         // 스킬 키 다운
-        if (skDown && !isFlinch && !isAttack && !status.isDodge && !status.isSkill && !status.isSkillHold)
+        if (skDown && !isFlinch && !isAttack && !status.isDodge && !status.isSkill && !status.isSkillHold )
         {
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
             if (skillController.skillList[playerStats.skill[status.skillIndex]].skillLimit.Length != 0 && 
@@ -316,6 +319,7 @@ public class Player : ObjectBasic
         if ((isFlinch || !skDown) && !isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
             StartCoroutine(skillController.Exit());
+            status.isReload = false;
         }
     }
 
