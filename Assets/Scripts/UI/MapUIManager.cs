@@ -23,6 +23,7 @@ public class MapUIManager : MonoBehaviour
     public RectTransform sidePanel;
     public GameObject minimapPanel;
     public GameObject statSelectPanel;                                  // Ω∫≈» º±≈√√¢
+    public GameObject nearObjectPanel;
 
     //Player status
     public Slider Hpslider;
@@ -37,6 +38,8 @@ public class MapUIManager : MonoBehaviour
 
     public TMP_Text[] EquipmentsTxt = new TMP_Text[3];                  // ¿Â∫Ò ¿Ã∏ß
     public TMP_Text[] StatsValueTxt = new TMP_Text[10];                                    // Ω∫≈» ºˆƒ°
+
+    public TMP_Text nearObjectInteraction;
 
     //gameObject
     public TMP_Text chapterTxt;
@@ -101,6 +104,7 @@ public class MapUIManager : MonoBehaviour
         UpdateStatUI();
         if (Player.instance.playerStats.item == "")
         { updateItemUI(null); }
+        UpdateNearObjectUI();
     }
 
     void setUpgradePanel()
@@ -220,6 +224,28 @@ public class MapUIManager : MonoBehaviour
     {
         minimapPanel.SetActive(tf);
     
+    }
+
+    public void UpdateNearObjectUI()
+    {
+        if(Player.instance.nearObject == null)
+        {
+            nearObjectPanel.SetActive(false);
+            return;
+        }
+
+        nearObjectPanel.SetActive(true);
+        switch(Player.instance.nearObject.tag)
+        {
+            case "Npc":
+                nearObjectInteraction.text = "F : ¥Î»≠";
+                break;
+            case "SelectItem":
+                nearObjectInteraction.text = "F : »πµÊ";
+                break;
+            default:
+                break;
+        }
     }
 
     #endregion
