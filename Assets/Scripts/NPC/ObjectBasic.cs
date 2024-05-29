@@ -6,7 +6,7 @@ using UnityEngine;
 public class ObjectBasic : MonoBehaviour
 {
     //스탯
-    public Stats stats;
+    [HideInInspector] public Stats stats;
     public int defaultLayer;
 
     // 이동관련
@@ -24,8 +24,8 @@ public class ObjectBasic : MonoBehaviour
     public GameObject hitTarget;            // 공격 성공
     //public float attackDelay;               // 공격중 시간
 
-    public SpriteRenderer sprite;
-    public Rigidbody2D rigid;
+    [HideInInspector] public SpriteRenderer sprite;
+    [HideInInspector] public Rigidbody2D rigid;
     
     protected virtual void Awake()
     {

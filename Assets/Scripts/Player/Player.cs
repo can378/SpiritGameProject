@@ -9,25 +9,25 @@ using System;
 
 public class Player : ObjectBasic
 {
-    // player 현재 능력치
-    public static Player instance { get; private set; }
-    // player 현재 상태
-    public PlayerStatus status { get; private set; }
-    public PlayerStats playerStats {get; private set; }
 
-    public float hAxis;
-    public float vAxis;
+    public static Player instance { get; private set; }         
+    public PlayerStatus status { get; private set; }                        // player 현재 능력치
+    public PlayerStats playerStats {get; private set; }                     // player 현재 능력치
+    public UserData userData { get; private set; }
+
+    [HideInInspector] public float hAxis;
+    [HideInInspector] public float vAxis;
 
     #region Key Input
 
-    public bool rDown { get; private set; }                             // 재장전
-    public bool dDown { get; private set; }                             // 회피
-    public bool aDown { get; private set; }                            // 공격
-    public bool siDown { get; private set; }                           // 선택 아이템
-    public bool iDown { get; private set; }                           // 상호작용
+    public bool rDown { get; private set; }                                 // 재장전
+    public bool dDown { get; private set; }                                 // 회피
+    public bool aDown { get; private set; }                                 // 공격
+    public bool siDown { get; private set; }                                // 선택 아이템
+    public bool iDown { get; private set; }                                 // 상호작용
 
-    public float skcDown { get; private set; }                        // 스킬 변경
-    public bool skDown { get; private set; }              // 스킬 키 다운 중
+    public float skcDown { get; private set; }                              // 스킬 변경
+    public bool skDown { get; private set; }                                // 스킬 키 다운 중
 
     #endregion
 
@@ -36,14 +36,11 @@ public class Player : ObjectBasic
     public GameObject playerItem;
 
     Vector2 playerPosition;
-    
     Vector2 dodgeVec;
 
     public WeaponController weaponController;
     public SkillController skillController;
     public Equipment[] equipmentList;
-
-    public UserData userData { get; private set; }
 
     protected override void Awake()
     {
@@ -343,6 +340,8 @@ public class Player : ObjectBasic
 
     #endregion
 
+    #region Interaction
+
     void Interaction()
     {
         if(nearObject == null)
@@ -376,6 +375,8 @@ public class Player : ObjectBasic
         }
 
     }
+
+    #endregion Interaction
 
     #region Item
 
@@ -684,7 +685,9 @@ public class Player : ObjectBasic
     {
         if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc")
         {
-            nearObject = other.gameObject;
+            if(nearObject == null ||
+            Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, nearObject.transform.position))
+                nearObject = other.gameObject;
         }
 
     }
