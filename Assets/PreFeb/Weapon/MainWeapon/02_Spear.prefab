@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2240183684125499985}
-  - component: {fileID: 7134848955563953320}
   - component: {fileID: 4326583180886243799}
+  - component: {fileID: 5448845741910072288}
   m_Layer: 6
   m_Name: 02_Spear
   m_TagString: SelectItem
@@ -34,41 +34,6 @@ Transform:
   - {fileID: 4386968561240285532}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7134848955563953320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemClass>k__BackingField: 1
-  <selectItemID>k__BackingField: 2
-  <selectItemName>k__BackingField: "\uAE30\uCC3D"
-  <price>k__BackingField: 0
-  <equipmentRating>k__BackingField: 0
-  user: {fileID: 0}
-  <weaponType>k__BackingField: 1
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <attackPower>k__BackingField: 10
-  <attackSize>k__BackingField: 1
-  <knockBack>k__BackingField: 0.8
-  <preDelay>k__BackingField: 0.4
-  <rate>k__BackingField: 0.6
-  <postDelay>k__BackingField: 0
-  <maxAmmo>k__BackingField: -1
-  <ammo>k__BackingField: -1
-  <reloadTime>k__BackingField: 0
-  <projectile>k__BackingField: {fileID: 0}
-  <projectileSpeed>k__BackingField: 0
-  <projectileTime>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <statusEffect>k__BackingField: 
 --- !u!58 &4326583180886243799
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -104,6 +69,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &5448845741910072288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179661334137346525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <selectItemClass>k__BackingField: 1
+  <selectItemID>k__BackingField: 2
+  <selectItemName>k__BackingField: "\uAE30\uCC3D"
+  <price>k__BackingField: 0
 --- !u!1 &3373618800750160635
 GameObject:
   m_ObjectHideFlags: 0

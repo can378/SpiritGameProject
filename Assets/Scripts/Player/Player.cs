@@ -391,7 +391,7 @@ public class Player : ObjectBasic
                 weaponController.UnEquipWeapon();
             }
             // 무기 장비
-            gainItem = weaponController.EquipWeapon(selectItem.GetComponent<Weapon>().selectItemID);
+            gainItem = weaponController.EquipWeapon(selectItem.GetComponent<SelectItem>().selectItemID);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
@@ -405,7 +405,7 @@ public class Player : ObjectBasic
                 skillController.UnEquipSkill();
             }
             // 스킬 장착
-            gainItem = skillController.EquipSkill(selectItem.GetComponent<Skill>().selectItemID);
+            gainItem = skillController.EquipSkill(selectItem.GetComponent<SelectItem>().selectItemID);
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable)
         {
@@ -414,7 +414,7 @@ public class Player : ObjectBasic
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            playerStats.item = selectItem.GetComponent<Consumable>().selectItemID;
+            playerStats.item = selectItem.GetComponent<SelectItem>().selectItemID;
             playerItem = selectItem.gameObject;
             playerItem.SetActive(false);
 
