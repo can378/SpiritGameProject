@@ -101,7 +101,8 @@ public class WeaponController : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        explosive.tag = "Weapon";
+        explosive.tag = "PlayerAttack";
+        explosive.layer = LayerMask.NameToLayer("PlayerAttack");
         explosive.SetActive(true);
         explosive.transform.position = transform.position;
         explosive.GetComponent<Rigidbody2D>().velocity = status.mouseDir * 25;

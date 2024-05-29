@@ -139,7 +139,7 @@ public class PlayerStats : Stats
     public int coin = 0;
     public int key = 0;
     public int dice = 0;
-    public string item = "";
+    public int item = 0;
 
     //Equipments
     public int weapon = 0;

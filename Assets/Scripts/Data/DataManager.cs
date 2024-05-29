@@ -138,7 +138,7 @@ public class DataManager : MonoBehaviour
         userData.playerKey = 0;
         userData.playerDice = 0;
 
-        userData.playerItem = "";
+        userData.playerItem = 0;
 
         userData.playerWeapon = 0;
         for (int i = 0; i < 3; i++)

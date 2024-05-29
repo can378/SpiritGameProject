@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class Skill : SelectItem
 {
-    [field: SerializeField] public string skillName { get; private set; }
-    [field: SerializeField] public int skillID { get; private set; }
     [field: SerializeField] public int skillType { get; private set; }                  //스킬 키 Down : 0
                                                                                         //스킬 키 Hold : 1
                                                                                         //스킬 키 Up   : 2

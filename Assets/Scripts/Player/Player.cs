@@ -391,11 +391,11 @@ public class Player : ObjectBasic
                 weaponController.UnEquipWeapon();
             }
             // 무기 장비
-            gainItem = weaponController.EquipWeapon(selectItem.GetComponent<Weapon>().equipmentId);
+            gainItem = weaponController.EquipWeapon(selectItem.GetComponent<Weapon>().selectItemID);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
-            gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentId);
+            gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().selectItemID);
         }
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
@@ -405,16 +405,16 @@ public class Player : ObjectBasic
                 skillController.UnEquipSkill();
             }
             // 스킬 장착
-            gainItem = skillController.EquipSkill(selectItem.GetComponent<Skill>().skillID);
+            gainItem = skillController.EquipSkill(selectItem.GetComponent<Skill>().selectItemID);
         }
-        else if(selectItem.selectItemClass == SelectItemClass.Consumable || selectItem.selectItemClass==SelectItemClass.ThrowWeapon  )
+        else if(selectItem.selectItemClass == SelectItemClass.Consumable)
         {
             //전에 가지고 있던 아이템 드랍
             if (playerItem != null)
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
             
             //아이템 갱신
-            playerStats.item = selectItem.GetComponent<ItemInfo>().selectItemName.ToString();
+            playerStats.item = selectItem.GetComponent<Consumable>().selectItemID;
             playerItem = selectItem.gameObject;
             playerItem.SetActive(false);
 
@@ -431,45 +431,12 @@ public class Player : ObjectBasic
         {
             Debug.Log("UseSelectItem");
             //Throwing Items
-            if (playerItem.GetComponent<SelectItem>().selectItemClass == SelectItemClass.ThrowWeapon)
+            if (playerItem.GetComponent<Consumable>().throwItem)
             { weaponController.UseItem(playerItem, status.mousePos); }
             //Consumable Item
             else 
             {
-                switch (playerItem.GetComponent<ItemInfo>().selectItemName)
-                {
-                    case SelectItemName.HPPortion:
-                        playerStats.HP += 10;
-                        MapUIManager.instance.UpdateHealthUI();
-                        break;
-                    case SelectItemName.SpeedPortion:
-                        break;
-                    case SelectItemName.SkillPortion:
-                        break;
-                    // 밑에 아이템들은 획득 즉시로 바꾸었으면 좋겠습니다.
-                    case SelectItemName.Insam:
-                        playerStats.HP += 20;
-                        MapUIManager.instance.UpdateHealthUI();
-                        break;
-                    case SelectItemName.Sansam:
-                        playerStats.HP += 30;
-                        MapUIManager.instance.UpdateHealthUI();
-                        break;
-                    case SelectItemName.SmallArmor:
-                        playerStats.tempHP += 10;
-                        break;
-                    case SelectItemName.LargeArmor:
-                        playerStats.tempHP += 20;
-                        break;
-                    case SelectItemName.NormalArmor:
-                        playerStats.tempHP += 30;
-                        break;
-
-
-                    default:
-                        Debug.LogWarning("no information item process" + playerItem.GetComponent<ItemInfo>().selectItemName);
-                        break;
-                }
+                playerItem.GetComponent<Consumable>().UseItem(this);
                 Destroy(playerItem);
             }
            
@@ -477,7 +444,7 @@ public class Player : ObjectBasic
             //"no item" status
             MapUIManager.instance.updateItemUI(null);
             playerItem = null;
-            playerStats.item = "";
+            playerStats.item = 0;
 
         }
 
@@ -553,7 +520,7 @@ public class Player : ObjectBasic
 
             //Debug.Log("Scene reloaded: " + scene.name);
             //Scene reload 후에도 전에 얻은 아이템 유지
-            string playerItemName = DataManager.instance.userData.playerItem;
+            int playerItemName = DataManager.instance.userData.playerItem;
             int playerWeapon = DataManager.instance.userData.playerWeapon;
             int playerSkill = DataManager.instance.userData.playerSkill;
             int[] playerEquipment = DataManager.instance.userData.playerEquipments;
@@ -568,11 +535,11 @@ public class Player : ObjectBasic
             playerStats.key = DataManager.instance.userData.playerKey;
 
             //아이템
-            if(playerItemName != "")
+            if(playerItemName != 0)
             {
                 foreach (GameObject obj in DataManager.instance.gameData.selectItemList)
                 {
-                    if (obj.GetComponent<ItemInfo>().selectItemName.ToString() == playerItemName)
+                    if (obj.GetComponent<Consumable>().selectItemID == playerItemName)
                     {
                         playerItem = Instantiate(obj);
                         MapUIManager.instance.updateItemUI(playerItem.gameObject);
@@ -668,28 +635,36 @@ public class Player : ObjectBasic
                 playerStats.coin++;
                 MapUIManager.instance.UpdateCoinUI();
             }
-
-            if (item.itemClass == ItemClass.Key)
+            else if (item.itemClass == ItemClass.Key)
             {
                 Destroy(other.gameObject); //키 오브젝트 삭제
                 playerStats.key++;
                 MapUIManager.instance.UpdateKeyUI();
             }
+            else if(item.itemClass == ItemClass.Heal)
+            {
+                Destroy(other.gameObject); //코인 오브젝트 삭제
+                playerStats.HP += 20f;
+            }
+            else if(item.itemClass == ItemClass.ExtraHealth)
+            {
+                Destroy(other.gameObject); //키 오브젝트 삭제
+                playerStats.tempHP += 10f;
+            }
 
             MapUIManager.instance.UpdateMinimapUI(false);
         }
-
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc")
         {
-            if(nearObject == null ||
-            Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, nearObject.transform.position))
+            if(nearObject == null || Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, nearObject.transform.position))
+            {
                 nearObject = other.gameObject;
+            }
         }
-
     }
 
     void OnTriggerExit2D(Collider2D other)

@@ -23,7 +23,7 @@ public class UserData
     public int playerKey;
     public int playerDice;
 
-    public string playerItem;
+    public int playerItem;
 
     //Equipment
     public int playerWeapon;

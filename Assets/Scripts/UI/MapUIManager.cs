@@ -65,7 +65,7 @@ public class MapUIManager : MonoBehaviour
         //UpdateWeaponUI();
         //UpdateSkillUI();
         //UpdatePointUI();
-        if (Player.instance.playerStats.item == "")
+        if (Player.instance.playerStats.item == 0)
         { updateItemUI(null); }
 
         setUpgradePanel();
@@ -102,7 +102,7 @@ public class MapUIManager : MonoBehaviour
         UpdateCoinUI();
         UpdateKeyUI();
         UpdateStatUI();
-        if (Player.instance.playerStats.item == "")
+        if (Player.instance.playerStats.item == 0)
         { updateItemUI(null); }
         UpdateNearObjectUI();
     }
@@ -166,7 +166,7 @@ public class MapUIManager : MonoBehaviour
 
         if (obj != null)
         {
-            itemImg.GetComponent<Image>().sprite = obj.GetComponent<SpriteRenderer>().sprite;
+            itemImg.GetComponent<Image>().sprite = obj.GetComponentInChildren<SpriteRenderer>().sprite;
         }
         else { itemImg.GetComponent<Image>().sprite = null; }
 
@@ -187,7 +187,7 @@ public class MapUIManager : MonoBehaviour
     {
         if (Player.instance.playerStats.weapon != 0)
         {
-            WeaponTxt.text = Player.instance.weaponController.weaponList[Player.instance.playerStats.weapon].equipmentName;
+            WeaponTxt.text = Player.instance.weaponController.weaponList[Player.instance.playerStats.weapon].selectItemName;
         }
         else {WeaponTxt.text = "";}
     }
@@ -196,7 +196,7 @@ public class MapUIManager : MonoBehaviour
     {
         if (Player.instance.playerStats.skill[Player.instance.status.skillIndex] != 0)
         {
-            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.playerStats.skill[Player.instance.status.skillIndex]].skillName;
+            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.playerStats.skill[Player.instance.status.skillIndex]].selectItemName;
         }
         else {SkillTxt.text = "";}
     }
@@ -214,7 +214,7 @@ public class MapUIManager : MonoBehaviour
         for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
         {
             if(Player.instance.playerStats.equipments[i] != 0)
-                EquipmentsTxt[i].text = Player.instance.equipmentList[Player.instance.playerStats.equipments[i]].equipmentName;
+                EquipmentsTxt[i].text = Player.instance.equipmentList[Player.instance.playerStats.equipments[i]].selectItemName;
             else
                 EquipmentsTxt[i].text ="";
         }
@@ -238,10 +238,12 @@ public class MapUIManager : MonoBehaviour
         switch(Player.instance.nearObject.tag)
         {
             case "Npc":
-                nearObjectInteraction.text = "F : ´ëÈ­";
+                nearObjectInteraction.text = Player.instance.nearObject.name;
+                nearObjectInteraction.text += " ´ëÈ­";
                 break;
             case "SelectItem":
-                nearObjectInteraction.text = "F : È¹µæ";
+                nearObjectInteraction.text = Player.instance.nearObject.GetComponent<SelectItem>().selectItemName;
+                nearObjectInteraction.text += " È¹µæ";
                 break;
             default:
                 break;

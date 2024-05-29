@@ -18,6 +18,7 @@ public class SellingItem : MonoBehaviour
 
     public int thisItemIndex;
     string thisItemName;
+    int thisItemID;
     int thisItemPrice;
 
 
@@ -41,15 +42,17 @@ public class SellingItem : MonoBehaviour
 
     private void setStore()
     {
-        thisItemIndex = Random.Range(0, itemList.Count);
+        thisItemIndex = Random.Range(1, itemList.Count);
         GameObject thisSlotItem = itemList[thisItemIndex];
 
-        GetComponent<SpriteRenderer>().sprite = thisSlotItem.GetComponent<SpriteRenderer>().sprite;
-        thisItemName=thisSlotItem.GetComponent<ItemInfo>().selectItemName.ToString();
-        thisItemPrice = thisSlotItem.GetComponent<ItemInfo>().price;
+        //GameObject thisSlotImage = Instantiate(thisSlotItem);
+        //GetComponent<SpriteRenderer>().sprite = thisSlotItem.GetComponentInChildren<SpriteRenderer>().sprite;
+        thisItemName = thisSlotItem.GetComponent<Consumable>().selectItemName;
+        thisItemID = thisSlotItem.GetComponent<Consumable>().selectItemID;
+        thisItemPrice = thisSlotItem.GetComponent<Consumable>().price;
         
         
-        itemName.text = thisItemName;
+        itemName.text = thisItemName.ToString();
         itemPrice.text = thisItemPrice.ToString();
     }
 
@@ -62,7 +65,7 @@ public class SellingItem : MonoBehaviour
         if (Player.instance.playerStats.coin >= cost)
         {
             Player.instance.playerStats.coin -= cost;
-            Player.instance.playerStats.item = thisItemName;
+            Player.instance.playerStats.item = thisItemID;
 
             //전에 가지고 있던 아이템 드랍
             if (Player.instance.playerItem != null)
