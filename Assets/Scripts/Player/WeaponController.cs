@@ -43,7 +43,7 @@ public class WeaponController : MonoBehaviour
         }
 
         // 장비 UI 적용
-        MapUIManager.instance.UpdateWeaponUI();
+        //MapUIManager.instance.UpdateWeaponUI();
         return true;
     }
 
@@ -61,7 +61,7 @@ public class WeaponController : MonoBehaviour
         
         // 무기 해제
         playerStats.weapon = 0;
-        MapUIManager.instance.UpdateWeaponUI();
+        //MapUIManager.instance.UpdateWeaponUI();
     }
 
     public void Use(Vector3 clickPos)

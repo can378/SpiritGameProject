@@ -25,7 +25,6 @@ public class SkillController : MonoBehaviour
             
         stats.skill[status.skillIndex] = skillID;
         skillList[skillID].gameObject.SetActive(true);
-        MapUIManager.instance.UpdateSkillUI();
         return true;
     }
 
@@ -35,7 +34,6 @@ public class SkillController : MonoBehaviour
         Instantiate(DataManager.instance.gameData.skillList[stats.skill[status.skillIndex]], gameObject.transform.position, gameObject.transform.localRotation);
         skillList[stats.skill[status.skillIndex]].gameObject.SetActive(false);
         stats.skill[status.skillIndex] = 0;
-        MapUIManager.instance.UpdateSkillUI();
     }
 
     // 스킬키 입력

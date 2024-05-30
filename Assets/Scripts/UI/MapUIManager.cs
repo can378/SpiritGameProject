@@ -20,10 +20,13 @@ public class MapUIManager : MonoBehaviour
     public GameObject warningPanel;
     public GameObject restartPanel;
     public GameObject resetPanel;
-    public RectTransform sidePanel;
     public GameObject minimapPanel;
-    public GameObject statSelectPanel;                                  // 스탯 선택창
+    // 스탯 선택창
+    public GameObject statSelectPanel;
+    // 상호작용                                
     public GameObject nearObjectPanel;
+    // 장비 창
+    public GameObject inventoryPanel;
 
     //Player status
     public Slider Hpslider;
@@ -32,13 +35,19 @@ public class MapUIManager : MonoBehaviour
     public TMP_Text CoinTxt;
     public TMP_Text KeyTxt;
     public Image itemImg;
-    public TMP_Text WeaponTxt;
-    public TMP_Text SkillTxt;
-    public TMP_Text PointTxt;
+    public Image skillImg;
+    //public TMP_Text WeaponTxt;
+    //public TMP_Text SkillTxt;
+    //public TMP_Text PointTxt;
 
-    public TMP_Text[] EquipmentsTxt = new TMP_Text[3];                  // 장비 이름
-    public TMP_Text[] StatsValueTxt = new TMP_Text[10];                                    // 스탯 수치
+    // Inventory
+    [SerializeField] Image IevenWeaponImage;                                                                  // 장비 이미지
+    [SerializeField] Image[] IevenSkillImage = new Image[5];                                                  // 스킬 이미지
+    [SerializeField] Image IenvenItemImage;
+    [SerializeField] Image[] IevenEquipmentsImage = new Image[3];                                             // 장비 이미지
+    [SerializeField] TMP_Text[] IevenStatsValueTxt = new TMP_Text[10];                                        // 스탯 수치
 
+    // nearObject
     public TMP_Text nearObjectInteraction;
 
     //gameObject
@@ -90,6 +99,13 @@ public class MapUIManager : MonoBehaviour
             
         }
 
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            if (inventoryPanel.activeSelf == true) { inventoryPanel.SetActive(false); }
+            else { inventoryPanel.SetActive(true); }
+        }
+
+
         if(esckeyPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf || resetPanel.activeSelf || restartPanel.activeSelf)
         {
             Time.timeScale = 0f;
@@ -102,6 +118,8 @@ public class MapUIManager : MonoBehaviour
         UpdateCoinUI();
         UpdateKeyUI();
         UpdateStatUI();
+        UpdateSkillUI();
+        UpdateInventoryUI();
         if (Player.instance.playerStats.item == 0)
         { updateItemUI(null); }
         UpdateNearObjectUI();
@@ -121,16 +139,16 @@ public class MapUIManager : MonoBehaviour
         // Main 씬 안거치고 Map 씬 들어가면 걸리는 듯
         // 아니면 final 씬 에서 설정을 안해서 일 듯
 
-        StatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
-        StatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
-        StatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
-        StatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
-        StatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
-        StatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
-        StatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
-        StatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
+        IevenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
+        IevenStatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
+        IevenStatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
+        IevenStatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
+        IevenStatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
+        IevenStatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
+        IevenStatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
+        IevenStatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
         //StatsValueTxt[8].text = (Player.instance.playerStats.SEResist * 100).ToString() + " %";
-        StatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
+        IevenStatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
         
     }
 
@@ -163,13 +181,21 @@ public class MapUIManager : MonoBehaviour
 
     public void updateItemUI(GameObject obj) 
     {
-
         if (obj != null)
         {
             itemImg.GetComponent<Image>().sprite = obj.GetComponentInChildren<SpriteRenderer>().sprite;
         }
         else { itemImg.GetComponent<Image>().sprite = null; }
 
+    }
+
+    public void UpdateSkillUI()
+    {
+        if (Player.instance.playerStats.skill[Player.instance.status.skillIndex] != 0)
+        {
+            skillImg.GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[Player.instance.status.skillIndex]].GetComponentInChildren<SpriteRenderer>().sprite;
+        }
+        else { skillImg.GetComponent<Image>().sprite = null; }
     }
 
     public void UpdateCoinUI() 
@@ -183,22 +209,45 @@ public class MapUIManager : MonoBehaviour
     }
 
 
-    public void UpdateWeaponUI() 
+    public void UpdateInventoryUI() 
     {
+        if(inventoryPanel.activeSelf == false)
+            return;
+
+        // 무기 이미지
         if (Player.instance.playerStats.weapon != 0)
         {
-            WeaponTxt.text = Player.instance.weaponController.weaponList[Player.instance.playerStats.weapon].selectItemName;
+            IevenWeaponImage.GetComponent<Image>().sprite = GameData.instance.weaponList[Player.instance.playerStats.weapon].GetComponentInChildren<SpriteRenderer>().sprite; ;
         }
-        else {WeaponTxt.text = "";}
-    }
+        else { IevenWeaponImage.GetComponent<Image>().sprite = null;}
 
-    public void UpdateSkillUI() 
-    {
-        if (Player.instance.playerStats.skill[Player.instance.status.skillIndex] != 0)
+        // 장비 이미지
+        for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
-            SkillTxt.text = Player.instance.skillController.skillList[Player.instance.playerStats.skill[Player.instance.status.skillIndex]].selectItemName;
+            if (Player.instance.playerStats.equipments[i] != 0)
+                IevenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+            else
+                IevenEquipmentsImage[i].GetComponent<Image>().sprite = null;
         }
-        else {SkillTxt.text = "";}
+
+        // 스킬 이미지
+        for (int i = 0; i < Player.instance.playerStats.maxSkillSlot; i++)
+        {
+            
+            if (Player.instance.playerStats.skill[i] != 0)
+            {
+                IevenSkillImage[i].GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+            }
+            else { IevenSkillImage[i].GetComponent<Image>().sprite =  null; }
+        }
+
+        // 소모품 이미지
+        if (Player.instance.playerStats.item != 0)
+        {
+            IenvenItemImage.GetComponent<Image>().sprite = GameData.instance.selectItemList[Player.instance.playerStats.item].GetComponentInChildren<SpriteRenderer>().sprite;
+        }
+        else { IenvenItemImage.GetComponent<Image>().sprite = null; }
+
     }
 
     /*
@@ -206,7 +255,7 @@ public class MapUIManager : MonoBehaviour
     {
         PointTxt.text = Player.instance.playerStats.point.ToString();
     }
-    */
+    
 
     //장비창 업데이트
     public void UpdateEquipmentUI()
@@ -219,6 +268,7 @@ public class MapUIManager : MonoBehaviour
                 EquipmentsTxt[i].text ="";
         }
     }
+    */
 
     public void UpdateMinimapUI(bool tf)
     {
@@ -309,24 +359,6 @@ public class MapUIManager : MonoBehaviour
         startPanel.SetActive(false);
     }
 
-    public void SideBtn() 
-    {
-        UpdateEquipmentUI();
-        if (sidePanelVisible) 
-        {
-            // 패널을 오른쪽으로 이동시킴
-            sidePanel.anchoredPosition += new Vector2(sidePanel.rect.width, 0);
-            sidePanelVisible = false;
-        }
-        else
-        {
-            // 패널을 왼쪽으로 이동시킴
-            sidePanel.anchoredPosition -= new Vector2(sidePanel.rect.width, 0);
-            sidePanelVisible = true;
-        }
-
-    }
-
     public void ExitBtn()
     {
         warningPanel.SetActive(true);
@@ -349,7 +381,7 @@ public class MapUIManager : MonoBehaviour
     {
         print("장비 해제");
         Player.instance.UnEquipEquipment(index);
-        UpdateEquipmentUI();
+        //UpdateEquipmentUI();
     }
 
     #endregion

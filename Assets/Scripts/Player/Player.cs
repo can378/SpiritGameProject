@@ -406,6 +406,7 @@ public class Player : ObjectBasic
             }
             // 스킬 장착
             gainItem = skillController.EquipSkill(selectItem.GetComponent<SelectItem>().selectItemID);
+
         }
         else if(selectItem.selectItemClass == SelectItemClass.Consumable)
         {
@@ -471,7 +472,7 @@ public class Player : ObjectBasic
         equipmentList[equipmentId].gameObject.SetActive(true);
         equipmentList[equipmentId].Equip(this.gameObject.GetComponent<Player>());
 
-        MapUIManager.instance.UpdateEquipmentUI();
+        //MapUIManager.instance.UpdateEquipmentUI();
 
         return true;
     }
@@ -491,7 +492,7 @@ public class Player : ObjectBasic
 
         // 무기 해제
         playerStats.equipments[index] = 0;
-        MapUIManager.instance.UpdateEquipmentUI();
+        //MapUIManager.instance.UpdateEquipmentUI();
         return true;
     }
     #endregion
