@@ -1298,7 +1298,7 @@ GameObject:
   - component: {fileID: 571690355}
   - component: {fileID: 571690357}
   - component: {fileID: 571690358}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: tempPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1433,8 +1433,7 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -1450,7 +1449,7 @@ MonoBehaviour:
   coin: 0
   key: 0
   dice: 0
-  item: 
+  item: 0
   weapon: 0
   maxSkillSlot: 1
   skill: 00000000
@@ -1864,6 +1863,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossBaby
       objectReference: {fileID: 0}
+    - target: {fileID: 5030433763933493535, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1979,8 +1982,7 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -2022,7 +2024,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!212 &859875205
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3584,8 +3586,7 @@ MonoBehaviour:
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
-  <immunity>k__BackingField: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -3615,7 +3616,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!114 &1943004352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3633,10 +3634,12 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  deadDelay: 0
   isAttack: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
   sprite: {fileID: 0}
+  rigid: {fileID: 0}
   isRun: 0
   randomMove: 0
   enemyStats: {fileID: 0}
@@ -4412,13 +4415,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 755718011158637499, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: enemyTarget
+      value: 
+      objectReference: {fileID: 571690356}
+    - target: {fileID: 3087701475805988645, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: enemyTarget
+      value: 
+      objectReference: {fileID: 571690356}
+    - target: {fileID: 3365422374356263887, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: detectionDis
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3365422374356263887, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: maxAttackRange
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3365422374356263887, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: detectionKeepDis
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5103913701435600940, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: enemyTarget
+      value: 
+      objectReference: {fileID: 571690356}
+    - target: {fileID: 6308384631664557765, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: enemyTarget
+      value: 
+      objectReference: {fileID: 571690356}
+    - target: {fileID: 7307828042324770918, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: enemyTarget
+      value: 
+      objectReference: {fileID: 571690356}
     - target: {fileID: 7495179540147074908, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
       propertyPath: m_Name
       value: BossShadow
       objectReference: {fileID: 0}
     - target: {fileID: 7495179540147074908, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

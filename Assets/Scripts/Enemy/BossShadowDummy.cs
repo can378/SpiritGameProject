@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class BossShadowDummy : EnemyBasic
 {
-    private void OnEnable()
+    
+
+    protected override void MovePattern()
     {
-        //StartNamedCoroutine("shadowDummy", shadowDummy());
-        //StartNamedCoroutine("shadowShot", shadowShot());
+        moveVec = (GameObject.FindWithTag("Player").gameObject.transform.position - transform.position).normalized;
     }
-    private void OnDisable()
+    protected override void AttackPattern()
     {
-        StopAllCoroutines();
+        StartCoroutine(shadowShot());
     }
 
-    IEnumerator shadowDummy() 
-    {
-        //Chase();
-        yield return new WaitForSeconds(0.01f);
-        StartCoroutine(shadowDummy());
-    }
     IEnumerator shadowShot() 
     {
+        isAttack = true;
+        isAttackReady = false;
+
         shot();
+
+        isAttack = false;
         yield return new WaitForSeconds(3f);
-        StartCoroutine (shadowShot());  
+        isAttackReady = true;
+
     }
 }

@@ -11,6 +11,10 @@ public class BossShadow : EnemyBasic
     private int patternNum=0;
     int time = 0;
 
+    private void Start()
+    {
+        isAttackReady = true;
+    }
 
     protected override void AttackPattern()
     {
@@ -36,8 +40,7 @@ public class BossShadow : EnemyBasic
 
     IEnumerator bossShadow() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        
 
         patternNum++;
         
@@ -68,6 +71,11 @@ public class BossShadow : EnemyBasic
 
     IEnumerator sightBlock_() 
     {
+        isAttack = true;
+        isAttackReady = false;
+
+        print("sight block");
+
         sightBlock.SetActive(true);
         while (time < 100)
         {
@@ -93,6 +101,8 @@ public class BossShadow : EnemyBasic
 
     IEnumerator illusion_() 
     {
+        isAttack = true;
+        isAttackReady = false;
         //player cant move
         //?????????????????
 
@@ -111,6 +121,9 @@ public class BossShadow : EnemyBasic
     }
     IEnumerator spawnDummy_() 
     {
+        isAttack = true;
+        isAttackReady = false;
+        print("spawnDummy");
         //Boss shadow invincible
         //?????
 
@@ -154,6 +167,10 @@ public class BossShadow : EnemyBasic
 
     IEnumerator darkSpawn_() 
     {
+        isAttack = true;
+        isAttackReady = false;
+
+        print("dark spawn");
         for (int i = 0; i < circles.Count; i++)
         {
             circles[i].SetActive(true);
