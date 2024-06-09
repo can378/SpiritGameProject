@@ -92,8 +92,8 @@ public class DataManager : MonoBehaviour
     
         for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
         {
-            if(Player.instance.playerStats.equipments[i] != 0)
-                userData.playerEquipments[i] = Player.instance.playerStats.equipments[i];
+            if(Player.instance.playerStats.equipments[i] == true)
+                userData.playerEquipments[i] = Player.instance.playerStats.equipments[i].GetComponent<Equipment>().selectItemID;
         }
 
         for (int i = 0; i < 8; i++)

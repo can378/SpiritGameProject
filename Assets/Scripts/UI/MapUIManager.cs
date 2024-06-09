@@ -224,8 +224,8 @@ public class MapUIManager : MonoBehaviour
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
-            if (Player.instance.playerStats.equipments[i] != 0)
-                IevenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+            if (Player.instance.playerStats.equipments[i] == true)
+                IevenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i].GetComponent<Equipment>().selectItemID].GetComponentInChildren<SpriteRenderer>().sprite;
             else
                 IevenEquipmentsImage[i].GetComponent<Image>().sprite = null;
         }
