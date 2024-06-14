@@ -462,6 +462,7 @@ public class Player : ObjectBasic
                 continue;
 
             playerStats.equipments[i] = Instantiate(equipmentList[equipmentId]).GetComponent<Equipment>();
+            playerStats.equipments[i].gameObject.SetActive(true);
             playerStats.equipments[i].transform.SetParent(transform.Find("Equipment"));
             playerStats.equipments[i].Equip(this.gameObject.GetComponent<Player>());
             equipOK = true;
@@ -489,7 +490,7 @@ public class Player : ObjectBasic
         playerStats.equipments[index].UnEquip(this.gameObject.GetComponent<Player>());
 
         // 삭제
-        Destroy(playerStats.equipments[index]);
+        Destroy(playerStats.equipments[index].gameObject);
 
         // 초기화
         playerStats.equipments[index] = null;

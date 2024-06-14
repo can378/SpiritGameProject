@@ -105,13 +105,13 @@ public class RandomBoxSkill : Skill
                 case 0:
                     break;
                 case 1:
-                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.selectItemList.Count);
+                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.equipmentList.Count);
                     break;
                 case 2:
                     itemCode = itemCode * 100 + Random.Range(1, GameData.instance.weaponList.Count);
                     break;
                 case 3:
-                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.equipmentList.Count);
+                    itemCode = itemCode * 100 + Random.Range(1, GameData.instance.selectItemList.Count);
                     break;
                 case 4:
                     itemCode = itemCode * 100 + Random.Range(1, GameData.instance.skillList.Count);

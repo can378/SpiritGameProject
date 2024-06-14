@@ -73,13 +73,13 @@ public class RewardBox : NPCbasic
                 case 0:
                     break;
                 case 1:
-                    Instantiate(GameData.instance.selectItemList[itemCode],pos,Quaternion.identity);
+                    Instantiate(GameData.instance.equipmentList[itemCode],pos,Quaternion.identity);
                     break;
                 case 2:
                     Instantiate(GameData.instance.weaponList[itemCode], pos, Quaternion.identity);
                     break;
                 case 3:
-                    Instantiate(GameData.instance.equipmentList[itemCode], pos, Quaternion.identity);
+                    Instantiate(GameData.instance.selectItemList[itemCode], pos, Quaternion.identity);
                     break;
                 case 4:
                     Instantiate(GameData.instance.skillList[itemCode], pos, Quaternion.identity);
