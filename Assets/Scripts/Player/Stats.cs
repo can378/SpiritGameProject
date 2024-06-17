@@ -15,6 +15,7 @@ public class Stats : MonoBehaviour
     [field :SerializeField] public float HPMax { get; set; } = 100;
     [field: SerializeField] public float HP { get; set; } = 100;
     [field: SerializeField] public float tempHP { get; set; } = 0;
+    [field: SerializeField] public int revivalStock {get; set; } = 0;
 
     // 방어력
     // UI : 방어력 0%

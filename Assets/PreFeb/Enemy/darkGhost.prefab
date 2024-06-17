@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 8519368828049854676}
   - component: {fileID: 5394377455417790836}
   - component: {fileID: 3391268737585964532}
-  - component: {fileID: 8207308201083225660}
   - component: {fileID: 6209441755671589856}
   - component: {fileID: 1932455732169588180}
   m_Layer: 8
@@ -309,16 +308,18 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  deadDelay: 0
   isAttack: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
   sprite: {fileID: 0}
+  rigid: {fileID: 0}
   isRun: 0
   randomMove: 0
   enemyStats: {fileID: 0}
   detectEnemy:
     serializedVersion: 2
-    m_Bits: 131080
+    m_Bits: 8
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
@@ -363,29 +364,6 @@ MonoBehaviour:
   detectionDis: 0
   detectionKeepDis: 0
   maxAttackRange: 0
---- !u!114 &8207308201083225660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2631852204514767454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 10
-  <knockBack>k__BackingField: 10
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
 --- !u!70 &6209441755671589856
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

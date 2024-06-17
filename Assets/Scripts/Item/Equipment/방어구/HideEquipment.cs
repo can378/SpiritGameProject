@@ -36,7 +36,7 @@ public class HideEquipment : Equipment
 
     void Hide()
     {
-        user.gameObject.layer = LayerMask.NameToLayer("Object");
+        user.gameObject.layer = LayerMask.NameToLayer("PlayerHide");
         user.sprite.color = new Color(1, 1, 1, 0.4f);
         isHide = true;
     }

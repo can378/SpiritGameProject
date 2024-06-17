@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 7773528247756860466}
   - component: {fileID: -4652182266321116131}
   - component: {fileID: 1203114887287792043}
-  m_Layer: 17
+  m_Layer: 10
   m_Name: NPC
   m_TagString: Npc
   m_Icon: {fileID: 0}
@@ -290,10 +290,12 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  deadDelay: 0
   isAttack: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
   sprite: {fileID: 0}
+  rigid: {fileID: 0}
   isTalking: 0
   isFollow: 0
   isChase: 0
