@@ -5,9 +5,22 @@ using UnityEngine;
 
 public class ShamanDoll : EnemyBasic
 {
+    // 무당 인형
+    // 기본적으로 도망다니며 플레이어에게 지속적인 피해
+
     [SerializeField] int defaulCurseCoolTime;
     [SerializeField] float curseCoolTime = 0;
+    private bool moveReady;
 
+    Vector2 playerPos1;
+    Vector2 playerPos2;
+    Vector2 playerPath;
+    Vector2 perpendicularDir;
+
+    private void Start()
+    {
+        moveReady = true;
+    }
     protected override void Update()
     {
         base.Update();
@@ -16,9 +29,9 @@ public class ShamanDoll : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(0f < curseCoolTime && targetDis <= 20f)
+        if(moveReady)
         {
-            Run();
+            StartCoroutine(runaway());
         }
         
     }
@@ -35,14 +48,34 @@ public class ShamanDoll : EnemyBasic
     {
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
 
+        //print("shamon doll hurts hershelf");
         enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(5f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
 
         isAttack = false;
         isAttackReady = true;
         curseCoolTime = defaulCurseCoolTime;
+    }
+
+    IEnumerator runaway() 
+    {
+        moveReady = false;
+
+        //print("shamon doll move");
+        playerPos1 = enemyTarget.transform.position;
+        yield return new WaitForSeconds(0.2f);
+        playerPos2 = enemyTarget.transform.position;
+
+        playerPath = playerPos1 - playerPos2;
+        perpendicularDir = new Vector2(playerPath.y, -playerPath.x).normalized;
+        rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().moveSpeed * 100f);
+
+        moveReady = true;
     }
 
     /*
@@ -52,8 +85,7 @@ public class ShamanDoll : EnemyBasic
         StartNamedCoroutine("shamanDoll", shamanDoll());
     }
 
-    // 무당 인형
-    // 기본적으로 도망다니며 플레이어에게 지속적인 피해
+    
 
     IEnumerator shamanDoll()
     {

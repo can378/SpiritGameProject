@@ -40,8 +40,8 @@ public class BossShadow : EnemyBasic
 
     IEnumerator bossShadow() 
     {
-        
 
+        
         patternNum++;
         
         switch (patternNum)
@@ -74,12 +74,12 @@ public class BossShadow : EnemyBasic
         isAttack = true;
         isAttackReady = false;
 
-        print("sight block");
+        print("sight block_shadow");
 
         sightBlock.SetActive(true);
         while (time < 100)
         {
-            shot();
+            if(time%10==0) { shot(); }
             sightBlock.transform.position=enemyTarget.transform.position;
             yield return new WaitForSeconds(0.1f);
             time++;
@@ -103,8 +103,10 @@ public class BossShadow : EnemyBasic
     {
         isAttack = true;
         isAttackReady = false;
+        
         //player cant move
-        //?????????????????
+        enemyTarget.GetComponent<Player>().isFlinch = true;
+        //enemyTarget.GetComponent<Player>().moveVec = Vector3.zero;
 
         //fade out
         float alpha = 255f;
@@ -118,14 +120,18 @@ public class BossShadow : EnemyBasic
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
 
+        enemyTarget.GetComponent<Player>().isFlinch = false;
+
     }
+
     IEnumerator spawnDummy_() 
     {
         isAttack = true;
         isAttackReady = false;
         print("spawnDummy");
+
         //Boss shadow invincible
-        //?????
+        isInvincible = true;
 
 
 
@@ -157,7 +163,8 @@ public class BossShadow : EnemyBasic
 
 
         //Boss shadow vincible
-        //????????
+        isInvincible = false;
+
         isAttack = false;
         yield return new WaitForSeconds(3f);
         isAttackReady = true;

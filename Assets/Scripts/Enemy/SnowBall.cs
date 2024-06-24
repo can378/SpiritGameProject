@@ -21,12 +21,14 @@ public class SnowBall : EnemyBasic
             size += Time.deltaTime * 0.1f;
         }
 
-        if(hitTarget)
+        if(isTouchPlayer)
         {
+            print("snowball hit");
             isHit = true;
+            isTouchPlayer= false;
             if (size >= 1f)
             {
-                size -= 1f;
+                size = 1f;
             }
             else
             {
@@ -59,7 +61,7 @@ public class SnowBall : EnemyBasic
         yield return new WaitForSeconds(0.6f);
 
         moveVec = targetDirVec * 5;
-        for(int i = 0; i < 10 ;i++)
+        for(int i = 0; i < 20 ;i++)
         {
             moveVec -= moveVec * 0.1f;
             if(isHit)

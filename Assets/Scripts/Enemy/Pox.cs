@@ -10,6 +10,11 @@ public class Pox : EnemyBasic
     //거리가 어느정도 있으면 총알 던짐
     //가까이 있다면 때리고 튄다.
 
+    private void Start()
+    {
+        hitDetection = hitArea.GetComponent<HitDetection>();
+        hitDetection.user = this.gameObject;
+    }
     protected override void MovePattern()
     {
 
@@ -18,7 +23,7 @@ public class Pox : EnemyBasic
     protected override void AttackPattern()
     {
         // 근거리 공격
-        if(targetDis <= 7f)
+        if(targetDis <= 8f)
         {
             StartCoroutine(HitAndRun());
         }
@@ -31,26 +36,24 @@ public class Pox : EnemyBasic
 
     IEnumerator HitAndRun()
     {
-        HitDetection hitDetection;
         Vector3 hitDir = targetDirVec;
 
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
 
-        hitDetection = hitArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
+        
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5, 0, 0, null);
         hitArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         hitArea.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-
         hitArea.SetActive(false);
+        
         isAttack = false;
         isAttackReady = true;
+
         isRun = true;
         yield return new WaitForSeconds(3f);
-
         isRun = false;
     }
 
@@ -59,13 +62,15 @@ public class Pox : EnemyBasic
         //throwing stone
         isAttack = true;
         isAttackReady = false;
-        Vector3 throwPos = enemyTarget.transform.position;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
-        GameObject bullet = Instantiate(ObjectPoolManager.instance.Get2("Bullet"),transform.position,Quaternion.identity);
-        targetDirVec = (throwPos - transform.position).normalized;
+        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+        bullet.transform.position = transform.position;
+        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 7, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(1f);
+
+
+        yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
         isAttackReady = true;

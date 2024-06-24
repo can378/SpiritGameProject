@@ -198,7 +198,9 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  defaulCurseCoolTime: 10
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
+  defaulCurseCoolTime: 5
   curseCoolTime: 0
 --- !u!114 &4529116099240296461
 MonoBehaviour:
@@ -215,6 +217,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 10
   <HP>k__BackingField: 10
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -229,12 +232,12 @@ MonoBehaviour:
   - 0
   - 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 10
   activeEffects: []
   enemyName: 
-  detectionDis: 5
-  detectionKeepDis: -1
-  maxAttackRange: -1
+  detectionDis: 10
+  detectionKeepDis: 50
+  maxAttackRange: 50
 --- !u!70 &2660188753817144381
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

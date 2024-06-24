@@ -12,10 +12,15 @@ public class BossBaby : EnemyBasic
 
     private int patternIndex = 0;
     private bool isHitWall;
+    Bounds bounds;
+    float randomX, randomY;
+    Vector2 madRushVec;
+    Vector3 corner;
 
     private void Start()
     {
         isAttackReady = true;
+        bounds = floor.GetComponent<Collider2D>().bounds;
     }
 
     protected override void Move()
@@ -117,9 +122,9 @@ public class BossBaby : EnemyBasic
 
 
         //move to corner
-        Vector3 corner = FindCorner();
+        corner = FindCorner();
 
-        while(Vector2.Distance(transform.position, corner) > 50f) 
+        while(Vector2.Distance(transform.position, corner) > 60f) 
         {
             yield return new WaitForSeconds(0.1f);
             moveVec = (corner - transform.position).normalized;
@@ -147,9 +152,8 @@ public class BossBaby : EnemyBasic
         isAttackReady = false;
 
 
-        Bounds bounds = floor.GetComponent<Collider2D>().bounds;
-        float randomX = Random.Range(bounds.min.x, bounds.max.x);
-        float randomY = Random.Range(bounds.min.y, bounds.max.y);
+        randomX = Random.Range(bounds.min.x, bounds.max.x);
+        randomY = Random.Range(bounds.min.y, bounds.max.y);
 
         GameObject thisTear = Instantiate(tear);
         thisTear.SetActive(true);
@@ -161,7 +165,6 @@ public class BossBaby : EnemyBasic
         yield return new WaitForSeconds(0.5f);
         Destroy(thisTear);
 
-
     }
 
 
@@ -171,40 +174,39 @@ public class BossBaby : EnemyBasic
         isAttackReady = false;
         print("MadRush");
 
-        
-        Bounds bounds = floor.GetComponent<Collider2D>().bounds;
-        float randomX = Random.Range(bounds.min.x, bounds.max.x);
-        float randomY = Random.Range(bounds.min.y, bounds.max.y);
+
+        randomX = Random.Range(bounds.min.x, bounds.max.x);
+        randomY = Random.Range(bounds.min.y, bounds.max.y);
+        madRushVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+
 
         float time = 0;
-
-        targetDirVec = (new Vector3(randomX,randomY,0) - transform.position).normalized;
-
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
 
-        while (time < 0.2f)
+        while (time < 0.3f)
         {
-            if (isHitWall == false)
+            if(isHitWall==true)
             {
-                moveVec=targetDirVec;
-                yield return new WaitForSeconds(0.1f);
-            }
-            else
-            {
+                print("hit wall!");
+                isHitWall = false;
+
+                //º®¿¡ ºÎ‹HÈû
                 randomX = Random.Range(bounds.min.x, bounds.max.x);
                 randomY = Random.Range(bounds.min.y, bounds.max.y);
-                moveVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+                madRushVec= (new Vector3(randomX, randomY, 0) - transform.position).normalized;
                 yield return new WaitForSeconds(0.1f);
-                isHitWall = false;
             }
+
+            rigid.AddForce(madRushVec * GetComponent<EnemyStats>().defaultMoveSpeed * 400);
+            yield return new WaitForSeconds(0.05f);
             time += Time.deltaTime;
         }
 
         yield return new WaitForSeconds(0.1f);
-
         rigid.velocity = Vector2.zero;
+
 
         isAttack = false;
         yield return new WaitForSeconds(3f);
@@ -324,14 +326,12 @@ public class BossBaby : EnemyBasic
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
+
         if (collision.gameObject.tag == "Wall")
         {
             isHitWall = true;
         }
-        if (collision.tag == "PlayerAttack")
-        {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
-        }
-
+        
     }
 }

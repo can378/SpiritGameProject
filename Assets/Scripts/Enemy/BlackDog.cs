@@ -12,6 +12,21 @@ public class BlackDog : EnemyBasic
     [SerializeField] GameObject biteArea;
     [SerializeField] float biteTime;
 
+
+    private Vector3 mousePos;
+    private Vector3 playerForward;
+    private float angle;
+    private Vector2 perpendicularDir;
+    HitDetection hitDetection;
+
+
+    private void Start()
+    {
+        hitDetection = biteArea.GetComponent<HitDetection>();
+        hitDetection.user = this.gameObject;
+
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -92,36 +107,69 @@ public class BlackDog : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (targetDis <= 3f)
+        if (targetDis <= 2f)
         {
             StartCoroutine(HitAndRun());
+        }
+        else
+        {
+            StartCoroutine(Evasion());
         }
     }
 
     IEnumerator HitAndRun()
     {
-        HitDetection hitDetection;
-        Vector3 hitDir = targetDirVec;
-
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(biteTime * 0.4f);
+        //yield return new WaitForSeconds(biteTime * 0.4f);
 
-        hitDetection = biteArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
+
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
-        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
+        
+        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
         biteArea.SetActive(true);
         yield return new WaitForSeconds(biteTime * 0.6f);
-
         biteArea.SetActive(false);
+        
+
         isAttack = false;
         isAttackReady = true;
+        
         isRun = true;
-        yield return new WaitForSeconds(3f);
-
+        yield return new WaitForSeconds(5f);
         isRun = false;
     }
+
+
+    IEnumerator Evasion() 
+    {
+        print("blackdog evasion start");
+        isAttack = true;
+        isAttackReady = false;
+
+
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        playerForward = (enemyTarget.position - mousePos);
+        angle = Vector3.Angle(playerForward, targetDirVec);
+
+
+        if (angle < 70f)
+        {
+            print("blackdog evasion1!!!");
+            //evasion!!
+            perpendicularDir = new Vector2(targetDirVec.y, -targetDirVec.x).normalized;
+            rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 200);
+        }
+        else 
+        {
+            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+        }
+
+        yield return new WaitForSeconds(0.01f);
+        isAttack = false;
+        isAttackReady = true;
+    }
+
 
     /*
     IEnumerator blackDog() 
