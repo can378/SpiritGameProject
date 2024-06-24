@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private UserData userData;
     public GameObject coinPrefab;
     public GameObject touchedObject;//마우스 클릭한 오브젝트
+    public GameObject nowRoom;//현재 플레이어가 있는 방
+
     //public GameObject canvas;
 
     

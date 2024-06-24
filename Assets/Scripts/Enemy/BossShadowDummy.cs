@@ -27,4 +27,9 @@ public class BossShadowDummy : EnemyBasic
         isAttackReady = true;
 
     }
+
+    public override void Dead()
+    {
+        gameObject.SetActive(false);
+    }
 }

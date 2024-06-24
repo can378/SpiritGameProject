@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10.8, y: -2.2, z: -0.17289542}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8159811338861983018}
@@ -103,19 +103,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  defaultLayer: 0
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  deadDelay: 0
   isAttack: 0
   isAttackReady: 1
   hitTarget: {fileID: 0}
-  isChase: 0
+  sprite: {fileID: 0}
+  rigid: {fileID: 0}
   isRun: 0
-  enemyTarget: {fileID: 0}
+  randomMove: 0
   enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  timeValue: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
 --- !u!114 &2469199061525234649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +146,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
 --- !u!114 &4937590248725359311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,14 +162,16 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 2
   activeEffects: []
-  detectionDis: 0
-  maxAttackRange: 0
   enemyName: 
+  detectionDis: 100
+  detectionKeepDis: 100
+  maxAttackRange: 100
 --- !u!50 &3830954581358934995
 Rigidbody2D:
   serializedVersion: 4

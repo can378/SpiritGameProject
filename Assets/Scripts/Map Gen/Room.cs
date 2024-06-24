@@ -22,6 +22,8 @@ public class Room : MonoBehaviour
     [field: SerializeField] public bool left { get; private set; }
     [field: SerializeField] public bool right { get; private set; }
 
+    public GameObject floorArea;
+
     RoomManager roomManager;
     MapTemplates mapTemplates;
     MapType preMapType;

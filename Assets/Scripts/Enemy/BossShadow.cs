@@ -7,13 +7,25 @@ public class BossShadow : EnemyBasic
     public GameObject sightBlock;
     public List<GameObject> dummies = new List<GameObject>();
     public List<GameObject> circles = new List<GameObject>();
+    
 
     private int patternNum=0;
     int time = 0;
+    bool isDummiesAllDie;
+    Renderer floorRenderer;
 
     private void Start()
     {
         isAttackReady = true;
+        isDummiesAllDie = false;
+        floorRenderer = GameManager.instance.nowRoom.GetComponent<Renderer>();
+    }
+
+    private void Update()
+    {
+        if (patternNum == 3 && dummies[0].activeSelf==true) 
+        {  checkDummy(); }
+        base.Update();
     }
 
     protected override void AttackPattern()
@@ -77,18 +89,19 @@ public class BossShadow : EnemyBasic
         print("sight block_shadow");
 
         sightBlock.SetActive(true);
-        while (time < 100)
+        while (time < 200)
         {
             if(time%10==0) { shot(); }
             sightBlock.transform.position=enemyTarget.transform.position;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
             time++;
         }
+        time = 0;
         sightBlock.SetActive(false);
-        
-        
+
+
         isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         isAttackReady = true;
     }
 
@@ -112,7 +125,7 @@ public class BossShadow : EnemyBasic
         float alpha = 255f;
         while (alpha > 0)
         {
-            sprite.color = new Color(255f, 255f, 255f, alpha);
+            GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, alpha);
             alpha--;
         }
 
@@ -120,6 +133,9 @@ public class BossShadow : EnemyBasic
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
 
+
+        transform.position = getRandomPos();
+        GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, 255f);
         enemyTarget.GetComponent<Player>().isFlinch = false;
 
     }
@@ -139,26 +155,26 @@ public class BossShadow : EnemyBasic
         for (int i = 0; i < dummies.Count; i++)
         {
             dummies[i].SetActive(true);
+
+            //set dummy position
+            dummies[i].transform.position = getRandomPos();
         }
 
-        bool isDummiesAllDie = false;
+
+        //reset dummy
+        for (int i = 0; i < dummies.Count; i++)
+        {
+            dummies[i].GetComponent<EnemyStats>().HP 
+                = dummies[i].GetComponent<EnemyStats>().HPMax;
+        }
+
+        isDummiesAllDie = false;
         while(isDummiesAllDie==false)
         {
             //attack
-            //Chase();
+            Chase();
             shot();
-
-            //check dummy
-            for (int i = 0; i < dummies.Count; i++)
-            {
-                if (dummies[i].GetComponent<EnemyStats>().HP > 0)
-                {
-                    break;
-                }
-                if (i == dummies.Count - 1) 
-                { isDummiesAllDie = true; }
-            }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(3f);
         }
 
 
@@ -181,16 +197,42 @@ public class BossShadow : EnemyBasic
         for (int i = 0; i < circles.Count; i++)
         {
             circles[i].SetActive(true);
+            circles[i].transform.position = getRandomPos();
         }
         yield return new WaitForSeconds(5f);
         for (int i = 0; i < circles.Count; i++)
         {
             circles[i].SetActive(false);
         }
+
+
         isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         isAttackReady = true;
 
     }
 
+    void  checkDummy() 
+    {
+        //check dummy
+        for (int i = 0; i < dummies.Count; i++)
+        {
+            if (dummies[i].GetComponent<EnemyStats>().HP > 0)
+            {
+                return;
+            }
+        }
+        isDummiesAllDie = true;
+        
+    }
+
+    Vector3 getRandomPos() 
+    {
+        Bounds bounds = floorRenderer.bounds;
+
+        float randomX = Random.Range(bounds.min.x, bounds.max.x);
+        float randomY = Random.Range(bounds.min.y, bounds.max.y);
+        return new Vector3(randomX, randomY, 1);
+
+    }
 }

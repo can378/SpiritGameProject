@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BossBaby : EnemyBasic
 {
-    public GameObject floor;
+    
     public GameObject tear;
     public GameObject SafeArea;
     public GameObject DamageArea;
     public GameObject ScreamArea;
 
+    private GameObject floor;
     private int patternIndex = 0;
     private bool isHitWall;
     Bounds bounds;
@@ -19,6 +20,8 @@ public class BossBaby : EnemyBasic
 
     private void Start()
     {
+        floor = GameManager.instance.nowRoom;
+
         isAttackReady = true;
         bounds = floor.GetComponent<Collider2D>().bounds;
     }
@@ -232,7 +235,7 @@ public class BossBaby : EnemyBasic
         DamageArea.SetActive(false);
 
         isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         isAttackReady = true;
 
     }
@@ -251,7 +254,7 @@ public class BossBaby : EnemyBasic
 
         // 완전히 가릴 때까지 스케일 조정
         //while (renderer1.bounds.Intersects(renderer2.bounds))
-        while (DamageArea.transform.localScale.x<400)
+        while (DamageArea.transform.localScale.x<100)
         {
             DamageArea.transform.localScale *= scaleFactor;
             yield return new WaitForSeconds(0.1f);
@@ -274,8 +277,9 @@ public class BossBaby : EnemyBasic
         yield return new WaitForSeconds(1f);
         ScreamArea.SetActive(false);
 
-        isAttack = false;
+
         yield return new WaitForSeconds(3f);
+        isAttack = false;
         isAttackReady = true;
     }
 
