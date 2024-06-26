@@ -707,13 +707,18 @@ GameObject:
   m_Component:
   - component: {fileID: 232509714}
   - component: {fileID: 232509715}
-  m_Layer: 0
+  - component: {fileID: 232509720}
+  - component: {fileID: 232509719}
+  - component: {fileID: 232509718}
+  - component: {fileID: 232509717}
+  - component: {fileID: 232509716}
+  m_Layer: 8
   m_Name: jangsanbum
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &232509714
 Transform:
   m_ObjectHideFlags: 0
@@ -723,10 +728,11 @@ Transform:
   m_GameObject: {fileID: 232509713}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.48912886, y: 5.154887, z: -0.07216038}
+  m_LocalPosition: {x: -3.99, y: 4.48, z: -0.07216038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2137891024}
   m_Father: {fileID: 1791554031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &232509715
@@ -781,6 +787,171 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &232509716
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232509713}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.92, y: 4.28}
+    newSize: {x: 5.5, y: 5.4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.92, y: 4.28}
+  m_EdgeRadius: 0
+--- !u!50 &232509717
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232509713}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &232509718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232509713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+--- !u!114 &232509719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232509713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
+  activeEffects: []
+  enemyName: 
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
+--- !u!114 &232509720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232509713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad73e95524e74b448008c3c51cb152a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  defaultLayer: 0
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  deadDelay: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  sprite: {fileID: 0}
+  rigid: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
 --- !u!1001 &238272116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1948,6 +2119,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossBaby
       objectReference: {fileID: 0}
+    - target: {fileID: 5030433763933493535, guid: 697b413efc3e9234caf3ce97c458df19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2624,7 +2799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7495179540147074908, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4250,6 +4425,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3769188400474308628, guid: 64f67ac28b55ac3429fecc4c80c3ff55, type: 3}
   m_PrefabInstance: {fileID: 69501503}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2137891023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2137891024}
+  - component: {fileID: 2137891025}
+  m_Layer: 8
+  m_Name: collide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2137891024
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137891023}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 232509714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &2137891025
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137891023}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.51907134, y: -1.4554358}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.7480254, y: 1.1424904}
+  m_EdgeRadius: 0
 --- !u!1001 &54579140600166399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4751,6 +5003,10 @@ PrefabInstance:
     - target: {fileID: 7495179540147074908, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
       propertyPath: m_Name
       value: BossShadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495179540147074908, guid: 206b639f1d2e1704c834b58212661eae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
