@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4212371380357261784
+--- !u!1 &3878173845991185829
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7736123328353180035}
-  - component: {fileID: 1291772518821146237}
+  - component: {fileID: 7276524860722785790}
+  - component: {fileID: 7155828325811973678}
   m_Layer: 6
-  m_Name: 11_CriticalChancePlus+
+  m_Name: 40_HPRatioPowerUp
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!4 &7736123328353180035
+--- !u!4 &7276524860722785790
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4212371380357261784}
+  m_GameObject: {fileID: 3878173845991185829}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,22 +32,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1291772518821146237
+--- !u!114 &7155828325811973678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4212371380357261784}
+  m_GameObject: {fileID: 3878173845991185829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8736189e2d59df4cb04e7b5be8cda11, type: 3}
+  m_Script: {fileID: 11500000, guid: ebd2758ffb675694f9daa81a374ac64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <selectItemClass>k__BackingField: 0
-  <selectItemID>k__BackingField: 11
+  <selectItemID>k__BackingField: 40
   <selectItemName>k__BackingField: 
   <price>k__BackingField: 0
   <selectItemRating>k__BackingField: 0
   user: {fileID: 0}
-  variation: 0.25
+  ratio: 1
+  maxPowerUP: 0.5
+  curLostHP: 0
