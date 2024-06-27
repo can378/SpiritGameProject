@@ -13,11 +13,11 @@ public class BlackDog : EnemyBasic
     [SerializeField] float biteTime;
 
 
+
     private Vector3 mousePos;
     private Vector3 playerForward;
     private float angle;
     private Vector2 perpendicularDir;
-    HitDetection hitDetection;
 
 
     private void Start()

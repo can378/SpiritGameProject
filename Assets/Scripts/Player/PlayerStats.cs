@@ -135,6 +135,10 @@ public class PlayerStats : Stats
         get { return Mathf.Clamp((defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime), 0.1f, 0.8f); }
     }
 
+    //n초간 실명
+    //-->cameraManager에서 효과적용
+    public float blind;
+
     //Item
     public int coin = 0;
     public int key = 0;
