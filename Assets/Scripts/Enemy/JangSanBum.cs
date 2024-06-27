@@ -1,18 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class JangSanBum : EnemyBasic
 {
     [SerializeField] GameObject biteArea;
+    [SerializeField] GameObject[] spawnCandidate;
     private int patternNum;
     private int biteTime = 1;
     private int blindTime = 5;
-    public List<GameObject> spawnEnemies;
+
+    private List<GameObject> spawnEnemy;
+    private GameObject floor;
+    int randomNum;
+    float randomX, randomY;
+    Bounds bounds;
 
     private void Start()
     {
+        floor = GameManager.instance.nowRoom;
+        bounds = floor.GetComponent<Collider2D>().bounds;
+
+        
+        
         hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
         patternNum = 0;
@@ -36,7 +50,8 @@ public class JangSanBum : EnemyBasic
         switch (patternNum)
         {
             case 1:
-                StartCoroutine(fastAttack());
+                //StartCoroutine(fastAttack());
+                StartCoroutine(RandomSpawn());
                 break;
             case 2:
                 StartCoroutine(Eating());
@@ -137,10 +152,11 @@ public class JangSanBum : EnemyBasic
     IEnumerator SnowSplash() 
     {
         print("snow splash");
-        //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
         isAttack = true;
         isAttackReady = false;
 
+
+        //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
         bite();
         biteArea.transform.localScale = new Vector3(2, 2, 2);
         yield return new WaitForSeconds(3f);
@@ -151,21 +167,41 @@ public class JangSanBum : EnemyBasic
         isAttack = false;
         isAttackReady = true;
     }
+
+
     IEnumerator RandomSpawn()
     {
         print("random spawn");
-        //랜덤 적 소환. 
         isAttack = true;
         isAttackReady = false;
 
-        int realTiger = 0;
-        for (int i = 0; i < 10; i++)
+
+        //랜덤 적 소환. 
+        for (int i = 0; i < 4; i++)
         {
-            //spawnEnemies[i]=Instantiate()
+            randomNum = UnityEngine.Random.Range(0, spawnCandidate.Length-1);
+            randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+            randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+            //print(spawnCandidate[i].name);
+            //Instantiate(spawnCandidate[randomNum]);
+            //spawnEnemy[i] = spawnCandidate[randomNum];
+            //spawnEnemy[i].SetActive(true);
+     
+            
+            //spawnEnemy[i].transform.position = new Vector2(randomX, randomY);
+            
         }
 
-        yield return null;
+        //0번재 enemy가 변신한 장산범이므로 그 것을 죽어야지 끝난다.
+        /*
+        while (spawnEnemy[0].GetComponent<EnemyStats>().HP > 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+        }
+        */
 
+
+        yield return new WaitForSeconds(3f);
         isAttack = false;
         isAttackReady = true;
     }

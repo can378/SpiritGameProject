@@ -16,6 +16,7 @@ public class ScreenEffect : MonoBehaviour
     public Image edgeEffect;
     public GameObject effectPanel;
 
+
     void Start()
     {
         switch (sEffect)

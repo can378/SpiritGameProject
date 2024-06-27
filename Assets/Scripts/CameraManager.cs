@@ -20,6 +20,8 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     float cameraMoveSpeed;
 
+    [SerializeField]
+    GameObject blindSprite;
 
     float height;
     float width;
@@ -47,7 +49,13 @@ public class CameraManager : MonoBehaviour
     void FixedUpdate()
     {
         if(isCameraChasing) CameraChasing();
-        
+
+        if (Player.GetComponent<PlayerStats>().blind > 0)
+        {
+            blindSprite.SetActive(true);
+            Player.GetComponent<PlayerStats>().blind--;
+        }
+        else { blindSprite.SetActive(false); }
     }
 
     void CameraChasing()

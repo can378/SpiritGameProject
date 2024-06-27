@@ -113,7 +113,8 @@ public class MapUIManager : MonoBehaviour
         else { Time.timeScale = 1f; }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate() 
+    {
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();

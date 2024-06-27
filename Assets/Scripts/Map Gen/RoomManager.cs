@@ -35,7 +35,8 @@ public class RoomManager : MonoBehaviour
         //templates 설정
         roomTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
         mapTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<MapTemplates>();
-        enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
+        //enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
+        enemyTemplates = GameManager.instance.enemyTemplates;
 
         // room 부모
         roomParent = new GameObject("Rooms");
