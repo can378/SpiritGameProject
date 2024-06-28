@@ -204,7 +204,8 @@ public class EnemyBasic : ObjectBasic
 
         //enemy disappear
         StopAllCoroutines();
-        //this.gameObject.SetActive(false);
+        
+
         base.Dead();
     }
 

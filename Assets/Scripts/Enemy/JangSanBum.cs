@@ -10,6 +10,8 @@ public class JangSanBum : EnemyBasic
 {
     [SerializeField] GameObject biteArea;
     [SerializeField] GameObject[] spawnCandidate;
+    public GameObject spawnCandidateParent;
+
     private int patternNum;
     private int biteTime = 1;
     private int blindTime = 5;
@@ -51,8 +53,8 @@ public class JangSanBum : EnemyBasic
         switch (patternNum)
         {
             case 1:
-                //StartCoroutine(fastAttack());
-                StartCoroutine(RandomSpawn());
+                StartCoroutine(fastAttack());
+                //StartCoroutine(RandomSpawn());
                 break;
             case 2:
                 StartCoroutine(Eating());
@@ -177,34 +179,64 @@ public class JangSanBum : EnemyBasic
         isAttackReady = false;
 
 
-        //랜덤 적 소환. 
+
+        gameObject.SetActive(false);
+        spawnCandidateParent.SetActive(true);
+
+
+
+
+        /*
         for (int i = 0; i < 4; i++)
         {
-            randomNum = UnityEngine.Random.Range(0, spawnCandidate.Length-1);
-            randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
-            randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
             //print(spawnCandidate[i].name);
-            //Instantiate(spawnCandidate[randomNum]);
-            //spawnEnemy[i] = spawnCandidate[randomNum];
-            //spawnEnemy[i].SetActive(true);
-     
-            
-            //spawnEnemy[i].transform.position = new Vector2(randomX, randomY);
-            
-        }
-
-        //0번재 enemy가 변신한 장산범이므로 그 것을 죽어야지 끝난다.
-        /*
-        while (spawnEnemy[0].GetComponent<EnemyStats>().HP > 0)
-        {
-            yield return new WaitForSeconds(0.01f);
+            randomNum = UnityEngine.Random.Range(0, spawnCandidate.Length);
+            spawnEnemy[i] = spawnCandidate[randomNum];
+            spawnEnemy[i].SetActive(true);
+            spawnEnemy[i].transform.position = new Vector2(randomX, randomY);
         }
         */
 
 
-        yield return new WaitForSeconds(3f);
+
+        //START
+        //랜덤 적 소환
+        for (int i = 0; i < spawnCandidate.Length; i++)
+        {
+
+            randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+            randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+            spawnCandidate[i].transform.position = new Vector2(randomX, randomY);
+
+            spawnCandidate[i].GetComponent<EnemyStats>().HP = spawnCandidate[i].GetComponent<EnemyStats>().HPMax;
+        }
+
+        
+        //CHECK
+        //randumNum 번째 enemy가 변신한 장산범이므로 그 것을 죽여야지 끝난다.
+        randomNum = UnityEngine.Random.Range(0, spawnCandidate.Length);
+        print("real jangsanbum num="+ spawnCandidate[randomNum].name);
+
+        while (true)
+        {
+            if (spawnCandidate[randomNum].GetComponent<EnemyStats>().HP <= 10){ break; }
+            yield return new WaitForSeconds(0.1f);
+            //print("spawn enemy ongoing-"+ spawnCandidate[randomNum].GetComponent<EnemyStats>().HP.ToString());
+            //print("spawn enemy ongoing-----------");
+        }
+
+
+        //END
+        print("spawn enemy end!!!!!!!!!!!!!!!!!!!!!!!");
+        spawnCandidateParent.SetActive(false);
+        gameObject.SetActive(true);
+
+
+
         isAttack = false;
         isAttackReady = true;
+        yield return null;
+        
     }
 
     private void bite() 

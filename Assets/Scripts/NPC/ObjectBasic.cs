@@ -252,7 +252,8 @@ public class ObjectBasic : MonoBehaviour
     public virtual void Dead()
     {
         print(this.name + " Dead");
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+        //Destroy(this.gameObject);
     }
 
     #endregion
