@@ -44,6 +44,7 @@ public class LittleMonster : EnemyBasic
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        base.OnTriggerEnter2D(collision);
         if (collision.tag == "Player"&&isDetection==true)
         {
             //Eye Screaming?
@@ -52,12 +53,6 @@ public class LittleMonster : EnemyBasic
             {
                 mouths[i].GetComponent<LittleMonster>().isDetected = true;
             }
-        }
-
-        //DAMAGE
-        if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
-        {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
     }
 }

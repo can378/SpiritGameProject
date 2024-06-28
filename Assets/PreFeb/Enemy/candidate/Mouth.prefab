@@ -122,6 +122,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
   isEye: 0
   isMouth: 1
   isDetection: 0
@@ -141,6 +143,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -155,12 +158,12 @@ MonoBehaviour:
   - 0
   - 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 4
   activeEffects: []
   enemyName: 
-  detectionDis: 10
-  detectionKeepDis: 0
-  maxAttackRange: 0
+  detectionDis: 100
+  detectionKeepDis: 100
+  maxAttackRange: 100
 --- !u!58 &8591411310951136715
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -246,6 +249,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!1 &5878315655292564709
 GameObject:
   m_ObjectHideFlags: 0

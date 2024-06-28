@@ -12,14 +12,15 @@ public class MazeEnter : MonoBehaviour
 
     private GameObject mazeInst=null;
 
+
     void Start()
     {
-        
+       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             if (mazePortal == mazePortal.enter)
             {
@@ -54,10 +55,19 @@ public class MazeEnter : MonoBehaviour
                 }
 
                 //entrance disabled
-                GameObject.FindWithTag("MazeEntrance").GetComponent<CircleCollider2D>().enabled = false;
+                
+                //GameObject.FindWithTag("MazeEntrance").SetActive(false);
+                //GetComponent<CircleCollider2D>().enabled = false;
+
+
+                GameObject.FindWithTag("Maze").SetActive(false);
+                GameObject.FindWithTag("MazeBgr").SetActive(false);
+
 
                 //player move
-                collision.transform.position = GameObject.FindWithTag("MazeEntrance").transform.position;
+                Vector3 backToMap = new Vector3(5, 0, 0);
+                collision.transform.position = GameManager.instance.nowRoom.transform.position+ backToMap;
+
 
                 //camera move
                 CameraManager.instance.CameraMove(collision.gameObject);
@@ -65,8 +75,6 @@ public class MazeEnter : MonoBehaviour
                 CameraManager.instance.mapSize = new Vector2(15, 15);
 
 
-                GameObject.FindWithTag("Maze").SetActive(false);
-                GameObject.FindWithTag("MazeBgr").SetActive(false);
 
             }
             

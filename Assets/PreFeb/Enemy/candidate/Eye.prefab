@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 8936018530224673296}
   - component: {fileID: 3860449695324340647}
   - component: {fileID: 8523548945383417299}
+  - component: {fileID: 5647908864989485072}
   - component: {fileID: 3165669130992944573}
+  - component: {fileID: 8482667258978312313}
   m_Layer: 0
   m_Name: detection
   m_TagString: Untagged
@@ -118,6 +120,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
   isEye: 0
   isMouth: 0
   isDetection: 1
@@ -126,6 +130,42 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &5647908864989485072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228380363254909268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
+  <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
+  <defaultDefensivePower>k__BackingField: 0
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
+  activeEffects: []
+  enemyName: 
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!61 &3165669130992944573
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -171,6 +211,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.8720012, y: 3.6636734}
   m_EdgeRadius: 0
+--- !u!50 &8482667258978312313
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228380363254909268}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &5343400701323957239
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +360,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
   isEye: 1
   isMouth: 0
   isDetection: 0
@@ -312,6 +381,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -329,9 +399,9 @@ MonoBehaviour:
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   enemyName: 
-  detectionDis: 10
-  detectionKeepDis: 0
-  maxAttackRange: 0
+  detectionDis: 100
+  detectionKeepDis: 100
+  maxAttackRange: 100
 --- !u!58 &6237550864698581202
 CircleCollider2D:
   m_ObjectHideFlags: 0
