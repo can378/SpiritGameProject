@@ -54,6 +54,7 @@ public class JangSanBum : EnemyBasic
         {
             case 1:
                 StartCoroutine(fastAttack());
+                //StartCoroutine(test());
                 //StartCoroutine(RandomSpawn());
                 break;
             case 2:
@@ -80,8 +81,8 @@ public class JangSanBum : EnemyBasic
         isAttackReady = false;
 
         print("faset attack");
-        int time = 10;
-        while(time>0)
+        int time1 = 10;
+        while(time1>0)
         {
             if (targetDis > 1f)
             {
@@ -109,7 +110,7 @@ public class JangSanBum : EnemyBasic
                 biteArea.transform.localScale = new Vector3(1, 1, 1);
                 biteArea.SetActive(false);
             }
-            time--;
+            time1--;
         }
         
 
@@ -126,8 +127,8 @@ public class JangSanBum : EnemyBasic
         isAttackReady = false;
 
 
-        int time = 100;
-        while (time > 0) 
+        int time2 = 100;
+        while (time2 > 0) 
         {
             if (targetDis > 3f)
             {
@@ -142,7 +143,7 @@ public class JangSanBum : EnemyBasic
                 biteArea.SetActive(false);
 
             }
-            time--;
+            time2--;
         }
         
 
@@ -162,7 +163,7 @@ public class JangSanBum : EnemyBasic
         //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
         bite();
         biteArea.transform.localScale = new Vector3(2, 2, 2);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         biteArea.transform.localScale = new Vector3(1,1, 1);
         biteArea.SetActive(false);
 
@@ -175,15 +176,6 @@ public class JangSanBum : EnemyBasic
     IEnumerator RandomSpawn()
     {
         print("random spawn");
-        isAttack = true;
-        isAttackReady = false;
-
-
-
-        gameObject.SetActive(false);
-        spawnCandidateParent.SetActive(true);
-
-
 
 
         /*
@@ -200,6 +192,8 @@ public class JangSanBum : EnemyBasic
 
 
         //START
+        gameObject.transform.position = new Vector3(-350, -1.4f, 0f);
+        spawnCandidateParent.SetActive(true);
         //랜덤 적 소환
         for (int i = 0; i < spawnCandidate.Length; i++)
         {
@@ -221,16 +215,14 @@ public class JangSanBum : EnemyBasic
         {
             if (spawnCandidate[randomNum].GetComponent<EnemyStats>().HP <= 10){ break; }
             yield return new WaitForSeconds(0.1f);
-            //print("spawn enemy ongoing-"+ spawnCandidate[randomNum].GetComponent<EnemyStats>().HP.ToString());
-            //print("spawn enemy ongoing-----------");
         }
 
 
         //END
         print("spawn enemy end!!!!!!!!!!!!!!!!!!!!!!!");
         spawnCandidateParent.SetActive(false);
-        gameObject.SetActive(true);
-
+        gameObject.transform.position = GameManager.instance.nowRoom.transform.position;
+        yield return new WaitForSeconds(2f);
 
 
         isAttack = false;
@@ -238,6 +230,7 @@ public class JangSanBum : EnemyBasic
         yield return null;
         
     }
+
 
     private void bite() 
     {
