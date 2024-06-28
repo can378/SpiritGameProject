@@ -12,6 +12,7 @@ public class Pox : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         hitDetection = hitArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
     }

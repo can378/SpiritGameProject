@@ -65,9 +65,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -10.25617, y: 1.0783036}
+  m_Offset: {x: -10.173754, y: 1.030933}
   serializedVersion: 2
-  m_Radius: 1.0333012
+  m_Radius: 0.78606623
 --- !u!114 &5301914119187379858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 05000000
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!1 &4019735354734707985
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +307,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
 --- !u!114 &4665542887200569295
 MonoBehaviour:
   m_ObjectHideFlags: 0

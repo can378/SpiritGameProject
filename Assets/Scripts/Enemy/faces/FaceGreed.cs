@@ -5,7 +5,6 @@ using UnityEngine;
 public class FaceGreed : EnemyBasic
 {
     private Transform startPoint; // 선이 시작될 위치
-    private Transform target; // 이동 목표
     public float lineWidth = 2f; // 선의 두께
 
     private LineRenderer lineRenderer;
@@ -17,7 +16,6 @@ public class FaceGreed : EnemyBasic
     {
 
         startPoint = transform;
-        target = GameObject.FindWithTag("Player").transform;
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
 
@@ -45,11 +43,10 @@ public class FaceGreed : EnemyBasic
 
         //START
         startPoint = transform;
-        target = GameObject.FindWithTag("Player").transform;
 
         // 매 프레임마다 선의 끝 점을 목표로 업데이트
         lineRenderer.SetPosition(0, startPoint.position);
-        lineRenderer.SetPosition(1, target.position);
+        lineRenderer.SetPosition(1, enemyTarget.position);
 
 
         //END

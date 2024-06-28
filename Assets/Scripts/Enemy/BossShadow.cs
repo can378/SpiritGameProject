@@ -16,6 +16,7 @@ public class BossShadow : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         isAttackReady = true;
         isDummiesAllDie = false;
         floorRenderer = GameManager.instance.nowRoom.GetComponent<Renderer>();

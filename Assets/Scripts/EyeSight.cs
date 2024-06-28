@@ -16,7 +16,7 @@ public class EyeSight : MonoBehaviour
 
     void playerEyeSight()
     {
-        transform.position = GameObject.FindWithTag("Player").transform.position;
+        transform.position = FindObj.instance.Player.transform.position;
         if (Player.instance.hAxis == 1)
         {
 

@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4791061485386070346}
   - component: {fileID: 3957524683034739096}
-  - component: {fileID: 1359276575881171552}
-  m_Layer: 0
+  - component: {fileID: 2793390050701612391}
+  - component: {fileID: 5504327695779721474}
+  - component: {fileID: 8109773404712140005}
+  m_Layer: 12
   m_Name: thorn
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +87,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1359276575881171552
-BoxCollider2D:
+--- !u!68 &2793390050701612391
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,15 +120,74 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.96, y: 6.57}
-    newSize: {x: 11.96, y: 6.57}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 11.96, y: 6.57}
   m_EdgeRadius: 0
+  m_Points:
+  - {x: -5.4725156, y: -0.053419165}
+  - {x: -4.2370305, y: 1.6292908}
+  - {x: -1.7877573, y: 2.2730207}
+  - {x: 2.6910465, y: 2.2894104}
+  - {x: 4.946894, y: 1.8063843}
+  - {x: 5.6689124, y: 0.9413656}
+  - {x: 6.033419, y: 0.05341888}
+  - {x: 6.0334196, y: 0.05341888}
+  - {x: 4.7739224, y: -1.3922727}
+  - {x: 2.670234, y: -1.939546}
+  - {x: -1.0279547, y: -1.9135796}
+  - {x: -2.7703922, y: -1.7032017}
+  - {x: -4.8307643, y: -1.0437374}
+  - {x: -5.4542546, y: -0.025896959}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
+--- !u!50 &5504327695779721474
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196104363489827725}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 1
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &8109773404712140005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196104363489827725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 2
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+  isHit: 0

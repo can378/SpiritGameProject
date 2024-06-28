@@ -22,6 +22,7 @@ public class JangSanBum : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         floor = GameManager.instance.nowRoom;
         bounds = floor.GetComponent<Collider2D>().bounds;
 

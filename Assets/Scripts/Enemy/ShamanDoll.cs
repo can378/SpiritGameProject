@@ -19,6 +19,7 @@ public class ShamanDoll : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         moveReady = true;
     }
     protected override void Update()

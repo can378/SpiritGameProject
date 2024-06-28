@@ -5,14 +5,14 @@ using UnityEngine;
 public class StartPortal : Portal
 {
     RoomManager roomManager;
-
-    private void Awake()
+    
+    private void Start()
     {
-        roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
+        roomManager = FindObj.instance.roomManagerScript;
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" && roomManager.finish==true)
+        if (other.CompareTag("Player") && roomManager.finish==true)
         {
             MapUIManager.instance.UpdateMinimapUI(true);
             Destination = roomManager.rooms[0].transform;

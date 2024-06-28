@@ -26,13 +26,15 @@ public class EnemyBasic : ObjectBasic
 
     protected override void Awake()
     {
-        base.Awake();
-        enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;//이거 넣으면 안되는거야?
+        base.Awake();       
         stats = enemyStats = GetComponent<EnemyStats>();
-
         defaultLayer = this.gameObject.layer;
     }
 
+    protected void Start()
+    {
+        enemyTarget = FindObj.instance.Player.transform;
+    }
 
     protected virtual void Update()
     {

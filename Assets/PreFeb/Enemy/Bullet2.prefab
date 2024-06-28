@@ -116,6 +116,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -149,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
+  <isProjectile>k__BackingField: 1
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
@@ -158,7 +159,8 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
+  isHit: 0
 --- !u!70 &1662742096732015433
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

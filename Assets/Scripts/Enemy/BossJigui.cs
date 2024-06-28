@@ -10,6 +10,7 @@ public class BossJigui : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         isTouchPlayer = false;
     }
     protected override void AttackPattern()

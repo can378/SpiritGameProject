@@ -147,6 +147,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
   detectLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -170,6 +172,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -183,7 +186,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  <defaultAttackPower>k__BackingField: 0
+  <defaultAttackPower>k__BackingField: 5
   <defaultMoveSpeed>k__BackingField: 1
   activeEffects: []
   enemyName: 
@@ -505,6 +508,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!61 &8599007761085145535
 BoxCollider2D:
   m_ObjectHideFlags: 0

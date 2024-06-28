@@ -14,7 +14,7 @@ public class BigKnife : MonoBehaviour
     {
         isCoRun = false;
         isTouchWall = false;
-        player = GameObject.FindWithTag("Player");
+        player = FindObj.instance.Player;
         originalTrailTime = GetComponent<TrailRenderer>().time;
         GetComponent<TrailRenderer>().time = 0;
     }

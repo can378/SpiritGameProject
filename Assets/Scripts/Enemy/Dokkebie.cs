@@ -11,6 +11,7 @@ public class Dokkebie : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         hitDetection = hammerArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
     }

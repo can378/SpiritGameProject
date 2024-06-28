@@ -20,6 +20,7 @@ public class BossBaby : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         floor = GameManager.instance.nowRoom;
 
         isAttackReady = true;

@@ -22,6 +22,7 @@ public class BlackDog : EnemyBasic
 
     private void Start()
     {
+        base.Start();
         hitDetection = biteArea.GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
 
