@@ -10,6 +10,13 @@ public class HPPortion : Consumable
     {
         if(finishUse)
             return;
-        user.playerStats.HP += healValue;
+        if (user.playerStats.HP + healValue > user.playerStats.HPMax)
+        {
+            user.playerStats.HP = user.playerStats.HPMax;
+        }
+        else
+        {
+            user.playerStats.HP += healValue;
+        }
     }
 }

@@ -12,7 +12,9 @@ public class SellingItem : MonoBehaviour
     public GameObject info;
     public TMP_Text itemName;
     public TMP_Text itemPrice;
+    public GameObject spriteR;
     
+
     private List<GameObject> itemList;//판매 가능한 아이템 종류
 
 
@@ -24,11 +26,10 @@ public class SellingItem : MonoBehaviour
 
     UserData userData;
 
-    SpriteRenderer spriteRenderer;
+    
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         userData = DataManager.instance.userData;
         itemList = DataManager.instance.gameData.selectItemList;
     }
@@ -46,7 +47,9 @@ public class SellingItem : MonoBehaviour
         GameObject thisSlotItem = itemList[thisItemIndex];
 
         //GameObject thisSlotImage = Instantiate(thisSlotItem);
-        //GetComponent<SpriteRenderer>().sprite = thisSlotItem.GetComponentInChildren<SpriteRenderer>().sprite;
+        spriteR.GetComponent<SpriteRenderer>().sprite = thisSlotItem.GetComponent<SpriteRenderer>().sprite;
+        spriteR.transform.localScale = thisSlotItem.transform.localScale;
+
         thisItemName = thisSlotItem.GetComponent<Consumable>().selectItemName;
         thisItemID = thisSlotItem.GetComponent<Consumable>().selectItemID;
         thisItemPrice = thisSlotItem.GetComponent<Consumable>().price;

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Dosa : EnemyBasic
 {
     [field: SerializeField] public List<Skill> skillList { get; private set; }
-    public GameObject biteArea;
 
 
     private int skill;
@@ -14,13 +13,16 @@ public class Dosa : EnemyBasic
     private void Start()
     {
         base.Start();
-        skill=UnityEngine.Random.Range(0,skillList.Count);
+        skill=UnityEngine.Random.Range(1,skillList.Count);
+        skillList[skill].gameObject.SetActive(true);
     }
     protected override void AttackPattern()
     {
+        Debug.Log("skill num="+skill);
         //스킬 사용
         if (skill != 0 && skillList[skill].skillCoolTime <= 0)
         {
+            Debug.Log("start skill");
             StartCoroutine(Skill());
         }
     }
