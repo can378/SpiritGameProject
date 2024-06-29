@@ -51,7 +51,7 @@ public class Enchant : MonoBehaviour
     void Thunderbolt(Vector3 pos)
     {
         Debug.Log("Crack");
-        GameObject thunderboltGO = Instantiate(ObjectPoolManager.instance.prefabs[9], pos, gameObject.transform.rotation);
+        GameObject thunderboltGO = Instantiate(ObjectPoolManager.instance.prefabs[12], pos, gameObject.transform.rotation);
         thunderboltGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 5 + this.hitDetection.user.GetComponent<Player>().playerStats.skillPower * 0.1f, 0, 0, 0, null);
         Destroy(thunderboltGO, 0.1f);
     }
@@ -63,7 +63,7 @@ public class Enchant : MonoBehaviour
             return;
 
         Debug.Log("Bomb");
-        GameObject explosionGO = Instantiate(ObjectPoolManager.instance.prefabs[8], gameObject.transform.position, gameObject.transform.rotation);
+        GameObject explosionGO = Instantiate(ObjectPoolManager.instance.prefabs[11], gameObject.transform.position, gameObject.transform.rotation);
         explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0, 0, 0, null);
         Destroy(explosionGO, 0.5f);
     }
