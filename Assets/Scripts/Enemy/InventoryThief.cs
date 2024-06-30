@@ -38,7 +38,7 @@ public class InventoryThief : EnemyBasic
     {
         if (isSteal == false)
         {
-            StartCoroutine(StealAttack());
+            //StartCoroutine(StealAttack());
             return;
         }
     }
@@ -70,17 +70,18 @@ public class InventoryThief : EnemyBasic
     {
         if (isSteal || !hitTarget)
             return;
-
+        /*
         if (hitTarget.tag == "Player")
         {
             if(hitTarget.gameObject.GetComponent<Player>().playerItem != null)
             {
                 Destroy(enemyTarget.GetComponent<Player>().playerItem);
                 enemyTarget.GetComponent<Player>().playerItem = null;
-                MapUIManager.instance.updateItemUI(null);
+                //MapUIManager.instance.updateItemUI(null);
                 isSteal = true;
             }
         }
+        */
     }
 
     /*

@@ -67,9 +67,11 @@ public class SellingItem : MonoBehaviour
 
         if (Player.instance.playerStats.coin >= cost)
         {
+            //useCoin
             Player.instance.playerStats.coin -= cost;
-            Player.instance.playerStats.item = thisItemID;
+            MapUIManager.instance.UpdateCoinUI();
 
+            /*
             //전에 가지고 있던 아이템 드랍
             if (Player.instance.playerItem != null)
             { 
@@ -77,13 +79,25 @@ public class SellingItem : MonoBehaviour
                 Player.instance.playerItem.transform.position = Player.instance.transform.position; 
             }
 
-            MapUIManager.instance.UpdateCoinUI();
             MapUIManager.instance.updateItemUI(itemList[thisItemIndex]);
-
             Player.instance.playerItem = Instantiate(itemList[thisItemIndex]);
             Player.instance.playerItem.SetActive(false);
+            */
 
-            this.gameObject.SetActive(false);
+            Player.instance.playerStats.item = thisItemID;
+
+            //UseItem
+            switch (itemList[thisItemIndex].GetComponent<SelectItem>().selectItemClass)
+            {
+                case SelectItemClass.Consumable:
+                    itemList[thisItemIndex].GetComponent<HPPortion>().
+                        UseItem(FindObj.instance.Player.GetComponent<Player>());
+                    break;
+                default: break;
+            }
+
+            //set active false
+            gameObject.SetActive(false);
             
         }
         else

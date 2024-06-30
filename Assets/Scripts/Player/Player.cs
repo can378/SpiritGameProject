@@ -23,7 +23,7 @@ public class Player : ObjectBasic
     public bool rDown { get; private set; }                                 // 재장전
     public bool dDown { get; private set; }                                 // 회피
     public bool aDown { get; private set; }                                 // 공격
-    public bool siDown { get; private set; }                                // 선택 아이템
+    public bool siDown { get; private set; }                                // 선택 아이템 H
     public bool iDown { get; private set; }                                 // 상호작용
 
     public float skcDown { get; private set; }                              // 스킬 변경
@@ -33,7 +33,7 @@ public class Player : ObjectBasic
 
     public LayerMask layerMask;             //접근 불가한 레이어 설정
     public GameObject nearObject;
-    public GameObject playerItem;
+    //public GameObject playerItem;
 
     Vector2 playerPosition;
     Vector2 dodgeVec;
@@ -79,7 +79,7 @@ public class Player : ObjectBasic
         Run();
         Dodge();
         Move();
-        UseItem();
+        //UseItem();
         Interaction();
         HalfDead();
 
@@ -384,6 +384,8 @@ public class Player : ObjectBasic
     {
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         bool gainItem = false;
+
+        //무기////////////////////////////////////////////////////////////////////
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
             if (playerStats.weapon != 0)
@@ -393,10 +395,12 @@ public class Player : ObjectBasic
             // 무기 장비
             gainItem = weaponController.EquipWeapon(selectItem.GetComponent<SelectItem>().selectItemID);
         }
+        //갑옷/////////////////////////////////////////////////////////////////////
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
             gainItem = EquipEquipment(selectItem.GetComponent<SelectItem>().selectItemID);
         }
+        //스킬/////////////////////////////////////////////////////////////////////
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
 
@@ -408,8 +412,10 @@ public class Player : ObjectBasic
             gainItem = skillController.EquipSkill(selectItem.GetComponent<SelectItem>().selectItemID);
 
         }
-        else if(selectItem.selectItemClass == SelectItemClass.Consumable)
+        //일반 아이템/////////////////////////////////////////////////////////////////
+        else if(selectItem.selectItemClass == SelectItemClass.Consumable && selectItem.GetComponent<HPPortion>()!=null)
         {
+            /*
             //전에 가지고 있던 아이템 드랍
             if (playerItem != null)
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
@@ -420,12 +426,18 @@ public class Player : ObjectBasic
             playerItem.SetActive(false);
 
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
+            */
+
+            //UseItem
+            selectItem.GetComponent<HPPortion>().UseItem(FindObj.instance.Player.GetComponent<Player>());
+            gainItem = true;
         }
 
         if(gainItem)
             Destroy(selectItem.gameObject);
     }
 
+    /*
     void UseItem()
     {
         if (siDown && playerItem != null)
@@ -446,11 +458,11 @@ public class Player : ObjectBasic
             MapUIManager.instance.updateItemUI(null);
             playerItem = null;
             playerStats.item = 0;
-
         }
-
     }
-    
+    */
+
+
     // 장착할 장비의 index
     public bool EquipEquipment(int equipmentId)
     {
@@ -535,7 +547,8 @@ public class Player : ObjectBasic
 
             playerStats.coin = DataManager.instance.userData.playerCoin;
             playerStats.key = DataManager.instance.userData.playerKey;
-
+            
+            /*
             //아이템
             if(playerItemName != 0)
             {
@@ -550,6 +563,8 @@ public class Player : ObjectBasic
                     }
                 }
             }
+            */
+
             // 무기
             if (playerWeapon != 0)
             {

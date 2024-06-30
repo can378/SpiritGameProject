@@ -74,8 +74,8 @@ public class MapUIManager : MonoBehaviour
         //UpdateWeaponUI();
         //UpdateSkillUI();
         //UpdatePointUI();
-        if (Player.instance.playerStats.item == 0)
-        { updateItemUI(null); }
+        //if (Player.instance.playerStats.item == 0)
+        //{ updateItemUI(null); }
 
         setUpgradePanel();
     }
@@ -121,8 +121,8 @@ public class MapUIManager : MonoBehaviour
         UpdateStatUI();
         UpdateSkillUI();
         UpdateInventoryUI();
-        if (Player.instance.playerStats.item == 0)
-        { updateItemUI(null); }
+        //if (Player.instance.playerStats.item == 0)
+        //{ updateItemUI(null); }
         UpdateNearObjectUI();
     }
 
@@ -180,6 +180,7 @@ public class MapUIManager : MonoBehaviour
     }
     */
 
+    /*
     public void updateItemUI(GameObject obj) 
     {
         if (obj != null)
@@ -189,6 +190,7 @@ public class MapUIManager : MonoBehaviour
         else { itemImg.GetComponent<Image>().sprite = null; }
 
     }
+    */
 
     public void UpdateSkillUI()
     {
