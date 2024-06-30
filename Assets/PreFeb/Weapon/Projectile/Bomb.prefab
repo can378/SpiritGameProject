@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 5213076292348642907}
   - component: {fileID: 2709215477121815719}
   - component: {fileID: 1711866502859185947}
-  - component: {fileID: 7547268499302607480}
-  - component: {fileID: 8983104758440613179}
   - component: {fileID: -1192987079018899415}
+  - component: {fileID: -597308780756370395}
   m_Layer: 11
   m_Name: Bomb
   m_TagString: PlayerAttack
@@ -99,43 +98,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7547268499302607480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237688199151948138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 1
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
---- !u!114 &8983104758440613179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237688199151948138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4aeb57509478154d9e26c78383a6eb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <explosionTime>k__BackingField: 1
-  <explosionField>k__BackingField: {fileID: 5651732826295342366, guid: 0da9c40e202b4234e8c0fde660e542e1, type: 3}
 --- !u!114 &-1192987079018899415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +110,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315cff1768063c2449ab260350e30b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <index>k__BackingField: 0
+  <index>k__BackingField: 21
+--- !u!114 &-597308780756370395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237688199151948138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+  isHit: 0
 --- !u!1 &9154743223894945601
 GameObject:
   m_ObjectHideFlags: 0

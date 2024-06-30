@@ -244,9 +244,9 @@ GameObject:
   - component: {fileID: 3890117652379484030}
   - component: {fileID: 8627062181232657184}
   - component: {fileID: 2987332338739154288}
-  - component: {fileID: 2961024902889108864}
   - component: {fileID: 20919314087054443}
   - component: {fileID: 6735343789765183407}
+  - component: {fileID: 2763052632987152624}
   m_Layer: 12
   m_Name: firePlan
   m_TagString: EnemyAttack
@@ -356,29 +356,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.49999997
---- !u!114 &2961024902889108864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2776086865700844444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 2
-  <knockBack>k__BackingField: 2
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
 --- !u!114 &20919314087054443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,16 +371,16 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: 0
+  <defaultSEResist>k__BackingField: []
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  detectionDis: 0
-  exp: 0
   enemyName: 
-  isEnemyStun: 0
-  isEnemyFear: 0
+  detectionDis: 0
+  detectionKeepDis: 0
+  maxAttackRange: 0
 --- !u!50 &6735343789765183407
 Rigidbody2D:
   serializedVersion: 4
@@ -431,6 +408,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2763052632987152624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776086865700844444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: -1
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: -1
+  <damage>k__BackingField: 2
+  <knockBack>k__BackingField: 2
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+  isHit: 0
 --- !u!1 &4724169368982175143
 GameObject:
   m_ObjectHideFlags: 0

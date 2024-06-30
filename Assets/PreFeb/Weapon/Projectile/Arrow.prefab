@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4662081752181882095}
   - component: {fileID: 4795214577067854906}
   - component: {fileID: 6900096828389256611}
-  - component: {fileID: 2339166584673235170}
   - component: {fileID: -1996565808621347797}
+  - component: {fileID: 7302903875322842229}
   m_Layer: 11
   m_Name: Arrow
   m_TagString: PlayerAttack
@@ -108,29 +108,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2339166584673235170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831173352780998368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 1
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
 --- !u!114 &-1996565808621347797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +121,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <index>k__BackingField: 0
+--- !u!114 &7302903875322842229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831173352780998368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+  isHit: 0
 --- !u!1 &8172994953639201744
 GameObject:
   m_ObjectHideFlags: 0

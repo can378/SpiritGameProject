@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 557106837768936022}
   - component: {fileID: 3771491851752741642}
   - component: {fileID: 2557283213814650095}
-  - component: {fileID: 5701562117317484425}
   - component: {fileID: 1662742096732015433}
   - component: {fileID: 6016990201301183377}
+  - component: {fileID: 8771328345539678233}
   m_Layer: 12
   m_Name: Bullet2
   m_TagString: EnemyAttack
@@ -137,30 +137,6 @@ MonoBehaviour:
   detectionDis: 0
   detectionKeepDis: 0
   maxAttackRange: 0
---- !u!114 &5701562117317484425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5940983208176413738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 1
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 5
-  <knockBack>k__BackingField: 5
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
-  isHit: 0
 --- !u!70 &1662742096732015433
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -223,3 +199,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8771328345539678233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5940983208176413738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+  isHit: 0

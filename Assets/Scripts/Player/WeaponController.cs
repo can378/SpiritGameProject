@@ -10,7 +10,7 @@ public class WeaponController : MonoBehaviour
     // 공격 정보
     public int enchant;
     [SerializeField] GameObject HitDetectionGameObject;
-    [SerializeField] GameObject projectileGameObject;
+    [SerializeField] int projectileIndex;
 
     // 근거리 공격 이펙트 
     [SerializeField] GameObject[] meleeEffectList;
@@ -39,7 +39,7 @@ public class WeaponController : MonoBehaviour
         }
         else if (10 <= weaponList[playerStats.weapon].weaponType)
         {
-            projectileGameObject = weaponList[playerStats.weapon].projectile;
+            projectileIndex = weaponList[playerStats.weapon].projectileIndex;
         }
 
         // 장비 UI 적용
@@ -50,7 +50,7 @@ public class WeaponController : MonoBehaviour
     public void UnEquipWeapon()
     {
         HitDetectionGameObject = null;
-        projectileGameObject = null;
+        projectileIndex = -1;
 
         // 현재 위치에 장비를 놓는다.
         Instantiate(GameData.instance.weaponList[playerStats.weapon],gameObject.transform.position,gameObject.transform.localRotation);
@@ -157,7 +157,7 @@ public class WeaponController : MonoBehaviour
 
         // 무기 이펙트 크기 설정
         HitDetectionGameObject.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize, 1);
-        HitDetectionGameObject.GetComponentInChildren<Enchant>().index = enchant;
+        HitDetectionGameObject.GetComponentInChildren<Enchant>().SetEnchant(enchant);
 
         // 이펙트 수치 설정
         HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
@@ -192,8 +192,10 @@ public class WeaponController : MonoBehaviour
         yield return new WaitForSeconds(weaponList[playerStats.weapon].preDelay / playerStats.attackSpeed);
 
         // 무기 투사체 적용
-        GameObject instantProjectile = Instantiate(projectileGameObject, transform.position, transform.rotation);
-        instantProjectile.GetComponent<Enchant>().index = enchant;
+        GameObject instantProjectile = ObjectPoolManager.instance.Get(projectileIndex);
+        instantProjectile.transform.position = transform.position;
+        instantProjectile.transform.rotation = transform.rotation;
+        instantProjectile.GetComponent<Enchant>().SetEnchant(enchant);
 
         //투사체 설정
         Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
@@ -206,7 +208,7 @@ public class WeaponController : MonoBehaviour
         instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize,1);
         bulletRigid.velocity = attackDir * 10 * weaponList[playerStats.weapon].projectileSpeed;  // 속도 설정
-        Destroy(instantProjectile, weaponList[playerStats.weapon].projectileTime);  //사거리 설정
+        //Destroy(instantProjectile, weaponList[playerStats.weapon].projectileTime);  //사거리 설정
     }
 
     // 범위 공격

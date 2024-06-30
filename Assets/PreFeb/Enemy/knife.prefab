@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 625540043863561911}
   - component: {fileID: 1032769423933587562}
   - component: {fileID: 4813387828989772026}
-  - component: {fileID: 8125954975881367947}
+  - component: {fileID: 1572125350621095219}
   m_Layer: 12
   m_Name: knife
   m_TagString: EnemyAttack
@@ -194,6 +194,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -286,7 +287,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8125954975881367947
+--- !u!114 &1572125350621095219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,7 +296,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9219173067023127962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   user: {fileID: 0}
@@ -308,4 +309,5 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
+  multiHitDurationTime: 0
+  isHit: 0
