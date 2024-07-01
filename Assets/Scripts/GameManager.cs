@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     
     //참조용
     public GameObject nowRoom;//현재 플레이어가 있는 방
+    public Room nowRoomScript;
     public EnemyTemplates enemyTemplates;
     //public GameObject canvas;
 

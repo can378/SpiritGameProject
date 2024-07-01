@@ -46,6 +46,10 @@ public class MazeEnter : MonoBehaviour
                 CameraManager.instance.CameraMove(collision.gameObject);
                 CameraManager.instance.CenterMove(collision.gameObject);
                 CameraManager.instance.mapSize = new Vector2(25, 25);
+
+                
+                gameObject.GetComponent<Collider2D>().enabled = false;
+
             }
             else if(mazePortal==mazePortal.exit)
             {
@@ -75,6 +79,7 @@ public class MazeEnter : MonoBehaviour
                 CameraManager.instance.mapSize = new Vector2(15, 15);
 
 
+                GameManager.instance.nowRoomScript.map.GetComponent<Mission>().isEscapeMaze = true;
 
             }
             
