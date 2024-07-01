@@ -10,7 +10,7 @@ public class StartPortal : Portal
     {
         roomManager = FindObj.instance.roomManagerScript;
     }
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Player") && roomManager.finish==true)
         {
