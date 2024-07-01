@@ -59,7 +59,7 @@ public class Enchant : MonoBehaviour
         thunderboltGO.transform.position = this.gameObject.transform.position;
         thunderboltGO.transform.rotation = this.gameObject.transform.rotation;
         thunderboltGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 5 + this.hitDetection.user.GetComponent<Player>().playerStats.skillPower * 0.1f, 0, 0, 0, null);
-        //Destroy(thunderboltGO, 0.1f);
+        thunderboltGO.GetComponent<HitDetection>().SetProjectileTime(0.1f);
     }
 
     //21
@@ -73,7 +73,7 @@ public class Enchant : MonoBehaviour
         explosionGO.transform.position = this.gameObject.transform.position;
         explosionGO.transform.rotation = this.gameObject.transform.rotation;
         explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0, 0, 0, null);
-        //Destroy(explosionGO, 0.5f);
+        explosionGO.GetComponent<HitDetection>().SetProjectileTime(0.1f);
     }
 
     #endregion Effect

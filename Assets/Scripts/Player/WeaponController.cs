@@ -208,7 +208,7 @@ public class WeaponController : MonoBehaviour
         instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);  // 방향 설정
         instantProjectile.transform.localScale = new Vector3(weaponList[playerStats.weapon].attackSize, weaponList[playerStats.weapon].attackSize,1);
         bulletRigid.velocity = attackDir * 10 * weaponList[playerStats.weapon].projectileSpeed;  // 속도 설정
-        //Destroy(instantProjectile, weaponList[playerStats.weapon].projectileTime);  //사거리 설정
+        hitDetection.SetProjectileTime(weaponList[playerStats.weapon].projectileTime);
     }
 
     // 범위 공격
