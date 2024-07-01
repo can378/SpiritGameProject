@@ -77,7 +77,7 @@ public class MapUIManager : MonoBehaviour
         //if (Player.instance.playerStats.item == 0)
         //{ updateItemUI(null); }
 
-        setUpgradePanel();
+        //setUpgradePanel();
     }
 
     void Update()
