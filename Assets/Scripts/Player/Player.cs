@@ -347,8 +347,10 @@ public class Player : ObjectBasic
         if(nearObject == null)
             return;
 
+        print("interaction");
         if (iDown && !isFlinch && !status.isDodge && !isAttack && !status.isSkill && !status.isSkillHold)
         {
+
             if (nearObject.tag == "SelectItem")
             {
                 GainSelectItem();
@@ -359,18 +361,24 @@ public class Player : ObjectBasic
             }
             else if (nearObject.tag == "Door")
             {
-                if (playerStats.key > 0) 
+                if (playerStats.key > 0)
                 {
                     playerStats.key--;
                     MapUIManager.instance.UpdateKeyUI();
-                    nearObject.GetComponent<Door>().DoorInteraction(); 
+                    nearObject.GetComponent<Door>().DoorInteraction();
                 }
-                
+
             }
             else if (nearObject.tag == "ShabbyWall")
             {
                 //open with bomb
                 //nearObject.GetComponent<Wall>().WallInteraction();
+            }
+            else if (nearObject.tag == "reward")
+            {
+                print("reward interaction");
+                nearObject.GetComponent<treasureBox>().Interaction();
+            
             }
         }
 
@@ -675,7 +683,7 @@ public class Player : ObjectBasic
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc")
+        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc" || other.tag=="reward")
         {
             if(nearObject == null || Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, nearObject.transform.position))
             {

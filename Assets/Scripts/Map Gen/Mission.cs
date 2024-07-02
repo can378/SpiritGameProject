@@ -8,16 +8,19 @@ public enum MissionType
 public class Mission : MonoBehaviour
 {
     public MissionType type;
-   
 
-    public float timeCondition;
 
+    public GameObject missionReward;
+    
 
     private ObjectSpawn spawn;
     private float time;
     private float playerFirstHP;
+    private bool isFail;
+   
 
     [Header("TimeAttack, Dream, LittleMonster")]
+    public float timeCondition;
     public GameObject clock;
 
     [Header("Curse")]
@@ -35,6 +38,7 @@ public class Mission : MonoBehaviour
     {
         spawn = GetComponent<ObjectSpawn>();
         isEscapeMaze = false;
+        isFail = false;
     }
 
     private void OnEnable()
@@ -65,7 +69,8 @@ public class Mission : MonoBehaviour
                 //hurts --> fail
                 if (Player.instance.stats.HP < playerFirstHP)
                 { 
-                    print("no hurt mission fail!!");
+                    print("fail");
+                    isFail = true;
                     missionEnd();
                 }
                 //kill all of them --> end
@@ -112,7 +117,8 @@ public class Mission : MonoBehaviour
                 }
                 else if (time > timeCondition) 
                 { 
-                    print("time attack mission fail!!!");
+                    print("fail");
+                    isFail = true;
                     missionEnd();
                 }
                 break;
@@ -148,7 +154,13 @@ public class Mission : MonoBehaviour
     }
     private void missionEnd() 
     {
+        if (!isFail)
+        {
+            missionReward.SetActive(true);
+        }
+
         roomScript.UnLockDoor();
         StopCoroutine(CheckMissionEnd());
+
     }
 }
