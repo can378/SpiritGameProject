@@ -10,7 +10,7 @@ public class FindObj : MonoBehaviour
     public Player playerScript;
     public GameObject roomManager;
     public RoomManager roomManagerScript;
-
+    public GameObject roomParent;
     private void Awake()
     {
         if (instance == null)

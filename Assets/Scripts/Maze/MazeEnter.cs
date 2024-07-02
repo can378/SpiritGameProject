@@ -11,11 +11,11 @@ public class MazeEnter : MonoBehaviour
     //public Vector2 mazePos;
 
     private GameObject mazeInst=null;
-
+    private GameObject roomParent=null;
 
     void Start()
     {
-       
+        roomParent = GameObject.FindWithTag("roomParent");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,13 +25,15 @@ public class MazeEnter : MonoBehaviour
             if (mazePortal == mazePortal.enter)
             {
 
-                foreach (Transform child in GameObject.FindWithTag("roomParent").transform)
+                foreach (Transform child in roomParent.transform)
                 {
                     child.gameObject.SetActive(false);
                 }
 
                 //generate maze
                 mazeInst = Instantiate(maze);
+                
+                
                 //mazeInst.transform.position = mazePos;
                 //mazeInst.GetComponent<MazeGenerator>().GenerateMaze();
                 //GameObject.FindWithTag("Maze").transform.position = mazePos;
@@ -53,7 +55,7 @@ public class MazeEnter : MonoBehaviour
             }
             else if(mazePortal==mazePortal.exit)
             {
-                foreach (Transform child in GameObject.FindWithTag("roomParent").transform)
+                foreach (Transform child in roomParent.transform)
                 {
                     child.gameObject.SetActive(true);
                 }

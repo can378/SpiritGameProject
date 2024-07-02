@@ -38,10 +38,12 @@ public class RoomManager : MonoBehaviour
         //enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
         enemyTemplates = GameManager.instance.enemyTemplates;
 
-        // room ºÎ¸ð
+        // room parent!!!!
         roomParent = new GameObject("Rooms");
         roomParent.tag = "roomParent";
+        FindObj.instance.roomParent= roomParent;
 
+        //Minimap camera
         miniMapCamera.cullingMask = 1 << LayerMask.NameToLayer("MiniMapOnly");
         maxRoom = defaultMaxRoom;
 

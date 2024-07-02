@@ -347,7 +347,6 @@ public class Player : ObjectBasic
         if(nearObject == null)
             return;
 
-        print("interaction");
         if (iDown && !isFlinch && !status.isDodge && !isAttack && !status.isSkill && !status.isSkillHold)
         {
 
