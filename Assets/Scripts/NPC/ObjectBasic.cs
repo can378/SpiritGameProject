@@ -16,7 +16,6 @@ public class ObjectBasic : MonoBehaviour
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public Coroutine flinchCoroutine;
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
-    public float deadDelay = 0;
 
     // 공격 관련 
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
@@ -79,7 +78,10 @@ public class ObjectBasic : MonoBehaviour
         damage = criticalHit ? damage * criticalDamage : damage;
 
         //Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
-        stats.HP = Mathf.Clamp(stats.HP - ((1 - stats.defensivePower) * damage), 0,stats.HPMax);
+        stats.HP = Mathf.Min(stats.HP - ((1 - stats.defensivePower) * damage), stats.HPMax);
+
+        if(stats.HP <= 0)
+            Dead();
 
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
 
@@ -247,31 +249,6 @@ public class ObjectBasic : MonoBehaviour
             Destroy(effect.gameObject);
         }
         stats.activeEffects.Clear();
-    }
-
-    // 빈사 상태로
-    // 회복되면 죽지 않음
-    protected void HalfDead()
-    {
-        if (stats.HP > 0 && deadDelay == 0)
-            return;
-
-        isFlinch = true;
-        isInvincible = true;
-        //StopAllCoroutines();
-        deadDelay += Time.deltaTime;
-
-        if(deadDelay >= 5f && stats.HP <= 0)
-            Dead();
-        else if (deadDelay >= 5f && 0 < stats.HP)
-        {
-            isFlinch = false;
-            isInvincible = false;
-            deadDelay = 0f;
-        }
-            
-
-
     }
 
     // 완전 죽음

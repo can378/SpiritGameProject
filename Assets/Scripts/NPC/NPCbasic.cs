@@ -50,7 +50,6 @@ public class NPCbasic : ObjectBasic
         ChaseEnemy();
         FollowCompanion();
         WaitTarget();
-        HalfDead();
     }
 
     #region Attack

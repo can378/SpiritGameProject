@@ -82,7 +82,6 @@ public class Player : ObjectBasic
         Move();
         //UseItem();
         Interaction();
-        HalfDead();
 
         if (status.isAttackable)
         {
@@ -703,37 +702,6 @@ public class Player : ObjectBasic
 
     // 상태 관련
     #region Effect
-
-    /*
-    //적에게 피격
-    public void EnemyAttack(GameObject attacker)
-    {
-        if (status.isInvincible)
-        {
-            return;
-        }
-
-        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
-
-
-        Damaged(hitDetection.damage);
-
-        KnockBack(attacker.gameObject, hitDetection.knockBack);
-
-        if(FlinchCoroutine != null) StopCoroutine(FlinchCoroutine);
-        FlinchCoroutine = StartCoroutine(Flinch(0.3f));
-
-        Invincible(0.1f);
-
-        if (hitDetection.statusEffect != null)
-        {
-            foreach (int statusEffectIndex in hitDetection.statusEffect)
-            {
-                ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
-            }
-        }
-    }
-    */
     
     // 피해
     public override void Damaged(float damage, float critical = 0, float criticalDamage = 0)
@@ -749,107 +717,6 @@ public class Player : ObjectBasic
         MapUIManager.instance.diePanel.SetActive(true);
         base.Dead();
     }
-    /*
-    void DamagedOut()
-    {
-        sprite.color = Color.white;
-    }
-
-    // 뒤로 밀려남
-    public void KnockBack(GameObject agent, float distance = 10)
-    {
-        Vector2 dir = (transform.position - agent.transform.position).normalized;
-
-        rigid.AddForce(dir * (distance * (1 - playerStats.defensivePower)), ForceMode2D.Impulse);
-    }
-
-    // 경직됨(움직일 수 없음)
-    public IEnumerator Flinch(float time = 0)
-    {
-        status.isFlinch = true;
-
-        yield return new WaitForSeconds(time);
-
-        status.isFlinch = false;
-    }
-
-    // 무적(적 공격 무시)
-    public void Invincible(float time = 0)
-    {
-        status.isInvincible = true;
-        int layerNum = LayerMask.NameToLayer("Invincible");
-        this.layerMask = layerNum;
-        sprite.color = new Color(1, 1, 1, 0.4f);
-        Invoke("InvincibleOut", time);
-    }
-
-    void InvincibleOut()
-    {
-        //무적 해제
-        sprite.color = new Color(1, 1, 1, 1);
-        this.layerMask = LayerMask.NameToLayer("Player");
-        status.isInvincible = false;
-    }
-
-    void Dead()
-    {
-        Debug.Log("player dead");
-        DataManager.instance.InitData();
-        DataManager.instance.SaveUserData();
-        MapUIManager.instance.diePanel.SetActive(true);
-    }
-
-    public void ApplyBuff(GameObject effect)
-    {
-        // 가지고 있는 버프인지 체크한다.
-        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
-        foreach (StatusEffect buff in playerStats.activeEffects)
-        {
-            // 가지고 있는 버프라면 갱신한다.
-            if (buff.buffId == statusEffect.buffId)
-            {
-                buff.ResetEffect();
-                return;
-            }
-        }
-        
-        // 가지고 있는 버프가 아니라면 새로 추가한다.
-        GameObject Buff = Instantiate(effect);
-        statusEffect = Buff.GetComponent<StatusEffect>();
-        statusEffect.SetTarget(gameObject);
-
-        statusEffect.ApplyEffect();
-        playerStats.activeEffects.Add(statusEffect);
-        
-        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
-    }
-
-    IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(0.1f);
-            effect.duration -= 0.1f;
-            if(effect.duration <= 0)
-            {
-                break;
-            }
-        }
-        effect.RemoveEffect();
-        playerStats.activeEffects.Remove(effect);
-
-        Destroy(effect.gameObject);
-    }
-
-    public void RemoveAllEffects()
-    {
-        foreach (StatusEffect effect in playerStats.activeEffects)
-        {
-            effect.RemoveEffect();
-        }
-        playerStats.activeEffects.Clear();
-    }
-    */
 
     #endregion
 

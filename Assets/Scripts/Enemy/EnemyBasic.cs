@@ -42,7 +42,6 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
-        HalfDead();
     }
 
 
