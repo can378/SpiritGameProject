@@ -43,6 +43,7 @@ public class StunDeBuff : StatusEffect
 
             while (objectBasic.isFlinch)
             {
+                objectBasic.stats.poise = 0;
                 yield return null;
             }
 
