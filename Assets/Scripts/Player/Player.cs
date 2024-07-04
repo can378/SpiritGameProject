@@ -76,7 +76,7 @@ public class Player : ObjectBasic
         */
 
         Turn();
-        Run();
+        //Run();
         Dodge();
         Move();
         //UseItem();
@@ -156,7 +156,7 @@ public class Player : ObjectBasic
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            rigid.velocity = moveVec * playerStats.moveSpeed * (status.isSprint ? 1 + playerStats.runSpeed : 1f);
+            rigid.velocity = moveVec * playerStats.moveSpeed;
         }
     }
 
@@ -191,6 +191,7 @@ public class Player : ObjectBasic
         status.isDodge = false;
     }
 
+    /*
     void Run()
     {
         if(isAttack || isFlinch || status.isSkillHold || status.isDodge)
@@ -203,6 +204,7 @@ public class Player : ObjectBasic
         status.runCurrentCoolTime -= Time.deltaTime;
         status.isSprint = status.runCurrentCoolTime <= 0 ? true : false;
     }
+    */
 
     #endregion
 
