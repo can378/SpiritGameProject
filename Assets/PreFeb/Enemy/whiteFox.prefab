@@ -278,6 +278,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!58 &8492139531867884543
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -393,6 +394,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -406,7 +409,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  <defaultAttackPower>k__BackingField: 10
+  <defaultAttackPower>k__BackingField: 5
   <defaultMoveSpeed>k__BackingField: 3
   activeEffects: []
   enemyName: 
@@ -445,6 +448,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
   blizzardArea: {fileID: 3179628487731707738}
   defaulBlizzardCoolTime: 10
   blizzardDebuff: 0100000003000000
@@ -598,6 +603,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!61 &2463616275541485763
 BoxCollider2D:
   m_ObjectHideFlags: 0

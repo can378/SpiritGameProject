@@ -28,7 +28,7 @@ public class StunDeBuff : StatusEffect
             // 저항에 따른 지속시간 적용
             duration = (1 - objectBasic.stats.SEResist(buffId)) * defaultDuration;
 
-            objectBasic.StopCoroutine(objectBasic.flinchCoroutine);
+            if (objectBasic.flinchCoroutine != null) objectBasic.StopCoroutine(objectBasic.flinchCoroutine);
             objectBasic.flinchCoroutine = StartCoroutine(objectBasic.Flinch(duration));
 
             StartCoroutine(Stun());

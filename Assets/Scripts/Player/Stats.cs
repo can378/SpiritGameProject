@@ -12,10 +12,12 @@ public class Stats : MonoBehaviour
     /// </summary>
 
     //HP
-    [field :SerializeField] public float HPMax { get; set; } = 100;
-    [field: SerializeField] public float HP { get; set; } = 100;
+    [field :SerializeField] public float HPMax { get; set; } = 100f;
+    [field: SerializeField] public float HP { get; set; } = 100f;
     [field: SerializeField] public float tempHP { get; set; } = 0;
-    [field: SerializeField] public int revivalStock {get; set; } = 0;
+    // 강인도
+    [field: SerializeField] public float poiseMax { get; set; } = 20f;
+    [field: SerializeField] public float poise { get; set; } = 20f;
 
     // 방어력
     // UI : 방어력 0%

@@ -75,6 +75,7 @@ public class Player : ObjectBasic
         }
         */
 
+        HealPoise();
         Turn();
         //Run();
         Dodge();

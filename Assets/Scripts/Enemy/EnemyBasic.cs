@@ -38,6 +38,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Update()
     {
+        HealPoise();
         Attack();
         Move();
         Detect();

@@ -49,10 +49,15 @@ public class ObjectBasic : MonoBehaviour
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
-        if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
-        flinchCoroutine = StartCoroutine(Flinch(0.3f));
+        // 강인도가 0이 될 시 경직되고 넉백
+        if(DamagedPoise(hitDetection.damage))
+        {
+            Debug.Log(gameObject.name + ":Flinch");
+            if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
+            flinchCoroutine = StartCoroutine(Flinch(0.5f));
 
-        KnockBack(hitDetection.gameObject, hitDetection.knockBack);
+            KnockBack(hitDetection.gameObject, hitDetection.knockBack);
+        }
 
         //Invincible(0.1f);
 
@@ -73,7 +78,7 @@ public class ObjectBasic : MonoBehaviour
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
 
-        Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        //Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
         stats.HP = Mathf.Clamp(stats.HP - ((1 - stats.defensivePower) * damage), 0,stats.HPMax);
 
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
@@ -84,6 +89,27 @@ public class ObjectBasic : MonoBehaviour
     protected virtual void DamagedOut()
     {
         sprite.color = Color.white;
+    }
+
+    public bool DamagedPoise(float damage)
+    {
+        if(isInvincible)
+            return false;
+
+        stats.poise = Mathf.Min(stats.poise - ((1 - stats.defensivePower) * damage), stats.poiseMax);
+
+        if(stats.poise <= 0)
+        {
+            stats.poise = stats.poiseMax;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void HealPoise()
+    {
+        stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 2f, stats.poiseMax);
     }
 
     public void KnockBack(GameObject agent, float knockBack)
