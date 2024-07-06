@@ -37,6 +37,7 @@ public class SnowBall : EnemyBasic
         }
 
         transform.localScale = new Vector3(size, size, 1f);
+        snowballHitDetection.gameObject.transform.localScale = new Vector3(size, size, 1f);
         enemyStats.increasedAttackPower = size - 1f;
         snowballHitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * size, 10, 0, 0, null);
 

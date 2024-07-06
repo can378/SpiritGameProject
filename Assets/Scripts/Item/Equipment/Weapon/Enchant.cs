@@ -73,7 +73,7 @@ public class Enchant : MonoBehaviour
         explosionGO.transform.position = this.gameObject.transform.position;
         explosionGO.transform.rotation = this.gameObject.transform.rotation;
         explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0, 0, 0, null);
-        explosionGO.GetComponent<HitDetection>().SetProjectileTime(0.1f);
+        explosionGO.GetComponent<HitDetection>().SetProjectileTime(0.3f);
     }
 
     #endregion Effect

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummonSkill : Skill
+public class SummonSkill : MonoBehaviour
 {
+    /*
     // 추가 공격력 계수, 추가 생명력 계수, 소환 유지 시간
     [field: SerializeField] public float damageRatio { get; private set; }
     [field: SerializeField] public float HPRatio { get; private set; }
@@ -166,5 +167,5 @@ public class SummonSkill : Skill
         }
     }
 
-    
+    */
 }
