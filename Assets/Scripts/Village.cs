@@ -13,7 +13,7 @@ public class Village : MonoBehaviour
     
     void Start()
     {
-        Player = GameObject.Find("Player");
+        Player = FindObj.instance.Player;
     }
 
 

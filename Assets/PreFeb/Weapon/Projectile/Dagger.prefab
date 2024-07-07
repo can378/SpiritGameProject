@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3214235305519029506}
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
-  - component: {fileID: 4635446497630190785}
   - component: {fileID: 647234047308338238}
   - component: {fileID: 6312787589905839786}
+  - component: {fileID: -6030273530695076383}
   m_Layer: 11
   m_Name: Dagger
   m_TagString: PlayerAttack
@@ -99,29 +99,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &4635446497630190785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 1
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 1
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
 --- !u!114 &647234047308338238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +125,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <index>k__BackingField: 0
+--- !u!114 &-6030273530695076383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  user: {fileID: 0}
+  <isProjectile>k__BackingField: 0
+  <penetrations>k__BackingField: 0
+  <isMultiHit>k__BackingField: 0
+  <DPS>k__BackingField: 0
+  <damage>k__BackingField: 0
+  <knockBack>k__BackingField: 0
+  <critical>k__BackingField: 0
+  <criticalDamage>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  multiHitDurationTime: 0
+  isHit: 0
 --- !u!1 &8147254618273612027
 GameObject:
   m_ObjectHideFlags: 0

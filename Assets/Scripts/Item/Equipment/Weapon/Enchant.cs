@@ -30,6 +30,10 @@ public class Enchant : MonoBehaviour
 
     public void SetEnchant(int index)
     {
+        if(this.index != 0)
+        {
+            return;
+        }
         this.index = index;
     }
 
@@ -39,9 +43,9 @@ public class Enchant : MonoBehaviour
             Thunderbolt(other.transform.position);
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
-        if(index == 21)
+        if (index == 21)
             Explosion();
     }
 
@@ -51,9 +55,11 @@ public class Enchant : MonoBehaviour
     void Thunderbolt(Vector3 pos)
     {
         Debug.Log("Crack");
-        GameObject thunderboltGO = Instantiate(ObjectPoolManager.instance.prefabs[9], pos, gameObject.transform.rotation);
+        GameObject thunderboltGO = ObjectPoolManager.instance.Get2("Lightning Explosion");
+        thunderboltGO.transform.position = this.gameObject.transform.position;
+        thunderboltGO.transform.rotation = this.gameObject.transform.rotation;
         thunderboltGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 5 + this.hitDetection.user.GetComponent<Player>().playerStats.skillPower * 0.1f, 0, 0, 0, null);
-        Destroy(thunderboltGO, 0.1f);
+        thunderboltGO.GetComponent<HitDetection>().SetProjectileTime(0.1f);
     }
 
     //21
@@ -63,9 +69,11 @@ public class Enchant : MonoBehaviour
             return;
 
         Debug.Log("Bomb");
-        GameObject explosionGO = Instantiate(ObjectPoolManager.instance.prefabs[8], gameObject.transform.position, gameObject.transform.rotation);
+        GameObject explosionGO = ObjectPoolManager.instance.Get2("Explosion");
+        explosionGO.transform.position = this.gameObject.transform.position;
+        explosionGO.transform.rotation = this.gameObject.transform.rotation;
         explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0, 0, 0, null);
-        Destroy(explosionGO, 0.5f);
+        explosionGO.GetComponent<HitDetection>().SetProjectileTime(0.3f);
     }
 
     #endregion Effect

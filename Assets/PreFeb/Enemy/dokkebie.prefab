@@ -70,6 +70,8 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
   hammerArea: {fileID: 2862370349361042020}
   defaultFireCoolTime: 10
 --- !u!114 &7671026463152467353
@@ -87,6 +89,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <poiseMax>k__BackingField: 40
+  <poise>k__BackingField: 40
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -254,6 +258,7 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!61 &1225111332828004709
 BoxCollider2D:
   m_ObjectHideFlags: 0

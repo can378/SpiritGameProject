@@ -7,14 +7,12 @@ public class LittleMonster : EnemyBasic
     
     public bool isEye;
     public bool isMouth;
-    public bool isDetection;
 
     public GameObject[] mouths;
 
     private bool isDetected;
 
-
-
+    
     protected override void MovePattern()
     {
         if (!enemyTarget)
@@ -30,34 +28,28 @@ public class LittleMonster : EnemyBasic
                 RandomMove();
             }
             //MOUTH
-            else if(isMouth==true)
+            else if (isMouth)
             {
-                if (isDetected == true) { Chase(); }
+                if (isDetected) { Chase(); }
                 else { RandomMove(); }
-                
             }
         }
-
     }
 
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player"&&isDetection==true)
+        //Detect player
+        if (collision.tag == "Player" && isEye)
         {
-            //Eye Screaming?
+            //Eye Screaming
             isDetected = true;
-            for(int i=0;i<mouths.Length;i++) 
+            for (int i = 0; i < mouths.Length; i++)
             {
                 mouths[i].GetComponent<LittleMonster>().isDetected = true;
             }
         }
-
-        //DAMAGE
-        if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
-        {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
-        }
+        base.OnTriggerEnter2D(collision);
     }
 }

@@ -61,9 +61,10 @@ public class RoomEnterExit : MonoBehaviour
         { 
             room.map.SetActive(true);
         }
-        
-        
 
+        //플레이어가 현재 있는 맵 위치
+        GameManager.instance.nowRoom = room.floorArea;
+        GameManager.instance.nowRoomScript = room;
     }
     void exitRoom()
     {

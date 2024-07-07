@@ -22,6 +22,8 @@ public class Room : MonoBehaviour
     [field: SerializeField] public bool left { get; private set; }
     [field: SerializeField] public bool right { get; private set; }
 
+    public GameObject floorArea;
+
     RoomManager roomManager;
     MapTemplates mapTemplates;
     MapType preMapType;
@@ -29,8 +31,8 @@ public class Room : MonoBehaviour
     
 
     void Start() {
-        roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
-        mapTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<MapTemplates>();
+        roomManager = FindObj.instance.roomManagerScript;
+        mapTemplates = FindObj.instance.roomManager.GetComponent<MapTemplates>();
 
         roomManager.rooms.Add(this.gameObject);
         

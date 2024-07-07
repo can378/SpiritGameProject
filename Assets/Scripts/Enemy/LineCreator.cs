@@ -36,7 +36,7 @@ public class LineCreator : MonoBehaviour
         isLaserBeamRun = true;
         transform.gameObject.SetActive(true);
         
-        target= GameObject.FindWithTag("Player").transform;
+        target= FindObj.instance.Player.transform;
         
 
 

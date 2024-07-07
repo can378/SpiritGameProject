@@ -13,8 +13,8 @@ public class ObjectSpawn : MonoBehaviour
 
     public void SpawnEnemy(MapType mapType)
     {
-        roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
-        enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
+        roomManager = FindObj.instance.roomManagerScript;
+        enemyTemplates = GameManager.instance.enemyTemplates;
         this.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, roomManager.roomSize);
 
         foreach (Transform enemyTransform in enemySpawnPoint)

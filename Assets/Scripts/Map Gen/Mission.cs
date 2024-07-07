@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum MissionType 
-{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse,Dream,Maze}
+{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse,Dream,Maze,LittleMonster}
 
 public class Mission : MonoBehaviour
 {
     public MissionType type;
-   
 
-    public float timeCondition;
 
+    public GameObject missionReward;
+    
 
     private ObjectSpawn spawn;
     private float time;
     private float playerFirstHP;
+    private bool isFail;
+   
 
-    [Header("TimeAttack, Dream")]
+    [Header("TimeAttack, Dream, LittleMonster")]
+    public float timeCondition;
     public GameObject clock;
 
     [Header("Curse")]
     public GameObject curse;
 
+    [Header("Maze")]
+    public bool isEscapeMaze;
 
 
     [HideInInspector]
@@ -32,49 +37,53 @@ public class Mission : MonoBehaviour
     private void Awake()
     {
         spawn = GetComponent<ObjectSpawn>();
+        isEscapeMaze = false;
+        isFail = false;
     }
 
     private void OnEnable()
     {
         time = 0;
         playerFirstHP = Player.instance.stats.HP;
+        
+
         StartCoroutine(CheckMissionEnd());
 
-        if(MissionType.Dream == type) 
+        //Start clock
+        if(MissionType.Dream == type || MissionType.LittleMonster==type || MissionType.TimeAttack==type) 
         { 
             StartCoroutine(clock.GetComponent<Clock>().ClockStart(timeCondition)); 
-            
         }
+
+        
     }
 
 
     //starts when the map is generated
     public IEnumerator CheckMissionEnd() 
     {
-        
+        time += Time.deltaTime;
         switch (type)
         {  
             case MissionType.NoHurt:
                 //hurts --> fail
                 if (Player.instance.stats.HP < playerFirstHP)
                 { 
-                    print("no hurt mission fail!!"); 
-                    roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                    print("fail");
+                    isFail = true;
+                    missionEnd();
                 }
                 //kill all of them --> end
-                if (KillAll()) 
-                { 
-                    roomScript.UnLockDoor();  
-                    StopCoroutine(CheckMissionEnd()); 
+                else if (KillAll()) 
+                {
+                    missionEnd();
                 }
                 break;
             case MissionType.KillAll:
             case MissionType.MiniBoss:
                 if (KillAll()) 
-                { 
-                    roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                {
+                    missionEnd();
                 }
                 break;
             case MissionType.KillAll2:
@@ -86,16 +95,14 @@ public class Mission : MonoBehaviour
                 }
                 if (KillAll())
                 {
-                    roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                    missionEnd();
                 }
                 break;
             case MissionType.Curse:
 
                 if (KillAll()) 
-                { 
-                    roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                {
+                    missionEnd();
                 }
                 else if(curse.transform.localScale.x>=0)
                 { 
@@ -104,26 +111,32 @@ public class Mission : MonoBehaviour
                 }
                 break;
             case MissionType.TimeAttack:
-                time += Time.deltaTime;
                 if (KillAll()) 
-                { roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                {
+                    missionEnd();
                 }
-                if (time > timeCondition&&KillAll()==false) 
+                else if (time > timeCondition) 
                 { 
-                    print("time attack mission fail!!!");
-                    roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                    print("fail");
+                    isFail = true;
+                    missionEnd();
                 }
                 break;
             case MissionType.Dream:
                 //ends over time
-                time += Time.deltaTime;
                 if (time > timeCondition) 
-                { 
-                    roomScript.UnLockDoor();
-                    StopCoroutine(CheckMissionEnd());
+                {
+                    missionEnd();
                 }
+                break;
+            case MissionType.LittleMonster:
+                if (time > timeCondition)
+                {
+                    missionEnd();
+                }
+                break;
+            case MissionType.Maze:
+                if (isEscapeMaze) { missionEnd(); }
                 break;
             default:
                 break;
@@ -139,5 +152,15 @@ public class Mission : MonoBehaviour
         { if (e.GetComponent<EnemyStats>().HP > 0) { return false; } }
         return true;
     }
+    private void missionEnd() 
+    {
+        if (!isFail)
+        {
+            missionReward.SetActive(true);
+        }
 
+        roomScript.UnLockDoor();
+        StopCoroutine(CheckMissionEnd());
+
+    }
 }

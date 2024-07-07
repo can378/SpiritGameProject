@@ -23,7 +23,7 @@ public class Player : ObjectBasic
     public bool rDown { get; private set; }                                 // 재장전
     public bool dDown { get; private set; }                                 // 회피
     public bool aDown { get; private set; }                                 // 공격
-    public bool siDown { get; private set; }                                // 선택 아이템
+    public bool siDown { get; private set; }                                // 선택 아이템 H
     public bool iDown { get; private set; }                                 // 상호작용
 
     public float skcDown { get; private set; }                              // 스킬 변경
@@ -33,14 +33,14 @@ public class Player : ObjectBasic
 
     public LayerMask layerMask;             //접근 불가한 레이어 설정
     public GameObject nearObject;
-    public GameObject playerItem;
+    //public GameObject playerItem;
 
     Vector2 playerPosition;
     Vector2 dodgeVec;
 
     public WeaponController weaponController;
     public SkillController skillController;
-    public GameObject[] equipmentList;
+    public Equipment[] equipmentList;
 
     protected override void Awake()
     {
@@ -75,13 +75,13 @@ public class Player : ObjectBasic
         }
         */
 
+        HealPoise();
         Turn();
-        Run();
+        //Run();
         Dodge();
         Move();
-        UseItem();
+        //UseItem();
         Interaction();
-        HalfDead();
 
         if (status.isAttackable)
         {
@@ -156,7 +156,7 @@ public class Player : ObjectBasic
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            rigid.velocity = moveVec * playerStats.moveSpeed * (status.isSprint ? 1 + playerStats.runSpeed : 1f);
+            rigid.velocity = moveVec * playerStats.moveSpeed;
         }
     }
 
@@ -191,6 +191,7 @@ public class Player : ObjectBasic
         status.isDodge = false;
     }
 
+    /*
     void Run()
     {
         if(isAttack || isFlinch || status.isSkillHold || status.isDodge)
@@ -203,6 +204,7 @@ public class Player : ObjectBasic
         status.runCurrentCoolTime -= Time.deltaTime;
         status.isSprint = status.runCurrentCoolTime <= 0 ? true : false;
     }
+    */
 
     #endregion
 
@@ -349,6 +351,7 @@ public class Player : ObjectBasic
 
         if (iDown && !isFlinch && !status.isDodge && !isAttack && !status.isSkill && !status.isSkillHold)
         {
+
             if (nearObject.tag == "SelectItem")
             {
                 GainSelectItem();
@@ -359,18 +362,24 @@ public class Player : ObjectBasic
             }
             else if (nearObject.tag == "Door")
             {
-                if (playerStats.key > 0) 
+                if (playerStats.key > 0)
                 {
                     playerStats.key--;
                     MapUIManager.instance.UpdateKeyUI();
-                    nearObject.GetComponent<Door>().DoorInteraction(); 
+                    nearObject.GetComponent<Door>().DoorInteraction();
                 }
-                
+
             }
             else if (nearObject.tag == "ShabbyWall")
             {
                 //open with bomb
                 //nearObject.GetComponent<Wall>().WallInteraction();
+            }
+            else if (nearObject.tag == "reward")
+            {
+                print("reward interaction");
+                nearObject.GetComponent<treasureBox>().Interaction();
+            
             }
         }
 
@@ -384,6 +393,8 @@ public class Player : ObjectBasic
     {
         SelectItem selectItem = nearObject.GetComponent<SelectItem>();
         bool gainItem = false;
+
+        //무기////////////////////////////////////////////////////////////////////
         if (selectItem.selectItemClass == SelectItemClass.Weapon)
         {
             if (playerStats.weapon != 0)
@@ -393,10 +404,12 @@ public class Player : ObjectBasic
             // 무기 장비
             gainItem = weaponController.EquipWeapon(selectItem.GetComponent<SelectItem>().selectItemID);
         }
+        //갑옷/////////////////////////////////////////////////////////////////////
         else if (selectItem.selectItemClass == SelectItemClass.Equipments)
         {
             gainItem = EquipEquipment(selectItem.GetComponent<SelectItem>().selectItemID);
         }
+        //스킬/////////////////////////////////////////////////////////////////////
         else if (selectItem.selectItemClass == SelectItemClass.Skill)
         {
 
@@ -408,8 +421,10 @@ public class Player : ObjectBasic
             gainItem = skillController.EquipSkill(selectItem.GetComponent<SelectItem>().selectItemID);
 
         }
-        else if(selectItem.selectItemClass == SelectItemClass.Consumable)
+        //일반 아이템/////////////////////////////////////////////////////////////////
+        else if(selectItem.selectItemClass == SelectItemClass.Consumable && selectItem.GetComponent<HPPortion>()!=null)
         {
+            /*
             //전에 가지고 있던 아이템 드랍
             if (playerItem != null)
             { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
@@ -420,12 +435,18 @@ public class Player : ObjectBasic
             playerItem.SetActive(false);
 
             MapUIManager.instance.updateItemUI(selectItem.gameObject);
+            */
+
+            //UseItem
+            selectItem.GetComponent<HPPortion>().UseItem(FindObj.instance.Player.GetComponent<Player>());
+            gainItem = true;
         }
 
         if(gainItem)
             Destroy(selectItem.gameObject);
     }
 
+    /*
     void UseItem()
     {
         if (siDown && playerItem != null)
@@ -446,11 +467,11 @@ public class Player : ObjectBasic
             MapUIManager.instance.updateItemUI(null);
             playerItem = null;
             playerStats.item = 0;
-
         }
-
     }
-    
+    */
+
+
     // 장착할 장비의 index
     public bool EquipEquipment(int equipmentId)
     {
@@ -458,13 +479,13 @@ public class Player : ObjectBasic
 
         for(int i = 0 ; i < playerStats.equipments.Length ; i++)
         {
-            if(playerStats.equipments[i] == true)
+            // 중복 장착 불가
+            if (playerStats.equipments[i] == equipmentId && playerStats.equipments[i] != 0)
+                break;
+            if (playerStats.equipments[i] != 0)
                 continue;
 
-            playerStats.equipments[i] = Instantiate(equipmentList[equipmentId]).GetComponent<Equipment>();
-            playerStats.equipments[i].gameObject.SetActive(true);
-            playerStats.equipments[i].transform.SetParent(transform.Find("Equipment"));
-            playerStats.equipments[i].Equip(this.gameObject.GetComponent<Player>());
+            playerStats.equipments[i] = equipmentId;
             equipOK = true;
             break;
         }
@@ -472,7 +493,8 @@ public class Player : ObjectBasic
         if(!equipOK)
             return false;
 
-        //MapUIManager.instance.UpdateEquipmentUI();
+        equipmentList[equipmentId].gameObject.SetActive(true);
+        equipmentList[equipmentId].Equip(this.gameObject.GetComponent<Player>());
 
         return true;
     }
@@ -480,20 +502,18 @@ public class Player : ObjectBasic
     // 현재 장착한 장비 중 해제할 index
     public bool UnEquipEquipment(int index)
     {
-        if(playerStats.equipments[index] != true)
+        if (playerStats.equipments[index] == 0)
             return false;
 
         // 현재 위치에 장비를 놓는다.
-        Instantiate(GameData.instance.equipmentList[playerStats.equipments[index].GetComponent<Equipment>().selectItemID], gameObject.transform.position, gameObject.transform.localRotation);
+        Instantiate(GameData.instance.equipmentList[playerStats.equipments[index]], gameObject.transform.position, gameObject.transform.localRotation);
 
         // 무기 능력치 해제
-        playerStats.equipments[index].UnEquip(this.gameObject.GetComponent<Player>());
+        equipmentList[playerStats.equipments[index]].UnEquip(this.gameObject.GetComponent<Player>());
+        equipmentList[playerStats.equipments[index]].gameObject.SetActive(false);
 
-        // 삭제
-        Destroy(playerStats.equipments[index].gameObject);
-
-        // 초기화
-        playerStats.equipments[index] = null;
+        // 무기 해제
+        playerStats.equipments[index] = 0;
         //MapUIManager.instance.UpdateEquipmentUI();
         return true;
     }
@@ -536,7 +556,8 @@ public class Player : ObjectBasic
 
             playerStats.coin = DataManager.instance.userData.playerCoin;
             playerStats.key = DataManager.instance.userData.playerKey;
-
+            
+            /*
             //아이템
             if(playerItemName != 0)
             {
@@ -551,6 +572,8 @@ public class Player : ObjectBasic
                     }
                 }
             }
+            */
+
             // 무기
             if (playerWeapon != 0)
             {
@@ -661,7 +684,7 @@ public class Player : ObjectBasic
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc")
+        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc" || other.tag=="reward")
         {
             if(nearObject == null || Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, nearObject.transform.position))
             {
@@ -679,37 +702,6 @@ public class Player : ObjectBasic
 
     // 상태 관련
     #region Effect
-
-    /*
-    //적에게 피격
-    public void EnemyAttack(GameObject attacker)
-    {
-        if (status.isInvincible)
-        {
-            return;
-        }
-
-        HitDetection hitDetection = attacker.GetComponent<HitDetection>();
-
-
-        Damaged(hitDetection.damage);
-
-        KnockBack(attacker.gameObject, hitDetection.knockBack);
-
-        if(FlinchCoroutine != null) StopCoroutine(FlinchCoroutine);
-        FlinchCoroutine = StartCoroutine(Flinch(0.3f));
-
-        Invincible(0.1f);
-
-        if (hitDetection.statusEffect != null)
-        {
-            foreach (int statusEffectIndex in hitDetection.statusEffect)
-            {
-                ApplyBuff(GameData.instance.statusEffectList[statusEffectIndex]);
-            }
-        }
-    }
-    */
     
     // 피해
     public override void Damaged(float damage, float critical = 0, float criticalDamage = 0)
@@ -725,107 +717,6 @@ public class Player : ObjectBasic
         MapUIManager.instance.diePanel.SetActive(true);
         base.Dead();
     }
-    /*
-    void DamagedOut()
-    {
-        sprite.color = Color.white;
-    }
-
-    // 뒤로 밀려남
-    public void KnockBack(GameObject agent, float distance = 10)
-    {
-        Vector2 dir = (transform.position - agent.transform.position).normalized;
-
-        rigid.AddForce(dir * (distance * (1 - playerStats.defensivePower)), ForceMode2D.Impulse);
-    }
-
-    // 경직됨(움직일 수 없음)
-    public IEnumerator Flinch(float time = 0)
-    {
-        status.isFlinch = true;
-
-        yield return new WaitForSeconds(time);
-
-        status.isFlinch = false;
-    }
-
-    // 무적(적 공격 무시)
-    public void Invincible(float time = 0)
-    {
-        status.isInvincible = true;
-        int layerNum = LayerMask.NameToLayer("Invincible");
-        this.layerMask = layerNum;
-        sprite.color = new Color(1, 1, 1, 0.4f);
-        Invoke("InvincibleOut", time);
-    }
-
-    void InvincibleOut()
-    {
-        //무적 해제
-        sprite.color = new Color(1, 1, 1, 1);
-        this.layerMask = LayerMask.NameToLayer("Player");
-        status.isInvincible = false;
-    }
-
-    void Dead()
-    {
-        Debug.Log("player dead");
-        DataManager.instance.InitData();
-        DataManager.instance.SaveUserData();
-        MapUIManager.instance.diePanel.SetActive(true);
-    }
-
-    public void ApplyBuff(GameObject effect)
-    {
-        // 가지고 있는 버프인지 체크한다.
-        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
-        foreach (StatusEffect buff in playerStats.activeEffects)
-        {
-            // 가지고 있는 버프라면 갱신한다.
-            if (buff.buffId == statusEffect.buffId)
-            {
-                buff.ResetEffect();
-                return;
-            }
-        }
-        
-        // 가지고 있는 버프가 아니라면 새로 추가한다.
-        GameObject Buff = Instantiate(effect);
-        statusEffect = Buff.GetComponent<StatusEffect>();
-        statusEffect.SetTarget(gameObject);
-
-        statusEffect.ApplyEffect();
-        playerStats.activeEffects.Add(statusEffect);
-        
-        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
-    }
-
-    IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(0.1f);
-            effect.duration -= 0.1f;
-            if(effect.duration <= 0)
-            {
-                break;
-            }
-        }
-        effect.RemoveEffect();
-        playerStats.activeEffects.Remove(effect);
-
-        Destroy(effect.gameObject);
-    }
-
-    public void RemoveAllEffects()
-    {
-        foreach (StatusEffect effect in playerStats.activeEffects)
-        {
-            effect.RemoveEffect();
-        }
-        playerStats.activeEffects.Clear();
-    }
-    */
 
     #endregion
 

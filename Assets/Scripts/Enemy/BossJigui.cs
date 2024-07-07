@@ -7,8 +7,12 @@ public class BossJigui : EnemyBasic
 {
     public GameObject fire;
     public GameObject eyeSight;
-    private bool isTouchPlayer=true;
 
+    private void Start()
+    {
+        base.Start();
+        isTouchPlayer = false;
+    }
     protected override void AttackPattern()
     {
         eyeSight.SetActive(true);

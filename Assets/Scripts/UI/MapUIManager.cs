@@ -74,10 +74,10 @@ public class MapUIManager : MonoBehaviour
         //UpdateWeaponUI();
         //UpdateSkillUI();
         //UpdatePointUI();
-        if (Player.instance.playerStats.item == 0)
-        { updateItemUI(null); }
+        //if (Player.instance.playerStats.item == 0)
+        //{ updateItemUI(null); }
 
-        setUpgradePanel();
+        //setUpgradePanel();
     }
 
     void Update()
@@ -113,15 +113,16 @@ public class MapUIManager : MonoBehaviour
         else { Time.timeScale = 1f; }
     }
 
-    void FixedUpdate() {
+    void FixedUpdate() 
+    {
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();
         UpdateStatUI();
         UpdateSkillUI();
         UpdateInventoryUI();
-        if (Player.instance.playerStats.item == 0)
-        { updateItemUI(null); }
+        //if (Player.instance.playerStats.item == 0)
+        //{ updateItemUI(null); }
         UpdateNearObjectUI();
     }
 
@@ -179,6 +180,7 @@ public class MapUIManager : MonoBehaviour
     }
     */
 
+    /*
     public void updateItemUI(GameObject obj) 
     {
         if (obj != null)
@@ -188,6 +190,7 @@ public class MapUIManager : MonoBehaviour
         else { itemImg.GetComponent<Image>().sprite = null; }
 
     }
+    */
 
     public void UpdateSkillUI()
     {
@@ -224,8 +227,8 @@ public class MapUIManager : MonoBehaviour
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
-            if (Player.instance.playerStats.equipments[i] == true)
-                IevenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i].GetComponent<Equipment>().selectItemID].GetComponentInChildren<SpriteRenderer>().sprite;
+            if (Player.instance.playerStats.equipments[i] != 0)
+                IevenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i]].GetComponentInChildren<SpriteRenderer>().sprite;
             else
                 IevenEquipmentsImage[i].GetComponent<Image>().sprite = null;
         }

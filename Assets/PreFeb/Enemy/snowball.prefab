@@ -64,9 +64,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0153265, y: 0.0019158125}
+  m_Offset: {x: 0.006587863, y: -0.2189129}
   serializedVersion: 2
-  m_Radius: 0.62835765
+  m_Radius: 0.38561457
 --- !u!1 &3899082299174955267
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,9 +77,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4771821430859408182}
   - component: {fileID: 8189220749486769636}
+  - component: {fileID: 6805283559688333167}
   - component: {fileID: 1970378815811846781}
   - component: {fileID: 7037800743473113150}
-  - component: {fileID: 6805283559688333167}
   - component: {fileID: 6357870973008652518}
   m_Layer: 8
   m_Name: snowball
@@ -157,6 +157,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6805283559688333167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3899082299174955267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a60b986c97feb746a7bb45b603db0c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  defaultLayer: 0
+  moveVec: {x: 0, y: 0}
+  isFlinch: 0
+  isInvincible: 0
+  deadDelay: 0
+  isAttack: 0
+  isAttackReady: 1
+  hitTarget: {fileID: 0}
+  sprite: {fileID: 0}
+  rigid: {fileID: 0}
+  isRun: 0
+  randomMove: 0
+  enemyStats: {fileID: 0}
+  detectEnemy:
+    serializedVersion: 2
+    m_Bits: 8
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
+  isTouchPlayer: 0
+  hitDetection: {fileID: 0}
+  snowballHitDetection: {fileID: 5533794121055610907}
 --- !u!114 &1970378815811846781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +207,7 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
+  <revivalStock>k__BackingField: 0
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -226,40 +262,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.67
---- !u!114 &6805283559688333167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3899082299174955267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a60b986c97feb746a7bb45b603db0c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  deadDelay: 0
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
-  sprite: {fileID: 0}
-  rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 8
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  snowballHitDetection: {fileID: 5533794121055610907}
+  m_Radius: 0.6565143
 --- !u!50 &6357870973008652518
 Rigidbody2D:
   serializedVersion: 4
@@ -338,12 +341,13 @@ MonoBehaviour:
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
+  <damage>k__BackingField: 5
   <knockBack>k__BackingField: 0
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
+  isHit: 0
 --- !u!58 &8785902024154056473
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -376,9 +380,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.003371358, y: -0.006742835}
   serializedVersion: 2
-  m_Radius: 0.67
+  m_Radius: 0.64977145
 --- !u!50 &2164266715612272491
 Rigidbody2D:
   serializedVersion: 4

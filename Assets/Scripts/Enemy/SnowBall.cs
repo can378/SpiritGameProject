@@ -21,12 +21,14 @@ public class SnowBall : EnemyBasic
             size += Time.deltaTime * 0.1f;
         }
 
-        if(hitTarget)
+        if(isTouchPlayer)
         {
+            print("snowball hit");
             isHit = true;
+            isTouchPlayer= false;
             if (size >= 1f)
             {
-                size -= 1f;
+                size = 1f;
             }
             else
             {
@@ -35,6 +37,7 @@ public class SnowBall : EnemyBasic
         }
 
         transform.localScale = new Vector3(size, size, 1f);
+        snowballHitDetection.gameObject.transform.localScale = new Vector3(size, size, 1f);
         enemyStats.increasedAttackPower = size - 1f;
         snowballHitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * size, 10, 0, 0, null);
 
@@ -59,7 +62,7 @@ public class SnowBall : EnemyBasic
         yield return new WaitForSeconds(0.6f);
 
         moveVec = targetDirVec * 5;
-        for(int i = 0; i < 10 ;i++)
+        for(int i = 0; i < 20 ;i++)
         {
             moveVec -= moveVec * 0.1f;
             if(isHit)

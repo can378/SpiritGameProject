@@ -8,7 +8,7 @@ public class BossShadowDummy : EnemyBasic
 
     protected override void MovePattern()
     {
-        moveVec = (GameObject.FindWithTag("Player").gameObject.transform.position - transform.position).normalized;
+        moveVec = (enemyTarget.position - transform.position).normalized;
     }
     protected override void AttackPattern()
     {
@@ -26,5 +26,10 @@ public class BossShadowDummy : EnemyBasic
         yield return new WaitForSeconds(3f);
         isAttackReady = true;
 
+    }
+
+    public override void Dead()
+    {
+        gameObject.SetActive(false);
     }
 }

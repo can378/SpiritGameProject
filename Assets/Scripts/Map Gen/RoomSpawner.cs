@@ -23,8 +23,8 @@ public class RoomSpawner : MonoBehaviour
     void Start()
     {
         Destroy(gameObject,5f);
-        templates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomTemplates>();
-        roomManager = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<RoomManager>();
+        templates = FindObj.instance.roomManager.GetComponent<RoomTemplates>();
+        roomManager = FindObj.instance.roomManagerScript;
 
         limitArea = roomManager.area * roomManager.roomSize * 10;
         roomSize = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);

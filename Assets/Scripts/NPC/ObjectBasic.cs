@@ -16,7 +16,6 @@ public class ObjectBasic : MonoBehaviour
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public Coroutine flinchCoroutine;
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
-    public float deadDelay = 0;
 
     // 공격 관련 
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
@@ -49,10 +48,15 @@ public class ObjectBasic : MonoBehaviour
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
-        if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
-        flinchCoroutine = StartCoroutine(Flinch(0.3f));
+        // 강인도가 0이 될 시 경직되고 넉백
+        if(DamagedPoise(hitDetection.damage))
+        {
+            Debug.Log(gameObject.name + ":Flinch");
+            if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
+            flinchCoroutine = StartCoroutine(Flinch(0.5f));
 
-        KnockBack(hitDetection.gameObject, hitDetection.knockBack);
+            KnockBack(hitDetection.gameObject, hitDetection.knockBack);
+        }
 
         //Invincible(0.1f);
 
@@ -73,8 +77,11 @@ public class ObjectBasic : MonoBehaviour
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
 
-        Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
-        stats.HP = Mathf.Clamp(stats.HP - ((1 - stats.defensivePower) * damage), 0,stats.HPMax);
+        //Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        stats.HP = Mathf.Min(stats.HP - ((1 - stats.defensivePower) * damage), stats.HPMax);
+
+        if(stats.HP <= 0)
+            Dead();
 
         sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
 
@@ -84,6 +91,27 @@ public class ObjectBasic : MonoBehaviour
     protected virtual void DamagedOut()
     {
         sprite.color = Color.white;
+    }
+
+    public bool DamagedPoise(float damage)
+    {
+        if(isInvincible)
+            return false;
+
+        stats.poise = Mathf.Min(stats.poise - ((1 - stats.defensivePower) * damage), stats.poiseMax);
+
+        if(stats.poise <= 0)
+        {
+            stats.poise = stats.poiseMax;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void HealPoise()
+    {
+        stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 2f, stats.poiseMax);
     }
 
     public void KnockBack(GameObject agent, float knockBack)
@@ -223,36 +251,12 @@ public class ObjectBasic : MonoBehaviour
         stats.activeEffects.Clear();
     }
 
-    // 빈사 상태로
-    // 회복되면 죽지 않음
-    protected void HalfDead()
-    {
-        if (stats.HP > 0 && deadDelay == 0)
-            return;
-
-        isFlinch = true;
-        isInvincible = true;
-        //StopAllCoroutines();
-        deadDelay += Time.deltaTime;
-
-        if(deadDelay >= 5f && stats.HP <= 0)
-            Dead();
-        else if (deadDelay >= 5f && 0 < stats.HP)
-        {
-            isFlinch = false;
-            isInvincible = false;
-            deadDelay = 0f;
-        }
-            
-
-
-    }
-
     // 완전 죽음
     public virtual void Dead()
     {
         print(this.name + " Dead");
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+        //Destroy(this.gameObject);
     }
 
     #endregion

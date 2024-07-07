@@ -41,7 +41,7 @@ public class PathFinding : MonoBehaviour
         instance = this;
         seekerSpeed = 30;
         grid = GameObject.Find("AGridManager").GetComponent<AGrid>();
-        target=GameObject.FindWithTag("Player").GetComponent<Transform>();
+        target=FindObj.instance.Player.transform;
         seeker = this.transform;
         //grid = GetComponent<AGrid>();
     }
@@ -77,7 +77,7 @@ public class PathFinding : MonoBehaviour
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
 
-        print("a star1");
+        //print("a star1");
 
         bool pathSuccess = false;// target에 도착여부
 
@@ -88,7 +88,7 @@ public class PathFinding : MonoBehaviour
         //길 찾기
         if (targetNode.walkable)
         {
-            print("a star2");
+            //print("a star2");
             List<ANode> openSet = new List<ANode>(); //계산한 노드
             HashSet<ANode> closedSet = new HashSet<ANode>();//계산할 노드
 
@@ -125,7 +125,7 @@ public class PathFinding : MonoBehaviour
                     pathSuccess = true;
                     break;
                 }
-                print("a star3");
+                //print("a star3");
                 // current의 상하좌우 노드들에 대하여 g,h cost를 고려한다.
                 foreach (ANode neighbour in grid.GetNeighbours(currentNode))
                 {
@@ -149,7 +149,7 @@ public class PathFinding : MonoBehaviour
         }
         else //목적지에 도달할 수 없을경우 way갱신 안함
         {
-            print("a star4");
+            //print("a star4");
             Vector3 origin = seeker.transform.position;
             while (true)
             {
@@ -163,7 +163,7 @@ public class PathFinding : MonoBehaviour
         
         yield return null;
 
-        print("a star5");
+        //print("a star5");
 
         // 길을 찾은 후 이동
         if (pathSuccess == true)

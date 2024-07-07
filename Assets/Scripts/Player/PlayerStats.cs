@@ -81,6 +81,9 @@ public class PlayerStats : Stats
     }
 
     // Move
+
+    // 달리기 폐기
+    /*
     // RunSpeed
     // UI 달리기 시 이동속도 50%
     // 달리기 시 속도
@@ -95,6 +98,7 @@ public class PlayerStats : Stats
         get { return Mathf.Clamp((defaultRunSpeed + addRunSpeed) * (1f + increasedRunSpeed) * (1f - decreasedRunSpeed), 0f, 3f); }
     }
 
+    
     //RunCoolTime
     // 달리기 재사용 대기 시간
     // UI : 달리기 재사용 대기 시간 5초
@@ -108,6 +112,7 @@ public class PlayerStats : Stats
     {
         get { return Mathf.Clamp((defaultRunCoolTime + addRunCoolTime) * (1f + increasedRunCoolTime) * (1f - decreasedRunCoolTime), 0f, 10f); }
     }
+    */
 
     // Dodge
     // 회피 속도
@@ -135,6 +140,10 @@ public class PlayerStats : Stats
         get { return Mathf.Clamp((defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime), 0.1f, 0.8f); }
     }
 
+    //n초간 실명
+    //-->cameraManager에서 효과적용
+    public float blind;
+
     //Item
     public int coin = 0;
     public int key = 0;
@@ -148,7 +157,7 @@ public class PlayerStats : Stats
     public int[] skill = {0, 0, 0, 0, 0};
 
     public int maxEquipment = 3;
-    public Equipment[] equipments = new Equipment[3];
+    public int[] equipments = new int[3];
 
     //Stat
     public int[] playerStat = new int[8];

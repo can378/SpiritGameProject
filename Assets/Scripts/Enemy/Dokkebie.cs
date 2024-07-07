@@ -8,7 +8,13 @@ public class Dokkebie : EnemyBasic
     [SerializeField] int defaultFireCoolTime;
     float fireCoolTime = 0;
 
-    //도깨비불을 쏘면서 천천히 다가옴
+
+    private void Start()
+    {
+        base.Start();
+        hitDetection = hammerArea.GetComponent<HitDetection>();
+        hitDetection.user = this.gameObject;
+    }
 
     protected override void Update()
     {
@@ -19,7 +25,7 @@ public class Dokkebie : EnemyBasic
     protected override void MovePattern()
     {
         // 적이 공격 사정거리 내에 있을 시
-        if (targetDis >= 5f)
+        if (targetDis > 5f)
         {
             Chase();
         }
@@ -43,11 +49,14 @@ public class Dokkebie : EnemyBasic
 
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
-        Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
-        
-        yield return new WaitForSeconds(1f);
+        GameObject bullet = ObjectPoolManager.instance.Get2("dokabbiFire");
+        bullet.transform.position = transform.position;
+        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized, ForceMode2D.Impulse);
+        //Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
+
+        yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
         isAttackReady = true;
@@ -56,21 +65,19 @@ public class Dokkebie : EnemyBasic
 
     IEnumerator Hammer()
     {
-        HitDetection hitDetection;
-        Vector3 hitDir = targetDirVec;
-
+        
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
-        hitDetection = hammerArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
+       
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
-        hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
+        hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
         hammerArea.SetActive(true);
-        yield return new WaitForSeconds(2f);
-
+        yield return new WaitForSeconds(1.5f);
         hammerArea.SetActive(false);
+
+
         isAttack = false;
         isAttackReady = true;
     }

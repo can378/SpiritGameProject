@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &146938879965455529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5990749010697458930}
+  - component: {fileID: 3268479786500307209}
+  m_Layer: 6
+  m_Name: 02_SpinAttack
+  m_TagString: SelectItem
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5990749010697458930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146938879965455529}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3268479786500307209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146938879965455529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd5da91295a6e4aa78c0b0d4b6c701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <selectItemClass>k__BackingField: 3
+  <selectItemID>k__BackingField: 2
+  <selectItemName>k__BackingField: "\uD68C\uC804\uBCA0\uAE30"
+  <price>k__BackingField: 0
+  <selectItemRating>k__BackingField: 0
+  <skillType>k__BackingField: 2
+  <skillLimit>k__BackingField: 0000000002000000
+  <maxHoldTime>k__BackingField: 5
+  <preDelay>k__BackingField: 0
+  <postDelay>k__BackingField: 0.5
+  <skillDefalutCoolTime>k__BackingField: 5
+  <skillCoolTime>k__BackingField: 0
+  <user>k__BackingField: {fileID: 0}
+  defalutDamage: 10
+  ratio: 1
+  maxHoldPower: 2
+  size: 5
+  time: 0.3
+  spinPrefab: {fileID: 8986035067505207802, guid: 91aa2908377a19946af27e0c84c3978e, type: 3}
+  spinSimulPrefab: {fileID: 8986035067505207802, guid: 9e138b0cb8e23a34daf5cad3cae5bc48, type: 3}

@@ -18,25 +18,30 @@ public class EnemyBasic : ObjectBasic
     // 벡터 -> rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90)
     public float targetDis;             // 적과의 거리
 
+    [HideInInspector]
+    public bool isTouchPlayer;
     //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
-
+    [HideInInspector]
+    public HitDetection hitDetection;
 
     protected override void Awake()
     {
-        base.Awake();
-        enemyTarget = GameObject.FindWithTag("Player").gameObject.transform;//이거 넣으면 안되는거야?
+        base.Awake();       
         stats = enemyStats = GetComponent<EnemyStats>();
-
         defaultLayer = this.gameObject.layer;
     }
 
+    protected void Start()
+    {
+        enemyTarget = FindObj.instance.Player.transform;
+    }
 
     protected virtual void Update()
     {
+        HealPoise();
         Attack();
         Move();
         Detect();
-        HalfDead();
     }
 
 
@@ -75,7 +80,7 @@ public class EnemyBasic : ObjectBasic
             // 타겟 유지 거리가 양수 이고 타겟이 유지거리보다 멀리 있다면 타겟 해제
             if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < targetDis)
             {
-                enemyTarget = null;
+                //enemyTarget = null; //이것이 있는이유는?
                 return;
             }
             return;
@@ -183,6 +188,11 @@ public class EnemyBasic : ObjectBasic
         {
             BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
+        isTouchPlayer= false;
+        if (collision.tag == "Player")
+        {
+            isTouchPlayer = true;
+        }
     }
 
     public override void Dead()
@@ -194,7 +204,8 @@ public class EnemyBasic : ObjectBasic
 
         //enemy disappear
         StopAllCoroutines();
-        //this.gameObject.SetActive(false);
+        
+
         base.Dead();
     }
 

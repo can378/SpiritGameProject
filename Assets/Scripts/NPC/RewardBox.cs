@@ -91,10 +91,4 @@ public class RewardBox : NPCbasic
 
         isOpen = true;
     }
-
-    public override void Dead()
-    {
-        Break();
-        base.Dead();
-    }
 }

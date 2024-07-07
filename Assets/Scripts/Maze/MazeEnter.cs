@@ -11,26 +11,29 @@ public class MazeEnter : MonoBehaviour
     //public Vector2 mazePos;
 
     private GameObject mazeInst=null;
+    private GameObject roomParent=null;
 
     void Start()
     {
-        
+        roomParent = GameObject.FindWithTag("roomParent");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             if (mazePortal == mazePortal.enter)
             {
 
-                foreach (Transform child in GameObject.FindWithTag("roomParent").transform)
+                foreach (Transform child in roomParent.transform)
                 {
                     child.gameObject.SetActive(false);
                 }
 
                 //generate maze
                 mazeInst = Instantiate(maze);
+                
+                
                 //mazeInst.transform.position = mazePos;
                 //mazeInst.GetComponent<MazeGenerator>().GenerateMaze();
                 //GameObject.FindWithTag("Maze").transform.position = mazePos;
@@ -45,19 +48,32 @@ public class MazeEnter : MonoBehaviour
                 CameraManager.instance.CameraMove(collision.gameObject);
                 CameraManager.instance.CenterMove(collision.gameObject);
                 CameraManager.instance.mapSize = new Vector2(25, 25);
+
+                
+                gameObject.GetComponent<Collider2D>().enabled = false;
+
             }
             else if(mazePortal==mazePortal.exit)
             {
-                foreach (Transform child in GameObject.FindWithTag("roomParent").transform)
+                foreach (Transform child in roomParent.transform)
                 {
                     child.gameObject.SetActive(true);
                 }
 
                 //entrance disabled
-                GameObject.FindWithTag("MazeEntrance").GetComponent<CircleCollider2D>().enabled = false;
+                
+                //GameObject.FindWithTag("MazeEntrance").SetActive(false);
+                //GetComponent<CircleCollider2D>().enabled = false;
+
+
+                GameObject.FindWithTag("Maze").SetActive(false);
+                GameObject.FindWithTag("MazeBgr").SetActive(false);
+
 
                 //player move
-                collision.transform.position = GameObject.FindWithTag("MazeEntrance").transform.position;
+                Vector3 backToMap = new Vector3(5, 0, 0);
+                collision.transform.position = GameManager.instance.nowRoom.transform.position+ backToMap;
+
 
                 //camera move
                 CameraManager.instance.CameraMove(collision.gameObject);
@@ -65,8 +81,7 @@ public class MazeEnter : MonoBehaviour
                 CameraManager.instance.mapSize = new Vector2(15, 15);
 
 
-                GameObject.FindWithTag("Maze").SetActive(false);
-                GameObject.FindWithTag("MazeBgr").SetActive(false);
+                GameManager.instance.nowRoomScript.map.GetComponent<Mission>().isEscapeMaze = true;
 
             }
             
