@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class StatusEffect : MonoBehaviour
 {
-    [field: SerializeField] public GameObject icon { get; private set; }
+    [field: SerializeField] public Image icon { get; private set; }
     [field: SerializeField] public GameObject target { get; private set; }
     [field: SerializeField] public int buffId { get; private set; }
     [field: SerializeField] public float defaultDuration { get; private set; }          // 기본 시간
@@ -13,7 +14,13 @@ public abstract class StatusEffect : MonoBehaviour
     [field: SerializeField] public int maxOverlap { get; protected set; }             // 최대 중첩
     [field: SerializeField] public int overlap { get; protected set; }                // 현재 중첩
 
+    void Awake()
+    {
+        icon = GetComponent<Image>();
+    }
+
     void Update() {
+        icon.fillAmount = duration / defaultDuration;
         if(this.target == null)
             Destroy(this.gameObject);
     }

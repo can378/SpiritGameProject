@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class OverlapDamageBuff : StatusEffect
 {
     [field: SerializeField] public float damagePer { get; set; }
+    public TMP_Text overlapText;
     // 최대 중첩 시 피해를 주고 제거되는 디버프
     // 저항에 따라 피해량이 감소
     
@@ -15,7 +18,8 @@ public class OverlapDamageBuff : StatusEffect
     public override void ResetEffect()     //갱신
     {
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
-
+        overlapText.text = overlap.ToString();
+        
         Stats stats = target.GetComponent<Stats>();
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;
         if (overlap == maxOverlap)
