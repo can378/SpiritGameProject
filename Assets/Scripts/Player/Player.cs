@@ -663,7 +663,8 @@ public class Player : ObjectBasic
             }
             else if (item.itemClass == ItemClass.Key)
             {
-                Destroy(other.gameObject); //키 오브젝트 삭제
+                print("get key");
+                other.gameObject.SetActive(false); //키 오브젝트 삭제
                 playerStats.key++;
                 MapUIManager.instance.UpdateKeyUI();
             }

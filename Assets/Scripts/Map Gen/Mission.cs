@@ -43,19 +43,7 @@ public class Mission : MonoBehaviour
 
     private void OnEnable()
     {
-        time = 0;
-        playerFirstHP = Player.instance.stats.HP;
-        
-
-        StartCoroutine(CheckMissionEnd());
-
-        //Start clock
-        if(MissionType.Dream == type || MissionType.LittleMonster==type || MissionType.TimeAttack==type) 
-        { 
-            StartCoroutine(clock.GetComponent<Clock>().ClockStart(timeCondition)); 
-        }
-
-        
+        startMission();
     }
 
 
@@ -67,15 +55,16 @@ public class Mission : MonoBehaviour
         {  
             case MissionType.NoHurt:
                 //hurts --> fail
-                if (Player.instance.stats.HP < playerFirstHP)
+                if (FindObj.instance.Player.GetComponent<PlayerStats>().HP < playerFirstHP)
                 { 
-                    print("fail");
+                    print("nohurt mission fail");
                     isFail = true;
                     missionEnd();
                 }
                 //kill all of them --> end
                 else if (KillAll()) 
                 {
+                    print("no hurt mission success");
                     missionEnd();
                 }
                 break;
@@ -145,7 +134,20 @@ public class Mission : MonoBehaviour
         yield return null;
         StartCoroutine(CheckMissionEnd());
     }
+    public void startMission() 
+    {
+        time = 0;
+        playerFirstHP = FindObj.instance.Player.GetComponent<PlayerStats>().HP;
 
+
+        StartCoroutine(CheckMissionEnd());
+
+        //Start clock
+        if (MissionType.Dream == type || MissionType.LittleMonster == type || MissionType.TimeAttack == type||MissionType.NoHurt==type)
+        {
+            StartCoroutine(clock.GetComponent<Clock>().ClockStart(timeCondition));
+        }
+    }
     private bool KillAll()
     {
         foreach (GameObject e in spawn.enemys)

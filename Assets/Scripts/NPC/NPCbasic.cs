@@ -15,6 +15,7 @@ public class NPCbasic : MonoBehaviour
     public int side = 0;    // 0 : 중립, 1 : 아군, 2 : 적군
     int index = 0;
 
+
     protected ScriptManager scriptManager;
 
     void Awake()
@@ -27,7 +28,7 @@ public class NPCbasic : MonoBehaviour
     //대화
     public virtual void Conversation()
     {
-        
+        isTalking = true;
         DialogPanel.SetActive(true);
 
         if (scriptManager.NPCScript(chapter, index) == "border")
@@ -49,6 +50,7 @@ public class NPCbasic : MonoBehaviour
 
     public virtual void ConversationOut()
     {
+        isTalking=false;
         DialogPanel.SetActive(false);
     }
 
