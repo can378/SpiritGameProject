@@ -121,7 +121,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5010716150790602935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,8 +387,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3029291629179971795}
-  - component: {fileID: 7952477311643125970}
-  - component: {fileID: 6118769548461374680}
   - component: {fileID: 6471495479911220435}
   m_Layer: 0
   m_Name: Buff
@@ -416,44 +414,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.39}
   m_SizeDelta: {x: 3, y: 0.4}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &7952477311643125970
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8280763369752395960}
-  m_CullTransparentMesh: 1
---- !u!114 &6118769548461374680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8280763369752395960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0.56078434}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &6471495479911220435
 MonoBehaviour:
   m_ObjectHideFlags: 0

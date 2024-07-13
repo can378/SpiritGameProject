@@ -18,7 +18,7 @@ public class OverlapDamageBuff : StatusEffect
     public override void ResetEffect()     //°»½Å
     {
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
-        overlapText.text = overlap.ToString();
+        overlapText.text = overlap > 1 ? overlap.ToString() : null;
         
         Stats stats = target.GetComponent<Stats>();
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;

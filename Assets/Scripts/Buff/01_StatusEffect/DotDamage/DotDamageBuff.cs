@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DotDamageBuff : StatusEffect
 {
@@ -8,7 +9,7 @@ public class DotDamageBuff : StatusEffect
     // dotDamage가 양수이면 피해
     // 음수이면 힐
     [field: SerializeField] public float damageSecond { get; set; }
-
+    [field: SerializeField] public TMP_Text overlapText { get; private set; }
     public override void ApplyEffect()
     {
         // 주기적으로 피해를 입히는 코루틴 시작
@@ -27,6 +28,7 @@ public class DotDamageBuff : StatusEffect
     {
         // 중첩 
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+        overlapText.text = overlap > 1 ? overlap.ToString() : null;
 
         Stats stats = target.GetComponent<Stats>();
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;

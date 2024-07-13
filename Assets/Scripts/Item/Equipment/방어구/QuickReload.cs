@@ -26,7 +26,7 @@ public class QuickReload : Equipment
             AttackSpeedBuff ASBSE = attackSpeedBuff.GetComponent<AttackSpeedBuff>();
             ASBSE.SetDefaultDuration(2f);
             ASBSE.increasedAttackSpeed = 0.5f;
-            user.ApplyBuff(attackSpeedBuff);
+            //user.ApplyBuff(attackSpeedBuff);
         }
         else if(isQuick && !user.status.isReload)
         {

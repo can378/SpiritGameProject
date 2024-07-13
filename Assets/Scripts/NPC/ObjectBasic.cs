@@ -16,6 +16,7 @@ public class ObjectBasic : MonoBehaviour
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public Coroutine flinchCoroutine;
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
+    public Transform buffTF;
 
     // 공격 관련 
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
@@ -93,6 +94,12 @@ public class ObjectBasic : MonoBehaviour
         sprite.color = Color.white;
     }
 
+    /// <summary>
+    /// 경직피해
+    /// 0 이하가 되면 경직되고 최대 경직치로 초기화된다.
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns></returns>
     public bool DamagedPoise(float damage)
     {
         if(isInvincible)
@@ -109,6 +116,10 @@ public class ObjectBasic : MonoBehaviour
             return false;
     }
 
+    /// <summary>
+    /// 경직 회복
+    /// 초당 2로 경직 피해를 회복 된다.
+    /// </summary>
     public void HealPoise()
     {
         stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 2f, stats.poiseMax);
@@ -157,16 +168,12 @@ public class ObjectBasic : MonoBehaviour
             }
             return;
         }
-        
-
-        GameObject effect = GameData.instance.statusEffectList[buffIndex];
 
         // 가지고 있는 버프인지 체크한다.
-        StatusEffect statusEffect = Instantiate(effect, Vector3.zero,Quaternion.identity).GetComponent<StatusEffect>();
         foreach (StatusEffect buff in stats.activeEffects)
         {
             // 가지고 있는 버프라면 갱신한다.
-            if (buff.buffId == statusEffect.buffId)
+            if (buff.buffId == buffIndex)
             {
                 buff.ResetEffect();
                 return;
@@ -174,48 +181,8 @@ public class ObjectBasic : MonoBehaviour
         }
 
         // 가지고 있는 버프가 아니라면 새로 추가한다.
-        GameObject Buff = Instantiate(effect);
-        statusEffect = Buff.GetComponent<StatusEffect>();
-        statusEffect.SetTarget(gameObject);
-
-        statusEffect.ApplyEffect();
-        stats.activeEffects.Add(statusEffect);
-
-        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
-    }
-
-    public void ApplyBuff(GameObject effect)
-    {
-        if (isInvincible)
-            return;
-
-        if (effect.GetComponent<StatusEffect>().buffId <=10 &&  0 < stats.SEResist(effect.GetComponent<StatusEffect>().buffId) )
-        {
-            // 저주 디버프일 시 피해를 입고 사라짐
-            if (effect.GetComponent<StatusEffect>().buffId == 10)
-            {
-                Damaged(stats.HPMax * 0.1f);
-            }
-            return;
-        }
-        
-
-        StatusEffect statusEffect = effect.GetComponent<StatusEffect>();
-
-        // 가지고 있는 버프인지 체크한다.
-        foreach (StatusEffect buff in stats.activeEffects)
-        {
-            // 가지고 있는 버프라면 갱신한다.
-            if (buff.buffId == statusEffect.buffId)
-            {
-                buff.ResetEffect();
-                return;
-            }
-        }
-
-        // 가지고 있는 버프가 아니라면 새로 추가한다.
-        GameObject Buff = Instantiate(effect);
-        statusEffect = Buff.GetComponent<StatusEffect>();
+        GameObject Buff = Instantiate(GameData.instance.statusEffectList[buffIndex], buffTF);
+        StatusEffect statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);
 
         statusEffect.ApplyEffect();

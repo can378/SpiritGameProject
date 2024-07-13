@@ -144,6 +144,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
+  buffTF: {fileID: 883088692791154741}
   isAttack: 0
   isAttackReady: 1
   hitTarget: {fileID: 0}
@@ -436,11 +437,17 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6118769548461374680, guid: f923c204947ecc24e8665b5fc90682cc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f923c204947ecc24e8665b5fc90682cc, type: 3}
+--- !u!224 &883088692791154741 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3029291629179971795, guid: f923c204947ecc24e8665b5fc90682cc, type: 3}
+  m_PrefabInstance: {fileID: 2759414453898129638}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3425277163398072636 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 703247352805505498, guid: f923c204947ecc24e8665b5fc90682cc, type: 3}

@@ -14,11 +14,6 @@ public abstract class StatusEffect : MonoBehaviour
     [field: SerializeField] public int maxOverlap { get; protected set; }             // ÃÖ´ë ÁßÃ¸
     [field: SerializeField] public int overlap { get; protected set; }                // ÇöÀç ÁßÃ¸
 
-    void Awake()
-    {
-        icon = GetComponent<Image>();
-    }
-
     void Update() {
         icon.fillAmount = duration / defaultDuration;
         if(this.target == null)

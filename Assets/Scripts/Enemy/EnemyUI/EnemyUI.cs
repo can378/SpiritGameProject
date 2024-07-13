@@ -19,7 +19,6 @@ public class EnemyUI : MonoBehaviour
     void FixedUpdate()
     {
         UpdateHealthUI();
-        UpdateBuffUI();
     }
 
     public void UpdateHealthUI()
@@ -34,15 +33,5 @@ public class EnemyUI : MonoBehaviour
 
         Hpslider.gameObject.SetActive(true);
         Hpslider.value = normalizedHealth;
-    }
-
-    public void UpdateBuffUI()
-    {
-        for(int i = 0 ; i<stats.activeEffects.Count ; i++)
-        {
-            if(stats.activeEffects[i].transform.parent != BuffUI.transform)
-                stats.activeEffects[i].transform.SetParent(BuffUI.transform);
-        }
-        
     }
 }
