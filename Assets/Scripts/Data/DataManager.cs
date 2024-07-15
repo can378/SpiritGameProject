@@ -86,8 +86,7 @@ public class DataManager : MonoBehaviour
 
         for(int i = 0;i<Player.instance.playerStats.skill.Length ; i++)
         {
-            if (Player.instance.playerStats.skill[i] != 0)
-                userData.playerSkill = Player.instance.playerStats.skill[i];
+            userData.playerSkill = Player.instance.playerStats.skill[i];
         }
     
         for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)

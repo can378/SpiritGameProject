@@ -9,14 +9,14 @@ public class Mission : MonoBehaviour
 {
     public MissionType type;
 
-
     public GameObject missionReward;
     
 
     private ObjectSpawn spawn;
     private float time;
     private float playerFirstHP;
-    private bool isFail;
+    private bool isFail;                            // 미션 실패
+    [SerializeField] private bool isEnd;            // 미션 종료(실패하든 안하든 끝나면 체크)
    
 
     [Header("TimeAttack, Dream, LittleMonster")]
@@ -39,6 +39,7 @@ public class Mission : MonoBehaviour
         spawn = GetComponent<ObjectSpawn>();
         isEscapeMaze = false;
         isFail = false;
+        isEnd = false;
     }
 
     private void OnEnable()
@@ -46,8 +47,8 @@ public class Mission : MonoBehaviour
         startMission();
     }
 
-
     //starts when the map is generated
+    // 미션 종료하면 몬스터나 미로 입구 흔적 등 없애야 할 듯
     public IEnumerator CheckMissionEnd() 
     {
         time += Time.deltaTime;
@@ -136,6 +137,12 @@ public class Mission : MonoBehaviour
     }
     public void startMission() 
     {
+        if(isEnd)
+        {
+            roomScript.UnLockDoor();
+            return;
+        }
+
         time = 0;
         playerFirstHP = FindObj.instance.Player.GetComponent<PlayerStats>().HP;
 
@@ -161,6 +168,7 @@ public class Mission : MonoBehaviour
             missionReward.SetActive(true);
         }
 
+        isEnd = true;
         roomScript.UnLockDoor();
         StopCoroutine(CheckMissionEnd());
 

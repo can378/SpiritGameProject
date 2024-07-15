@@ -80,7 +80,7 @@ public class EnemyBasic : ObjectBasic
             // 타겟 유지 거리가 양수 이고 타겟이 유지거리보다 멀리 있다면 타겟 해제
             if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < targetDis)
             {
-                //enemyTarget = null; //이것이 있는이유는?
+                enemyTarget = null; // 플레이어가 거리 조절하며 적들 죽일 수 있게, 이거 안하면 적들이 너무 몰려와서 난이도가 너무 높아짐.
                 return;
             }
             return;
