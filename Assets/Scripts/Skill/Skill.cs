@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Skill : SelectItem
 {
-    [field: SerializeField] public int skillType { get; private set; }                  //스킬 키 Down : 0
+    [field: SerializeField] public int skillType { get; private set; }                  // 스킬 시전 타이밍
+                                                                                        //스킬 키 Down : 0
                                                                                         //스킬 키 Hold : 1
                                                                                         //스킬 키 Up   : 2
                                                                                         
@@ -30,6 +31,23 @@ public abstract class Skill : SelectItem
         this.user = user;
         print(user.name + " : " + this.name);
     }
+
+    public virtual void Cancle()
+    {
+        if(user.tag == "Player")
+        {
+            PlayerStats playerStats = this.user.GetComponent<PlayerStats>();
+
+            // 쿨타임 적용
+            skillCoolTime = (1 - playerStats.skillCoolTime) * skillDefalutCoolTime;
+        }
+        else if (user.tag == "Enemy")
+        {
+            // 쿨타임 적용
+            skillCoolTime =skillDefalutCoolTime;
+        }
+    }
+
     public abstract void Exit();                                                            //스킬 사용 끝
 
     void CoolDown()

@@ -88,6 +88,16 @@ public class SlashSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+        StopCoroutine(Simulation());
+        // 시뮬 삭제
+        // 이동 속도 회복
+        Destroy(simul);
+        user.GetComponent<Stats>().decreasedMoveSpeed -= 0.5f;
+    }
+
     public override void Exit()
     {
         StopCoroutine(Simulation());

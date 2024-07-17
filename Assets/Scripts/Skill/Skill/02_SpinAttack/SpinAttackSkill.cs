@@ -67,6 +67,14 @@ public class SpinAttackSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+        StopCoroutine(Simulation());
+        user.GetComponent<Stats>().decreasedMoveSpeed -= 0.5f;
+        Destroy(spinSimul);
+    }
+
     public override void Exit()
     {
         StopCoroutine(Simulation());

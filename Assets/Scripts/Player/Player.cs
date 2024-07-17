@@ -299,7 +299,8 @@ public class Player : ObjectBasic
         if (skDown && !isFlinch && !isAttack && !status.isDodge && !status.isSkill && !status.isSkillHold )
         {
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
-            if (skillController.skillList[playerStats.skill[status.skillIndex]].skillLimit.Length != 0 && 
+            if (playerStats.weapon == 0 && 
+                skillController.skillList[playerStats.skill[status.skillIndex]].skillLimit.Length != 0 && 
             Array.IndexOf(skillController.skillList[playerStats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[playerStats.weapon].weaponType) == -1)
             {
                 return;
@@ -315,7 +316,7 @@ public class Player : ObjectBasic
             return;
 
         //스킬 hold 상태에서 스킬 키 up
-        if ((isFlinch || !skDown) && !isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
+        if ((!skDown) && !isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
             StartCoroutine(skillController.Exit());
             status.isReload = false;
@@ -703,7 +704,15 @@ public class Player : ObjectBasic
 
     // 상태 관련
     #region Effect
-    
+
+    public override void AttackCancle()
+    {
+        base.AttackCancle();
+        status.attackDelay = 0;
+        skillController.SkillCancle();
+        weaponController.AttackCancle();
+    }
+
     // 피해
     public override void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {

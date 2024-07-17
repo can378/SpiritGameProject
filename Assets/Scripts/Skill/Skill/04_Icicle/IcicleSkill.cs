@@ -72,8 +72,15 @@ public class IcicleSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        StopCoroutine(Simulation());
+        Destroy(simul);
+    }
+
     public override void Exit()
     {
+        base.Cancle();
         StopCoroutine(Simulation());
         Fire();
     }

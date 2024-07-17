@@ -74,6 +74,28 @@ public class HealSkill : Skill
         }
     }
 
+    
+    public override void Cancle()
+    {
+        base.Cancle();
+        StopCoroutine(HealCoroutine());
+
+        Destroy(effect);
+
+        if (user.tag == "Player")
+        {
+            Player player = this.user.GetComponent<Player>();
+            player.stats.decreasedMoveSpeed -= 0.9f;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+
+        }
+        else if (user.tag == "Enemy")
+        {
+            EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
+            enemy.stats.decreasedMoveSpeed -= 0.9f;
+            skillCoolTime = skillDefalutCoolTime;
+        }
+    }
 
     public override void Exit()
     {

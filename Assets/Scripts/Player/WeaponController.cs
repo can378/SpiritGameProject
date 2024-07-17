@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
     PlayerStats playerStats;
 
     // 공격 정보
+    Coroutine attackCoroutine;
     public int enchant;
     [SerializeField] GameObject HitDetectionGameObject;
     [SerializeField] int projectileIndex;
@@ -70,15 +71,15 @@ public class WeaponController : MonoBehaviour
         if (weaponList[playerStats.weapon].weaponType < 10 )
         {
             // 플레이어 애니메이션 실행
-            StartCoroutine("Swing");
+            attackCoroutine = StartCoroutine("Swing");
         }
         else if ( 10 <= weaponList[playerStats.weapon].weaponType)
         {
             // 플레이어 애니메이션 실행
             if(weaponList[playerStats.weapon].weaponType == 13)
-                StartCoroutine("Throw", clickPos);
+                attackCoroutine = StartCoroutine("Throw", clickPos);
             else 
-                StartCoroutine("Shot");
+                attackCoroutine = StartCoroutine("Shot");
         }
 
         //Debug.Log(playerStats.weapon.attackSpeed);
@@ -235,4 +236,10 @@ public class WeaponController : MonoBehaviour
         yield return null;
     }
     */
+
+    public void AttackCancle()
+    {
+        if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+        if (HitDetectionGameObject != null) HitDetectionGameObject.SetActive(false);
+    }
 }

@@ -9,7 +9,7 @@ public class Dokkebie : EnemyBasic
     float fireCoolTime = 0;
 
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         hitDetection = hammerArea.GetComponent<HitDetection>();
@@ -35,11 +35,11 @@ public class Dokkebie : EnemyBasic
     {
         if (targetDis <= enemyStats.maxAttackRange && fireCoolTime <= 0)
         {
-            StartCoroutine(Fire());
+            attackCoroutine = StartCoroutine(Fire());
         }
         else if (targetDis <= 5f)
         {
-            StartCoroutine(Hammer());
+            attackCoroutine = StartCoroutine(Hammer());
         }
     }
 
@@ -74,12 +74,19 @@ public class Dokkebie : EnemyBasic
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
         hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
         hammerArea.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5f);
         hammerArea.SetActive(false);
 
 
         isAttack = false;
         isAttackReady = true;
+    }
+
+    public override void AttackCancle()
+    {
+        base.AttackCancle();
+        if(attackCoroutine != null) StopCoroutine(attackCoroutine);
+        hammerArea.SetActive(false);
     }
 
     /*

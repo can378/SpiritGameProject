@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FireBallSkill : Skill
 {
-    // ÇÇÇØ·®, ¹Ğ·Á³²
+    // í”¼í•´ëŸ‰, ë°€ë ¤ë‚¨
     [field: SerializeField] int defalutDamage;
     [field: SerializeField] float ratio;
     [field: SerializeField] float knockBack;
 
-    // »ç°Å¸®, Å©±â, À¯Áö½Ã°£, vÇÁ¸®ÆÕ, ½Ã¹Ä·¹ÀÌÅÍ ÇÁ¸®ÆÕ, »óÅÂÀÌ»ó
+    // ì‚¬ê±°ë¦¬, í¬ê¸°, ìœ ì§€ì‹œê°„, ví”„ë¦¬íŒ¹, ì‹œë®¬ë ˆì´í„° í”„ë¦¬íŒ¹, ìƒíƒœì´ìƒ
     [field: SerializeField] float range;
     [field: SerializeField] float size;
     [field: SerializeField] float time;
@@ -17,7 +17,7 @@ public class FireBallSkill : Skill
     [field: SerializeField] GameObject simulPrefab;
     [field: SerializeField] int[] statusEffect;
 
-    //¹ßµ¿ Àü È¿°ú ¹üÀ§ Ç¥½Ã±â
+    //ë°œë™ ì „ íš¨ê³¼ ë²”ìœ„ í‘œì‹œê¸°
     Transform fireBallSimul;
     Transform rangeSimul;
 
@@ -61,13 +61,21 @@ public class FireBallSkill : Skill
 
             while (timer <= maxHoldTime/2)
             {
-                // ³ªÁß¿¡ ¿ø ÇüÅÂ·Î ÃÖ´ë ¹üÀ§ Á¦ÇÑÇÏ±â
-                // ³ªÁß¿¡ ¿ø ÇüÅÂ·Î ÃÖ´ë ¹üÀ§ Ç¥½ÃÇÏ±â
+                // ë‚˜ì¤‘ì— ì› í˜•íƒœë¡œ ìµœëŒ€ ë²”ìœ„ ì œí•œí•˜ê¸°
+                // ë‚˜ì¤‘ì— ì› í˜•íƒœë¡œ ìµœëŒ€ ë²”ìœ„ í‘œì‹œí•˜ê¸°
                 fireBallSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyTarget.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }
         }
+    }
+
+    public override void Cancle()
+    {
+        base.Cancle();
+        StopCoroutine(Simulation());
+        Destroy(rangeSimul.gameObject);
+        Destroy(fireBallSimul.gameObject);
     }
 
     public override void Exit()
@@ -86,7 +94,7 @@ public class FireBallSkill : Skill
             GameObject effect = Instantiate(fireBallPrefab, fireBallSimul.position, Quaternion.identity);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             Destroy(rangeSimul.gameObject);
@@ -98,15 +106,15 @@ public class FireBallSkill : Skill
             effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             /*
-            Åõ»çÃ¼ = false
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = false
-            ÃÊ´ç Å¸°İ È½¼ö = -1 
-            ÇÇÇØ·® = ÇÇÇØ·® * ÇÃ·¹ÀÌ¾î ÁÖ¹®·Â
-            ³Ë¹é = ³Ë¹é
-            Ä¡È® = 0
-            Ä¡µ© = 0
-            µğ¹öÇÁ = È­»ó
+            íˆ¬ì‚¬ì²´ = false
+            ê´€í†µë ¥ = -1
+            ë‹¤ë‹¨íˆíŠ¸ = false
+            ì´ˆë‹¹ íƒ€ê²© íšŸìˆ˜ = -1 
+            í”¼í•´ëŸ‰ = í”¼í•´ëŸ‰ * í”Œë ˆì´ì–´ ì£¼ë¬¸ë ¥
+            ë„‰ë°± = ë„‰ë°±
+            ì¹˜í™• = 0
+            ì¹˜ë€ = 0
+            ë””ë²„í”„ = í™”ìƒ
             */
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;
@@ -120,7 +128,7 @@ public class FireBallSkill : Skill
 
             skillCoolTime = skillDefalutCoolTime;
 
-            // ÀÌÆåÆ® Àû¿ë
+            // ì´í™íŠ¸ ì ìš©
             Destroy(rangeSimul.gameObject);
             Destroy(fireBallSimul.gameObject);
             Destroy(effect, time);
@@ -130,15 +138,15 @@ public class FireBallSkill : Skill
             effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             /*
-            Åõ»çÃ¼ = false
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = false
-            ÃÊ´ç Å¸°İ È½¼ö = -1 
-            ÇÇÇØ·® = ÇÇÇØ·® * ÇÃ·¹ÀÌ¾î ÁÖ¹®·Â
-            ³Ë¹é = ³Ë¹é
-            Ä¡È® = 0
-            Ä¡µ© = 0
-            µğ¹öÇÁ = È­»ó
+            íˆ¬ì‚¬ì²´ = false
+            ê´€í†µë ¥ = -1
+            ë‹¤ë‹¨íˆíŠ¸ = false
+            ì´ˆë‹¹ íƒ€ê²© íšŸìˆ˜ = -1 
+            í”¼í•´ëŸ‰ = í”¼í•´ëŸ‰ * í”Œë ˆì´ì–´ ì£¼ë¬¸ë ¥
+            ë„‰ë°± = ë„‰ë°±
+            ì¹˜í™• = 0
+            ì¹˜ë€ = 0
+            ë””ë²„í”„ = í™”ìƒ
             */
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;

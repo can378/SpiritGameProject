@@ -19,6 +19,11 @@ public class WaveSkill : Skill
         StartCoroutine(Attack());
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+    }
+
     public override void Exit()
     {
 

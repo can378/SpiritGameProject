@@ -18,7 +18,7 @@ public class ObjectBasic : MonoBehaviour
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
     public Transform buffTF;
 
-    // 공격 관련 
+    // 공격 관련
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
     public bool isAttackReady = true;       // 공격 준비 : false일 시 공격은 할 수 없으나 스스로 이동은 가능
     public GameObject hitTarget;            // 공격 성공
@@ -134,10 +134,21 @@ public class ObjectBasic : MonoBehaviour
     public IEnumerator Flinch(float time = 0)
     {
         isFlinch = true;
+        AttackCancle();
 
         yield return new WaitForSeconds(time);
 
         isFlinch = false;
+    }
+
+    /// <summary>
+    /// 공격 캔슬
+    /// 공격 코루틴 해제, 공격 범위 해제
+    /// </summary>
+    public virtual void AttackCancle()
+    {
+        isAttack = false;
+        isAttackReady = true;
     }
 
     public void Invincible(float time = 0)

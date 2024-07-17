@@ -20,7 +20,7 @@ public class BlackDog : EnemyBasic
     private Vector2 perpendicularDir;
 
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         hitDetection = biteArea.GetComponent<HitDetection>();

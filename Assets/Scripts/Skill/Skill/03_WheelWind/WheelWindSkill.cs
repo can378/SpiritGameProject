@@ -124,6 +124,13 @@ public class WheelWindSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+        Destroy(WheelWindEffect);
+        user.GetComponent<Stats>().decreasedMoveSpeed -= 0.5f;
+    }
+
 
     public override void Exit()
     {

@@ -127,6 +127,12 @@ public class ThunderboltSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+        StartCoroutine(AttackOut());
+    }
+
 
     public override void Exit()
     {

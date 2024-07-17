@@ -20,6 +20,11 @@ public class LittleStarSkill : Skill
         Summon();
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+    }
+
     public override void Exit()
     {
 

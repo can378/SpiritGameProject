@@ -65,6 +65,16 @@ public class RandomBoxSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        base.Cancle();
+        StopCoroutine(Simulation());
+        // 생성 범위 표시기 삭제
+        // 생성 위치 표시기 삭제
+        Destroy(randomBoxSimul.gameObject);
+        Destroy(rangeSimul.gameObject);
+    }
+
     public override void Exit()
     {
         StopCoroutine(Simulation());

@@ -38,6 +38,11 @@ public class SpottingWeaknessSkill : Skill
         }
     }
 
+    public override void Cancle()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void Exit()
     {
 

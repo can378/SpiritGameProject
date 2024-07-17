@@ -24,6 +24,8 @@ public class EnemyBasic : ObjectBasic
     [HideInInspector]
     public HitDetection hitDetection;
 
+    protected Coroutine attackCoroutine;
+
     protected override void Awake()
     {
         base.Awake();       
@@ -31,7 +33,7 @@ public class EnemyBasic : ObjectBasic
         defaultLayer = this.gameObject.layer;
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         enemyTarget = FindObj.instance.Player.transform;
     }
@@ -42,6 +44,7 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
+
     }
 
 

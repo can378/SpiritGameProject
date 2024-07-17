@@ -7,6 +7,8 @@ public class SkillController : MonoBehaviour
     PlayerStatus status;
     PlayerStats stats;
 
+    Coroutine skillCoroutine;
+
     // 스킬 리스트
     public Skill[] skillList;
 
@@ -39,7 +41,7 @@ public class SkillController : MonoBehaviour
     // 스킬키 입력
     public void SkillDown()
     {
-        StartCoroutine(Enter());
+        skillCoroutine = StartCoroutine(Enter());
     }
 
     public IEnumerator Enter()
@@ -61,7 +63,7 @@ public class SkillController : MonoBehaviour
             status.isSkill = false;
         }
 
-        StartCoroutine(Stay());
+        skillCoroutine = StartCoroutine(Stay());
     }
 
     public IEnumerator Stay()
@@ -74,7 +76,7 @@ public class SkillController : MonoBehaviour
             timer -= 0.1f;
             if (timer <= 0)
             {
-                StartCoroutine(Exit());
+                skillCoroutine = StartCoroutine(Exit());
                 break;
             }
         }
@@ -92,15 +94,21 @@ public class SkillController : MonoBehaviour
 
         skillList[stats.skill[status.skillIndex]].Exit();
 
+        skillCoroutine = null;
+
         if (skillList[stats.skill[status.skillIndex]].skillType == 2)
         {
             yield return new WaitForSeconds(skillList[stats.skill[status.skillIndex]].postDelay);
             status.isSkill = false;
         }
+    }
 
-        
-
-
+    public void SkillCancle()
+    {
+        status.isSkillHold = false;
+        status.isSkill = false;
+        if (skillCoroutine != null) StopCoroutine(skillCoroutine);
+        if(stats.skill[status.skillIndex] != 0) skillList[stats.skill[status.skillIndex]].Cancle();
     }
 
 }
