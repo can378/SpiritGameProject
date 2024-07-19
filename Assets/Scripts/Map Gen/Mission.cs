@@ -60,7 +60,15 @@ public class Mission : MonoBehaviour
                 { 
                     print("nohurt mission fail");
                     isFail = true;
+
+                    foreach (GameObject e in spawn.enemys)
+                    { 
+                        e.GetComponent<EnemyStats>().HP = 0;
+                        e.SetActive(false);
+                        clock.SetActive(false);
+                    }
                     missionEnd();
+
                 }
                 //kill all of them --> end
                 else if (KillAll()) 
