@@ -27,10 +27,12 @@ public class UserData
 
     //Equipment
     public int playerWeapon;
-    public int[] playerEquipments = new int[3];
+    public int playerMaxEquipments;
+    public int[] playerEquipments = new int[5];
 
     //Skill
-    public int playerSkill;
+    public int playerMaxSkillSlot;
+    public int[] playerSkill = new int[5];
 
     //Chpater
     public int nowChapter;

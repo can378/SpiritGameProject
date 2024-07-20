@@ -533,6 +533,7 @@ public class Player : ObjectBasic
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        print("Load Data");
         if (scene.name != "Main")
         {
             //playerStats.level = DataManager.instance.userData.playerLevel;
@@ -544,11 +545,34 @@ public class Player : ObjectBasic
 
             //Debug.Log("Scene reloaded: " + scene.name);
             //Scene reload 후에도 전에 얻은 아이템 유지
-            int playerItemName = DataManager.instance.userData.playerItem;
-            int playerWeapon = DataManager.instance.userData.playerWeapon;
-            int playerSkill = DataManager.instance.userData.playerSkill;
-            int[] playerEquipment = DataManager.instance.userData.playerEquipments;
+            //int playerItemName = DataManager.instance.userData.playerItem;
 
+            // 무기
+            int playerWeapon = DataManager.instance.userData.playerWeapon;
+            if (playerWeapon != 0)
+            {
+                weaponController.EquipWeapon(playerWeapon);
+            }
+
+            // 스킬
+            playerStats.maxSkillSlot = DataManager.instance.userData.playerMaxSkillSlot;
+            int[] playerSkill = DataManager.instance.userData.playerSkill;
+            for (int i = 0; i < playerSkill.Length; i++)
+            {
+                if (playerSkill[i] != 0)
+                    skillController.EquipSkill(playerSkill[i]);
+            }
+
+            // 방어구
+            playerStats.maxEquipment = DataManager.instance.userData.playerMaxEquipments;
+            int[] playerEquipment = DataManager.instance.userData.playerEquipments;
+            for (int i = 0; i < playerEquipment.Length; i++)
+            {
+                if (playerEquipment[i] != 0)
+                    EquipEquipment(playerEquipment[i]);
+            }
+
+            // 영구 스탯
             for(int i = 0;i<playerStats.playerStat.Length;i++)
             {
                 playerStats.playerStat[i] = DataManager.instance.userData.playerStat[i];
@@ -575,25 +599,6 @@ public class Player : ObjectBasic
             }
             */
 
-            // 무기
-            if (playerWeapon != 0)
-            {
-                weaponController.EquipWeapon(playerWeapon);
-            }
-            // 스킬
-            if (playerSkill != 0)
-            {
-                skillController.EquipSkill(playerSkill);
-            }
-            // 방어구
-            
-            for(int i = 0;i< playerEquipment.Length; i++)
-            {
-                if(playerEquipment[i] != 0)
-                    EquipEquipment(playerEquipment[i]);
-            }
-            
-            
         }
 
     }

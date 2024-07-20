@@ -145,19 +145,19 @@ public class PlayerStats : Stats
     public float blind;
 
     //Item
-    public int coin = 0;
-    public int key = 0;
-    public int dice = 0;
-    public int item = 0;
+    public int coin;
+    public int key;
+    public int dice;
+    public int item;
 
     //Equipments
-    public int weapon = 0;
+    public int weapon;
 
-    public int maxSkillSlot = 1;
-    public int[] skill = {0, 0, 0, 0, 0};
+    public int maxSkillSlot;
+    public int[] skill = new int[5];
 
-    public int maxEquipment = 3;
-    public int[] equipments = new int[3];
+    public int maxEquipment;
+    public int[] equipments = new int[5];
 
     //Stat
     public int[] playerStat = new int[8];

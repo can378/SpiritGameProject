@@ -57,7 +57,7 @@ public class DataManager : MonoBehaviour
             Debug.Log("货肺款 单捞磐 积己");
             
             userData = new UserData();
-            persistentData=new PersistentData();
+            persistentData =new PersistentData();
 
             InitData();
             InitPersistentData();
@@ -84,15 +84,14 @@ public class DataManager : MonoBehaviour
 
         userData.playerWeapon = Player.instance.playerStats.weapon;
 
-        for(int i = 0;i<Player.instance.playerStats.skill.Length ; i++)
+        for(int i = 0;i < Player.instance.playerStats.skill.Length ; i++)
         {
-            userData.playerSkill = Player.instance.playerStats.skill[i];
+            userData.playerSkill[i] = Player.instance.playerStats.skill[i];
         }
     
-        for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
+        for(int i = 0;i < Player.instance.playerStats.equipments.Length; i++)
         {
-            if(Player.instance.playerStats.equipments[i] != 0)
-                userData.playerEquipments[i] = Player.instance.playerStats.equipments[i];
+            userData.playerEquipments[i] = Player.instance.playerStats.equipments[i];
         }
 
         for (int i = 0; i < 8; i++)
@@ -126,6 +125,7 @@ public class DataManager : MonoBehaviour
 
     public void InitData()
     {
+        print("Init");
         //userData.playerLevel = 1;
         //userData.playerExp = 1;
         //userData.playerPoint = 5;
@@ -140,21 +140,26 @@ public class DataManager : MonoBehaviour
         userData.playerItem = 0;
 
         userData.playerWeapon = 0;
-        for (int i = 0; i < 3; i++)
+
+        userData.playerMaxEquipments = 3;
+        for (int i = 0; i < userData.playerEquipments.Length; i++)
         {
             userData.playerEquipments[i] = 0;
         }
 
-        userData.playerSkill = 0;
+        userData.playerMaxSkillSlot = 1;
+        for (int i = 0; i < userData.playerSkill.Length; i++)
+        {
+            userData.playerSkill[i] = 0;
+        }
 
-        userData.nowChapter = 0;
-
-        userData.playerStat = new int[8];
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < userData.playerStat.Length; i++)
         {
             userData.playerStat[i] = 0;
         }
 
+
+        userData.nowChapter = 0;
 
     }
 

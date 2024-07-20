@@ -108,7 +108,7 @@ public class SkillController : MonoBehaviour
         status.isSkillHold = false;
         status.isSkill = false;
         if (skillCoroutine != null) StopCoroutine(skillCoroutine);
-        if(stats.skill[status.skillIndex] != 0) skillList[stats.skill[status.skillIndex]].Cancle();
+        if(stats.skill[status.skillIndex] == 0) skillList[stats.skill[status.skillIndex]].Cancle();
     }
 
 }

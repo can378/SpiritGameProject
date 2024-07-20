@@ -10,6 +10,8 @@ public class Wall : MonoBehaviour
     WallType wallType;
     SpriteRenderer sprite;
 
+    int durabilityCount = 10;
+
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
@@ -55,13 +57,14 @@ public class Wall : MonoBehaviour
 
         if(other.tag == "PlayerAttack" && wallType == WallType.ShabbyWall)
         {
-            Collapse(other.GetComponent<HitDetection>());
+            Collapse();
         }
     }
 
-    public void Collapse(HitDetection hitDetection)
+    public void Collapse()
     {
-        if(hitDetection.damage >= 100)
+        durabilityCount--;
+        if (durabilityCount <= 0)
         {
             Destroy(this.gameObject);
         }
