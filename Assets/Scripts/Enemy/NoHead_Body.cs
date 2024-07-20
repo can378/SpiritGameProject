@@ -8,7 +8,7 @@ public class NoHead_Body : EnemyBasic
     bool isHit = false;
     public GameObject headPos;
     public GameObject head;
-    private Vector2 dir = new Vector2(1, 0);
+    //private Vector2 dir = new Vector2(1, 0);
 
 
     protected override void MovePattern()

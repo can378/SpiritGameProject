@@ -14,7 +14,7 @@ public class BossShadow : EnemyBasic
     bool isDummiesAllDie;
     Renderer floorRenderer;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         isAttackReady = true;
@@ -22,7 +22,7 @@ public class BossShadow : EnemyBasic
         floorRenderer = GameManager.instance.nowRoom.GetComponent<Renderer>();
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (patternNum == 3 && dummies[0].activeSelf==true) 
         {  checkDummy(); }

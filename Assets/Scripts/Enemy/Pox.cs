@@ -10,7 +10,7 @@ public class Pox : EnemyBasic
     //거리가 어느정도 있으면 총알 던짐
     //가까이 있다면 때리고 튄다.
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         hitDetection = hitArea.GetComponent<HitDetection>();

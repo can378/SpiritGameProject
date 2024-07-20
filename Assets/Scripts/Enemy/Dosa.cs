@@ -8,9 +8,9 @@ public class Dosa : EnemyBasic
 
 
     private int skill;
-    
 
-    private void Start()
+
+    protected override void Start()
     {
         base.Start();
         skill=UnityEngine.Random.Range(1,skillList.Count);

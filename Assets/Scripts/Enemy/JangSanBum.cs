@@ -22,7 +22,7 @@ public class JangSanBum : EnemyBasic
     float randomX, randomY;
     Bounds bounds;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         floor = GameManager.instance.nowRoom;
@@ -35,7 +35,7 @@ public class JangSanBum : EnemyBasic
         patternNum = 0;
     }
 
-    private void Update()
+    protected override void Update()
     {
         base.Update();
         checkHit();

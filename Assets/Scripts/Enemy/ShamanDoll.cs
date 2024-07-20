@@ -17,7 +17,7 @@ public class ShamanDoll : EnemyBasic
     Vector2 playerPath;
     Vector2 perpendicularDir;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         moveReady = true;

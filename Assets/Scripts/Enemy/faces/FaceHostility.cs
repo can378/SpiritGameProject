@@ -17,7 +17,7 @@ public class FaceHostility : EnemyBasic
     Vector2 startDir;
     //적대감=총 부채꼴 모양으로 발사
 
-    private void Start()
+    protected override void Start()
     {
         radius = 6;
         angleStep = spreadAngle / (bulletCount - 1);

@@ -18,7 +18,7 @@ public class BossBaby : EnemyBasic
     Vector2 madRushVec;
     Vector3 corner;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         floor = GameManager.instance.nowRoom;
@@ -329,7 +329,7 @@ public class BossBaby : EnemyBasic
 
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
 
