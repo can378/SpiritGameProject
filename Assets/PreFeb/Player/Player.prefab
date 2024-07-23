@@ -204,7 +204,6 @@ GameObject:
   - component: {fileID: 6162495839983942233}
   - component: {fileID: 2680101835875493889}
   - component: {fileID: 8114064950361091504}
-  - component: {fileID: 385001862643613236}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -315,7 +314,7 @@ MonoBehaviour:
   isFlinch: 0
   isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
+  isAttack: 1
   isAttackReady: 0
   hitTarget: {fileID: 0}
   sprite: {fileID: 0}
@@ -327,7 +326,18 @@ MonoBehaviour:
     m_Bits: 0
   nearObject: {fileID: 0}
   weaponController: {fileID: 0}
-  skillController: {fileID: 0}
+  skillList:
+  - {fileID: 0}
+  - {fileID: 3039287651601481129}
+  - {fileID: 919416348197099439}
+  - {fileID: 177932615043141013}
+  - {fileID: 8390133909948217856}
+  - {fileID: 7678600716853907644}
+  - {fileID: 4956594110543346185}
+  - {fileID: 7282360757907042092}
+  - {fileID: 5459595728386863653}
+  - {fileID: 726707132998332633}
+  - {fileID: 4414882775074814602}
   equipmentList:
   - {fileID: 0}
   - {fileID: 7439955994502636290}
@@ -489,30 +499,6 @@ MonoBehaviour:
   - {fileID: 6729927443594688983}
   - {fileID: 8002197845923787803}
   - {fileID: 2042823196366823235}
---- !u!114 &385001862643613236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3504708173630329506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d0a1aa67ce92c5449c4d11a976217dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillList:
-  - {fileID: 0}
-  - {fileID: 3039287651601481129}
-  - {fileID: 919416348197099439}
-  - {fileID: 177932615043141013}
-  - {fileID: 8390133909948217856}
-  - {fileID: 7678600716853907644}
-  - {fileID: 4956594110543346185}
-  - {fileID: 7282360757907042092}
-  - {fileID: 5459595728386863653}
-  - {fileID: 726707132998332633}
-  - {fileID: 4414882775074814602}
 --- !u!1 &3698801542754413869
 GameObject:
   m_ObjectHideFlags: 0
@@ -2865,6 +2851,14 @@ PrefabInstance:
     - target: {fileID: 3513457264238153669, guid: cb98e660d9f7aa94c9ef3b6d7508a63c, type: 3}
       propertyPath: m_Name
       value: 14_DokkabeBat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100344937091233571, guid: cb98e660d9f7aa94c9ef3b6d7508a63c, type: 3}
+      propertyPath: <rate>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100344937091233571, guid: cb98e660d9f7aa94c9ef3b6d7508a63c, type: 3}
+      propertyPath: <preDelay>k__BackingField
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

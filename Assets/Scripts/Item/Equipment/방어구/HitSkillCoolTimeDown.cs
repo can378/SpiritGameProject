@@ -20,7 +20,7 @@ public class HitSkillCoolTimeDown : Equipment
         if (user.hitTarget.gameObject.tag == "Wall" || user.hitTarget.gameObject.tag == "Door" || user.hitTarget.gameObject.tag == "ShabbyWall")
             return;
 
-        user.skillController.skillList[user.playerStats.skill[user.status.skillIndex]].skillCoolTime -= variation;
+        user.skillList[user.playerStats.skill[user.status.skillIndex]].skillCoolTime -= variation;
     }
 
     public override void Equip(Player target)

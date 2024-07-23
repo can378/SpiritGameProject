@@ -21,7 +21,7 @@ public class WaveSkill : Skill
 
     public override void Cancle()
     {
-        base.Cancle();
+        
     }
 
     public override void Exit()

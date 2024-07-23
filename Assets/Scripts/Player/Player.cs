@@ -39,7 +39,10 @@ public class Player : ObjectBasic
     Vector2 dodgeVec;
 
     public WeaponController weaponController;
-    public SkillController skillController;
+    SkillController skillController;
+
+    // 스킬 리스트
+    public Skill[] skillList;
     public Equipment[] equipmentList;
 
     protected override void Awake()
@@ -52,7 +55,7 @@ public class Player : ObjectBasic
         stats = playerStats = GetComponent<PlayerStats>();
         
         weaponController = GetComponent<WeaponController>();
-        skillController = GetComponent<SkillController>();
+        skillController = gameObject.AddComponent<Player.SkillController>();
     }
 
     void Start()
@@ -88,8 +91,8 @@ public class Player : ObjectBasic
             Reload();
             ReloadOut();
             Attack();
-            SkillDown();
             SkillUp();
+            SkillDown();
             SkillChange();
         }
         
@@ -282,17 +285,151 @@ public class Player : ObjectBasic
     {
         isAttack = false;
     }
-    
+
     #endregion
 
     #region Skill
+
+    public class SkillController : MonoBehaviour
+    {
+        Player player;
+
+        Coroutine skillCoroutine;
+
+        void Awake()
+        {
+            player = GetComponent<Player>();
+        }
+
+        void Update()
+        {
+            print("Coroutine is " + skillCoroutine);
+        }
+
+        // 스킬 획득
+        public bool EquipSkill(int skillID)
+        {
+            // 이미 보유한 스킬이라면
+            if (player.skillList[skillID].gameObject.activeSelf == true)
+                return false;
+
+            player.playerStats.skill[player.status.skillIndex] = skillID;
+            player.skillList[skillID].gameObject.SetActive(true);
+            return true;
+        }
+
+        // 스킬 해제
+        public void UnEquipSkill()
+        {
+            Instantiate(DataManager.instance.gameData.skillList[player.playerStats.skill[player.status.skillIndex]], gameObject.transform.position, gameObject.transform.localRotation);
+            player.skillList[player.playerStats.skill[player.status.skillIndex]].gameObject.SetActive(false);
+            player.playerStats.skill[player.status.skillIndex] = 0;
+        }
+
+        // 스킬키 입력
+        public void SkillDown()
+        {
+            skillCoroutine = StartCoroutine(Enter());
+        }
+
+        public void SkillUp()
+        {
+            skillCoroutine = StartCoroutine(Exit());
+        }
+
+        IEnumerator Enter()
+        {
+            print("Enter");
+            // 홀드 중
+            player.status.isSkillHold = true;
+
+            if (player.skillList[player.playerStats.skill[player.status.skillIndex]].skillType == 0)
+            {
+                player.status.isSkill = true;
+                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.status.skillIndex]].preDelay);
+            }
+
+            player.skillList[player.playerStats.skill[player.status.skillIndex]].Enter(gameObject);
+
+            if (player.skillList[player.playerStats.skill[player.status.skillIndex]].skillType == 0)
+            {
+                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.status.skillIndex]].postDelay);
+                player.status.isSkill = false;
+            }
+
+            skillCoroutine = StartCoroutine(Stay());
+
+            yield return null;          // 안 넣으면 코루틴 저장이 안됨 yield return이 없으면 코루틴으로 취급 안하는 듯?
+        }
+
+        IEnumerator Stay()
+        {
+            print("Stay");
+            float timer = player.skillList[player.playerStats.skill[player.status.skillIndex]].maxHoldTime;
+
+            while (player.status.isSkillHold)
+            {
+                yield return new WaitForSeconds(0.1f);
+                timer -= 0.1f;
+                if (timer <= 0)
+                {
+                    skillCoroutine = StartCoroutine(Exit());
+                    break;
+                }
+            }
+
+            yield return null;          // 안 넣으면 코루틴 저장이 안됨
+        }
+
+        IEnumerator Exit()
+        {
+            player.status.isSkillHold = false;
+
+            if (player.skillList[player.playerStats.skill[player.status.skillIndex]].skillType == 2)
+            {
+                player.status.isSkill = true;
+                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.status.skillIndex]].preDelay);
+            }
+
+            player.skillList[player.playerStats.skill[player.status.skillIndex]].Exit();
+
+            skillCoroutine = null;
+
+            if (player.skillList[player.playerStats.skill[player.status.skillIndex]].skillType == 2)
+            {
+                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.status.skillIndex]].postDelay);
+                player.status.isSkill = false;
+            }
+
+            yield return null;      // 안 넣으면 코루틴 저장이 안됨
+
+            skillCoroutine = null;
+
+        }
+
+        public void SkillCancle()
+        {
+            print("Cancle");
+            player.status.isSkillHold = false;
+            player.status.isSkill = false;
+            if (skillCoroutine != null) 
+            {
+                StopCoroutine(skillCoroutine);
+                skillCoroutine = null;
+                if (player.playerStats.skill[player.status.skillIndex] != 0)
+                    player.skillList[player.playerStats.skill[player.status.skillIndex]].Cancle();
+            }
+
+        }
+
+    }
 
     void SkillDown()
     {
         if (playerStats.skill[status.skillIndex] == 0)
             return;
 
-        if (skillController.skillList[playerStats.skill[status.skillIndex]].skillCoolTime > 0)
+        if (skillList[playerStats.skill[status.skillIndex]].skillCoolTime > 0)
             return;
 
         // 스킬 키 다운
@@ -300,8 +437,8 @@ public class Player : ObjectBasic
         {
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
             if (playerStats.weapon == 0 && 
-                skillController.skillList[playerStats.skill[status.skillIndex]].skillLimit.Length != 0 && 
-            Array.IndexOf(skillController.skillList[playerStats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[playerStats.weapon].weaponType) == -1)
+                skillList[playerStats.skill[status.skillIndex]].skillLimit.Length != 0 && 
+            Array.IndexOf(skillList[playerStats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[playerStats.weapon].weaponType) == -1)
             {
                 return;
             }
@@ -316,9 +453,9 @@ public class Player : ObjectBasic
             return;
 
         //스킬 hold 상태에서 스킬 키 up
-        if ((!skDown) && !isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
+        if ((!skDown)&& !isFlinch && !isAttack && !status.isDodge && !status.isSkill && status.isSkillHold)
         {
-            StartCoroutine(skillController.Exit());
+            skillController.SkillUp();
             status.isReload = false;
         }
     }
