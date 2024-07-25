@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
@@ -270,15 +271,17 @@ public class RoomManager : MonoBehaviour
     //맵의 중앙을 찾아서 미니맵 카메라 이동
     void setMinimapCamera()
     {
+        List<GameObject> maps=new List<GameObject>();//random 생성된 맵들
 
-        Vector2 middlePos=Vector2.zero;
+        //Vector2 middlePos=Vector2.zero;
 
         for(int i=0;i<roomParent.transform.childCount;i++) 
         {
-            middlePos += (Vector2)roomParent.transform.GetChild(i).transform.position;
+            maps.Add(roomParent.transform.GetChild(i).gameObject);
+            //middlePos += (Vector2)roomParent.transform.GetChild(i).transform.position;
         }
 
-
+        /*
         if (roomParent.transform.childCount > 0)
         {
             middlePos /= roomParent.transform.childCount;
@@ -286,7 +289,29 @@ public class RoomManager : MonoBehaviour
 
         miniMapCamera.transform.position = middlePos;
         miniMapCamera.transform.position += new Vector3(0,0,-5);
-        
+        */
+
+        //add
+
+
+        // Calculate bounds (all maps)
+        Bounds bounds = new Bounds(maps[0].transform.position, Vector3.zero);
+        foreach (GameObject map in maps)
+        {
+            //bounds.Encapsulate(map.GetComponent<Renderer>().bounds);
+            bounds.Encapsulate(map.GetComponent<BoxCollider2D>().bounds);
+        }
+
+        Vector3 center = bounds.center;//maps center
+        Vector3 size = bounds.size;//camera size
+
+        // set camera position
+        miniMapCamera.transform.position = new Vector3(center.x, center.y, -10f);
+
+        // set camera size
+        float largestSize = Mathf.Max(size.x, size.y);
+        miniMapCamera.orthographicSize = largestSize / 2;
+
     }
 
     /*
