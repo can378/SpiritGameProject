@@ -30,7 +30,7 @@ public class WheelWindSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.playerStats.weapon];
+            Weapon weapon = player.weaponList[player.playerStats.weapon];
             HitDetection hitDetection;
             float attackRate = weapon.SPA / player.playerStats.attackSpeed;
 
@@ -48,7 +48,7 @@ public class WheelWindSkill : Skill
 
             WheelWindEffect = Instantiate(WheelWindPrefab, user.transform.position, user.transform.rotation);
             WheelWindEffect.transform.parent = user.transform;
-            WheelWindEffect.transform.localScale = new Vector3(size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
+            WheelWindEffect.transform.localScale = new Vector3(size * player.weaponList[player.playerStats.weapon].attackSize, size * player.weaponList[player.playerStats.weapon].attackSize, 0);
             WheelWindEffect.tag = "PlayerAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("PlayerAttack");
 
@@ -68,10 +68,10 @@ public class WheelWindSkill : Skill
             */
             hitDetection.SetHitDetection(false, -1, true, (int)((float)DPS / attackRate),
              defaultDamage + player.stats.attackPower * ratio,
-             player.weaponController.weaponList[player.playerStats.weapon].knockBack,
+             player.weaponList[player.playerStats.weapon].knockBack,
              player.playerStats.criticalChance,
              player.playerStats.criticalDamage,
-             player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
+             player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
         }
         else if (user.tag == "Enemy")
@@ -142,7 +142,7 @@ public class WheelWindSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.playerStats.weapon];
+            Weapon weapon = player.weaponList[player.playerStats.weapon];
             float attackRate = weapon.SPA / player.playerStats.attackSpeed;
 
             yield return new WaitForSeconds(0.5f * attackRate);

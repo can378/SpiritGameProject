@@ -203,7 +203,6 @@ GameObject:
   - component: {fileID: 2830920931105813052}
   - component: {fileID: 6162495839983942233}
   - component: {fileID: 2680101835875493889}
-  - component: {fileID: 8114064950361091504}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -325,8 +324,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   nearObject: {fileID: 0}
-  weaponController: {fileID: 0}
-  skillList:
+  <skillList>k__BackingField:
   - {fileID: 0}
   - {fileID: 3039287651601481129}
   - {fileID: 919416348197099439}
@@ -338,7 +336,28 @@ MonoBehaviour:
   - {fileID: 5459595728386863653}
   - {fileID: 726707132998332633}
   - {fileID: 4414882775074814602}
-  equipmentList:
+  <weaponList>k__BackingField:
+  - {fileID: 0}
+  - {fileID: 1811389599244873689}
+  - {fileID: 7482286952941643625}
+  - {fileID: 264465512817401448}
+  - {fileID: 4803969609152811737}
+  - {fileID: 3211954076127991482}
+  - {fileID: 1326059039569515621}
+  - {fileID: 7847518625626164900}
+  - {fileID: 1011933677386137442}
+  - {fileID: 6323502057816310659}
+  - {fileID: 3173375208004332274}
+  - {fileID: 8927466445473626184}
+  - {fileID: 4217453785281311880}
+  - {fileID: 6729927443594688983}
+  - {fileID: 8002197845923787803}
+  - {fileID: 2042823196366823235}
+  meleeEffectList:
+  - {fileID: 5324849133557116994}
+  - {fileID: 1820615735909877065}
+  - {fileID: 3089707545546175867}
+  <equipmentList>k__BackingField:
   - {fileID: 0}
   - {fileID: 7439955994502636290}
   - {fileID: 7794989197248214982}
@@ -463,42 +482,6 @@ MonoBehaviour:
   <skillChangeDelay>k__BackingField: 0
   <isSkill>k__BackingField: 0
   <isSkillHold>k__BackingField: 0
---- !u!114 &8114064950361091504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3504708173630329506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10bc7e415cd3038478d4b3a895ba7d0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enchant: 0
-  HitDetectionGameObject: {fileID: 0}
-  projectileIndex: 0
-  meleeEffectList:
-  - {fileID: 5324849133557116994}
-  - {fileID: 1820615735909877065}
-  - {fileID: 3089707545546175867}
-  weaponList:
-  - {fileID: 0}
-  - {fileID: 1811389599244873689}
-  - {fileID: 7482286952941643625}
-  - {fileID: 264465512817401448}
-  - {fileID: 4803969609152811737}
-  - {fileID: 3211954076127991482}
-  - {fileID: 1326059039569515621}
-  - {fileID: 7847518625626164900}
-  - {fileID: 1011933677386137442}
-  - {fileID: 6323502057816310659}
-  - {fileID: 3173375208004332274}
-  - {fileID: 8927466445473626184}
-  - {fileID: 4217453785281311880}
-  - {fileID: 6729927443594688983}
-  - {fileID: 8002197845923787803}
-  - {fileID: 2042823196366823235}
 --- !u!1 &3698801542754413869
 GameObject:
   m_ObjectHideFlags: 0
@@ -2854,11 +2837,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8100344937091233571, guid: cb98e660d9f7aa94c9ef3b6d7508a63c, type: 3}
       propertyPath: <rate>k__BackingField
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8100344937091233571, guid: cb98e660d9f7aa94c9ef3b6d7508a63c, type: 3}
       propertyPath: <preDelay>k__BackingField
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8100344937091233571, guid: cb98e660d9f7aa94c9ef3b6d7508a63c, type: 3}
+      propertyPath: <attackPower>k__BackingField
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

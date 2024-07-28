@@ -41,7 +41,7 @@ public class SpinAttackSkill : Skill
             while (holdPower < maxHoldPower && player.status.isSkillHold)
             {
                 holdPower += 0.05f;
-                spinSimul.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
+                spinSimul.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -88,7 +88,7 @@ public class SpinAttackSkill : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponController.weaponList[player.playerStats.weapon];
+            Weapon weapon = player.weaponList[player.playerStats.weapon];
             GameObject effect = Instantiate(spinPrefab, user.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
             float attackRate = weapon.SPA / player.playerStats.attackSpeed;
@@ -99,7 +99,7 @@ public class SpinAttackSkill : Skill
             Destroy(spinSimul);
 
             effect.transform.parent = user.transform;
-            effect.transform.localScale = new Vector3(holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponController.weaponList[player.playerStats.weapon].attackSize, 0);
+            effect.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
             effect.tag = "PlayerAttack";
             effect.layer = LayerMask.NameToLayer("PlayerAttack");
             /*
@@ -115,10 +115,10 @@ public class SpinAttackSkill : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              defalutDamage + player.stats.attackPower * ratio * holdPower,
-             player.weaponController.weaponList[player.playerStats.weapon].knockBack * 10 * holdPower, 
+             player.weaponList[player.playerStats.weapon].knockBack * 10 * holdPower, 
              player.playerStats.criticalChance, 
              player.playerStats.criticalDamage,
-             player.weaponController.weaponList[player.playerStats.weapon].statusEffect);
+             player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
             // rate 동안 유지

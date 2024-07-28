@@ -11,7 +11,7 @@ public class ExplosiveEnchant : Equipment
         if (target.tag == "Player")
         {
             this.user = target;
-            user.weaponController.enchant = 21;
+            user.SetEnchant(21);
         }
     }
 
@@ -20,7 +20,7 @@ public class ExplosiveEnchant : Equipment
     {
         if (target.tag == "Player")
         {
-            user.weaponController.enchant = 0;
+            user.SetEnchant(0);
         }
     }
 }

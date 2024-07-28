@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class WeaponController : MonoBehaviour
 {
     PlayerStatus status;
@@ -120,7 +121,7 @@ public class WeaponController : MonoBehaviour
 
     // 아이템 투척
     // 클릭한 위치에 아이템 생성
-    /*
+    
     IEnumerator ThrowItem(GameObject explosive)
     {
         Debug.Log("ThrowItem");
@@ -142,7 +143,7 @@ public class WeaponController : MonoBehaviour
         yield return null;
 
     }
-    */    
+
 
     // 이펙트 생성
     // 클릭한 방향으로 이펙트 생성
@@ -214,7 +215,7 @@ public class WeaponController : MonoBehaviour
 
     // 범위 공격
     // 클릭한 위치에 공격 판정 생성
-    /*
+    
     IEnumerator Throw(Vector3 clickPos)
     {
         Debug.Log("Throw");
@@ -235,7 +236,6 @@ public class WeaponController : MonoBehaviour
 
         yield return null;
     }
-    */
 
     public void AttackCancle()
     {
@@ -243,3 +243,4 @@ public class WeaponController : MonoBehaviour
         if (HitDetectionGameObject != null) HitDetectionGameObject.SetActive(false);
     }
 }
+*/

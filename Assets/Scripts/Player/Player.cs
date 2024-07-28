@@ -38,12 +38,13 @@ public class Player : ObjectBasic
     Vector2 playerPosition;
     Vector2 dodgeVec;
 
-    public WeaponController weaponController;
+    WeaponController weaponController;
     SkillController skillController;
 
-    // 스킬 리스트
-    public Skill[] skillList;
-    public Equipment[] equipmentList;
+    [field: SerializeField] public Skill[] skillList { get; private set; }
+    [field: SerializeField] public Weapon[] weaponList {get; private set;}
+    [field: SerializeField] GameObject[] meleeEffectList;
+    [field: SerializeField] public Equipment[] equipmentList { get; private set; }
 
     protected override void Awake()
     {
@@ -54,7 +55,7 @@ public class Player : ObjectBasic
         status = GetComponent<PlayerStatus>();
         stats = playerStats = GetComponent<PlayerStats>();
         
-        weaponController = GetComponent<WeaponController>();
+        weaponController = gameObject.AddComponent<Player.WeaponController>();
         skillController = gameObject.AddComponent<Player.SkillController>();
     }
 
@@ -211,17 +212,17 @@ public class Player : ObjectBasic
 
     #endregion
 
-    #region Attack
+    #region Reload
 
     void Reload()
     {
         if (playerStats.weapon == 0)
             return;
 
-        if (weaponController.weaponList[playerStats.weapon].maxAmmo < 0)
+        if (weaponList[playerStats.weapon].maxAmmo < 0)
             return;
 
-        if (weaponController.weaponList[playerStats.weapon].maxAmmo == weaponController.weaponList[playerStats.weapon].ammo)
+        if (weaponList[playerStats.weapon].maxAmmo == weaponList[playerStats.weapon].ammo)
             return;
 
         if (rDown && !isFlinch && !status.isDodge && !status.isReload && !isAttack && !status.isSkill && !status.isSkillHold)
@@ -230,7 +231,7 @@ public class Player : ObjectBasic
             status.reloadDelay = 0f;
         }
 
-        if (aDown && !isFlinch && status.attackDelay < 0 && weaponController.weaponList[playerStats.weapon].ammo == 0 && !status.isDodge && !status.isReload && !isAttack && !status.isSkill && !status.isSkillHold)
+        if (aDown && !isFlinch && status.attackDelay < 0 && weaponList[playerStats.weapon].ammo == 0 && !status.isDodge && !status.isReload && !isAttack && !status.isSkill && !status.isSkillHold)
         {
             status.isReload = true;
             status.reloadDelay = 0f;
@@ -244,10 +245,178 @@ public class Player : ObjectBasic
 
         status.reloadDelay += Time.deltaTime * (playerStats.attackSpeed);
 
-        if(status.reloadDelay >= weaponController.weaponList[playerStats.weapon].reloadTime)
+        if(status.reloadDelay >= weaponList[playerStats.weapon].reloadTime)
         {
-            weaponController.weaponList[playerStats.weapon].Reload();
+            weaponList[playerStats.weapon].Reload();
             status.isReload = false;
+        }
+    }
+
+    #endregion
+
+    #region Attack
+
+    [System.Serializable]
+    class WeaponController : MonoBehaviour
+    {
+        Player player;
+        // 공격 정보
+        Coroutine attackCoroutine;
+        int enchant;
+        GameObject HitDetectionGameObject;
+        int projectileIndex;
+        void Awake()
+        {
+            player = GetComponent<Player>();
+        }
+
+        // 무기를 획득
+        public bool EquipWeapon(int weaponID)
+        {
+            // 무기 소유
+            player.playerStats.weapon = weaponID;
+            // 장비 능력치 적용
+            player.weaponList[player.playerStats.weapon].gameObject.SetActive(true);
+            player.weaponList[player.playerStats.weapon].Equip(this.gameObject.GetComponent<Player>());
+
+            if (player.weaponList[player.playerStats.weapon].weaponType < 10)
+            {
+                HitDetectionGameObject = player.meleeEffectList[player.weaponList[player.playerStats.weapon].weaponType];
+            }
+            else if (10 <= player.weaponList[player.playerStats.weapon].weaponType)
+            {
+                projectileIndex = player.weaponList[player.playerStats.weapon].projectileIndex;
+            }
+
+            // 장비 UI 적용
+            //MapUIManager.instance.UpdateWeaponUI();
+            return true;
+        }
+
+        public void UnEquipWeapon()
+        {
+            HitDetectionGameObject = null;
+            projectileIndex = -1;
+
+            // 현재 위치에 장비를 놓는다.
+            Instantiate(GameData.instance.weaponList[player.playerStats.weapon], gameObject.transform.position, gameObject.transform.localRotation);
+
+            // 무기 능력치 해제
+            player.weaponList[player.playerStats.weapon].UnEquip(this.gameObject.GetComponent<Player>());
+            player.weaponList[player.playerStats.weapon].gameObject.SetActive(false);
+
+            // 무기 해제
+            player.playerStats.weapon = 0;
+            //MapUIManager.instance.UpdateWeaponUI();
+        }
+
+        public void SetEnchant(int enchantID)
+        {
+            enchant = enchantID;
+        }
+
+        public void Use(Vector3 clickPos)
+        {
+            player.weaponList[player.playerStats.weapon].ConsumeAmmo();
+            if (player.weaponList[player.playerStats.weapon].weaponType < 10)
+            {
+                // 플레이어 애니메이션 실행
+                attackCoroutine = StartCoroutine("Swing");
+            }
+            else if (10 <= player.weaponList[player.playerStats.weapon].weaponType)
+            {
+                // 플레이어 애니메이션 실행
+                if (player.weaponList[player.playerStats.weapon].weaponType == 13)
+                    attackCoroutine = StartCoroutine("Throw", clickPos);
+                else
+                    attackCoroutine = StartCoroutine("Shot");
+            }
+
+            //Debug.Log(playerStats.weapon.attackSpeed);
+            //Debug.Log(playerStats.attackSpeed);
+
+        }
+
+        IEnumerator Swing()
+        {
+            // 공격 상태
+            player.isAttack = true;
+
+            float attackAngle = player.status.mouseAngle;
+
+            //선딜
+            yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
+
+            // 무기 이펙트 크기 설정
+            HitDetectionGameObject.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
+            HitDetectionGameObject.GetComponentInChildren<Enchant>().SetEnchant(enchant);
+
+            // 이펙트 수치 설정
+            HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
+            hitDetection.SetHitDetection(false, -1, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage, player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.user = this.gameObject;
+
+            // 무기 방향 
+            HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);
+
+            // 무기 이펙트 실행
+            HitDetectionGameObject.SetActive(true);
+
+            // 공격 시간
+            yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].rate / player.playerStats.attackSpeed);
+
+            // 무기 이펙트 해제
+            HitDetectionGameObject.SetActive(false);
+            HitDetectionGameObject.GetComponentInChildren<Enchant>().index = 0;
+
+            // 공격 상태 해제
+            player.isAttack = false;
+        }
+
+        IEnumerator Shot()
+        {
+            player.isAttack = true;
+
+            float attackAngle = player.status.mouseAngle;
+            Vector2 attackDir = player.status.mouseDir;
+
+            // 선딜
+            yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
+
+            // 무기 투사체 적용
+            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectileIndex);
+            instantProjectile.transform.position = transform.position;
+            instantProjectile.transform.rotation = transform.rotation;
+            instantProjectile.GetComponent<Enchant>().SetEnchant(enchant);
+
+            //투사체 설정
+            Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
+            HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
+
+            //bulletRigid.velocity = shotPos.up * 25;
+            // 투사체 설정
+            hitDetection.SetHitDetection(true, player.weaponList[player.playerStats.weapon].penetrations, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage, player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.user = this.gameObject;
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);  // 방향 설정
+            instantProjectile.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
+            bulletRigid.velocity = attackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;  // 속도 설정
+            hitDetection.SetProjectileTime(player.weaponList[player.playerStats.weapon].projectileTime);
+
+            // 공격 상태 해제
+            player.isAttack = false;
+        }
+
+        public void AttackCancle()
+        {
+            player.isAttack = false;
+            player.status.attackDelay = 0;
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(attackCoroutine);
+                attackCoroutine = null;
+                if (HitDetectionGameObject != null)
+                    HitDetectionGameObject.SetActive(false);
+            }
         }
     }
 
@@ -258,39 +427,28 @@ public class Player : ObjectBasic
         if (playerStats.weapon == 0)
             return;
 
-        if (weaponController.weaponList[playerStats.weapon].ammo == 0)
+        if (weaponList[playerStats.weapon].ammo == 0)
             return;
 
         isAttackReady = status.attackDelay <= 0;
 
         if (aDown && !isFlinch && !isAttack && !status.isReload && !status.isDodge && isAttackReady && !status.isSkill && !status.isSkillHold )
         {
-            // 공격 준비 안됨
-            isAttackReady = false;
-            isAttack = true;
-
             weaponController.Use(status.mousePos);
 
             AudioManager.instance.SFXPlay("attack_sword");
 
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
-            status.attackDelay = weaponController.weaponList[playerStats.weapon].SPA / playerStats.attackSpeed;
-
-            // 공격 시간(움직이기까지 대기 시간) = (선딜레이 * 공격 중인 시간) / 초당 공격 속도
-            Invoke("AttackOut", (weaponController.weaponList[playerStats.weapon].preDelay + weaponController.weaponList[playerStats.weapon].rate) / playerStats.attackSpeed);
+            status.attackDelay = weaponList[playerStats.weapon].SPA / playerStats.attackSpeed;
         }
-    }
-
-    void AttackOut()
-    {
-        isAttack = false;
     }
 
     #endregion
 
     #region Skill
 
-    public class SkillController : MonoBehaviour
+    [System.Serializable]
+    class SkillController : MonoBehaviour
     {
         Player player;
 
@@ -299,11 +457,6 @@ public class Player : ObjectBasic
         void Awake()
         {
             player = GetComponent<Player>();
-        }
-
-        void Update()
-        {
-            print("Coroutine is " + skillCoroutine);
         }
 
         // 스킬 획득
@@ -438,7 +591,7 @@ public class Player : ObjectBasic
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
             if (playerStats.weapon == 0 && 
                 skillList[playerStats.skill[status.skillIndex]].skillLimit.Length != 0 && 
-            Array.IndexOf(skillList[playerStats.skill[status.skillIndex]].skillLimit, weaponController.weaponList[playerStats.weapon].weaponType) == -1)
+            Array.IndexOf(skillList[playerStats.skill[status.skillIndex]].skillLimit, weaponList[playerStats.weapon].weaponType) == -1)
             {
                 return;
             }
@@ -846,6 +999,11 @@ public class Player : ObjectBasic
 
     // 상태 관련
     #region Effect
+
+    public void SetEnchant(int enchantID)
+    {
+        weaponController.SetEnchant(enchantID);
+    }
 
     public override void AttackCancle()
     {
