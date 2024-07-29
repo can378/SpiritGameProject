@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Dokkebie : EnemyBasic
 {
-    [SerializeField] GameObject hammerArea;
     [SerializeField] int defaultFireCoolTime;
     float fireCoolTime = 0;
 
@@ -12,8 +11,6 @@ public class Dokkebie : EnemyBasic
     protected override void Start()
     {
         base.Start();
-        hitDetection = hammerArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
     }
 
     protected override void Update()
@@ -49,14 +46,14 @@ public class Dokkebie : EnemyBasic
 
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
 
         GameObject bullet = ObjectPoolManager.instance.Get2("dokabbiFire");
         bullet.transform.position = transform.position;
         bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized, ForceMode2D.Impulse);
         //Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
 
         isAttack = false;
         isAttackReady = true;
@@ -65,28 +62,20 @@ public class Dokkebie : EnemyBasic
 
     IEnumerator Hammer()
     {
-        
+        Vector2 attackTarget = targetDirVec;
+
         isAttack = true;
         isAttackReady = false;
-        Vector2 attackTarget = targetDirVec;
         yield return new WaitForSeconds(1f);
-
        
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
-        hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(attackTarget.y, attackTarget.x) * Mathf.Rad2Deg - 90);
-        hammerArea.SetActive(true);
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(attackTarget.y, attackTarget.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
-        hammerArea.SetActive(false);
+        hitEffects[0].gameObject.SetActive(false);
         isAttack = false;
         isAttackReady = true;
-    }
-
-    public override void AttackCancle()
-    {
-        base.AttackCancle();
-        if(attackCoroutine != null) StopCoroutine(attackCoroutine);
-        hammerArea.SetActive(false);
     }
 
     /*

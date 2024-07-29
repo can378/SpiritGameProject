@@ -43,7 +43,6 @@ public class Player : ObjectBasic
 
     [field: SerializeField] public Skill[] skillList { get; private set; }
     [field: SerializeField] public Weapon[] weaponList {get; private set;}
-    [field: SerializeField] GameObject[] meleeEffectList;
     [field: SerializeField] public Equipment[] equipmentList { get; private set; }
 
     protected override void Awake()
@@ -263,7 +262,7 @@ public class Player : ObjectBasic
         // 공격 정보
         Coroutine attackCoroutine;
         int enchant;
-        GameObject HitDetectionGameObject;
+        [SerializeField] GameObject HitDetectionGameObject;
         int projectileIndex;
         void Awake()
         {
@@ -281,7 +280,7 @@ public class Player : ObjectBasic
 
             if (player.weaponList[player.playerStats.weapon].weaponType < 10)
             {
-                HitDetectionGameObject = player.meleeEffectList[player.weaponList[player.playerStats.weapon].weaponType];
+                HitDetectionGameObject = player.hitEffects[player.weaponList[player.playerStats.weapon].weaponType];
             }
             else if (10 <= player.weaponList[player.playerStats.weapon].weaponType)
             {

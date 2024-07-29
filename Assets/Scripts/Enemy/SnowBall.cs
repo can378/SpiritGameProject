@@ -6,7 +6,13 @@ public class SnowBall : EnemyBasic
 {
     float size = 1f;
     bool isHit;
-    [SerializeField] HitDetection snowballHitDetection;
+    HitDetection snowBallHitD;
+
+    protected override void Start()
+    {
+        base.Start();
+        snowBallHitD = hitEffects[0].GetComponent<HitDetection>();
+    }
 
     protected override void Update()
     {
@@ -21,14 +27,13 @@ public class SnowBall : EnemyBasic
             size += Time.deltaTime * 0.1f;
         }
 
-        if(isTouchPlayer)
+        if(hitTarget)
         {
             print("snowball hit");
             isHit = true;
-            isTouchPlayer= false;
-            if (size >= 1f)
+            if (size > 1.5f)
             {
-                size = 1f;
+                size -= 1f;
             }
             else
             {
@@ -37,9 +42,8 @@ public class SnowBall : EnemyBasic
         }
 
         transform.localScale = new Vector3(size, size, 1f);
-        //snowballHitDetection.gameObject.transform.localScale = new Vector3(size, size, 1f);
         enemyStats.increasedAttackPower = size - 1f;
-        snowballHitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * size, 10, 0, 0, null);
+        snowBallHitD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * size, 10, 0, 0, null);
 
     }
 
@@ -47,7 +51,7 @@ public class SnowBall : EnemyBasic
     {
         if (targetDis <= enemyStats.maxAttackRange)
         {
-            StartCoroutine(Tackle());
+            attackCoroutine = StartCoroutine(Tackle());
         }
     }
 
@@ -56,16 +60,15 @@ public class SnowBall : EnemyBasic
         // µ¹Áø Àü ÁØºñ
         isAttack = true;
         isAttackReady = false;
-        snowballHitDetection.gameObject.SetActive(true);
-        snowballHitDetection.SetHitDetection(false,-1,false,-1,enemyStats.attackPower * size,20,0,0,null);
-        snowballHitDetection.user = this.gameObject;
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower * size,20,0,0,null);
         yield return new WaitForSeconds(0.6f);
 
+        hitEffects[0].gameObject.SetActive(true);
         moveVec = targetDirVec * 5;
         for(int i = 0; i < 20 ;i++)
         {
             moveVec -= moveVec * 0.1f;
-            if(isHit)
+            if(isHit || isFlinch)
             {
                 break;
             }
@@ -74,7 +77,7 @@ public class SnowBall : EnemyBasic
 
         // ¸ØÃã
         moveVec = new Vector3(0, 0, 0);
-        snowballHitDetection.gameObject.SetActive(false);
+        hitEffects[0].gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
         isAttack = false;

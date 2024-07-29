@@ -5,16 +5,10 @@ using UnityEngine;
 
 public class Pox : EnemyBasic
 {
-    [SerializeField] GameObject hitArea;
-    //수두 걸린 사람
-    //거리가 어느정도 있으면 총알 던짐
-    //가까이 있다면 때리고 튄다.
 
     protected override void Start()
     {
         base.Start();
-        hitDetection = hitArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
     }
     protected override void MovePattern()
     {
@@ -44,11 +38,11 @@ public class Pox : EnemyBasic
         yield return new WaitForSeconds(0.5f);
 
         
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5, 0, 0, null);
-        hitArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
-        hitArea.SetActive(true);
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5, 0, 0, null);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-        hitArea.SetActive(false);
+        hitEffects[0].gameObject.SetActive(false);
         
         isAttack = false;
         isAttackReady = true;

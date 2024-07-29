@@ -22,7 +22,7 @@ public class ObjectBasic : MonoBehaviour
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
     public bool isAttackReady = true;       // 공격 준비 : false일 시 공격은 할 수 없으나 스스로 이동은 가능
     public GameObject hitTarget;            // 공격 성공
-    //public float attackDelay;               // 공격중 시간
+    [field:SerializeField] protected GameObject[] hitEffects;           // 공격범위들 저장하는 객체
 
     [HideInInspector] public SpriteRenderer sprite;
     [HideInInspector] public Rigidbody2D rigid;
@@ -149,6 +149,9 @@ public class ObjectBasic : MonoBehaviour
     {
         isAttack = false;
         isAttackReady = true;
+        moveVec = Vector2.zero;
+        foreach(GameObject hitEffect in hitEffects)
+            hitEffect.SetActive(false);
     }
 
     public void Invincible(float time = 0)

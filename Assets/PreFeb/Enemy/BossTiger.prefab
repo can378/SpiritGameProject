@@ -253,7 +253,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
-  deadDelay: 0
+  buffTF: {fileID: 0}
   isAttack: 0
   isAttackReady: 1
   hitTarget: {fileID: 0}
@@ -269,8 +269,8 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   isTouchPlayer: 0
-  hitDetection: {fileID: 0}
-  biteArea: {fileID: 5987174625535437208}
+  hitDetection:
+  - {fileID: 0}
   spawnCandidate:
   - {fileID: 7204850298384088174}
   - {fileID: 1159921509662655472}
@@ -293,7 +293,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <revivalStock>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -625,6 +626,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8295984943593487094, guid: 0ffd2b7d081542b40bbb8f59bd7da0de, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8565315372985090458, guid: 0ffd2b7d081542b40bbb8f59bd7da0de, type: 3}
       propertyPath: m_Name
       value: normalGhost
@@ -663,6 +668,10 @@ PrefabInstance:
     - target: {fileID: 3642521718709155923, guid: 604c3250046a4054faa3289de72d4932, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4278051864775572363, guid: 604c3250046a4054faa3289de72d4932, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6360330638373099078, guid: 604c3250046a4054faa3289de72d4932, type: 3}
       propertyPath: <HP>k__BackingField
@@ -870,6 +879,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6805283559688333167, guid: f6de8b3f6ef7b5d4fb1862fc74110e70, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -893,6 +906,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3026903673131294440}
     m_Modifications:
+    - target: {fileID: 3914431217769459977, guid: 0efdaa13ddc1ab34b86dc5c5ac4af4ae, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4691231705658497611, guid: 0efdaa13ddc1ab34b86dc5c5ac4af4ae, type: 3}
       propertyPath: <HP>k__BackingField
       value: 50

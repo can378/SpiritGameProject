@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class JangSanBum : EnemyBasic
 {
-    [SerializeField] GameObject biteArea;
+    HitDetection biteHD;
     [SerializeField] GameObject[] spawnCandidate;
     public GameObject spawnCandidateParent;
 
@@ -30,8 +30,7 @@ public class JangSanBum : EnemyBasic
 
         
         
-        hitDetection = biteArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
+        biteHD = hitEffects[0].GetComponent<HitDetection>();
         patternNum = 0;
     }
 
@@ -97,7 +96,7 @@ public class JangSanBum : EnemyBasic
                 //attack
                 bite();
                 yield return new WaitForSeconds(biteTime * 0.6f);
-                biteArea.SetActive(false);
+                hitEffects[0].SetActive(false);
 
             }
             //근처에 있으면 내리친다
@@ -105,10 +104,10 @@ public class JangSanBum : EnemyBasic
             {
                 //attack
                 bite();
-                biteArea.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                hitEffects[0].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
                 yield return new WaitForSeconds(3f);
-                biteArea.transform.localScale = new Vector3(1, 1, 1);
-                biteArea.SetActive(false);
+                hitEffects[0].transform.localScale = new Vector3(1, 1, 1);
+                hitEffects[0].SetActive(false);
             }
             time1--;
         }
@@ -140,7 +139,7 @@ public class JangSanBum : EnemyBasic
                 //입을 크게 벌리는 모션
                 bite();
                 yield return new WaitForSeconds(biteTime * 0.6f);
-                biteArea.SetActive(false);
+                hitEffects[0].SetActive(false);
 
             }
             time2--;
@@ -162,10 +161,10 @@ public class JangSanBum : EnemyBasic
 
         //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
         bite();
-        biteArea.transform.localScale = new Vector3(2, 2, 2);
+        hitEffects[0].transform.localScale = new Vector3(2, 2, 2);
         yield return new WaitForSeconds(4f);
-        biteArea.transform.localScale = new Vector3(1,1, 1);
-        biteArea.SetActive(false);
+        hitEffects[0].transform.localScale = new Vector3(1,1, 1);
+        hitEffects[0].SetActive(false);
 
 
         isAttack = false;
@@ -235,14 +234,14 @@ public class JangSanBum : EnemyBasic
     private void bite() 
     {
         //attack
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
-        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
-        biteArea.SetActive(true);
+        biteHD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].SetActive(true);
     }
     private void checkHit()
     {
         //플레이어가 hit detection에 걸렸을 때 추가 효과
-        if (hitDetection.isHit)
+        if (biteHD.isHit)
         {
             if (patternNum == 2) { enemyStats.HP += 10; }
             else if (patternNum == 3) { enemyTarget.GetComponent<PlayerStats>().blind = blindTime; }

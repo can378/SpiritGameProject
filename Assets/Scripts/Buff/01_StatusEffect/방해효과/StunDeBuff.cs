@@ -15,12 +15,13 @@ public class StunDeBuff : StatusEffect
 
     public override void ResetEffect()
     {
-        if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
+        if (target.tag == "Player" || target.tag == "Enemy")
         {
             ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
             // 효과 적용
             objectBasic.isFlinch = true;
+            objectBasic.AttackCancle();
 
             // 중첩 
             overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;

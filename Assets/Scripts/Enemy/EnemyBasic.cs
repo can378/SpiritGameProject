@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
@@ -21,9 +22,8 @@ public class EnemyBasic : ObjectBasic
     [HideInInspector]
     public bool isTouchPlayer;
     //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
-    [HideInInspector]
-    public HitDetection hitDetection;
 
+    // 해당 enemy가 가진 공격 범위들
     protected Coroutine attackCoroutine;
 
     protected override void Awake()
@@ -36,6 +36,8 @@ public class EnemyBasic : ObjectBasic
     protected virtual void Start()
     {
         enemyTarget = FindObj.instance.Player.transform;
+        foreach (GameObject hitEffect in hitEffects)
+            hitEffect.GetComponent<HitDetection>().user = this.gameObject;
     }
 
     protected virtual void Update()
@@ -204,11 +206,7 @@ public class EnemyBasic : ObjectBasic
         int dropCoinNum = 3;
         Vector3 coinDropPoint = transform.position;
         GameManager.instance.dropCoin(dropCoinNum, coinDropPoint);
-
-        //enemy disappear
-        StopAllCoroutines();
         
-
         base.Dead();
     }
 
@@ -218,6 +216,16 @@ public class EnemyBasic : ObjectBasic
     {
         Gizmos.color = Color.red;
         //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionDis);
+    }
+
+    public override void AttackCancle()
+    {
+        base.AttackCancle();
+        if(attackCoroutine != null) 
+        {
+            Debug.Log(name + "코루틴 종료");
+            StopCoroutine(attackCoroutine);
+        }
     }
 
     /*

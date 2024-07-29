@@ -106,7 +106,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
-  deadDelay: 0
+  buffTF: {fileID: 0}
   isAttack: 0
   isAttackReady: 1
   hitTarget: {fileID: 0}
@@ -122,7 +122,8 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: -1
   isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+  hitDetection:
+  - {fileID: 6666704503909228979}
 --- !u!114 &6059479966666769969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +139,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <revivalStock>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0

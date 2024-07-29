@@ -9,7 +9,6 @@ public class BlackDog : EnemyBasic
     [SerializeField] bool isDodge;                  // 회피중
     [SerializeField] bool isDetectAttack;           // 공격 탐지
 
-    [SerializeField] GameObject biteArea;
     [SerializeField] float biteTime;
 
 
@@ -23,9 +22,6 @@ public class BlackDog : EnemyBasic
     protected override void Start()
     {
         base.Start();
-        hitDetection = biteArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
-
     }
 
     protected override void Update()
@@ -125,12 +121,12 @@ public class BlackDog : EnemyBasic
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
 
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
         
-        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
-        biteArea.SetActive(true);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(biteTime * 0.6f);
-        biteArea.SetActive(false);
+        hitEffects[0].gameObject.SetActive(false);
         
 
         isAttack = false;

@@ -174,10 +174,12 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
-  deadDelay: 0
+  buffTF: {fileID: 0}
   isAttack: 0
   isAttackReady: 1
   hitTarget: {fileID: 0}
+  hitEffects:
+  - {fileID: 8149751074031315023}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
   isRun: 0
@@ -190,8 +192,6 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   isTouchPlayer: 0
-  hitDetection: {fileID: 0}
-  snowballHitDetection: {fileID: 5533794121055610907}
 --- !u!114 &1970378815811846781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +207,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <revivalStock>k__BackingField: 0
+  <poiseMax>k__BackingField: 10
+  <poise>k__BackingField: 10
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -382,7 +383,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.003371358, y: -0.006742835}
   serializedVersion: 2
-  m_Radius: 0.64977145
+  m_Radius: 0.8
 --- !u!50 &2164266715612272491
 Rigidbody2D:
   serializedVersion: 4

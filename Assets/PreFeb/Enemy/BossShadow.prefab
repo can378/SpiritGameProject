@@ -1065,7 +1065,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   isFlinch: 0
   isInvincible: 0
-  deadDelay: 0
+  buffTF: {fileID: 0}
   isAttack: 0
   isAttackReady: 0
   hitTarget: {fileID: 0}
@@ -1081,7 +1081,7 @@ MonoBehaviour:
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
   isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+  hitDetection: []
   sightBlock: {fileID: 1707718157729224152}
   dummies:
   - {fileID: 9054062907636419184}
@@ -1132,7 +1132,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <revivalStock>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -1277,6 +1278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: shadowdummy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5803784162449769295, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1343,6 +1348,10 @@ PrefabInstance:
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
       value: shadowdummy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803784162449769295, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1411,6 +1420,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: shadowdummy
       objectReference: {fileID: 0}
+    - target: {fileID: 5803784162449769295, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1477,6 +1490,10 @@ PrefabInstance:
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
       value: shadowdummy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803784162449769295, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: hitDetection.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
