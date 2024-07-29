@@ -68,16 +68,16 @@ public class Dokkebie : EnemyBasic
         
         isAttack = true;
         isAttackReady = false;
-        yield return new WaitForSeconds(0.5f);
+        Vector2 attackTarget = targetDirVec;
+        yield return new WaitForSeconds(1f);
 
        
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
-        hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hammerArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(attackTarget.y, attackTarget.x) * Mathf.Rad2Deg - 90);
         hammerArea.SetActive(true);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0.5f);
+
         hammerArea.SetActive(false);
-
-
         isAttack = false;
         isAttackReady = true;
     }
