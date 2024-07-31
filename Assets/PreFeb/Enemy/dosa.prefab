@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2930629388769488270}
   - component: {fileID: 5139860355139914438}
   - component: {fileID: 3610507394969829896}
+  - component: {fileID: -7980827000272133388}
   m_Layer: 8
   m_Name: dosa
   m_TagString: Enemy
@@ -102,27 +103,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: []
+  enemyStatus: {fileID: 0}
   <skillList>k__BackingField:
   - {fileID: 0}
   - {fileID: 3985821864081480213}
@@ -234,6 +221,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-7980827000272133388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538086322564347871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  hitEffects: []
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1 &7727270129497258219
 GameObject:
   m_ObjectHideFlags: 0

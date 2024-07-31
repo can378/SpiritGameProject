@@ -23,31 +23,31 @@ public class BossBaby : EnemyBasic
         base.Start();
         floor = GameManager.instance.nowRoom;
 
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
         bounds = floor.GetComponent<Collider2D>().bounds;
     }
 
     protected override void Move()
     {
         // 경직과 공격 중에는 직접 이동 불가
-        if (isFlinch)
+        if (enemyStatus.isFlinch)
         {
             return;
         }
-        else if (isAttack)
+        else if (enemyStatus.isAttack)
         {
-            rigid.velocity = moveVec * stats.moveSpeed;
+            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
             return;
         }
-        else if (isRun)
+        else if (enemyStatus.isRun)
         {
-            if (enemyTarget)
+            if (enemyStatus.enemyTarget)
             {
-                rigid.velocity = -(enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+                rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
             }
             return;
         }
-        rigid.velocity = moveVec * stats.moveSpeed;
+        rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
 
     }
 
@@ -78,13 +78,13 @@ public class BossBaby : EnemyBasic
     IEnumerator Rush() 
     {
         //start
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         print("Rush");
 
         float time = 0;
 
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
 
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
@@ -94,13 +94,13 @@ public class BossBaby : EnemyBasic
         {
             if (isHitWall == false)
             {
-                moveVec=targetDirVec;
+                enemyStatus.moveVec=enemyStatus.targetDirVec;
                 yield return new WaitForSeconds(0.1f);
             }
             else 
             {
-                targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-                moveVec = targetDirVec;
+                enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+                enemyStatus.moveVec = enemyStatus.targetDirVec;
                 yield return new WaitForSeconds(0.1f);
                 isHitWall = false;
             }
@@ -112,16 +112,16 @@ public class BossBaby : EnemyBasic
         rigid.velocity = Vector2.zero;
 
         //end
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 
     IEnumerator Crying() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         print("Crying");
 
 
@@ -131,7 +131,7 @@ public class BossBaby : EnemyBasic
         while(Vector2.Distance(transform.position, corner) > 60f) 
         {
             yield return new WaitForSeconds(0.1f);
-            moveVec = (corner - transform.position).normalized;
+            enemyStatus.moveVec = (corner - transform.position).normalized;
         }
         rigid.velocity = Vector2.zero;
 
@@ -144,16 +144,16 @@ public class BossBaby : EnemyBasic
             yield return new WaitForSeconds(0.5f);
         }
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 
     IEnumerator DropTear() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
 
         randomX = Random.Range(bounds.min.x, bounds.max.x);
@@ -174,8 +174,8 @@ public class BossBaby : EnemyBasic
 
     IEnumerator MadRush() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         print("MadRush");
 
 
@@ -212,9 +212,9 @@ public class BossBaby : EnemyBasic
         rigid.velocity = Vector2.zero;
 
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 
@@ -222,8 +222,8 @@ public class BossBaby : EnemyBasic
 
     IEnumerator Hiding() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         print("Hiding");
 
         SafeArea.SetActive(true);
@@ -235,9 +235,9 @@ public class BossBaby : EnemyBasic
         SafeArea.SetActive(false);
         DamageArea.SetActive(false);
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 
@@ -267,8 +267,8 @@ public class BossBaby : EnemyBasic
 
     IEnumerator Screaming() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         print("Screaming");
         ScreamArea.SetActive(true);
@@ -280,8 +280,8 @@ public class BossBaby : EnemyBasic
 
 
         yield return new WaitForSeconds(3f);
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
 

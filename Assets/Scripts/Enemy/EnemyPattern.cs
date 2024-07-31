@@ -14,13 +14,13 @@ public class EnemyPattern : EnemyBasic
     {
         for (int i = 0; i < 2; i++)
         {
-            targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+            enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
 
             rigid.velocity = Vector2.zero;
             yield return new WaitForSeconds(0.1f);
 
             for (int j = 0; j < 100; j++)
-            { rigid.AddForce(targetDirVec * Mathf.Pow(-1, i) * 2 * Mathf.Pow(3, i)); }
+            { rigid.AddForce(enemyStatus.targetDirVec * Mathf.Pow(-1, i) * 2 * Mathf.Pow(3, i)); }
             //{ rigid.AddForce(targetDirVec * Mathf.Pow(-1,i) * stats.speed*Mathf.Pow(3,i)); }
 
             yield return new WaitForSeconds(0.1f);
@@ -48,12 +48,12 @@ public class EnemyPattern : EnemyBasic
             bullet.transform.position = GunMuzzle[i].transform.position;
             bullet.transform.rotation = Quaternion.identity;
 
-            targetDirVec = new Vector2(
+            enemyStatus.targetDirVec = new Vector2(
                 Mathf.Cos(Mathf.PI * 2 * i / gunNum),
                 Mathf.Sin(Mathf.PI * 2 * i / gunNum));
 
             bullet.GetComponent<Rigidbody2D>().
-                AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
+                AddForce(enemyStatus.targetDirVec.normalized * 2, ForceMode2D.Impulse);
             Vector3 rotVec = Vector3.forward * 260 * i / gunNum + Vector3.forward * 90;
             bullet.transform.Rotate(rotVec);
 
@@ -73,13 +73,13 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator rushHit(bool isRepeat) //돌진 후 대기 (반복)
     {
         //print("rushhit=" + stats.damage);
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
 
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
         for (int i = 0; i < 100; i++)
-        { rigid.AddForce(targetDirVec * stats.defaultMoveSpeed); }
+        { rigid.AddForce(enemyStatus.targetDirVec * stats.defaultMoveSpeed); }
         
         yield return new WaitForSeconds(0.1f);
 
@@ -100,26 +100,26 @@ public class EnemyPattern : EnemyBasic
     {
         isHARRun = true;
         //print("hit and run=" + stats.damage);
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
         //if (targetDis < stats.detectionDis)
         //{
             //getting closer
             do
             {
                 Chase();
-                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+                enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
                 yield return new WaitForSeconds(0.01f);
-            } while (targetDis > 1.2f);
+            } while (enemyStatus.targetDis > 1.2f);
 
 
             //getting farther
             do
             {
-                rigid.AddForce(-targetDirVec * stats.defaultMoveSpeed, ForceMode2D.Impulse);
-                targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-                targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+                rigid.AddForce(-enemyStatus.targetDirVec * stats.defaultMoveSpeed, ForceMode2D.Impulse);
+                enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
+                enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
                 yield return new WaitForSeconds(0.01f);
-            } while (targetDis < 10f);
+            } while (enemyStatus.targetDis < 10f);
 
         //}
         yield return new WaitForSeconds(0.01f);
@@ -247,12 +247,12 @@ public class EnemyPattern : EnemyBasic
         if (isAttacking == false)
         {
 
-            targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+            enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
 
-            if (targetDis <= enemyStats.detectionDis)
+            if (enemyStatus.targetDis <= enemyStats.detectionDis)
             {
                 //attack
-                if (targetDis <= 0.7f)
+                if (enemyStatus.targetDis <= 0.7f)
                 {
                     
                     isAttacking = true;
@@ -286,9 +286,9 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator chasing() 
     {
         //print("chasing=" + stats.damage);
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
 
-        if (targetDis <= enemyStats.detectionDis && targetDis >= 1f)
+        if (enemyStatus.targetDis <= enemyStats.detectionDis && enemyStatus.targetDis >= 1f)
         {
             Chase();
         }
@@ -300,19 +300,19 @@ public class EnemyPattern : EnemyBasic
     public IEnumerator jump(bool isRepeat)
     {
         //print("jump=" + stats.damage);
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
 
-        if (targetDis <= enemyStats.detectionDis && targetDis >= 0.2f)
+        if (enemyStatus.targetDis <= enemyStats.detectionDis && enemyStatus.targetDis >= 0.2f)
         {
             if (isJumping == false)
             {
 
                 // 이동 방향
-                Vector3 direction = enemyTarget.position - transform.position;
+                Vector3 direction = enemyStatus.enemyTarget.position - transform.position;
                 direction.Normalize();
 
                 // 이동 속도, 시간
-                float jumpDuration = Vector3.Distance(enemyTarget.position, transform.position) / stats.defaultMoveSpeed;
+                float jumpDuration = Vector3.Distance(enemyStatus.enemyTarget.position, transform.position) / stats.defaultMoveSpeed;
 
                 // 점프 시작
                 isJumping = true;
@@ -352,9 +352,9 @@ public class EnemyPattern : EnemyBasic
             //range value 조절 필요
             randomX = Random.Range(-25, 25);
             randomY = Random.Range(-25, 25);
-            targetDirVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+            enemyStatus.targetDirVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
             //rigid.AddForce(targetDirVec * stats.speed);
-            rigid.AddForce(targetDirVec * 2);
+            rigid.AddForce(enemyStatus.targetDirVec * 2);
             yield return new WaitForSeconds(0.1f);
 
             time += Time.deltaTime;
@@ -375,8 +375,8 @@ public class EnemyPattern : EnemyBasic
 
         beam.SetActive(true);
 
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
-        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, targetDirVec);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, enemyStatus.targetDirVec);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, GetComponent<EnemyStats>().defaultMoveSpeed * Time.deltaTime);
     
         

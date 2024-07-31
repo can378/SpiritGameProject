@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4124179873196935874}
   - component: {fileID: 4975046949373675182}
+  - component: {fileID: 8268145946047765869}
   - component: {fileID: 7671026463152467353}
   - component: {fileID: 8366843435267718557}
   - component: {fileID: 3415628108008075770}
@@ -51,29 +52,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
+  status: {fileID: 0}
   hitEffects:
   - {fileID: 2862370349361042020}
+  defaultLayer: 0
+  buffTF: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &8268145946047765869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786627948272666640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d4936979f43f8e4dbade4a1a223ae5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isTouchPlayer: 0
-  defaultFireCoolTime: 10
+  fireCoolTime: 0
 --- !u!114 &7671026463152467353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,8 +104,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <poiseMax>k__BackingField: 40
-  <poise>k__BackingField: 40
+  <poiseMax>k__BackingField: 10
+  <poise>k__BackingField: 10
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -109,7 +124,7 @@ MonoBehaviour:
   activeEffects: []
   enemyName: 
   detectionDis: 10
-  detectionKeepDis: 0
+  detectionKeepDis: 10
   maxAttackRange: 10
 --- !u!50 &8366843435267718557
 Rigidbody2D:

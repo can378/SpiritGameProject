@@ -7,22 +7,12 @@ public class ObjectBasic : MonoBehaviour
 {
     //스탯
     [HideInInspector] public Stats stats;
+    // 현재 행동 상태
+    [HideInInspector] public Status status;
+
+    public GameObject[] hitEffects;           // 공격범위들 저장하는 객체
     public int defaultLayer;
-
-    // 이동관련
-    public Vector2 moveVec;
-
-    // 피격 관련
-    public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
-    public Coroutine flinchCoroutine;
-    public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
-    public Transform buffTF;
-
-    // 공격 관련
-    public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
-    public bool isAttackReady = true;       // 공격 준비 : false일 시 공격은 할 수 없으나 스스로 이동은 가능
-    public GameObject hitTarget;            // 공격 성공
-    [field:SerializeField] protected GameObject[] hitEffects;           // 공격범위들 저장하는 객체
+    public Transform buffTF;                // 버프 아이콘 위치
 
     [HideInInspector] public SpriteRenderer sprite;
     [HideInInspector] public Rigidbody2D rigid;
@@ -35,14 +25,14 @@ public class ObjectBasic : MonoBehaviour
 
     protected virtual void LateUpdate()
     {
-        hitTarget = null;
+        status.hitTarget = null;
     }
 
     #region Effect
 
     public virtual void BeAttacked(HitDetection hitDetection)
     {
-        if (isInvincible)
+        if (status.isInvincible)
             return;
 
         AudioManager.instance.SFXPlay("Hit_SFX");
@@ -53,8 +43,8 @@ public class ObjectBasic : MonoBehaviour
         if(DamagedPoise(hitDetection.damage))
         {
             Debug.Log(gameObject.name + ":Flinch");
-            if (flinchCoroutine != null) StopCoroutine(flinchCoroutine);
-            flinchCoroutine = StartCoroutine(Flinch(0.5f));
+            if (status.flinchCoroutine != null) StopCoroutine(status.flinchCoroutine);
+            status.flinchCoroutine = StartCoroutine(Flinch(0.5f));
 
             KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
@@ -72,7 +62,7 @@ public class ObjectBasic : MonoBehaviour
 
     public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
-        if(isInvincible)
+        if(status.isInvincible)
             return;
 
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
@@ -102,7 +92,7 @@ public class ObjectBasic : MonoBehaviour
     /// <returns></returns>
     public bool DamagedPoise(float damage)
     {
-        if(isInvincible)
+        if(status.isInvincible)
             return false;
 
         stats.poise = Mathf.Min(stats.poise - ((1 - stats.defensivePower) * damage), stats.poiseMax);
@@ -133,12 +123,12 @@ public class ObjectBasic : MonoBehaviour
 
     public IEnumerator Flinch(float time = 0)
     {
-        isFlinch = true;
+        status.isFlinch = true;
         AttackCancle();
 
         yield return new WaitForSeconds(time);
 
-        isFlinch = false;
+        status.isFlinch = false;
     }
 
     /// <summary>
@@ -147,16 +137,16 @@ public class ObjectBasic : MonoBehaviour
     /// </summary>
     public virtual void AttackCancle()
     {
-        isAttack = false;
-        isAttackReady = true;
-        moveVec = Vector2.zero;
+        status.isAttack = false;
+        status.isAttackReady = true;
+        status.moveVec = Vector2.zero;
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
     }
 
     public void Invincible(float time = 0)
     {
-        isInvincible = true;
+        status.isInvincible = true;
         sprite.color = Color.white;
         Invoke("InvincibleOut", time);
     }
@@ -165,12 +155,12 @@ public class ObjectBasic : MonoBehaviour
     {
         //무적 해제
         sprite.color = new Color(1, 1, 1, 1);
-        isInvincible = false;
+        status.isInvincible = false;
     }
 
     public void ApplyBuff(int buffIndex)
     {
-        if (isInvincible)
+        if (status.isInvincible)
             return;
 
         if (buffIndex <= 10 && 0 < stats.SEResist(buffIndex))

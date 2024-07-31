@@ -6,7 +6,7 @@ public class DeerWoman : EnemyBasic
 {
     protected override void AttackPattern()
     {
-        if (targetDis <= enemyStats.maxAttackRange)
+        if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
             StartCoroutine(deerWoman());
             return;
@@ -16,10 +16,10 @@ public class DeerWoman : EnemyBasic
 
     IEnumerator deerWoman()
     {
-        Vector3 shotDir = targetDirVec;
+        Vector3 shotDir = enemyStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.5f);
 
         //shot arrow
@@ -32,8 +32,8 @@ public class DeerWoman : EnemyBasic
     
         yield return new WaitForSeconds(2f);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 }

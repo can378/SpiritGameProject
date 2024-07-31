@@ -20,8 +20,8 @@ public class BossDarkGhost : EnemyBasic
 
     IEnumerator darkGhost()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //Wave Attack
         NoAttackRange.SetActive(true);
@@ -56,7 +56,7 @@ public class BossDarkGhost : EnemyBasic
         for (int i = 0; i < zones.Count; i++)
         {
             zones[i].SetActive(true);
-            zones[i].transform.position = enemyTarget.transform.position;
+            zones[i].transform.position = enemyStatus.enemyTarget.transform.position;
             yield return new WaitForSeconds(1f);
         
         }
@@ -70,9 +70,9 @@ public class BossDarkGhost : EnemyBasic
 
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 

@@ -37,17 +37,17 @@ public class FaceHostility : EnemyBasic
 
     IEnumerator hostility()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //START//////////////////////////////////
 
         // 가장 가까운 지점 계산
         circleCenter = transform.position;
-        startPoint = circleCenter + targetDirVec * radius;
+        startPoint = circleCenter + enemyStatus.targetDirVec * radius;
 
         // 시작 방향 설정
-        playerCenter=enemyTarget.transform.position;
+        playerCenter=enemyStatus.enemyTarget.transform.position;
         startDir = (playerCenter - startPoint).normalized;
         float angleStep = spreadAngle / (bulletCount - 1);
         float startAngle = -spreadAngle / 2;
@@ -72,9 +72,9 @@ public class FaceHostility : EnemyBasic
 
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 }

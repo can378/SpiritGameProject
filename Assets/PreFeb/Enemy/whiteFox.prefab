@@ -350,8 +350,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7036557452942694889}
-  - component: {fileID: 6360330638373099078}
   - component: {fileID: 4278051864775572363}
+  - component: {fileID: 7406414688100231865}
+  - component: {fileID: 2634327298365532885}
   - component: {fileID: 7875017551484753222}
   - component: {fileID: 3994815513577111045}
   m_Layer: 8
@@ -379,7 +380,60 @@ Transform:
   - {fileID: 6254242015886140061}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6360330638373099078
+--- !u!114 &4278051864775572363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642521718709155923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278857d8f61a14843b3a3afbe3cb17f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects:
+  - {fileID: 4379490230305102266}
+  - {fileID: 3179628487731707738}
+  defaultLayer: 0
+  buffTF: {fileID: 0}
+  sprite: {fileID: 0}
+  rigid: {fileID: 0}
+  enemyStats: {fileID: 0}
+  enemyStatus: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  defaulBlizzardCoolTime: 10
+  blizzardDebuff: 0100000003000000
+--- !u!114 &7406414688100231865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642521718709155923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bee31f3fc6aabe40afd13534d60af9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
+  blizzardCoolTime: 0
+--- !u!114 &2634327298365532885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,8 +445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 50
-  <HP>k__BackingField: 50
+  <HPMax>k__BackingField: 100
+  <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
@@ -409,55 +463,13 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  <defaultAttackPower>k__BackingField: 5
-  <defaultMoveSpeed>k__BackingField: 3
+  <defaultAttackPower>k__BackingField: 0
+  <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   enemyName: 
-  detectionDis: 10
-  detectionKeepDis: 10
-  maxAttackRange: 5
---- !u!114 &4278051864775572363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642521718709155923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 278857d8f61a14843b3a3afbe3cb17f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
-  sprite: {fileID: 0}
-  rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 8
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection:
-  - {fileID: 8542935334657758641}
-  - {fileID: 8889902559624257407}
-  blizzardArea: {fileID: 3179628487731707738}
-  defaulBlizzardCoolTime: 10
-  blizzardDebuff: 0100000003000000
-  blizzardTime: 5
-  biteArea: {fileID: 4379490230305102266}
-  biteTime: 1
+  detectionDis: 8
+  detectionKeepDis: 8
+  maxAttackRange: 3
 --- !u!58 &7875017551484753222
 CircleCollider2D:
   m_ObjectHideFlags: 0

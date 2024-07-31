@@ -17,8 +17,8 @@ public class BossShaman : EnemyBasic
 
     IEnumerator bossShaman()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         switch (attackNum)
         {
@@ -48,9 +48,9 @@ public class BossShaman : EnemyBasic
         yield return new WaitForSeconds(2f);
 
         attackNum = 1;
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator SummonDoll()
@@ -60,9 +60,9 @@ public class BossShaman : EnemyBasic
         yield return new WaitForSeconds(3f);
 
         attackNum = 2;
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator ShotKnife()
@@ -76,9 +76,9 @@ public class BossShaman : EnemyBasic
         yield return new WaitForSeconds(2f);
 
         attackNum = 0;
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 }

@@ -26,10 +26,10 @@ public class Tiger_head : EnemyBasic
 
     IEnumerator tigerHead()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
 
 
         //ROLLING
@@ -53,7 +53,7 @@ public class Tiger_head : EnemyBasic
         }
         else 
         { 
-            if (targetDis > GetComponent<EnemyStats>().detectionDis)
+            if (enemyStatus.targetDis > GetComponent<EnemyStats>().detectionDis)
             {
                 //MOVE
                 //setting random dirVec
@@ -89,9 +89,9 @@ public class Tiger_head : EnemyBasic
             }
         }
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 

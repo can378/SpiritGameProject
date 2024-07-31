@@ -21,8 +21,8 @@ public class NoHead_Head : EnemyBasic
         //targetDirVec = (enemyTarget.position - transform.position).normalized;
 
         float angle = Mathf.Atan2
-            (enemyTarget.transform.position.y - transform.position.y,
-             enemyTarget.transform.position.x - transform.position.x)
+            (enemyStatus.enemyTarget.transform.position.y - transform.position.y,
+             enemyStatus.enemyTarget.transform.position.x - transform.position.x)
            * Mathf.Rad2Deg;
         
         vomit.transform.rotation = Quaternion.Euler(0, 0, angle-180);
@@ -31,13 +31,13 @@ public class NoHead_Head : EnemyBasic
         // Quaternion rotation = Quaternion.LookRotation(0,0,targetDirVec.z);
         //vomit.transform.rotation = rotation;
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         vomit.SetActive(true);
         yield return new WaitForSeconds(3f);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
         vomit.SetActive(false);
         yield return new WaitForSeconds(3f);
 

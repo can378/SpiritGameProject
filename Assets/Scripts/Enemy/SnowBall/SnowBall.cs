@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SnowBall : EnemyBasic
 {
-    float size = 1f;
-    bool isHit;
+    SnowBallStatus snowBallStatus;
     HitDetection snowBallHitD;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         snowBallHitD = hitEffects[0].GetComponent<HitDetection>();
+        status = snowBallStatus = snowBallStatus = GetComponent<SnowBallStatus>();
     }
 
     protected override void Update()
@@ -22,18 +22,18 @@ public class SnowBall : EnemyBasic
 
     void SizeUp()
     {
-        if (moveVec != Vector2.zero && size < 4f && !isAttack)
+        if (snowBallStatus.moveVec != Vector2.zero && snowBallStatus.size < 4f && !snowBallStatus.isAttack)
         {
-            size += Time.deltaTime * 0.1f;
+            snowBallStatus.size += Time.deltaTime * 0.1f;
         }
 
-        if(hitTarget)
+        if(snowBallStatus.hitTarget)
         {
             print("snowball hit");
-            isHit = true;
-            if (size > 1.5f)
+            snowBallStatus.isHit = true;
+            if (snowBallStatus.size > 1.5f)
             {
-                size -= 1f;
+                snowBallStatus.size -= 1f;
             }
             else
             {
@@ -41,34 +41,34 @@ public class SnowBall : EnemyBasic
             }
         }
 
-        transform.localScale = new Vector3(size, size, 1f);
-        enemyStats.increasedAttackPower = size - 1f;
-        snowBallHitD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * size, 10, 0, 0, null);
+        transform.localScale = new Vector3(snowBallStatus.size, snowBallStatus.size, 1f);
+        enemyStats.increasedAttackPower = snowBallStatus.size - 1f;
+        snowBallHitD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * snowBallStatus.size, 10, 0, 0, null);
 
     }
 
     protected override void AttackPattern()
     {
-        if (targetDis <= enemyStats.maxAttackRange)
+        if (snowBallStatus.targetDis <= enemyStats.maxAttackRange)
         {
-            attackCoroutine = StartCoroutine(Tackle());
+            snowBallStatus.attackCoroutine = StartCoroutine(Tackle());
         }
     }
 
     IEnumerator Tackle()
     {
         // µ¹Áø Àü ÁØºñ
-        isAttack = true;
-        isAttackReady = false;
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower * size,20,0,0,null);
+        snowBallStatus.isAttack = true;
+        snowBallStatus.isAttackReady = false;
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower * snowBallStatus.size,20,0,0,null);
         yield return new WaitForSeconds(0.6f);
 
         hitEffects[0].gameObject.SetActive(true);
-        moveVec = targetDirVec * 5;
+        snowBallStatus.moveVec = snowBallStatus.targetDirVec * 5;
         for(int i = 0; i < 20 ;i++)
         {
-            moveVec -= moveVec * 0.1f;
-            if(isHit || isFlinch)
+            snowBallStatus.moveVec -= snowBallStatus.moveVec * 0.1f;
+            if(snowBallStatus.isHit || snowBallStatus.isFlinch)
             {
                 break;
             }
@@ -76,13 +76,13 @@ public class SnowBall : EnemyBasic
         }
 
         // ¸ØÃã
-        moveVec = new Vector3(0, 0, 0);
+        snowBallStatus.moveVec = new Vector3(0, 0, 0);
         hitEffects[0].gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        isAttack = false;
-        isAttackReady = true;
-        isHit = false;
+        snowBallStatus.isAttack = false;
+        snowBallStatus.isAttackReady = true;
+        snowBallStatus.isHit = false;
         
     }
 

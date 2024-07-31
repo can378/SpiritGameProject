@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 2921970725400241017}
   - component: {fileID: 7587859286718858369}
   - component: {fileID: 7035456568682600607}
+  - component: {fileID: -3117349766190478531}
   m_Layer: 8
   m_Name: jangsanbum
   m_TagString: Enemy
@@ -395,28 +396,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection:
-  - {fileID: 7074909548250620282}
+  enemyStatus: {fileID: 0}
   spawnCandidate: []
   spawnCandidateParent: {fileID: 0}
 --- !u!114 &2921970725400241017
@@ -528,3 +514,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.92, y: 4.28}
   m_EdgeRadius: 0
+--- !u!114 &-3117349766190478531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977258680326904767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  hitEffects: []
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0

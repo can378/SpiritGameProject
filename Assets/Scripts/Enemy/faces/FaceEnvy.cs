@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FaceEnvy : EnemyBasic
 {
-    //ÁúÅõ=½ºÅ³¸ð¹æ(Áã Ã³·³ ´ë½Å °­µµ´Â ´õ °­ÇÏ°Ô)
+    //ï¿½ï¿½ï¿½ï¿½=ï¿½ï¿½Å³ï¿½ï¿½ï¿½(ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½)
 
     [field: SerializeField] public List<Skill> skillList { get; private set; }
     [field: SerializeField] public int skill { get; private set; }
@@ -20,27 +20,27 @@ public class FaceEnvy : EnemyBasic
     protected override void MovePattern()
     {
 
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
         {
             RandomMove();
         }
-        else if (targetDis < 6f)
+        else if (enemyStatus.targetDis < 6f)
         {
             Run();
         }
-        else if (targetDis >= 7f)
+        else if (enemyStatus.targetDis >= 7f)
         {
             Chase();
         }
         else
         {
-            moveVec = Vector3.zero;
+            enemyStatus.moveVec = Vector3.zero;
         }
     }
 
     protected override void AttackPattern()
     {
-        // ½ºÅ³ »ç¿ëÀÌ °¡´ÉÇÏ¸é ½ºÅ³ »ç¿ë
+        // ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½
         if (skill != 0 && skillList[skill].skillCoolTime <= 0)
         {
             StartCoroutine(Skill());
@@ -51,8 +51,8 @@ public class FaceEnvy : EnemyBasic
     {
         print("Skill");
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //mimic player skill
         print("mimic player skill");
@@ -71,19 +71,19 @@ public class FaceEnvy : EnemyBasic
 
         yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 
     void Change()
     {
-        if (!hitTarget || isFlinch)
+        if (!enemyStatus.hitTarget || enemyStatus.isFlinch)
             return;
 
-        if (hitTarget.tag == "Player")
+        if (enemyStatus.hitTarget.tag == "Player")
         {
-            skill = hitTarget.GetComponent<Player>().playerStats.skill[hitTarget.GetComponent<Player>().status.skillIndex];
+            skill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
             if (skill != 0) skillList[skill].gameObject.SetActive(true);
         }
     }

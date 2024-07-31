@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 2568458734840514807}
   - component: {fileID: 7338967536234966317}
   - component: {fileID: 916321001779519949}
+  - component: {fileID: -4266050704333988154}
   m_Layer: 8
   m_Name: pox
   m_TagString: Enemy
@@ -427,28 +428,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 8
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection:
-  - {fileID: 875071346257546696}
+  enemyStatus: {fileID: 0}
 --- !u!114 &2568458734840514807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,3 +544,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.046439, y: 3.0617552}
   m_EdgeRadius: 0
+--- !u!114 &-4266050704333988154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641949530967464337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  hitEffects: []
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0

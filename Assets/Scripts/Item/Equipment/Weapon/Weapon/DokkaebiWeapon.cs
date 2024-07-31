@@ -13,10 +13,10 @@ public class DokkaebiWeapon : Weapon
 
     void Passive()
     {
-        if (user == null || !user.hitTarget)
+        if (user == null || !user.status.hitTarget)
             return;
 
-        if (user.hitTarget.layer == LayerMask.NameToLayer("Wall"))
+        if (user.status.hitTarget.layer == LayerMask.NameToLayer("Wall"))
             return;
         
         user.playerStats.coin += 1;

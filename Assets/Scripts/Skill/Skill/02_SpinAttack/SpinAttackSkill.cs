@@ -38,7 +38,7 @@ public class SpinAttackSkill : Skill
             spinSimul = Instantiate(spinSimulPrefab, user.gameObject.transform.position, Quaternion.identity);
             spinSimul.transform.parent = user.transform;
 
-            while (holdPower < maxHoldPower && player.status.isSkillHold)
+            while (holdPower < maxHoldPower && player.playerStatus.isSkillHold)
             {
                 holdPower += 0.05f;
                 spinSimul.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);

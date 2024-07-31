@@ -40,7 +40,7 @@ public class Merchant : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             checkTemp.SetActive(true);
-            Player.instance.status.isAttackable = false;
+            Player.instance.playerStatus.isAttackable = false;
             StartCoroutine(storeActivate());
         }
     }
@@ -50,7 +50,7 @@ public class Merchant : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             checkTemp.SetActive(false);
-            Player.instance.status.isAttackable = true;
+            Player.instance.playerStatus.isAttackable = true;
             StopAllCoroutines();
         }
     }

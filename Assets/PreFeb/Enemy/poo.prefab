@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6059479966666769969}
   - component: {fileID: 8152342561663690571}
   - component: {fileID: 286843030813587767}
+  - component: {fileID: 7785426860531856017}
   m_Layer: 8
   m_Name: poo
   m_TagString: Enemy
@@ -102,28 +103,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 8
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: -1
-  isTouchPlayer: 0
-  hitDetection:
-  - {fileID: 6666704503909228979}
+  enemyStatus: {fileID: 0}
 --- !u!114 &6059479966666769969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +209,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &7785426860531856017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997188540857653842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  hitEffects: []
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1 &6425500129360686181
 GameObject:
   m_ObjectHideFlags: 0

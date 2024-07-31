@@ -44,7 +44,7 @@ public class SlashSkill : Skill
             simul.transform.parent = user.transform;
             simul.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
 
-            while (player.status.isSkillHold)
+            while (player.playerStatus.isSkillHold)
             {
                 if (holdPower < maxHoldPower && powerTimer > 0.1f)
                 {
@@ -52,7 +52,7 @@ public class SlashSkill : Skill
                     simul.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
                     powerTimer = 0;
                 }
-                simul.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);
+                simul.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);
                 powerTimer += Time.deltaTime;
                 yield return null;
             }
@@ -60,7 +60,7 @@ public class SlashSkill : Skill
         else if(user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            float angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
             float powerTimer = 0;
 
@@ -79,7 +79,7 @@ public class SlashSkill : Skill
                     simul.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);
                     powerTimer = 0;
                 }
-                angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+                angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
                 simul.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
                 timer += Time.deltaTime;
                 powerTimer += Time.deltaTime;
@@ -122,7 +122,7 @@ public class SlashSkill : Skill
             skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             //이펙트 설정
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // 방향 설정
             instantProjectile.transform.localScale = simul.transform.lossyScale;
             instantProjectile.tag = "PlayerAttack";
             instantProjectile.layer = LayerMask.NameToLayer("PlayerAttack");
@@ -145,7 +145,7 @@ public class SlashSkill : Skill
                 player.playerStats.criticalDamage,
                 player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
-            bulletRigid.velocity = player.status.mouseDir * 10 * speed;
+            bulletRigid.velocity = player.playerStatus.mouseDir * 10 * speed;
 
             Destroy(simul);
             Destroy(instantProjectile, time);  //사거리 설정
@@ -156,7 +156,7 @@ public class SlashSkill : Skill
             GameObject instantProjectile = Instantiate(slashEffect, transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            float angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
 
             enemy.stats.decreasedMoveSpeed -= 0.5f;
 
@@ -186,7 +186,7 @@ public class SlashSkill : Skill
                 0,
                 null);
             hitDetection.user = user;
-            bulletRigid.velocity = (enemy.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
+            bulletRigid.velocity = (enemy.enemyStatus.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
 
             Destroy(simul);
             Destroy(instantProjectile, time);  //사거리 설정

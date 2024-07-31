@@ -26,16 +26,16 @@ public class NoHead_Body : EnemyBasic
 
     IEnumerator ChangeMove()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.1f);
 
-        moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
-        isAttack = false;
+        enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+        enemyStatus.isAttack = false;
 
         yield return new WaitForSeconds(5f);
 
-        isAttackReady = false;
+        enemyStatus.isAttackReady = false;
     }
 
 

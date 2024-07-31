@@ -15,9 +15,9 @@ public class EnemyMosquito : EnemyBasic
 
     IEnumerator attack() 
     {
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
 
-        if (targetDis <= enemyStats.detectionDis && targetDis >= 1f)
+        if (enemyStatus.targetDis <= enemyStats.detectionDis && enemyStatus.targetDis >= 1f)
         {
             //GetComponent<PathFinding>().StartFinding((Vector2)transform.position, (Vector2)enemyTarget.transform.position);
             //Chase();

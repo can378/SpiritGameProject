@@ -6,12 +6,12 @@ public class FakeTree : EnemyBasic
 {
     protected override void MovePattern()
     {
-        isRun = false;
+        enemyStatus.isRun = false;
     }
 
     protected override void AttackPattern()
     {
-        if (targetDis <= enemyStats.maxAttackRange)
+        if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
             StartCoroutine(fakeTree());
             return;
@@ -22,13 +22,13 @@ public class FakeTree : EnemyBasic
 
     IEnumerator fakeTree()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         sprite.color = new Color(255, 0, 0);
         yield return new WaitForSeconds(2f);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
         sprite.color = new Color(255, 255, 255);
 
 

@@ -15,7 +15,7 @@ public class LittleMonster : EnemyBasic
     
     protected override void MovePattern()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
         {
             RandomMove();
             print("enemyTarget is null");

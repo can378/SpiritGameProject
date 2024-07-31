@@ -17,7 +17,7 @@ public class BossShadow : EnemyBasic
     protected override void Start()
     {
         base.Start();
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
         isDummiesAllDie = false;
         floorRenderer = GameManager.instance.nowRoom.GetComponent<Renderer>();
     }
@@ -84,8 +84,8 @@ public class BossShadow : EnemyBasic
 
     IEnumerator sightBlock_() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         print("sight block_shadow");
 
@@ -93,7 +93,7 @@ public class BossShadow : EnemyBasic
         while (time < 200)
         {
             if(time%10==0) { shot(); }
-            sightBlock.transform.position=enemyTarget.transform.position;
+            sightBlock.transform.position=enemyStatus.enemyTarget.transform.position;
             yield return new WaitForSeconds(0.05f);
             time++;
         }
@@ -101,9 +101,9 @@ public class BossShadow : EnemyBasic
         sightBlock.SetActive(false);
 
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator shot_() 
@@ -115,11 +115,11 @@ public class BossShadow : EnemyBasic
 
     IEnumerator illusion_() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         
         //player cant move
-        enemyTarget.GetComponent<Player>().isFlinch = true;
+        enemyStatus.enemyTarget.GetComponent<Player>().playerStatus.isFlinch = true;
         //enemyTarget.GetComponent<Player>().moveVec = Vector3.zero;
 
         //fade out
@@ -130,25 +130,25 @@ public class BossShadow : EnemyBasic
             alpha--;
         }
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
 
         transform.position = getRandomPos();
         GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, 255f);
-        enemyTarget.GetComponent<Player>().isFlinch = false;
+        enemyStatus.enemyTarget.GetComponent<Player>().playerStatus.isFlinch = false;
 
     }
 
     IEnumerator spawnDummy_() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         print("spawnDummy");
 
         //Boss shadow invincible
-        isInvincible = true;
+        enemyStatus.isInvincible = true;
 
 
 
@@ -180,19 +180,19 @@ public class BossShadow : EnemyBasic
 
 
         //Boss shadow vincible
-        isInvincible = false;
+        enemyStatus.isInvincible = false;
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
   
 
     IEnumerator darkSpawn_() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         print("dark spawn");
         for (int i = 0; i < circles.Count; i++)
@@ -207,9 +207,9 @@ public class BossShadow : EnemyBasic
         }
 
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 

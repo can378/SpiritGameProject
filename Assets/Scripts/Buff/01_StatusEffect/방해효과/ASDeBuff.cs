@@ -48,10 +48,10 @@ public class ASDeBuff : StatusEffect
             while (duration > 0)
             {
                 if (player.playerStats.weapon != 0)
-                    player.status.attackDelay = 99f;
+                    player.playerStatus.attackDelay = 99f;
 
-                if (player.playerStats.skill[player.status.skillIndex] != 0)
-                    player.skillList[player.playerStats.skill[player.status.skillIndex]].skillCoolTime = 99f;
+                if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
+                    player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime = 99f;
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -61,12 +61,12 @@ public class ASDeBuff : StatusEffect
 
             //player에서 isEnemyAttackalve false이면 피해안받게 하기
             print("enemy fear");
-            enemy.isAttackReady = false;
+            enemy.enemyStatus.isAttackReady = false;
 
             while (duration > 0)
             {
-                enemy.isAttackReady = false;
-                enemy.isRun = true;
+                enemy.enemyStatus.isAttackReady = false;
+                enemy.enemyStatus.isRun = true;
                 yield return new WaitForSeconds(0.1f);
             }
 
@@ -80,14 +80,14 @@ public class ASDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            if (player.playerStats.skill[player.status.skillIndex] != 0)
+            if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
             {
-                player.skillList[player.playerStats.skill[player.status.skillIndex]].skillCoolTime = curSkillCoolTIme;
+                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime = curSkillCoolTIme;
             }
 
             if (player.playerStats.weapon != 0)
             {
-                player.status.attackDelay = curAttackDelay;
+                player.playerStatus.attackDelay = curAttackDelay;
             }
             StopCoroutine(attackDelayTimeCoroutine);
         }
@@ -95,8 +95,8 @@ public class ASDeBuff : StatusEffect
         {
             EnemyBasic enemy = target.GetComponent<EnemyBasic>();
 
-            enemy.isAttackReady = true;
-            enemy.isRun = false;
+            enemy.enemyStatus.isAttackReady = true;
+            enemy.enemyStatus.isRun = false;
             
             StopCoroutine(attackDelayTimeCoroutine);
 

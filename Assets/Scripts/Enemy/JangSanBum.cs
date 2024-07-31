@@ -76,21 +76,21 @@ public class JangSanBum : EnemyBasic
 
     IEnumerator fastAttack()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         print("faset attack");
         int time1 = 10;
         while(time1>0)
         {
-            if (targetDis > 1f)
+            if (enemyStatus.targetDis > 1f)
             {
                 //멀리 있다면 연속으로 3회 할퀴며 다가간다
-                targetDirVec = (enemyTarget.position - transform.position).normalized;
+                enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
                 //move to player
                 for (int j = 0; j < 5; j++)
                 {
-                    rigid.AddForce(targetDirVec * enemyStats.defaultMoveSpeed * 500);
+                    rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 500);
                     yield return new WaitForSeconds(0.01f);
                 }
                 //attack
@@ -113,8 +113,8 @@ public class JangSanBum : EnemyBasic
         }
         
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator Eating() 
@@ -122,14 +122,14 @@ public class JangSanBum : EnemyBasic
         print("eating");
         //쫓아간다. 잡아먹으려한다.
         //잡아먹으면 플레이어 큰 피해입고 장산범은 일부 체력회복
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
 
         int time2 = 100;
         while (time2 > 0) 
         {
-            if (targetDis > 3f)
+            if (enemyStatus.targetDis > 3f)
             {
                 Chase();
                 yield return new WaitForSeconds(0.1f);
@@ -147,16 +147,16 @@ public class JangSanBum : EnemyBasic
         
 
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
 
     IEnumerator SnowSplash() 
     {
         print("snow splash");
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
 
         //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
@@ -167,8 +167,8 @@ public class JangSanBum : EnemyBasic
         hitEffects[0].SetActive(false);
 
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
 
@@ -224,8 +224,8 @@ public class JangSanBum : EnemyBasic
         yield return new WaitForSeconds(2f);
 
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
         yield return null;
         
     }
@@ -235,7 +235,7 @@ public class JangSanBum : EnemyBasic
     {
         //attack
         biteHD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
-        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].SetActive(true);
     }
     private void checkHit()
@@ -244,7 +244,7 @@ public class JangSanBum : EnemyBasic
         if (biteHD.isHit)
         {
             if (patternNum == 2) { enemyStats.HP += 10; }
-            else if (patternNum == 3) { enemyTarget.GetComponent<PlayerStats>().blind = blindTime; }
+            else if (patternNum == 3) { enemyStatus.enemyTarget.GetComponent<PlayerStats>().blind = blindTime; }
         }
     }
 }

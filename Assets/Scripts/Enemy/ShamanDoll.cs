@@ -47,16 +47,16 @@ public class ShamanDoll : EnemyBasic
 
     IEnumerator Curse()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.2f);
 
         //print("shamon doll hurts hershelf");
-        enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(5f);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(5f);
         yield return new WaitForSeconds(0.2f);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
         curseCoolTime = defaulCurseCoolTime;
     }
 
@@ -65,16 +65,16 @@ public class ShamanDoll : EnemyBasic
         moveReady = false;
 
         //print("shamon doll move");
-        playerPos1 = enemyTarget.transform.position;
+        playerPos1 = enemyStatus.enemyTarget.transform.position;
         yield return new WaitForSeconds(0.2f);
-        playerPos2 = enemyTarget.transform.position;
+        playerPos2 = enemyStatus.enemyTarget.transform.position;
 
         playerPath = playerPos1 - playerPos2;
         perpendicularDir = new Vector2(playerPath.y, -playerPath.x).normalized;
         rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
 
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-        rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().moveSpeed * 100f);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+        rigid.AddForce(-enemyStatus.targetDirVec * GetComponent<EnemyStats>().moveSpeed * 100f);
 
         moveReady = true;
     }

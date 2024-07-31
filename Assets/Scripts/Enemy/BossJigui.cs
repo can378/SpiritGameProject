@@ -11,7 +11,7 @@ public class BossJigui : EnemyBasic
     protected override void Start()
     {
         base.Start();
-        isTouchPlayer = false;
+        enemyStatus.isTouchPlayer = false;
     }
     protected override void AttackPattern()
     {
@@ -26,7 +26,7 @@ public class BossJigui : EnemyBasic
 
     protected override void MovePattern()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
         {
             RandomMove();
             print("enemyTarget is null");
@@ -38,16 +38,16 @@ public class BossJigui : EnemyBasic
                 Chase();
             }
             
-            if (targetDis <= 3f)
+            if (enemyStatus.targetDis <= 3f)
             {
-                isTouchPlayer = true;
+                enemyStatus.isTouchPlayer = true;
             }
-            else if (targetDis >= 10f && isTouchPlayer == true)
+            else if (enemyStatus.targetDis >= 10f && enemyStatus.isTouchPlayer == true)
             {
-                isTouchPlayer = false;
+                enemyStatus.isTouchPlayer = false;
             }
 
-            if (isTouchPlayer == true)
+            if (enemyStatus.isTouchPlayer == true)
             { Run(); }
 
         }
@@ -58,8 +58,8 @@ public class BossJigui : EnemyBasic
     IEnumerator fireBall()
     {
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //Throw fire balls
         for (int i = 0; i < 20; i++)
@@ -83,9 +83,9 @@ public class BossJigui : EnemyBasic
 
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(5f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 

@@ -27,11 +27,11 @@ public class AttackDeBuff : StatusEffect
         {
             Player player = target.GetComponent<Player>();
 
-            player.status.attackDelay += 0.1f;
+            player.playerStatus.attackDelay += 0.1f;
 
             while (duration > 0)
             {
-                player.status.attackDelay += 0.1f;
+                player.playerStatus.attackDelay += 0.1f;
                 yield return new WaitForSeconds(0.1f);
 
             }

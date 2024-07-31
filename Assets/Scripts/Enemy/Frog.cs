@@ -9,7 +9,7 @@ public class Frog : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (targetDis <= enemyStats.maxAttackRange)
+        if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
             StartCoroutine(Laser());
             return;
@@ -21,8 +21,8 @@ public class Frog : EnemyBasic
 
     IEnumerator Laser()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //shooting laser
         laser.SetActive(true);
@@ -33,8 +33,8 @@ public class Frog : EnemyBasic
         laser.SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
     /*

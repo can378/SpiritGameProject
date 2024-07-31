@@ -29,7 +29,7 @@ public class RandomBoxSkill : Skill
             Player player = user.GetComponent<Player>();
 
             // 소환될 위치 표시기
-            randomBoxSimul = Instantiate(simulPrefab, player.status.mousePos, Quaternion.identity).transform;
+            randomBoxSimul = Instantiate(simulPrefab, player.playerStatus.mousePos, Quaternion.identity).transform;
             randomBoxSimul.localScale = new Vector3(1, 1, 0);
 
             // 사거리 표시기
@@ -37,9 +37,9 @@ public class RandomBoxSkill : Skill
             rangeSimul.parent = player.transform;
             rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
 
-            while (player.status.isSkillHold)
+            while (player.playerStatus.isSkillHold)
             {
-                randomBoxSimul.position = player.transform.position + Vector3.ClampMagnitude(player.status.mousePos - player.transform.position, range);
+                randomBoxSimul.position = player.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.transform.position, range);
                 yield return null;
             }
         }
@@ -48,7 +48,7 @@ public class RandomBoxSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            randomBoxSimul = Instantiate(simulPrefab, enemy.enemyTarget.transform.position, Quaternion.identity).transform;
+            randomBoxSimul = Instantiate(simulPrefab, enemy.enemyStatus.transform.position, Quaternion.identity).transform;
             randomBoxSimul.localScale = new Vector3(1, 1, 0);
 
             // 사거리 표시기
@@ -58,7 +58,7 @@ public class RandomBoxSkill : Skill
 
             while (timer <= maxHoldTime/2)
             {
-                randomBoxSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyTarget.transform.position - enemy.transform.position, range);
+                randomBoxSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }

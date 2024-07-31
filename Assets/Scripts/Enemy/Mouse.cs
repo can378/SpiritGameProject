@@ -20,7 +20,7 @@ public class Mouse : EnemyBasic
     {
         if (!isChange)
         {
-            if(!enemyTarget)
+            if(!enemyStatus.enemyTarget)
             {
                 RandomMove();
             }
@@ -31,21 +31,21 @@ public class Mouse : EnemyBasic
         }
         else
         {
-            if (!enemyTarget)
+            if (!enemyStatus.enemyTarget)
             {
                 RandomMove();
             }
-            else if (targetDis < 6f)
+            else if (enemyStatus.targetDis < 6f)
             {
                 Run();
             }
-            else if (targetDis >= 7f)
+            else if (enemyStatus.targetDis >= 7f)
             {
                 Chase();
             }
             else
             {
-                moveVec = Vector3.zero;
+                enemyStatus.moveVec = Vector3.zero;
             }
         }
     }
@@ -53,7 +53,7 @@ public class Mouse : EnemyBasic
     protected override void AttackPattern()
     {
         // 가까이 있으면 깨문다.
-        if(targetDis < 2f)
+        if(enemyStatus.targetDis < 2f)
         {
             StartCoroutine(Bite());
             return;
@@ -73,10 +73,10 @@ public class Mouse : EnemyBasic
     IEnumerator Bite()
     {
         HitDetection hitDetection;
-        Vector3 hitDir = targetDirVec;
+        Vector3 hitDir = enemyStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.5f);
 
         hitDetection = biteArea.GetComponent<HitDetection>();
@@ -87,16 +87,16 @@ public class Mouse : EnemyBasic
         yield return new WaitForSeconds(0.5f);
 
         biteArea.SetActive(false);
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator Skill()
     {
         print("Skill");
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //mimic player skill
         print("mimic player skill");
@@ -115,28 +115,28 @@ public class Mouse : EnemyBasic
 
         yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 
     void Change()
     {
-        if(isChange || !hitTarget || isFlinch)
+        if(isChange || !enemyStatus.hitTarget || enemyStatus.isFlinch)
             return;
 
-        if (hitTarget.tag == "Player")
+        if (enemyStatus.hitTarget.tag == "Player")
         {
-            GetComponentInChildren<SpriteRenderer>().sprite = hitTarget.GetComponentInChildren<SpriteRenderer>().sprite;
-            GetComponentInChildren<SpriteRenderer>().transform.localScale = hitTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
+            GetComponentInChildren<SpriteRenderer>().sprite = enemyStatus.hitTarget.GetComponentInChildren<SpriteRenderer>().sprite;
+            GetComponentInChildren<SpriteRenderer>().transform.localScale = enemyStatus.hitTarget.GetComponentInChildren<SpriteRenderer>().transform.localScale;
             isChange = true;
 
-            skill = hitTarget.GetComponent<Player>().playerStats.skill[hitTarget.GetComponent<Player>().status.skillIndex];
+            skill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
             if (skill != 0) skillList[skill].gameObject.SetActive(true);
 
             //Run away
-            targetDirVec = hitTarget.transform.position - transform.position;
-            rigid.AddForce(-targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+            enemyStatus.targetDirVec = enemyStatus.hitTarget.transform.position - transform.position;
+            rigid.AddForce(-enemyStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
         }
     }
 

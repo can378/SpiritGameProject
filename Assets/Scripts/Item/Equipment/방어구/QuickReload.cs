@@ -18,7 +18,7 @@ public class QuickReload : Equipment
             return;
         }
 
-        if(!isQuick && user.status.isReload)
+        if(!isQuick && user.playerStatus.isReload)
         {
             print("buff");
             isQuick = true;
@@ -28,7 +28,7 @@ public class QuickReload : Equipment
             ASBSE.increasedAttackSpeed = 0.5f;
             //user.ApplyBuff(attackSpeedBuff);
         }
-        else if(isQuick && !user.status.isReload)
+        else if(isQuick && !user.playerStatus.isReload)
         {
             isQuick = false;
         }

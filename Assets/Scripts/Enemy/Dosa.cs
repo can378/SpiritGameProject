@@ -31,8 +31,8 @@ public class Dosa : EnemyBasic
     IEnumerator Skill()
     {
         print("Dosa Skill");
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //mimic player skill
         print("mimic player skill");
@@ -52,8 +52,8 @@ public class Dosa : EnemyBasic
         yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
 
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 

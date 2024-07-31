@@ -14,13 +14,13 @@ public class HitSkillCoolTimeDown : Equipment
 
     void Passive()
     {
-        if (user == null || !user.hitTarget)
+        if (user == null || !user.playerStatus.hitTarget)
             return;
 
-        if (user.hitTarget.gameObject.tag == "Wall" || user.hitTarget.gameObject.tag == "Door" || user.hitTarget.gameObject.tag == "ShabbyWall")
+        if (user.playerStatus.hitTarget.gameObject.tag == "Wall" || user.playerStatus.hitTarget.gameObject.tag == "Door" || user.playerStatus.hitTarget.gameObject.tag == "ShabbyWall")
             return;
 
-        user.skillList[user.playerStats.skill[user.status.skillIndex]].skillCoolTime -= variation;
+        user.skillList[user.playerStats.skill[user.playerStatus.skillIndex]].skillCoolTime -= variation;
     }
 
     public override void Equip(Player target)

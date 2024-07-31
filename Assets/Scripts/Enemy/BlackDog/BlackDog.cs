@@ -4,24 +4,19 @@ using UnityEngine;
 
 public class BlackDog : EnemyBasic
 {
+    BlackDogStatus blackDogStatus;
     [SerializeField] LayerMask detectLayer;         //공격 탐지 레이어
     [SerializeField] int attackDetectRange;         //공격 감지 범위
-    [SerializeField] bool isDodge;                  // 회피중
-    [SerializeField] bool isDetectAttack;           // 공격 탐지
 
-    [SerializeField] float biteTime;
+    Vector3 mousePos;
+    Vector3 playerForward;
+    float angle;
+    Vector2 perpendicularDir;
 
-
-
-    private Vector3 mousePos;
-    private Vector3 playerForward;
-    private float angle;
-    private Vector2 perpendicularDir;
-
-
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
+        status = blackDogStatus = blackDogStatus = GetComponent<BlackDogStatus>();
     }
 
     protected override void Update()
@@ -39,21 +34,21 @@ public class BlackDog : EnemyBasic
 
         if(playerAttackObj == null)
         {
-            isDetectAttack = false;
+            blackDogStatus.isDetectAttack = false;
             return;
         }
 
-        isDetectAttack = true;
+        blackDogStatus.isDetectAttack = true;
     }
 
     void Dodge()
     {
-        if(!isDetectAttack)
+        if(!blackDogStatus.isDetectAttack)
         {
             return;
         }
 
-        if(!isDodge && !isAttack && !isFlinch)
+        if(!blackDogStatus.isDodge && !blackDogStatus.isAttack && !blackDogStatus.isFlinch)
         {
             StartCoroutine(DodgeCoroutine());
         }
@@ -61,26 +56,26 @@ public class BlackDog : EnemyBasic
 
     IEnumerator DodgeCoroutine()
     {
-        isDodge = true;
-        isAttackReady = false;
+        blackDogStatus.isDodge = true;
+        blackDogStatus.isAttackReady = false;
         //적 방향 수직으로 회피
         if(Random.Range(0,2) == 0)
         {
-            moveVec = new Vector2(targetDirVec.y, -targetDirVec.x).normalized;
+            blackDogStatus.moveVec = new Vector2(blackDogStatus.targetDirVec.y, -blackDogStatus.targetDirVec.x).normalized;
         }
         else
         {
-            moveVec = new Vector2(-targetDirVec.y, targetDirVec.x).normalized;
+            blackDogStatus.moveVec = new Vector2(-blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x).normalized;
         }
-        enemyStats.increasedMoveSpeed += 10f;
+        enemyStats.increasedMoveSpeed += 2f;
 
         yield return new WaitForSeconds(0.3f);
-        moveVec = Vector2.zero;
-        enemyStats.increasedMoveSpeed -= 10f;
+        blackDogStatus.moveVec = Vector2.zero;
+        enemyStats.increasedMoveSpeed -= 2f;
 
-        yield return new WaitForSeconds(0.7f);
-        isDodge = false;
-        isAttackReady = true;
+        yield return new WaitForSeconds(0.3f);
+        blackDogStatus.isDodge = false;
+        blackDogStatus.isAttackReady = true;
 
     }
 
@@ -88,15 +83,15 @@ public class BlackDog : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(!enemyTarget)
+        if(!blackDogStatus.enemyTarget)
         {
             RandomMove();
         }
-        else if(isDodge)
+        else if(blackDogStatus.isDodge)
         {
             
         }
-        else if (targetDis > enemyStats.maxAttackRange)
+        else if (blackDogStatus.targetDis > enemyStats.maxAttackRange)
         {
             Chase();
         }
@@ -104,69 +99,69 @@ public class BlackDog : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (targetDis <= 2f)
+        if (blackDogStatus.targetDis <= 2f)
         {
-            StartCoroutine(HitAndRun());
+            blackDogStatus.attackCoroutine = StartCoroutine(HitAndRun());
         }
-        else
-        {
-            StartCoroutine(Evasion());
-        }
+        // 이거는 어떤 패턴? 작동을 안하는 거 같아서 우선 주석 처리
+        // else
+        // {
+        //     StartCoroutine(Evasion());
+        // }
     }
 
     IEnumerator HitAndRun()
     {
-        isAttack = true;
-        isAttackReady = false;
+        blackDogStatus.isAttack = true;
+        blackDogStatus.isAttackReady = false;
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
 
         hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
         
-        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);
-        yield return new WaitForSeconds(biteTime * 0.6f);
+        yield return new WaitForSeconds(5);
         hitEffects[0].gameObject.SetActive(false);
         
 
-        isAttack = false;
-        isAttackReady = true;
+        blackDogStatus.isAttack = false;
+        blackDogStatus.isAttackReady = true;
         
-        isRun = true;
+        blackDogStatus.isRun = true;
         yield return new WaitForSeconds(5f);
-        isRun = false;
+        blackDogStatus.isRun = false;
     }
 
 
     IEnumerator Evasion() 
     {
         print("blackdog evasion start");
-        isAttack = true;
-        isAttackReady = false;
+        blackDogStatus.isAttack = true;
+        blackDogStatus.isAttackReady = false;
 
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        playerForward = (enemyTarget.position - mousePos);
-        angle = Vector3.Angle(playerForward, targetDirVec);
+        playerForward = (blackDogStatus.enemyTarget.position - mousePos);
+        angle = Vector3.Angle(playerForward, blackDogStatus.targetDirVec);
 
 
         if (angle < 70f)
         {
             print("blackdog evasion1!!!");
             //evasion!!
-            perpendicularDir = new Vector2(targetDirVec.y, -targetDirVec.x).normalized;
+            perpendicularDir = new Vector2(blackDogStatus.targetDirVec.y, -blackDogStatus.targetDirVec.x).normalized;
             rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 200);
         }
         else 
         {
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+            rigid.AddForce(blackDogStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
         }
 
         yield return new WaitForSeconds(0.01f);
-        isAttack = false;
-        isAttackReady = true;
+        blackDogStatus.isAttack = false;
+        blackDogStatus.isAttackReady = true;
     }
-
 
     /*
     IEnumerator blackDog() 

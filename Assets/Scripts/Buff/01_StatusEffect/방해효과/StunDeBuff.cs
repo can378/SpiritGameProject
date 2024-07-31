@@ -20,7 +20,7 @@ public class StunDeBuff : StatusEffect
             ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
             // 효과 적용
-            objectBasic.isFlinch = true;
+            objectBasic.status.isFlinch = true;
             objectBasic.AttackCancle();
 
             // 중첩 
@@ -29,8 +29,8 @@ public class StunDeBuff : StatusEffect
             // 저항에 따른 지속시간 적용
             duration = (1 - objectBasic.stats.SEResist(buffId)) * defaultDuration;
 
-            if (objectBasic.flinchCoroutine != null) objectBasic.StopCoroutine(objectBasic.flinchCoroutine);
-            objectBasic.flinchCoroutine = StartCoroutine(objectBasic.Flinch(duration));
+            if (objectBasic.status.flinchCoroutine != null) objectBasic.StopCoroutine(objectBasic.status.flinchCoroutine);
+            objectBasic.status.flinchCoroutine = StartCoroutine(objectBasic.Flinch(duration));
 
             StartCoroutine(Stun());
         }
@@ -42,7 +42,7 @@ public class StunDeBuff : StatusEffect
         {
             ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
-            while (objectBasic.isFlinch)
+            while (objectBasic.status.isFlinch)
             {
                 objectBasic.stats.poise = 0;
                 yield return null;
@@ -58,7 +58,7 @@ public class StunDeBuff : StatusEffect
         {
             ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
 
-            if (objectBasic.flinchCoroutine != null) StopCoroutine(objectBasic.flinchCoroutine);
+            if (objectBasic.status.flinchCoroutine != null) StopCoroutine(objectBasic.status.flinchCoroutine);
         }
     }
 }

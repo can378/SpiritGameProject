@@ -39,19 +39,19 @@ public class IcicleSkill : Skill
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
-            while (player.status.isSkillHold)
+            while (player.playerStatus.isSkillHold)
             {
                 // 나중에 원 형태로 최대 범위 제한하기
                 // 나중에 원 형태로 최대 범위 표시하기
-                simulVector = player.status.mousePos;
-                simul.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);
+                simulVector = player.playerStatus.mousePos;
+                simul.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);
                 yield return null;
             }
         }
         else if(user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            float angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
 
             if (simul != null)
@@ -59,12 +59,12 @@ public class IcicleSkill : Skill
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyTarget != null )
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.enemyTarget != null )
             {
                 // 나중에 원 형태로 최대 범위 제한하기
                 // 나중에 원 형태로 최대 범위 표시하기
-                angle = Mathf.Atan2(enemy.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
-                simulVector = enemy.enemyTarget.transform.position;
+                angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+                simulVector = enemy.enemyStatus.enemyTarget.transform.position;
                 simul.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
                 timer += Time.deltaTime;
                 yield return null;
@@ -118,7 +118,7 @@ public class IcicleSkill : Skill
             */
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.status.mouseAngle - 90, Vector3.forward);  // 방향 설정
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // 방향 설정
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정
         }

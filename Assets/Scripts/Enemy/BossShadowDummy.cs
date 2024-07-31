@@ -8,7 +8,7 @@ public class BossShadowDummy : EnemyBasic
 
     protected override void MovePattern()
     {
-        moveVec = (enemyTarget.position - transform.position).normalized;
+        enemyStatus.moveVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
     }
     protected override void AttackPattern()
     {
@@ -17,14 +17,14 @@ public class BossShadowDummy : EnemyBasic
 
     IEnumerator shadowShot() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         shot();
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 

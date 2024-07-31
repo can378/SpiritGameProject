@@ -34,16 +34,16 @@ public class FireBallSkill : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            fireBallSimul = Instantiate(simulPrefab, player.status.mousePos, Quaternion.identity).transform;
+            fireBallSimul = Instantiate(simulPrefab, player.playerStatus.mousePos, Quaternion.identity).transform;
             fireBallSimul.transform.localScale = new Vector3(size, size, 1);
 
             rangeSimul = Instantiate(simulPrefab,player.transform.position,Quaternion.identity).transform;
             rangeSimul.parent = player.transform;
             rangeSimul.localScale = new Vector3(range * 2 , range * 2, 1);
             
-            while (player.status.isSkillHold)
+            while (player.playerStatus.isSkillHold)
             {
-                fireBallSimul.position = player.transform.position + Vector3.ClampMagnitude(player.status.mousePos - player.transform.position, range);
+                fireBallSimul.position = player.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.transform.position, range);
                 yield return null;
             }
         }
@@ -52,7 +52,7 @@ public class FireBallSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            fireBallSimul = Instantiate(simulPrefab, enemy.enemyTarget.transform.position, Quaternion.identity).transform;
+            fireBallSimul = Instantiate(simulPrefab, enemy.enemyStatus.enemyTarget.transform.position, Quaternion.identity).transform;
             fireBallSimul.localScale = new Vector3(size, size, 1);
 
             rangeSimul = Instantiate(simulPrefab, enemy.transform.position, Quaternion.identity).transform;
@@ -63,7 +63,7 @@ public class FireBallSkill : Skill
             {
                 // 나중에 원 형태로 최대 범위 제한하기
                 // 나중에 원 형태로 최대 범위 표시하기
-                fireBallSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyTarget.transform.position - enemy.transform.position, range);
+                fireBallSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.enemyTarget.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }

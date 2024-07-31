@@ -18,12 +18,12 @@ public class Pox : EnemyBasic
     protected override void AttackPattern()
     {
         // 근거리 공격
-        if(targetDis <= 8f)
+        if(enemyStatus.targetDis <= 8f)
         {
             StartCoroutine(HitAndRun());
         }
         // 원거리 공격
-        else if( targetDis <= enemyStats.maxAttackRange)
+        else if( enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
             StartCoroutine(Throw());
         }
@@ -31,10 +31,10 @@ public class Pox : EnemyBasic
 
     IEnumerator HitAndRun()
     {
-        Vector3 hitDir = targetDirVec;
+        Vector3 hitDir = enemyStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.5f);
 
         
@@ -44,31 +44,31 @@ public class Pox : EnemyBasic
         yield return new WaitForSeconds(0.2f);
         hitEffects[0].gameObject.SetActive(false);
         
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
-        isRun = true;
+        enemyStatus.isRun = true;
         yield return new WaitForSeconds(3f);
-        isRun = false;
+        enemyStatus.isRun = false;
     }
 
     IEnumerator Throw()
     {
         //throwing stone
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.5f);
 
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 7, ForceMode2D.Impulse);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+        bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
 
 
         yield return new WaitForSeconds(0.5f);
 
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 

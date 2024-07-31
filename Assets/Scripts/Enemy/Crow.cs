@@ -11,8 +11,8 @@ public class Crow : EnemyBasic
 
     IEnumerator LRShot()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         for (int i = 0; i < 2; i++)
         {
@@ -20,9 +20,9 @@ public class Crow : EnemyBasic
             yield return new WaitForSeconds(0.2f);
         }
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 }

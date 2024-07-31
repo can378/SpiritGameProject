@@ -2,33 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class whiteFox : EnemyBasic
+public class WhiteFox : EnemyBasic
 {
-    [SerializeField] GameObject blizzardArea;
+    WhiteFoxStatus whiteFoxStatus;
     [SerializeField] int defaulBlizzardCoolTime = 10;
     [SerializeField] int[] blizzardDebuff;
-    [SerializeField] float blizzardTime = 5;
 
-    [SerializeField] GameObject biteArea;
-    [SerializeField] float biteTime = 1;
-
-    float blizzardCoolTime;
+    protected override void Awake()
+    {
+        base.Awake();
+        status = enemyStatus = whiteFoxStatus = GetComponent<WhiteFoxStatus>();
+    }
 
     protected override void Update()
     {
         base.Update();
-        blizzardCoolTime -= Time.deltaTime;
+        whiteFoxStatus.blizzardCoolTime -= Time.deltaTime;
     }
 
     protected override void AttackPattern()
     {
-        // 근거리 공격
-        if (targetDis <= 3f)
+        if (whiteFoxStatus.targetDis <= 3f)
         {
             StartCoroutine(HitAndRun());
         }
-        // 원거리 공격
-        else if (targetDis <= enemyStats.maxAttackRange && blizzardCoolTime <= 0f)
+        else if (whiteFoxStatus.targetDis <= enemyStats.maxAttackRange && whiteFoxStatus.blizzardCoolTime <= 0f)
         {
             StartCoroutine(PeripheralAttack());
         }
@@ -37,48 +35,48 @@ public class whiteFox : EnemyBasic
     IEnumerator HitAndRun()
     {
         HitDetection hitDetection;
-        Vector3 hitDir = targetDirVec;
+        Vector3 hitDir = whiteFoxStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
-        yield return new WaitForSeconds(biteTime * 0.2f);
+        whiteFoxStatus.isAttack = true;
+        whiteFoxStatus.isAttackReady = false;
+        yield return new WaitForSeconds(0.2f);
 
-        hitDetection = biteArea.GetComponent<HitDetection>();
+        hitDetection = hitEffects[0].GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
         hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
-        biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
-        biteArea.SetActive(true);
-        yield return new WaitForSeconds(biteTime * 0.8f);
+        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].SetActive(true);
+        yield return new WaitForSeconds(0.6f);
 
-        biteArea.SetActive(false);
-        isAttack = false;
-        isAttackReady = true;
-        isRun = true;
+        hitEffects[0].SetActive(false);
+        whiteFoxStatus.isAttack = false;
+        whiteFoxStatus.isAttackReady = true;
+        whiteFoxStatus.isRun = true;
         yield return new WaitForSeconds(3f);
 
-        isRun = false;
+        whiteFoxStatus.isRun = false;
     }
 
     IEnumerator PeripheralAttack()
     {
-        isAttack = true;
-        isAttackReady = false;
+        whiteFoxStatus.isAttack = true;
+        whiteFoxStatus.isAttackReady = false;
 
         yield return new WaitForSeconds(0.5f);
 
-        HitDetection hitDetection = blizzardArea.GetComponent<HitDetection>();
+        HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
         hitDetection.SetHitDetection(false, -1, true, 3, enemyStats.attackPower * 0.5f, 0, 0, 0, blizzardDebuff);
 
-        blizzardArea.SetActive(true);
-        yield return new WaitForSeconds(blizzardTime);
+        hitEffects[1].SetActive(true);
+        yield return new WaitForSeconds(3f);
 
-        blizzardArea.SetActive(false);
+        hitEffects[1].SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        isAttack = false;
-        isAttackReady = true;
-        blizzardCoolTime = defaulBlizzardCoolTime;
+        whiteFoxStatus.isAttack = false;
+        whiteFoxStatus.isAttackReady = true;
+        whiteFoxStatus.blizzardCoolTime = defaulBlizzardCoolTime;
 
     }
 

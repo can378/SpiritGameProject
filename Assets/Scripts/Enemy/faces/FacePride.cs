@@ -9,17 +9,17 @@ public class FacePride : EnemyBasic
 
     protected override void Attack()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
             return;
 
-        targetDis = Vector2.Distance(this.transform.position, enemyTarget.position);
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
+        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (!isRun && !isFlinch && !isAttack && isAttackReady)
+        if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady)
         {
-            moveVec = Vector2.zero;
+            enemyStatus.moveVec = Vector2.zero;
             AttackPattern();
         }
     }
@@ -35,15 +35,15 @@ public class FacePride : EnemyBasic
 
     IEnumerator pride()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
 
         //attack
         //감지
-        if (targetDis <= enemyStats.detectionDis)
+        if (enemyStatus.targetDis <= enemyStats.detectionDis)
         {
-            if (targetDis <= enemyStats.maxAttackRange)
+            if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
             {
                 //사정거리 안
                 print("pride-attack");
@@ -52,7 +52,7 @@ public class FacePride : EnemyBasic
             }
             else
             {
-                if (isFlinch == false && isRun == false)
+                if (enemyStatus.isFlinch == false && enemyStatus.isRun == false)
                 {
                     print("pride-chase");
                     Chase();
@@ -71,7 +71,7 @@ public class FacePride : EnemyBasic
 
 
         //END
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 }

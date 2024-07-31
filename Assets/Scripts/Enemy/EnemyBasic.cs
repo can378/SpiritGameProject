@@ -8,34 +8,27 @@ using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBasic : ObjectBasic
 {
-    public bool isRun;                  // µµ∏¡ ¡ﬂ : ∞¯∞› «“ ºˆ æ¯¿∏∏Á ¿˚ø°∞‘º≠ ∏÷æÓ¡¸
-    public float randomMove = 0;
-
-    public EnemyStats enemyStats;       // ¿˚ Ω∫≈»
-
-    public LayerMask detectEnemy;
-    public Transform enemyTarget;       // «ˆ¿Á ≈∏∞Ÿ
-    public Vector2 targetDirVec;        // ∞¯∞› πÊ«‚
-    // ∫§≈Õ -> rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90)
-    public float targetDis;             // ¿˚∞˙¿« ∞≈∏Æ
-
     [HideInInspector]
-    public bool isTouchPlayer;
-    //Dictionary<string, Coroutine> runningCoroutines = new Dictionary<string, Coroutine>();
+    public EnemyStats enemyStats;       // Ï†Å Ïä§ÌÉØ
+    [HideInInspector]
+    public EnemyStatus enemyStatus;     // Ï†Å ÌñâÎèô ÏÉÅÌÉú
 
-    // «ÿ¥Á enemy∞° ∞°¡¯ ∞¯∞› π¸¿ßµÈ
-    protected Coroutine attackCoroutine;
+    [SerializeField]
+    LayerMask targetLayer;
+
 
     protected override void Awake()
     {
         base.Awake();       
         stats = enemyStats = GetComponent<EnemyStats>();
+        status = enemyStatus = GetComponent<EnemyStatus>();
+        
         defaultLayer = this.gameObject.layer;
     }
 
     protected virtual void Start()
     {
-        enemyTarget = FindObj.instance.Player.transform;
+        enemyStatus.enemyTarget = FindObj.instance.Player.transform;
         foreach (GameObject hitEffect in hitEffects)
             hitEffect.GetComponent<HitDetection>().user = this.gameObject;
     }
@@ -46,59 +39,56 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
-
     }
-
-
 
     #region  Attack
 
     protected virtual void Attack()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
             return;
 
-        targetDis = Vector2.Distance(this.transform.position, enemyTarget.position);
-        targetDirVec = (enemyTarget.position - transform.position).normalized;
+        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (!isRun && !isFlinch && !isAttack && isAttackReady && (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
-            moveVec = Vector2.zero;
+            enemyStatus.moveVec = Vector2.zero;
             AttackPattern();
         }
     }
 
-    // ¿˚ ∞¯∞› ∆–≈œ(±‚∫ª ∆–≈œ : ∞¯∞› æ»«‘)
+    // Ï†Å Í≥µÍ≤© Ìå®ÌÑ¥(Í∏∞Î≥∏ Ìå®ÌÑ¥ : Í≥µÍ≤© ÏïàÌï®)
     protected virtual void AttackPattern()
     {
-        isAttack = false;
-        isAttackReady = false;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = false;
     }
 
     void Detect()
     {
-        // ≈∏∞Ÿ¿Ã ¿÷¿ª ∂ß
-        if (enemyTarget != null)
+        // ÌÉÄÍ≤üÏù¥ ÏûàÏùÑ Îïå
+        if (enemyStatus.enemyTarget != null)
         {
-            // ≈∏∞Ÿ ¿Ø¡ˆ ∞≈∏Æ∞° æÁºˆ ¿Ã∞Ì ≈∏∞Ÿ¿Ã ¿Ø¡ˆ∞≈∏Æ∫∏¥Ÿ ∏÷∏Æ ¿÷¥Ÿ∏È ≈∏∞Ÿ «ÿ¡¶
-            if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < targetDis)
+            // ÌÉÄÍ≤ü Ïú†ÏßÄ Í±∞Î¶¨Í∞Ä ÏñëÏàò Ïù¥Í≥† ÌÉÄÍ≤üÏù¥ Ïú†ÏßÄÍ±∞Î¶¨Î≥¥Îã§ Î©ÄÎ¶¨ ÏûàÎã§Î©¥ ÌÉÄÍ≤ü Ìï¥Ï†ú
+            if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < enemyStatus.targetDis)
             {
-                enemyTarget = null; // «√∑π¿ÃæÓ∞° ∞≈∏Æ ¡∂¿˝«œ∏Á ¿˚µÈ ¡◊¿œ ºˆ ¿÷∞‘, ¿Ã∞≈ æ»«œ∏È ¿˚µÈ¿Ã ≥ π´ ∏Ù∑¡øÕº≠ ≥≠¿Ãµµ∞° ≥ π´ ≥Ùæ∆¡¸.
+                enemyStatus.enemyTarget = null; // ÌîåÎ†àÏù¥Ïñ¥Í∞Ä Í±∞Î¶¨ Ï°∞Ï†àÌïòÎ©∞ Ï†ÅÎì§ Ï£ΩÏùº Ïàò ÏûàÍ≤å, Ïù¥Í±∞ ÏïàÌïòÎ©¥ Ï†ÅÎì§Ïù¥ ÎÑàÎ¨¥ Î™∞Î†§ÏôÄÏÑú ÎÇúÏù¥ÎèÑÍ∞Ä ÎÑàÎ¨¥ ÎÜíÏïÑÏßê.
                 return;
             }
             return;
         }
 
-        var target = Physics2D.OverlapCircle(transform.position, enemyStats.detectionDis, detectEnemy);
+        var target = Physics2D.OverlapCircle(this.transform.position, enemyStats.detectionDis, targetLayer);
 
         if (target == null)
         {
             return;
         }
 
-        enemyTarget = target.transform;
+        enemyStatus.enemyTarget = target.transform;
     }
 
     #endregion Attack
@@ -107,79 +97,79 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Move()
     {
-        // ∞Ê¡˜∞˙ ∞¯∞› ¡ﬂø°¥¬ ¡˜¡¢ ¿Ãµø ∫“∞°
-        if (isFlinch)
+        // Í≤ΩÏßÅÍ≥º Í≥µÍ≤© Ï§ëÏóêÎäî ÏßÅÏ†ë Ïù¥Îèô Î∂àÍ∞Ä
+        if (enemyStatus.isFlinch)
         {
             return;
         }
-        else if (isAttack)
+        else if (enemyStatus.isAttack)
         {
-            rigid.velocity = moveVec * stats.moveSpeed;
+            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
             return;
         }
-        else if (isRun)
+        else if (enemyStatus.isRun)
         {
-            if (enemyTarget)
+            if (enemyStatus.enemyTarget)
             {
-                rigid.velocity = -(enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+                rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
             }
             return;
         }
 
         MovePattern();
 
-        rigid.velocity = moveVec * stats.moveSpeed;
+        rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
 
     }
 
-    // ¿Ãµø ∆–≈œ(±‚∫ª ∆–≈œ : ≈∏∞Ÿ¿Ã æ¯¿∏∏È π´¿€¿ß ¿Ãµø, ≈∏∞Ÿ¿Ã ¿÷¿∏∏È ªÁ¡§∞≈∏Æ ±Ó¡ˆ √ﬂ¿˚)
+    // Ïù¥Îèô Ìå®ÌÑ¥(Í∏∞Î≥∏ Ìå®ÌÑ¥ : ÌÉÄÍ≤üÏù¥ ÏóÜÏúºÎ©¥ Î¨¥ÏûëÏúÑ Ïù¥Îèô, ÌÉÄÍ≤üÏù¥ ÏûàÏúºÎ©¥ ÏÇ¨Ï†ïÍ±∞Î¶¨ ÍπåÏßÄ Ï∂îÏ†Å)
     protected virtual void MovePattern()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
         {
             RandomMove();
         }
-        // ¿˚¿Ã ∞¯∞› ªÁ¡§∞≈∏Æ π€ø° ¿÷¿ª Ω√
-        else if (targetDis > enemyStats.maxAttackRange)
+        // Ï†ÅÏù¥ Í≥µÍ≤© ÏÇ¨Ï†ïÍ±∞Î¶¨ Î∞ñÏóê ÏûàÏùÑ Ïãú
+        else if (enemyStatus.targetDis > enemyStats.maxAttackRange)
         {
             Chase();
         }
     }
 
-    // π´¿€¿ß ¿Ãµø
+    // Î¨¥ÏûëÏúÑ Ïù¥Îèô
     protected void RandomMove()
     {
-        randomMove -= Time.deltaTime;
-        if (-1f < randomMove && randomMove < 0f)
+        enemyStatus.randomMove -= Time.deltaTime;
+        if (-1f < enemyStatus.randomMove && enemyStatus.randomMove < 0f)
         {
-            moveVec = Vector2.zero;
-            randomMove -= 1;
+            enemyStatus.moveVec = Vector2.zero;
+            enemyStatus.randomMove -= 1;
         }
-        else if (randomMove < -3f)
+        else if (enemyStatus.randomMove < -3f)
         {
-            moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;
-            randomMove = Random.Range(2, 5);
+            enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;
+            enemyStatus.randomMove = Random.Range(2, 5);
         }
     }
 
-    // ¿˚ √ﬂ¿˚
+    // Ï†Å Ï∂îÏ†Å
     protected void Chase()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
         {
             return;
         }
 
-        moveVec = (enemyTarget.transform.position - transform.position).normalized;
+       enemyStatus. moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
     }
 
-    // µµ∏¡ƒ°±‚
+    // ÎèÑÎßùÏπòÍ∏∞
     protected void Run()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
             return;
 
-        moveVec = -(enemyTarget.transform.position - transform.position).normalized * 0.5f;
+        enemyStatus.moveVec = -(enemyStatus.enemyTarget.transform.position - transform.position).normalized * 0.5f;
     }
 
 
@@ -193,10 +183,10 @@ public class EnemyBasic : ObjectBasic
         {
             BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
-        isTouchPlayer= false;
+        enemyStatus.isTouchPlayer= false;
         if (collision.tag == "Player")
         {
-            isTouchPlayer = true;
+            enemyStatus.isTouchPlayer = true;
         }
     }
 
@@ -216,15 +206,16 @@ public class EnemyBasic : ObjectBasic
     {
         Gizmos.color = Color.red;
         //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionDis);
+        //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionKeepDis);
     }
 
     public override void AttackCancle()
     {
         base.AttackCancle();
-        if(attackCoroutine != null) 
+        if(enemyStatus.attackCoroutine != null) 
         {
-            Debug.Log(name + "ƒ⁄∑Á∆æ ¡æ∑·");
-            StopCoroutine(attackCoroutine);
+            Debug.Log(name + "ÏΩîÎ£®Ìã¥ Ï¢ÖÎ£å");
+            StopCoroutine(enemyStatus.attackCoroutine);
         }
     }
 
@@ -241,14 +232,14 @@ public class EnemyBasic : ObjectBasic
     {
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
-        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 2, ForceMode2D.Impulse);
     }
 
     public void shotWhat(string name)
     {
         GameObject bullet = ObjectPoolManager.instance.Get2(name);
         bullet.transform.position = transform.position;
-        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized * 2, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 2, ForceMode2D.Impulse);
 
     }
 

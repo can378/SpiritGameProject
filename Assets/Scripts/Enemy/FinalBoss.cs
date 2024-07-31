@@ -30,8 +30,8 @@ public class FinalBoss : EnemyBasic
 
     public IEnumerator finalBoss() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         if (
             GetComponent<EnemyStats>().HP <= GetComponent<EnemyStats>().HPMax / 2
@@ -82,8 +82,8 @@ public class FinalBoss : EnemyBasic
                     StartCoroutine(punchFist());
                     break;
                 case 5:
-                    isAttack = false;
-                    isAttackReady = true;
+                    enemyStatus.isAttack = false;
+                    enemyStatus.isAttackReady = true;
             break;
                 default:
                     break;
@@ -108,17 +108,17 @@ public class FinalBoss : EnemyBasic
         time = 1000;
         while (time > 0)
         {
-            if (targetDis < 5f)
+            if (enemyStatus.targetDis < 5f)
             {
                 //print("swing");
                 circularCector.transform.rotation =
-                    Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x) * Mathf.Rad2Deg);
+                    Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg);
                 circularCector.transform.position = transform.position;
                 circularCector.SetActive(true);
                 yield return new WaitForSeconds(2f);
                 circularCector.SetActive(false);
             }
-            else { rigid.AddForce(targetDirVec * 20); }
+            else { rigid.AddForce(enemyStatus.targetDirVec * 20); }
 
             yield return new WaitForSeconds(0.01f);
             time--;
@@ -126,9 +126,9 @@ public class FinalBoss : EnemyBasic
        
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(1f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator shotKnife() 
@@ -142,9 +142,9 @@ public class FinalBoss : EnemyBasic
         }
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator rushThrow() 
@@ -153,30 +153,30 @@ public class FinalBoss : EnemyBasic
         time = 6000;
         while(time>0) 
         {
-            if (targetDis<5f)
+            if (enemyStatus.targetDis<5f)
             {
                 //grab player and throw away
                 //print("grab and throw away");
 
                 for (int i = 0; i < 10; i++)
                 {
-                    enemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce((enemyTarget.position - transform.position).normalized * 10000);
+                    enemyStatus.enemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce((enemyStatus.enemyTarget.position - transform.position).normalized * 10000);
                     yield return new WaitForSeconds(0.01f);
                 }
                 
                 yield return new WaitForSeconds(3f);
                 break;
             }
-            else { rigid.AddForce(targetDirVec * 50); }
+            else { rigid.AddForce(enemyStatus.targetDirVec * 50); }
             time--;
 
             yield return new WaitForSeconds(0.01f);
         }
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator hitGround() 
@@ -187,9 +187,9 @@ public class FinalBoss : EnemyBasic
         yield return new WaitForSeconds(5f);
         hitGroundCol.SetActive(false);
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator fireShot() 
@@ -225,9 +225,9 @@ public class FinalBoss : EnemyBasic
 
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
 
 
@@ -251,12 +251,12 @@ public class FinalBoss : EnemyBasic
 
         while (time > 0)
         {
-            aboveTarget = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, 0);
+            aboveTarget = new Vector3(enemyStatus.enemyTarget.transform.position.x, enemyStatus.enemyTarget.transform.position.y + 20, 0);
 
             //if find Player!
             if (MoveTo(fist, 100, fist.transform.position, aboveTarget) == true) 
             {
-                Vector3 tar = enemyTarget.position;
+                Vector3 tar = enemyStatus.enemyTarget.position;
                 fist.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 yield return new WaitForSeconds(2f);
 
@@ -279,9 +279,9 @@ public class FinalBoss : EnemyBasic
         fist.SetActive(false);
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator knifeRun() 
@@ -294,9 +294,9 @@ public class FinalBoss : EnemyBasic
 
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator wind() 
@@ -308,7 +308,7 @@ public class FinalBoss : EnemyBasic
         time = 1000;
         while (time > 0)
         {
-            enemyTarget.GetComponent<Rigidbody2D>().
+           enemyStatus.enemyTarget.GetComponent<Rigidbody2D>().
                 AddForce(new Vector3(0, -1, 0) * 200);
             time--;
             yield return new WaitForSeconds(0.01f);
@@ -317,9 +317,9 @@ public class FinalBoss : EnemyBasic
         yield return new WaitForSeconds(2f);
         thorn.SetActive(false);
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
     IEnumerator faces() 
@@ -341,9 +341,9 @@ public class FinalBoss : EnemyBasic
         yield return new WaitForSeconds(10f);
         allFaces.SetActive(false);
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
         
     }
 

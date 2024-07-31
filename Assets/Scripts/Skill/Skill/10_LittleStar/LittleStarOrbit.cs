@@ -34,10 +34,10 @@ public class LittleStarOrbit : MonoBehaviour
         if (user == null)
             return;
         
-        if (user.hitTarget == null)
+        if (user.status.hitTarget == null)
             return;
 
-        OnTarget(user.hitTarget.transform);
+        OnTarget(user.status.hitTarget.transform);
     }
 
     // Å¸°Ù °¨Áö

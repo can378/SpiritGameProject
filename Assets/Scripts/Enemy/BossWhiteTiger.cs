@@ -57,7 +57,7 @@ public class BossWhiteTiger : EnemyBasic
 
     IEnumerator contiAttack()
     {
-        while (Vector2.Distance(enemyTarget.transform.position, transform.position) > 5f)
+        while (Vector2.Distance(enemyStatus.enemyTarget.transform.position, transform.position) > 5f)
         { 
             //Chase();
             yield return new WaitForSeconds(0.1f);

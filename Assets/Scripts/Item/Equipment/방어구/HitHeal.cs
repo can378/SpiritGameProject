@@ -14,10 +14,10 @@ public class HitHeal : Equipment
 
     void Passive()
     {
-        if (user == null || !user.hitTarget)
+        if (user == null || !user.playerStatus.hitTarget)
             return;
 
-        if (user.hitTarget.gameObject.tag == "Wall" || user.hitTarget.gameObject.tag == "Door" || user.hitTarget.gameObject.tag == "ShabbyWall")
+        if (user.playerStatus.hitTarget.gameObject.tag == "Wall" || user.playerStatus.hitTarget.gameObject.tag == "Door" || user.playerStatus.hitTarget.gameObject.tag == "ShabbyWall")
             return;
 
         user.Damaged(-variation);

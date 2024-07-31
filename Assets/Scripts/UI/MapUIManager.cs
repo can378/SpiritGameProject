@@ -194,9 +194,9 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateSkillUI()
     {
-        if (Player.instance.playerStats.skill[Player.instance.status.skillIndex] != 0)
+        if (Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex] != 0)
         {
-            skillImg.GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[Player.instance.status.skillIndex]].GetComponentInChildren<SpriteRenderer>().sprite;
+            skillImg.GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex]].GetComponentInChildren<SpriteRenderer>().sprite;
         }
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
@@ -281,21 +281,21 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateNearObjectUI()
     {
-        if(Player.instance.nearObject == null)
+        if(Player.instance.playerStatus.nearObject == null)
         {
             nearObjectPanel.SetActive(false);
             return;
         }
 
         nearObjectPanel.SetActive(true);
-        switch(Player.instance.nearObject.tag)
+        switch(Player.instance.playerStatus.nearObject.tag)
         {
             case "Npc":
-                nearObjectInteraction.text = Player.instance.nearObject.name;
+                nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
                 nearObjectInteraction.text += " ¥Î»≠";
                 break;
             case "SelectItem":
-                nearObjectInteraction.text = Player.instance.nearObject.GetComponent<SelectItem>().selectItemName;
+                nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>().selectItemName;
                 nearObjectInteraction.text += " »πµÊ";
                 break;
             default:

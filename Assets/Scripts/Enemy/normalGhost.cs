@@ -10,7 +10,7 @@ public class normalGhost : EnemyBasic
     {
         
         // 원거리 공격
-        if (targetDis <= enemyStats.maxAttackRange)
+        if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
             StartCoroutine(Throw());
         }
@@ -20,8 +20,8 @@ public class normalGhost : EnemyBasic
 
     IEnumerator Throw()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         for (int i = 0; i < 3; i++)
         {
@@ -30,9 +30,9 @@ public class normalGhost : EnemyBasic
             yield return new WaitForSeconds(1f);
         }
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 }

@@ -41,10 +41,10 @@ public class FakeBox : EnemyBasic
     IEnumerator fakeBox() 
     {
         HitDetection hitDetection;
-        Vector3 hitDir = targetDirVec;
+        Vector3 hitDir = enemyStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.5f);
 
         hitDetection = mouth.GetComponent<HitDetection>();
@@ -55,8 +55,8 @@ public class FakeBox : EnemyBasic
         yield return new WaitForSeconds(2f);
 
         mouth.SetActive(false);
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 

@@ -41,7 +41,7 @@ public class HealSkill : Skill
 
             player.Damaged(-player.stats.HPMax * defaultHeal);
 
-            while(player.status.isSkillHold)
+            while(player.playerStatus.isSkillHold)
             {
                 player.Damaged(-player.stats.HPMax * dotHeal * 0.1f);
                 yield return new WaitForSeconds(0.1f / player.playerStats.attackSpeed);

@@ -87,6 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8056558004469194041}
   - component: {fileID: 5404340927306449340}
+  - component: {fileID: 8017413181563036438}
   - component: {fileID: 745577100928358849}
   - component: {fileID: 490919376907538645}
   - component: {fileID: 2574822562470831089}
@@ -128,35 +129,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects:
+  - {fileID: 9032993308872877328}
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
     m_Bits: 8
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection:
-  - {fileID: 7771911458117855258}
   detectLayer:
     serializedVersion: 2
     m_Bits: 2048
   attackDetectRange: 5
+--- !u!114 &8017413181563036438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2381619801541026782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49145de7664e22a45883a1189f0b0907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
   isDodge: 0
   isDetectAttack: 0
-  biteTime: 1
 --- !u!114 &745577100928358849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,8 +186,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <poiseMax>k__BackingField: 20
-  <poise>k__BackingField: 20
+  <poiseMax>k__BackingField: 10
+  <poise>k__BackingField: 10
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -188,11 +202,11 @@ MonoBehaviour:
   - 0
   - 0
   <defaultAttackPower>k__BackingField: 5
-  <defaultMoveSpeed>k__BackingField: 1
+  <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   enemyName: 
   detectionDis: 5
-  detectionKeepDis: 5
+  detectionKeepDis: 10
   maxAttackRange: 2
 --- !u!50 &490919376907538645
 Rigidbody2D:

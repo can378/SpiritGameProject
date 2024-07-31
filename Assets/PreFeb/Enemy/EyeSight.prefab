@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4416115121843460754}
   - component: {fileID: 8943848680252071507}
   - component: {fileID: -8433502791517103413}
+  - component: {fileID: -6951733002104135056}
   m_Layer: 8
   m_Name: EyeSight
   m_TagString: Untagged
@@ -190,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <hitSuccess>k__BackingField: 0
+  user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
@@ -200,5 +201,30 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <target>k__BackingField: []
   multiHitDurationTime: 0
+  isHit: 0
+--- !u!114 &-6951733002104135056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647627899137824662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  hitEffects: []
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0

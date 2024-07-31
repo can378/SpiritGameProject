@@ -38,21 +38,21 @@ public class FaceGreed : EnemyBasic
     IEnumerator greed()
     {
         print("greed2");
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         //START
         startPoint = transform;
 
         // 매 프레임마다 선의 끝 점을 목표로 업데이트
         lineRenderer.SetPosition(0, startPoint.position);
-        lineRenderer.SetPosition(1, enemyTarget.position);
+        lineRenderer.SetPosition(1, enemyStatus.enemyTarget.position);
 
 
         //END
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(1f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
 
     }
 }

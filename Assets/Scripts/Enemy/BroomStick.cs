@@ -16,7 +16,7 @@ public class BroomStick : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (targetDis <= 2f)
+        if (enemyStatus.targetDis <= 2f)
         {
             StartCoroutine(headache());   
         }
@@ -29,8 +29,8 @@ public class BroomStick : EnemyBasic
 
     IEnumerator peripheralAttack()
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         yield return new WaitForSeconds(0.5f);
         colObj.transform.localScale = new Vector3(0.1f, 0.1f, 1);
@@ -51,23 +51,23 @@ public class BroomStick : EnemyBasic
         colObj.SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        isAttack = false;
+        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(0.1f);
-        isAttackReady = true;
+        enemyStatus.isAttackReady = true;
     }
 
 
     IEnumerator headache() 
     {
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         colObj.transform.localScale = new Vector3(0.1f * radius, 0.1f * radius, 1);
         colObj.GetComponent<HitDetection>().SetHitDetection(false,-1,true,2,0,0,0,0, debuff);
         colObj.GetComponent<SpriteRenderer>().color = Color.magenta;
         colObj.SetActive(true);
 
-        while(targetDis <= 2f)
+        while(enemyStatus.targetDis <= 2f)
         {
             yield return null;
         }
@@ -75,8 +75,8 @@ public class BroomStick : EnemyBasic
         colObj.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
 
     }
 

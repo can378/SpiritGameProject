@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class Dokkebie : EnemyBasic
 {
-    [SerializeField] int defaultFireCoolTime;
-    float fireCoolTime = 0;
+    DokkebieStatus dokkebieStatus;
 
-
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
+        status = enemyStatus = dokkebieStatus = GetComponent<DokkebieStatus>();
     }
 
     protected override void Update()
     {
         base.Update();
-        fireCoolTime -= Time.deltaTime;
+        dokkebieStatus.fireCoolTime -= Time.deltaTime;
     }
 
     protected override void MovePattern()
     {
         // 적이 공격 사정거리 내에 있을 시
-        if (targetDis > 5f)
+        if (dokkebieStatus.targetDis > 5f)
         {
             Chase();
         }
@@ -30,13 +29,13 @@ public class Dokkebie : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (targetDis <= enemyStats.maxAttackRange && fireCoolTime <= 0)
+        if (dokkebieStatus.targetDis <= enemyStats.maxAttackRange && dokkebieStatus.fireCoolTime <= 0)
         {
-            attackCoroutine = StartCoroutine(Fire());
+            dokkebieStatus.attackCoroutine = StartCoroutine(Fire());
         }
-        else if (targetDis <= 5f)
+        else if (dokkebieStatus.targetDis <= 5f)
         {
-            attackCoroutine = StartCoroutine(Hammer());
+            dokkebieStatus.attackCoroutine = StartCoroutine(Hammer());
         }
     }
 
@@ -44,28 +43,28 @@ public class Dokkebie : EnemyBasic
     {
         //shot dokkebie fire
 
-        isAttack = true;
-        isAttackReady = false;
+        dokkebieStatus.isAttack = true;
+        dokkebieStatus.isAttackReady = false;
         yield return new WaitForSeconds(2f);
 
         GameObject bullet = ObjectPoolManager.instance.Get2("dokabbiFire");
         bullet.transform.position = transform.position;
-        bullet.GetComponent<Rigidbody2D>().AddForce(targetDirVec.normalized, ForceMode2D.Impulse);
+        bullet.GetComponent<Rigidbody2D>().AddForce(dokkebieStatus.targetDirVec.normalized, ForceMode2D.Impulse);
         //Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
 
         yield return new WaitForSeconds(2f);
 
-        isAttack = false;
-        isAttackReady = true;
-        fireCoolTime = defaultFireCoolTime;
+        dokkebieStatus.isAttack = false;
+        dokkebieStatus.isAttackReady = true;
+        dokkebieStatus.fireCoolTime = 10;
     }
 
     IEnumerator Hammer()
     {
-        Vector2 attackTarget = targetDirVec;
+        Vector2 attackTarget = dokkebieStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
+        dokkebieStatus.isAttack = true;
+        dokkebieStatus.isAttackReady = false;
         yield return new WaitForSeconds(1f);
        
         hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
@@ -74,8 +73,8 @@ public class Dokkebie : EnemyBasic
         yield return new WaitForSeconds(0.5f);
 
         hitEffects[0].gameObject.SetActive(false);
-        isAttack = false;
-        isAttackReady = true;
+        dokkebieStatus.isAttack = false;
+        dokkebieStatus.isAttackReady = true;
     }
 
     /*

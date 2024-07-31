@@ -15,7 +15,7 @@ public class InventoryThief : EnemyBasic
 
     protected override void MovePattern()
     {
-        if (!enemyTarget)
+        if (!enemyStatus.enemyTarget)
         {
             RandomMove();
         }
@@ -23,7 +23,7 @@ public class InventoryThief : EnemyBasic
         {
             Run();
         }
-        else if (targetDis <= enemyStats.maxAttackRange)
+        else if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
             
         }
@@ -48,10 +48,10 @@ public class InventoryThief : EnemyBasic
     IEnumerator StealAttack()
     {
         HitDetection hitDetection;
-        Vector3 hitDir = targetDirVec;
+        Vector3 hitDir = enemyStatus.targetDirVec;
 
-        isAttack = true;
-        isAttackReady = false;
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.3f);
 
         hitDetection = stealArea.GetComponent<HitDetection>();
@@ -62,13 +62,13 @@ public class InventoryThief : EnemyBasic
         yield return new WaitForSeconds(0.7f);
 
         stealArea.SetActive(false);
-        isAttack = false;
-        isAttackReady = true;
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
     }
 
     void Steal()
     {
-        if (isSteal || !hitTarget)
+        if (isSteal || !enemyStatus.hitTarget)
             return;
         /*
         if (hitTarget.tag == "Player")

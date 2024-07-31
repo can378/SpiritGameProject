@@ -20,23 +20,23 @@ public class Tiger_tiger : EnemyBasic
     { 
         yield return null;
         
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
 
         //hunt
         yield return new WaitForSeconds(3f);
-        rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+        rigid.AddForce(enemyStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
         yield return new WaitForSeconds(2f);
         rigid.velocity = new Vector2(0, 0);
 
 
         //hit
-        targetDis = Vector2.Distance(transform.position, enemyTarget.position);
-        targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-        while (targetDis > 2f)
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+        while (enemyStatus.targetDis > 2f)
         {
-            targetDirVec = (enemyTarget.transform.position - transform.position).normalized;
-            rigid.AddForce(targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed*50);
-            targetDis = Vector2.Distance(transform.position, enemyTarget.position);
+            enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+            rigid.AddForce(enemyStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed*50);
+            enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
             yield return new WaitForSeconds(0.1f);
         }
         
