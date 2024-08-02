@@ -12,7 +12,7 @@ public class normalGhost : EnemyBasic
         // 원거리 공격
         if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
-            StartCoroutine(Throw());
+            enemyStatus.attackCoroutine = StartCoroutine(Throw());
         }
     }
 

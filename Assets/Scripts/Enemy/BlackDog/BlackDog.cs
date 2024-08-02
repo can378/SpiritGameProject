@@ -121,16 +121,14 @@ public class BlackDog : EnemyBasic
         
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1f);
         hitEffects[0].gameObject.SetActive(false);
         
 
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
         
-        blackDogStatus.isRun = true;
-        yield return new WaitForSeconds(5f);
-        blackDogStatus.isRun = false;
+        StartCoroutine(RunAway(5f));
     }
 
 

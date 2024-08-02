@@ -227,6 +227,8 @@ public class ObjectBasic : MonoBehaviour
     {
         print(this.name + " Dead");
         this.gameObject.SetActive(false);
+        RemoveAllEffects();
+        AttackCancle();
         //Destroy(this.gameObject);
     }
 

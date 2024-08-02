@@ -6,13 +6,14 @@ public class Crow : EnemyBasic
 {
     protected override void AttackPattern()
     {
-        StartCoroutine(LRShot());
+        enemyStatus.attackCoroutine = StartCoroutine(LRShot());
     }
 
     IEnumerator LRShot()
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
+        yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < 2; i++)
         {

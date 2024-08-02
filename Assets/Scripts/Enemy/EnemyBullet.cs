@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
     private float time=0;
-    private EnemyStats status;
+    private EnemyStats stats;
     Transform playerPos;
  
     private void Start()
     {
         playerPos = FindObj.instance.Player.transform;
-        status = GetComponent<EnemyStats>();
+        stats = GetComponent<EnemyStats>();
     }
     private void Update()
     {
@@ -21,11 +21,11 @@ public class EnemyBullet : MonoBehaviour
 
         //플레이어쪽으로 발사
         Vector2 direction = playerPos.position- transform.position;
-        transform.Translate(direction * status.defaultMoveSpeed * Time.deltaTime);    
+        transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);  
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!collision.CompareTag("Enemy")) { gameObject.SetActive(false); }
-    }
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if (collision.CompareTag("Player") || collision.CompareTag("Wall")) { gameObject.SetActive(false); }
+    // }
 }

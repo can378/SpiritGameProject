@@ -11,6 +11,12 @@ public class Rotating : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
+    void OnEnable()
+    {
+        rigid.angularVelocity = angular;
+        //rigid.AddTorque(90,ForceMode2D.Force);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

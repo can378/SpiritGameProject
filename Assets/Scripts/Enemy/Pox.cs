@@ -18,14 +18,14 @@ public class Pox : EnemyBasic
     protected override void AttackPattern()
     {
         // 근거리 공격
-        if(enemyStatus.targetDis <= 8f)
+        if(enemyStatus.targetDis <= 5f)
         {
-            StartCoroutine(HitAndRun());
+            enemyStatus.attackCoroutine = StartCoroutine(HitAndRun());
         }
         // 원거리 공격
         else if( enemyStatus.targetDis <= enemyStats.maxAttackRange)
         {
-            StartCoroutine(Throw());
+           enemyStatus.attackCoroutine = StartCoroutine(Throw());
         }
     }
 
@@ -46,10 +46,7 @@ public class Pox : EnemyBasic
         
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
-
-        enemyStatus.isRun = true;
-        yield return new WaitForSeconds(3f);
-        enemyStatus.isRun = false;
+        StartCoroutine(RunAway(3f));
     }
 
     IEnumerator Throw()

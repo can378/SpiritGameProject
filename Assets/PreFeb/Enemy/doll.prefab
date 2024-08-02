@@ -181,12 +181,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
   buffTF: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
   enemyStats: {fileID: 0}
   enemyStatus: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
   defaulCurseCoolTime: 5
   curseCoolTime: 0
 --- !u!114 &4529116099240296461
@@ -220,7 +224,7 @@ MonoBehaviour:
   - 0
   - 0
   <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 10
+  <defaultMoveSpeed>k__BackingField: 8
   activeEffects: []
   enemyName: 
   detectionDis: 10
@@ -302,7 +306,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveVec: {x: 0, y: 0}
   hitTarget: {fileID: 0}
-  hitEffects: []
   isFlinch: 0
   isInvincible: 0
   isAttack: 0

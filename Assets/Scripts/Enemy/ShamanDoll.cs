@@ -5,11 +5,7 @@ using UnityEngine;
 
 public class ShamanDoll : EnemyBasic
 {
-    // 무당 인형
-    // 기본적으로 도망다니며 플레이어에게 지속적인 피해
-
     [SerializeField] int defaulCurseCoolTime;
-    [SerializeField] float curseCoolTime = 0;
     private bool moveReady;
 
     Vector2 playerPos1;
@@ -25,39 +21,37 @@ public class ShamanDoll : EnemyBasic
     protected override void Update()
     {
         base.Update();
-        curseCoolTime -= Time.deltaTime;
     }
 
     protected override void MovePattern()
     {
-        if(moveReady)
-        {
-            StartCoroutine(runaway());
-        }
+        // isRun 상태면 도망가는 함수있어서 그걸 쓰면 될듯
+        // if(moveReady)
+        // {
+        //     StartCoroutine(runaway());
+        // }
         
     }
 
     protected override void AttackPattern()
     {
-        if(curseCoolTime <= 0f)
-        {
-            StartCoroutine(Curse());
-        }
+        enemyStatus.attackCoroutine = StartCoroutine(Curse());
     }
 
     IEnumerator Curse()
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(2f);
 
         //print("shamon doll hurts hershelf");
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(5f);
-        yield return new WaitForSeconds(0.2f);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(enemyStatus.enemyTarget.gameObject.GetComponent<Stats>().HPMax * 0.1f);
+        yield return new WaitForSeconds(2f);
 
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
-        curseCoolTime = defaulCurseCoolTime;
+
+        StartCoroutine(RunAway(5f));
     }
 
     IEnumerator runaway() 

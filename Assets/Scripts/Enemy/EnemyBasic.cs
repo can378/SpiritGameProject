@@ -60,6 +60,7 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
+    // 도망 중이 아닐 때
     // 적 공격 패턴(기본 패턴 : 공격 안함)
     protected virtual void AttackPattern()
     {
@@ -109,10 +110,7 @@ public class EnemyBasic : ObjectBasic
         }
         else if (enemyStatus.isRun)
         {
-            if (enemyStatus.enemyTarget)
-            {
-                rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
-            }
+            Run();
             return;
         }
 
@@ -163,13 +161,22 @@ public class EnemyBasic : ObjectBasic
        enemyStatus. moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
     }
 
-    // 도망치기
+    
+    // 일시적으로 도망치기
     protected void Run()
     {
-        if (!enemyStatus.enemyTarget)
-            return;
+        if (enemyStatus.enemyTarget)
+        {
+            rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+        }
+    }
 
-        enemyStatus.moveVec = -(enemyStatus.enemyTarget.transform.position - transform.position).normalized * 0.5f;
+    // 일정 시간 동안 도망치기
+    protected IEnumerator RunAway(float time)
+    {
+        enemyStatus.isRun = true;
+        yield return new WaitForSeconds(time);
+        enemyStatus.isRun = false;
     }
 
 

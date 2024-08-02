@@ -24,13 +24,6 @@ public class OverlapDamageBuff : StatusEffect
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;
         if (overlap == maxOverlap)
         {
-            duration = 0;
-        }
-    }
-    public override void RemoveEffect()    //제거
-    {
-        if(overlap == maxOverlap)
-        {
             Debug.Log(target.name +":출혈!");
             if (target.tag == "Player" || target.tag == "Npc")
             {
@@ -42,7 +35,11 @@ public class OverlapDamageBuff : StatusEffect
                 EnemyBasic enemy = target.GetComponent<EnemyBasic>();
                 enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist(buffId)) * damagePer);
             }
+            duration = 0;
         }
-        
+    }
+    public override void RemoveEffect()    //제거
+    {
+           
     }
 }

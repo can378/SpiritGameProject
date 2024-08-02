@@ -24,11 +24,11 @@ public class WhiteFox : EnemyBasic
     {
         if (whiteFoxStatus.targetDis <= 3f)
         {
-            StartCoroutine(HitAndRun());
+            enemyStatus.attackCoroutine = StartCoroutine(HitAndRun());
         }
         else if (whiteFoxStatus.targetDis <= enemyStats.maxAttackRange && whiteFoxStatus.blizzardCoolTime <= 0f)
         {
-            StartCoroutine(PeripheralAttack());
+            enemyStatus.attackCoroutine = StartCoroutine(PeripheralAttack());
         }
     }
 
@@ -39,7 +39,8 @@ public class WhiteFox : EnemyBasic
 
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
-        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(RunAway(5f));
+        yield return new WaitForSeconds(1f);
 
         hitDetection = hitEffects[0].GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
@@ -51,17 +52,14 @@ public class WhiteFox : EnemyBasic
         hitEffects[0].SetActive(false);
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
-        whiteFoxStatus.isRun = true;
-        yield return new WaitForSeconds(3f);
-
-        whiteFoxStatus.isRun = false;
     }
 
     IEnumerator PeripheralAttack()
     {
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
-
+        whiteFoxStatus.blizzardCoolTime = defaulBlizzardCoolTime;
+        StartCoroutine(RunAway(5f));
         yield return new WaitForSeconds(0.5f);
 
         HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
@@ -76,7 +74,7 @@ public class WhiteFox : EnemyBasic
 
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
-        whiteFoxStatus.blizzardCoolTime = defaulBlizzardCoolTime;
+
 
     }
 
