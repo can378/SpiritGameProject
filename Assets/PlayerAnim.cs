@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
 {
+
     public List<Animator> animators;//0:front, 1:back, 2:side
     public List<GameObject> playerLayers;//0:front 1:back, 2:side
 
-    Animator nowAnimator;
-
-    Rigidbody2D rigid;
-    Vector3 movement;
-    //Animator animator;
-    private float speed=10f;
+    private Animator nowAnimator;
+    
     
     float horizontalMove;
     float verticalMove;
@@ -22,43 +19,37 @@ public class PlayerAnim : MonoBehaviour
     float chardir = 1;
     float charscale = 0.7f;
 
-    bool leftPressed;
-    bool rightPressed;
-    bool upPressed;
-    bool downPressed;
+
+    //Player GetInput에서 받아온다.
+    public bool leftPressed;
+    public bool rightPressed;
+    public bool upPressed;
+    public bool downPressed;
 
     int front=0, back=1,side=2;
 
 
     private void Awake()
     {
-        //animator = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
         nowAnimator = animators[front];
-        isFront=true;
+        playerLayers[front].SetActive(true);
+        isFront =true;
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) 
+        if (leftPressed) { leftGetKeyDown(); }
+        if (rightPressed) { rightGetKeyDown(); }
+        if (upPressed) 
         {
-            leftGetKeyDown();
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            rightGetKeyDown();
-        }
-        if(Input.GetKeyDown(KeyCode.W)) 
-        { 
             upPressed = true;
             nowAnimator = animators[back];
             playerLayers[front].SetActive(false);
             playerLayers[side].SetActive(false);
             playerLayers[back].SetActive(true);
             isFront = false;
-
         }
-        if(Input.GetKeyDown(KeyCode.S)) 
-        { 
+        if (downPressed)
+        {
             downPressed = true;
             nowAnimator = animators[front];
             playerLayers[back].SetActive(false);
@@ -66,19 +57,19 @@ public class PlayerAnim : MonoBehaviour
             playerLayers[front].SetActive(true);
             isFront = true;
         }
+        
 
-
-        if (Input.GetKeyUp(KeyCode.A))
+        if (!leftPressed)
         {
             leftGetKeyUp();
         }
-        if (Input.GetKeyUp(KeyCode.D))
+        if (!rightPressed)
         {
             rightGetKeyUp();
         }
-        if (Input.GetKeyUp(KeyCode.W))
+        if (!upPressed)
         { upPressed = false; }
-        if (Input.GetKeyUp(KeyCode.S))
+        if (!downPressed)
         { downPressed = false; }
 
 
@@ -120,19 +111,14 @@ public class PlayerAnim : MonoBehaviour
         else if(downPressed) { verticalMove = -1; }
         else { horizontalMove = 0; verticalMove = 0; }
 
-        movement.Set(horizontalMove, verticalMove, 0);
-        movement = movement.normalized * speed * Time.deltaTime;
 
         if (isFront)
         {
             if (horizontalMove == 1 || horizontalMove == -1) { chardir = -horizontalMove; }
         }
         else { chardir = 1; }
-        
-        
-        rigid.MovePosition(transform.position + movement);
-        transform.localScale=new Vector3(chardir*charscale,charscale,charscale);
 
+        transform.localScale=new Vector3(chardir*charscale,charscale,charscale);
     }
     void AnimationUpdate() 
     {

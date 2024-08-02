@@ -14,6 +14,8 @@ public class Player : ObjectBasic
     public PlayerStatus playerStatus { get; private set; }                        // player 현재 능력치
     public PlayerStats playerStats {get; private set; }                     // player 현재 능력치
     public UserData userData { get; private set; }
+    public PlayerAnim playerAnim;
+
 
     [HideInInspector] public float hAxis;
     [HideInInspector] public float vAxis;
@@ -52,7 +54,8 @@ public class Player : ObjectBasic
 
         status = playerStatus = GetComponent<PlayerStatus>();
         stats = playerStats = GetComponent<PlayerStats>();
-        
+
+
         weaponController = gameObject.AddComponent<Player.WeaponController>();
         skillController = gameObject.AddComponent<Player.SkillController>();
     }
@@ -106,12 +109,27 @@ public class Player : ObjectBasic
         rDown = Input.GetButton("Reload");
         dDown = Input.GetButtonDown("Dodge");
         aDown = Input.GetButton("Attack");
-        iDown = Input.GetButtonDown("Interaction"); //f
-        siDown = Input.GetButtonDown("SelectItem"); //h
+        iDown = Input.GetButtonDown("Interaction"); //f down
+        siDown = Input.GetButtonDown("SelectItem"); //h down
 
         skcDown = Input.GetAxisRaw("Mouse ScrollWheel");
         skDown = Input.GetButton("Skill");          //e Down
-        
+
+        if (hAxis > 0) { playerAnim.rightPressed = true; }
+        else if (hAxis < 0) { playerAnim.leftPressed = true; }
+        else
+        { 
+            playerAnim.rightPressed = false; 
+            playerAnim.leftPressed = false; 
+        }
+
+        if (vAxis > 0) { playerAnim.upPressed = true; }
+        else if (vAxis < 0) { playerAnim.downPressed = true; }
+        else
+        { 
+            playerAnim.upPressed = false; 
+            playerAnim.downPressed = false; 
+        }
     }
 
     #region Moving

@@ -278,6 +278,63 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &42881657
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 539968280}
+    m_Modifications:
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5370463335600144029, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_Name
+      value: playerAnim
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
 --- !u!1 &68411985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1498,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1920514947}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &539968282
@@ -1484,25 +1542,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 0
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  playerAnim: {fileID: 1920514946}
   hAxis: 0
   vAxis: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 1
-  nearObject: {fileID: 0}
   <skillList>k__BackingField: []
   <weaponList>k__BackingField: []
-  meleeEffectList: []
   <equipmentList>k__BackingField: []
 --- !u!114 &539968288
 MonoBehaviour:
@@ -1516,6 +1569,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ab0145e2a78be499a07c26b80dfc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  <nearObject>k__BackingField: {fileID: 0}
   <mousePos>k__BackingField: {x: 0, y: 0, z: 0}
   <mouseDir>k__BackingField: {x: 0, y: 0, z: 0}
   <mouseAngle>k__BackingField: 0
@@ -1524,7 +1584,6 @@ MonoBehaviour:
   <isReload>k__BackingField: 0
   <reloadDelay>k__BackingField: 0
   <isDodge>k__BackingField: 0
-  <isInvincible>k__BackingField: 0
   <isAttackable>k__BackingField: 0
   <attackDelay>k__BackingField: 0
   <skillIndex>k__BackingField: 0
@@ -3551,6 +3610,22 @@ CapsuleCollider2D:
   m_Offset: {x: 0.27623492, y: 4.7765746}
   m_Size: {x: 12.651773, y: 13.690834}
   m_Direction: 0
+--- !u!114 &1920514946 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1913441116389064017, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+  m_PrefabInstance: {fileID: 42881657}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368d359df5dfad345942907261f8beef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1920514947 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+  m_PrefabInstance: {fileID: 42881657}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1980723534
 GameObject:
   m_ObjectHideFlags: 0

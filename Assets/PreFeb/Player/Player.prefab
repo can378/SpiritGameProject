@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 472769400, guid: 5cfa884cb4172424d968911aed8248a9, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_Size: {x: 0.62, y: 1.58}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3105114939551070920
@@ -263,6 +263,7 @@ Transform:
   - {fileID: 3418451821682442538}
   - {fileID: 731373971785790677}
   - {fileID: 4859087193058382073}
+  - {fileID: 8924815692000093876}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4369510584889721068
@@ -340,26 +341,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  buffTF: {fileID: 0}
-  isAttack: 1
-  isAttackReady: 0
-  hitTarget: {fileID: 0}
+  status: {fileID: 0}
   hitEffects:
   - {fileID: 1369341997654721744}
   - {fileID: 3390848125582378263}
   - {fileID: 3475945037996605182}
+  defaultLayer: 0
+  buffTF: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  playerAnim: {fileID: 6466065332252712301}
   hAxis: 0
   vAxis: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  nearObject: {fileID: 0}
   <skillList>k__BackingField:
   - {fileID: 0}
   - {fileID: 3039287651601481129}
@@ -499,6 +495,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ab0145e2a78be499a07c26b80dfc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  <nearObject>k__BackingField: {fileID: 0}
   <mousePos>k__BackingField: {x: 0, y: 0, z: 0}
   <mouseDir>k__BackingField: {x: 0, y: 0, z: 0}
   <mouseAngle>k__BackingField: 0
@@ -507,7 +510,6 @@ MonoBehaviour:
   <isReload>k__BackingField: 0
   <reloadDelay>k__BackingField: 0
   <isDodge>k__BackingField: 0
-  <isInvincible>k__BackingField: 0
   <isAttackable>k__BackingField: 1
   <attackDelay>k__BackingField: 0
   <skillIndex>k__BackingField: 0
@@ -4255,6 +4257,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06c1b73152bd374faf011e0999af8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &4841928870999040060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8884761542970708304}
+    m_Modifications:
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5370463335600144029, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+      propertyPath: m_Name
+      value: playerAnim
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+--- !u!114 &6466065332252712301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1913441116389064017, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+  m_PrefabInstance: {fileID: 4841928870999040060}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368d359df5dfad345942907261f8beef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8924815692000093876 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4101279739290076808, guid: b231e5ae27501f24a8e8bdff12f4f07b, type: 3}
+  m_PrefabInstance: {fileID: 4841928870999040060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4922498939917339732
 PrefabInstance:
   m_ObjectHideFlags: 0
