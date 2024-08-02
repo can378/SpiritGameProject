@@ -78,7 +78,7 @@ public class MazeEnter : MonoBehaviour
                 //camera move
                 CameraManager.instance.CameraMove(collision.gameObject);
                 CameraManager.instance.CenterMove(collision.gameObject);
-                CameraManager.instance.mapSize = new Vector2(15, 15);
+                CameraManager.instance.mapSize = new Vector2(25, 25);
 
 
                 GameManager.instance.nowRoomScript.map.GetComponent<Mission>().isEscapeMaze = true;
