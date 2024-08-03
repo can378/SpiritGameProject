@@ -26,6 +26,7 @@ public class ObjectBasic : MonoBehaviour
     protected virtual void LateUpdate()
     {
         status.hitTarget = null;
+
     }
 
     #region Effect

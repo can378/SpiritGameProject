@@ -6,12 +6,15 @@ using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 
+
 public class EnemyBasic : ObjectBasic
 {
     [HideInInspector]
     public EnemyStats enemyStats;       // 적 스탯
     [HideInInspector]
     public EnemyStatus enemyStatus;     // 적 행동 상태
+
+    public EnemyAnim enemyAnim;
 
     [SerializeField]
     LayerMask targetLayer;
@@ -22,7 +25,8 @@ public class EnemyBasic : ObjectBasic
         base.Awake();       
         stats = enemyStats = GetComponent<EnemyStats>();
         status = enemyStatus = GetComponent<EnemyStatus>();
-        
+
+
         defaultLayer = this.gameObject.layer;
     }
 
@@ -39,6 +43,8 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
+
+        
     }
 
     #region  Attack
@@ -179,6 +185,46 @@ public class EnemyBasic : ObjectBasic
         enemyStatus.isRun = false;
     }
 
+    public void CheckMovement()
+    {
+        Vector2 velocity = rigid.velocity;
+
+        if (velocity.magnitude == 0)
+        {
+            Debug.Log("멈춤");
+            enemyAnim.horizontalMove = 0;
+            enemyAnim.verticalMove = 0;
+        }
+        else
+        {
+            if (Mathf.Abs(velocity.x) > Mathf.Abs(velocity.y))
+            {
+                if (velocity.x > 0)
+                {
+                    Debug.Log("오른쪽으로 움직임");
+                    enemyAnim.horizontalMove = 1;
+                }
+                else
+                {
+                    Debug.Log("왼쪽으로 움직임");
+                    enemyAnim.horizontalMove = -1;
+                }
+            }
+            else
+            {
+                if (velocity.y > 0)
+                {
+                    Debug.Log("위쪽으로 움직임");
+                    enemyAnim.verticalMove = 1;
+                }
+                else
+                {
+                    Debug.Log("아래쪽으로 움직임");
+                    enemyAnim.verticalMove = -1;
+                }
+            }
+        }
+    }
 
     #endregion Move
 

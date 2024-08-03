@@ -51,7 +51,11 @@ public class BossBaby : EnemyBasic
 
     }
 
-
+    protected override void Update()
+    {
+        base.Update();
+        CheckMovement();
+    }
 
     protected override void AttackPattern()
     {
@@ -81,6 +85,7 @@ public class BossBaby : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Rush");
+        enemyAnim.changeAnimToAdult();
 
         float time = 0;
 
@@ -120,10 +125,12 @@ public class BossBaby : EnemyBasic
 
     IEnumerator Crying() 
     {
+        
+
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Crying");
-
+        enemyAnim.changeAnimToBaby();
 
         //move to corner
         corner = FindCorner();
@@ -177,7 +184,7 @@ public class BossBaby : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("MadRush");
-
+        enemyAnim.changeAnimToAdult();
 
         randomX = Random.Range(bounds.min.x, bounds.max.x);
         randomY = Random.Range(bounds.min.y, bounds.max.y);
@@ -225,6 +232,7 @@ public class BossBaby : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Hiding");
+        enemyAnim.changeAnimToBaby();
 
         SafeArea.SetActive(true);
         DamageArea.SetActive(true);
@@ -269,10 +277,11 @@ public class BossBaby : EnemyBasic
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-
         print("Screaming");
+        enemyAnim.changeAnimToBaby();
+
         ScreamArea.SetActive(true);
-        this.GetComponent<SpriteRenderer>().color = Color.white;
+        //this.GetComponent<SpriteRenderer>().color = Color.white;
         //플레이어 느려지게 만든다.
 
         yield return new WaitForSeconds(1f);
