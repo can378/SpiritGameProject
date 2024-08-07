@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2323307323661156973}
   - component: {fileID: 8522849875804448683}
+  - component: {fileID: 2032379173313446530}
   m_Layer: 0
   m_Name: BossMap
   m_TagString: Untagged
@@ -168,6 +169,19 @@ MonoBehaviour:
   enemySpawnPoint:
   - {fileID: 6202803812658245017}
   enemys: []
+--- !u!114 &2032379173313446530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782812310506344177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe0c59f2abf84547ac682e6cdd6ccb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 4184860465444839015}
 --- !u!1 &7278715629051353697
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +335,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e82178507b739e94faa01a96a4df3724, type: 3}
+--- !u!1 &4184860465444839015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6977163118116975903, guid: e82178507b739e94faa01a96a4df3724, type: 3}
+  m_PrefabInstance: {fileID: 6539297613651110776}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7703942580743712620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3470488047173747732, guid: e82178507b739e94faa01a96a4df3724, type: 3}

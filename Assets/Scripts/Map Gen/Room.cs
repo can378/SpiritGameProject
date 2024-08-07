@@ -23,12 +23,14 @@ public class Room : MonoBehaviour
     [field: SerializeField] public bool right { get; private set; }
 
     public GameObject floorArea;
+    private GameObject minimapIcon;
 
     RoomManager roomManager;
     MapTemplates mapTemplates;
     MapType preMapType;
     DoorType preDoorType;
     
+
 
     void Start() {
         roomManager = FindObj.instance.roomManagerScript;
@@ -66,6 +68,7 @@ public class Room : MonoBehaviour
             {
                 ran = Random.Range(0, mapTemplates.shopMap.Length);
                 map = Instantiate(mapTemplates.shopMap[ran], transform.position, transform.rotation);
+                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
                 
             }
             else if(mapType == MapType.Treasure)
@@ -77,6 +80,8 @@ public class Room : MonoBehaviour
             {
                 ran = Random.Range(0, mapTemplates.eventMap.Length);
                 map = Instantiate(mapTemplates.eventMap[ran], transform.position, transform.rotation);
+                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
+                
             }
             else if (mapType == MapType.Mission)
             {
@@ -85,17 +90,28 @@ public class Room : MonoBehaviour
                 map = Instantiate(mapTemplates.missionMap[ran], transform.position, transform.rotation);
                 
                 map.GetComponent<Mission>().roomScript = this;
+                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
+                
             }
             else if (mapType == MapType.Boss)
             {
                 doorType = DoorType.Key;
                 ran = Random.Range(0, mapTemplates.bossMap.Length);
                 map = Instantiate(mapTemplates.bossMap[ran], transform.position, transform.rotation);
+                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
+                
             }
             else if(mapType == MapType.Default)
             {
                 ran = Random.Range(0, mapTemplates.defaultMap.Length);
                 map = Instantiate(mapTemplates.defaultMap[ran],transform.position,transform.rotation);
+            }
+
+            if (minimapIcon != null)
+            {
+                minimapIcon.transform.parent = transform;
+                minimapIcon.transform.localScale = new Vector3(0.005f, 0.005f, 1f);
+                minimapIcon.transform.position = this.transform.position;
             }
             map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
             map.transform.SetParent(this.transform);

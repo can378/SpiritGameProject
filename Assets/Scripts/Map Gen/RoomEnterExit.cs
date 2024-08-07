@@ -9,12 +9,15 @@ public class RoomEnterExit : MonoBehaviour
     
     public Room room;
     GameObject enemyGroup;
+    private GameObject minimapIcon;
 
 
     public SpriteRenderer forMiniMapSprite;
     public GameObject forMap;
     public List<SpriteRenderer> aisleSprite;
 
+
+    private string minimapIconString = "MinimapIcon";
 
     void Start()
     {
@@ -69,14 +72,42 @@ public class RoomEnterExit : MonoBehaviour
     {
         playerPos.SetActive(false);
 
-
+        /*
+        if (HasComponent(room.map.gameObject, minimapIconString))
+        {
+            GameObject miniIcon = room.map.gameObject.GetComponent<MinimapIcon>().minimapIcon;
+            miniIcon.transform.parent = room.transform;
+        }
+        */
         if (room.map != null)
         {
             room.map.SetActive(false);
         }
+
+
+        
         
         forMap.SetActive(true);
 
+    }
+
+
+    bool HasComponent(GameObject obj, string componentType)
+    {
+        // Component 타입을 가져옴
+        var type = System.Type.GetType(componentType);
+
+        if (type != null)
+        {
+            // GetComponent 메서드를 사용하여 Component가 있는지 확인
+            var component = obj.GetComponent(type);
+            return component != null;
+        }
+        else
+        {
+            Debug.LogError("Component type not found.");
+            return false;
+        }
     }
 
 }

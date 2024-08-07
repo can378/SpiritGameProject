@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2015379903977444201}
   - component: {fileID: 8168718669937716399}
   m_Layer: 30
-  m_Name: minimapOnly
+  m_Name: minimapIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2323307323661156973}
   - component: {fileID: 8522849875804448683}
+  - component: {fileID: 2154202173369196076}
   m_Layer: 0
   m_Name: AltarMap
   m_TagString: Untagged
@@ -218,6 +219,19 @@ MonoBehaviour:
   enemyGroup: {fileID: 0}
   enemySpawnPoint: []
   enemys: []
+--- !u!114 &2154202173369196076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782812310506344177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe0c59f2abf84547ac682e6cdd6ccb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapIcon: {fileID: 2028211998394182351}
 --- !u!1001 &500413700204134283
 PrefabInstance:
   m_ObjectHideFlags: 0
