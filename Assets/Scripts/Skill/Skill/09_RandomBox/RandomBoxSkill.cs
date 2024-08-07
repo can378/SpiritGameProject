@@ -56,7 +56,7 @@ public class RandomBoxSkill : Skill
             rangeSimul.parent = enemy.transform;
             rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
 
-            while (timer <= maxHoldTime/2)
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 randomBoxSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;

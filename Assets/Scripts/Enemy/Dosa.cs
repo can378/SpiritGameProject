@@ -6,8 +6,7 @@ public class Dosa : EnemyBasic
 {
     [field: SerializeField] public List<Skill> skillList { get; private set; }
 
-
-    private int skill;
+    int skill;
 
 
     protected override void Start()
@@ -16,14 +15,15 @@ public class Dosa : EnemyBasic
         skill=UnityEngine.Random.Range(1,skillList.Count);
         skillList[skill].gameObject.SetActive(true);
     }
+
     protected override void AttackPattern()
     {
-        Debug.Log("skill num="+skill);
+        //Debug.Log("skill num="+skill);
         //스킬 사용
         if (skill != 0 && skillList[skill].skillCoolTime <= 0)
         {
             Debug.Log("start skill");
-            StartCoroutine(Skill());
+            enemyStatus.attackCoroutine = StartCoroutine(Skill());
         }
     }
 
@@ -33,9 +33,6 @@ public class Dosa : EnemyBasic
         print("Dosa Skill");
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-
-        //mimic player skill
-        print("mimic player skill");
 
         yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
@@ -48,12 +45,31 @@ public class Dosa : EnemyBasic
         yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
 
         skillList[skill].Exit();
+        enemyStatus.attackCoroutine = null;
 
         yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
 
 
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
+
+    }
+
+    public override void AttackCancle()
+    {
+        status.isAttack = false;
+        status.isAttackReady = true;
+        status.moveVec = Vector2.zero;
+
+        foreach(GameObject hitEffect in hitEffects)
+            hitEffect.SetActive(false);
+
+        if(enemyStatus.attackCoroutine != null)
+        {
+            StopCoroutine(enemyStatus.attackCoroutine);
+            skillList[skill].Cancle();
+            enemyStatus.attackCoroutine = null;
+        }
 
     }
 

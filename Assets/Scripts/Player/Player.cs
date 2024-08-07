@@ -588,7 +588,6 @@ public class Player : ObjectBasic
                 if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
                     player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Cancle();
             }
-
         }
 
     }

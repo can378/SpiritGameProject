@@ -26,6 +26,8 @@ public class LittleStarOrbit : MonoBehaviour
     {
         WaitTarget();
         this.transform.position = user.transform.position;
+        if(user.gameObject.activeSelf == false)
+            Destroy(this.gameObject);
     }
 
     // ≈∏∞Ÿ ¥Î±‚¡ﬂ

@@ -59,7 +59,7 @@ public class IcicleSkill : Skill
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.enemyTarget != null )
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.enemyTarget != null  && enemy.enemyStatus.isAttack)
             {
                 // 나중에 원 형태로 최대 범위 제한하기
                 // 나중에 원 형태로 최대 범위 표시하기

@@ -71,7 +71,7 @@ public class SlashSkill : Skill
             simul.transform.parent = user.transform;
             simul.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);
 
-            while (timer < maxHoldTime / 2)
+            while (timer < maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 if (holdPower < maxHoldPower && powerTimer > 0.1f)
                 {

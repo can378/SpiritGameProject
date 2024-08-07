@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8591411310951136715}
   - component: {fileID: 1842744761382000521}
   - component: {fileID: -3922947368392430312}
+  - component: {fileID: 2617462166320672221}
   m_Layer: 8
   m_Name: Mouth
   m_TagString: Enemy
@@ -103,30 +104,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  deadDelay: 0
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
+  buffTF: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 8
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+    m_Bits: 0
   isEye: 0
   isMouth: 1
-  isDetection: 0
   mouths: []
 --- !u!114 &7958813719626967745
 MonoBehaviour:
@@ -143,7 +134,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <revivalStock>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -250,6 +242,30 @@ MonoBehaviour:
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
   isHit: 0
+--- !u!114 &2617462166320672221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3293908221029111862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1 &5878315655292564709
 GameObject:
   m_ObjectHideFlags: 0

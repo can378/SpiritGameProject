@@ -59,10 +59,8 @@ public class FireBallSkill : Skill
             rangeSimul.parent = enemy.transform;
             rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
 
-            while (timer <= maxHoldTime/2)
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
-                // 나중에 원 형태로 최대 범위 제한하기
-                // 나중에 원 형태로 최대 범위 표시하기
                 fireBallSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.enemyTarget.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
@@ -73,14 +71,14 @@ public class FireBallSkill : Skill
     public override void Cancle()
     {
         base.Cancle();
-        StopCoroutine(Simulation());
+        StopCoroutine("Simulation");
         Destroy(rangeSimul.gameObject);
         Destroy(fireBallSimul.gameObject);
     }
 
     public override void Exit()
     {
-        StopCoroutine(Simulation());
+        StopCoroutine("Simulation");
         Fire();
     }
 

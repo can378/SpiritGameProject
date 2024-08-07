@@ -58,7 +58,7 @@ public class SpinAttackSkill : Skill
             holdPower = 1f;
             timer = 0;
 
-            while (holdPower < maxHoldPower && timer <= maxHoldTime / 2)
+            while (holdPower < maxHoldPower && timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 holdPower += 0.05f;
                 spinSimul.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);

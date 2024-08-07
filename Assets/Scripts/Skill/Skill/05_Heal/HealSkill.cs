@@ -65,7 +65,7 @@ public class HealSkill : Skill
 
             enemy.Damaged(-enemy.stats.HPMax * defaultHeal);
 
-            while (timer <= maxHoldTime / 2)
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 enemy.Damaged(-enemy.stats.HPMax * dotHeal * 0.1f);
                 timer += 0.1f;

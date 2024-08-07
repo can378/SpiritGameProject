@@ -98,7 +98,7 @@ public class ThunderboltSkill : Skill
             // 선딜의 시간이 지난 후 시작
             yield return new WaitForSeconds(preDelay);
 
-            while (timer <= maxHoldTime / 2)
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 // 무작위 생성 위치 선정
                 Vector3 pos = transform.position + (Random.insideUnitSphere * summonAreaSize / 2);

@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class BossShadowDummy : EnemyBasic
 {
-    
-
     protected override void MovePattern()
     {
         enemyStatus.moveVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
     }
     protected override void AttackPattern()
     {
-        StartCoroutine(shadowShot());
+        enemyStatus.attackCoroutine = StartCoroutine(shadowShot());
     }
 
     IEnumerator shadowShot() 
@@ -26,10 +24,5 @@ public class BossShadowDummy : EnemyBasic
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 
-    }
-
-    public override void Dead()
-    {
-        gameObject.SetActive(false);
     }
 }

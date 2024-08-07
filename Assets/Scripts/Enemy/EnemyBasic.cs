@@ -272,6 +272,22 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
+    public override void Cancle()
+    {
+        enemyStatus.isRun = false;
+        enemyStatus.isTouchPlayer = false;
+        base.Cancle();
+        if(enemyStatus.attackCoroutine != null) 
+        {
+            Debug.Log(name + "코루틴 종료");
+            StopCoroutine(enemyStatus.attackCoroutine);
+        }
+    }
+
+    void OnDisable()
+    {
+        Cancle();
+    }
     /*
     public void Chase()
     {
