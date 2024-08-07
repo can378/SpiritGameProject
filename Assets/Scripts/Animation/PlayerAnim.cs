@@ -24,8 +24,8 @@ public class PlayerAnim : AnimBasic
     private void Update()
     {
         if (leftPressed) { leftGetKeyDown(); }
-        if (rightPressed) { rightGetKeyDown(); }
-        if (upPressed)
+        else if (rightPressed) { rightGetKeyDown(); }
+        else if (upPressed)
         {
             upPressed = true;
             nowAnimator = animators[back];
@@ -34,7 +34,7 @@ public class PlayerAnim : AnimBasic
             animLayers[back].SetActive(true);
             isFront = false;
         }
-        if (downPressed)
+        else if (downPressed)
         {
             downPressed = true;
             nowAnimator = animators[front];
@@ -60,7 +60,9 @@ public class PlayerAnim : AnimBasic
 
 
         AnimationUpdate();
+
     }
+
     public void leftGetKeyDown()
     {
         leftPressed = true;
