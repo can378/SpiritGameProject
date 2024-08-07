@@ -31,7 +31,7 @@ public class SnowBall : EnemyBasic
         {
             print("snowball hit");
             snowBallStatus.isHit = true;
-            if (snowBallStatus.size > 1.5f)
+            if (snowBallStatus.size >= 1.5f)
             {
                 snowBallStatus.size -= 1f;
             }
@@ -170,6 +170,13 @@ public class SnowBall : EnemyBasic
         //NEXT
         StartCoroutine(snowBall());
     }
-*/
+    */
+
+    public override void Cancle()
+    {
+        snowBallStatus.isHit = false;
+        base.Cancle();
+    }
+
 
 }

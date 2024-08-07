@@ -44,7 +44,7 @@ public abstract class Skill : SelectItem
         else if (user.tag == "Enemy")
         {
             // 쿨타임 적용
-            skillCoolTime =skillDefalutCoolTime;
+            skillCoolTime = skillDefalutCoolTime;
         }
     }
 

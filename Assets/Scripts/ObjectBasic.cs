@@ -134,6 +134,7 @@ public class ObjectBasic : MonoBehaviour
 
     /// <summary>
     /// 공격 캔슬
+    /// 공격 중 경직 시 
     /// 공격 코루틴 해제, 공격 범위 해제
     /// </summary>
     public virtual void AttackCancle()
@@ -141,6 +142,24 @@ public class ObjectBasic : MonoBehaviour
         status.isAttack = false;
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
+
+        foreach(GameObject hitEffect in hitEffects)
+            hitEffect.SetActive(false);
+    }
+
+    /// <summary>
+    /// 상태 초기화
+    /// 모든 상태 초기 상태로 변경
+    /// 해당 오브젝트가 바보가 되는 것을 방지
+    /// </summary>
+    public virtual void Cancle()
+    {
+        status.isAttack = false;
+        status.isAttackReady = true;
+        status.isFlinch = false;
+        status.isInvincible = false;
+        status.moveVec = Vector2.zero;
+
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
     }
