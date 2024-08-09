@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShamanDoll : EnemyBasic
 {
     [SerializeField] int defaulCurseCoolTime;
-    private bool moveReady;
+    //private bool moveReady;
 
     Vector2 playerPos1;
     Vector2 playerPos2;
@@ -16,7 +16,7 @@ public class ShamanDoll : EnemyBasic
     protected override void Start()
     {
         base.Start();
-        moveReady = true;
+        //moveReady = true;
     }
     protected override void Update()
     {
@@ -56,7 +56,7 @@ public class ShamanDoll : EnemyBasic
 
     IEnumerator runaway() 
     {
-        moveReady = false;
+        //moveReady = false;
 
         //print("shamon doll move");
         playerPos1 = enemyStatus.enemyTarget.transform.position;
@@ -70,7 +70,7 @@ public class ShamanDoll : EnemyBasic
         enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
         rigid.AddForce(-enemyStatus.targetDirVec * GetComponent<EnemyStats>().moveSpeed * 100f);
 
-        moveReady = true;
+        //moveReady = true;
     }
 
     /*

@@ -5,7 +5,6 @@ using UnityEngine;
 public class NoHead_Body : EnemyBasic
 {
     private bool isTransform=false;
-    bool isHit = false;
     public GameObject headPos;
     public GameObject head;
     //private Vector2 dir = new Vector2(1, 0);
@@ -98,8 +97,6 @@ public class NoHead_Body : EnemyBasic
             {
                 //attack animation
             }
-            else
-            { isHit = true; }
 
         }
 

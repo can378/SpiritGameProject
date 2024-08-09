@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7653305266310428476}
   m_Layer: 8
   m_Name: ScreamArea
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,13 +137,13 @@ MonoBehaviour:
   user: {fileID: 0}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
+  <isMultiHit>k__BackingField: 1
+  <DPS>k__BackingField: 2
+  <damage>k__BackingField: 3
+  <knockBack>k__BackingField: 3
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
+  <statusEffect>k__BackingField: 01000000
   multiHitDurationTime: 0
   isHit: 0
 --- !u!50 &7653305266310428476
@@ -186,9 +186,9 @@ GameObject:
   - component: {fileID: 1049453484614500957}
   - component: {fileID: 353126954175971493}
   - component: {fileID: 3241274986737828957}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: DamageArea
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -616,7 +616,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
-  hitEffects: []
+  hitEffects:
+  - {fileID: 7175259245655347033}
+  - {fileID: 2447196642319655762}
+  - {fileID: 1749037725384822060}
+  - {fileID: 775840593114464040}
   defaultLayer: 0
   buffTF: {fileID: 0}
   sprite: {fileID: 0}
@@ -626,11 +630,7 @@ MonoBehaviour:
   enemyAnim: {fileID: 2084435484889676110}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  tear: {fileID: 7175259245655347033}
-  SafeArea: {fileID: 2447196642319655762}
-  DamageArea: {fileID: 1749037725384822060}
-  ScreamArea: {fileID: 775840593114464040}
+    m_Bits: 8
 --- !u!114 &4368071184651363648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,11 +643,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
-  <HP>k__BackingField: 100
+  <HPMax>k__BackingField: 500
+  <HP>k__BackingField: 500
   <tempHP>k__BackingField: 0
-  <poiseMax>k__BackingField: 20
-  <poise>k__BackingField: 20
+  <poiseMax>k__BackingField: 50
+  <poise>k__BackingField: 50
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -982,7 +982,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7175259245655347033}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 

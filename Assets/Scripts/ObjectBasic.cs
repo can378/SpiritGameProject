@@ -113,7 +113,7 @@ public class ObjectBasic : MonoBehaviour
     /// </summary>
     public void HealPoise()
     {
-        stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 2f, stats.poiseMax);
+        stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 1f, stats.poiseMax);
     }
 
     public void KnockBack(GameObject agent, float knockBack)
@@ -152,7 +152,7 @@ public class ObjectBasic : MonoBehaviour
     /// 모든 상태 초기 상태로 변경
     /// 해당 오브젝트가 바보가 되는 것을 방지
     /// </summary>
-    public virtual void Cancle()
+    public virtual void InitStatus()
     {
         status.isAttack = false;
         status.isAttackReady = true;

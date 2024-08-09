@@ -4,6 +4,8 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Buff {None, Slow, PowerWeaken, DefensiveWeaken, Burn, Poison, Stun, Fear, Root, Bleeding, Curse}
+
 public abstract class StatusEffect : MonoBehaviour
 {
     [field: SerializeField] public Image icon { get; private set; }

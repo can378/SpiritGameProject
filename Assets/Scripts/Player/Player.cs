@@ -508,7 +508,7 @@ public class Player : ObjectBasic
 
         IEnumerator Enter()
         {
-            print("Enter");
+            //print("Enter");
             // È¦µå Áß
             player.playerStatus.isSkillHold = true;
 
@@ -533,7 +533,7 @@ public class Player : ObjectBasic
 
         IEnumerator Stay()
         {
-            print("Stay");
+            //print("Stay");
             float timer = player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].maxHoldTime;
 
             while (player.playerStatus.isSkillHold)

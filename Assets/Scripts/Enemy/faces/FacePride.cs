@@ -7,22 +7,23 @@ public class FacePride : EnemyBasic
 {
     //교만=투명해진다. 잠시 반투명하게 보인다. 1초 뒤에 튀어나와서 공격. 다시 투명해진다. 반복
 
-    protected override void Attack()
-    {
-        if (!enemyStatus.enemyTarget)
-            return;
+    // protected override void Attack()
+    // {
+    //     if (!enemyStatus.enemyTarget)
+    //         return;
 
-        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
-        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
+    //     enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
+    //     enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
 
-        //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
+    //     //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady)
-        {
-            enemyStatus.moveVec = Vector2.zero;
-            AttackPattern();
-        }
-    }
+    //     if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady)
+    //     {
+    //         enemyStatus.moveVec = Vector2.zero;
+    //         AttackPattern();
+    //     }
+    // }
+
     protected override void MovePattern()
     {
         

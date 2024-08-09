@@ -12,27 +12,27 @@ public class FaceDelusion : EnemyBasic
     }
 
 
-    protected override void Move()
-    {
-        // 경직 중에는 직접 이동 불가
-        if (enemyStatus.isFlinch)
-        {
-            return;
-        }
-        else if (enemyStatus.isRun)
-        {
-            if (enemyStatus.enemyTarget)
-            {
-                rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
-            }
-            return;
-        }
+    // protected override void Move()
+    // {
+    //     // 경직 중에는 직접 이동 불가
+    //     if (enemyStatus.isFlinch)
+    //     {
+    //         return;
+    //     }
+    //     else if (enemyStatus.isRun)
+    //     {
+    //         if (enemyStatus.enemyTarget)
+    //         {
+    //             rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+    //         }
+    //         return;
+    //     }
 
-        MovePattern();
+    //     MovePattern();
 
-        rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+    //     rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
 
-    }
+    // }
 
     protected override void MovePattern()
     {
@@ -41,7 +41,7 @@ public class FaceDelusion : EnemyBasic
 
     IEnumerator delusion()
     {
-        enemyStatus.isAttack = true;
+        //enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
         //START
@@ -63,7 +63,7 @@ public class FaceDelusion : EnemyBasic
 
 
         //END
-        enemyStatus.isAttack = false;
+        //enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 

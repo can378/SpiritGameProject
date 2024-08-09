@@ -11,27 +11,27 @@ public class FaceAngry : EnemyBasic
         print("angry");
         StartCoroutine(angry());
     }
-    protected override void Move()
-    {
-        // 경직 중에는 직접 이동 불가
-        if (enemyStatus.isFlinch)
-        {
-            return;
-        }
-        else if (enemyStatus.isRun)
-        {
-            if (enemyStatus.enemyTarget)
-            {
-                rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
-            }
-            return;
-        }
+    // protected override void Move()
+    // {
+    //     // 경직 중에는 직접 이동 불가
+    //     if (enemyStatus.isFlinch)
+    //     {
+    //         return;
+    //     }
+    //     else if (enemyStatus.isRun)
+    //     {
+    //         if (enemyStatus.enemyTarget)
+    //         {
+    //             rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+    //         }
+    //         return;
+    //     }
 
-        MovePattern();
+    //     MovePattern();
 
-        rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+    //     rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
 
-    }
+    // }
 
     protected override void MovePattern()
     {
@@ -39,7 +39,7 @@ public class FaceAngry : EnemyBasic
     }
     IEnumerator angry()
     {
-        enemyStatus.isAttack = true;
+        //enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
         foreach(GameObject f in faces) 
@@ -55,7 +55,7 @@ public class FaceAngry : EnemyBasic
 
 
 
-        enemyStatus.isAttack = false;
+        //enemyStatus.isAttack = false;
         yield return new WaitForSeconds(1f);
         enemyStatus.isAttackReady = true;
 

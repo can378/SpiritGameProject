@@ -263,8 +263,19 @@ public class RoomManager : MonoBehaviour
                 room.SetMapManager(MapType.Shop);
             }
         }
+    }
 
-
+    public Transform GetBossRoomPos()
+    {
+        for( int i = 1 ; i< rooms.Count ; i++)
+        {
+            Room room = rooms[i].GetComponent<Room>();
+            if(room.roomType == RoomType.OneWay)
+            {
+                return room.gameObject.transform;
+            }
+        }
+        return null;
     }
 
 

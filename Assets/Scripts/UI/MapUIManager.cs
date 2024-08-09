@@ -55,7 +55,7 @@ public class MapUIManager : MonoBehaviour
 
 
 
-    private bool sidePanelVisible = false;
+    //private bool sidePanelVisible = false;
     //private bool EquipmentPanelVisible = false;
     UserData userData;
 

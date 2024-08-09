@@ -208,11 +208,11 @@ public class BlackDog : EnemyBasic
     }
     */
 
-    public override void Cancle()
+    public override void InitStatus()
     {
         blackDogStatus.isDodge = false;
         blackDogStatus.isDetectAttack = false;
-        base.Cancle();
+        base.InitStatus();
     }
 
 

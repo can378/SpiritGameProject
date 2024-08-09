@@ -172,10 +172,10 @@ public class SnowBall : EnemyBasic
     }
     */
 
-    public override void Cancle()
+    public override void InitStatus()
     {
         snowBallStatus.isHit = false;
-        base.Cancle();
+        base.InitStatus();
     }
 
 

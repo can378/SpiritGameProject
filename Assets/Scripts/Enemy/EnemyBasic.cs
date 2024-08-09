@@ -34,7 +34,11 @@ public class EnemyBasic : ObjectBasic
     {
         enemyStatus.enemyTarget = FindObj.instance.Player.transform;
         foreach (GameObject hitEffect in hitEffects)
-            hitEffect.GetComponent<HitDetection>().user = this.gameObject;
+        {
+            if(hitEffect.GetComponent<HitDetection>())
+                hitEffect.GetComponent<HitDetection>().user = this.gameObject;
+        }
+            
     }
 
     protected virtual void Update()
@@ -49,7 +53,7 @@ public class EnemyBasic : ObjectBasic
 
     #region  Attack
 
-    protected virtual void Attack()
+    void Attack()
     {
         if (!enemyStatus.enemyTarget)
             return;
@@ -102,7 +106,7 @@ public class EnemyBasic : ObjectBasic
 
     #region Move
 
-    protected virtual void Move()
+    void Move()
     {
         // 경직과 공격 중에는 직접 이동 불가
         if (enemyStatus.isFlinch)
@@ -191,7 +195,7 @@ public class EnemyBasic : ObjectBasic
 
         if (velocity.magnitude == 0)
         {
-            Debug.Log("멈춤");
+            //Debug.Log("멈춤");
             enemyAnim.horizontalMove = 0;
             enemyAnim.verticalMove = 0;
         }
@@ -201,12 +205,12 @@ public class EnemyBasic : ObjectBasic
             {
                 if (velocity.x > 0)
                 {
-                    Debug.Log("오른쪽으로 움직임");
+                    //Debug.Log("오른쪽으로 움직임");
                     enemyAnim.horizontalMove = 1;
                 }
                 else
                 {
-                    Debug.Log("왼쪽으로 움직임");
+                    //Debug.Log("왼쪽으로 움직임");
                     enemyAnim.horizontalMove = -1;
                 }
             }
@@ -214,12 +218,12 @@ public class EnemyBasic : ObjectBasic
             {
                 if (velocity.y > 0)
                 {
-                    Debug.Log("위쪽으로 움직임");
+                    //Debug.Log("위쪽으로 움직임");
                     enemyAnim.verticalMove = 1;
                 }
                 else
                 {
-                    Debug.Log("아래쪽으로 움직임");
+                    //Debug.Log("아래쪽으로 움직임");
                     enemyAnim.verticalMove = -1;
                 }
             }
@@ -272,11 +276,11 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
-    public override void Cancle()
+    public override void InitStatus()
     {
         enemyStatus.isRun = false;
         enemyStatus.isTouchPlayer = false;
-        base.Cancle();
+        base.InitStatus();
         if(enemyStatus.attackCoroutine != null) 
         {
             Debug.Log(name + "코루틴 종료");
@@ -286,7 +290,7 @@ public class EnemyBasic : ObjectBasic
 
     void OnDisable()
     {
-        Cancle();
+        InitStatus();
     }
     /*
     public void Chase()

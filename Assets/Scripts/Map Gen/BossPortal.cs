@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartPortal : Portal
+public class BossPortal : Portal
 {
     RoomManager roomManager;
     
@@ -15,7 +15,7 @@ public class StartPortal : Portal
         if (other.CompareTag("Player") && roomManager.finish==true)
         {
             MapUIManager.instance.UpdateMinimapUI(true);
-            Destination = roomManager.rooms[0].transform;
+            Destination = roomManager.GetBossRoomPos();
             other.transform.position = Destination.position;
             CameraManager.instance.CameraMove(other.gameObject);
             CameraManager.instance.CenterMove(other.gameObject);

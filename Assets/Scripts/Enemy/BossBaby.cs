@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class BossBaby : EnemyBasic
 {
-    
-    public GameObject tear;
-    public GameObject SafeArea;
-    public GameObject DamageArea;
-    public GameObject ScreamArea;
+    /// <summary>
+    /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
+    /// </summary>
+    enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, None };
 
     private GameObject floor;
     private int patternIndex = 0;
@@ -27,28 +26,9 @@ public class BossBaby : EnemyBasic
         bounds = floor.GetComponent<Collider2D>().bounds;
     }
 
-    protected override void Move()
+    protected override void MovePattern()
     {
-        // 경직과 공격 중에는 직접 이동 불가
-        if (enemyStatus.isFlinch)
-        {
-            return;
-        }
-        else if (enemyStatus.isAttack)
-        {
-            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
-            return;
-        }
-        else if (enemyStatus.isRun)
-        {
-            if (enemyStatus.enemyTarget)
-            {
-                rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
-            }
-            return;
-        }
-        rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
-
+        //Chase();
     }
 
     protected override void Update()
@@ -68,11 +48,11 @@ public class BossBaby : EnemyBasic
 
         switch (patternIndex%5)
         { 
-            case 0: yield return StartCoroutine(Rush()); break;
-            case 1: yield return StartCoroutine(Hiding()); break;
-            case 2: yield return StartCoroutine(Screaming()); break;
-            case 3: yield return StartCoroutine(MadRush()); break;
-            case 4: yield return StartCoroutine(Crying());break;
+            case 0: yield return enemyStatus.attackCoroutine = StartCoroutine(Rush()); break;
+            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding()); break;
+            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); break;
+            case 3: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
+            case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Crying());break;
         }
         patternIndex++;
         
@@ -166,12 +146,14 @@ public class BossBaby : EnemyBasic
         randomX = Random.Range(bounds.min.x, bounds.max.x);
         randomY = Random.Range(bounds.min.y, bounds.max.y);
 
-        GameObject thisTear = Instantiate(tear);
+        GameObject thisTear = Instantiate(hitEffects[(int)BossBabyHitEffect.Tear]);
         thisTear.SetActive(true);
         thisTear.transform.position=new Vector2(randomX, randomY);
 
-        thisTear.GetComponent<SpriteRenderer>().color=Color.white;
+        thisTear.GetComponent<SpriteRenderer>().color = Color.white;
         yield return new WaitForSeconds(0.5f);
+        
+        thisTear.GetComponent<HitDetection>().enabled = true;
         thisTear.GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(0.5f);
         Destroy(thisTear);
@@ -234,14 +216,14 @@ public class BossBaby : EnemyBasic
         print("Hiding");
         enemyAnim.changeAnimToBaby();
 
-        SafeArea.SetActive(true);
-        DamageArea.SetActive(true);
+        hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(true);
+        hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(true);
 
         yield return StartCoroutine(DamageAreaIncrease());
         yield return new WaitForSeconds(1f);
 
-        SafeArea.SetActive(false);
-        DamageArea.SetActive(false);
+        hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(false);
+        hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(false);
 
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);
@@ -254,18 +236,18 @@ public class BossBaby : EnemyBasic
         float scaleFactor = 1.1f;
 
         // initiate scale
-        DamageArea.transform.localScale = Vector3.one;
+        hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale = Vector3.one;
 
 
-        Renderer renderer1 = DamageArea.GetComponent<Renderer>();
+        Renderer renderer1 = hitEffects[(int)BossBabyHitEffect.DamageArea].GetComponent<Renderer>();
         Renderer renderer2 = floor.GetComponent<Renderer>();
 
 
         // 완전히 가릴 때까지 스케일 조정
         //while (renderer1.bounds.Intersects(renderer2.bounds))
-        while (DamageArea.transform.localScale.x<100)
+        while (hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale.x<100)
         {
-            DamageArea.transform.localScale *= scaleFactor;
+            hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale *= scaleFactor;
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -280,12 +262,12 @@ public class BossBaby : EnemyBasic
         print("Screaming");
         enemyAnim.changeAnimToBaby();
 
-        ScreamArea.SetActive(true);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
         //this.GetComponent<SpriteRenderer>().color = Color.white;
         //플레이어 느려지게 만든다.
 
         yield return new WaitForSeconds(1f);
-        ScreamArea.SetActive(false);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
 
 
         yield return new WaitForSeconds(3f);
