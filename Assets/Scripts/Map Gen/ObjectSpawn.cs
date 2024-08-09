@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectSpawn : MonoBehaviour
@@ -10,32 +11,60 @@ public class ObjectSpawn : MonoBehaviour
 
     EnemyTemplates enemyTemplates;
     RoomManager roomManager;
+    private UserData userData;
+    private Dictionary<string, GameObject[]> enemyTemplatesDic;
+    private int nowChapter;
+
 
     public void SpawnEnemy(MapType mapType)
     {
+        userData = DataManager.instance.userData;
         roomManager = FindObj.instance.roomManagerScript;
         enemyTemplates = GameManager.instance.enemyTemplates;
-        this.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, roomManager.roomSize);
+
+        // enemyTemplates Dictionary
+        enemyTemplatesDic = new Dictionary<string, GameObject[]>();
+        enemyTemplatesDic.Add("normalEnemyCh1", enemyTemplates.normalEnemyCh1);
+        enemyTemplatesDic.Add("normalEnemyCh2", enemyTemplates.normalEnemyCh2);
+        enemyTemplatesDic.Add("normalEnemyCh3", enemyTemplates.normalEnemyCh3);
+
+
+        nowChapter = userData.nowChapter;
+
+
+        transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, roomManager.roomSize);
 
         foreach (Transform enemyTransform in enemySpawnPoint)
         {
             int ran;
             GameObject instEnemy = null;
-            if (mapType == MapType.Default)
+            if (mapType == MapType.Default|| mapType==MapType.Mission)
             {
-                ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
-                instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+                if (Random.Range(0, 2) ==0) 
+                {
+                    ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
+                    instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+                }
+                else 
+                {
+                    string key = "normalEnemyCh" + nowChapter.ToString();
+
+                    if (enemyTemplatesDic.ContainsKey(key))
+                    {
+                        ran = Random.Range(0, enemyTemplatesDic[key].Length);
+                        instEnemy = Instantiate(enemyTemplatesDic[key][ran], enemyTransform.position, enemyTransform.rotation);
+                    }
+                    else { print("there is no key here"); }
+                }
+                
             }
             else if (mapType == MapType.Boss)
             {
-                ran = Random.Range(0, enemyTemplates.bossEnemy.Length);
+                ran = nowChapter - 1;
+                //ran = Random.Range(0, enemyTemplates.bossEnemy.Length);
                 instEnemy = Instantiate(enemyTemplates.bossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
             }
-            else if (mapType == MapType.Mission)
-            {
-                ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
-                instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
-            }
+            
             // 위치 삭제
             Destroy(enemyTransform.gameObject);
             // 부모 설정

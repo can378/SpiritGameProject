@@ -941,21 +941,21 @@ public class Player : ObjectBasic
         }
         else if (other.tag == "EnterDungeon")
         {
-            if (userData.nowChapter < 4)
+            if (userData.nowChapter < 3)
             {
                 
                 userData.nowChapter++;
                 DataManager.instance.SaveUserData();
                 SceneManager.LoadScene("Map");
             }
-            else if (userData.nowChapter == 4)
+            else if (userData.nowChapter == 3)
             {
                 
                 userData.nowChapter++;
                 DataManager.instance.SaveUserData();
                 SceneManager.LoadScene("FinalMap"); 
             }
-            else if(userData.nowChapter==5) 
+            else if(userData.nowChapter==4) 
             {
                 DataManager.instance.InitData();
                 DataManager.instance.SaveUserData();

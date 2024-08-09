@@ -326,7 +326,7 @@ public class MapUIManager : MonoBehaviour
     public void RestartBtn() //now chapter restart
     {
         DataManager.instance.LoadData();
-        if (userData.nowChapter == 5) { SceneManager.LoadScene("FinalMap"); }
+        if (userData.nowChapter == 4) { SceneManager.LoadScene("FinalMap"); }
         else { SceneManager.LoadScene("Map"); }
     }
 

@@ -11,6 +11,10 @@ public class EnemyTemplates : MonoBehaviour
     public GameObject[] miniBossEnemy;
     public GameObject[] bossEnemy;
 
+    public GameObject[] normalEnemyCh1;
+    public GameObject[] normalEnemyCh2;
+    public GameObject[] normalEnemyCh3;
+
 
     void Awake()
     {

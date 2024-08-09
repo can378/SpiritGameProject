@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         if (userData.nowChapter == 0)
         { SceneManager.LoadScene("Main"); }
-        else if (userData.nowChapter == 5)
+        else if (userData.nowChapter == 4)
         { SceneManager.LoadScene("FinalMap"); }
         else
         { SceneManager.LoadScene("Map"); }

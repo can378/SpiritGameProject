@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2915206205528068176}
-  - component: {fileID: -4255916062640346695}
   m_Layer: 0
   m_Name: BossTiger
   m_TagString: Untagged
@@ -26,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 197850784266170097}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.304842, y: -90.65334, z: -0.6006319}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34,31 +33,6 @@ Transform:
   - {fileID: 3026903673131294440}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4255916062640346695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197850784266170097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveVec: {x: 0, y: 0}
-  hitTarget: {fileID: 0}
-  hitEffects: []
-  isFlinch: 0
-  isInvincible: 0
-  isAttack: 0
-  isAttackReady: 1
-  isTouchPlayer: 0
-  isRun: 0
-  randomMove: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
 --- !u!1 &3758901386692022848
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,6 +160,7 @@ GameObject:
   - component: {fileID: 465988126225767545}
   - component: {fileID: 2778493267553781492}
   - component: {fileID: 3484825194484156806}
+  - component: {fileID: 4738652994451722154}
   m_Layer: 8
   m_Name: jangSanBum
   m_TagString: Enemy
@@ -276,12 +251,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
   buffTF: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
   enemyStats: {fileID: 0}
   enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
   spawnCandidate:
   - {fileID: 7204850298384088174}
   - {fileID: 1159921509662655472}
@@ -398,6 +378,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.92, y: 4.28}
   m_EdgeRadius: 0
+--- !u!114 &4738652994451722154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4923097757205680534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1 &5987174625535437208
 GameObject:
   m_ObjectHideFlags: 0
