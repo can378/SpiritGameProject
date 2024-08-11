@@ -25,7 +25,11 @@ public class EnemyBasic : ObjectBasic
         base.Awake();       
         stats = enemyStats = GetComponent<EnemyStats>();
         status = enemyStatus = GetComponent<EnemyStatus>();
-
+        foreach (GameObject hitEffect in hitEffects)
+        {
+            if (hitEffect.GetComponent<HitDetection>())
+                hitEffect.GetComponent<HitDetection>().user = this.gameObject;
+        }
 
         defaultLayer = this.gameObject.layer;
     }
@@ -33,11 +37,6 @@ public class EnemyBasic : ObjectBasic
     protected virtual void Start()
     {
         enemyStatus.enemyTarget = FindObj.instance.Player.transform;
-        foreach (GameObject hitEffect in hitEffects)
-        {
-            if(hitEffect.GetComponent<HitDetection>())
-                hitEffect.GetComponent<HitDetection>().user = this.gameObject;
-        }
             
     }
 
@@ -168,7 +167,7 @@ public class EnemyBasic : ObjectBasic
             return;
         }
 
-       enemyStatus. moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+       enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
     }
 
     

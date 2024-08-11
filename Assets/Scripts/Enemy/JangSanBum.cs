@@ -8,19 +8,27 @@ using UnityEngine;
 
 public class JangSanBum : EnemyBasic
 {
-    HitDetection biteHD;
+    enum JangSanBumHitEffect { Scratch, Bite, Snow, Crack, None };
+
     [SerializeField] GameObject[] spawnCandidate;
     public GameObject spawnCandidateParent;
 
+    
     private int patternNum;
     private int biteTime = 1;
     private int blindTime = 5;
 
+    int randomNum;
+
     private List<GameObject> spawnEnemy;
     private GameObject floor;
-    int randomNum;
     float randomX, randomY;
     Bounds bounds;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void Start()
     {
@@ -28,39 +36,29 @@ public class JangSanBum : EnemyBasic
         floor = GameManager.instance.nowRoom;
         bounds = floor.GetComponent<Collider2D>().bounds;
 
-        
-        
-        biteHD = hitEffects[0].GetComponent<HitDetection>();
         patternNum = 0;
+
     }
 
     protected override void Update()
     {
         base.Update();
-        checkHit();
+        checkBite();
     }
 
     protected override void AttackPattern()
     {
-        StartCoroutine(tiger());
-    }
-    IEnumerator tiger()
-    {
-
         patternNum++;
-
         switch (patternNum)
         {
             case 1:
-                StartCoroutine(fastAttack());
-                //StartCoroutine(test());
-                //StartCoroutine(RandomSpawn());
+                enemyStatus.attackCoroutine = StartCoroutine(FastAttack());
                 break;
             case 2:
-                StartCoroutine(Eating());
+                enemyStatus.attackCoroutine = StartCoroutine(Eating());
                 break;
             case 3:
-                StartCoroutine(SnowSplash());
+                enemyStatus.attackCoroutine = StartCoroutine(SnowSplash());
                 break;
             case 4:
                 StartCoroutine(RandomSpawn());
@@ -68,52 +66,61 @@ public class JangSanBum : EnemyBasic
             default:
                 patternNum = 0;
                 break;
-
         }
-        yield return null;
-
     }
 
-    IEnumerator fastAttack()
+    IEnumerator FastAttack()
     {
-        enemyStatus.isAttack = true;
+        //enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
         print("faset attack");
-        int time1 = 10;
-        while(time1>0)
+        int time = UnityEngine.Random.Range(3,5);
+        while(time > 0)
         {
-            if (enemyStatus.targetDis > 1f)
-            {
-                //멀리 있다면 연속으로 3회 할퀴며 다가간다
-                enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
-                //move to player
-                for (int j = 0; j < 5; j++)
-                {
-                    rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 500);
-                    yield return new WaitForSeconds(0.01f);
-                }
-                //attack
-                bite();
-                yield return new WaitForSeconds(biteTime * 0.6f);
-                hitEffects[0].SetActive(false);
-
-            }
-            //근처에 있으면 내리친다
-            else
-            {
-                //attack
-                bite();
-                hitEffects[0].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-                yield return new WaitForSeconds(3f);
-                hitEffects[0].transform.localScale = new Vector3(1, 1, 1);
-                hitEffects[0].SetActive(false);
-            }
-            time1--;
-        }
+            //멀리 있다면 연속으로 할퀴며 다가간다
         
+            //move to player
+            for (int j = 0; j < 5; j++)
+            {
+                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 500);
+                yield return new WaitForSeconds(0.01f);
+            }
 
-        enemyStatus.isAttack = false;
+            //attack
+            hitEffects[(int)JangSanBumHitEffect.Scratch].transform.rotation = enemyStatus.targetQuaternion;
+            hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(true);
+            yield return new WaitForSeconds(biteTime * 0.6f);
+            hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(false);
+            yield return new WaitForSeconds(biteTime * 0.4f);
+
+            time--;
+        }
+
+        //근처에 있으면 내리친다
+        if (enemyStatus.targetDis < 4f)
+        {
+            //attack
+            hitEffects[(int)JangSanBumHitEffect.Crack].transform.rotation = enemyStatus.targetQuaternion;
+            hitEffects[(int)JangSanBumHitEffect.Crack].SetActive(true);
+            yield return new WaitForSeconds(3f);
+            hitEffects[(int)JangSanBumHitEffect.Crack].SetActive(false);
+        }
+        else
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 500);
+                yield return new WaitForSeconds(0.01f);
+            }
+            hitEffects[(int)JangSanBumHitEffect.Scratch].transform.rotation = enemyStatus.targetQuaternion;
+            hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(true);
+            yield return new WaitForSeconds(biteTime * 0.6f);
+            hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(false);
+            yield return new WaitForSeconds(biteTime * 0.4f);
+        }
+
+        //enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
     }
 
@@ -127,7 +134,7 @@ public class JangSanBum : EnemyBasic
 
 
         int time2 = 100;
-        while (time2 > 0) 
+        while (time2 > 0)
         {
             if (enemyStatus.targetDis > 3f)
             {
@@ -137,10 +144,12 @@ public class JangSanBum : EnemyBasic
             else
             {
                 //입을 크게 벌리는 모션
-                bite();
+                hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
+                hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(true);
                 yield return new WaitForSeconds(biteTime * 0.6f);
-                hitEffects[0].SetActive(false);
-
+                hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(false);
+                yield return new WaitForSeconds(biteTime * 5f);
+                break;
             }
             time2--;
         }
@@ -160,11 +169,10 @@ public class JangSanBum : EnemyBasic
 
 
         //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
-        bite();
-        hitEffects[0].transform.localScale = new Vector3(2, 2, 2);
-        yield return new WaitForSeconds(4f);
-        hitEffects[0].transform.localScale = new Vector3(1,1, 1);
-        hitEffects[0].SetActive(false);
+        hitEffects[(int)JangSanBumHitEffect.Snow].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[(int)JangSanBumHitEffect.Snow].SetActive(true);
+        yield return new WaitForSeconds(2f);
+        hitEffects[(int)JangSanBumHitEffect.Snow].SetActive(false);
 
 
         enemyStatus.isAttack = false;
@@ -230,21 +238,26 @@ public class JangSanBum : EnemyBasic
         
     }
 
-
-    private void bite() 
+    private void BiteAttack()
     {
         //attack
-        biteHD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
-        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
-        hitEffects[0].SetActive(true);
+        hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(true);
     }
-    private void checkHit()
+
+    private void checkBite()
     {
+        if(enemyStatus.hitTarget == null)
+            return;
+
         //플레이어가 hit detection에 걸렸을 때 추가 효과
-        if (biteHD.isHit)
+        if (patternNum == 2 && enemyStatus.hitTarget.CompareTag("Player"))
         {
-            if (patternNum == 2) { enemyStats.HP += 10; }
-            else if (patternNum == 3) { enemyStatus.enemyTarget.GetComponent<PlayerStats>().blind = blindTime; }
+            enemyStats.HP += 10;
+        }
+        else if(patternNum == 3 && enemyStatus.hitTarget.CompareTag("Player"))
+        {
+            enemyStatus.enemyTarget.GetComponent<PlayerStats>().blind = blindTime;
         }
     }
 }

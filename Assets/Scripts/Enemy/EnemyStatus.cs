@@ -10,6 +10,11 @@ public class EnemyStatus : Status
     public float randomMove = 0;
     public Transform enemyTarget;       // 현재 타겟
     public Vector2 targetDirVec;        // 공격 방향
+
+    public Quaternion targetQuaternion 
+    { 
+        get {return Quaternion.Euler(0, 0, Mathf.Atan2(targetDirVec.y, targetDirVec.x)* Mathf.Rad2Deg - 90);}
+    }
     public float targetDis;             // 적과의 거리
     public Coroutine attackCoroutine;
 }

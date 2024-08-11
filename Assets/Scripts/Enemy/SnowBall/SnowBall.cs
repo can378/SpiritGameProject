@@ -5,12 +5,10 @@ using UnityEngine;
 public class SnowBall : EnemyBasic
 {
     SnowBallStatus snowBallStatus;
-    HitDetection snowBallHitD;
 
     protected override void Awake()
     {
         base.Awake();
-        snowBallHitD = hitEffects[0].GetComponent<HitDetection>();
         status = snowBallStatus = snowBallStatus = GetComponent<SnowBallStatus>();
     }
 
@@ -43,8 +41,6 @@ public class SnowBall : EnemyBasic
 
         transform.localScale = new Vector3(snowBallStatus.size, snowBallStatus.size, 1f);
         enemyStats.increasedAttackPower = snowBallStatus.size - 1f;
-        snowBallHitD.SetHitDetection(false, -1, false, -1, enemyStats.attackPower * snowBallStatus.size, 10, 0, 0, null);
-
     }
 
     protected override void AttackPattern()

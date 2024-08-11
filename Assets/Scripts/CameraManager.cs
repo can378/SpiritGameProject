@@ -53,7 +53,7 @@ public class CameraManager : MonoBehaviour
         if (Player.GetComponent<PlayerStats>().blind > 0)
         {
             blindSprite.SetActive(true);
-            Player.GetComponent<PlayerStats>().blind--;
+            Player.GetComponent<PlayerStats>().blind -= Time.deltaTime;
         }
         else { blindSprite.SetActive(false); }
     }
