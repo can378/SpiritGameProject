@@ -40,12 +40,7 @@ public class ObjectSpawn : MonoBehaviour
             GameObject instEnemy = null;
             if (mapType == MapType.Default|| mapType==MapType.Mission)
             {
-                if (Random.Range(0, 2) ==0) 
-                {
-                    ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
-                    instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
-                }
-                else 
+                if (Random.Range(0, 6) ==0) 
                 {
                     string key = "normalEnemyCh" + nowChapter.ToString();
 
@@ -55,6 +50,12 @@ public class ObjectSpawn : MonoBehaviour
                         instEnemy = Instantiate(enemyTemplatesDic[key][ran], enemyTransform.position, enemyTransform.rotation);
                     }
                     else { print("there is no key here"); }
+                    
+                }
+                else 
+                {
+                    ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
+                    instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
                 }
                 
             }
