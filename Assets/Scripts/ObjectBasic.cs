@@ -26,15 +26,17 @@ public class ObjectBasic : MonoBehaviour
     protected virtual void LateUpdate()
     {
         status.hitTarget = null;
-
+        status.isBeAttaked = false;
     }
 
     #region Effect
 
-    public virtual void BeAttacked(HitDetection hitDetection)
+    public void BeAttacked(HitDetection hitDetection)
     {
         if (status.isInvincible)
             return;
+
+        status.isBeAttaked = true;
 
         AudioManager.instance.SFXPlay("Hit_SFX");
 
@@ -45,7 +47,7 @@ public class ObjectBasic : MonoBehaviour
         {
             Debug.Log(gameObject.name + ":Flinch");
             if (status.flinchCoroutine != null) StopCoroutine(status.flinchCoroutine);
-            status.flinchCoroutine = StartCoroutine(Flinch(0.5f));
+            SetFlinch(0.5f);
 
             KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
@@ -74,15 +76,6 @@ public class ObjectBasic : MonoBehaviour
 
         if(stats.HP <= 0)
             Dead();
-
-        sprite.color = 0 < (1 - stats.defensivePower) * damage ? Color.red : Color.green;
-
-        Invoke("DamagedOut", 0.05f);
-    }
-
-    protected virtual void DamagedOut()
-    {
-        sprite.color = Color.white;
     }
 
     /// <summary>
@@ -91,7 +84,7 @@ public class ObjectBasic : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
-    public bool DamagedPoise(float damage)
+    bool DamagedPoise(float damage)
     {
         if(status.isInvincible)
             return false;
@@ -111,7 +104,7 @@ public class ObjectBasic : MonoBehaviour
     /// 경직 회복
     /// 초당 2로 경직 피해를 회복 된다.
     /// </summary>
-    public void HealPoise()
+    protected void HealPoise()
     {
         stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 1f, stats.poiseMax);
     }
@@ -122,7 +115,12 @@ public class ObjectBasic : MonoBehaviour
         rigid.AddForce(dir * (knockBack * (1 - stats.defensivePower)), ForceMode2D.Impulse);
     }
 
-    public IEnumerator Flinch(float time = 0)
+    public void SetFlinch(float time = 0)
+    {
+        status.flinchCoroutine =  StartCoroutine(Flinch(time));
+    }
+
+    protected IEnumerator Flinch(float time = 0)
     {
         status.isFlinch = true;
         AttackCancle();
@@ -143,7 +141,9 @@ public class ObjectBasic : MonoBehaviour
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
 
-        foreach(GameObject hitEffect in hitEffects)
+        sprite.color = new Color(1f, 1f, 1f, 1f);
+
+        foreach (GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
     }
 
@@ -159,6 +159,8 @@ public class ObjectBasic : MonoBehaviour
         status.isFlinch = false;
         status.isInvincible = false;
         status.moveVec = Vector2.zero;
+
+        sprite.color = new Color(1f,1f,1f,1f);
 
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);

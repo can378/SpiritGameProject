@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class BossShadow : EnemyBasic
 {
-    public GameObject sightBlock;
+    enum ShadowHitEffect { SightBlock, Dummy, Circle, None };
+
     public List<GameObject> dummies = new List<GameObject>();
     public List<GameObject> circles = new List<GameObject>();
-    
 
+    [SerializeField]
     private int patternNum=0;
-    int time = 0;
+    float time = 0;
     bool isDummiesAllDie;
     Renderer floorRenderer;
 
@@ -24,15 +25,33 @@ public class BossShadow : EnemyBasic
 
     protected override void Update()
     {
-        if (patternNum == 3 && dummies[0].activeSelf==true) 
+        if (patternNum == 3 && !isDummiesAllDie)
         {  checkDummy(); }
         base.Update();
     }
 
     protected override void AttackPattern()
     {
-        StartCoroutine(bossShadow());
-        //StartCoroutine(hpRecovery_());
+        patternNum++;
+        switch (patternNum)
+        {
+            case 1:
+                enemyStatus.attackCoroutine = StartCoroutine(sightBlock_());
+                break;
+            case 2:
+                enemyStatus.attackCoroutine = StartCoroutine(illusion_());
+                break;
+            case 3:
+                enemyStatus.attackCoroutine = StartCoroutine(spawnDummy_());
+                break;
+            case 4:
+                enemyStatus.attackCoroutine = StartCoroutine(darkSpawn_());
+                break;
+            default:
+                patternNum = 0;
+                break;
+
+        }
     }
 
 
@@ -50,36 +69,6 @@ public class BossShadow : EnemyBasic
         yield return new WaitForSeconds(0.01f);
     }
 
-
-    IEnumerator bossShadow() 
-    {
-
-        
-        patternNum++;
-        
-        switch (patternNum)
-        {
-            case 1:
-                StartCoroutine(sightBlock_());
-                break;
-            case 2:
-                StartCoroutine(illusion_());
-                break;
-            case 3:
-                StartCoroutine(spawnDummy_());
-                break;
-            case 4:
-                StartCoroutine(darkSpawn_());
-                break;
-            default:
-                patternNum = 0;
-                break;
-        
-        }
-        yield return null;
-    
-    }
-
     
 
     IEnumerator sightBlock_() 
@@ -89,16 +78,21 @@ public class BossShadow : EnemyBasic
 
         print("sight block_shadow");
 
-        sightBlock.SetActive(true);
-        while (time < 200)
+        hitEffects[(int)ShadowHitEffect.SightBlock].SetActive(true);
+
+        float shotTime = 0;
+
+        // 시야 차단이 좀 더 부드럽게 움직이도록 조정
+        while (time < 10f)
         {
-            if(time%10==0) { shot(); }
-            sightBlock.transform.position=enemyStatus.enemyTarget.transform.position;
-            yield return new WaitForSeconds(0.05f);
-            time++;
+            if(shotTime > 0.5f) { shot(); shotTime = 0f; }
+            hitEffects[(int)ShadowHitEffect.SightBlock].transform.position=enemyStatus.enemyTarget.transform.position;
+            yield return null;
+            time += Time.deltaTime;
+            shotTime += Time.deltaTime;
         }
         time = 0;
-        sightBlock.SetActive(false);
+        hitEffects[(int)ShadowHitEffect.SightBlock].SetActive(false);
 
 
         enemyStatus.isAttack = false;
@@ -106,39 +100,30 @@ public class BossShadow : EnemyBasic
         enemyStatus.isAttackReady = true;
     }
 
-    IEnumerator shot_() 
-    {
-        shot();
-        yield return new WaitForSeconds(1f);
-
-    }
-
     IEnumerator illusion_() 
     {
-        enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        
+
+        print("illusion");
+
         //player cant move
-        enemyStatus.enemyTarget.GetComponent<Player>().playerStatus.isFlinch = true;
-        //enemyTarget.GetComponent<Player>().moveVec = Vector3.zero;
+        enemyStatus.enemyTarget.GetComponent<Player>().SetFlinch(3f);
 
         //fade out
-        float alpha = 255f;
-        while (alpha > 0)
+        time = 0f;
+        while (time < 1.5f)
         {
-            GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, alpha);
-            alpha--;
+            sprite.color = new Color(1f, 1f, 1f, 1f - (time / 1.5f));
+            yield return null;
+            time += Time.deltaTime;
         }
 
-        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 
 
         transform.position = getRandomPos();
-        GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, 255f);
-        enemyStatus.enemyTarget.GetComponent<Player>().playerStatus.isFlinch = false;
-
+        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
     }
 
     IEnumerator spawnDummy_() 
@@ -150,7 +135,7 @@ public class BossShadow : EnemyBasic
         //Boss shadow invincible
         enemyStatus.isInvincible = true;
 
-
+        hitEffects[(int)ShadowHitEffect.Dummy].SetActive(true);
 
         //spawn dummy
         for (int i = 0; i < dummies.Count; i++)
@@ -170,7 +155,7 @@ public class BossShadow : EnemyBasic
         }
 
         isDummiesAllDie = false;
-        while(isDummiesAllDie==false)
+        while(isDummiesAllDie == false)
         {
             //attack
             Chase();
@@ -178,6 +163,7 @@ public class BossShadow : EnemyBasic
             yield return new WaitForSeconds(3f);
         }
 
+        hitEffects[(int)ShadowHitEffect.Dummy].SetActive(true);
 
         //Boss shadow vincible
         enemyStatus.isInvincible = false;
@@ -194,6 +180,8 @@ public class BossShadow : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
+        hitEffects[(int)ShadowHitEffect.Circle].SetActive(true);
+
         print("dark spawn");
         for (int i = 0; i < circles.Count; i++)
         {
@@ -206,6 +194,7 @@ public class BossShadow : EnemyBasic
             circles[i].SetActive(false);
         }
 
+        hitEffects[(int)ShadowHitEffect.Circle].SetActive(false);
 
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);

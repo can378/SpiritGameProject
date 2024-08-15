@@ -15,12 +15,10 @@ public class JangSanBum : EnemyBasic
 
     
     private int patternNum;
-    private int biteTime = 1;
     private int blindTime = 5;
 
     int randomNum;
 
-    private List<GameObject> spawnEnemy;
     private GameObject floor;
     float randomX, randomY;
     Bounds bounds;
@@ -90,9 +88,9 @@ public class JangSanBum : EnemyBasic
             //attack
             hitEffects[(int)JangSanBumHitEffect.Scratch].transform.rotation = enemyStatus.targetQuaternion;
             hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(true);
-            yield return new WaitForSeconds(biteTime * 0.6f);
+            yield return new WaitForSeconds(0.6f);
             hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(false);
-            yield return new WaitForSeconds(biteTime * 0.4f);
+            yield return new WaitForSeconds(0.4f);
 
             time--;
         }
@@ -115,9 +113,9 @@ public class JangSanBum : EnemyBasic
             }
             hitEffects[(int)JangSanBumHitEffect.Scratch].transform.rotation = enemyStatus.targetQuaternion;
             hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(true);
-            yield return new WaitForSeconds(biteTime * 0.6f);
+            yield return new WaitForSeconds(0.6f);
             hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(false);
-            yield return new WaitForSeconds(biteTime * 0.4f);
+            yield return new WaitForSeconds(0.4f);
         }
 
         //enemyStatus.isAttack = false;
@@ -129,34 +127,21 @@ public class JangSanBum : EnemyBasic
         print("eating");
         //쫓아간다. 잡아먹으려한다.
         //잡아먹으면 플레이어 큰 피해입고 장산범은 일부 체력회복
-        enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
+        enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized * 3f;
 
-        int time2 = 100;
-        while (time2 > 0)
-        {
-            if (enemyStatus.targetDis > 3f)
-            {
-                Chase();
-                yield return new WaitForSeconds(0.1f);
-            }
-            else
-            {
-                //입을 크게 벌리는 모션
-                hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
-                hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(true);
-                yield return new WaitForSeconds(biteTime * 0.6f);
-                hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(false);
-                yield return new WaitForSeconds(biteTime * 5f);
-                break;
-            }
-            time2--;
-        }
-        
+        //입을 크게 벌리는 모션
+        yield return new WaitForSeconds(1f);
+        hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
+        hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(true);
 
+        yield return new WaitForSeconds(1f);
+        hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(false);
+        enemyStatus.moveVec = Vector2.zero;
 
-        enemyStatus.isAttack = false;
+        yield return new WaitForSeconds(1f);
+
         enemyStatus.isAttackReady = true;
     }
 
@@ -169,8 +154,10 @@ public class JangSanBum : EnemyBasic
 
 
         //플레이어 방향으로 넓은 범위에 눈 뿌린다. 눈에 맞으면 잠시 실명
+        yield return new WaitForSeconds(0.4f);
         hitEffects[(int)JangSanBumHitEffect.Snow].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[(int)JangSanBumHitEffect.Snow].SetActive(true);
+
         yield return new WaitForSeconds(2f);
         hitEffects[(int)JangSanBumHitEffect.Snow].SetActive(false);
 
@@ -236,13 +223,6 @@ public class JangSanBum : EnemyBasic
         enemyStatus.isAttackReady = true;
         yield return null;
         
-    }
-
-    private void BiteAttack()
-    {
-        //attack
-        hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
-        hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(true);
     }
 
     private void checkBite()

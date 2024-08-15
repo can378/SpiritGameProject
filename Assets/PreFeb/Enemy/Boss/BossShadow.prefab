@@ -110,7 +110,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!50 &4142592192703271646
 Rigidbody2D:
   serializedVersion: 4
@@ -188,7 +187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6377837638707124476
 Transform:
   m_ObjectHideFlags: 0
@@ -479,7 +478,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!50 &3765213270148975882
 Rigidbody2D:
   serializedVersion: 4
@@ -652,7 +650,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!50 &3275389665493937578
 Rigidbody2D:
   serializedVersion: 4
@@ -825,7 +822,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!50 &1635717451693272602
 Rigidbody2D:
   serializedVersion: 4
@@ -903,7 +899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1780638398505917347
 Transform:
   m_ObjectHideFlags: 0
@@ -968,12 +964,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4137672631232053611}
   - component: {fileID: 1910484775304120853}
+  - component: {fileID: 3028669445623300217}
+  - component: {fileID: 7613802533114784060}
   - component: {fileID: 755718011158637499}
-  - component: {fileID: 8378198943861317875}
   - component: {fileID: 5192649963609469419}
   - component: {fileID: 5067793882498305777}
-  - component: {fileID: 7613802533114784060}
-  - component: {fileID: 3028669445623300217}
   m_Layer: 8
   m_Name: BossShadow
   m_TagString: Enemy
@@ -1049,6 +1044,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3028669445623300217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741861102832193666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <HPMax>k__BackingField: 1000
+  <HP>k__BackingField: 1000
+  <tempHP>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
+  <defaultDefensivePower>k__BackingField: 0.5
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  <defaultAttackPower>k__BackingField: 5
+  <defaultMoveSpeed>k__BackingField: 2
+  activeEffects: []
+  enemyName: 
+  detectionDis: 100
+  detectionKeepDis: 100
+  maxAttackRange: 100
+--- !u!114 &7613802533114784060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741861102832193666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!114 &755718011158637499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1063,7 +1120,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
-  hitEffects: []
+  hitEffects:
+  - {fileID: 1707718157729224152}
+  - {fileID: 795750825057389680}
+  - {fileID: 6941248615025346427}
   defaultLayer: 0
   buffTF: {fileID: 0}
   sprite: {fileID: 0}
@@ -1074,7 +1134,6 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  sightBlock: {fileID: 1707718157729224152}
   dummies:
   - {fileID: 9054062907636419184}
   - {fileID: 5712537652599436499}
@@ -1085,30 +1144,7 @@ MonoBehaviour:
   - {fileID: 3901576333142559362}
   - {fileID: 660020428940091934}
   - {fileID: 6140028167270052062}
---- !u!114 &8378198943861317875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7741861102832193666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
-  isHit: 0
+  patternNum: 0
 --- !u!50 &5192649963609469419
 Rigidbody2D:
   serializedVersion: 4
@@ -1181,67 +1217,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.57, y: 1.51}
   m_EdgeRadius: 0
---- !u!114 &7613802533114784060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7741861102832193666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveVec: {x: 0, y: 0}
-  hitTarget: {fileID: 0}
-  isFlinch: 0
-  isInvincible: 0
-  isAttack: 0
-  isAttackReady: 1
-  isTouchPlayer: 0
-  isRun: 0
-  randomMove: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
---- !u!114 &3028669445623300217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7741861102832193666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
-  <HP>k__BackingField: 100
-  <tempHP>k__BackingField: 0
-  <poiseMax>k__BackingField: 20
-  <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  <defaultAttackPower>k__BackingField: 5
-  <defaultMoveSpeed>k__BackingField: 2
-  activeEffects: []
-  enemyName: 
-  detectionDis: 100
-  detectionKeepDis: 100
-  maxAttackRange: 100
 --- !u!1001 &504628094816845194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1289,6 +1264,14 @@ PrefabInstance:
     - target: {fileID: 2194577495062764656, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HP>k__BackingField
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HPMax>k__BackingField
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
@@ -1361,6 +1344,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HP>k__BackingField
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HPMax>k__BackingField
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
       value: shadowdummy (2)
@@ -1432,6 +1423,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HP>k__BackingField
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HPMax>k__BackingField
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name
       value: shadowdummy
@@ -1502,6 +1501,14 @@ PrefabInstance:
     - target: {fileID: 2194577495062764656, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HP>k__BackingField
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937590248725359311, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
+      propertyPath: <HPMax>k__BackingField
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5208358193491003737, guid: ecf892ce0f8c82043a7ffda830b9ad95, type: 3}
       propertyPath: m_Name

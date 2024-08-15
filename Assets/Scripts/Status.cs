@@ -8,6 +8,7 @@ public class Status : MonoBehaviour
     public Coroutine flinchCoroutine;       // 피격 코루틴
     public GameObject hitTarget;            // 공격 성공
 
+    public bool isBeAttaked;                  // 피격 : 피격됨
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가

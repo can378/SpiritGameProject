@@ -30,7 +30,7 @@ public class StunDeBuff : StatusEffect
             duration = (1 - objectBasic.stats.SEResist(buffId)) * defaultDuration;
 
             if (objectBasic.status.flinchCoroutine != null) objectBasic.StopCoroutine(objectBasic.status.flinchCoroutine);
-            objectBasic.status.flinchCoroutine = StartCoroutine(objectBasic.Flinch(duration));
+            objectBasic.SetFlinch(duration);
 
             StartCoroutine(Stun());
         }
