@@ -179,23 +179,24 @@ public class BossShadow : EnemyBasic
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-
         hitEffects[(int)ShadowHitEffect.Circle].SetActive(true);
 
-        print("dark spawn");
+        //start
         for (int i = 0; i < circles.Count; i++)
         {
+            
+            circles[i].transform.position = enemyStatus.enemyTarget.position;
+            yield return new WaitForSeconds(0.5f);
             circles[i].SetActive(true);
-            circles[i].transform.position = getRandomPos();
+            yield return new WaitForSeconds(1f);
+            //circles[i].transform.position = getRandomPos();
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
+
+        //finish
         for (int i = 0; i < circles.Count; i++)
-        {
-            circles[i].SetActive(false);
-        }
-
+        { circles[i].SetActive(false); }
         hitEffects[(int)ShadowHitEffect.Circle].SetActive(false);
-
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;

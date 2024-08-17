@@ -7,7 +7,7 @@ public class BossBaby : EnemyBasic
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, None };
+    enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, RushHitArea,None };
 
     private GameObject floor;
     private int patternIndex = 0;
@@ -69,31 +69,25 @@ public class BossBaby : EnemyBasic
 
         float time = 0;
 
-        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
 
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
 
-        while(time<0.2f)
+
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+        
+        while (time<3.0f)
         {
-            if (isHitWall == false)
-            {
-                enemyStatus.moveVec=enemyStatus.targetDirVec;
-                yield return new WaitForSeconds(0.1f);
-            }
-            else 
-            {
-                enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
-                enemyStatus.moveVec = enemyStatus.targetDirVec;
-                yield return new WaitForSeconds(0.1f);
-                isHitWall = false;
-            }
+            hitEffects[(int)BossBabyHitEffect.RushHitArea].transform.position = transform.position;
+            enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+            enemyStatus.moveVec = enemyStatus.targetDirVec;
+            yield return new WaitForSeconds(0.01f);
             time += Time.deltaTime;
         }
 
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
         yield return new WaitForSeconds(0.1f);
-
         rigid.velocity = Vector2.zero;
 
         //end
@@ -125,7 +119,7 @@ public class BossBaby : EnemyBasic
 
 
         //start crying
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 20; i++)
         { 
             StartCoroutine(DropTear());
             yield return new WaitForSeconds(0.5f);
@@ -178,7 +172,7 @@ public class BossBaby : EnemyBasic
         yield return new WaitForSeconds(0.1f);
 
 
-        while (time < 0.3f)
+        while (time < 2.0f)
         {
             if(isHitWall==true)
             {
@@ -192,7 +186,7 @@ public class BossBaby : EnemyBasic
                 yield return new WaitForSeconds(0.1f);
             }
 
-            rigid.AddForce(madRushVec * GetComponent<EnemyStats>().defaultMoveSpeed * 400);
+            rigid.AddForce(madRushVec * GetComponent<EnemyStats>().defaultMoveSpeed * 600);
             yield return new WaitForSeconds(0.05f);
             time += Time.deltaTime;
         }
@@ -245,7 +239,7 @@ public class BossBaby : EnemyBasic
 
         // 완전히 가릴 때까지 스케일 조정
         //while (renderer1.bounds.Intersects(renderer2.bounds))
-        while (hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale.x<100)
+        while (hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale.x<500)
         {
             hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale *= scaleFactor;
             yield return new WaitForSeconds(0.1f);
@@ -263,7 +257,7 @@ public class BossBaby : EnemyBasic
         enemyAnim.changeAnimToBaby();
 
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
-        //this.GetComponent<SpriteRenderer>().color = Color.white;
+
         //플레이어 느려지게 만든다.
 
         yield return new WaitForSeconds(1f);

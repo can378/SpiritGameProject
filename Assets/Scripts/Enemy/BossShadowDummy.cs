@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossShadowDummy : EnemyBasic
@@ -13,6 +14,7 @@ public class BossShadowDummy : EnemyBasic
         enemyStatus.attackCoroutine = StartCoroutine(shadowShot());
     }
 
+    private void OnDisable() { StopAllCoroutines(); }
     IEnumerator shadowShot() 
     {
         enemyStatus.isAttack = true;

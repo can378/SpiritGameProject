@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum finalBossPhase { phase1, phase2};
 public class FinalBoss : EnemyBasic
 {
-    private int phaseNum = 1;
+
     private int patternNum=1;
     private int time;
 
+    public finalBossPhase phase;
+    public GameObject finalBoss1;
+    public GameObject finalBoss2;
 
-
+    [Header("phase1")]
     public GameObject circularCector;
     public GameObject hitGroundCol;
-    
+
+    [Header("phase2")]
     public GameObject fist;
     public GameObject knife;
     public GameObject thorn;
-
     public GameObject fistWave;
-
     public GameObject allFaces;
+
 
     protected override void AttackPattern()
     {
@@ -27,20 +31,22 @@ public class FinalBoss : EnemyBasic
     }
 
 
-
     public IEnumerator finalBoss() 
     {
+        print("start finall boss pattern");
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
-        if (
-            GetComponent<EnemyStats>().HP <= GetComponent<EnemyStats>().HPMax / 2
-            && phaseNum==1
-            )
-        { phaseNum = 2; patternNum = 1; }
+        if ( GetComponent<EnemyStats>().HP <= GetComponent<EnemyStats>().HPMax / 2
+            && phase==finalBossPhase.phase1 )
+        {
+            finalBoss2.SetActive(true);
+            StopAllCoroutines();
+            finalBoss1.SetActive(false);
+        }
 
 
-        if (phaseNum==1)
+        if (phase==finalBossPhase.phase1)
         {
             switch (patternNum)
             {
@@ -70,21 +76,21 @@ public class FinalBoss : EnemyBasic
             switch (patternNum)
             {
                 case 1:
-                    StartCoroutine(faces()); 
+                    StartCoroutine(wind());
                     break;
                 case 2:
                     StartCoroutine(knifeRun());
                     break;
                 case 3:
-                    StartCoroutine(wind());
+                    StartCoroutine(punchFist());
                     break;
                 case 4:
-                    StartCoroutine(punchFist());
+                    StartCoroutine(faces());
                     break;
                 case 5:
                     enemyStatus.isAttack = false;
                     enemyStatus.isAttackReady = true;
-            break;
+                    break;
                 default:
                     break;
             }
@@ -105,10 +111,10 @@ public class FinalBoss : EnemyBasic
         //isChase = true;
 
         //swing knife(circular cector)
-        time = 1000;
+        time = 2000;
         while (time > 0)
         {
-            if (enemyStatus.targetDis < 5f)
+            if (enemyStatus.targetDis < 10f)
             {
                 //print("swing");
                 circularCector.transform.rotation =
@@ -118,7 +124,7 @@ public class FinalBoss : EnemyBasic
                 yield return new WaitForSeconds(2f);
                 circularCector.SetActive(false);
             }
-            else { rigid.AddForce(enemyStatus.targetDirVec * 20); }
+            else { rigid.AddForce(enemyStatus.targetDirVec * 200); }
 
             yield return new WaitForSeconds(0.01f);
             time--;
@@ -150,10 +156,10 @@ public class FinalBoss : EnemyBasic
     IEnumerator rushThrow() 
     {
         print("3. rush throw");
-        time = 6000;
+        time = 5000;
         while(time>0) 
         {
-            if (enemyStatus.targetDis<5f)
+            if (enemyStatus.targetDis<10f)
             {
                 //grab player and throw away
                 //print("grab and throw away");
@@ -167,7 +173,7 @@ public class FinalBoss : EnemyBasic
                 yield return new WaitForSeconds(3f);
                 break;
             }
-            else { rigid.AddForce(enemyStatus.targetDirVec * 50); }
+            else { rigid.AddForce(enemyStatus.targetDirVec * 500); }
             time--;
 
             yield return new WaitForSeconds(0.01f);
@@ -241,7 +247,7 @@ public class FinalBoss : EnemyBasic
     IEnumerator punchFist() 
     { 
         
-        print("1. punchFist");
+        print("3. punchFist");
 
         fist.SetActive(true);
         yield return new WaitForSeconds(0.5f);
@@ -301,7 +307,7 @@ public class FinalBoss : EnemyBasic
 
     IEnumerator wind() 
     {
-        print("3. wind");
+        print("1. wind");
         thorn.SetActive(true);
         yield return new WaitForSeconds(2f);
 
@@ -309,7 +315,7 @@ public class FinalBoss : EnemyBasic
         while (time > 0)
         {
            enemyStatus.enemyTarget.GetComponent<Rigidbody2D>().
-                AddForce(new Vector3(0, -1, 0) * 200);
+                AddForce(new Vector3(0, -1, 0) * 300);
             time--;
             yield return new WaitForSeconds(0.01f);
         }
@@ -338,7 +344,7 @@ public class FinalBoss : EnemyBasic
 
 
         allFaces.SetActive(true);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         allFaces.SetActive(false);
 
         enemyStatus.isAttack = false;
