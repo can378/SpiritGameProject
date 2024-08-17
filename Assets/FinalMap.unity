@@ -1050,7 +1050,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &241507580
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1506,9 +1505,10 @@ GameObject:
   m_Component:
   - component: {fileID: 374151330}
   - component: {fileID: 374151335}
+  - component: {fileID: 374151333}
+  - component: {fileID: 374151337}
   - component: {fileID: 374151336}
   - component: {fileID: 374151334}
-  - component: {fileID: 374151333}
   - component: {fileID: 374151332}
   - component: {fileID: 374151331}
   m_Layer: 0
@@ -1614,7 +1614,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -1645,7 +1656,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &374151335
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1711,27 +1721,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  enemyStats: {fileID: 0}
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &374151337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374151329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
   isRun: 0
   randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
 --- !u!1 &434266450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2527,7 +2553,7 @@ GameObject:
   - component: {fileID: 587121733}
   - component: {fileID: 587121732}
   - component: {fileID: 587121731}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: finalBoss2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2652,7 +2678,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!114 &587121733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2671,7 +2696,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -2891,9 +2927,10 @@ GameObject:
   m_Component:
   - component: {fileID: 595311233}
   - component: {fileID: 595311238}
+  - component: {fileID: 595311236}
+  - component: {fileID: 595311240}
   - component: {fileID: 595311239}
   - component: {fileID: 595311237}
-  - component: {fileID: 595311236}
   - component: {fileID: 595311235}
   - component: {fileID: 595311234}
   m_Layer: 0
@@ -2999,7 +3036,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -3030,7 +3078,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &595311238
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3096,27 +3143,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  enemyStats: {fileID: 0}
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &595311240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595311232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
   isRun: 0
   randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
 --- !u!4 &601227219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7702378838149605242, guid: 069caac10953bde4b8a399320581c0d7, type: 3}
@@ -4384,11 +4447,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3504708173630329506, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
   m_PrefabInstance: {fileID: 848879989}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &848879991 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8884761542970708304, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
-  m_PrefabInstance: {fileID: 848879989}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &848879992 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2830920931105813052, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
@@ -4564,9 +4622,10 @@ GameObject:
   m_Component:
   - component: {fileID: 936646687}
   - component: {fileID: 936646692}
+  - component: {fileID: 936646690}
+  - component: {fileID: 936646694}
   - component: {fileID: 936646693}
   - component: {fileID: 936646691}
-  - component: {fileID: 936646690}
   - component: {fileID: 936646689}
   - component: {fileID: 936646688}
   m_Layer: 0
@@ -4674,7 +4733,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -4705,7 +4775,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &936646692
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4771,27 +4840,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+    m_Bits: 8
   <skillList>k__BackingField:
   - {fileID: 0}
   - {fileID: 0}
@@ -4807,6 +4867,31 @@ MonoBehaviour:
   - {fileID: 0}
   <skill>k__BackingField: 11
   biteArea: {fileID: 1136158341}
+--- !u!114 &936646694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936646686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1001 &948167585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5763,7 +5848,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!50 &1136158345
 Rigidbody2D:
   serializedVersion: 4
@@ -5877,9 +5961,10 @@ GameObject:
   - component: {fileID: 1257918530}
   - component: {fileID: 1257918535}
   - component: {fileID: 1257918537}
+  - component: {fileID: 1257918533}
+  - component: {fileID: 1257918538}
   - component: {fileID: 1257918536}
   - component: {fileID: 1257918534}
-  - component: {fileID: 1257918533}
   - component: {fileID: 1257918532}
   - component: {fileID: 1257918531}
   m_Layer: 0
@@ -5985,7 +6070,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -6016,7 +6112,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &1257918535
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6082,27 +6177,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+    m_Bits: 8
   lineWidth: 3
 --- !u!120 &1257918537
 LineRenderer:
@@ -6208,6 +6294,31 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1257918538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257918529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1 &1276688482
 GameObject:
   m_ObjectHideFlags: 0
@@ -6218,12 +6329,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1276688488}
   - component: {fileID: 1276688487}
-  - component: {fileID: 1276688489}
   - component: {fileID: 1276688485}
+  - component: {fileID: 1276688490}
+  - component: {fileID: 1276688489}
   - component: {fileID: 1276688484}
   - component: {fileID: 1276688486}
   - component: {fileID: 1276688483}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: finalBoss1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -6280,7 +6392,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!114 &1276688485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6299,7 +6410,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -6426,27 +6548,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  enemyTarget: {fileID: 848879991}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+    m_Bits: 8
   circularCector: {fileID: 241507575}
   hitGroundCol: {fileID: 731389439}
   fist: {fileID: 1417328709}
@@ -6454,6 +6567,31 @@ MonoBehaviour:
   thorn: {fileID: 2002947923}
   fistWave: {fileID: 1654440752}
   allFaces: {fileID: 604999270}
+--- !u!114 &1276688490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276688482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1001 &1290558741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6541,9 +6679,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1315558325}
   - component: {fileID: 1315558330}
+  - component: {fileID: 1315558328}
+  - component: {fileID: 1315558332}
   - component: {fileID: 1315558331}
   - component: {fileID: 1315558329}
-  - component: {fileID: 1315558328}
   - component: {fileID: 1315558327}
   - component: {fileID: 1315558326}
   m_Layer: 0
@@ -6649,7 +6788,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -6680,7 +6830,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &1315558330
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6746,27 +6895,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  enemyStats: {fileID: 0}
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &1315558332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315558324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
   isRun: 0
   randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
 --- !u!1 &1318917265
 GameObject:
   m_ObjectHideFlags: 0
@@ -8461,9 +8626,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1568253417}
   - component: {fileID: 1568253422}
+  - component: {fileID: 1568253420}
+  - component: {fileID: 1568253424}
   - component: {fileID: 1568253423}
   - component: {fileID: 1568253421}
-  - component: {fileID: 1568253420}
   - component: {fileID: 1568253419}
   - component: {fileID: 1568253418}
   m_Layer: 0
@@ -8570,7 +8736,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -8601,7 +8778,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &1568253422
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8667,31 +8843,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
-    m_Bits: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
+    m_Bits: 8
   faces:
   - {fileID: 990657601}
   - {fileID: 860987247}
   - {fileID: 320738333}
+--- !u!114 &1568253424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568253416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!1 &1569536384
 GameObject:
   m_ObjectHideFlags: 0
@@ -8702,9 +8894,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1569536385}
   - component: {fileID: 1569536390}
+  - component: {fileID: 1569536388}
+  - component: {fileID: 1569536392}
   - component: {fileID: 1569536391}
   - component: {fileID: 1569536389}
-  - component: {fileID: 1569536388}
   - component: {fileID: 1569536387}
   - component: {fileID: 1569536386}
   m_Layer: 0
@@ -8810,7 +9003,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -8841,7 +9045,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &1569536390
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8907,27 +9110,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  enemyStats: {fileID: 0}
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &1569536392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569536384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
   isRun: 0
   randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
 --- !u!1 &1647364801
 GameObject:
   m_ObjectHideFlags: 0
@@ -9064,9 +9283,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1676140937}
   - component: {fileID: 1676140942}
+  - component: {fileID: 1676140940}
+  - component: {fileID: 1676140944}
   - component: {fileID: 1676140943}
   - component: {fileID: 1676140941}
-  - component: {fileID: 1676140940}
   - component: {fileID: 1676140939}
   - component: {fileID: 1676140938}
   m_Layer: 0
@@ -9172,7 +9392,18 @@ MonoBehaviour:
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
+  <defaultSEResist>k__BackingField:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
@@ -9203,7 +9434,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!212 &1676140942
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9269,27 +9499,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
+  status: {fileID: 0}
+  hitEffects: []
   defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 1
-  hitTarget: {fileID: 0}
   sprite: {fileID: 0}
   rigid: {fileID: 0}
+  enemyStats: {fileID: 0}
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &1676140944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676140936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
   isRun: 0
   randomMove: 0
-  enemyStats: {fileID: 0}
-  detectEnemy:
-    serializedVersion: 2
-    m_Bits: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
 --- !u!1001 &1703182155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10447,7 +10693,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1522175050513423334, guid: fa1b6330840d87d4d96655521cb6553b, type: 3}
       propertyPath: orthographic size
-      value: 13
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1522175050513423334, guid: fa1b6330840d87d4d96655521cb6553b, type: 3}
       propertyPath: m_CullingMask.m_Bits
