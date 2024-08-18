@@ -10,6 +10,7 @@ public class Status : MonoBehaviour
 
     public bool isBeAttaked;                  // 피격 : 피격됨
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
+    public bool isSuperArmor;               // 강인(슈퍼아머) : 경직 되지 않는다.
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시
     public bool isAttack;                   // 공격 : 스스로 움직일 수 없으며 추가로 공격 불가
     public bool isAttackReady = true;       // 공격 준비 : false일 시 공격은 할 수 없으나 스스로 이동은 가능

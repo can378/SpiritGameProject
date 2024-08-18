@@ -54,7 +54,7 @@ public class Pox : EnemyBasic
         //throwing stone
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
         bullet.transform.position = transform.position;
@@ -62,7 +62,7 @@ public class Pox : EnemyBasic
         bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
 
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
 
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;

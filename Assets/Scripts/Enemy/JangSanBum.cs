@@ -59,7 +59,7 @@ public class JangSanBum : EnemyBasic
                 enemyStatus.attackCoroutine = StartCoroutine(SnowSplash());
                 break;
             case 4:
-                StartCoroutine(RandomSpawn());
+                enemyStatus.attackCoroutine = StartCoroutine(RandomSpawn());
                 break;
             default:
                 patternNum = 0;
@@ -77,12 +77,15 @@ public class JangSanBum : EnemyBasic
         while(time > 0)
         {
             //멀리 있다면 연속으로 할퀴며 다가간다
-        
+
+            float moveTime = 0.3f;
             //move to player
-            for (int j = 0; j < 5; j++)
+            while (moveTime > 0)
             {
-                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 500);
-                yield return new WaitForSeconds(0.01f);
+                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 50);
+                moveTime -= Time.deltaTime;
+                print(moveTime);
+                yield return null;
             }
 
             //attack
@@ -90,7 +93,7 @@ public class JangSanBum : EnemyBasic
             hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(true);
             yield return new WaitForSeconds(0.6f);
             hitEffects[(int)JangSanBumHitEffect.Scratch].SetActive(false);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.2f);
 
             time--;
         }
@@ -130,10 +133,10 @@ public class JangSanBum : EnemyBasic
         enemyStatus.isAttackReady = false;
 
         enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized * 3f;
+        hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
 
         //입을 크게 벌리는 모션
         yield return new WaitForSeconds(1f);
-        hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[(int)JangSanBumHitEffect.Bite].SetActive(true);
 
         yield return new WaitForSeconds(1f);
