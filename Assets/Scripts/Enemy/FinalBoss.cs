@@ -6,66 +6,56 @@ public enum finalBossPhase { phase1, phase2};
 public class FinalBoss : EnemyBasic
 {
 
+    enum FinalBossHitEffect { CIRCULARCECTOR , HITGROUNDCOL, FIST, KNIFE, THORN, FISTWAVE, ALLFACES, NONE }
+
     private int patternNum=1;
-    private int time;
+    [SerializeField]
+    private float time;
 
     public finalBossPhase phase;
     public GameObject finalBoss1;
     public GameObject finalBoss2;
 
-    [Header("phase1")]
-    public GameObject circularCector;
-    public GameObject hitGroundCol;
-
-    [Header("phase2")]
-    public GameObject fist;
-    public GameObject knife;
-    public GameObject thorn;
-    public GameObject fistWave;
-    public GameObject allFaces;
-
 
     protected override void AttackPattern()
     {
-        StartCoroutine(finalBoss());
+        finalBoss();
     }
 
 
-    public IEnumerator finalBoss() 
+    void finalBoss() 
     {
         print("start finall boss pattern");
-        enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
+        
 
-        if ( GetComponent<EnemyStats>().HP <= GetComponent<EnemyStats>().HPMax / 2
-            && phase==finalBossPhase.phase1 )
+        if ( (enemyStats.HP <= (enemyStats.HPMax / 2))
+            && phase == finalBossPhase.phase1 )
         {
             finalBoss2.SetActive(true);
-            StopAllCoroutines();
+            InitStatus();
             finalBoss1.SetActive(false);
         }
 
-
-        if (phase==finalBossPhase.phase1)
+        if (phase == finalBossPhase.phase1)
         {
             switch (patternNum)
             {
                 case 1:
                     
-                    StartCoroutine(rushSwing());
+                    enemyStatus.attackCoroutine = StartCoroutine(rushSwing());
                     break;
                 case 2:
-                    
-                    StartCoroutine(shotKnife());
+
+                    enemyStatus.attackCoroutine = StartCoroutine(shotKnife());
                     break;
                 case 3:
-                    StartCoroutine(rushThrow());
+                    enemyStatus.attackCoroutine = StartCoroutine(rushThrow());
                     break;
                 case 4:
-                    StartCoroutine(hitGround());
+                    enemyStatus.attackCoroutine = StartCoroutine(hitGround());
                     break;
                 case 5:
-                    StartCoroutine(fireShot());
+                    enemyStatus.attackCoroutine = StartCoroutine(fireShot());
                     break;
                 default:
                     break;
@@ -76,20 +66,16 @@ public class FinalBoss : EnemyBasic
             switch (patternNum)
             {
                 case 1:
-                    StartCoroutine(wind());
+                    enemyStatus.attackCoroutine = StartCoroutine(wind());
                     break;
                 case 2:
-                    StartCoroutine(knifeRun());
+                    enemyStatus.attackCoroutine = StartCoroutine(knifeRun());
                     break;
                 case 3:
-                    StartCoroutine(punchFist());
+                    enemyStatus.attackCoroutine = StartCoroutine(punchFist());
                     break;
                 case 4:
-                    StartCoroutine(faces());
-                    break;
-                case 5:
-                    enemyStatus.isAttack = false;
-                    enemyStatus.isAttackReady = true;
+                    enemyStatus.attackCoroutine = StartCoroutine(faces());
                     break;
                 default:
                     break;
@@ -100,7 +86,6 @@ public class FinalBoss : EnemyBasic
         if (patternNum == 5) { patternNum = 1; }
         else { patternNum++; }
         
-        yield return null;
     }
 
     #region Phase1
@@ -108,26 +93,30 @@ public class FinalBoss : EnemyBasic
     {
         print("1. rush and swing");
 
-        //isChase = true;
+        enemyStatus.isAttackReady = false;
 
         //swing knife(circular cector)
-        time = 2000;
+        time = 10f;
         while (time > 0)
         {
             if (enemyStatus.targetDis < 10f)
             {
                 //print("swing");
-                circularCector.transform.rotation =
-                    Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg);
-                circularCector.transform.position = transform.position;
-                circularCector.SetActive(true);
-                yield return new WaitForSeconds(2f);
-                circularCector.SetActive(false);
-            }
-            else { rigid.AddForce(enemyStatus.targetDirVec * 200); }
+                enemyStatus.moveVec = Vector2.zero;
 
-            yield return new WaitForSeconds(0.01f);
-            time--;
+                yield return new WaitForSeconds(0.6f);
+                hitEffects[(int)FinalBossHitEffect.CIRCULARCECTOR].transform.rotation =
+                    Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg);
+                hitEffects[(int)FinalBossHitEffect.CIRCULARCECTOR].transform.position = transform.position;
+                hitEffects[(int)FinalBossHitEffect.CIRCULARCECTOR].SetActive(true);
+                yield return new WaitForSeconds(1f);
+                hitEffects[(int)FinalBossHitEffect.CIRCULARCECTOR].SetActive(false);
+            }
+            else 
+            { Chase(); }
+
+            yield return null;
+            time -= Time.deltaTime;
         }
        
 
@@ -140,6 +129,9 @@ public class FinalBoss : EnemyBasic
     IEnumerator shotKnife() 
     {
         print("2. shot knife");
+
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
 
         for(int i=0;i<3;i++) 
         {
@@ -156,13 +148,18 @@ public class FinalBoss : EnemyBasic
     IEnumerator rushThrow() 
     {
         print("3. rush throw");
-        time = 5000;
+
+        enemyStatus.isAttackReady = false;
+        enemyStatus.isSuperArmor = true;
+
+        time = 10f;
         while(time>0) 
         {
             if (enemyStatus.targetDis<10f)
             {
                 //grab player and throw away
                 //print("grab and throw away");
+                enemyStatus.moveVec = Vector2.zero;
 
                 for (int i = 0; i < 10; i++)
                 {
@@ -173,25 +170,31 @@ public class FinalBoss : EnemyBasic
                 yield return new WaitForSeconds(3f);
                 break;
             }
-            else { rigid.AddForce(enemyStatus.targetDirVec * 500); }
-            time--;
+            else { Chase(); }
+            time -= Time.deltaTime;
 
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
 
         //END
         enemyStatus.isAttack = false;
+        enemyStatus.isSuperArmor = false;
+
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
+        
     }
 
     IEnumerator hitGround() 
     {
         print("4. hit ground");
 
-        hitGroundCol.SetActive(true);
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+
+        hitEffects[(int)FinalBossHitEffect.HITGROUNDCOL].SetActive(true);
         yield return new WaitForSeconds(5f);
-        hitGroundCol.SetActive(false);
+        hitEffects[(int)FinalBossHitEffect.HITGROUNDCOL].SetActive(false);
 
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
@@ -201,6 +204,10 @@ public class FinalBoss : EnemyBasic
     IEnumerator fireShot() 
     {
         print("5. fire shot");
+
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+
         if (!gameObject.activeSelf) yield break;
 
         //원형 발사
@@ -249,40 +256,45 @@ public class FinalBoss : EnemyBasic
         
         print("3. punchFist");
 
-        fist.SetActive(true);
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+
+        hitEffects[(int)FinalBossHitEffect.FIST].SetActive(true);
         yield return new WaitForSeconds(0.5f);
 
         Vector3 aboveTarget;
-        time = 100;
+        time = 20f;
 
         while (time > 0)
         {
             aboveTarget = new Vector3(enemyStatus.enemyTarget.transform.position.x, enemyStatus.enemyTarget.transform.position.y + 20, 0);
 
             //if find Player!
-            if (MoveTo(fist, 100, fist.transform.position, aboveTarget) == true) 
+            if (MoveTo(hitEffects[(int)FinalBossHitEffect.FIST], 100, hitEffects[(int)FinalBossHitEffect.FIST].transform.position, aboveTarget) == true) 
             {
                 Vector3 tar = enemyStatus.enemyTarget.position;
-                fist.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                hitEffects[(int)FinalBossHitEffect.FIST].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 yield return new WaitForSeconds(2f);
 
                 //내리친다
-                while (time>0 && MoveTo(fist, 100, fist.transform.position, tar) == false) 
+                while (time>0 && MoveTo(hitEffects[(int)FinalBossHitEffect.FIST], 100, hitEffects[(int)FinalBossHitEffect.FIST].transform.position, tar) == false) 
                 { yield return new WaitForSeconds(0.01f); time--; }
 
-                
-                fistWave.SetActive(true);
-                fistWave.transform.position = tar;
-                fist.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+                hitEffects[(int)FinalBossHitEffect.FISTWAVE].SetActive(true);
+                hitEffects[(int)FinalBossHitEffect.FISTWAVE].transform.position = tar;
+                hitEffects[(int)FinalBossHitEffect.FIST].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 yield return new WaitForSeconds(2f);
-                fistWave.SetActive(false);
+                hitEffects[(int)FinalBossHitEffect.FISTWAVE].SetActive(false);
             }
-            time--;
-            yield return new WaitForSeconds(0.1f);
+
+            time -= Time.deltaTime;
+
+            yield return null;
         }
 
 
-        fist.SetActive(false);
+        hitEffects[(int)FinalBossHitEffect.FIST].SetActive(false);
 
         //END
         enemyStatus.isAttack = false;
@@ -294,9 +306,12 @@ public class FinalBoss : EnemyBasic
     {
         print("2. knife run");
 
-        knife.SetActive(true);
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+
+        hitEffects[(int)FinalBossHitEffect.KNIFE].SetActive(true);
         yield return new WaitForSeconds(10f);
-        knife.SetActive(false);
+        hitEffects[(int)FinalBossHitEffect.KNIFE].SetActive(false);
 
 
         //END
@@ -308,20 +323,24 @@ public class FinalBoss : EnemyBasic
     IEnumerator wind() 
     {
         print("1. wind");
-        thorn.SetActive(true);
+
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+
+        hitEffects[(int)FinalBossHitEffect.THORN].SetActive(true);
         yield return new WaitForSeconds(2f);
 
-        time = 1000;
+        time = 10f;
         while (time > 0)
         {
            enemyStatus.enemyTarget.GetComponent<Rigidbody2D>().
-                AddForce(new Vector3(0, -1, 0) * 300);
-            time--;
-            yield return new WaitForSeconds(0.01f);
+                AddForce(new Vector3(0, -1, 0) * 100);
+            time -= Time.deltaTime;
+            yield return null;
         }
 
         yield return new WaitForSeconds(2f);
-        thorn.SetActive(false);
+        hitEffects[(int)FinalBossHitEffect.THORN].SetActive(false);
 
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
@@ -331,6 +350,11 @@ public class FinalBoss : EnemyBasic
     IEnumerator faces() 
     {
         print("4. faces");
+
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+        enemyStatus.isSuperArmor = true;
+
         //기독교 7가지 대죄+불교 3독
 
         //교만=투명해진다. 잠시 반투명하게 보인다. 1초 뒤에 튀어나와서 공격. 다시 투명해진다. 반복
@@ -343,14 +367,17 @@ public class FinalBoss : EnemyBasic
         //적대감=총 부채꼴 모양으로 발사
 
 
-        allFaces.SetActive(true);
+        hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(true);
         yield return new WaitForSeconds(5f);
-        allFaces.SetActive(false);
+        hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(false);
 
         enemyStatus.isAttack = false;
+        enemyStatus.isSuperArmor = false;
         yield return new WaitForSeconds(3f);
+
         enemyStatus.isAttackReady = true;
         
+
     }
 
     #endregion

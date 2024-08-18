@@ -86,7 +86,7 @@ public class ObjectBasic : MonoBehaviour
     /// <returns></returns>
     bool DamagedPoise(float damage)
     {
-        if(status.isInvincible)
+        if(status.isInvincible || status.isSuperArmor)
             return false;
 
         stats.poise = Mathf.Min(stats.poise - ((1 - stats.defensivePower) * damage), stats.poiseMax);
@@ -156,6 +156,7 @@ public class ObjectBasic : MonoBehaviour
     {
         status.isAttack = false;
         status.isAttackReady = true;
+        status.isSuperArmor = false;
         status.isFlinch = false;
         status.isInvincible = false;
         status.moveVec = Vector2.zero;
