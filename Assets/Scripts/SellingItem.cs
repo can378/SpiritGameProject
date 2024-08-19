@@ -69,7 +69,6 @@ public class SellingItem : MonoBehaviour
         {
             //useCoin
             Player.instance.playerStats.coin -= cost;
-            MapUIManager.instance.UpdateCoinUI();
 
             /*
             //전에 가지고 있던 아이템 드랍

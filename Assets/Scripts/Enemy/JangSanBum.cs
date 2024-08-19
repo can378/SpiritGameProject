@@ -78,13 +78,12 @@ public class JangSanBum : EnemyBasic
         {
             //멀리 있다면 연속으로 할퀴며 다가간다
 
-            float moveTime = 0.3f;
+            float moveTime = 0.2f;
             //move to player
             while (moveTime > 0)
             {
-                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 50);
+                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 100);
                 moveTime -= Time.deltaTime;
-                print(moveTime);
                 yield return null;
             }
 

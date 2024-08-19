@@ -20,7 +20,6 @@ public class DokkaebiWeapon : Weapon
             return;
         
         user.playerStats.coin += 1;
-        MapUIManager.instance.UpdateCoinUI();
     }
 
     public override void Equip(Player user)

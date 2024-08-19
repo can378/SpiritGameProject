@@ -21,31 +21,32 @@ public class MapUIManager : MonoBehaviour
     public GameObject restartPanel;
     public GameObject resetPanel;
     public GameObject minimapPanel;
-    // 스탯 선택창
-    public GameObject statSelectPanel;
-    // 상호작용                                
-    public GameObject nearObjectPanel;
-    // 장비 창
-    public GameObject inventoryPanel;
+    public GameObject statSelectPanel;      // 스탯 선택창
+    public GameObject nearObjectPanel;      // 상호작용
+    public GameObject inventoryPanel;       // 장비 창
+    [SerializeField] GameObject BossProgressPanel;
 
-    //Player status
-    public Slider Hpslider;
-    public Slider ExpSlider;
-    public TMP_Text ExpTxt;
-    public TMP_Text CoinTxt;
-    public TMP_Text KeyTxt;
-    public Image itemImg;
-    public Image skillImg;
-    //public TMP_Text WeaponTxt;
-    //public TMP_Text SkillTxt;
-    //public TMP_Text PointTxt;
+    //Player Stats
+    [SerializeField] Slider Hpslider;
+    //[SerializeField] Slider ExpSlider;
+    //[SerializeField] TMP_Text ExpTxt;
+    [SerializeField] TMP_Text CoinTxt;
+    [SerializeField] TMP_Text KeyTxt;
+    //[SerializeField] Image itemImg;
+    [SerializeField] Image skillImg;
+
+    //Boss Stats
+    [SerializeField] EnemyBasic Boss;
+    [SerializeField] Slider BossHpslider;
+    [SerializeField] Transform BossBuffbar;
+    [SerializeField] TMP_Text BossName;
 
     // Inventory
-    [SerializeField] Image IevenWeaponImage;                                                                  // 장비 이미지
-    [SerializeField] Image[] IevenSkillImage = new Image[5];                                                  // 스킬 이미지
-    [SerializeField] Image IenvenItemImage;
-    [SerializeField] Image[] IevenEquipmentsImage = new Image[3];                                             // 장비 이미지
-    [SerializeField] TMP_Text[] IevenStatsValueTxt = new TMP_Text[10];                                        // 스탯 수치
+    [SerializeField] Image InvenWeaponImage;                                                                  // 장비 이미지
+    [SerializeField] Image[] InvenSkillImage = new Image[5];                                                  // 스킬 이미지
+    [SerializeField] Image InvenItemImage;
+    [SerializeField] Image[] InvenEquipmentsImage = new Image[3];                                             // 장비 이미지
+    [SerializeField] TMP_Text[] InvenStatsValueTxt = new TMP_Text[10];                                        // 스탯 수치
 
     // nearObject
     public TMP_Text nearObjectInteraction;
@@ -121,9 +122,12 @@ public class MapUIManager : MonoBehaviour
         UpdateStatUI();
         UpdateSkillUI();
         UpdateInventoryUI();
-        //if (Player.instance.playerStats.item == 0)
-        //{ updateItemUI(null); }
         UpdateNearObjectUI();
+
+        OnOffBossProgress();
+        UpdateBossHealthUI();
+        UpdateBossName();
+
     }
 
     void setUpgradePanel()
@@ -132,33 +136,31 @@ public class MapUIManager : MonoBehaviour
     }
 
 
-    #region player UI Update
+    #region Player UI Update
 
-    public void UpdateStatUI()
+    void UpdateStatUI()
     {
         //오류나서 잠깐 주석처리해놨음
         // Main 씬 안거치고 Map 씬 들어가면 걸리는 듯
         // 아니면 final 씬 에서 설정을 안해서 일 듯
 
-        IevenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
-        IevenStatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
-        IevenStatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
-        IevenStatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
-        IevenStatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
-        IevenStatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
-        IevenStatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
-        IevenStatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
+        InvenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
+        InvenStatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
+        InvenStatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
+        InvenStatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
+        InvenStatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
+        InvenStatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
+        InvenStatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
+        InvenStatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
         //StatsValueTxt[8].text = (Player.instance.playerStats.SEResist * 100).ToString() + " %";
-        IevenStatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
+        InvenStatsValueTxt[9].text = Player.instance.playerStats.moveSpeed.ToString();
         
     }
 
-    public void UpdateHealthUI()
+    void UpdateHealthUI()
     {
-
         float normalizedHealth = (Player.instance.stats.HP / Player.instance.stats.HPMax) *100;
         Hpslider.value = normalizedHealth;
-
     }
 
     /*
@@ -192,7 +194,7 @@ public class MapUIManager : MonoBehaviour
     }
     */
 
-    public void UpdateSkillUI()
+    void UpdateSkillUI()
     {
         if (Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex] != 0)
         {
@@ -201,18 +203,18 @@ public class MapUIManager : MonoBehaviour
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
 
-    public void UpdateCoinUI() 
+    void UpdateCoinUI() 
     {
         CoinTxt.text = Player.instance.playerStats.coin.ToString();
     }
 
-    public void UpdateKeyUI()
+    void UpdateKeyUI()
     {
         KeyTxt.text = Player.instance.playerStats.key.ToString();
     }
 
 
-    public void UpdateInventoryUI() 
+    void UpdateInventoryUI() 
     {
         if(inventoryPanel.activeSelf == false)
             return;
@@ -220,17 +222,17 @@ public class MapUIManager : MonoBehaviour
         // 무기 이미지
         if (Player.instance.playerStats.weapon != 0)
         {
-            IevenWeaponImage.GetComponent<Image>().sprite = GameData.instance.weaponList[Player.instance.playerStats.weapon].GetComponentInChildren<SpriteRenderer>().sprite; ;
+            InvenWeaponImage.GetComponent<Image>().sprite = GameData.instance.weaponList[Player.instance.playerStats.weapon].GetComponentInChildren<SpriteRenderer>().sprite; ;
         }
-        else { IevenWeaponImage.GetComponent<Image>().sprite = null;}
+        else { InvenWeaponImage.GetComponent<Image>().sprite = null;}
 
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
             if (Player.instance.playerStats.equipments[i] != 0)
-                IevenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+                InvenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i]].GetComponentInChildren<SpriteRenderer>().sprite;
             else
-                IevenEquipmentsImage[i].GetComponent<Image>().sprite = null;
+                InvenEquipmentsImage[i].GetComponent<Image>().sprite = null;
         }
 
         // 스킬 이미지
@@ -239,17 +241,17 @@ public class MapUIManager : MonoBehaviour
             
             if (Player.instance.playerStats.skill[i] != 0)
             {
-                IevenSkillImage[i].GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+                InvenSkillImage[i].GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[i]].GetComponentInChildren<SpriteRenderer>().sprite;
             }
-            else { IevenSkillImage[i].GetComponent<Image>().sprite =  null; }
+            else { InvenSkillImage[i].GetComponent<Image>().sprite =  null; }
         }
 
         // 소모품 이미지
         if (Player.instance.playerStats.item != 0)
         {
-            IenvenItemImage.GetComponent<Image>().sprite = GameData.instance.selectItemList[Player.instance.playerStats.item].GetComponentInChildren<SpriteRenderer>().sprite;
+            InvenItemImage.GetComponent<Image>().sprite = GameData.instance.selectItemList[Player.instance.playerStats.item].GetComponentInChildren<SpriteRenderer>().sprite;
         }
-        else { IenvenItemImage.GetComponent<Image>().sprite = null; }
+        else { InvenItemImage.GetComponent<Image>().sprite = null; }
 
     }
 
@@ -305,6 +307,57 @@ public class MapUIManager : MonoBehaviour
 
     #endregion
 
+    #region Boss UI
+
+    public void SetBossProgress(EnemyBasic enemy)
+    {
+        Boss = enemy;
+        enemy.buffTF = BossBuffbar;
+    }
+
+    void OnOffBossProgress()
+    {
+        if(Boss == null)
+            return;
+
+        if (Boss.stats.HP <= 0)
+        {
+            BossProgressPanel.SetActive(false);
+            return;
+        }
+
+        if(Boss.enemyStatus.enemyTarget && !BossProgressPanel.activeSelf)
+        {
+            BossProgressPanel.SetActive(true);
+            return;
+        }
+        
+    }
+
+    void UpdateBossHealthUI()
+    {
+        if(Boss == null)
+            return;
+
+        if(!Boss.enemyStatus.enemyTarget)
+            return;
+
+        float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax) * 100;
+        BossHpslider.value = normalizedHealth;
+    }
+
+    void UpdateBossName()
+    {
+        if(Boss == null)
+            return;
+
+        if(!Boss.enemyStatus.enemyTarget)
+            return;
+        
+        BossName.text = Boss.enemyStats.enemyName;
+    }
+
+    #endregion Boss UI
 
     #region Button
 

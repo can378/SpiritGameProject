@@ -95,6 +95,7 @@ public class Room : MonoBehaviour
             }
             else if (mapType == MapType.Boss)
             {
+                doorType = DoorType.Trap;
                 ran = Random.Range(0, mapTemplates.bossMap.Length);
                 map = Instantiate(mapTemplates.bossMap[ran], transform.position, transform.rotation);
                 minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);

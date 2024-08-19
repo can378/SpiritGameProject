@@ -64,6 +64,7 @@ public class ObjectSpawn : MonoBehaviour
                 ran = nowChapter - 1;
                 //ran = Random.Range(0, enemyTemplates.bossEnemy.Length);
                 instEnemy = Instantiate(enemyTemplates.bossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+                MapUIManager.instance.SetBossProgress(instEnemy.GetComponent<EnemyBasic>());
             }
             
             // 위치 삭제

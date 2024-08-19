@@ -671,7 +671,6 @@ public class Player : ObjectBasic
                 if (playerStats.key > 0)
                 {
                     playerStats.key--;
-                    MapUIManager.instance.UpdateKeyUI();
                     playerStatus.nearObject.GetComponent<Door>().DoorInteraction();
                 }
 
@@ -920,8 +919,6 @@ public class Player : ObjectBasic
         Player.instance.playerStats.addSkillPower += Player.instance.playerStats.playerStat[5] * 10f;
         Player.instance.playerStats.addSkillCoolTime -= Player.instance.playerStats.playerStat[6] * 0.10f;
         Player.instance.playerStats.addMoveSpeed += Player.instance.playerStats.playerStat[7] * 0.1f;
-
-        MapUIManager.instance.UpdateHealthUI();
     }
     #endregion
 
@@ -970,14 +967,12 @@ public class Player : ObjectBasic
             {
                 Destroy(other.gameObject); //코인 오브젝트 삭제
                 playerStats.coin++;
-                MapUIManager.instance.UpdateCoinUI();
             }
             else if (item.itemClass == ItemClass.Key)
             {
                 print("get key");
                 other.gameObject.SetActive(false); //키 오브젝트 삭제
                 playerStats.key++;
-                MapUIManager.instance.UpdateKeyUI();
             }
             else if(item.itemClass == ItemClass.Heal)
             {
@@ -1032,7 +1027,6 @@ public class Player : ObjectBasic
     public override void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
         base.Damaged(damage,critical,criticalDamage);
-        MapUIManager.instance.UpdateHealthUI();
     }
 
     public override void Dead()
