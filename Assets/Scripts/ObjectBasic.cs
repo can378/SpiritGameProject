@@ -165,6 +165,7 @@ public class ObjectBasic : MonoBehaviour
 
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
+        RemoveAllEffects();
     }
 
     public void Invincible(float time = 0)

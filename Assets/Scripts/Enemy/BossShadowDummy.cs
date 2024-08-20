@@ -14,7 +14,6 @@ public class BossShadowDummy : EnemyBasic
         enemyStatus.attackCoroutine = StartCoroutine(shadowShot());
     }
 
-    private void OnDisable() { StopAllCoroutines(); }
     IEnumerator shadowShot() 
     {
         enemyStatus.isAttack = true;

@@ -16,6 +16,10 @@ public class FinalBoss : EnemyBasic
     public GameObject finalBoss1;
     public GameObject finalBoss2;
 
+    protected override void Update()
+    {
+        base.Update();
+    }
 
     protected override void AttackPattern()
     {

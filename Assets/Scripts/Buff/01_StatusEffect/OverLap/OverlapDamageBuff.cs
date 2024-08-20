@@ -21,7 +21,9 @@ public class OverlapDamageBuff : StatusEffect
         overlapText.text = overlap > 1 ? overlap.ToString() : null;
         
         Stats stats = target.GetComponent<Stats>();
+
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+
         if (overlap == maxOverlap)
         {
             Debug.Log(target.name +":출혈!");
@@ -33,7 +35,17 @@ public class OverlapDamageBuff : StatusEffect
             else if (target.tag == "Enemy")
             {
                 EnemyBasic enemy = target.GetComponent<EnemyBasic>();
-                enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist(buffId)) * damagePer);
+                
+                // 최대 체력이 1000 이상이라면
+                if(enemy.stats.HPMax >= 1000)
+                {
+                    enemy.Damaged(1000 * (1 - enemy.stats.SEResist(buffId)) * damagePer);
+                }
+                else
+                {
+                    enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist(buffId)) * damagePer);
+                }
+                
             }
             duration = 0;
         }

@@ -46,8 +46,6 @@ public class EnemyBasic : ObjectBasic
         Attack();
         Move();
         Detect();
-
-        
     }
 
     #region  Attack
@@ -287,10 +285,19 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
+    void OnEnable()
+    {
+        // 보스라면 UI에 정보를 띄운다.
+        if(enemyStatus.isBoss)
+            MapUIManager.instance.SetBossProgress(this.GetComponent<EnemyBasic>());
+    }
+
     void OnDisable()
     {
+        // 비활성화시 상태 초기화
         InitStatus();
     }
+
     /*
     public void Chase()
     {

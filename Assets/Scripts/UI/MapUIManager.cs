@@ -309,6 +309,7 @@ public class MapUIManager : MonoBehaviour
 
     #region Boss UI
 
+    // UI에 보스의 정보를 띄우고 싶다면 설정
     public void SetBossProgress(EnemyBasic enemy)
     {
         Boss = enemy;

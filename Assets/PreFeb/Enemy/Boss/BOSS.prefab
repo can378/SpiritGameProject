@@ -203,6 +203,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -280,10 +281,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4747125245869897901}
   - component: {fileID: 982058022916528933}
-  - component: {fileID: 6629509494486428863}
   - component: {fileID: 4548476060031336469}
   - component: {fileID: 7687089350613666423}
   - component: {fileID: 1200216419230840209}
+  - component: {fileID: 6629509494486428863}
   - component: {fileID: 8310445247515019843}
   m_Layer: 8
   m_Name: finalBoss2
@@ -365,41 +366,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &6629509494486428863
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662196373789001864}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.8001461, y: 0}
-  m_Size: {x: 19.3261, y: 25.580032}
-  m_Direction: 0
 --- !u!114 &4548476060031336469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,8 +381,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 10000
   <HP>k__BackingField: 10000
   <tempHP>k__BackingField: 0
-  <poiseMax>k__BackingField: 10
-  <poise>k__BackingField: 10
+  <poiseMax>k__BackingField: 100
+  <poise>k__BackingField: 100
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -433,7 +399,7 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
-  enemyName: 
+  enemyName: "\uC9C0\uD558\uAD6D\uB300\uC801"
   detectionDis: 100
   detectionKeepDis: 100
   maxAttackRange: 100
@@ -458,6 +424,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 1
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -499,6 +466,41 @@ MonoBehaviour:
   phase: 1
   finalBoss1: {fileID: 1613906168541564709}
   finalBoss2: {fileID: 662196373789001864}
+--- !u!70 &6629509494486428863
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662196373789001864}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.8001461, y: 0}
+  m_Size: {x: 19.3261, y: 25.580032}
+  m_Direction: 0
 --- !u!50 &8310445247515019843
 Rigidbody2D:
   serializedVersion: 4
@@ -712,6 +714,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -965,6 +968,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -1223,6 +1227,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -1459,9 +1464,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5418944763766121739}
   - {fileID: 5851429290960802719}
   - {fileID: 4252652673039291670}
+  - {fileID: 5418944763766121739}
   m_Father: {fileID: 2840908111707991752}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4751234714058320819
@@ -1549,7 +1554,7 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 0
   <defaultMoveSpeed>k__BackingField: 8
   activeEffects: []
-  enemyName: undergroundKing
+  enemyName: "\uC9C0\uD558\uAD6D\uB300\uC801"
   detectionDis: 100
   detectionKeepDis: 100
   maxAttackRange: 100
@@ -1574,6 +1579,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 1
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -2304,6 +2310,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -2847,6 +2854,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -3100,6 +3108,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -3353,6 +3362,7 @@ MonoBehaviour:
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -5214,6 +5224,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5504327695779721474, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8109773404712140005, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: <damage>k__BackingField
       value: 20
@@ -5568,6 +5582,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5504327695779721474, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8109773404712140005, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: <damage>k__BackingField
       value: 20
@@ -5710,6 +5728,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5504327695779721474, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8109773404712140005, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: <damage>k__BackingField
       value: 20
@@ -5851,6 +5873,10 @@ PrefabInstance:
     - target: {fileID: 4791061485386070346, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504327695779721474, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
+      propertyPath: m_BodyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8109773404712140005, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: <damage>k__BackingField
@@ -5997,6 +6023,10 @@ PrefabInstance:
     - target: {fileID: 4791061485386070346, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504327695779721474, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
+      propertyPath: m_BodyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8109773404712140005, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: <damage>k__BackingField
@@ -6211,6 +6241,10 @@ PrefabInstance:
     - target: {fileID: 4791061485386070346, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504327695779721474, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
+      propertyPath: m_BodyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8109773404712140005, guid: bdf1f6ed902f648479a8928a615318fe, type: 3}
       propertyPath: <damage>k__BackingField
