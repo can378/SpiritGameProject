@@ -876,12 +876,20 @@ public class Player : ObjectBasic
                     EquipEquipment(playerEquipment[i]);
             }
 
-            // 영구 스탯
+            // 스탯 적용
             for(int i = 0;i<playerStats.playerStat.Length;i++)
             {
                 playerStats.playerStat[i] = DataManager.instance.userData.playerStat[i];
             }
-            statApply();
+
+            Player.instance.playerStats.HPMax                       += Player.instance.playerStats.playerStat[(int)StatID.HP] * StatIV[(int)StatID.HP];
+            Player.instance.playerStats.increasedAttackPower        += Player.instance.playerStats.playerStat[(int)StatID.AP] * StatIV[(int)StatID.AP];
+            Player.instance.playerStats.increasedAttackSpeed        += Player.instance.playerStats.playerStat[(int)StatID.AS] * StatIV[(int)StatID.AS];
+            Player.instance.playerStats.addCriticalChance           += Player.instance.playerStats.playerStat[(int)StatID.CC] * StatIV[(int)StatID.CC];
+            Player.instance.playerStats.addCriticalDamage           += Player.instance.playerStats.playerStat[(int)StatID.CD] * StatIV[(int)StatID.CD];
+            Player.instance.playerStats.addSkillPower               += Player.instance.playerStats.playerStat[(int)StatID.SP] * StatIV[(int)StatID.SP];
+            Player.instance.playerStats.addSkillCoolTime            += Player.instance.playerStats.playerStat[(int)StatID.SCT] * StatIV[(int)StatID.SCT];
+            Player.instance.playerStats.increasedMoveSpeed          += Player.instance.playerStats.playerStat[(int)StatID.MS] * StatIV[(int)StatID.MS];
 
             playerStats.coin = DataManager.instance.userData.playerCoin;
             playerStats.key = DataManager.instance.userData.playerKey;
@@ -907,19 +915,50 @@ public class Player : ObjectBasic
 
     }
 
-    // 수정할 것
-    // 지금 곱셉으로 적용돼서 이상함
-    public void statApply()
+    #endregion
+
+    #region StatLV
+
+    // 체력, 공격력, 공격속도, 치명타 확률 ,치명타 피해량, 도력, 도술 대기시간, 이동속도
+    public enum StatID {HP, AP, AS, CC, CD, SP, SCT, MS};
+    // 스탯 증가량
+    [HideInInspector]
+    public readonly float[] StatIV = { 25, 0.2f, 0.2f, 0.1f, 0.05f, 10f, -0.1f, 0.1f };
+
+    // 스탯을 증가 시킨다.
+    public void StatLevelUp(StatID _StatID)
     {
-        Player.instance.playerStats.HPMax += Player.instance.playerStats.playerStat[0] * 25;
-        Player.instance.playerStats.addAttackPower += Player.instance.playerStats.playerStat[1] * 0.20f;
-        Player.instance.playerStats.addAttackSpeed += Player.instance.playerStats.playerStat[2] * 0.20f;
-        Player.instance.playerStats.addCriticalChance += Player.instance.playerStats.playerStat[3] * 0.1f;
-        Player.instance.playerStats.addCriticalDamage += Player.instance.playerStats.playerStat[4] * 0.05f;
-        Player.instance.playerStats.addSkillPower += Player.instance.playerStats.playerStat[5] * 10f;
-        Player.instance.playerStats.addSkillCoolTime -= Player.instance.playerStats.playerStat[6] * 0.10f;
-        Player.instance.playerStats.addMoveSpeed += Player.instance.playerStats.playerStat[7] * 0.1f;
+        Player.instance.playerStats.playerStat[(int)_StatID]++;
+        switch(_StatID)
+        {
+            case StatID.HP:
+            Player.instance.playerStats.HPMax                       += StatIV[(int)_StatID];
+            break;
+            case StatID.AP:
+            Player.instance.playerStats.increasedAttackPower        += StatIV[(int)_StatID];
+            break;
+            case StatID.AS:
+            Player.instance.playerStats.increasedAttackSpeed        += StatIV[(int)_StatID];
+            break;
+            case StatID.CC:
+            Player.instance.playerStats.addCriticalChance           += StatIV[(int)_StatID];
+            break;
+            case StatID.CD:
+            Player.instance.playerStats.addCriticalDamage           += StatIV[(int)_StatID];
+            break;
+            case StatID.SP:
+            Player.instance.playerStats.addSkillPower               += StatIV[(int)_StatID];
+            break;
+            case StatID.SCT:
+            Player.instance.playerStats.addSkillCoolTime            += StatIV[(int)_StatID];
+            break;
+            case StatID.MS:
+            Player.instance.playerStats.increasedMoveSpeed          += StatIV[(int)_StatID];
+            break;
+
+        }
     }
+
     #endregion
 
     #region Trigger

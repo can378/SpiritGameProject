@@ -97,7 +97,7 @@ public class IcicleSkill : Skill
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             instantProjectile.transform.localScale = new Vector3(size, size, 0);
             instantProjectile.tag = "PlayerAttack";

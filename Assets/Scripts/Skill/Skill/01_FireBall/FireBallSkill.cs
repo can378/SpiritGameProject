@@ -93,7 +93,7 @@ public class FireBallSkill : Skill
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             Destroy(rangeSimul.gameObject);
             Destroy(fireBallSimul.gameObject);

@@ -86,7 +86,7 @@ public class HealSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
             player.stats.decreasedMoveSpeed -= 0.9f;
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
@@ -107,7 +107,7 @@ public class HealSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
             player.stats.decreasedMoveSpeed -= 0.9f;
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")

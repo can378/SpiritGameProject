@@ -153,7 +153,7 @@ public class WheelWindSkill : Skill
             yield return new WaitForSeconds(postDelay * attackRate);
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             player.stats.decreasedMoveSpeed -= 0.5f;
         }

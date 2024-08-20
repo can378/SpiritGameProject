@@ -40,7 +40,7 @@ public class LittleStarSkill : Skill
             LittleStarOrbit littleStarOrbit;
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             // 이펙트 생성
             if(effect)

@@ -94,7 +94,7 @@ public class SpinAttackSkill : Skill
             float attackRate = weapon.SPA / player.playerStats.attackSpeed;
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             Destroy(spinSimul);
 
