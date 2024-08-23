@@ -267,7 +267,7 @@ public class FinalBoss : EnemyBasic
         yield return new WaitForSeconds(0.5f);
 
         Vector3 aboveTarget;
-        time = 20f;
+        time = 120f;
 
         while (time > 0)
         {
@@ -314,7 +314,7 @@ public class FinalBoss : EnemyBasic
         enemyStatus.isAttackReady = false;
 
         hitEffects[(int)FinalBossHitEffect.KNIFE].SetActive(true);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(40f);
         hitEffects[(int)FinalBossHitEffect.KNIFE].SetActive(false);
 
 
@@ -334,7 +334,7 @@ public class FinalBoss : EnemyBasic
         hitEffects[(int)FinalBossHitEffect.THORN].SetActive(true);
         yield return new WaitForSeconds(2f);
 
-        time = 10f;
+        time = 5f;
         while (time > 0)
         {
            enemyStatus.enemyTarget.GetComponent<Rigidbody2D>().

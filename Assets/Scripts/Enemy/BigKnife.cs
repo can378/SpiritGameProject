@@ -10,13 +10,18 @@ public class BigKnife : MonoBehaviour
     private bool isCoRun;
     private bool isTouchWall;
     private float originalTrailTime;
+    public TrailRenderer trailRender;
+    public EdgeCollider2D edgeCollider;
+
     void Start()
     {
         isCoRun = false;
         isTouchWall = false;
+
         player = FindObj.instance.Player;
-        originalTrailTime = GetComponent<TrailRenderer>().time;
-        GetComponent<TrailRenderer>().time = 0;
+
+        originalTrailTime = trailRender.time;
+        trailRender.time = 0;
     }
 
 
@@ -50,9 +55,11 @@ public class BigKnife : MonoBehaviour
         Vector3 cutDir = (vec2 - vec1).normalized;
 
         //자국 시작
-        GetComponent<TrailRenderer>().time = originalTrailTime;
-        transform.GetComponent<TrailRenderer>().enabled = true;
-        
+        trailRender.time = originalTrailTime;
+        //trailRender.enabled = true;
+        //edgeCollider.enabled = true;
+
+
         while (isTouchWall == false)
         {
             transform.GetComponent<Rigidbody2D>().AddForce(cutDir * 30);
@@ -60,9 +67,10 @@ public class BigKnife : MonoBehaviour
         }
 
         //자국 끝
-        GetComponent<TrailRenderer>().time = 0;
-        transform.GetComponent<TrailRenderer>().enabled = false;
-        
+        trailRender.time = 0;
+        //trailRender.enabled = false;
+        //edgeCollider.enabled = false;
+
         //reset
         isTouchWall = false;
         transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
