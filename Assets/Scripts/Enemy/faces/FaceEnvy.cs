@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceEnvy : EnemyBasic
+public class FaceEnvy : BossFace
 {
     //����=��ų���(�� ó�� ��� ������ �� ���ϰ�)
 

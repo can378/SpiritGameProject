@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceDelusion : EnemyBasic
+public class FaceDelusion : BossFace
 {
     //착각=무작위로 총 발사
 

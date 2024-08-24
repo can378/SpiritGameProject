@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceAngry : EnemyBasic
+public class FaceAngry : BossFace
 {
     public List<GameObject> faces;
     //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님

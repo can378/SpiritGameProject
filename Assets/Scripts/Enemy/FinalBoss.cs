@@ -16,6 +16,10 @@ public class FinalBoss : EnemyBasic
     public GameObject finalBoss1;
     public GameObject finalBoss2;
 
+    [Header("2phase")]
+    public List<GameObject> faces;
+    public List<GameObject> facesLoc;
+
     protected override void Update()
     {
         base.Update();
@@ -79,7 +83,7 @@ public class FinalBoss : EnemyBasic
                     enemyStatus.attackCoroutine = StartCoroutine(punchFist());
                     break;
                 case 4:
-                    enemyStatus.attackCoroutine = StartCoroutine(faces());
+                    enemyStatus.attackCoroutine = StartCoroutine(facesAttack());
                     break;
                 default:
                     break;
@@ -351,8 +355,9 @@ public class FinalBoss : EnemyBasic
         enemyStatus.isAttackReady = true;
     }
 
-    IEnumerator faces() 
+    IEnumerator facesAttack() 
     {
+        //start
         print("4. faces");
 
         enemyStatus.isAttack = true;
@@ -369,12 +374,20 @@ public class FinalBoss : EnemyBasic
         //무지=막 돌아다님
         //착각=무작위로 총 발사
         //적대감=총 부채꼴 모양으로 발사
-
-
         hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(true);
-        yield return new WaitForSeconds(5f);
+        for (int i=0;i<faces.Count;i++) 
+        {
+            faces[i].GetComponent<EnemyStatus>().isAttackReady = true;
+            yield return new WaitForSeconds(10f);
+            faces[i].GetComponent<EnemyStatus>().isAttackReady = false;
+
+            while (MoveTo(faces[i], 100, faces[i].transform.position, facesLoc[i].transform.position))
+            { yield return new WaitForSeconds(0.01f); }
+            
+        }
         hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(false);
 
+        //Finish
         enemyStatus.isAttack = false;
         enemyStatus.isSuperArmor = false;
         yield return new WaitForSeconds(3f);

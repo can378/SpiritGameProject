@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceHostility : EnemyBasic
+public class FaceHostility : BossFace
 {
     int bulletCount = 5; // 발사할 총알의 수
     float spreadAngle = 45f; // 부채꼴의 총 각도

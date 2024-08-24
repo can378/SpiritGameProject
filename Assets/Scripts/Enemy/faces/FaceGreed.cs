@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceGreed : EnemyBasic
+public class FaceGreed : BossFace
 {
     private Transform startPoint; // 선이 시작될 위치
     public float lineWidth = 2f; // 선의 두께
