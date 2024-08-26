@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using System.Reflection;
 
 
 public class AudioManager : MonoBehaviour
@@ -32,6 +33,8 @@ public class AudioManager : MonoBehaviour
     [Header("BGM Audio Source")]
     //배경음 오디오
     public AudioClip[] BgClipList;
+    public AudioClip[] ChapterBgm_normal;
+    public AudioClip[] ChapterBgm_boss;
 
     [Header("SFX Audio Source")]
     public AudioClip testAudio;
@@ -41,6 +44,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip footStepDirt;
     public AudioClip footStepStone;
     public AudioClip[] SFXClipList;
+    public AudioClip healSfx;
+    public AudioClip chestOpenSfx;
+    public AudioClip fireWooschSfx;
+    public AudioClip UIClickSfx;
 
     //instance
     public static AudioManager instance;
@@ -63,8 +70,9 @@ public class AudioManager : MonoBehaviour
         BGSoundVolume();
         SFXVolume();
 
-        
-        AudioManager.instance.BGMPlay(4);
+
+        //start bgm
+        Bgm_normal(DataManager.instance.userData.nowChapter);
 
 
         //슬라이드값 변할때마다 아래 함수 실행
@@ -127,8 +135,8 @@ public class AudioManager : MonoBehaviour
     }
 
 
-
-    //효과음 플레이 함수
+    
+    //효과음 플레이 함수====================================================================================
     public void TestAudioPlay()
     { SFXPlayPoolingVersion(testAudio); }
 
@@ -143,8 +151,14 @@ public class AudioManager : MonoBehaviour
     public void FootStoneAudioPlay() 
     { SFXPlayPoolingVersion(footStepStone); }
 
+    public void HealAudioPlay() { SFXPlayPoolingVersion(healSfx); }
+    public void chestOpenAudioPlay() { SFXPlayPoolingVersion(chestOpenSfx); }
 
-    //배경음악 플레이 함수
+    public void fireWooschAudio() { SFXPlayPoolingVersion(fireWooschSfx); }
+    public void UIClickAudio() { SFXPlayPoolingVersion(UIClickSfx); }
+    
+
+    //배경음악 플레이 함수===============================================================================
     public void BGMPlay(int index)
     {
 
@@ -160,8 +174,42 @@ public class AudioManager : MonoBehaviour
             bgSound.Play();
         }
     }
+    public void Bgm_normal(int chapterNum) 
+    {
+        
 
+        AudioClip clip;
+        clip = AudioManager.instance.ChapterBgm_normal[chapterNum];
 
+        
+        if (isPlayAudio)
+        {
+            
+            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
+            bgSound.clip = clip;
+            bgSound.loop = true;
+            bgSound.volume = 0.6f;
+            bgSound.Play();
+
+            Debug.Log("bgm normal=" + chapterNum + "," + bgSound.clip.name);
+        }
+
+    }
+
+    public void Bgm_boss(int chapterNum)
+    {
+        AudioClip clip;
+        clip = AudioManager.instance.ChapterBgm_boss[chapterNum];
+
+        if (isPlayAudio)
+        {
+            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
+            bgSound.clip = clip;
+            bgSound.loop = true;
+            bgSound.volume = 0.6f;
+            bgSound.Play();
+        }
+    }
     //오브젝트 풀링========================================================================================================
 
 

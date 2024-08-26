@@ -85,7 +85,7 @@ public class MapUIManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            AudioManager.instance.TestAudioPlay();
+            AudioManager.instance.UIClickAudio();
             tabkeyPanel.SetActive(!tabkeyPanel.activeSelf);
         }
 
@@ -94,7 +94,7 @@ public class MapUIManager : MonoBehaviour
             if (esckeyPanel) { Time.timeScale = 1; }
             else { Time.timeScale = 0; }
 
-            AudioManager.instance.TestAudioPlay();
+            AudioManager.instance.UIClickAudio();
             esckeyPanel.SetActive(!esckeyPanel.activeSelf);
             settingPanel.SetActive(false);
             
@@ -372,6 +372,8 @@ public class MapUIManager : MonoBehaviour
     {
         DataManager.instance.InitData();
         DataManager.instance.SaveUserData();
+
+        AudioManager.instance.Bgm_normal(userData.nowChapter);
         SceneManager.LoadScene("Main");
     }
 
@@ -379,8 +381,16 @@ public class MapUIManager : MonoBehaviour
     public void RestartBtn() //now chapter restart
     {
         DataManager.instance.LoadData();
-        if (userData.nowChapter == 4) { SceneManager.LoadScene("FinalMap"); }
-        else { SceneManager.LoadScene("Map"); }
+
+        AudioManager.instance.Bgm_normal(userData.nowChapter);
+        if (userData.nowChapter == 4) 
+        {
+            SceneManager.LoadScene("FinalMap");
+        }
+        else 
+        {
+            SceneManager.LoadScene("Map"); 
+        }
     }
 
     public void QuitBtn()
@@ -402,7 +412,7 @@ public class MapUIManager : MonoBehaviour
     }
     public void BackBtn() 
     {
-        AudioManager.instance.TestAudioPlay();
+        AudioManager.instance.UIClickAudio();
         esckeyPanel.SetActive(!esckeyPanel.activeSelf);
         settingPanel.SetActive(false);
         warningPanel.SetActive(false);

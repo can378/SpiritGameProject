@@ -64,6 +64,9 @@ public class RoomEnterExit : MonoBehaviour
             room.map.SetActive(true);
         }
 
+        if(room.mapType==MapType.Boss) 
+        { AudioManager.instance.Bgm_boss(DataManager.instance.userData.nowChapter); }
+
         //플레이어가 현재 있는 맵 위치
         GameManager.instance.nowRoom = room.floorArea;
         GameManager.instance.nowRoomScript = room;

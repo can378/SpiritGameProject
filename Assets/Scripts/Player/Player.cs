@@ -977,6 +977,8 @@ public class Player : ObjectBasic
         }
         else if (other.tag == "EnterDungeon")
         {
+            AudioManager.instance.Bgm_normal(userData.nowChapter);
+
             if (userData.nowChapter < 3)
             {
                 
