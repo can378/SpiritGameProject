@@ -69,6 +69,7 @@ public class Enchant : MonoBehaviour
             return;
 
         Debug.Log("Bomb");
+        AudioManager.instance.SFXPlay("Explosion");
         GameObject explosionGO = ObjectPoolManager.instance.Get2("Explosion");
         explosionGO.transform.position = this.gameObject.transform.position;
         explosionGO.transform.rotation = this.gameObject.transform.rotation;

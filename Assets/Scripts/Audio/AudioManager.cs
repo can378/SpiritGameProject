@@ -38,7 +38,6 @@ public class AudioManager : MonoBehaviour
 
     [Header("SFX Audio Source")]
     public AudioClip testAudio;
-    public AudioClip swingSword;
     public AudioClip drop_key;
     public AudioClip hit;
     public AudioClip footStepDirt;
@@ -48,6 +47,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip chestOpenSfx;
     public AudioClip fireWooschSfx;
     public AudioClip UIClickSfx;
+
+   
+    [field:SerializeField, Header("Player Weapon")]
+    public AudioClip[] weaponAttack {get; private set; } = new AudioClip[(int)WEAPON_TYPE.NONE];
 
     //instance
     public static AudioManager instance;
@@ -140,8 +143,8 @@ public class AudioManager : MonoBehaviour
     public void TestAudioPlay()
     { SFXPlayPoolingVersion(testAudio); }
 
-    public void SwordAudioPlay() 
-    { SFXPlayPoolingVersion(swingSword); }
+    public void WeaponAttackAudioPlay(WEAPON_TYPE weaponType) 
+    { SFXPlayPoolingVersion(weaponAttack[(int)weaponType]); }
     public void KeyAudioPlay() 
     { SFXPlayPoolingVersion(drop_key); }
     public void HitAudioPlay() 
@@ -279,6 +282,5 @@ public class AudioManager : MonoBehaviour
         obj.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
 
     }
-
 
 }

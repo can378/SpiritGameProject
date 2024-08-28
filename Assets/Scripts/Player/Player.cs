@@ -295,11 +295,11 @@ public class Player : ObjectBasic
             player.weaponList[player.playerStats.weapon].gameObject.SetActive(true);
             player.weaponList[player.playerStats.weapon].Equip(this.gameObject.GetComponent<Player>());
 
-            if (player.weaponList[player.playerStats.weapon].weaponType < 10)
+            if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.MELEE)
             {
-                HitDetectionGameObject = player.hitEffects[player.weaponList[player.playerStats.weapon].weaponType];
+                HitDetectionGameObject = player.hitEffects[(int)player.weaponList[player.playerStats.weapon].weaponType];
             }
-            else if (10 <= player.weaponList[player.playerStats.weapon].weaponType)
+            else if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.RANGE)
             {
                 projectileIndex = player.weaponList[player.playerStats.weapon].projectileIndex;
             }
@@ -334,18 +334,14 @@ public class Player : ObjectBasic
         public void Use(Vector3 clickPos)
         {
             player.weaponList[player.playerStats.weapon].ConsumeAmmo();
-            if (player.weaponList[player.playerStats.weapon].weaponType < 10)
+            if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.MELEE)
             {
                 // 플레이어 애니메이션 실행
                 attackCoroutine = StartCoroutine("Swing");
             }
-            else if (10 <= player.weaponList[player.playerStats.weapon].weaponType)
+            else if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.RANGE)
             {
-                // 플레이어 애니메이션 실행
-                if (player.weaponList[player.playerStats.weapon].weaponType == 13)
-                    attackCoroutine = StartCoroutine("Throw", clickPos);
-                else
-                    attackCoroutine = StartCoroutine("Shot");
+                attackCoroutine = StartCoroutine("Shot");
             }
 
             //Debug.Log(playerStats.weapon.attackSpeed);
@@ -359,6 +355,8 @@ public class Player : ObjectBasic
             player.playerStatus.isAttack = true;
 
             float attackAngle = player.playerStatus.mouseAngle;
+
+            AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             //선딜
             yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
@@ -398,6 +396,7 @@ public class Player : ObjectBasic
 
             // 선딜
             yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
+            AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             // 무기 투사체 적용
             GameObject instantProjectile = ObjectPoolManager.instance.Get(projectileIndex);
@@ -451,8 +450,6 @@ public class Player : ObjectBasic
         if (aDown && !playerStatus.isFlinch && !playerStatus.isAttack && !playerStatus.isReload && !playerStatus.isDodge && playerStatus.isAttackReady && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
             weaponController.Use(playerStatus.mousePos);
-
-            AudioManager.instance.SFXPlay("attack_sword");
 
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
             playerStatus.attackDelay = weaponList[playerStats.weapon].SPA / playerStats.attackSpeed;
@@ -606,7 +603,7 @@ public class Player : ObjectBasic
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
             if (playerStats.weapon == 0 && 
                 skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit.Length != 0 && 
-            Array.IndexOf(skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit, weaponList[playerStats.weapon].weaponType) == -1)
+            Array.IndexOf(skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit, (int)weaponList[playerStats.weapon].weaponType) == -1)
             {
                 return;
             }
