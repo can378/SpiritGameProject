@@ -19,37 +19,40 @@ public class FaceEnvy : BossFace
 
     protected override void MovePattern()
     {
-
-        if (!enemyStatus.enemyTarget)
+        if (nowAttack)
         {
-            RandomMove();
-        }
-        else if (enemyStatus.targetDis < 6f)
-        {
-            Run();
-        }
-        else if (enemyStatus.targetDis >= 7f)
-        {
-            Chase();
-        }
-        else
-        {
-            enemyStatus.moveVec = Vector3.zero;
+            if (!enemyStatus.enemyTarget)
+            {
+                RandomMove();
+            }
+            else if (enemyStatus.targetDis < 6f)
+            {
+                Run();
+            }
+            else if (enemyStatus.targetDis >= 7f)
+            {
+                Chase();
+            }
+            else
+            {
+                enemyStatus.moveVec = Vector3.zero;
+            }
         }
     }
 
-    protected override void AttackPattern()
+
+    protected override void faceAttack()
     {
-        // ��ų ����� �����ϸ� ��ų ���
         if (skill != 0 && skillList[skill].skillCoolTime <= 0)
         {
             StartCoroutine(Skill());
         }
     }
 
+
     IEnumerator Skill()
     {
-        print("Skill");
+        print("envy Skill");
 
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;

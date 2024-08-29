@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum finalBossPhase { phase1, phase2};
@@ -9,6 +10,8 @@ public class FinalBoss : EnemyBasic
     enum FinalBossHitEffect { CIRCULARCECTOR , HITGROUNDCOL, FIST, KNIFE, THORN, FISTWAVE, ALLFACES, NONE }
 
     private int patternNum=1;
+    private List<GameObject> facesList;
+
     [SerializeField]
     private float time;
 
@@ -18,7 +21,12 @@ public class FinalBoss : EnemyBasic
 
     [Header("2phase")]
     public List<GameObject> faces;
-    public List<GameObject> facesLoc;
+
+    private void Start()
+    {
+        base.Start();
+        hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(true);
+    }
 
     protected override void Update()
     {
@@ -74,7 +82,8 @@ public class FinalBoss : EnemyBasic
             switch (patternNum)
             {
                 case 1:
-                    enemyStatus.attackCoroutine = StartCoroutine(wind());
+                    enemyStatus.attackCoroutine = StartCoroutine(facesAttack());
+                    //enemyStatus.attackCoroutine = StartCoroutine(wind());
                     break;
                 case 2:
                     enemyStatus.attackCoroutine = StartCoroutine(knifeRun());
@@ -364,6 +373,7 @@ public class FinalBoss : EnemyBasic
         enemyStatus.isAttackReady = false;
         enemyStatus.isSuperArmor = true;
 
+       
         //기독교 7가지 대죄+불교 3독
 
         //교만=투명해진다. 잠시 반투명하게 보인다. 1초 뒤에 튀어나와서 공격. 다시 투명해진다. 반복
@@ -374,18 +384,36 @@ public class FinalBoss : EnemyBasic
         //무지=막 돌아다님
         //착각=무작위로 총 발사
         //적대감=총 부채꼴 모양으로 발사
-        hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(true);
-        for (int i=0;i<faces.Count;i++) 
-        {
-            faces[i].GetComponent<EnemyStatus>().isAttackReady = true;
-            yield return new WaitForSeconds(10f);
-            faces[i].GetComponent<EnemyStatus>().isAttackReady = false;
+        
 
-            while (MoveTo(faces[i], 100, faces[i].transform.position, facesLoc[i].transform.position))
-            { yield return new WaitForSeconds(0.01f); }
-            
+        //set random attack faces
+        List<int> randomN = randomNum(faces.Count,4);
+        
+
+        
+               
+        facesList = new List<GameObject>();
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            facesList.Add(faces[randomN[i]]);
+            facesList[i].GetComponent<BossFace>().nowAttack = true;
         }
-        hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(false);
+
+
+        //wait until end
+        while (checkFaceAttackEnd(facesList) == false) 
+        {
+            for(int i=0;i < 4; i++) 
+            {
+                print(facesList[i].name + "-->" + facesList[i].GetComponent<BossFace>().nowAttack);
+            }
+            yield return new WaitForSeconds(0.01f); 
+        }
+        
+
+
 
         //Finish
         enemyStatus.isAttack = false;
@@ -394,9 +422,45 @@ public class FinalBoss : EnemyBasic
 
         enemyStatus.isAttackReady = true;
         
-
+        
     }
 
+    List<int> randomNum(int maxNum, int chooseNum) {
+
+        // 0부터 8까지의 숫자 리스트 생성
+        List<int> numbers = new List<int>();
+        for (int i = 0; i < maxNum; i++)
+        {
+            numbers.Add(i);
+        }
+
+
+        System.Random random = new System.Random();
+
+
+        List<int> selectedNumbers = new List<int>();
+        for (int i = 0; i < chooseNum; i++)
+        {
+            int index = random.Next(numbers.Count);
+            selectedNumbers.Add(numbers[index]);
+
+            // 중복 방지를 위해 선택된 숫자 삭제
+            numbers.RemoveAt(index);
+        }
+
+        return selectedNumbers;
+    }
+
+    bool checkFaceAttackEnd(List<GameObject>faceLists) 
+    {
+        for(int i=0;i<faceLists.Count;i++) 
+        { 
+            if (faceLists[i].GetComponent<BossFace>().nowAttack == true) 
+            { return false; } 
+        }
+        return true;
+
+    }
     #endregion
 
 

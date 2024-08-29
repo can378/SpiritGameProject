@@ -11,5 +11,4 @@ public class FaceSloth : BossFace
     }
 
 
-
 }

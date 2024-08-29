@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class FaceAngry : BossFace
 {
-    public List<GameObject> faces;
-    //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님
-    protected override void AttackPattern()
+    //public List<GameObject> faces;
+
+    protected override void MovePattern()
     {
-        print("angry");
-        StartCoroutine(angry());
+        if (nowAttack) { RandomMove(); }
     }
+    //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님
+
+
     // protected override void Move()
     // {
     //     // 경직 중에는 직접 이동 불가
@@ -33,10 +35,12 @@ public class FaceAngry : BossFace
 
     // }
 
-    protected override void MovePattern()
-    {
-        RandomMove();
-    }
+
+
+
+
+    //이거는 왜 넣은것..?
+    /*
     IEnumerator angry()
     {
         //enemyStatus.isAttack = true;
@@ -60,4 +64,5 @@ public class FaceAngry : BossFace
         enemyStatus.isAttackReady = true;
 
     }
+    */
 }

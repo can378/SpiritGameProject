@@ -5,10 +5,10 @@ using UnityEngine;
 public class FaceDumb : BossFace
 {
 
-    //무지=막 돌아다님 추가할까 고민중
+    //무지=막 돌아다님
     protected override void MovePattern()
     {
-        RandomMove();
+        if (nowAttack) { RandomMove(); }
     }
 
 }
