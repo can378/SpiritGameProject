@@ -10,8 +10,8 @@ public class BossFace : EnemyBasic
 
     protected bool isFirst = true;
     private float approachTime = 1000;
-    private float attackTime = 5000;
-    private float countTime = 0;
+    private float attackTime = 3000;
+    protected float countTime = 0;
 
     protected bool isFaceAttack;
     protected bool isFaceApproach;
@@ -59,7 +59,7 @@ public class BossFace : EnemyBasic
                 GetComponent<Rigidbody2D>().AddForce(vec * 2.5f);
                 //print("go back to original pose");
             }
-            else { setEnd(); }
+            else { Finish(); }
         }
         else if (isFaceAttack)
         {
@@ -102,7 +102,7 @@ public class BossFace : EnemyBasic
         countTime = 0;
     }
 
-    private void setEnd() 
+    protected virtual void Finish() 
     {
         rigid.velocity= Vector3.zero;
         isFaceApproach = false;
@@ -126,7 +126,11 @@ public class BossFace : EnemyBasic
             {
                 faceAttack();
                 countTime--;
-                print("attack time-"+countTime);
+                if (countTime % 1000 == 0) 
+                { 
+                    //print(this.name + " attack time-" + countTime); 
+                }
+                
             }
             else { setBack(); }
         }

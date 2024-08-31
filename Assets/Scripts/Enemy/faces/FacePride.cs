@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class FacePride : BossFace
 {
@@ -9,23 +9,31 @@ public class FacePride : BossFace
 
     public GameObject attackArea;
 
-    protected override void Update()
+    protected override void init()
     {
-        base.Update();
-        attackArea.transform.localPosition = new Vector3(0,0,0);
+        base.init();
+        attackArea.SetActive(false);
     }
-
+    protected override void Finish()
+    {
+        base.Finish();
+        attackArea.SetActive(false);
+    }
     protected override void faceAttack() 
     {
+        print("pride");
         //attack
         //감지
-        if (enemyStatus.targetDis <= enemyStats.detectionDis)
+
+        attackArea.transform.localPosition = new Vector3(0, 0, 0);
+        if (enemyStatus.targetDis <= 15f)
         {
-            if (enemyStatus.targetDis <= enemyStats.maxAttackRange)
+            if (enemyStatus.targetDis <= 5.5f)
             {
                 //사정거리 안
                 print("pride-attack");
                 sprite.color = new Color(1f, 0f, 0f, 1f);
+                attackArea.SetActive(true);
             }
             else
             {
@@ -34,7 +42,7 @@ public class FacePride : BossFace
                     print("pride-chase");
                     Chase();
                     sprite.color = new Color(1f, 1f, 1f, 0.2f);
-
+                    attackArea.SetActive(false);
                 }
 
             }
@@ -43,7 +51,9 @@ public class FacePride : BossFace
         {
             //hide
             print("pride-hide");
-            sprite.color = new Color(1f, 1f, 1f, 0.005f);
+            Chase();
+            sprite.color = new Color(1f, 1f, 1f, 0.05f);
+            attackArea.SetActive(false);
         }
 
     }

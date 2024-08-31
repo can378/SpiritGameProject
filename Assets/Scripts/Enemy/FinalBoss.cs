@@ -367,7 +367,7 @@ public class FinalBoss : EnemyBasic
     IEnumerator facesAttack() 
     {
         //start
-        print("4. faces");
+        //print("4. faces");
 
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
@@ -407,7 +407,7 @@ public class FinalBoss : EnemyBasic
         {
             for(int i=0;i < 4; i++) 
             {
-                //print(facesList[i].name + " attacks -->" + facesList[i].GetComponent<BossFace>().nowAttack);
+                print(facesList[i].name + " attacks -->" + facesList[i].GetComponent<BossFace>().nowAttack);
             }
             yield return new WaitForSeconds(0.01f); 
         }
@@ -419,7 +419,6 @@ public class FinalBoss : EnemyBasic
         enemyStatus.isAttack = false;
         enemyStatus.isSuperArmor = false;
         yield return new WaitForSeconds(3f);
-
         enemyStatus.isAttackReady = true;
         
         

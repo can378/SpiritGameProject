@@ -40,6 +40,11 @@ public class FaceEnvy : BossFace
         }
     }
 
+    protected override void init()
+    {
+        base.init();
+        skill = Random.RandomRange(1, skillList.Count);
+    }
 
     protected override void faceAttack()
     {
@@ -86,8 +91,13 @@ public class FaceEnvy : BossFace
 
         if (enemyStatus.hitTarget.tag == "Player")
         {
-            skill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
-            if (skill != 0) skillList[skill].gameObject.SetActive(true);
+            int playerSkill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
+            if (playerSkill != 0) { skill = playerSkill; }
+
+            skillList[skill].gameObject.SetActive(true);
+
+            //if (skill != 0) { skillList[skill].gameObject.SetActive(true); }
+
         }
     }
 }

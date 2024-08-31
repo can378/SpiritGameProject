@@ -15,9 +15,12 @@ public class FaceDumb : BossFace
         attackArea.transform.localPosition = new Vector3(0, 0, 0);
     }
 
+
     protected override void MovePattern()
     {
-        if (nowAttack) { RandomMove(); }
+        print("dumb");
+        Chase();
+        
     }
 
 }
