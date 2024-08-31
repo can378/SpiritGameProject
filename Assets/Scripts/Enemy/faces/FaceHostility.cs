@@ -17,37 +17,31 @@ public class FaceHostility : BossFace
     Vector2 startDir;
     //적대감=총 부채꼴 모양으로 발사
 
+    private bool isReady=true;
+
     protected override void Start()
     {
         radius = 6;
         angleStep = spreadAngle / (bulletCount - 1);
         startAngle = -spreadAngle / 2;
     }
-    protected override void AttackPattern()
+
+    protected override void faceAttack()
     {
-        print("hostility");
-        StartCoroutine(hostility());
+        if(isReady) { StartCoroutine(hostility()); }
     }
 
-
-    protected override void MovePattern()
+    IEnumerator hostility() 
     {
-        //Chase();
-    }
-
-    IEnumerator hostility()
-    {
-        enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
-
-        //START//////////////////////////////////
+        isReady = false;
+        //print("hostility");
 
         // 가장 가까운 지점 계산
         circleCenter = transform.position;
         startPoint = circleCenter + enemyStatus.targetDirVec * radius;
 
         // 시작 방향 설정
-        playerCenter=enemyStatus.enemyTarget.transform.position;
+        playerCenter = enemyStatus.enemyTarget.transform.position;
         startDir = (playerCenter - startPoint).normalized;
         float angleStep = spreadAngle / (bulletCount - 1);
         float startAngle = -spreadAngle / 2;
@@ -65,16 +59,9 @@ public class FaceHostility : BossFace
 
             bulletRigid.AddForce(dirVec.normalized * bulletSpeed, ForceMode2D.Impulse);
         }
-
-
-
-
-
-
-        //END
-        enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
-        enemyStatus.isAttackReady = true;
-
+        isReady = true;
     }
+
+    
 }

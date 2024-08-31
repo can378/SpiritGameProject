@@ -5,46 +5,16 @@ using UnityEngine;
 public class FaceDelusion : BossFace
 {
     //착각=무작위로 총 발사
-
-    protected override void AttackPattern()
+    private bool isReady = true;
+    protected override void faceAttack()
     {
-        StartCoroutine(delusion());
+        if (isReady) { StartCoroutine(delusion()); }
     }
 
-
-    // protected override void Move()
-    // {
-    //     // 경직 중에는 직접 이동 불가
-    //     if (enemyStatus.isFlinch)
-    //     {
-    //         return;
-    //     }
-    //     else if (enemyStatus.isRun)
-    //     {
-    //         if (enemyStatus.enemyTarget)
-    //         {
-    //             rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
-    //         }
-    //         return;
-    //     }
-
-    //     MovePattern();
-
-    //     rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
-
-    // }
-
-    protected override void MovePattern()
-    {
-        RandomMove();
-    }
 
     IEnumerator delusion()
     {
-        //enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
-
-        //START
+        isReady = false;
         //여러개 한번에 발사
         for (int i = 0; i < 7; i++)
         {
@@ -61,12 +31,12 @@ public class FaceDelusion : BossFace
         }
         rigid.AddForce(enemyStatus.targetDirVec * 20);
 
-
-        //END
-        //enemyStatus.isAttack = false;
-        yield return new WaitForSeconds(3f);
-        enemyStatus.isAttackReady = true;
-
+        yield return new WaitForSeconds(4f);
+        isReady = true;
+    }
+    protected override void MovePattern()
+    {
+        RandomMove();
     }
 
 }

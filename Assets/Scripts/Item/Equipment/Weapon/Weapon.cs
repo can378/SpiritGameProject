@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 무기 종류 늘릴시 MELEE과 RANGE 조정할 것
+public enum WEAPON_TYPE {
+    // 근거리 
+    SWING, STAB, CRACK, MELEE,
+    // 원거리
+    GUN, BOW, THROW, CANNON, RANGE, NONE}
+
 public class Weapon : Equipment
 {
-    [field: SerializeField] public int weaponType {get; private set;}               //근거리 : 0 - 베기, 1 - 찌르기, 2 - 휘두르기
-                                                                                    //원거리 : 10 - 총, 11 - 활, 12 - 던지기, 13 - 범위 공격    
+    [field: SerializeField] public WEAPON_TYPE weaponType {get; private set;}       //근거리 : 0 - 베기, 1 - 찌르기, 2 - 휘두르기
+                                                                                    //원거리 : 10 - 총, 11 - 활, 12 - 던지기
     
     [field: SerializeField] public bool isMultiHit { get; private set; }            // 다단히트 여부
     [field: SerializeField] public int DPS { get; private set; }                    // 초당 타격 횟수 필요 없을 시 음수

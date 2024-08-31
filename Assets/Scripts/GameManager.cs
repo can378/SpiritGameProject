@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {   
         userData = DataManager.instance.userData;
+
+        AudioManager.instance.Bgm_normal(userData.nowChapter);
         LoadNowScene();
     }
     void Update()

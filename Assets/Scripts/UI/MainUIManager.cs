@@ -18,7 +18,7 @@ public class MainUIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            AudioManager.instance.TestAudioPlay();
+            AudioManager.instance.UIClickAudio();
             mainPanel.SetActive(!mainPanel.activeSelf);
             settingPanel.SetActive(false);
             taskPanel.SetActive(false);
@@ -34,12 +34,14 @@ public class MainUIManager : MonoBehaviour
 
     public void StartBtn() //게임 시작 버튼
     {
+        AudioManager.instance.UIClickAudio();
         //SceneManager.LoadScene("Map");
         mainPanel.SetActive(false);
     }
 
     public void TaskBtn() //도전 과제, 찾은 NPC 보는 버튼
     {
+        AudioManager.instance.UIClickAudio();
         settingPanel.SetActive(false);
         taskPanel.SetActive(true);
         mainPanel.SetActive(false);
@@ -47,7 +49,8 @@ public class MainUIManager : MonoBehaviour
 
     public void BackBtn() //뒤로가기 버튼
     {
-        AudioManager.instance.TestAudioPlay();
+        AudioManager.instance.UIClickAudio();
+        AudioManager.instance.UIClickAudio();
         mainPanel.SetActive(!mainPanel.activeSelf);
         settingPanel.SetActive(false);
         taskPanel.SetActive(false);
@@ -55,6 +58,7 @@ public class MainUIManager : MonoBehaviour
     }
     public void SettingBtn() 
     {
+        AudioManager.instance.UIClickAudio();
         settingPanel.SetActive(true);
         taskPanel.SetActive(false);
         mainPanel.SetActive(false);
@@ -62,12 +66,14 @@ public class MainUIManager : MonoBehaviour
 
     public void ExitBtn()
     {
+        AudioManager.instance.UIClickAudio();
         warningPanel.SetActive(true);
         mainPanel.SetActive(false);
     }
 
     public void QuitBtn()
     {
+        AudioManager.instance.UIClickAudio();
         PlayerPrefs.Save();
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

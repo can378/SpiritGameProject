@@ -120,7 +120,9 @@ public class IcicleSkill : Skill
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // 방향 설정
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // 속도 설정
-            Destroy(instantProjectile, time);  //사거리 설정
+
+            StartCoroutine(explosion(instantProjectile));
+            
         }
         else if (user.tag == "Enemy")
         {
@@ -158,5 +160,15 @@ public class IcicleSkill : Skill
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // 속도 설정
             Destroy(instantProjectile, time);  //사거리 설정
         }
+    }
+
+    private IEnumerator explosion(GameObject projectile) 
+    {
+        yield return new WaitForSeconds(speed);//사거리 설정
+
+        projectile.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        projectile.GetComponent<IcicleExplosion>().explosionSprite();
+        yield return new WaitForSeconds(1f);
+        Destroy(projectile);  
     }
 }

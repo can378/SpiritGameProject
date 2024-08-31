@@ -32,14 +32,12 @@ public class BigKnife : MonoBehaviour
 
         if (isCoRun == false)
         {
-            if (targetDis > 3f)
+            if (targetDis > 6f)
             { transform.GetComponent<Rigidbody2D>().AddForce(moveDir * 10); }
             else
             { StartCoroutine(Attack()); }
 
         }
-        
-
     }
 
     IEnumerator Attack()
@@ -52,6 +50,8 @@ public class BigKnife : MonoBehaviour
         Vector3 vec1 = player.transform.position;
         yield return new WaitForSeconds(1f);
         Vector3 vec2 = player.transform.position;
+
+        if (vec2 == vec1) { vec1 = transform.position; }
         Vector3 cutDir = (vec2 - vec1).normalized;
 
         //자국 시작

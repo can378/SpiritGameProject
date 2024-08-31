@@ -16,7 +16,7 @@ public class ExplosiveProjectile : Equipment
             return;
         }
 
-        if (10 <= user.weaponList[user.playerStats.weapon].weaponType || user.playerStatus.isAttack)
+        if ((int)WEAPON_TYPE.MELEE < (int)user.weaponList[user.playerStats.weapon].weaponType || user.playerStatus.isAttack)
         {
             
         }
