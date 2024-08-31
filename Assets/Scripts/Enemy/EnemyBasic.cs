@@ -103,7 +103,7 @@ public class EnemyBasic : ObjectBasic
 
     #region Move
 
-    void Move()
+    protected virtual void Move()
     {
         // 경직과 공격 중에는 직접 이동 불가
         if (enemyStatus.isFlinch)

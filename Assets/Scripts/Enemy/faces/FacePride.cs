@@ -7,12 +7,13 @@ public class FacePride : BossFace
 {
     //교만=투명해진다. 잠시 반투명하게 보인다. 1초 뒤에 튀어나와서 공격. 다시 투명해진다. 반복
 
+    public GameObject attackArea;
 
-    protected override void MovePattern()
+    protected override void Update()
     {
-        
+        base.Update();
+        attackArea.transform.localPosition = new Vector3(0,0,0);
     }
-    
 
     protected override void faceAttack() 
     {

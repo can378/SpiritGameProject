@@ -194,7 +194,7 @@ public class AudioManager : MonoBehaviour
             bgSound.volume = 0.6f;
             bgSound.Play();
 
-            Debug.Log("bgm normal=" + chapterNum + "," + bgSound.clip.name);
+            //Debug.Log("bgm normal=" + chapterNum + "," + bgSound.clip.name);
         }
 
     }

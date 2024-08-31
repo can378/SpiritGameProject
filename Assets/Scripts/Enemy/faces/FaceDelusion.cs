@@ -39,30 +39,4 @@ public class FaceDelusion : BossFace
         RandomMove();
     }
 
-    // protected override void Move()
-    // {
-    //     // 경직 중에는 직접 이동 불가
-    //     if (enemyStatus.isFlinch)
-    //     {
-    //         return;
-    //     }
-    //     else if (enemyStatus.isRun)
-    //     {
-    //         if (enemyStatus.enemyTarget)
-    //         {
-    //             rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
-    //         }
-    //         return;
-    //     }
-
-    //     MovePattern();
-
-    //     rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
-
-    // }
-
-
-
-
-
 }

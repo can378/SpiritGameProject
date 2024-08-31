@@ -1,87 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class BossFace : EnemyBasic
 {
     public GameObject originalPose;
-    public bool nowAttack=false;
+    public bool nowAttack = false;
 
-    protected bool isFirst=true;
-    private float approachTime=200;
-    private float attackTime=100;
+    protected bool isFirst = true;
+    private float approachTime = 1000;
+    private float attackTime = 5000;
     private float countTime = 0;
 
     protected bool isFaceAttack;
+    protected bool isFaceApproach;
+    protected bool isFaceBack;
 
 
-    protected override void Update() 
+
+    protected override void Update()
     {
         base.Update();
-        if (isFirst) 
+        if (isFirst&&nowAttack)
         {
             isFirst = false;
-            initAttack();
+            init();
         }
     }
-    protected override void AttackPattern()
+
+    protected virtual void init()
     {
-        if(nowAttack) { StartCoroutine(faceAttackStart()); }
+        setApproach();
     }
 
-    protected virtual void initAttack() 
-    { 
-         
-    }
-    protected virtual void faceAttack() 
+
+    //MOVE////////////////////////////////////////
+    protected override void Move()
     {
-       
+        if (isFaceApproach)
+        {
+            //Approaching
+            if (countTime > 0)
+            {
+                MoveTo(gameObject, 2.5f, transform.position, FindObj.instance.Player.transform.position);
+                countTime--;
+
+            }
+            else { setAttack(); }
+
+        }
+        else if (isFaceBack)
+        {
+            //Back
+            if (Vector2.Distance(transform.position, originalPose.transform.position) >= 1f)
+            {
+                Vector3 vec = (originalPose.transform.position - transform.position).normalized;
+                GetComponent<Rigidbody2D>().AddForce(vec * 2.5f);
+                //print("go back to original pose");
+            }
+            else { setEnd(); }
+        }
+        else if (isFaceAttack)
+        {
+            base.Move();
+        }
     }
-
-    public IEnumerator faceAttackStart() 
-    {
-        //start
-        enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
-
-        //Approaching
-        countTime = approachTime;
-        while (countTime>=0)
-        {
-            MoveTo(gameObject, 150, transform.position, enemyStatus.enemyTarget.transform.position);
-            yield return new WaitForSeconds(0.01f);
-            countTime--;
-        }
-
-
-        //Attack
-        countTime = attackTime;
-        while (countTime >=0) 
-        {
-            faceAttack();
-            yield return new WaitForSeconds(0.01f);
-            countTime--;
-            print(countTime);
-        }
-
-
-       
-        //Back
-        while (Vector2.Distance(transform.position, originalPose.transform.position) >= 2f)
-        {
-            Vector3 vec = (originalPose.transform.position - transform.position).normalized;
-            GetComponent<Rigidbody2D>().AddForce(vec * 200);
-            yield return new WaitForSeconds(0.01f);
-            print("go back to original pose");
-        }
-
-        //END
-        enemyStatus.isAttack = false;
-        enemyStatus.isAttackReady = true;
-        isFirst = true;
-        nowAttack = false;
-    }
-
 
 
     bool MoveTo(GameObject obj, float speed, Vector3 from, Vector3 to)
@@ -92,4 +76,68 @@ public class BossFace : EnemyBasic
         { return true; }
         return false;
     }
+    //Set////////////////////////////////////////////////////////////
+    private void setApproach() 
+    {
+        isFaceApproach = true;
+        isFaceBack = false;
+        isFaceAttack = false;
+
+        countTime = approachTime;
+    }
+    private void setAttack() 
+    {
+        isFaceApproach = false;
+        isFaceBack = false;
+        isFaceAttack = true;
+
+        countTime = attackTime;
+    }
+    private void setBack() 
+    {
+        isFaceApproach = false;
+        isFaceBack = true;
+        isFaceAttack = false;
+
+        countTime = 0;
+    }
+
+    private void setEnd() 
+    {
+        rigid.velocity= Vector3.zero;
+        isFaceApproach = false;
+        isFaceBack = false;
+        isFaceAttack = false;
+
+        countTime = 0;
+
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
+        isFirst = true;
+        nowAttack = false;
+    }
+    //ATTACK///////////////////////////////////////////////////////
+    protected override void AttackPattern()
+    {
+        if(nowAttack&& isFaceAttack)
+        { 
+            //Attack
+            if (countTime > 0)
+            {
+                faceAttack();
+                countTime--;
+                print("attack time-"+countTime);
+            }
+            else { setBack(); }
+        }
+    }
+
+    
+    protected virtual void faceAttack() 
+    {
+       
+    }
+
+
+   
 }

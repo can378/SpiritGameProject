@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FaceAngry : BossFace
 {
+    //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님
+
     //public List<GameObject> faces;
+    public List<GameObject> fires;
+    private bool isReady=false;
 
     protected override void MovePattern()
     {
         if (nowAttack) { RandomMove(); }
     }
-    //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님
 
+    protected override void faceAttack()
+    {
+        base.faceAttack();
+        if(isReady) { StartCoroutine(angry()); }
+        
+    }
 
+    IEnumerator angry() 
+    {
+        isReady = false;
+        foreach (GameObject fire in fires)
+        { 
+            fire.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(3f); 
+        isReady = true;
+    }
     // protected override void Move()
     // {
     //     // 경직 중에는 직접 이동 불가

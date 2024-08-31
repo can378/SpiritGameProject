@@ -30,9 +30,9 @@ public class FaceGreed : BossFace
         // 시작 시점에 선의 위치 초기화
         lineRenderer.positionCount = 2;
     }
-    protected override void initAttack()
+    protected override void init()
     {
-        base.initAttack();
+        base.init();
         startPoint = transform;
     }
     protected override void MovePattern()

@@ -25,10 +25,7 @@ public class FaceHostility : BossFace
         angleStep = spreadAngle / (bulletCount - 1);
         startAngle = -spreadAngle / 2;
     }
-    protected override void MovePattern()
-    {
-        //if (nowAttack) { base.MovePattern(); }
-    }
+
     protected override void faceAttack()
     {
         if(isReady) { StartCoroutine(hostility()); }
