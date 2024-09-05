@@ -14,6 +14,7 @@ public class ObjectPoolManager : MonoBehaviour
     public GameObject[] prefabs;
     List<GameObject>[] pools;
 
+
     void Awake()
     {
         if (instance == null)
@@ -35,7 +36,7 @@ public class ObjectPoolManager : MonoBehaviour
             pools[index] = new List<GameObject>();
     }
 
-    public GameObject Get(int index)//오브젝트 이름으로 찾는거로 바꿀까?
+    public GameObject Get(int index)//get object with index
     {
         GameObject select = null;
 
@@ -58,7 +59,7 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    public GameObject Get2(string name) 
+    public GameObject Get2(string name)//get object iwth name
     {
         GameObject select = null;
        
@@ -78,7 +79,15 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    public void test() { print("object pool manger test"); }
+    public GameObject ExplosionSFX(Sprite sprite) 
+    {
+
+        GameObject select = Get2("explosionSFX");
+        select.GetComponent<SpriteRenderer>().sprite = sprite;
+        
+        return select;
+    }
+
 
     public void Clear(int index)
     {

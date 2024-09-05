@@ -34,7 +34,9 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] TMP_Text KeyTxt;
     //[SerializeField] Image itemImg;
     [SerializeField] Image skillImg;
-
+    public Image skillCoolImg;
+   
+    
     //Boss Stats
     [SerializeField] EnemyBasic Boss;
     [SerializeField] Slider BossHpslider;
@@ -121,6 +123,8 @@ public class MapUIManager : MonoBehaviour
         UpdateKeyUI();
         UpdateStatUI();
         UpdateSkillUI();
+        UpdateSkillCoolTimeUI();
+
         UpdateInventoryUI();
         UpdateNearObjectUI();
 
@@ -201,6 +205,25 @@ public class MapUIManager : MonoBehaviour
         }
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
+
+    private float fillSpeed = 0.5f;
+    private float targetFillAmount = 1.0f;
+    private float fillValue;
+    private float skillCoolTime_max;
+    private float skillCoolTime_now;
+    void UpdateSkillCoolTimeUI() 
+    {
+        // 비율 계산 (예: now = 현재 값, max = 최대 값).
+        fillValue = skillCoolTime_now / skillCoolTime_max;
+        skillCoolImg.fillAmount = Mathf.Clamp(fillValue, 0f, 1f);
+
+    }
+    public void UpdateSkillCoolTime(float max, float now)
+    {
+        skillCoolTime_max = max;
+        skillCoolTime_now = now;
+    }
+
 
     void UpdateCoinUI() 
     {

@@ -96,6 +96,14 @@ public class Player : ObjectBasic
             SkillUp();
             SkillDown();
             SkillChange();
+            //skill cool time
+            if(playerStats.skill[playerStatus.skillIndex] != 0)
+            {
+                MapUIManager.instance.UpdateSkillCoolTime
+                (skillList[playerStats.skill[playerStatus.skillIndex]].skillDefalutCoolTime,
+                skillList[playerStats.skill[playerStatus.skillIndex]].skillCoolTime);
+            }
+           
         }
         
         string layerName = LayerMask.LayerToName(gameObject.layer);
