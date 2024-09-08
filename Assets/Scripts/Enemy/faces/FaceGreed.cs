@@ -10,7 +10,7 @@ public class FaceGreed : BossFace
     public float lineWidth = 2f; // 선의 두께
 
 
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer;
     private List<Vector3> positions; // 선을 그릴 위치들의 리스트
 
 
@@ -21,7 +21,7 @@ public class FaceGreed : BossFace
         base.Start();
 
 
-        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        //lineRenderer = gameObject.GetComponent<LineRenderer>();
 
         // 선 두께,material
         lineRenderer.startWidth = lineWidth;
@@ -64,7 +64,6 @@ public class FaceGreed : BossFace
     }
     protected override void faceAttack()
     {
-        print("greed");
         // 매 프레임마다 선의 끝 점을 목표로 업데이트
         //endPoint=transform;
         //lineRenderer.SetPosition(0, startPoint.position);

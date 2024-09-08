@@ -18,8 +18,8 @@ public class FaceDumb : BossFace
 
     protected override void MovePattern()
     {
-        print("dumb");
-        Chase();
+
+        RandomMove();
         
     }
 

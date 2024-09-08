@@ -8,8 +8,7 @@ public class FaceAngry : BossFace
 
     public List<GameObject> fires;//아니 이게 부모 자식 관계인데 일일히 해줘야하는건지 이해가 안가는데 일단 안되서 이렇게 함;;;
     public GameObject fire;
-    private bool isReady;
-    private float randomMoveCount = 600f;
+    private const float randomMoveCount = 3f;
     private float nowCount = 0;
 
     protected override void Update()
@@ -22,19 +21,23 @@ public class FaceAngry : BossFace
     }
     protected override void MovePattern()
     {
-        Chase();
+        //Chase();
+        print("angry");
+        //Debug.Log(enemyStatus.isFlinch+" "+ enemyStatus.isAttack+" "+ enemyStatus.isRun);
         /*
-        if (nowCount > 0)
+        if (nowCount >= 0)
         {
-            nowCount--;
+            nowCount-=Time.deltaTime;
         }
         else 
         { 
-            enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized; 
+            enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;  
+            //print("moveVec================"+ enemyStatus.moveVec);
             nowCount = randomMoveCount; 
         }
-        print(rigid.velocity);
         */
+
+        RandomMove();
     }
 
     protected override void faceAttack()
@@ -46,7 +49,6 @@ public class FaceAngry : BossFace
     protected override void init()
     {
         base.init();
-        isReady = true;
         nowCount = randomMoveCount;
         enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;
     }
@@ -75,15 +77,7 @@ public class FaceAngry : BossFace
 
 
 
-    IEnumerator angry() 
-    {
-        print("angry");
-        isReady = false;
-        fire.SetActive(true);
-        yield return new WaitForSeconds(3f); 
-        fire.SetActive(false);
-        isReady = true;
-    }
+
     // protected override void Move()
     // {
     //     // 경직 중에는 직접 이동 불가

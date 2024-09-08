@@ -43,7 +43,8 @@ public class FaceEnvy : BossFace
     protected override void init()
     {
         base.init();
-        skill = Random.RandomRange(1, skillList.Count);
+        skill = UnityEngine.Random.Range(1, skillList.Count);
+        skillList[skill].gameObject.SetActive(true);
     }
 
     protected override void faceAttack()
@@ -94,10 +95,31 @@ public class FaceEnvy : BossFace
             int playerSkill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
             if (playerSkill != 0) { skill = playerSkill; }
 
+            print("envy");
             skillList[skill].gameObject.SetActive(true);
 
             //if (skill != 0) { skillList[skill].gameObject.SetActive(true); }
 
         }
     }
+
+    public override void AttackCancle()
+    {
+        status.isAttack = false;
+        status.isAttackReady = true;
+        status.moveVec = Vector2.zero;
+
+        foreach (GameObject hitEffect in hitEffects)
+            hitEffect.SetActive(false);
+
+        if (enemyStatus.attackCoroutine != null)
+        {
+            StopCoroutine(enemyStatus.attackCoroutine);
+            skillList[skill].Cancle();
+            enemyStatus.attackCoroutine = null;
+        }
+
+    }
+
+
 }

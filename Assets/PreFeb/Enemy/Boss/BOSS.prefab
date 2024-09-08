@@ -118,7 +118,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 7786001796715813975}
+  originalPose: {fileID: 4193080847018387911}
   nowAttack: 0
   <skillList>k__BackingField:
   - {fileID: 6658312218765360812, guid: 8d5409f6a9fc1c24db83e217c46858d6, type: 3}
@@ -654,7 +654,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 6527211622890632511}
+  originalPose: {fileID: 987058458133851207}
   nowAttack: 0
 --- !u!114 &8349689524911112008
 MonoBehaviour:
@@ -910,7 +910,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 1923701858444437108}
+  originalPose: {fileID: 7786001796715813975}
   nowAttack: 0
 --- !u!114 &7926505312240910884
 MonoBehaviour:
@@ -1198,9 +1198,13 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 987058458133851207}
+  originalPose: {fileID: 8364776543247843159}
   nowAttack: 0
-  fires: []
+  fires:
+  - {fileID: 3526785452249360168}
+  - {fileID: 9085572544140192093}
+  - {fileID: 3998027995211900500}
+  fire: {fileID: 6846768452825272038}
 --- !u!114 &4933685169703591471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,7 +1636,15 @@ MonoBehaviour:
   phase: 0
   finalBoss1: {fileID: 1613906168541564709}
   finalBoss2: {fileID: 662196373789001864}
-  faces: []
+  faces:
+  - {fileID: 4403570332857898030}
+  - {fileID: 107364410753869966}
+  - {fileID: 730951465155966044}
+  - {fileID: 3781528914712195213}
+  - {fileID: 4745113883667359956}
+  - {fileID: 1034818434386542507}
+  - {fileID: 4348781097448445182}
+  - {fileID: 870475538228834938}
 --- !u!114 &6811579726078025734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1646,7 +1658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <HPMax>k__BackingField: 1000
-  <HP>k__BackingField: 600
+  <HP>k__BackingField: 400
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 10
   <poise>k__BackingField: 10
@@ -2283,7 +2295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4924791187568627928
 Transform:
   m_ObjectHideFlags: 0
@@ -2674,7 +2686,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 4193080847018387911}
+  originalPose: {fileID: 7294068057737336207}
   nowAttack: 0
   attackArea: {fileID: 5893021971227521195}
 --- !u!114 &5184781030305975787
@@ -2835,7 +2847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2317943629591613802
 Transform:
   m_ObjectHideFlags: 0
@@ -3167,12 +3179,14 @@ GameObject:
   - component: {fileID: 1699088139532595074}
   - component: {fileID: 6128256737217274291}
   - component: {fileID: 6342574278063361145}
+  - component: {fileID: 757494504686578510}
   - component: {fileID: 3415571620394987867}
   - component: {fileID: 1072074692704561262}
   - component: {fileID: 5579246312854693862}
   - component: {fileID: 2938237443487743501}
   - component: {fileID: 732582228588761747}
   - component: {fileID: 5957375715351671592}
+  - component: {fileID: 4344692884510383771}
   m_Layer: 8
   m_Name: greedFace
   m_TagString: Enemy
@@ -3276,6 +3290,20 @@ MonoBehaviour:
   originalPose: {fileID: 1578486019789384408}
   nowAttack: 0
   lineWidth: 3
+--- !u!114 &757494504686578510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348781097448445182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41433f8fc7143b0479504beb9f8f67c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 3415571620394987867}
+  edgeCollider: {fileID: 4344692884510383771}
 --- !u!120 &3415571620394987867
 LineRenderer:
   serializedVersion: 2
@@ -3378,7 +3406,7 @@ LineRenderer:
     generateLightingData: 0
   m_MaskInteraction: 0
   m_UseWorldSpace: 1
-  m_Loop: 1
+  m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!114 &1072074692704561262
 MonoBehaviour:
@@ -3518,6 +3546,47 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!68 &4344692884510383771
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348781097448445182}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 1.34
+  m_Points:
+  - {x: -1.08, y: 0}
+  - {x: 1.08, y: 0}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &4403570332857898030
 GameObject:
   m_ObjectHideFlags: 0
@@ -3635,7 +3704,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 7294068057737336207}
+  originalPose: {fileID: 1923701858444437108}
   nowAttack: 0
   attackArea: {fileID: 2953052033494414407}
 --- !u!114 &8380526451917969200
@@ -3684,9 +3753,9 @@ MonoBehaviour:
   <defaultMoveSpeed>k__BackingField: 5
   activeEffects: []
   enemyName: 
-  detectionDis: 30
+  detectionDis: 100
   detectionKeepDis: 100
-  maxAttackRange: 6
+  maxAttackRange: 100
 --- !u!114 &5963684533729813059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3892,7 +3961,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  originalPose: {fileID: 8364776543247843159}
+  originalPose: {fileID: 6527211622890632511}
   nowAttack: 0
 --- !u!114 &2318259720663811732
 MonoBehaviour:
@@ -4252,7 +4321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644f07611200c12448532bf09df18766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailRenderer: {fileID: 8370837757245949244}
+  trailRenderer: {fileID: 0}
   edgeCollider: {fileID: 7366287823012422960}
 --- !u!68 &7366287823012422960
 EdgeCollider2D:
@@ -5280,7 +5349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8240142640538188774
 Transform:
   m_ObjectHideFlags: 0
@@ -5626,7 +5695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1127087926774377981
 Transform:
   m_ObjectHideFlags: 0
@@ -5964,7 +6033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &620043391435311517
 Transform:
   m_ObjectHideFlags: 0

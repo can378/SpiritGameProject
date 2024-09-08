@@ -407,7 +407,7 @@ public class FinalBoss : EnemyBasic
         {
             for(int i=0;i < 4; i++) 
             {
-                print(facesList[i].name + " attacks -->" + facesList[i].GetComponent<BossFace>().nowAttack);
+                //print(facesList[i].name + " attacks -->" + facesList[i].GetComponent<BossFace>().nowAttack);
             }
             yield return new WaitForSeconds(0.01f); 
         }
