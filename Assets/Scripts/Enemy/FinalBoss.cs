@@ -47,14 +47,17 @@ public class FinalBoss : EnemyBasic
         if ( (enemyStats.HP <= (enemyStats.HPMax / 2))
             && phase == finalBossPhase.phase1 )
         {
+            StopAllCoroutines();
+
             finalBoss2.SetActive(true);
-            InitStatus();
+            //InitStatus();
             finalBoss1.SetActive(false);
+            return;
         }
 
         if (phase == finalBossPhase.phase1)
         {
-            switch (patternNum)
+            switch (patternNum%6)
             {
                 case 1:
                     
@@ -79,7 +82,7 @@ public class FinalBoss : EnemyBasic
         }
         else 
         {
-            switch (patternNum)
+            switch (patternNum%5)
             {
                 case 1:
                     enemyStatus.attackCoroutine = StartCoroutine(facesAttack());
@@ -98,10 +101,9 @@ public class FinalBoss : EnemyBasic
                     break;
             }
         }
+        patternNum++;
 
-
-        if (patternNum == 5) { patternNum = 1; }
-        else { patternNum++; }
+       
         
     }
 
