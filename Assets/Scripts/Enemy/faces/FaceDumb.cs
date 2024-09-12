@@ -8,70 +8,80 @@ public class FaceDumb : BossFace
     //무지=막 돌아다님
     private const float randomMoveCount =5f;
     private float nowCount = 0;
+    
+
+    public GameObject floor;
+    private Bounds floorBound;
+    private bool isHitWall = false;
     private float randomX, randomY;
 
-    public Bounds floorBound;
+
     public GameObject attackArea;
 
+    
+    //start, update/////////////////////////////////////////
+    protected override void Start()
+    {
+        base.Start();
+        floorBound = floor.GetComponent<Collider2D>().bounds;
+    }
     protected override void Update()
     {
         base.Update();
         attackArea.transform.localPosition = new Vector3(0, 0, 0);
     }
 
-    protected override void MovePattern()
+    //Attack////////////////////////////////////////////////
+    protected override void faceAttack()
     {
-        //enemyStatus.moveVec = new Vector2(-1, 0);
-        //Debug.Log(enemyStatus.isFlinch+" "+ enemyStatus.isAttack+" "+ enemyStatus.isRun);
-        
-        if (nowCount >= 0)
-        {
-            nowCount-=Time.deltaTime;
-        }
-        else 
-        { 
-            enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;  
-            //print("moveVec================"+ enemyStatus.moveVec);
-            nowCount = randomMoveCount; 
-        }
-       
+        base.faceAttack();
+        attackArea.SetActive(true);
     }
 
-    /*
-    IEnumerator MadRush()
+
+    //Move//////////////////////////////////////////////////
+    protected override void MovePattern()
     {
+        MadRush();
+    }
 
-        randomX = Random.Range(floorBound.min.x, floorBound.max.x);
-        randomY = Random.Range(floorBound.min.y, floorBound.max.y);
-        madRushVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
-
-
-        float time = 0;
-        rigid.velocity = Vector2.zero;
-
-
-        while (time < 2.0f)
+    void MadRush()
+    {
+        if(nowCount >= 0)
         {
-            if (isHitWall == true)
+            if (isHitWall)
             {
-                print("hit wall!");
                 isHitWall = false;
 
                 //벽에 부딫힘
                 randomX = Random.Range(floorBound.min.x, floorBound.max.x);
                 randomY = Random.Range(floorBound.min.y, floorBound.max.y);
-                madRushVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
-                yield return new WaitForSeconds(0.1f);
+                enemyStatus.moveVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+                rigid.velocity = Vector2.zero;
             }
-
-            rigid.AddForce(madRushVec * GetComponent<EnemyStats>().defaultMoveSpeed * 600);
-            yield return new WaitForSeconds(0.05f);
-            time += Time.deltaTime;
+            nowCount -= Time.deltaTime;
+        }
+        else
+        {
+            //set new vector
+            randomX = Random.Range(floorBound.min.x, floorBound.max.x);
+            randomY = Random.Range(floorBound.min.y, floorBound.max.y);
+            enemyStatus.moveVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+            rigid.velocity = Vector2.zero;
+            nowCount = randomMoveCount;
         }
 
-        yield return new WaitForSeconds(0.1f);
-        rigid.velocity = Vector2.zero;
-
     }
-    */
+
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
+
+
+        if (collision.CompareTag("Wall")) 
+        {
+            isHitWall = true;
+        }
+    }
 }

@@ -75,7 +75,7 @@ public class EnemyBasic : ObjectBasic
         enemyStatus.isAttackReady = false;
     }
 
-    void Detect()
+    protected virtual void Detect()
     {
         // 타겟이 있을 때
         if (enemyStatus.enemyTarget != null)

@@ -68,7 +68,7 @@ public class BossFace : EnemyBasic
     }
 
 
-    bool MoveTo(GameObject obj, float speed, Vector3 from, Vector3 to)
+    protected bool MoveTo(GameObject obj, float speed, Vector3 from, Vector3 to)
     {
         Vector3 vec = (to - from).normalized;
         obj.GetComponent<Rigidbody2D>().AddForce(vec * speed);
@@ -76,8 +76,11 @@ public class BossFace : EnemyBasic
         { return true; }
         return false;
     }
+
+
+   
     //Set////////////////////////////////////////////////////////////
-    private void setApproach() 
+    protected void setApproach() 
     {
         isFaceApproach = true;
         isFaceBack = false;
@@ -85,7 +88,7 @@ public class BossFace : EnemyBasic
 
         countTime = approachTime;
     }
-    private void setAttack() 
+    protected void setAttack() 
     {
         isFaceApproach = false;
         isFaceBack = false;
@@ -116,6 +119,7 @@ public class BossFace : EnemyBasic
         isFirst = true;
         nowAttack = false;
     }
+
     //ATTACK///////////////////////////////////////////////////////
     protected override void AttackPattern()
     {
@@ -137,10 +141,7 @@ public class BossFace : EnemyBasic
     }
 
     
-    protected virtual void faceAttack() 
-    {
-       
-    }
+    protected virtual void faceAttack() {    }
 
 
    

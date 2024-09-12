@@ -21,7 +21,7 @@ public class FacePride : BossFace
     }
     protected override void faceAttack() 
     {
-        print("pride");
+        //print("pride");
         //attack
         //감지
 
@@ -31,7 +31,7 @@ public class FacePride : BossFace
             if (enemyStatus.targetDis <= 5.5f)
             {
                 //사정거리 안
-                print("pride-attack");
+                //print("pride-attack");
                 sprite.color = new Color(1f, 0f, 0f, 1f);
                 attackArea.SetActive(true);
             }
@@ -39,7 +39,7 @@ public class FacePride : BossFace
             {
                 if (enemyStatus.isFlinch == false && enemyStatus.isRun == false)
                 {
-                    print("pride-chase");
+                    //print("pride-chase");
                     Chase();
                     sprite.color = new Color(1f, 1f, 1f, 0.2f);
                     attackArea.SetActive(false);
@@ -50,7 +50,7 @@ public class FacePride : BossFace
         else
         {
             //hide
-            print("pride-hide");
+            //print("pride-hide");
             Chase();
             sprite.color = new Color(1f, 1f, 1f, 0.05f);
             attackArea.SetActive(false);

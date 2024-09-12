@@ -4,12 +4,28 @@ using UnityEngine;
 
 public class FaceAngry : BossFace
 {
+    //코드로 작동은 하지만 제일 더러움
+
+
+
     //분노=머리랑 귀, 코 에서 불 나오고 랜덤으로 돌아다님
 
     public List<GameObject> fires;//아니 이게 부모 자식 관계인데 일일히 해줘야하는건지 이해가 안가는데 일단 안되서 이렇게 함;;;
     public GameObject fire;
+
     private const float randomMoveCount = 3f;
     private float nowCount = 0;
+
+    public GameObject floor;
+    private Bounds floorBound;
+    private bool isHitWall = false;
+    private float randomX, randomY;
+
+    protected override void Start()
+    {
+        base.Start();
+        floorBound = floor.GetComponent<Collider2D>().bounds;
+    }
 
     protected override void Update()
     {
@@ -19,30 +35,92 @@ public class FaceAngry : BossFace
         fires[2].transform.localPosition = new Vector3(1.72f, -0.001f, 0);
 
     }
-    protected override void MovePattern()
+
+    protected override void Move()
     {
-        //Chase();
-        print("angry");
-        //Debug.Log(enemyStatus.isFlinch+" "+ enemyStatus.isAttack+" "+ enemyStatus.isRun);
-        /*
+        if(isFaceApproach)
+        {
+            //Approaching
+            if (countTime > 0)
+            {
+                MoveTo(gameObject, 2.5f, transform.position, FindObj.instance.Player.transform.position);
+                countTime--;
+
+            }
+            else { print("angry set attack"); setAttack(); }
+
+        }
+        else if (isFaceBack)
+        {
+            //Back
+            if (Vector2.Distance(transform.position, originalPose.transform.position) >= 1f)
+            {
+                Vector3 vec = (originalPose.transform.position - transform.position).normalized;
+                GetComponent<Rigidbody2D>().AddForce(vec * 2.5f);
+            }
+            else { print("angry set finish"); Finish(); }
+        }
+        else if (isFaceAttack)
+        {
+            
+            // 경직 중에는 직접 이동 불가
+            if (enemyStatus.isFlinch)
+            {
+                return;
+            }
+
+            MovePattern();
+
+            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+        }
+
+
+    }
+
+    protected override void MovePattern() { }
+
+
+    private void madRush() {
+
+        print("angry move");
         if (nowCount >= 0)
         {
-            nowCount-=Time.deltaTime;
-        }
-        else 
-        { 
-            enemyStatus.moveVec = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f)).normalized;  
-            //print("moveVec================"+ enemyStatus.moveVec);
-            nowCount = randomMoveCount; 
-        }
-        */
+            if (isHitWall)
+            {
+                isHitWall = false;
 
-        RandomMove();
+                //벽에 부딫힘
+                randomX = Random.Range(floorBound.min.x, floorBound.max.x);
+                randomY = Random.Range(floorBound.min.y, floorBound.max.y);
+                enemyStatus.moveVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+                rigid.velocity = Vector2.zero;
+            }
+            nowCount -= Time.deltaTime;
+        }
+        else
+        {
+            //set new vector
+            randomX = Random.Range(floorBound.min.x, floorBound.max.x);
+            randomY = Random.Range(floorBound.min.y, floorBound.max.y);
+            enemyStatus.moveVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+            rigid.velocity = Vector2.zero;
+            nowCount = randomMoveCount;
+        }
+
+    }
+
+
+
+    protected override void Detect()
+    {
+        enemyStatus.enemyTarget = FindObj.instance.Player.transform;
     }
 
     protected override void faceAttack()
     {
+        //print("angry attack");
         base.faceAttack();
+        madRush();
         fire.SetActive(true);
        
     }
@@ -55,13 +133,23 @@ public class FaceAngry : BossFace
     protected override void Finish()
     {
         base .Finish();
+        rigid.velocity = Vector2.zero;
         fire.SetActive(false);
     }
 
 
 
 
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        base.OnTriggerEnter2D(collision);
 
+
+        if (collision.CompareTag("Wall"))
+        {
+            isHitWall = true;
+        }
+    }
 
 
 
