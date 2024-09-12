@@ -340,7 +340,7 @@ public class MapUIManager : MonoBehaviour
 
     void OnOffBossProgress()
     {
-        if(Boss == null)
+        if(Boss == null || Boss.isActiveAndEnabled==false)
             return;
 
         if (Boss.stats.HP <= 0)
@@ -359,7 +359,7 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateBossHealthUI()
     {
-        if(Boss == null)
+        if(Boss == null||Boss.isActiveAndEnabled==false)
             return;
 
         if(!Boss.enemyStatus.enemyTarget)
@@ -371,7 +371,7 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateBossName()
     {
-        if(Boss == null)
+        if(Boss == null || Boss.isActiveAndEnabled == false)
             return;
 
         if(!Boss.enemyStatus.enemyTarget)
