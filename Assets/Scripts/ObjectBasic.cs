@@ -250,9 +250,10 @@ public class ObjectBasic : MonoBehaviour
     public virtual void Dead()
     {
         print(this.name + " Dead");
-        this.gameObject.SetActive(false);
+        
         RemoveAllEffects();
         AttackCancle();
+        this.gameObject.SetActive(false);
         //Destroy(this.gameObject);
     }
 

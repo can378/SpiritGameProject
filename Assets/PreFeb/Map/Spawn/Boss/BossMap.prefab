@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 2323307323661156973}
   - component: {fileID: 8522849875804448683}
   - component: {fileID: 2032379173313446530}
+  - component: {fileID: 7399106270705271396}
   m_Layer: 0
   m_Name: BossMap
   m_TagString: Untagged
@@ -182,6 +183,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimapIcon: {fileID: 4184860465444839015}
+--- !u!114 &7399106270705271396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782812310506344177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca7930a8678d0c4cb1740c4c025467f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextChapterDoor: {fileID: 6384596373396706539}
 --- !u!1 &7278715629051353697
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +371,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: nextDungeon
       objectReference: {fileID: 0}
+    - target: {fileID: 3925127381359125605, guid: 218085becc645114bb88f75ba7e6c0db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6013281908172076556, guid: 218085becc645114bb88f75ba7e6c0db, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.06
@@ -405,5 +423,10 @@ PrefabInstance:
 --- !u!4 &4436333793329940098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6013281908172076556, guid: 218085becc645114bb88f75ba7e6c0db, type: 3}
+  m_PrefabInstance: {fileID: 7990087354991718542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6384596373396706539 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3925127381359125605, guid: 218085becc645114bb88f75ba7e6c0db, type: 3}
   m_PrefabInstance: {fileID: 7990087354991718542}
   m_PrefabAsset: {fileID: 0}
