@@ -253,8 +253,9 @@ public class ObjectBasic : MonoBehaviour
         
         RemoveAllEffects();
         AttackCancle();
-        this.gameObject.SetActive(false);
-        //Destroy(this.gameObject);
+        StopAllCoroutines();
+        //this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 
     #endregion

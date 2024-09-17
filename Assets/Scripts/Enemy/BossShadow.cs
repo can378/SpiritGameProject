@@ -197,6 +197,8 @@ public class BossShadow : EnemyBasic
         for (int i = 0; i < circles.Count; i++)
         { circles[i].SetActive(false); }
         hitEffects[(int)ShadowHitEffect.Circle].SetActive(false);
+
+
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;

@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class SafeArea : MonoBehaviour
 {
+    public bool isPlayerSafe=false;
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            //dot damage 시작
-            print("damage to player");
-            //방을 나가면 중지되는지 확인하기
+            //print("not safe");
+            isPlayerSafe = false;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            //dot damage 중단
-            print("damage stop");
+            //print("safe");
+            isPlayerSafe = true;
         }
     }
 }

@@ -1031,7 +1031,7 @@ public class Player : ObjectBasic
                 playerStats.tempHP += 10f;
             }
 
-            MapUIManager.instance.UpdateMinimapUI(false);
+            //MapUIManager.instance.UpdateMinimapUI(false);
         }
     }
 

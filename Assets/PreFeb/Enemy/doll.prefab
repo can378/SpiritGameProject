@@ -89,9 +89,9 @@ GameObject:
   - component: {fileID: 2455287251449302286}
   - component: {fileID: 3976504061870937201}
   - component: {fileID: 4529116099240296461}
+  - component: {fileID: 3293383377006346972}
   - component: {fileID: 2660188753817144381}
   - component: {fileID: 2399028934464656598}
-  - component: {fileID: 3293383377006346972}
   m_Layer: 8
   m_Name: doll
   m_TagString: Enemy
@@ -230,6 +230,33 @@ MonoBehaviour:
   detectionDis: 10
   detectionKeepDis: 50
   maxAttackRange: 50
+--- !u!114 &3293383377006346972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8128793878538749382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveVec: {x: 0, y: 0}
+  hitTarget: {fileID: 0}
+  isBeAttaked: 0
+  isFlinch: 0
+  isSuperArmor: 0
+  isInvincible: 0
+  isAttack: 0
+  isAttackReady: 1
+  isTouchPlayer: 0
+  isBoss: 0
+  isRun: 0
+  randomMove: 0
+  enemyTarget: {fileID: 0}
+  targetDirVec: {x: 0, y: 0}
+  targetDis: 0
 --- !u!70 &2660188753817144381
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -292,27 +319,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3293383377006346972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8128793878538749382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ae92002b18b2ad4eb9bdedd1ec5737e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveVec: {x: 0, y: 0}
-  hitTarget: {fileID: 0}
-  isFlinch: 0
-  isInvincible: 0
-  isAttack: 0
-  isAttackReady: 1
-  isTouchPlayer: 0
-  isRun: 0
-  randomMove: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0

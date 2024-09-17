@@ -171,10 +171,11 @@ public class BossBaby : EnemyBasic
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
-
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         while (time < 2.0f)
         {
-            if(isHitWall==true)
+            hitEffects[(int)BossBabyHitEffect.RushHitArea].transform.position = transform.position;
+            if (isHitWall==true)
             {
                 print("hit wall!");
                 isHitWall = false;
@@ -194,7 +195,7 @@ public class BossBaby : EnemyBasic
         yield return new WaitForSeconds(0.1f);
         rigid.velocity = Vector2.zero;
 
-
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
@@ -211,6 +212,7 @@ public class BossBaby : EnemyBasic
         enemyAnim.changeAnimToBaby();
 
         hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(true);
+        yield return new WaitForSeconds(2f);
         hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(true);
 
         yield return StartCoroutine(DamageAreaIncrease());
@@ -230,7 +232,7 @@ public class BossBaby : EnemyBasic
         float scaleFactor = 1.1f;
 
         // initiate scale
-        hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale = Vector3.one;
+        hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale = new Vector3(50,50,1);
 
 
         Renderer renderer1 = hitEffects[(int)BossBabyHitEffect.DamageArea].GetComponent<Renderer>();

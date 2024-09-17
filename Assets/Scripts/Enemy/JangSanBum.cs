@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,11 +12,13 @@ public class JangSanBum : EnemyBasic
     enum JangSanBumHitEffect { Scratch, Bite, Snow, Crack, None };
 
     [SerializeField] GameObject[] spawnCandidate;
+   
     public GameObject spawnCandidateParent;
 
     
     private int patternNum;
     private int blindTime = 5;
+    private int spawnEnemyHP = 50;
 
     int randomNum;
 
@@ -174,6 +177,7 @@ public class JangSanBum : EnemyBasic
         print("random spawn");
 
 
+
         /*
         for (int i = 0; i < 4; i++)
         {
@@ -186,9 +190,39 @@ public class JangSanBum : EnemyBasic
         */
 
 
+        //SPAWN ENEMY
+        List<GameObject> spawnEnemies = new List<GameObject>();
+        gameObject.transform.position = new Vector3(-350, -1.4f, 0f);//장산범 치워두기
+        foreach(GameObject obj in spawnCandidate) 
+        {
+            if (obj != null) 
+            {
+                GameObject newObj = Instantiate(obj);
+                randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+                randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
+                newObj.transform.position=new Vector2(randomX, randomY);
+                spawnEnemies.Add(newObj);
+            }
+        }
 
-        //START
-        gameObject.transform.position = new Vector3(-350, -1.4f, 0f);
+        //CHECK
+        //randumNum 번째 enemy가 변신한 장산범이므로 그 것을 죽여야지 끝난다.
+        randomNum = UnityEngine.Random.Range(0, spawnEnemies.Count);
+        print("real jangsanbum num=" + spawnEnemies[randomNum].name);
+
+        while (spawnEnemies[randomNum]!=null)
+        {
+            if (spawnEnemies[randomNum].GetComponent<EnemyStats>().HP <=1) { break; }
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        foreach (GameObject obj in spawnEnemies)
+        {
+            if(obj!=null) { Destroy(obj); }
+            
+        }
+        spawnEnemies.Clear();
+        /*
         spawnCandidateParent.SetActive(true);
         //랜덤 적 소환
         for (int i = 0; i < spawnCandidate.Length; i++)
@@ -201,7 +235,8 @@ public class JangSanBum : EnemyBasic
             spawnCandidate[i].GetComponent<EnemyStats>().HP = spawnCandidate[i].GetComponent<EnemyStats>().HPMax;
         }
 
-        
+
+
         //CHECK
         //randumNum 번째 enemy가 변신한 장산범이므로 그 것을 죽여야지 끝난다.
         randomNum = UnityEngine.Random.Range(0, spawnCandidate.Length);
@@ -209,14 +244,19 @@ public class JangSanBum : EnemyBasic
 
         while (true)
         {
-            if (spawnCandidate[randomNum].GetComponent<EnemyStats>().HP <= 10){ break; }
+            if (spawnCandidate[randomNum].GetComponent<EnemyStats>().HP <= 
+                spawnCandidate[randomNum].GetComponent<EnemyStats>().HPMax-spawnEnemyHP) { break; }
             yield return new WaitForSeconds(0.1f);
         }
+        */
 
 
         //END
         print("spawn enemy end!!!!!!!!!!!!!!!!!!!!!!!");
-        spawnCandidateParent.SetActive(false);
+        //spawnCandidateParent.SetActive(false);
+        //for(int i=0;i<spawnEnemies.Length;i++) { Destroy(spawnEnemies[i]); }
+        //spawnEnemies = new GameObject[0];
+
         gameObject.transform.position = GameManager.instance.nowRoom.transform.position;
         yield return new WaitForSeconds(2f);
 
