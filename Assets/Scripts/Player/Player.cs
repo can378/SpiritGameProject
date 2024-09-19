@@ -68,7 +68,7 @@ public class Player : ObjectBasic
 
     void Update()
     {
-        sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
+        //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
         GetInput();
 
         /*
