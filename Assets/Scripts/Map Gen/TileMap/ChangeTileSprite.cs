@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[System.Serializable]
+public class ChapterTile
+{
+    public TileBase[] swapTileBase;
+}
+
 public class ChangeTileSprite : MonoBehaviour
 {
     public Tilemap m_Tilemap;
-    
+
     int m_PrevChpterIndex;
     public int m_ChapterIndex;
-    public TileBase[] swapTileBase;
+    public ChapterTile[] swapChapter;
 
     void Update()
     {
-        if(m_PrevChpterIndex != m_ChapterIndex)
+        if (m_PrevChpterIndex != m_ChapterIndex)
         {
-            m_Tilemap.SwapTile(swapTileBase[m_PrevChpterIndex], swapTileBase[m_ChapterIndex]);
+            for (int i = 0; i < swapChapter[m_ChapterIndex].swapTileBase.Length; ++i)
+            {
+                m_Tilemap.SwapTile(swapChapter[m_PrevChpterIndex].swapTileBase[i], swapChapter[m_ChapterIndex].swapTileBase[i]);
+            }
+
             m_PrevChpterIndex = m_ChapterIndex;
         }
     }
