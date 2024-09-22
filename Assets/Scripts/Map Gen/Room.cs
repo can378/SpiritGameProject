@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public enum MapType { None, Default, Shop, Treasure, Event, Mission, Boss }
 public enum RoomType { None, OneWay, TwoWay, ThreeWay, FourWay } // 문의 개수
@@ -10,8 +11,11 @@ public class Room : MonoBehaviour
 
     [SerializeField] bool lockTrigger;        //맵을 잠궈버린다
     [SerializeField] bool unLockTrigger;      //맵의 잠금을 해제한다.
+
     [field: SerializeField] public MapType mapType { get; private set; }          //맵 타입을 바꾸면 현재 방이 변경됨
+    MapType preMapType;
     [field: SerializeField] public DoorType doorType { get; private set; }                         //나중에 설정
+    DoorType preDoorType;
     [field: SerializeField] public RoomType roomType { get; private set; }
     [field: SerializeField] public Door door { get; private set; }
     [field: SerializeField] public GameObject map { get; private set; }
@@ -27,14 +31,14 @@ public class Room : MonoBehaviour
 
     RoomManager roomManager;
     MapTemplates mapTemplates;
-    MapType preMapType;
-    DoorType preDoorType;
+    TileBaseTemplate tileBaseTemplate;
     
-
+    
 
     void Start() {
         roomManager = FindObj.instance.roomManagerScript;
         mapTemplates = FindObj.instance.roomManager.GetComponent<MapTemplates>();
+        tileBaseTemplate = FindObj.instance.roomManager.GetComponent<TileBaseTemplate>();
 
         roomManager.rooms.Add(this.gameObject);
         
@@ -42,6 +46,8 @@ public class Room : MonoBehaviour
 
         preMapType = mapType;
         preDoorType = doorType;
+
+        SetSprite();
     }
 
     void Update()
@@ -50,6 +56,18 @@ public class Room : MonoBehaviour
         SetDoor();
         LockTrigger();
         UnLockTrigger();
+    }
+
+    // 현재 챕터에 따른 벽의 Sprite를 변경한다.
+    void SetSprite()
+    {
+        int nowChapter = DataManager.instance.userData.nowChapter - 1;
+        Tilemap m_Tilemap = GetComponentInChildren<Tilemap>();
+
+        for (int i = 0; i < tileBaseTemplate.swapChapter[0].swapTileBase.Length; ++i)
+        {
+            m_Tilemap.SwapTile(tileBaseTemplate.swapChapter[0].swapTileBase[i], tileBaseTemplate.swapChapter[nowChapter].swapTileBase[i]);
+        }
     }
 
     // 방 설정

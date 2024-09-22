@@ -5,8 +5,16 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
+    [HideInInspector]
     public RoomTemplates roomTemplates;
+
+    [HideInInspector]
     public MapTemplates mapTemplates;
+
+    [HideInInspector]
+    public TileBaseTemplate tileBaseTemplate { get; set; }
+
+    [HideInInspector]
     public EnemyTemplates enemyTemplates;
 
 
