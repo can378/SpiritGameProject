@@ -96,7 +96,7 @@ public class BossFace : EnemyBasic
 
         countTime = attackTime;
     }
-    private void setBack() 
+    protected virtual void setBack() 
     {
         isFaceApproach = false;
         isFaceBack = true;
@@ -145,12 +145,7 @@ public class BossFace : EnemyBasic
             if (countTime > 0)
             {
                 faceAttack();
-                countTime--;
-                if (countTime % 1000 == 0) 
-                { 
-                    //print(this.name + " attack time-" + countTime); 
-                }
-                
+                countTime--;                
             }
             else { setBack(); }
         }

@@ -9,6 +9,11 @@ public class FacePride : BossFace
 
     public GameObject attackArea;
 
+    protected override void Update()
+    {
+        base.Update();
+        attackArea.transform.localPosition = new Vector3(0, 0, 0);
+    }
     protected override void init()
     {
         base.init();
@@ -19,6 +24,12 @@ public class FacePride : BossFace
         base.Finish();
         attackArea.SetActive(false);
     }
+    protected override void setBack()
+    {
+        base.setBack();
+        sprite.color = new Color(1f, 1f, 1f, 1f);
+    }
+
     protected override void faceAttack() 
     {
         //print("pride");

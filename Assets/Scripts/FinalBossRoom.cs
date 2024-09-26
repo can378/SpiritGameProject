@@ -9,7 +9,11 @@ public class FinalBossRoom : MonoBehaviour
     public GameObject finalBoss1;
     public GameObject finalBoss2;
     public GameObject exit;
-
+    private bool isFirst;
+    private void Start()
+    {
+        isFirst=true;
+    }
     private void Update()
     {
         if (finalBoss2.GetComponent<EnemyStats>().HP <= 0)
@@ -25,8 +29,9 @@ public class FinalBossRoom : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")&&isFirst)
         {
+            isFirst = false;
             startFinalBoss();
         }
     }
