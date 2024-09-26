@@ -7,7 +7,7 @@ public enum finalBossPhase { phase1, phase2};
 public class FinalBoss : EnemyBasic
 {
 
-    enum FinalBossHitEffect { CIRCULARCECTOR , HITGROUNDCOL, FIST, KNIFE, THORN, FISTWAVE, ALLFACES, NONE }
+    enum FinalBossHitEffect { CIRCULARCECTOR , HITGROUNDCOL, FIST, KNIFE, THORN, FISTWAVE, NONE }
 
     private int patternNum=1;
     private List<GameObject> facesList;
@@ -20,17 +20,19 @@ public class FinalBoss : EnemyBasic
     public GameObject finalBoss2;
 
     [Header("2phase")]
+    public GameObject face;
     public List<GameObject> faces;
 
     private void Start()
     {
         base.Start();
-        hitEffects[(int)FinalBossHitEffect.ALLFACES].SetActive(true);
+        
     }
 
     protected override void Update()
     {
         base.Update();
+        face.SetActive(true);
     }
 
     protected override void AttackPattern()
@@ -317,7 +319,7 @@ public class FinalBoss : EnemyBasic
 
         //END
         enemyStatus.isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;
     }
 
@@ -335,7 +337,7 @@ public class FinalBoss : EnemyBasic
 
         //END
         enemyStatus.isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;
     }
 

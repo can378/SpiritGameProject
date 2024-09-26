@@ -50,7 +50,7 @@ public class EnemyBasic : ObjectBasic
 
     #region  Attack
 
-    void Attack()
+    protected virtual void Attack()
     {
         if (!enemyStatus.enemyTarget)
             return;

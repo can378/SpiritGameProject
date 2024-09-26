@@ -121,6 +121,22 @@ public class BossFace : EnemyBasic
     }
 
     //ATTACK///////////////////////////////////////////////////////
+    protected override void Attack()
+    {
+        if (!enemyStatus.enemyTarget)
+            return;
+
+        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
+
+        //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
+
+        if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        {
+            AttackPattern();
+        }
+    }
+
     protected override void AttackPattern()
     {
         if(nowAttack&& isFaceAttack)

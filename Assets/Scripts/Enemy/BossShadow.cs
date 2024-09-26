@@ -107,9 +107,10 @@ public class BossShadow : EnemyBasic
         print("illusion");
 
         //player cant move
-        enemyStatus.enemyTarget.GetComponent<Player>().SetFlinch(3f);
+        //enemyStatus.enemyTarget.GetComponent<Player>().SetFlinch(3f);
 
         //fade out
+        enemyStatus.isInvincible = true;
         time = 0f;
         while (time < 1.5f)
         {
@@ -124,6 +125,7 @@ public class BossShadow : EnemyBasic
 
         transform.position = getRandomPos();
         GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        enemyStatus.isInvincible = false;
     }
 
     IEnumerator spawnDummy_() 

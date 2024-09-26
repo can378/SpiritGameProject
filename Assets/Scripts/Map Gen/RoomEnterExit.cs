@@ -43,12 +43,24 @@ public class RoomEnterExit : MonoBehaviour
     void enterRoom()
     {
 
-        //최초방문시 miniMap에서 가리고 있던것 없앰
+        //최초방문시 miniMap에서 보이도록
         forMiniMapSprite.color = new Color(1, 1, 1, 1);
         forMiniMapSprite.sortingOrder = -1;
         foreach (SpriteRenderer spr in aisleSprite) 
         { spr.color = new Color(1, 1, 1, 1); }
 
+        //show minimap icon
+        if (room.minimapIcon != null)
+        {
+            room.minimapIcon.SetActive(true);
+        }
+        /*
+        if (room.map!=null && HasComponent(room.map, "MinimapIcon")) 
+        { room.map.GetComponent<MinimapIcon>().minimapIcon.SetActive(true); }
+        */
+
+
+        //map가리고 있는 검정색 제거
         forMap.SetActive(false);
 
         //플레이어 위치 표시

@@ -27,7 +27,7 @@ public class Room : MonoBehaviour
     [field: SerializeField] public bool right { get; private set; }
 
     public GameObject floorArea;
-    private GameObject minimapIcon;
+    public GameObject minimapIcon;
 
     RoomManager roomManager;
     MapTemplates mapTemplates;
@@ -125,12 +125,14 @@ public class Room : MonoBehaviour
                 map = Instantiate(mapTemplates.defaultMap[ran],transform.position,transform.rotation);
             }
 
+          
             if (minimapIcon != null)
             {
                 minimapIcon.transform.parent = transform;
                 minimapIcon.transform.localScale = new Vector3(0.005f, 0.005f, 1f);
                 minimapIcon.transform.position = this.transform.position;
             }
+            
             map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
             map.transform.SetParent(this.transform);
             map.SetActive(false);
