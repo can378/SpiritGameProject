@@ -77,7 +77,9 @@ public class RoomEnterExit : MonoBehaviour
         }
 
         if(room.mapType==MapType.Boss) 
-        { AudioManager.instance.Bgm_boss(DataManager.instance.userData.nowChapter); }
+        {
+            enterBossRoom();
+        }
 
         //플레이어가 현재 있는 맵 위치
         GameManager.instance.nowRoom = room.floorArea;
@@ -99,13 +101,19 @@ public class RoomEnterExit : MonoBehaviour
             room.map.SetActive(false);
         }
 
-
-        
-        
         forMap.SetActive(true);
 
     }
 
+    void enterBossRoom() 
+    {
+        GameObject boss = room.map.GetComponent<ObjectSpawn>().enemys[0];
+        //start audio
+        AudioManager.instance.Bgm_boss(DataManager.instance.userData.nowChapter);
+        //camera moving
+        CameraManager.instance.isCameraChasing = false;
+        StartCoroutine(CameraManager.instance.BossRoomEnterEffect(boss,room.gameObject));
+    }
 
     bool HasComponent(GameObject obj, string componentType)
     {

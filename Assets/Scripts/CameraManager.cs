@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CameraManager : MonoBehaviour
 {
@@ -26,14 +28,23 @@ public class CameraManager : MonoBehaviour
     float height;
     float width;
     Transform playerTransform;
+    Camera cam;
+    float startSize;
+   
 
+
+    [HideInInspector]
     public bool isCameraChasing = true;
+    [HideInInspector]
+    public bool isShowingBoss = false;
 
     public static CameraManager instance;
 
     private void Awake()
     {
         instance = this;
+        cam=GetComponent<Camera>();
+        startSize = cam.orthographicSize;
     }
 
     void Start()
@@ -49,6 +60,7 @@ public class CameraManager : MonoBehaviour
     void FixedUpdate()
     {
         if(isCameraChasing) CameraChasing();
+        
 
         if (Player.GetComponent<PlayerStats>().blind > 0)
         {
@@ -80,7 +92,29 @@ public class CameraManager : MonoBehaviour
         Gizmos.DrawWireCube(center, mapSize * 2);
     }
 
-    
+
+    //Boss room enter effect
+    private bool isCameraMoving = true;
+    public IEnumerator BossRoomEnterEffect(GameObject boss,GameObject room)
+    {
+        isShowingBoss = true;
+        //startSize = cam.orthographicSize;
+
+        //boss zoom in
+        StartCoroutine(CameraZoom(boss, 2f, true));
+        while (isCameraMoving) { yield return new WaitForSeconds(0.1f); }
+
+        
+        //zoom out
+        StartCoroutine(CameraZoom(FindObj.instance.Player, 2f, false));
+        while (isCameraMoving) { yield return new WaitForSeconds(0.1f); }
+
+
+        //Finish
+        yield return new WaitForSeconds(0.5f);
+        isCameraChasing = true;
+        isShowingBoss = false;
+    }
 
 
     //Directly move to "obj.transform.position"/////////////////////////////////////////
@@ -94,4 +128,70 @@ public class CameraManager : MonoBehaviour
         postCenter = obj.transform.position;
         center=obj.transform.position;
     }
+    //Slowly move to "obj"//////////////////////////////////////////////////////////////
+    /*
+    void CameraMoveSlowly(GameObject obj)
+    {
+        isCameraMoving = true;
+
+        float duration = 2.0f;
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
+
+        while(true)
+        {
+            // 경과된 시간을 갱신
+            elapsedTime += Time.deltaTime;
+
+            // 목표 위치로 Lerp
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            transform.position = Vector3.Lerp(startPosition, obj.transform.position, t);
+
+            // 시간이 다 됐으면 이동 멈춤
+            if (elapsedTime >= duration)
+            {
+                break;
+            }
+        }
+
+        isCameraMoving = false;
+
+    }
+    */
+    public IEnumerator CameraZoom(GameObject target, float duration, bool zoomIn)
+    {
+
+        isCameraMoving = true;
+
+        
+        float targetSize = zoomIn ? 2f : startSize; // 줌 인이면 2, 줌 아웃이면 원래 사이즈
+
+        Vector3 startPosition = cam.transform.position;
+        Vector3 targetPosition = target.transform.position;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // 카메라의 orthographicSize를 Lerp로 계산
+            cam.orthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / duration);
+
+            // 카메라 위치 타겟을 기준으로 이동
+            if (target.CompareTag("Player") == true) { targetPosition = FindObj.instance.Player.transform.position; }
+            cam.transform.position = Vector3.Lerp(startPosition, new Vector3(targetPosition.x, targetPosition.y, startPosition.z), elapsedTime / duration);
+
+            yield return null;
+        }
+
+        // 최종 값으로 세팅
+        cam.orthographicSize = targetSize;
+        cam.transform.position = new Vector3(targetPosition.x, targetPosition.y, startPosition.z);
+
+        isCameraMoving = false;
+    }
+
+
+
 }

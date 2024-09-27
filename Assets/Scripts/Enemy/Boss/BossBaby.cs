@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBaby : EnemyBasic
+public class BossBaby : Boss
 {
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
@@ -314,7 +314,7 @@ public class BossBaby : EnemyBasic
         return new Vector3(x,y,0);
     }
 
-
+    
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

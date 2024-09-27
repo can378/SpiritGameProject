@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossShadow : EnemyBasic
+public class BossShadow : Boss
 {
     enum ShadowHitEffect { SightBlock, Dummy, Circle, None };
 

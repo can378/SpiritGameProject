@@ -26,4 +26,13 @@ public class BossShadowDummy : EnemyBasic
         enemyStatus.isAttackReady = true;
 
     }
+    public override void Dead()
+    {
+        print(this.name + " Dead");
+
+        RemoveAllEffects();
+        AttackCancle();
+        StopAllCoroutines();
+        this.gameObject.SetActive(false);
+    }
 }

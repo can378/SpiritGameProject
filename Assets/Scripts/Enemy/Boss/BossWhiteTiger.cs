@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossWhiteTiger : EnemyBasic
+public class BossWhiteTiger : Boss
 {
     public GameObject splitSnowArea;
     public GameObject attackArea;
@@ -19,10 +19,7 @@ public class BossWhiteTiger : EnemyBasic
         //StartNamedCoroutine("whiteTiger", whiteTiger());
     }
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
+   
 
 
     IEnumerator whiteTiger()
