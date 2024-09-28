@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public enum MapType { None, Default, Shop, Treasure, Event, Mission, Boss }
-public enum RoomType { None, OneWay, TwoWay, ThreeWay, FourWay } // πÆ¿« ∞≥ºˆ
+public enum MapType { Default, Reward, Mission, Boss, None }
+public enum RoomType { OneWay, TwoWay, ThreeWay, FourWay, None } 
 
 public class Room : MonoBehaviour
 {
 
-    [SerializeField] bool lockTrigger;        //∏ ¿ª ¿·±≈πˆ∏∞¥Ÿ
-    [SerializeField] bool unLockTrigger;      //∏ ¿« ¿·±›¿ª «ÿ¡¶«—¥Ÿ.
+    [SerializeField] bool lockTrigger;
+    [SerializeField] bool unLockTrigger;
 
-    [field: SerializeField] public MapType mapType { get; private set; }          //∏  ≈∏¿‘¿ª πŸ≤Ÿ∏È «ˆ¿Á πÊ¿Ã ∫Ø∞Êµ 
+    [field: SerializeField] public MapType mapType { get; private set; }
     MapType preMapType;
-    [field: SerializeField] public DoorType doorType { get; private set; }                         //≥™¡ﬂø° º≥¡§
+    [field: SerializeField] public DoorType doorType { get; private set; }
     DoorType preDoorType;
     [field: SerializeField] public RoomType roomType { get; private set; }
     [field: SerializeField] public Door door { get; private set; }
     [field: SerializeField] public GameObject map { get; private set; }
 
-    // πÆ ¡∏¿Á ø©∫Œ º≥¡§øÎ
+
     [field: SerializeField] public bool top {get; private set;}
     [field: SerializeField] public bool bottom { get; private set; }
     [field: SerializeField] public bool left { get; private set; }
@@ -58,7 +58,7 @@ public class Room : MonoBehaviour
         UnLockTrigger();
     }
 
-    // «ˆ¿Á √©≈Õø° µ˚∏• ∫Æ¿« Sprite∏¶ ∫Ø∞Ê«—¥Ÿ.
+    //
     void SetSprite()
     {
         int nowChapter = DataManager.instance.userData.nowChapter - 1;
@@ -69,43 +69,33 @@ public class Room : MonoBehaviour
             m_Tilemap.SwapTile(tileBaseTemplate.swapChapter[0].swapTileBase[i], tileBaseTemplate.swapChapter[nowChapter].swapTileBase[i]);
         }
     }
-
-    // πÊ º≥¡§
-    // shop
-    // treasure
-    // mission
-    // miniBoss
-    // boss
+    
+    /// <summary>
+    /// Î∞©Ïóê Îßµ ÌÉÄÏûÖÏóê ÎßûÍ≤å Î≥ÄÍ≤ΩÌïúÎã§.
+    /// </summary>
     void SetMap()
     {
         if(preMapType != mapType)
         {
             int ran;
+
             Destroy(map);
-            if(mapType == MapType.Shop)
+            Destroy(minimapIcon);
+
+            preMapType = mapType;
+
+            if (mapType == MapType.Reward)
             {
-                ran = Random.Range(0, mapTemplates.shopMap.Length);
-                map = Instantiate(mapTemplates.shopMap[ran], transform.position, transform.rotation);
-                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
-                
-            }
-            else if(mapType == MapType.Treasure)
-            {
-                ran = Random.Range(0, mapTemplates.treasureMap.Length);
-                map = Instantiate(mapTemplates.treasureMap[ran], transform.position, transform.rotation);
-            }
-            else if(mapType == MapType.Event)
-            {
-                ran = Random.Range(0, mapTemplates.eventMap.Length);
-                map = Instantiate(mapTemplates.eventMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.RewardMap.Length);
+                map = Instantiate(mapTemplates.RewardMap[ran], transform.position, transform.rotation);
                 minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
                 
             }
             else if (mapType == MapType.Mission)
             {
                 doorType = DoorType.Trap;
-                ran = Random.Range(0, mapTemplates.missionMap.Length);
-                map = Instantiate(mapTemplates.missionMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.MissionMap.Length);
+                map = Instantiate(mapTemplates.MissionMap[ran], transform.position, transform.rotation);
                 
                 map.GetComponent<Mission>().roomScript = this;
                 minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
@@ -114,17 +104,22 @@ public class Room : MonoBehaviour
             else if (mapType == MapType.Boss)
             {
                 doorType = DoorType.Trap;
-                ran = Random.Range(0, mapTemplates.bossMap.Length);
-                map = Instantiate(mapTemplates.bossMap[ran], transform.position, transform.rotation);
+                ran = Random.Range(0, mapTemplates.BossMap.Length);
+                map = Instantiate(mapTemplates.BossMap[ran], transform.position, transform.rotation);
                 minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
                 
             }
             else if(mapType == MapType.Default)
             {
-                ran = Random.Range(0, mapTemplates.defaultMap.Length);
-                map = Instantiate(mapTemplates.defaultMap[ran],transform.position,transform.rotation);
+                map = Instantiate(mapTemplates.GetDefaultMap(top, bottom, left, right), transform.position, transform.rotation);
+                minimapIcon = null;
             }
-
+            else if(mapType == MapType.None)
+            {
+                map = null;
+                minimapIcon = null;
+                return;
+            }
           
             if (minimapIcon != null)
             {
@@ -136,20 +131,20 @@ public class Room : MonoBehaviour
             map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
             map.transform.SetParent(this.transform);
             map.SetActive(false);
-            preMapType = mapType;
+            
         }
     }
 
-    // πÆ º≥¡§
-    // None æ∆π´∞Õµµ ¡∏¿Á «œ¡ˆ æ ¿Ω
-    // Key ≈∞∑Œ ø≠ ºˆ ¿÷¥¬ πÆ, ¡ÔΩ√ ¿·±Ë
-    // Trap ∆Ø¡§ ¡∂∞«ø° µ˚∂Û ¥›»˜∞Ì ø≠∏≤
-    // Both KeyøÕ Trap¿« ∆Øº∫¿ª ∏µŒ ∞°¡¸
-    // Shabby ∆¯≈∫¿∏∑Œ ∆ƒ±´ ∞°¥…
-    // Wall ¿˝¥Î ∫Œº˙ºˆ æ¯¥¬ πÆ
+    //
+    // None
+    // Key
+    // Trap
+    // Both
+    // Shabby
+    // Wall
     void SetDoor()
     {
-        // ∫Ø∞Ê
+        //
         if (preDoorType != doorType)
         {
             door.SetDoorType(doorType);
@@ -171,7 +166,7 @@ public class Room : MonoBehaviour
         unLockTrigger = true;
     }
 
-    // key, Trap¿Ã∏È πÆ¿ª ¿·±º ºˆ ¿÷¥Ÿ.
+    // key, Trap
     void LockTrigger()
     {
         if(lockTrigger)
@@ -181,7 +176,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    // key, Trap¿Ã∏È πÆ¿ª ø≠ ºˆ ¿÷¥Ÿ.
+    // key, Trap
     void UnLockTrigger()
     {
         if(unLockTrigger)
@@ -191,7 +186,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    // ∏≈¥œ¿˙øÎ
+    //
     public void SetMapManager(MapType mapType)
     {
         this.mapType = mapType;

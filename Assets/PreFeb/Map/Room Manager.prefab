@@ -97,9 +97,11 @@ MonoBehaviour:
   verticalCrossedRooms:
   - {fileID: 4313598515406823029, guid: 8b6a2cc307ca4844391075c2adc848e7, type: 3}
   - {fileID: 4313598515406823029, guid: 5ce61788667d4264cab9b72af04f57d6, type: 3}
+  - {fileID: 4313598515406823029, guid: 4cc5c8084dd007a45aa8476e02d0c99d, type: 3}
   horizontalCrossedRooms:
   - {fileID: 4313598515406823029, guid: bb6ad37595ab4fd479014d5b71404e31, type: 3}
   - {fileID: 4313598515406823029, guid: 846654b8a1b49164d81891f2c8532a45, type: 3}
+  - {fileID: 4313598515406823029, guid: 4cc5c8084dd007a45aa8476e02d0c99d, type: 3}
   closedRoom: {fileID: 4313598515406823029, guid: e0e5b3de545f1434ea03d8f253a0d7ed, type: 3}
 --- !u!114 &7230322733636524781
 MonoBehaviour:
@@ -113,16 +115,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c80a90f007af894d9cfa3a8b93c2f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMap:
-  - {fileID: 2782812310506344177, guid: f35572d05fa15874c93f2997314431e0, type: 3}
-  shopMap:
-  - {fileID: 2782812310506344177, guid: ffa9ebf5568153a408faefcb719a816b, type: 3}
-  npcMap: []
-  eventMap:
+  DefaultMap:
+  - References:
+    - {fileID: 2782812310506344177, guid: e5a478ff0958c7a49aa4dcff93f77c4d, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 477b6af5bc3b8db4cae50d417d09fc83, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: c547f084014b33749b65e11ca41695e7, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 7eb34121e8af93042884697f4bd14597, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: e3e4ca1bf853fac45b677381774ae467, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 13e2e4c85cb14a141bbb41b70ad2047d, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: f0628e043ffc01a4b8af9f10923dec1d, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: d5456b8bba123c143b1cff62e5c23b99, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 5a937e39878bd2f41a8206ee8dce8c09, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: c4985c370cc86924ab505b32e730121e, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 5295f0d56747d3647b4f70597911be05, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: c3a89275b20ffd74ab5b71e56f4cfc8b, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 45bde178434852d49ac091f54712a1e8, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 289b160b649e7d64b8b3e47581dd8ad2, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: 5f1b49ae1a994ae4794846b968dfc761, type: 3}
+  - References:
+    - {fileID: 2782812310506344177, guid: d388d033147123342a88c2719f84ef4e, type: 3}
+  RewardMap:
   - {fileID: 2782812310506344177, guid: ffa250031abfdbd4ea7d9727bd1ce1eb, type: 3}
-  treasureMap:
+  - {fileID: 2782812310506344177, guid: ffa9ebf5568153a408faefcb719a816b, type: 3}
   - {fileID: 2782812310506344177, guid: 24ccbde777f194841a2180847a21ac62, type: 3}
-  missionMap:
+  MissionMap:
   - {fileID: 2782812310506344177, guid: 15a5a3c590325154a912cf26a2185664, type: 3}
   - {fileID: 2782812310506344177, guid: 8e8750a3e5fc0e14cbef8dc4e12dc081, type: 3}
   - {fileID: 2782812310506344177, guid: 109b16465275f12458e2800ae9f6ce7f, type: 3}
@@ -130,9 +160,7 @@ MonoBehaviour:
   - {fileID: 2782812310506344177, guid: c2edcfd5be8b8144fafc5e4b269223eb, type: 3}
   - {fileID: 2782812310506344177, guid: d5104d2c3b28aec4ba50dc768a8e92cf, type: 3}
   - {fileID: 2782812310506344177, guid: 8b2fdc01509b49b4b84bd1eff0bb1d6a, type: 3}
-  miniBossMap:
-  - {fileID: 2782812310506344177, guid: 561611ccf1098414ba9a0e1e06f015fc, type: 3}
-  bossMap:
+  BossMap:
   - {fileID: 2782812310506344177, guid: c7a383459503b5d4bbab072566b0753f, type: 3}
 --- !u!114 &6119772620689559344
 MonoBehaviour:

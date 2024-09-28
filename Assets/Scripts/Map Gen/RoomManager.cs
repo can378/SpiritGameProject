@@ -86,7 +86,7 @@ public class RoomManager : MonoBehaviour
                     spawn = true;
                     return;
                 }
-                SetMap();
+                SetMapType();
                 finish = true;
                 setMinimapCamera();
             }
@@ -202,13 +202,13 @@ public class RoomManager : MonoBehaviour
 
             if (crossedRoomGameObjectRoom.top && crossedRoomGameObjectRoom.bottom)
             {
-                instObj = Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
+                instObj = Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 3)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
                 instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
                 instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
             }
             else if (crossedRoomGameObjectRoom.left && crossedRoomGameObjectRoom.right)
             {
-                instObj = Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
+                instObj = Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 3)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
                 instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
                 instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
             }
@@ -224,7 +224,8 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    void SetMap()
+    // 생성된 방들의 타입을 설정한다.
+    void SetMapType()
     {
         bool isBoss = false;
         bool isEvent = false;
@@ -235,11 +236,16 @@ public class RoomManager : MonoBehaviour
         {
             Room room = rooms[i].GetComponent<Room>();
             
+            // 1. 통로가 없는 방이라면
+            // 1-1 무조건 보상방
             if(room.roomType == RoomType.None)
             {
-                room.SetMapManager(MapType.Treasure);
+                room.SetMapManager(MapType.Reward);
             }
-            else if(room.roomType == RoomType.OneWay)
+            // 2. 통로가 하나인 방이라면
+            // 2-1 미션방
+            // 2-2 보스방 : 세팅되어있지않다면 보스방 세팅
+            else if (room.roomType == RoomType.OneWay)
             {
                 if(!isBoss)
                 {
@@ -249,26 +255,30 @@ public class RoomManager : MonoBehaviour
                 }
                 room.SetMapManager(MapType.Mission);
             }
+            // 3. 통로가 2개인 방이라면
+            // 3-1 일반방 
+            // 3-2 보상방 : 낮은 확률로 적이 없는 잠시 휴식을 위한 방
             else if (room.roomType == RoomType.TwoWay)
             {
-                
                 int ran = Random.Range(0, 10);
                 if(ran == 0)
                 {
-                    room.SetMapManager(MapType.Treasure);
+                    room.SetMapManager(MapType.Reward);
                     continue;
                 }
                 room.SetMapManager(MapType.Default);
             }
+            // 4. 통로가 3개인 방이라면
+            // 4-1 보상방 : 적이 없는 잠시 휴식을 위한 방
             else if (room.roomType == RoomType.ThreeWay)
             {
                 if(!isEvent)
                 {
-                    room.SetMapManager(MapType.Event);
+                    room.SetMapManager(MapType.Reward);
                     isEvent = true;
                     continue;
                 }
-                room.SetMapManager(MapType.Shop);
+                room.SetMapManager(MapType.Reward);
             }
         }
     }
