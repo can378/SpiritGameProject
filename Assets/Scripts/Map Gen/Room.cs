@@ -58,7 +58,6 @@ public class Room : MonoBehaviour
         UnLockTrigger();
     }
 
-    //
     void SetSprite()
     {
         int nowChapter = DataManager.instance.userData.nowChapter - 1;
