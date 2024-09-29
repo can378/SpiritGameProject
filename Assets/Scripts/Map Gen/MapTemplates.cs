@@ -21,9 +21,6 @@ public class MapTemplates : MonoBehaviour
     public GameObject GetDefaultMap(bool _Top, bool _Bottom, bool _Left, bool _Right)
     {
         int BitNumber = (Convert.ToByte(_Top) << 0) | (Convert.ToByte(_Bottom) << 1) | (Convert.ToByte(_Left) << 2) | (Convert.ToByte(_Right) << 3);
-
-        Debug.Log(BitNumber);
-
         return DefaultMap[BitNumber].References[UnityEngine.Random.Range(0, DefaultMap[BitNumber].References.Length)];
     }
 }
