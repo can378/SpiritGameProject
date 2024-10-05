@@ -63,6 +63,9 @@ public class Room : MonoBehaviour
         int nowChapter = DataManager.instance.userData.nowChapter - 1;
         Tilemap m_Tilemap = GetComponentInChildren<Tilemap>();
 
+        if (nowChapter == 0) 
+            return;
+
         for (int i = 0; i < tileBaseTemplate.swapChapter[0].swapTileBase.Length; ++i)
         {
             m_Tilemap.SwapTile(tileBaseTemplate.swapChapter[0].swapTileBase[i], tileBaseTemplate.swapChapter[nowChapter].swapTileBase[i]);

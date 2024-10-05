@@ -44,6 +44,7 @@ public class FaceEnvy : BossFace
     {
         base.init();
         skill = UnityEngine.Random.Range(1, skillList.Count);
+        if(skill==9) { skill = 1; }
         skillList[skill].gameObject.SetActive(true);
     }
 
@@ -93,7 +94,7 @@ public class FaceEnvy : BossFace
         if (enemyStatus.hitTarget.tag == "Player")
         {
             int playerSkill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
-            if (playerSkill != 0) { skill = playerSkill; }
+            if (playerSkill != 0 || playerSkill!=9) { skill = playerSkill; }
 
             print("envy");
             skillList[skill].gameObject.SetActive(true);
