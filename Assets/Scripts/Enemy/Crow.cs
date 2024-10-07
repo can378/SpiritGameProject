@@ -17,7 +17,9 @@ public class Crow : EnemyBasic
 
         for (int i = 0; i < 2; i++)
         {
-            shot();
+            GameObject bullet = ObjectPoolManager.instance.Get2("jewel");
+            bullet.transform.position = transform.position;
+            bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.2f);
         }
 
