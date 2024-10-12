@@ -330,7 +330,6 @@ MonoBehaviour:
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!61 &7875525497088085243
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -437,6 +436,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   enemyStats: {fileID: 0}
   enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -454,11 +454,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveVec: {x: 0, y: 0}
   hitTarget: {fileID: 0}
+  isBeAttaked: 0
   isFlinch: 0
+  isSuperArmor: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
@@ -497,10 +500,10 @@ MonoBehaviour:
   <defaultAttackPower>k__BackingField: 2
   <defaultMoveSpeed>k__BackingField: 3
   activeEffects: []
-  enemyName: 
-  detectionDis: 10
-  detectionKeepDis: 10
-  maxAttackRange: 10
+  enemyName: pox
+  detectionDis: 20
+  detectionKeepDis: 20
+  maxAttackRange: 20
 --- !u!50 &7338967536234966317
 Rigidbody2D:
   serializedVersion: 4
