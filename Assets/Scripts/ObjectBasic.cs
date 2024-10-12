@@ -40,10 +40,12 @@ public class ObjectBasic : MonoBehaviour
 
         AudioManager.instance.SFXPlay("Hit_SFX");
 
+
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
+
         // 강인도가 0이 될 시 경직되고 넉백
-        if(DamagedPoise(hitDetection.damage))
+        if (DamagedPoise(hitDetection.damage))
         {
             Debug.Log(gameObject.name + ":Flinch");
             if (status.flinchCoroutine != null) StopCoroutine(status.flinchCoroutine);
@@ -65,7 +67,8 @@ public class ObjectBasic : MonoBehaviour
 
     public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
-        if(status.isInvincible)
+      
+        if (status.isInvincible)
             return;
 
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;

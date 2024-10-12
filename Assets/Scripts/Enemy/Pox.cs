@@ -55,12 +55,15 @@ public class Pox : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(1f);
-
-        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
-        bullet.transform.position = transform.position;
-        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
-        bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
-
+        
+        if (enemyStatus.enemyTarget != null)
+        {
+            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            bullet.transform.position = transform.position;
+        
+            enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+            bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
+        }
 
         yield return new WaitForSeconds(2f);
 
