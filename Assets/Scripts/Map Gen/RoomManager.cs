@@ -42,8 +42,8 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         //templates ¼³Á¤
-        roomTemplates = FindObj.instance.roomManager.GetComponent<RoomTemplates>();
-        mapTemplates = FindObj.instance.roomManager.GetComponent<MapTemplates>();
+        roomTemplates = GetComponent<RoomTemplates>();
+        mapTemplates = GetComponent<MapTemplates>();
         //enemyTemplates = GameObject.FindGameObjectWithTag("RoomManager").GetComponent<EnemyTemplates>();
         enemyTemplates = GameManager.instance.enemyTemplates;
 
