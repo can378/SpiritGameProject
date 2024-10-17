@@ -63,11 +63,11 @@ public class RoomManager : MonoBehaviour
     void Update()
     {
         Spawn();
-        Finish();
+        FinishCheck();
     }
 
     // 방의 업데이트가 끝나고 1초 후 방 생성 완료
-    void Finish()
+    void FinishCheck()
     {
         if(spawning)
         {
@@ -159,31 +159,6 @@ public class RoomManager : MonoBehaviour
         
     }
 
-    /*
-    void Lock()
-    {
-        if(Lock)
-        {
-            for (int i = 0; i < room.Count; i++)
-            {
-                room[i].GetComponent<Room>().type = MapType.Default;
-            }
-
-            while (lockRoomCount < lockRoom)
-            {
-                GameObject lockRoomGameObject = room[Random.Range(2, room.Count - 1)];
-                Room lockRoom = lockRoomGameObject.GetComponent<Room>();
-                if (lockRoom.type == MapType.Lock)
-                    continue;
-                lockRoom.type = MapType.Lock;
-                lockRoomCount++;
-            }
-            Lock = false;
-        }
-        
-    }
-    */
-
     // 갈림길 설정
     void Crossed()
     {
@@ -236,16 +211,18 @@ public class RoomManager : MonoBehaviour
         {
             Room room = rooms[i].GetComponent<Room>();
             
+            int roomType = room.GetRoomWayType();
+
             // 1. 통로가 없는 방이라면
             // 1-1 무조건 보상방
-            if(room.roomType == RoomType.None)
+            if(roomType == 0)
             {
                 room.SetMapManager(MapType.Reward);
             }
             // 2. 통로가 하나인 방이라면
             // 2-1 미션방
             // 2-2 보스방 : 세팅되어있지않다면 보스방 세팅
-            else if (room.roomType == RoomType.OneWay)
+            else if (roomType == 1)
             {
                 if(!isBoss)
                 {
@@ -258,7 +235,7 @@ public class RoomManager : MonoBehaviour
             // 3. 통로가 2개인 방이라면
             // 3-1 일반방 
             // 3-2 보상방 : 낮은 확률로 적이 없는 잠시 휴식을 위한 방
-            else if (room.roomType == RoomType.TwoWay)
+            else if (roomType == 2)
             {
                 int ran = Random.Range(0, 10);
                 if(ran == 0)
@@ -270,7 +247,7 @@ public class RoomManager : MonoBehaviour
             }
             // 4. 통로가 3개인 방이라면
             // 4-1 보상방 : 적이 없는 잠시 휴식을 위한 방
-            else if (room.roomType == RoomType.ThreeWay)
+            else if (roomType == 3)
             {
                 if(!isEvent)
                 {
@@ -285,10 +262,11 @@ public class RoomManager : MonoBehaviour
 
     public Transform GetBossRoomPos()
     {
+        // 첫번째 1개 통로방은 무조건 보스방임
         for( int i = 1 ; i< rooms.Count ; i++)
         {
             Room room = rooms[i].GetComponent<Room>();
-            if(room.roomType == RoomType.OneWay)
+            if(room.GetRoomWayType() == 1)
             {
                 return room.gameObject.transform;
             }

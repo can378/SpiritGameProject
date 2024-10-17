@@ -22,7 +22,6 @@ public class RoomSpawner : MonoBehaviour
 
     void Start()
     {
-        Destroy(gameObject,5f);
         templates = FindObj.instance.roomManager.GetComponent<RoomTemplates>();
         roomManager = FindObj.instance.roomManagerScript;
 

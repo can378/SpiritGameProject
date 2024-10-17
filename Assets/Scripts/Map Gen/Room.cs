@@ -5,7 +5,6 @@ using UnityEngine.Tilemaps;
 using System;
 
 public enum MapType { Default, Reward, Mission, Boss, None }
-public enum RoomType { OneWay, TwoWay, ThreeWay, FourWay, None } 
 
 public class Room : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class Room : MonoBehaviour
     MapType preMapType;
     [field: SerializeField] public DoorType doorType { get; private set; }
     DoorType preDoorType;
-    [field: SerializeField] public RoomType roomType { get; private set; }
     [field: SerializeField] public Door door { get; private set; }
     [field: SerializeField] public GameObject map { get; private set; }
 
@@ -31,8 +29,8 @@ public class Room : MonoBehaviour
     bool preRight;
     [field: SerializeField] public bool right { get; set; }
 
-    public GameObject floorArea;
-    public GameObject minimapIcon;
+    public GameObject floorArea { get; set; }
+    public GameObject minimapIcon { get; set; }
 
     RoomManager roomManager;
     MapTemplates mapTemplates;
@@ -72,21 +70,21 @@ public class Room : MonoBehaviour
     /// </summary>
     void SetReRoom()
     {
-        if(roomManager.finish && preTop != top || preBottom != bottom || preLeft != left || preRight != right)
-        {
-            // 변경할 방을 생성
-            int roomIndex = GetRoomIndex();
-            GameObject instObj = Instantiate(roomManager.roomTemplates.rooms[roomIndex], transform.position, roomManager.roomTemplates.rooms[roomIndex].transform.rotation);
-            instObj.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
-            instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
+        if(preTop == top && preBottom == bottom && preLeft == left && preRight == right)
+            return;
 
-            // 현재 방의 정보를 변경할 방에게 계승
-            instObj.GetComponent<Room>().mapType = mapType;
+        // 변경할 방을 생성
+        int roomIndex = GetRoomIndex();
+        GameObject instObj = Instantiate(roomManager.roomTemplates.rooms[roomIndex], transform.position, roomManager.roomTemplates.rooms[roomIndex].transform.rotation);
+        instObj.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
+        instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
+
+        // 현재 방의 정보를 변경할 방에게 계승
+        instObj.GetComponent<Room>().mapType = mapType;
             
-            // 현재 방의 정보 삭제
-            roomManager.rooms.Remove(this.gameObject);
-            Destroy(this.gameObject);
-        }
+        // 현재 방의 정보 삭제
+        roomManager.rooms.Remove(this.gameObject);
+        Destroy(this.gameObject);
     }
 
     /// <summary>
@@ -95,10 +93,11 @@ public class Room : MonoBehaviour
     void SetSprite()
     {
         int nowChapter = DataManager.instance.userData.nowChapter - 1;
-        Tilemap m_Tilemap = GetComponentInChildren<Tilemap>();
-
+        
         if (nowChapter == 0) 
             return;
+
+        Tilemap m_Tilemap = GetComponentInChildren<Tilemap>();
 
         for (int i = 0; i < tileBaseTemplate.swapChapter[0].swapTileBase.Length; ++i)
         {
@@ -111,64 +110,63 @@ public class Room : MonoBehaviour
     /// </summary>
     void SetMap()
     {
-        if(preMapType != mapType)
+        if(preMapType == mapType)
+            return;
+
+        int ran;
+
+        Destroy(map);
+        Destroy(minimapIcon);
+
+        preMapType = mapType;
+
+        if (mapType == MapType.Reward)
         {
-            int ran;
-
-            Destroy(map);
-            Destroy(minimapIcon);
-
-            preMapType = mapType;
-
-            if (mapType == MapType.Reward)
-            {
-                ran = UnityEngine.Random.Range(0, mapTemplates.RewardMap.Length);
-                map = Instantiate(mapTemplates.RewardMap[ran], transform.position, transform.rotation);
-                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
-                
-            }
-            else if (mapType == MapType.Mission)
-            {
-                doorType = DoorType.Trap;
-                ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
-                map = Instantiate(mapTemplates.MissionMap[ran], transform.position, transform.rotation);
-                
-                map.GetComponent<Mission>().roomScript = this;
-                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
-                
-            }
-            else if (mapType == MapType.Boss)
-            {
-                doorType = DoorType.Trap;
-                ran = UnityEngine.Random.Range(0, mapTemplates.BossMap.Length);
-                map = Instantiate(mapTemplates.BossMap[ran], transform.position, transform.rotation);
-                minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
-                
-            }
-            else if(mapType == MapType.Default)
-            {
-                map = Instantiate(mapTemplates.GetDefaultMap(top, bottom, left, right), transform.position, transform.rotation);
-                minimapIcon = null;
-            }
-            else if(mapType == MapType.None)
-            {
-                map = null;
-                minimapIcon = null;
-                return;
-            }
+            ran = UnityEngine.Random.Range(0, mapTemplates.RewardMap.Length);
+            map = Instantiate(mapTemplates.RewardMap[ran], transform.position, transform.rotation);
+            minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
           
-            if (minimapIcon != null)
-            {
-                minimapIcon.transform.parent = transform;
-                minimapIcon.transform.localScale = new Vector3(0.005f, 0.005f, 1f);
-                minimapIcon.transform.position = this.transform.position;
-            }
+        }
+        else if (mapType == MapType.Mission)
+        {
+           doorType = DoorType.Trap;
+            ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
+            map = Instantiate(mapTemplates.MissionMap[ran], transform.position, transform.rotation);
             
-            map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
-            map.transform.SetParent(this.transform);
-            map.SetActive(false);
+            map.GetComponent<Mission>().roomScript = this;
+            minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
             
         }
+        else if (mapType == MapType.Boss)
+        {
+            doorType = DoorType.Trap;
+            ran = UnityEngine.Random.Range(0, mapTemplates.BossMap.Length);
+            map = Instantiate(mapTemplates.BossMap[ran], transform.position, transform.rotation);
+            minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
+            
+        }
+        else if(mapType == MapType.Default)
+        {
+            map = Instantiate(mapTemplates.GetDefaultMap(top, bottom, left, right), transform.position, transform.rotation);
+            minimapIcon = null;
+        }
+        else if(mapType == MapType.None)
+        {
+            map = null;
+            minimapIcon = null;
+            return;
+        }
+          
+        if (minimapIcon != null)
+        {
+            minimapIcon.transform.parent = transform;
+            minimapIcon.transform.localScale = new Vector3(0.005f, 0.005f, 1f);
+            minimapIcon.transform.position = this.transform.position;
+        }
+            
+        map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
+        map.transform.SetParent(this.transform);
+        map.SetActive(false);
     }
 
     //
@@ -205,21 +203,20 @@ public class Room : MonoBehaviour
     // key, Trap
     void LockTrigger()
     {
-        if(lockTrigger)
-        {
-            door.LockDoor();
-            lockTrigger = false;
-        }
+        if(!lockTrigger)
+            return;
+
+        door.LockDoor();
+        lockTrigger = false;
     }
 
     // key, Trap
     void UnLockTrigger()
     {
-        if(unLockTrigger)
-        {
-            door.UnLockDoor();
-            unLockTrigger = false;
-        }
+        if(!unLockTrigger)
+            return;
+        door.UnLockDoor();
+        unLockTrigger = false;
     }
 
     //
@@ -230,8 +227,12 @@ public class Room : MonoBehaviour
 
     public int GetRoomIndex()
     {
-        int BitNumber = (Convert.ToByte(top) << 0) | (Convert.ToByte(bottom) << 1) | (Convert.ToByte(left) << 2) | (Convert.ToByte(right) << 3);
-        return BitNumber;
+        return (Convert.ToByte(top) << 0) | (Convert.ToByte(bottom) << 1) | (Convert.ToByte(left) << 2) | (Convert.ToByte(right) << 3);
+    }
+
+    public int GetRoomWayType()
+    {
+        return Convert.ToInt32(top) +  Convert.ToInt32(bottom) + Convert.ToInt32(left) + Convert.ToInt32(right);
     }
 
 }

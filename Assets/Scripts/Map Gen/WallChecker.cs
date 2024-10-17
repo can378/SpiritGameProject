@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WallChecker : MonoBehaviour
 {
-    enum DirectionType {TOP,BOTTOM,LEFT,RIGHT, NONE}
+    enum DirectionType {TOP, BOTTOM, LEFT, RIGHT, NONE}
     
     [field : SerializeField]
     DirectionType type;
