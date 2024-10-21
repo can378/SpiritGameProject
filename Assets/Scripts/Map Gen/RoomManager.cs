@@ -237,7 +237,7 @@ public class RoomManager : MonoBehaviour
             // 3-2 보상방 : 낮은 확률로 적이 없는 잠시 휴식을 위한 방
             else if (roomType == 2)
             {
-                int ran = Random.Range(0, 10);
+                int ran = Random.Range(0, 50);
                 if(ran == 0)
                 {
                     room.SetMapManager(MapType.Reward);

@@ -69,7 +69,7 @@ public class Stats : MonoBehaviour
     public float decreasedMoveSpeed { get; set; }
     public float moveSpeed
     {
-        get { return Mathf.Clamp((defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed), 0, 9999f); }
+        get { return Mathf.Clamp((defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed), 0, 20f); }
     }
 
     [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
