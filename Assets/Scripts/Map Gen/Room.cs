@@ -48,7 +48,7 @@ public class Room : MonoBehaviour
         preMapType = mapType;
         preDoorType = doorType;
 
-        SetSprite();
+        //SetSprite();
 
         preTop = top;
         preBottom = bottom;
