@@ -65,7 +65,7 @@ public class EnemyBasic : ObjectBasic
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        if (this.gameObject.activeSelf && !enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
             enemyStatus.moveVec = Vector2.zero;
             AttackPattern();
@@ -273,7 +273,6 @@ public class EnemyBasic : ObjectBasic
         base.AttackCancle();
         if(enemyStatus.attackCoroutine != null) 
         {
-            Debug.Log(name + "코루틴 종료");
             StopCoroutine(enemyStatus.attackCoroutine);
         }
     }
@@ -285,7 +284,6 @@ public class EnemyBasic : ObjectBasic
         base.InitStatus();
         if(enemyStatus.attackCoroutine != null) 
         {
-            Debug.Log(name + "코루틴 종료");
             StopCoroutine(enemyStatus.attackCoroutine);
         }
     }

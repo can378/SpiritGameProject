@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class ObjectBasic : MonoBehaviour
 {
-    //½ºÅÈ
+    //ï¿½ï¿½ï¿½ï¿½
     [HideInInspector] public Stats stats;
-    // ÇöÀç Çàµ¿ »óÅÂ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½àµ¿ ï¿½ï¿½ï¿½ï¿½
     [HideInInspector] public Status status;
 
-    public GameObject[] hitEffects;           // °ø°Ý¹üÀ§µé ÀúÀåÇÏ´Â °´Ã¼
+    public GameObject[] hitEffects;           // ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ã¼
     public int defaultLayer;
-    public Transform buffTF;                // ¹öÇÁ ¾ÆÀÌÄÜ À§Ä¡
+    public Transform buffTF;                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
 
     [HideInInspector] public SpriteRenderer sprite;
     [HideInInspector] public Rigidbody2D rigid;
@@ -43,8 +43,11 @@ public class ObjectBasic : MonoBehaviour
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
+        // if enemy is Dead, Don't Flinch and Buff
+        if(stats.HP <= 0)
+            return;
 
-        // °­ÀÎµµ°¡ 0ÀÌ µÉ ½Ã °æÁ÷µÇ°í ³Ë¹é
+        // ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ë¹ï¿½
         if (DamagedPoise(hitDetection.damage))
         {
             Debug.Log(gameObject.name + ":Flinch");
@@ -82,8 +85,8 @@ public class ObjectBasic : MonoBehaviour
     }
 
     /// <summary>
-    /// °æÁ÷ÇÇÇØ
-    /// 0 ÀÌÇÏ°¡ µÇ¸é °æÁ÷µÇ°í ÃÖ´ë °æÁ÷Ä¡·Î ÃÊ±âÈ­µÈ´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// 0 ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½È´ï¿½.
     /// </summary>
     /// <param name="damage"></param>
     /// <returns></returns>
@@ -104,8 +107,8 @@ public class ObjectBasic : MonoBehaviour
     }
 
     /// <summary>
-    /// °æÁ÷ È¸º¹
-    /// ÃÊ´ç 2·Î °æÁ÷ ÇÇÇØ¸¦ È¸º¹ µÈ´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
+    /// ï¿½Ê´ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¸ï¿½ È¸ï¿½ï¿½ ï¿½È´ï¿½.
     /// </summary>
     protected void HealPoise()
     {
@@ -133,11 +136,6 @@ public class ObjectBasic : MonoBehaviour
         status.isFlinch = false;
     }
 
-    /// <summary>
-    /// °ø°Ý Äµ½½
-    /// °ø°Ý Áß °æÁ÷ ½Ã 
-    /// °ø°Ý ÄÚ·çÆ¾ ÇØÁ¦, °ø°Ý ¹üÀ§ ÇØÁ¦
-    /// </summary>
     public virtual void AttackCancle()
     {
         status.isAttack = false;
@@ -150,11 +148,6 @@ public class ObjectBasic : MonoBehaviour
             hitEffect.SetActive(false);
     }
 
-    /// <summary>
-    /// »óÅÂ ÃÊ±âÈ­
-    /// ¸ðµç »óÅÂ ÃÊ±â »óÅÂ·Î º¯°æ
-    /// ÇØ´ç ¿ÀºêÁ§Æ®°¡ ¹Ùº¸°¡ µÇ´Â °ÍÀ» ¹æÁö
-    /// </summary>
     public virtual void InitStatus()
     {
         status.isAttack = false;
@@ -180,7 +173,7 @@ public class ObjectBasic : MonoBehaviour
 
     protected void InvincibleOut()
     {
-        //¹«Àû ÇØÁ¦
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         sprite.color = new Color(1, 1, 1, 1);
         status.isInvincible = false;
     }
@@ -192,7 +185,7 @@ public class ObjectBasic : MonoBehaviour
 
         if (buffIndex <= 10 && 0 < stats.SEResist(buffIndex))
         {
-            // ÀúÁÖ µð¹öÇÁÀÏ ½Ã ÇÇÇØ¸¦ ÀÔ°í »ç¶óÁü
+           
             if (buffIndex == 10)
             {
                 Damaged(stats.HPMax * 0.1f);
@@ -200,10 +193,8 @@ public class ObjectBasic : MonoBehaviour
             return;
         }
 
-        // °¡Áö°í ÀÖ´Â ¹öÇÁÀÎÁö Ã¼Å©ÇÑ´Ù.
         foreach (StatusEffect buff in stats.activeEffects)
         {
-            // °¡Áö°í ÀÖ´Â ¹öÇÁ¶ó¸é °»½ÅÇÑ´Ù.
             if (buff.buffId == buffIndex)
             {
                 buff.ResetEffect();
@@ -211,7 +202,6 @@ public class ObjectBasic : MonoBehaviour
             }
         }
 
-        // °¡Áö°í ÀÖ´Â ¹öÇÁ°¡ ¾Æ´Ï¶ó¸é »õ·Î Ãß°¡ÇÑ´Ù.
         GameObject Buff = Instantiate(GameData.instance.statusEffectList[buffIndex], buffTF);
         StatusEffect statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);
@@ -249,7 +239,7 @@ public class ObjectBasic : MonoBehaviour
         stats.activeEffects.Clear();
     }
 
-    // ¿ÏÀü Á×À½
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public virtual void Dead()
     {
         print(this.name + " Dead");
@@ -257,8 +247,8 @@ public class ObjectBasic : MonoBehaviour
         RemoveAllEffects();
         AttackCancle();
         StopAllCoroutines();
-        //this.gameObject.SetActive(false);
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+        //Destroy(this.gameObject);
     }
 
     #endregion

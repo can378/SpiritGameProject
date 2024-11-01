@@ -89,4 +89,17 @@ public class ObjectSpawn : MonoBehaviour
         enemys.Clear();
     }
 
+    // if Enemy is Dead, Destroy Enemy
+    void OnDisable() {
+        for (int i = enemys.Count - 1; i >= 0; i--)
+        {
+            if (enemys[i].GetComponent<Stats>().HP <= 0)
+            {
+                GameObject enemy = enemys[i];
+                enemys.RemoveAt(i);
+                Destroy(enemy);
+            }
+        }
+    }
+
 }
