@@ -5,14 +5,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 /*
- * 장애물을 피해 target위치로 seeker를 가장 최적의 루트로 이동시키는 스크립트
+ * OPEN SET : 평가되어야 할 노드
+ * CLOSED SET : 평가 완료 노드
  * 
- * OPEN SET : 평가되어야 할 노드 집합
- * CLOSED SET : 이미 평가된 노드 집합
- * 
- * 1. OPEN SET에서 가장 낮은 F코스트를 가진 노드 획득 후 CLOSED SET 삽입
- * 2. 이 노드가 목적지라면, 반복문 탈출
- * 3. 이 노드의 주변 노드들을 CLOSED SET에 넣고, 주변노드의 F값 계산. 주변노드의 G값보다 작다면 F값으로 G값 최신화
+ * 1. OPEN SET에서 가장 낮은 F cost를 가진 노드를 CLOSED SET 삽입
+ * 2. 이 노드가 목적지라면, 반복문 break
+ * 3. 이 노드의 neighbour 노드들을 CLOSED SET에 넣고, 주변노드의 F값 계산. 주변노드의 G값보다 작다면 F값으로 G값 최신화
  * 4. 1번 반복.
  */
 public class PathFinding : MonoBehaviour

@@ -1,20 +1,19 @@
-﻿/* ----------------------------
- * Uses Deapth-First searching and Recursive Backtracking.
- * Author: c00pala
- * ---------------------------- */
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MazeGenerator : MonoBehaviour {
+public class MazeGenerator : MonoBehaviour 
+{
+
+    //DFS and Recursive Backtracking.
 
     #region Variables:
     // ------------------------------------------------------
-    // User defined variables - set in editor:
+    // User
     // ------------------------------------------------------
-    [Header("Maze generation values:")]
-    [Tooltip("maze tall, wide .mandatory even number. Minimum = 4.")]
+    [Header("Maze generation")]
+    [Tooltip("maze tall, wide")]
+    //!!!! even number (mandatory). minimum 4
     public int mazeRows;
     public int mazeColumns;
     //public Vector2 mazePos;
@@ -24,34 +23,31 @@ public class MazeGenerator : MonoBehaviour {
     [SerializeField]
     private GameObject cellPrefab;
 
-    [Tooltip("If you want to disable the main sprite so the cell has no background, set to TRUE. This will create a maze with only walls.")]
+    [Tooltip("True --> disable the main sprite. (cell has no background. only walls)")]
     public bool disableCellSprite;
 
     public GameObject mazeExitPortal;
     public AGrid AGrid;
     // ------------------------------------------------------
-    // System defined variables - You don't need to touch these:
+    // System variables -dont need to change
     // ------------------------------------------------------
 
     // Variable to store size of centre room. Hard coded to be 2.
     private int centreSize = 2;
 
-    // Dictionary to hold and locate all cells in maze.
-    private Dictionary<Vector2, Cell> allCells = new Dictionary<Vector2, Cell>();
-    // List to hold unvisited cells.
-    private List<Cell> unvisited = new List<Cell>();
-    // List to store 'stack' cells, cells being checked during generation.
-    private List<Cell> stack = new List<Cell>();
+    private Dictionary<Vector2, Cell> allCells = new Dictionary<Vector2, Cell>(); // all cells information
+    private List<Cell> unvisited = new List<Cell>(); //store unvisited cells
+    private List<Cell> stack = new List<Cell>(); // cells which will be checked during generation
 
     // Array will hold 4 centre room cells, from 0 -> 3 these are:
     // Top left (0), top right (1), bottom left (2), bottom right (3).
     private Cell[] centreCells = new Cell[4];
 
-    // Cell variables to hold current and checking Cells.
+    // current and checking Cells.
     private Cell currentCell;
     private Cell checkCell;
 
-    // Array of all possible neighbour positions.
+    // all possible neighbour positions.(Left Right Up Down)
     private Vector2[] neighbourPositions = new Vector2[] { new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, -1) };
 
     // Size of the cells, used to determine how far apart to place cells during generation.
@@ -84,24 +80,22 @@ public class MazeGenerator : MonoBehaviour {
     {
         InitValues();
 
-        // Set starting point, set spawn point to start.
+        // Set starting point,spawn point
         Vector2 startPos 
             = new Vector2(
                 -(cellSize * (mazeColumns / 2)) + (cellSize / 2), 
                 -(cellSize * (mazeRows / 2)) + (cellSize / 2));
         Vector2 spawnPos = startPos;
 
+
+        //generate Cells
         for (int x = 1; x <= mazeColumns ; x++)
         {
             for (int y = 1; y <= mazeRows; y++)
             {
                 GenerateCell(spawnPos, new Vector2(x, y));
-
-                // Increase spawnPos y.
                 spawnPos.y += cellSize;
             }
-
-            // Reset spawnPos y and increase spawnPos x.
             spawnPos.y = startPos.y;
             spawnPos.x += cellSize;
         }
@@ -111,13 +105,12 @@ public class MazeGenerator : MonoBehaviour {
         MakeExit();
     }
 
-    // This is where the fun stuff happens.
+
     public void RunAlgorithm()
     {
-        // Get start cell, make it visited (i.e. remove from unvisited list).
+        // start cell, make it visited
         unvisited.Remove(currentCell);
 
-        // While we have unvisited cells.
         while (unvisited.Count > 0)
         {
             List<Cell> unvisitedNeighbours = GetUnvisitedNeighbours(currentCell);
@@ -147,7 +140,7 @@ public class MazeGenerator : MonoBehaviour {
     public void MakeExit()
     {
         
-        // Create and populate list of all possible edge cells.
+        // Create aall possible edge cells.
         List<Cell> edgeCells = new List<Cell>();
 
         foreach (KeyValuePair<Vector2, Cell> cell in allCells)
@@ -155,11 +148,10 @@ public class MazeGenerator : MonoBehaviour {
             if (cell.Key.x == 0 || cell.Key.x == mazeColumns  || cell.Key.y == 0  || cell.Key.y == mazeRows)
             {
                 edgeCells.Add(cell.Value);
-                //print("edge=" + cell.Key.x+" "+ cell.Key.y);
             }
         }
 
-        // Get edge cell randomly from list.
+        // random  edge cell
         Cell newCell = edgeCells[Random.Range(0, edgeCells.Count)];
         /*
         // Remove appropriate wall for chosen edge cell.
@@ -181,8 +173,6 @@ public class MazeGenerator : MonoBehaviour {
 
         Debug.Log("Maze generation finished.");
 
-
-        
     }
 
     public List<Cell> GetUnvisitedNeighbours(Cell curCell)
@@ -283,18 +273,15 @@ public class MazeGenerator : MonoBehaviour {
         // Create new Cell object.
         Cell newCell = new Cell();
 
-        // Store reference to position in grid.
-        newCell.gridPos = keyPos;
-        // Set and instantiate cell GameObject.
-        newCell.cellObject = Instantiate(cellPrefab, pos, cellPrefab.transform.rotation);
-        // Child new cell to parent.
-        if (mazeParent != null) newCell.cellObject.transform.parent = mazeParent.transform;
-        // Set name of cellObject.
-        newCell.cellObject.name = "Cell / X:" + keyPos.x + " Y:" + keyPos.y;
+        newCell.gridPos = keyPos;//position in grid
+        newCell.cellObject = Instantiate(cellPrefab, pos, cellPrefab.transform.rotation); //instantiate cell
+        if (mazeParent != null) newCell.cellObject.transform.parent = mazeParent.transform;//set cells as a child of mazeParent
+        newCell.cellObject.name = "Cell / X:" + keyPos.x + " Y:" + keyPos.y;//set name
         // Get reference to attached CellScript.
         newCell.cScript = newCell.cellObject.GetComponent<CellScript>();
-        // Disable Cell sprite, if applicable.
-        if (disableCellSprite) newCell.cellObject.GetComponent<SpriteRenderer>().enabled = false;
+        
+
+        //if (disableCellSprite) newCell.cellObject.GetComponent<SpriteRenderer>().enabled = false;
 
         // Add to Lists.
         allCells[keyPos] = newCell;

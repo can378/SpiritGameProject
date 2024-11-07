@@ -7,17 +7,18 @@ public class AGrid : MonoBehaviour
     public static AGrid instance = null;
 
     public bool displayGridGizmos;
-    // 추격자 위치
+
     //public Transform seeker;
-    // 장애물 레이어
+   
     public LayerMask OBSTACLE;
     // 화면의 크기
     public Vector2 gridWorldSize;
-    // 반지름
+
+    //node radius
     public float nodeRadius;
     ANode[,] grid;
 
-    // 격자의 지름
+    // node diameter
     float nodeDiameter;
     // x,y축 사이즈
     int gridSizeX, gridSizeY;
@@ -29,8 +30,6 @@ public class AGrid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-        
-        
     }
 
     private void Start()
@@ -43,7 +42,7 @@ public class AGrid : MonoBehaviour
     [SerializeField]
     public List<ANode> path;
 
-    // Scene view 출력용 기즈모.
+    // Scene view 출력용 Gizmo.
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector2(gridWorldSize.x, gridWorldSize.y));
@@ -64,7 +63,7 @@ public class AGrid : MonoBehaviour
 
                         }
                     }
-                //seekerNode를 파란색으로 화면에 표시해주는 코드
+                //seekerNode(blue)
                 //if (seekerNode == n) Gizmos.color = Color.cyan * new Color(1f, 1f, 1f, 0.5f);
                 Gizmos.DrawCube(n.worldPosition, Vector2.one * (nodeDiameter - 0.1f));
             }
@@ -75,8 +74,7 @@ public class AGrid : MonoBehaviour
     public void CreateGrid()
     {
         grid = new ANode[gridSizeX, gridSizeY];
-        // 격자 생성은 좌측 최하단부터 시작. transform은 월드 중앙에 위치한다. 
-        // 이에 x와 y좌표를 반반 씩 왼쪽, 아래쪽으로 옮겨준다.
+        // creating grid-> left bottom start / transform->world center 
         Vector2 worldBottomLeft = (Vector2)transform.position - Vector2.right * gridWorldSize.x / 2 - Vector2.up * gridWorldSize.y / 2;
 
         for (int x = 0; x < gridSizeX; x++)
