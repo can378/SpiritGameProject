@@ -90,7 +90,7 @@ public class AGrid : MonoBehaviour
         }
     }
 
-    // node 상하 좌우 노드를 반환하는 함수.
+    // node 상하 좌우 노드 반환
     public List<ANode> GetNeighbours(ANode node)
     {
         List<ANode> neighbours = new List<ANode>();

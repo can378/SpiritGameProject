@@ -75,10 +75,10 @@ public class PathFinding : MonoBehaviour
         ANode startNode = grid.NodeFromWorldPoint(startPos);
         ANode targetNode = grid.NodeFromWorldPoint(targetPos);
         
-        //print("a star1");
 
-        bool pathSuccess = false;// target에 도착여부
+        bool pathSuccess = false;// target 도착여부
 
+        //도달 불가
         if (!startNode.walkable) {   Debug.Log("Unwalkable StartNode.");  }
         if (!targetNode.walkable) 
         { 
@@ -89,7 +89,6 @@ public class PathFinding : MonoBehaviour
         
         //길 찾기
         //if (targetNode.walkable) {
-            //print("a star2");
             List<ANode> openSet = new List<ANode>(); //계산한 노드
             HashSet<ANode> closedSet = new HashSet<ANode>();//계산할 노드
 
@@ -100,7 +99,7 @@ public class PathFinding : MonoBehaviour
             {
                 // currentNode를 계산 후 openSet에서 빼야 한다.
                 ANode currentNode = openSet[0];
-                // 모든 openSet에 대해, current보다 f값이 작거나, h(휴리스틱)값이 작으면 그것을 current로 지정.
+                // openSet 내에서 current보다 f값이 작거나, h(휴리스틱)값이 작으면 그것을 current로 지정.
                 for (int i = 1; i < openSet.Count; i++)
                 {
                     if (openSet[i].fCost < currentNode.fCost || 
@@ -126,7 +125,7 @@ public class PathFinding : MonoBehaviour
                     pathSuccess = true;
                     break;
                 }
-                //print("a star3");
+
                 // current의 상하좌우 노드들에 대하여 g,h cost를 고려한다.
                 foreach (ANode neighbour in grid.GetNeighbours(currentNode))
                 {
@@ -151,7 +150,6 @@ public class PathFinding : MonoBehaviour
         }
         else //목적지에 도달할 수 없을경우 way갱신 안함
         {
-            //print("a star4");
             Vector3 origin = seeker.transform.position;
             while (true)
             {
@@ -165,7 +163,6 @@ public class PathFinding : MonoBehaviour
         */
         yield return null;
 
-        //print("a star5");
 
         // 길을 찾은 후 이동
         if (pathSuccess == true)
@@ -210,7 +207,7 @@ public class PathFinding : MonoBehaviour
         }
     }
 
-    // 현재 큐에 거꾸로 저장되어있으므로, 역순으로 wayQueue를 뒤집어준다. 
+    // queue를 역순 저장 
     Vector2[] RetracePath(ANode startNode, ANode endNode)
     {
         List<ANode> path = new List<ANode>();
@@ -240,8 +237,7 @@ public class PathFinding : MonoBehaviour
         return wayPoints.ToArray();
     }
 
-    // custom g cost 또는 휴리스틱 추정치를 계산하는 함수.
-    // 매개변수로 들어오는 값에 따라 기능이 바뀝니다.
+    // custom g cost or heuristic cost 계산
     int GetDistance(ANode nodeA, ANode nodeB)
     {
         int dstX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
