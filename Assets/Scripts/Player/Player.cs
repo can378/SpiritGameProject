@@ -1072,9 +1072,9 @@ public class Player : ObjectBasic
     }
 
     // ÇÇÇØ
-    public override void Damaged(float damage, float critical = 0, float criticalDamage = 0)
+    public override bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
-        base.Damaged(damage,critical,criticalDamage);
+        return base.Damaged(damage,critical,criticalDamage);
     }
 
     public override void Dead()

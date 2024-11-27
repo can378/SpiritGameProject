@@ -39,9 +39,7 @@ public class ObjectBasic : MonoBehaviour
         status.isBeAttaked = true;
 
        
-
-
-        Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
+        bool criticalHit = Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
 
         // if enemy is Dead, Don't Flinch and Buff
         if(stats.HP <= 0)
@@ -67,15 +65,32 @@ public class ObjectBasic : MonoBehaviour
             }
         }
 
-        AudioManager.instance.SFXPlay("Hit_SFX");
-        ObjectPoolManager.instance.Get2("Hit").transform.position = this.transform.position;
+        Vector2 oCenter = this.GetComponent<Collider2D>().bounds.center;
+        Vector2 hCenter = hitDetection.GetComponent<Collider2D>().bounds.center;
+
+        Vector2 dirVec = (hCenter - oCenter).normalized;
+
+        Vector2 pos = oCenter + dirVec * 0.25f;
+
+        if(criticalHit)
+        {
+            ObjectPoolManager.instance.Get2("Hit_Red").transform.position = pos;
+            AudioManager.instance.WeaponAttackAudioPlay(0);
+            
+        }
+        else
+        {
+            ObjectPoolManager.instance.Get2("Hit_White").transform.position = pos;
+            AudioManager.instance.SFXPlay("Hit_SFX");
+        }
+            
     }
 
-    public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)
+    public virtual bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
       
         if (status.isInvincible)
-            return;
+            return false;
 
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
@@ -85,6 +100,8 @@ public class ObjectBasic : MonoBehaviour
 
         if(stats.HP <= 0)
             Dead();
+
+        return criticalHit;
     }
 
     /// <summary>

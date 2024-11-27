@@ -238,7 +238,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "PlayerAttack" || collision.tag == "AllAttack")
+        if (collision.CompareTag("PlayerAttack") || collision.CompareTag("AllAttack"))
         {
             BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
