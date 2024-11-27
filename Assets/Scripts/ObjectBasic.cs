@@ -38,7 +38,7 @@ public class ObjectBasic : MonoBehaviour
 
         status.isBeAttaked = true;
 
-        AudioManager.instance.SFXPlay("Hit_SFX");
+       
 
 
         Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
@@ -47,7 +47,7 @@ public class ObjectBasic : MonoBehaviour
         if(stats.HP <= 0)
             return;
 
-        // ���ε��� 0�� �� �� �����ǰ� �˹�
+
         if (DamagedPoise(hitDetection.damage))
         {
             Debug.Log(gameObject.name + ":Flinch");
@@ -66,6 +66,9 @@ public class ObjectBasic : MonoBehaviour
                 ApplyBuff(statusEffectIndex);
             }
         }
+
+        AudioManager.instance.SFXPlay("Hit_SFX");
+        ObjectPoolManager.instance.Get2("Hit").transform.position = this.transform.position;
     }
 
     public virtual void Damaged(float damage, float critical = 0, float criticalDamage = 0)
