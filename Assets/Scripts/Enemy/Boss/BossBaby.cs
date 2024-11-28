@@ -65,7 +65,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Rush");
-        enemyAnim.changeAnimToAdult();
+        //enemyAnim.changeAnimToAdult();
 
         float time = 0;
 
@@ -104,7 +104,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Crying");
-        enemyAnim.changeAnimToBaby();
+        //enemyAnim.changeAnimToBaby();
 
         //move to corner
         corner = FindCorner();
@@ -160,7 +160,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("MadRush");
-        enemyAnim.changeAnimToAdult();
+        //enemyAnim.changeAnimToAdult();
 
         randomX = Random.Range(bounds.min.x, bounds.max.x);
         randomY = Random.Range(bounds.min.y, bounds.max.y);
@@ -209,7 +209,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Hiding");
-        enemyAnim.changeAnimToBaby();
+        //enemyAnim.changeAnimToBaby();
 
         hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(true);
         yield return new WaitForSeconds(2f);
@@ -256,7 +256,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Screaming");
-        enemyAnim.changeAnimToBaby();
+        //enemyAnim.changeAnimToBaby();
 
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
 

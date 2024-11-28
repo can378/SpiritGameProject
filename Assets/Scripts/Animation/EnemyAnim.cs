@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EnemyAnim : AnimBasic
 {
+    /*
     public List<Animator> babyAnimator;
     public List<Animator> adultAnimator;
     public List<GameObject> babyLayer;
@@ -79,4 +80,5 @@ public class EnemyAnim : AnimBasic
 
         transform.localScale = new Vector3(chardir * charscale, charscale, charscale);
     }
+    */
 }
