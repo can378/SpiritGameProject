@@ -120,7 +120,6 @@ public class Player : ObjectBasic
         skcDown = Input.GetAxisRaw("Mouse ScrollWheel");
         skDown = Input.GetButton("Skill");          //e Down
 
-        /*
         if (hAxis > 0) { playerAnim.rightPressed = true; }
         else if (hAxis < 0) { playerAnim.leftPressed = true; }
         else
@@ -136,7 +135,6 @@ public class Player : ObjectBasic
             playerAnim.upPressed = false; 
             playerAnim.downPressed = false; 
         }
-        */
     }
 
     #region Moving
