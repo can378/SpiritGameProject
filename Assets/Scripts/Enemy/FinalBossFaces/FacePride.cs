@@ -27,7 +27,10 @@ public class FacePride : BossFace
     protected override void setBack()
     {
         base.setBack();
-        sprite.color = new Color(1f, 1f, 1f, 1f);
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
     protected override void faceAttack() 
@@ -43,7 +46,10 @@ public class FacePride : BossFace
             {
                 //사정거리 안
                 //print("pride-attack");
-                sprite.color = new Color(1f, 0f, 0f, 1f);
+                foreach(SpriteRenderer sprite in sprites)
+                {
+                    sprite.color = new Color(1f, 0f, 0f, 1f);
+                }
                 attackArea.SetActive(true);
             }
             else
@@ -52,7 +58,11 @@ public class FacePride : BossFace
                 {
                     //print("pride-chase");
                     Chase();
-                    sprite.color = new Color(1f, 1f, 1f, 0.2f);
+                    foreach(SpriteRenderer sprite in sprites)
+                    {
+                        sprite.color = new Color(1f, 1f, 1f, 0.2f);
+                    }
+                    
                     attackArea.SetActive(false);
                 }
 
@@ -63,7 +73,11 @@ public class FacePride : BossFace
             //hide
             //print("pride-hide");
             Chase();
-            sprite.color = new Color(1f, 1f, 1f, 0.05f);
+            foreach(SpriteRenderer sprite in sprites)
+            {
+                sprite.color = new Color(1f, 1f, 1f, 0.05f);
+            }
+            
             attackArea.SetActive(false);
         }
 

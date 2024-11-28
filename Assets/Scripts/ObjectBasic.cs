@@ -5,21 +5,20 @@ using UnityEngine;
 
 public class ObjectBasic : MonoBehaviour
 {
-    //����
     [HideInInspector] public Stats stats;
-    // ���� �ൿ ����
     [HideInInspector] public Status status;
 
-    public GameObject[] hitEffects;           // ���ݹ����� �����ϴ� ��ü
+    public GameObject[] hitEffects;
     public int defaultLayer;
-    public Transform buffTF;                // ���� ������ ��ġ
+    public Transform buffTF;
+    public GameObject animGameObject;
 
-    [HideInInspector] public SpriteRenderer sprite;
+    [HideInInspector] public SpriteRenderer[] sprites;
     [HideInInspector] public Rigidbody2D rigid;
     
     protected virtual void Awake()
     {
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        sprites = animGameObject.GetComponentsInChildren<SpriteRenderer>(true);
         rigid = GetComponent<Rigidbody2D>();
     }
 
@@ -29,7 +28,7 @@ public class ObjectBasic : MonoBehaviour
         status.isBeAttaked = false;
     }
 
-    #region Effect
+    #region BeAttacked
 
     public void BeAttacked(HitDetection hitDetection)
     {
@@ -55,8 +54,6 @@ public class ObjectBasic : MonoBehaviour
             KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
 
-        //Invincible(0.1f);
-
         if (hitDetection.statusEffect != null)
         {
             foreach (int statusEffectIndex in hitDetection.statusEffect)
@@ -65,25 +62,33 @@ public class ObjectBasic : MonoBehaviour
             }
         }
 
+        #region Effect
+
         Vector2 oCenter = this.GetComponent<Collider2D>().bounds.center;
         Vector2 hCenter = hitDetection.GetComponent<Collider2D>().bounds.center;
-
         Vector2 dirVec = (hCenter - oCenter).normalized;
-
         Vector2 pos = oCenter + dirVec * 0.25f;
 
         if(criticalHit)
         {
             ObjectPoolManager.instance.Get2("Hit_Red").transform.position = pos;
             AudioManager.instance.WeaponAttackAudioPlay(0);
-            
         }
         else
         {
             ObjectPoolManager.instance.Get2("Hit_White").transform.position = pos;
             AudioManager.instance.SFXPlay("Hit_SFX");
         }
-            
+        
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.red;
+        }
+
+        if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
+            status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
+
+        #endregion Effect
     }
 
     public virtual bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
@@ -105,11 +110,28 @@ public class ObjectBasic : MonoBehaviour
     }
 
     /// <summary>
-    /// ��������
-    /// 0 ���ϰ� �Ǹ� �����ǰ� �ִ� ����ġ�� �ʱ�ȭ�ȴ�.
+    /// Change Color Red
     /// </summary>
-    /// <param name="damage"></param>
+    /// <param name="time"></param>
     /// <returns></returns>
+    protected IEnumerator ChangeHitColor(float time = 0)
+    {
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.red;
+        }
+
+        yield return new WaitForSeconds(time);
+
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = new Color(1, 1, 1,1);
+        }
+    }
+
+    #endregion BeAttacked
+
+    #region Flinch
     bool DamagedPoise(float damage)
     {
         if(status.isInvincible || status.isSuperArmor)
@@ -126,10 +148,6 @@ public class ObjectBasic : MonoBehaviour
             return false;
     }
 
-    /// <summary>
-    /// ���� ȸ��
-    /// �ʴ� 2�� ���� ���ظ� ȸ�� �ȴ�.
-    /// </summary>
     protected void HealPoise()
     {
         stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 1f, stats.poiseMax);
@@ -162,41 +180,42 @@ public class ObjectBasic : MonoBehaviour
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
 
-        sprite.color = new Color(1f, 1f, 1f, 1f);
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = new Color(1f, 1f, 1f, 1f);
+        }
+        
 
         foreach (GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
     }
 
-    public virtual void InitStatus()
-    {
-        status.isAttack = false;
-        status.isAttackReady = true;
-        status.isSuperArmor = false;
-        status.isFlinch = false;
-        status.isInvincible = false;
-        status.moveVec = Vector2.zero;
+    #endregion Flinch
 
-        sprite.color = new Color(1f,1f,1f,1f);
-
-        foreach(GameObject hitEffect in hitEffects)
-            hitEffect.SetActive(false);
-        RemoveAllEffects();
-    }
+    #region Invincible
 
     public void Invincible(float time = 0)
     {
         status.isInvincible = true;
-        sprite.color = Color.white;
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.white;
+        }
         Invoke("InvincibleOut", time);
     }
 
     protected void InvincibleOut()
     {
-        //���� ����
-        sprite.color = new Color(1, 1, 1, 1);
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = new Color(1f, 1f, 1f, 1f);
+        }
         status.isInvincible = false;
     }
+
+    #endregion  Invincible
+
+    #region Buff
 
     public void ApplyBuff(int buffIndex)
     {
@@ -259,7 +278,10 @@ public class ObjectBasic : MonoBehaviour
         stats.activeEffects.Clear();
     }
 
-    // ���� ����
+    #endregion Buff
+
+    #region Dead
+
     public virtual void Dead()
     {
         print(this.name + " Dead");
@@ -271,5 +293,40 @@ public class ObjectBasic : MonoBehaviour
         //Destroy(this.gameObject);
     }
 
-    #endregion
+    #endregion Dead
+   
+    /// <summary>
+    /// Reset status Func
+    /// </summary>
+    public virtual void InitStatus()
+    {
+        status.isAttack = false;
+        status.isAttackReady = true;
+        status.isSuperArmor = false;
+        status.isFlinch = false;
+        status.isInvincible = false;
+        status.moveVec = Vector2.zero;
+
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = new Color(1f, 1f, 1f, 1f);
+        }
+
+        foreach(GameObject hitEffect in hitEffects)
+            hitEffect.SetActive(false);
+        RemoveAllEffects();
+    }
+
+    /// <summary>
+    /// Easy Color Chanage Func
+    /// </summary>
+    /// <param name="_Color"></param>
+    public void ChangeColor(Color _Color)
+    {
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = _Color;
+        }
+    }
+
 }

@@ -66,7 +66,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.5
 --- !u!1 &7040823031454602919
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a2c3357e61e5aa04696f689955badfe6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -240,7 +240,8 @@ MonoBehaviour:
   hitEffects: []
   defaultLayer: 0
   buffTF: {fileID: 883088692791154741}
-  sprite: {fileID: 0}
+  animGameObject: {fileID: 7040823031454602919}
+  sprites: []
   rigid: {fileID: 0}
   enemyStats: {fileID: 0}
   enemyStatus: {fileID: 0}

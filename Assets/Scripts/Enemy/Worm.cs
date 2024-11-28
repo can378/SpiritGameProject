@@ -21,7 +21,11 @@ public class Worm : EnemyBasic
 
         transform.position = enemyStatus.enemyTarget.transform.position;
         transform.parent = enemyStatus.enemyTarget.gameObject.transform;
-        sprite.sortingOrder = enemyStatus.enemyTarget.GetComponentInChildren<SpriteRenderer>().sortingOrder + 1;
+        foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.sortingOrder = enemyStatus.enemyTarget.GetComponentInChildren<SpriteRenderer>().sortingOrder + 1;
+        }
+        
 
         //player move slowly
         enemyStatus.enemyTarget.GetComponent<PlayerStats>().decreasedMoveSpeed += 0.5f;

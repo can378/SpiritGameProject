@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    public Vector2 moveVec;                 // 이동 방향 벡터
-    public Coroutine flinchCoroutine;       // 피격 코루틴
-    public GameObject hitTarget;            // 공격 성공
+    public Vector2 moveVec;                     // 이동 방향 벡터
+    public Coroutine flinchCoroutine;           // 경직 코루틴
+    public Coroutine beAttackedCoroutine;       // 피격 색상 변경 코루틴
+    public GameObject hitTarget;                // 공격 성공
 
-    public bool isBeAttaked;                  // 피격 : 피격됨
+    public bool isBeAttaked;                 // 피격 : 피격됨
     public bool isFlinch;                   // 경직 : 스스로 움직일 수 없으며 공격할 수 없음
     public bool isSuperArmor;               // 강인(슈퍼아머) : 경직 되지 않는다.
     public bool isInvincible;               // 무적 : 피해와 적의 공격 무시

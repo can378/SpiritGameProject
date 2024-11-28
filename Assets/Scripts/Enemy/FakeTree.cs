@@ -24,12 +24,12 @@ public class FakeTree : EnemyBasic
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        sprite.color = new Color(255, 0, 0);
+        //sprite.color = new Color(255, 0, 0);
         yield return new WaitForSeconds(2f);
 
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
-        sprite.color = new Color(255, 255, 255);
+        //sprite.color = new Color(255, 255, 255);
 
 
     }

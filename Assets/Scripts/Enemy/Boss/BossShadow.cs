@@ -114,7 +114,10 @@ public class BossShadow : Boss
         time = 0f;
         while (time < 1.5f)
         {
+        foreach(SpriteRenderer sprite in sprites)
+        {
             sprite.color = new Color(1f, 1f, 1f, 1f - (time / 1.5f));
+        }
             yield return null;
             time += Time.deltaTime;
         }

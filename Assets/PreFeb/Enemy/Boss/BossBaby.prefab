@@ -144,6 +144,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 01000000
+  <isShake>k__BackingField: 0
   multiHitDurationTime: 0
 --- !u!50 &7653305266310428476
 Rigidbody2D:
@@ -316,8 +317,10 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  <isShake>k__BackingField: 0
   multiHitDurationTime: 0
   safeArea: {fileID: 2368719781450076700}
+  circleCollider: {fileID: 0}
 --- !u!50 &353126954175971493
 Rigidbody2D:
   serializedVersion: 4
@@ -649,7 +652,8 @@ MonoBehaviour:
   - {fileID: 5086274386454289508}
   defaultLayer: 0
   buffTF: {fileID: 0}
-  sprite: {fileID: 0}
+  animGameObject: {fileID: 6939599685599458559}
+  sprites: []
   rigid: {fileID: 0}
   enemyStats: {fileID: 0}
   enemyStatus: {fileID: 0}
@@ -927,6 +931,7 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  <isShake>k__BackingField: 0
   multiHitDurationTime: 0
 --- !u!50 &825585655899856437
 Rigidbody2D:
@@ -1198,6 +1203,7 @@ MonoBehaviour:
   <critical>k__BackingField: 10
   <criticalDamage>k__BackingField: 10
   <statusEffect>k__BackingField: 
+  <isShake>k__BackingField: 0
   multiHitDurationTime: 0
 --- !u!1001 &6188142464054561110
 PrefabInstance:

@@ -256,7 +256,7 @@ public class EnemyPattern : EnemyBasic
                 {
                     
                     isAttacking = true;
-                    sprite.color = new Color(1f, 0f, 0f, 0.5f);
+                    //sprite.color = new Color(1f, 0f, 0f, 0.5f);
 
                     yield return new WaitForSecondsRealtime(3f);
 
@@ -267,13 +267,13 @@ public class EnemyPattern : EnemyBasic
                 else
                 {
                     Chase();
-                    sprite.color = new Color(1f, 1f, 1f, 0.5f);
+                    //sprite.color = new Color(1f, 1f, 1f, 0.5f);
                 }
             }
             else
             {
                 //hide
-                sprite.color = new Color(1f, 1f, 1f, 0.2f);
+                //sprite.color = new Color(1f, 1f, 1f, 0.2f);
             }
         }
 

@@ -10,11 +10,11 @@ using System;
 public class Player : ObjectBasic
 {
 
-    public static Player instance { get; private set; }         
-    public PlayerStatus playerStatus { get; private set; }                        // player 현재 능력치
-    public PlayerStats playerStats {get; private set; }                     // player 현재 능력치
+    public static Player instance { get; private set; }
+    public PlayerStatus playerStatus { get; private set; }
+    public PlayerStats playerStats {get; private set; }
     public UserData userData { get; private set; }
-    public PlayerAnim playerAnim;
+    public PlayerAnim playerAnim { get; private set; }
 
 
     [HideInInspector] public float hAxis;
@@ -34,7 +34,6 @@ public class Player : ObjectBasic
     #endregion
 
     public LayerMask layerMask;             //접근 불가한 레이어 설정
-    //public GameObject playerItem;
 
     Vector2 playerPosition;
     Vector2 dodgeVec;
@@ -49,8 +48,7 @@ public class Player : ObjectBasic
     protected override void Awake()
     {
         instance = this;
-        rigid = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        base.Awake();
 
         status = playerStatus = GetComponent<PlayerStatus>();
         stats = playerStats = GetComponent<PlayerStats>();
@@ -58,14 +56,14 @@ public class Player : ObjectBasic
 
         weaponController = gameObject.AddComponent<Player.WeaponController>();
         skillController = gameObject.AddComponent<Player.SkillController>();
-    }
 
+        playerAnim = animGameObject.GetComponent<PlayerAnim>();
+    }
     void Start()
     {
         userData = DataManager.instance.userData;
         defaultLayer = this.gameObject.layer;
     }
-
     void Update()
     {
         //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
@@ -109,7 +107,6 @@ public class Player : ObjectBasic
         string layerName = LayerMask.LayerToName(gameObject.layer);
         //Debug.Log("My layer name is: " + layerName);
     }
-
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");
@@ -141,7 +138,6 @@ public class Player : ObjectBasic
     }
 
     #region Moving
-    
 
     private bool isMoveable() 
     {
@@ -444,7 +440,7 @@ public class Player : ObjectBasic
             }
         }
     }
-
+    
     void Attack()
     {
         playerStatus.attackDelay -= Time.deltaTime;
@@ -621,7 +617,7 @@ public class Player : ObjectBasic
         }
 
     }
-
+    
     void SkillUp()
     {
         if (playerStats.skill[playerStatus.skillIndex] == 0)
@@ -634,7 +630,7 @@ public class Player : ObjectBasic
             playerStatus.isReload = false;
         }
     }
-
+    
     void SkillChange()
     {
         playerStatus.skillChangeDelay -= Time.deltaTime;
@@ -782,7 +778,6 @@ public class Player : ObjectBasic
         }
     }
     */
-
 
     // 장착할 장비의 index
     public bool EquipEquipment(int equipmentId)
@@ -1069,12 +1064,6 @@ public class Player : ObjectBasic
         playerStatus.attackDelay = 0;
         skillController.SkillCancle();
         weaponController.AttackCancle();
-    }
-
-    // 피해
-    public override bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
-    {
-        return base.Damaged(damage,critical,criticalDamage);
     }
 
     public override void Dead()
