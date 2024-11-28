@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerAnim : AnimBasic
 {
-
+    /*
     //Player GetInput에서 받아온다.
     public bool leftPressed;
     public bool rightPressed;
@@ -116,5 +116,5 @@ public class PlayerAnim : AnimBasic
         else { nowAnimator.SetBool("isRunning", true); }
 
     }
-
+    */
 }
