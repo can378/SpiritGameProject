@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class WheelWindSkill : Skill
 {
-    //ÇÇÇØ·®
+    //ï¿½ï¿½ï¿½Ø·ï¿½
     [field: SerializeField] int defaultDamage;
     [field: SerializeField] float ratio;
 
 
-    // ÃÊ´ç Å¸°Ý È½¼ö, Å©±â, ÀÌÆåÆ®
+    // ï¿½Ê´ï¿½ Å¸ï¿½ï¿½ È½ï¿½ï¿½, Å©ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½Æ®
     [field: SerializeField] int DPS;
     [field: SerializeField] float size;
     [field: SerializeField] GameObject WheelWindPrefab;
 
-    //ÀÌÆåÆ®
+    //ï¿½ï¿½ï¿½ï¿½Æ®
     GameObject WheelWindEffect;
 
     public override void Enter(GameObject user)
@@ -36,35 +36,35 @@ public class WheelWindSkill : Skill
 
             skillCoolTime = 99;
 
-            // ¸ÕÀú ¼Óµµ °¨¼Ò
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
             player.stats.decreasedMoveSpeed += 0.5f;
             
-            // ½Ã°£ÀÌ Á¶±Ý Áö³­ ÈÄ È¸Àü ½ÃÀÛ
+            // ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return new WaitForSeconds(preDelay * attackRate);
 
-            // »ç¿ëÀÚ À§Ä¡¿¡ »ý¼º
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
             WheelWindEffect = Instantiate(WheelWindPrefab, user.transform.position, user.transform.rotation);
             WheelWindEffect.transform.parent = user.transform;
-            WheelWindEffect.transform.localScale = new Vector3(size * player.weaponList[player.playerStats.weapon].attackSize, size * player.weaponList[player.playerStats.weapon].attackSize, 0);
+            WheelWindEffect.transform.localScale = new Vector3(size * player.weaponList[player.playerStats.weapon].attackSize, size * player.weaponList[player.playerStats.weapon].attackSize, 1);
             WheelWindEffect.tag = "PlayerAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("PlayerAttack");
 
-            // °ø°Ý ÆÇÁ¤ Á¶Á¤
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
             /*
-            Åõ»çÃ¼ = false
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = true
-            ÃÊ´ç Å¸°Ý È½¼ö = DPS * attackRate 
-            ¼Ó¼º = ¹«±â ¼Ó¼º
-            ÇÇÇØ·® = (±âº» ÇÇÇØ·® + ¹«±â ÇÇÇØ·®) * ÇÃ·¹ÀÌ¾î °ø°Ý·Â
-            ³Ë¹é = ¹«±â ³Ë¹é
-            Ä¡È® = ÇÃ·¹ÀÌ¾î Ä¡È®
-            Ä¡µ© = ÇÃ·¹ÀÌ¾î Ä¡µ©
-            µð¹öÇÁ = ¾øÀ½
+            ï¿½ï¿½ï¿½ï¿½Ã¼ = false
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = -1
+            ï¿½Ù´ï¿½ï¿½ï¿½Æ® = true
+            ï¿½Ê´ï¿½ Å¸ï¿½ï¿½ È½ï¿½ï¿½ = DPS * attackRate 
+            ï¿½Ó¼ï¿½ = ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½
+            ï¿½ï¿½ï¿½Ø·ï¿½ = (ï¿½âº» ï¿½ï¿½ï¿½Ø·ï¿½ + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø·ï¿½) * ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
+            ï¿½Ë¹ï¿½ = ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¹ï¿½
+            Ä¡È® = ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä¡È®
+            Ä¡ï¿½ï¿½ = ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä¡ï¿½ï¿½
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = ï¿½ï¿½ï¿½ï¿½
             */
             hitDetection.SetHitDetection(false, -1, true, (int)((float)DPS / attackRate),
              defaultDamage + player.stats.attackPower * ratio,
@@ -81,16 +81,16 @@ public class WheelWindSkill : Skill
 
             skillCoolTime = 99;
 
-            // ¸ÕÀú ¼Óµµ °¨¼Ò
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
             enemy.stats.decreasedMoveSpeed += 0.5f;
 
-            // ÄðÅ¸ÀÓ Àû¿ë
+            // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             skillCoolTime = skillDefalutCoolTime;
 
-            // ½Ã°£ÀÌ Á¶±Ý Áö³­ ÈÄ È¸Àü ½ÃÀÛ
+            // ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return new WaitForSeconds(preDelay);
 
-            // »ç¿ëÀÚ À§Ä¡¿¡ »ý¼º
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
@@ -100,19 +100,19 @@ public class WheelWindSkill : Skill
             WheelWindEffect.tag = "EnemyAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("EnemyAttack");
 
-            // °ø°Ý ÆÇÁ¤ Á¶Á¤
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
             /*
-            Åõ»çÃ¼ = false
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = true
-            ÃÊ´ç Å¸°Ý È½¼ö = DPS * attackRate 
-            ¼Ó¼º = ¹«±â ¼Ó¼º
-            ÇÇÇØ·® = (±âº» ÇÇÇØ·® + ¹«±â ÇÇÇØ·®) * ÇÃ·¹ÀÌ¾î °ø°Ý·Â
-            ³Ë¹é = ¹«±â ³Ë¹é
-            Ä¡È® = ÇÃ·¹ÀÌ¾î Ä¡È®
-            Ä¡µ© = ÇÃ·¹ÀÌ¾î Ä¡µ©
-            µð¹öÇÁ = ¾øÀ½
+            ï¿½ï¿½ï¿½ï¿½Ã¼ = false
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = -1
+            ï¿½Ù´ï¿½ï¿½ï¿½Æ® = true
+            ï¿½Ê´ï¿½ Å¸ï¿½ï¿½ È½ï¿½ï¿½ = DPS * attackRate 
+            ï¿½Ó¼ï¿½ = ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½
+            ï¿½ï¿½ï¿½Ø·ï¿½ = (ï¿½âº» ï¿½ï¿½ï¿½Ø·ï¿½ + ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø·ï¿½) * ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
+            ï¿½Ë¹ï¿½ = ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¹ï¿½
+            Ä¡È® = ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä¡È®
+            Ä¡ï¿½ï¿½ = ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä¡ï¿½ï¿½
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = ï¿½ï¿½ï¿½ï¿½
             */
             hitDetection.SetHitDetection(false, -1, true, DPS,
              defaultDamage + enemy.stats.attackPower * ratio,
@@ -149,10 +149,10 @@ public class WheelWindSkill : Skill
 
             Destroy(WheelWindEffect);
 
-            // Á¶±Ý ½Ã°£ÀÌ Áö³­ ÈÄ ¼Óµµ °¨¼Ò ÇØÁ¦
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return new WaitForSeconds(postDelay * attackRate);
 
-            // ÄðÅ¸ÀÓ Àû¿ë
+            // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             player.stats.decreasedMoveSpeed -= 0.5f;
@@ -163,13 +163,13 @@ public class WheelWindSkill : Skill
 
             yield return new WaitForSeconds(0.5f);
 
-            // È¸Àü ¸ØÃã
+            // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Destroy(WheelWindEffect);
 
-            // Á¶±Ý ½Ã°£ÀÌ Áö³­ ÈÄ ¼Óµµ °¨¼Ò ÇØÁ¦
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             yield return new WaitForSeconds(postDelay);
 
-            // ÄðÅ¸ÀÓ Àû¿ë
+            // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             skillCoolTime = skillDefalutCoolTime;
 
             enemy.stats.decreasedMoveSpeed -= 0.5f;

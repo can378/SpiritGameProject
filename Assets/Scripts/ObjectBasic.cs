@@ -18,7 +18,7 @@ public class ObjectBasic : MonoBehaviour
     
     protected virtual void Awake()
     {
-        //sprites = animGameObject.GetComponentsInChildren<SpriteRenderer>(true);
+        sprites = animGameObject.GetComponentsInChildren<SpriteRenderer>(true);
         rigid = GetComponent<Rigidbody2D>();
     }
 
