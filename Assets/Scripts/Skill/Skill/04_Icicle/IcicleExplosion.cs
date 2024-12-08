@@ -32,7 +32,7 @@ public class IcicleExplosion : HitDetection
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         originalForm.SetActive(false);
         //explosinForm.SetActive(true);
-        GameObject sfx=ObjectPoolManager.instance.ExplosionSFX(explosinForm.GetComponent<SpriteRenderer>().sprite);
+        GameObject sfx = ObjectPoolManager.instance.ExplosionSFX(explosinForm.GetComponent<SpriteRenderer>().sprite);
         sfx.transform.position = this.transform.position;
     }
 

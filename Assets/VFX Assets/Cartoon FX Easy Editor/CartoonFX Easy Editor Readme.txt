@@ -1,6 +1,6 @@
 ﻿Cartoon FX Easy Editor
 2020/03/05
-© 2020 - Jean Moreno
+© 2012-2020 - Jean Moreno
 ======================
 
 You can open the editor within the Unity top menu:
