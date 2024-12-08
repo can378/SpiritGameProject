@@ -5,11 +5,11 @@ using System;
 
 public class IcicleSkill : Skill
 {
-    // ÇÇÇØ·®
+    // ï¿½ï¿½ï¿½Ø·ï¿½
     [field: SerializeField] int defalutDamage;
     [field: SerializeField] float ratio;
 
-    // Å©±â, ³Ë¹é, ¼Óµµ, ÀÌÆåÆ® À¯Áö½Ã°£, ÀÌÆåÆ®, »óÅÂÀÌ»ó
+    // Å©ï¿½ï¿½, ï¿½Ë¹ï¿½, ï¿½Óµï¿½, ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½, ï¿½ï¿½ï¿½ï¿½Æ®, ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½
     [field: SerializeField] float size;
     [field: SerializeField] float knockBack;
     [field: SerializeField] float speed;
@@ -18,7 +18,7 @@ public class IcicleSkill : Skill
     [field: SerializeField] GameObject fireSimul;
     [field: SerializeField] int[] statusEffect;
 
-    //¹æÇâ Ç¥½Ã±â
+    //ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½Ã±ï¿½
     GameObject simul;
     Vector3 simulVector;
 
@@ -41,8 +41,8 @@ public class IcicleSkill : Skill
 
             while (player.playerStatus.isSkillHold)
             {
-                // ³ªÁß¿¡ ¿ø ÇüÅÂ·Î ÃÖ´ë ¹üÀ§ Á¦ÇÑÇÏ±â
-                // ³ªÁß¿¡ ¿ø ÇüÅÂ·Î ÃÖ´ë ¹üÀ§ Ç¥½ÃÇÏ±â
+                // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï±ï¿½
                 simulVector = player.playerStatus.mousePos;
                 simul.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);
                 yield return null;
@@ -61,8 +61,8 @@ public class IcicleSkill : Skill
 
             while (timer <= maxHoldTime / 2 && enemy.enemyStatus.enemyTarget != null  && enemy.enemyStatus.isAttack)
             {
-                // ³ªÁß¿¡ ¿ø ÇüÅÂ·Î ÃÖ´ë ¹üÀ§ Á¦ÇÑÇÏ±â
-                // ³ªÁß¿¡ ¿ø ÇüÅÂ·Î ÃÖ´ë ¹üÀ§ Ç¥½ÃÇÏ±â
+                // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                // ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ï±ï¿½
                 angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
                 simulVector = enemy.enemyStatus.enemyTarget.transform.position;
                 simul.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
@@ -96,7 +96,7 @@ public class IcicleSkill : Skill
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
 
-            // ÄðÅ¸ÀÓ Àû¿ë
+            // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
             instantProjectile.transform.localScale = new Vector3(size, size, 0);
@@ -106,22 +106,20 @@ public class IcicleSkill : Skill
             Destroy(simul);
             
             /*
-            Åõ»çÃ¼ = true
-            °üÅë·Â = 0
-            ´Ù´ÜÈ÷Æ® = false
-            ÃÊ´ç Å¸°Ý È½¼ö = -1 
-            ÇÇÇØ·® = ÇÇÇØ·® * ÇÃ·¹ÀÌ¾î µµ·Â
-            ³Ë¹é = ³Ë¹é
+            ï¿½ï¿½ï¿½ï¿½Ã¼ = true
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = 0
+            ï¿½Ù´ï¿½ï¿½ï¿½Æ® = false
+            ï¿½Ê´ï¿½ Å¸ï¿½ï¿½ È½ï¿½ï¿½ = -1 
+            ï¿½ï¿½ï¿½Ø·ï¿½ = ï¿½ï¿½ï¿½Ø·ï¿½ * ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+            ï¿½Ë¹ï¿½ = ï¿½Ë¹ï¿½
             Ä¡È® = 0
-            Ä¡µ© = 0
-            µð¹öÇÁ = È­»ó
+            Ä¡ï¿½ï¿½ = 0
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = È­ï¿½ï¿½
             */
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ¹æÇâ ¼³Á¤
-            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // ¼Óµµ ¼³Á¤
-
-            StartCoroutine(explosion(instantProjectile));
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
             
         }
         else if (user.tag == "Enemy")
@@ -132,43 +130,33 @@ public class IcicleSkill : Skill
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             float angle = Mathf.Atan2(simulVector.y - user.transform.position.y, simulVector.x - user.transform.position.x) * Mathf.Rad2Deg;
 
-            // ÄðÅ¸ÀÓ Àû¿ë
+            // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             skillCoolTime = skillDefalutCoolTime;
 
             instantProjectile.transform.localScale = new Vector3(size, size,0);
             instantProjectile.tag = "EnemyAttack";
             instantProjectile.layer = LayerMask.NameToLayer("EnemyAttack");
 
-            // ÀÌÆåÆ® Àû¿ë
+            // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             Destroy(simul);
 
 
             /*
-            Åõ»çÃ¼ = true
-            °üÅë·Â = 0
-            ´Ù´ÜÈ÷Æ® = false
-            ÃÊ´ç Å¸°Ý È½¼ö = -1 
-            ÇÇÇØ·® = ÇÇÇØ·® * ÇÃ·¹ÀÌ¾î µµ·Â
-            ³Ë¹é = ³Ë¹é
+            ï¿½ï¿½ï¿½ï¿½Ã¼ = true
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = 0
+            ï¿½Ù´ï¿½ï¿½ï¿½Æ® = false
+            ï¿½Ê´ï¿½ Å¸ï¿½ï¿½ È½ï¿½ï¿½ = -1 
+            ï¿½ï¿½ï¿½Ø·ï¿½ = ï¿½ï¿½ï¿½Ø·ï¿½ * ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
+            ï¿½Ë¹ï¿½ = ï¿½Ë¹ï¿½
             Ä¡È® = 0
-            Ä¡µ© = 0
-            µð¹öÇÁ = È­»ó
+            Ä¡ï¿½ï¿½ = 0
+            ï¿½ï¿½ï¿½ï¿½ï¿½ = È­ï¿½ï¿½
             */
             hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
             hitDetection.user = user;
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ¹æÇâ ¼³Á¤
-            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // ¼Óµµ ¼³Á¤
-            Destroy(instantProjectile, time);  //»ç°Å¸® ¼³Á¤
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
+            Destroy(instantProjectile, time);  //ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
-    }
-
-    private IEnumerator explosion(GameObject projectile) 
-    {
-        yield return new WaitForSeconds(speed);//»ç°Å¸® ¼³Á¤
-
-        projectile.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        projectile.GetComponent<IcicleExplosion>().explosionSprite();
-        yield return new WaitForSeconds(1f);
-        Destroy(projectile);  
     }
 }
