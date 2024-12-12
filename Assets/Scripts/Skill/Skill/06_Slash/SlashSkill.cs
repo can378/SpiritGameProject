@@ -142,8 +142,8 @@ public class SlashSkill : Skill
                 (int)((defalutDamage + player.stats.attackPower * ratio) * holdPower),
                 player.weaponList[player.playerStats.weapon].knockBack * holdPower,
                 player.playerStats.criticalChance,
-                player.playerStats.criticalDamage,
-                player.weaponList[player.playerStats.weapon].statusEffect);
+                player.playerStats.criticalDamage);
+            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
             bulletRigid.velocity = player.playerStatus.mouseDir * 10 * speed;
 
@@ -181,10 +181,7 @@ public class SlashSkill : Skill
             */
             hitDetection.SetHitDetection(true, -1, true, DPS,
                 (int)((defalutDamage + enemy.stats.attackPower * ratio) * holdPower),
-                1 * holdPower,
-                0,
-                0,
-                null);
+                1 * holdPower);
             hitDetection.user = user;
             bulletRigid.velocity = (enemy.enemyStatus.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
 

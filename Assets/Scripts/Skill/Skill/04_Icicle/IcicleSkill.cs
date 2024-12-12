@@ -16,7 +16,7 @@ public class IcicleSkill : Skill
     [field: SerializeField] float time;
     [field: SerializeField] GameObject icicleEffect;
     [field: SerializeField] GameObject fireSimul;
-    [field: SerializeField] int[] statusEffect;
+    [field: SerializeField] Buff[] statusEffect;
 
     //���� ǥ�ñ�
     GameObject simul;
@@ -107,16 +107,17 @@ public class IcicleSkill : Skill
             
             /*
             ����ü = true
-            ����� = 0
+            �����? = 0
             �ٴ���Ʈ = false
             �ʴ� Ÿ�� Ƚ�� = -1 
             ���ط� = ���ط� * �÷��̾� ����
             �˹� = �˹�
             ġȮ = 0
             ġ�� = 0
-            ����� = ȭ��
+            �����? = ȭ��
             */
-            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0);
+            hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ���� ����
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // �ӵ� ����
@@ -143,20 +144,21 @@ public class IcicleSkill : Skill
 
             /*
             ����ü = true
-            ����� = 0
+            �����? = 0
             �ٴ���Ʈ = false
             �ʴ� Ÿ�� Ƚ�� = -1 
             ���ط� = ���ط� * �÷��̾� ����
             �˹� = �˹�
             ġȮ = 0
             ġ�� = 0
-            ����� = ȭ��
+            �����? = ȭ��
             */
-            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack);
+            hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ���� ����
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // �ӵ� ����
-            Destroy(instantProjectile, time);  //��Ÿ� ����
+            Destroy(instantProjectile, time);  //��Ÿ�? ����
         }
     }
 }

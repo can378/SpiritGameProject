@@ -31,6 +31,7 @@ public class OverlapDamageBuff : StatusEffect
             {
                 ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
                 objectBasic.Damaged(objectBasic.stats.HPMax * (1 - objectBasic.stats.SEResist(buffId)) * damagePer);
+
             }
             else if (target.tag == "Enemy")
             {
@@ -47,6 +48,11 @@ public class OverlapDamageBuff : StatusEffect
                 }
                 
             }
+
+            GameObject BleedObject = ObjectPoolManager.instance.Get2("Bleeding");
+            BleedObject.transform.position = target.transform.position;
+            BleedObject.transform.localScale = Vector3.one * 3;
+
             duration = 0;
         }
     }

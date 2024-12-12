@@ -288,7 +288,7 @@ public class Player : ObjectBasic
         Player player;
         // 공격 정보
         Coroutine attackCoroutine;
-        int enchant;
+        [field: SerializeField] ENCHANT_TYPE enchant = ENCHANT_TYPE.END;
         [SerializeField] GameObject HitDetectionGameObject;
         int projectileIndex;
         void Awake()
@@ -336,7 +336,7 @@ public class Player : ObjectBasic
             //MapUIManager.instance.UpdateWeaponUI();
         }
 
-        public void SetEnchant(int enchantID)
+        public void SetEnchant(ENCHANT_TYPE enchantID)
         {
             enchant = enchantID;
         }
@@ -364,8 +364,6 @@ public class Player : ObjectBasic
             // 공격 상태
             player.playerStatus.isAttack = true;
 
-            float attackAngle = player.playerStatus.mouseAngle;
-
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             //선딜
@@ -377,12 +375,53 @@ public class Player : ObjectBasic
 
             // 이펙트 수치 설정
             HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-            hitDetection.SetHitDetection(false, -1, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage, player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.SetHitDetection(false, 
+            -1, 
+            player.weaponList[player.playerStats.weapon].isMultiHit, 
+            player.weaponList[player.playerStats.weapon].DPS, 
+            player.playerStats.attackPower, 
+            player.weaponList[player.playerStats.weapon].knockBack, 
+            player.playerStats.criticalChance, 
+            player.playerStats.criticalDamage);
+            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = this.gameObject;
 
             // 무기 방향 
-            HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);
+            HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);
 
+            // 파티클
+            {
+                // 공격 속도에 따른 이펙트 가속
+                ParticleSystem.MainModule particleMain = HitDetectionGameObject.GetComponentInChildren<ParticleSystem>().main;
+                particleMain.startLifetime = player.weaponList[player.playerStats.weapon].rate / player.playerStats.attackSpeed;
+
+                if (player.weaponList[player.playerStats.weapon].statusEffect.Length > 0)
+                {
+                    switch (player.weaponList[player.playerStats.weapon].statusEffect[0])
+                    {
+                        case Buff.Slow:
+                            particleMain.startColor = Color.cyan;
+                            break;
+
+                        case Buff.Burn:
+                            particleMain.startColor = new Color(255.0f / 255.0f, 100.0f / 255.0f, 0, 1.0f);
+                            break;
+                        case Buff.Poison:
+                            particleMain.startColor = new Color(178.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f, 1.0f);
+                            break;
+                        case Buff.Bleeding:
+                            particleMain.startColor = new Color(128.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f);
+                            break;
+                        case Buff.Curse:
+                            particleMain.startColor = Color.black;
+                            break;
+                        default:
+                            particleMain.startColor = Color.white;
+                            break;
+                    }
+                }
+            }
+            
             // 무기 이펙트 실행
             HitDetectionGameObject.SetActive(true);
 
@@ -391,7 +430,7 @@ public class Player : ObjectBasic
 
             // 무기 이펙트 해제
             HitDetectionGameObject.SetActive(false);
-            HitDetectionGameObject.GetComponentInChildren<Enchant>().index = 0;
+            HitDetectionGameObject.GetComponentInChildren<Enchant>().EnchantType = ENCHANT_TYPE.END;
 
             // 공격 상태 해제
             player.playerStatus.isAttack = false;
@@ -420,11 +459,20 @@ public class Player : ObjectBasic
 
             //bulletRigid.velocity = shotPos.up * 25;
             // 투사체 설정
-            hitDetection.SetHitDetection(true, player.weaponList[player.playerStats.weapon].penetrations, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage, player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.SetHitDetection(true, player.weaponList[player.playerStats.weapon].penetrations, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage);
+            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = this.gameObject;
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);  // 방향 설정
+
+            // 방향 설정
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);
+
+            // 크기 설정
             instantProjectile.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
-            bulletRigid.velocity = attackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;  // 속도 설정
+
+            // 속도 설정
+            bulletRigid.velocity = attackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;
+
+            // 사정거리 설정
             hitDetection.SetProjectileTime(player.weaponList[player.playerStats.weapon].projectileTime);
 
             // 공격 상태 해제
@@ -1057,7 +1105,7 @@ public class Player : ObjectBasic
     // 상태 관련
     #region Effect
 
-    public void SetEnchant(int enchantID)
+    public void SetEnchant(ENCHANT_TYPE enchantID)
     {
         weaponController.SetEnchant(enchantID);
     }

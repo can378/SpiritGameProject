@@ -117,7 +117,7 @@ public class BlackDog : EnemyBasic
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
 
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
         
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);

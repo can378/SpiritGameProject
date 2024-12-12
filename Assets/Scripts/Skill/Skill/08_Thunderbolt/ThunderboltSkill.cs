@@ -17,7 +17,7 @@ public class ThunderboltSkill : Skill
     [field: SerializeField] float summonAreaSize;
     [field: SerializeField] GameObject summonAreaSimul;
     [field: SerializeField] GameObject thunderbolt;
-    [field: SerializeField] int[] statusEffect;
+    [field: SerializeField] Buff[] statusEffect;
 
     //소환 범위 시뮬
     GameObject simul;
@@ -65,10 +65,8 @@ public class ThunderboltSkill : Skill
 
                 hitDetection.SetHitDetection(false, -1, false, -1,
                 defaultDamage + player.playerStats.skillPower * ratio,
-                knockBack,
-                0,
-                0,
-                statusEffect);
+                knockBack);
+                hitDetection.SetSEs(statusEffect);
 
                 Destroy(effect, time);
 
@@ -112,10 +110,8 @@ public class ThunderboltSkill : Skill
 
                 hitDetection.SetHitDetection(false, -1, false, -1,
                 defaultDamage,
-                knockBack,
-                0,
-                0,
-                statusEffect);
+                knockBack);
+                hitDetection.SetSEs(statusEffect);
                 hitDetection.user = user;
 
                 Destroy(effect, time);

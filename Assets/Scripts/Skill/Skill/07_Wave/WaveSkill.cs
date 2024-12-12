@@ -11,7 +11,7 @@ public class WaveSkill : Skill
     // 기본 크기, 이펙트 유지시간, 이펙트
     [field: SerializeField] float time;
     [field: SerializeField] GameObject waveEffect;
-    [field: SerializeField] int[] statusEffect;
+    [field: SerializeField] Buff[] statusEffect;
 
     public override void Enter(GameObject user)
     {
@@ -59,10 +59,8 @@ public class WaveSkill : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              defalutDamage + player.stats.attackPower * ratio,
-             0,
-             0, 
-             0,
-             statusEffect);
+             0);
+            hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
 
             // rate 동안 유지
@@ -96,10 +94,8 @@ public class WaveSkill : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              defalutDamage + enemy.stats.attackPower * ratio,
-             0,
-             0,
-             0,
-             statusEffect);
+             0);
+            hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
 
             while (timer < time)

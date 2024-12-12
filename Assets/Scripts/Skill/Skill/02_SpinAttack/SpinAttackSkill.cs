@@ -117,8 +117,8 @@ public class SpinAttackSkill : Skill
              defalutDamage + player.stats.attackPower * ratio * holdPower,
              player.weaponList[player.playerStats.weapon].knockBack * 10 * holdPower, 
              player.playerStats.criticalChance, 
-             player.playerStats.criticalDamage,
-             player.weaponList[player.playerStats.weapon].statusEffect);
+             player.playerStats.criticalDamage);
+            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
             // rate 동안 유지
@@ -154,10 +154,7 @@ public class SpinAttackSkill : Skill
             */
             hitDetection.SetHitDetection(false, -1, false, -1,
              defalutDamage + enemy.stats.attackPower * ratio * holdPower,
-             10 * holdPower,
-             0,
-             0,
-             null);
+             10 * holdPower);
             hitDetection.user = user;
 
             // rate 동안 유지

@@ -67,7 +67,7 @@ public class Dokkebie : EnemyBasic
         dokkebieStatus.isAttackReady = false;
         yield return new WaitForSeconds(1f);
        
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30, 0, 0, null);
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 30);
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(attackTarget.y, attackTarget.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);

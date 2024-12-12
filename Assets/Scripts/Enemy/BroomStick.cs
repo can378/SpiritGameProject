@@ -5,7 +5,6 @@ using UnityEngine;
 public class BroomStick : EnemyBasic
 {
     public GameObject colObj;
-    int[] debuff = {7};
     float radius = 50;
     float attackTime = 2;
 
@@ -34,7 +33,9 @@ public class BroomStick : EnemyBasic
 
         yield return new WaitForSeconds(0.5f);
         colObj.transform.localScale = new Vector3(0.1f, 0.1f, 1);
-        colObj.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 0, 0, 0, debuff);
+        Buff[] buffs = new Buff[] {Buff.Fear};
+        colObj.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 0);
+        colObj.GetComponent<HitDetection>().SetSE(Buff.Fear);
         colObj.GetComponent<SpriteRenderer>().color = Color.white;
         colObj.SetActive(true);
         
@@ -63,7 +64,8 @@ public class BroomStick : EnemyBasic
         enemyStatus.isAttackReady = false;
 
         colObj.transform.localScale = new Vector3(0.1f * radius, 0.1f * radius, 1);
-        colObj.GetComponent<HitDetection>().SetHitDetection(false,-1,true,2,0,0,0,0, debuff);
+        colObj.GetComponent<HitDetection>().SetHitDetection(false,-1,true,2,0,0);
+        colObj.GetComponent<HitDetection>().SetSE(Buff.Fear);
         colObj.GetComponent<SpriteRenderer>().color = Color.magenta;
         colObj.SetActive(true);
 

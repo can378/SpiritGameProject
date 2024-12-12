@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class FireBallSkill : Skill
 {
-    // 피해량, 밀려남
-    [field: SerializeField] int defalutDamage;
-    [field: SerializeField] float ratio;
-    [field: SerializeField] float knockBack;
+    [Header("Information")]
+    [field: SerializeField] int defalutDamage;              // �⺻ �����
+    [field: SerializeField] float ratio;                    // ���� ����
 
-    // 사거리, 크기, 유지시간, v프리팹, 시뮬레이터 프리팹, 상태이상
-    [field: SerializeField] float range;
-    [field: SerializeField] float size;
-    [field: SerializeField] float time;
+    [field: SerializeField] float knockBack;                // �˹� �Ÿ�
+    [field: SerializeField] float range;                    // �����Ÿ�
+
+    [Header ("GameObject")]
     [field: SerializeField] GameObject fireBallPrefab;
     [field: SerializeField] GameObject simulPrefab;
-    [field: SerializeField] int[] statusEffect;
+    [field: SerializeField] GameObject fireBallSimulPrefab;
 
-    //발동 전 효과 범위 표시기
-    Transform fireBallSimul;
-    Transform rangeSimul;
 
 
     public override void Enter(GameObject user)
@@ -34,16 +30,15 @@ public class FireBallSkill : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            fireBallSimul = Instantiate(simulPrefab, player.playerStatus.mousePos, Quaternion.identity).transform;
-            fireBallSimul.transform.localScale = new Vector3(size, size, 1);
+            fireBallSimulPrefab.SetActive(true);
+            fireBallSimulPrefab.transform.localScale = Vector3.one * 10;
 
-            rangeSimul = Instantiate(simulPrefab,player.transform.position,Quaternion.identity).transform;
-            rangeSimul.parent = player.transform;
-            rangeSimul.localScale = new Vector3(range * 2 , range * 2, 1);
+            simulPrefab.SetActive(true);
+            simulPrefab.transform.localScale = Vector3.one * range * 2;
             
             while (player.playerStatus.isSkillHold)
             {
-                fireBallSimul.position = player.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.transform.position, range);
+                fireBallSimulPrefab.transform.position = player.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.transform.position, range);
                 yield return null;
             }
         }
@@ -52,16 +47,15 @@ public class FireBallSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            fireBallSimul = Instantiate(simulPrefab, enemy.enemyStatus.enemyTarget.transform.position, Quaternion.identity).transform;
-            fireBallSimul.localScale = new Vector3(size, size, 1);
+            fireBallSimulPrefab.SetActive(true);
+            fireBallSimulPrefab.transform.localScale = Vector3.one * 10;
 
-            rangeSimul = Instantiate(simulPrefab, enemy.transform.position, Quaternion.identity).transform;
-            rangeSimul.parent = enemy.transform;
-            rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
+            simulPrefab.SetActive(true);
+            simulPrefab.transform.localScale = Vector3.one * range * 2;
 
             while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
-                fireBallSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.enemyTarget.transform.position - enemy.transform.position, range);
+                fireBallSimulPrefab.transform.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.enemyTarget.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -72,8 +66,8 @@ public class FireBallSkill : Skill
     {
         base.Cancle();
         StopCoroutine("Simulation");
-        Destroy(rangeSimul.gameObject);
-        Destroy(fireBallSimul.gameObject);
+        fireBallSimulPrefab.SetActive(false);
+        simulPrefab.SetActive(false);
     }
 
     public override void Exit()
@@ -89,64 +83,40 @@ public class FireBallSkill : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
-            GameObject effect = Instantiate(fireBallPrefab, fireBallSimul.position, Quaternion.identity);
-            HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-            // 쿨타임 적용
+            GameObject Effect = Instantiate(fireBallPrefab, fireBallSimulPrefab.transform.position,Quaternion.identity);
+            HitDetection hitDetection = Effect.GetComponent<HitDetection>();
+
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
-            Destroy(rangeSimul.gameObject);
-            Destroy(fireBallSimul.gameObject);
-            Destroy(effect, time);
+            simulPrefab.SetActive(false);
+            fireBallSimulPrefab.SetActive(false);
 
-            effect.transform.localScale = new Vector3(size, size, 1);
-            effect.tag = "PlayerAttack";
-            effect.layer = LayerMask.NameToLayer("PlayerAttack");
+            Effect.tag = "PlayerAttack";
+            Effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
-            /*
-            투사체 = false
-            관통력 = -1
-            다단히트 = false
-            초당 타격 횟수 = -1 
-            피해량 = 피해량 * 플레이어 주문력
-            넉백 = 넉백
-            치확 = 0
-            치뎀 = 0
-            디버프 = 화상
-            */
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack);
+            hitDetection.SetSE(Buff.Burn);
             hitDetection.user = user;
             
         }
         else if(user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject effect = Instantiate(fireBallPrefab, fireBallSimul.transform.position, Quaternion.identity);
-            HitDetection hitDetection = effect.GetComponent<HitDetection>();
+
+            GameObject Effect = Instantiate(fireBallPrefab, fireBallSimulPrefab.transform.position, Quaternion.identity);
+            HitDetection hitDetection = Effect.GetComponent<HitDetection>();
 
             skillCoolTime = skillDefalutCoolTime;
 
-            // 이펙트 적용
-            Destroy(rangeSimul.gameObject);
-            Destroy(fireBallSimul.gameObject);
-            Destroy(effect, time);
+            simulPrefab.SetActive(false);
+            fireBallSimulPrefab.SetActive(false);
 
-            effect.transform.localScale = new Vector3(size, size, 1);
-            effect.tag = "EnemyAttack";
-            effect.layer = LayerMask.NameToLayer("EnemyAttack");
+            Effect.tag = "EnemyAttack";
+            Effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
-            /*
-            투사체 = false
-            관통력 = -1
-            다단히트 = false
-            초당 타격 횟수 = -1 
-            피해량 = 피해량 * 플레이어 주문력
-            넉백 = 넉백
-            치확 = 0
-            치뎀 = 0
-            디버프 = 화상
-            */
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack, 0, 0, statusEffect);
+            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack);
+            hitDetection.SetSE(Buff.Burn);
             hitDetection.user = user;
         }
     }

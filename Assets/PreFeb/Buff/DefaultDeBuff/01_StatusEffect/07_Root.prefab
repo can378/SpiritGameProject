@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4243279905995245480
+--- !u!1 &293620557154016263
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5355752653855305323}
-  - component: {fileID: 496114835658690979}
-  - component: {fileID: 5916334981258306191}
+  - component: {fileID: 9117273286452578786}
+  - component: {fileID: 4221740706949319551}
+  - component: {fileID: 7293933946674033179}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &5355752653855305323
+--- !u!224 &9117273286452578786
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4243279905995245480}
+  m_GameObject: {fileID: 293620557154016263}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -37,28 +37,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &496114835658690979
+--- !u!222 &4221740706949319551
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4243279905995245480}
+  m_GameObject: {fileID: 293620557154016263}
   m_CullTransparentMesh: 1
---- !u!114 &5916334981258306191
+--- !u!114 &7293933946674033179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4243279905995245480}
+  m_GameObject: {fileID: 293620557154016263}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.79805255, b: 1, a: 1}
+  m_Color: {r: 0.11209362, g: 0.3773585, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -84,11 +84,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2866315741150197865}
-  - component: {fileID: -152151802162976719}
-  - component: {fileID: 6903980341971296562}
-  - component: {fileID: 7850769033798545589}
+  - component: {fileID: 6924547152572128875}
+  - component: {fileID: 3299615221092578893}
+  - component: {fileID: 6816336342488849107}
   m_Layer: 0
-  m_Name: 03_DefensiveWeaken
+  m_Name: 07_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5355752653855305323}
+  - {fileID: 9117273286452578786}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -114,7 +114,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &-152151802162976719
+--- !u!114 &6924547152572128875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,19 +123,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 5535729302175816803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef95863c6c8a2f247a246a2eb1b2fffb, type: 3}
+  m_Script: {fileID: 11500000, guid: ab004ad6cb3bc2e468403eb3920d08b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <icon>k__BackingField: {fileID: 5916334981258306191}
+  <icon>k__BackingField: {fileID: 7293933946674033179}
   <target>k__BackingField: {fileID: 0}
-  <buffId>k__BackingField: 3
-  <defaultDuration>k__BackingField: 10
+  <buffId>k__BackingField: 7
+  <defaultDuration>k__BackingField: 5
   <duration>k__BackingField: 0
   <maxOverlap>k__BackingField: 1
   <overlap>k__BackingField: 0
-  <decreasedDefensivePower>k__BackingField: 0.5
-  <decreasedSEResist>k__BackingField: 0.5
---- !u!222 &6903980341971296562
+  <decreasedMoveSpeed>k__BackingField: 999
+  <decreasedAttackSpeed>k__BackingField: 0
+--- !u!222 &3299615221092578893
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,7 +143,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5535729302175816803}
   m_CullTransparentMesh: 1
---- !u!114 &7850769033798545589
+--- !u!114 &6816336342488849107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

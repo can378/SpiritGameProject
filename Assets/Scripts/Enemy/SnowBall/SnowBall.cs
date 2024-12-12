@@ -56,7 +56,7 @@ public class SnowBall : EnemyBasic
         // 돌진 전 준비
         snowBallStatus.isAttack = true;
         snowBallStatus.isAttackReady = false;
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower * snowBallStatus.size,20,0,0,null);
+        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower * snowBallStatus.size,20);
         yield return new WaitForSeconds(0.6f);
 
         hitEffects[0].gameObject.SetActive(true);

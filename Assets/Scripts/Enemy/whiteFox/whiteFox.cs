@@ -6,7 +6,7 @@ public class WhiteFox : EnemyBasic
 {
     WhiteFoxStatus whiteFoxStatus;
     [SerializeField] int defaulBlizzardCoolTime = 10;
-    [SerializeField] int[] blizzardDebuff;
+    [SerializeField] Buff[] blizzardDebuff;
 
     protected override void Awake()
     {
@@ -44,7 +44,7 @@ public class WhiteFox : EnemyBasic
 
         hitDetection = hitEffects[0].GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10, 0, 0, null);
+        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].SetActive(true);
         yield return new WaitForSeconds(0.6f);
@@ -64,7 +64,8 @@ public class WhiteFox : EnemyBasic
 
         HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false, -1, true, 3, enemyStats.attackPower * 0.5f, 0, 0, 0, blizzardDebuff);
+        hitDetection.SetHitDetection(false, -1, true, 3, enemyStats.attackPower * 0.5f, 0);
+        hitDetection.SetSEs(blizzardDebuff);
 
         hitEffects[1].SetActive(true);
         yield return new WaitForSeconds(3f);

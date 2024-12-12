@@ -53,7 +53,7 @@ public class StarSword : Weapon
 
             littleStar.tag = "PlayerAttack";
             littleStar.layer = LayerMask.NameToLayer("PlayerAttack");
-            hitDetection.SetHitDetection(false, -1, false, -1, (defalutDamage + ratio * user.playerStats.skillPower) * 0.5f, knockBack, 0, 0, null);
+            hitDetection.SetHitDetection(false, -1, false, -1, (defalutDamage + ratio * user.playerStats.skillPower) * 0.5f, knockBack);
         }
 
     }

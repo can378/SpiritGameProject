@@ -53,7 +53,7 @@ public class LittleStarOrbit : MonoBehaviour
             HitDetection hitDetection = littleStar.GetComponent<HitDetection>();
 
             guiding.guidingTarget = target;
-            hitDetection.SetHitDetection(true, 0, false, -1, hitDetection.damage * 2, hitDetection.knockBack, 0, 0, null);
+            hitDetection.SetHitDetection(true, 0, false, -1, hitDetection.damage * 2, hitDetection.knockBack);
 
             littleStar.transform.parent = null;
             Destroy(littleStar.gameObject, 5f);

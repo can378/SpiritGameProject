@@ -7,7 +7,8 @@ public enum WEAPON_TYPE {
     // 근거리 
     SWING, STAB, CRACK, MELEE,
     // 원거리
-    GUN, BOW, THROW, CANNON, RANGE, NONE}
+    GUN, BOW, THROW, CANNON, RANGE,
+    NONE}
 
 public class Weapon : Equipment
 {
@@ -35,7 +36,7 @@ public class Weapon : Equipment
     [field: SerializeField] public float projectileTime { get; private set; }       // 투사체 유지 시간
     [field: SerializeField] public int penetrations { get; private set; }           // 투사체 관통 횟수
 
-    [field: SerializeField] public int[] statusEffect {get; private set;}
+    [field: SerializeField] public Buff[] statusEffect {get; private set;}
 
 
     public override void Equip(Player user)

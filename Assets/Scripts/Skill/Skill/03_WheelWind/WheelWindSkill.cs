@@ -42,7 +42,7 @@ public class WheelWindSkill : Skill
             // �ð��� ���� ���� �� ȸ�� ����
             yield return new WaitForSeconds(preDelay * attackRate);
 
-            // ����� ��ġ�� ����
+            // �����? ��ġ�� ����
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
@@ -54,24 +54,13 @@ public class WheelWindSkill : Skill
 
             // ���� ���� ����
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
-            /*
-            ����ü = false
-            ����� = -1
-            �ٴ���Ʈ = true
-            �ʴ� Ÿ�� Ƚ�� = DPS * attackRate 
-            �Ӽ� = ���� �Ӽ�
-            ���ط� = (�⺻ ���ط� + ���� ���ط�) * �÷��̾� ���ݷ�
-            �˹� = ���� �˹�
-            ġȮ = �÷��̾� ġȮ
-            ġ�� = �÷��̾� ġ��
-            ����� = ����
-            */
+
             hitDetection.SetHitDetection(false, -1, true, (int)((float)DPS / attackRate),
              defaultDamage + player.stats.attackPower * ratio,
              player.weaponList[player.playerStats.weapon].knockBack,
              player.playerStats.criticalChance,
-             player.playerStats.criticalDamage,
-             player.weaponList[player.playerStats.weapon].statusEffect);
+             player.playerStats.criticalDamage);
+            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
         }
         else if (user.tag == "Enemy")
@@ -90,7 +79,7 @@ public class WheelWindSkill : Skill
             // �ð��� ���� ���� �� ȸ�� ����
             yield return new WaitForSeconds(preDelay);
 
-            // ����� ��ġ�� ����
+            // �����? ��ġ�� ����
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
@@ -104,7 +93,7 @@ public class WheelWindSkill : Skill
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
             /*
             ����ü = false
-            ����� = -1
+            �����? = -1
             �ٴ���Ʈ = true
             �ʴ� Ÿ�� Ƚ�� = DPS * attackRate 
             �Ӽ� = ���� �Ӽ�
@@ -112,14 +101,11 @@ public class WheelWindSkill : Skill
             �˹� = ���� �˹�
             ġȮ = �÷��̾� ġȮ
             ġ�� = �÷��̾� ġ��
-            ����� = ����
+            �����? = ����
             */
             hitDetection.SetHitDetection(false, -1, true, DPS,
              defaultDamage + enemy.stats.attackPower * ratio,
-             1,
-             0,
-             0,
-             null);
+             1);
             hitDetection.user = user;
         }
     }
