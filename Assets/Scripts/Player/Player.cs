@@ -288,7 +288,11 @@ public class Player : ObjectBasic
         Player player;
         // 공격 정보
         Coroutine attackCoroutine;
-        [field: SerializeField] ENCHANT_TYPE enchant = ENCHANT_TYPE.END;
+        [field: SerializeField] public List<SE_TYPE> SEType { get; set; } = new List<SE_TYPE>();
+
+        [field: SerializeField] public List<COMMON_TYPE> CommonType { get; set; } = new List<COMMON_TYPE>();
+
+        [field: SerializeField] public List<PROJECTILE_TYPE> ProjectileType { get; set; } = new List<PROJECTILE_TYPE>();
         [SerializeField] GameObject HitDetectionGameObject;
         int projectileIndex;
         void Awake()
@@ -336,11 +340,6 @@ public class Player : ObjectBasic
             //MapUIManager.instance.UpdateWeaponUI();
         }
 
-        public void SetEnchant(ENCHANT_TYPE enchantID)
-        {
-            enchant = enchantID;
-        }
-
         public void Use(Vector3 clickPos)
         {
             player.weaponList[player.playerStats.weapon].ConsumeAmmo();
@@ -371,8 +370,8 @@ public class Player : ObjectBasic
 
             // 무기 이펙트 크기 설정
             HitDetectionGameObject.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
-            HitDetectionGameObject.GetComponentInChildren<Enchant>().SetEnchant(enchant);
-
+        
+        
             // 이펙트 수치 설정
             HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
             hitDetection.SetHitDetection(false, 
@@ -383,8 +382,12 @@ public class Player : ObjectBasic
             player.weaponList[player.playerStats.weapon].knockBack, 
             player.playerStats.criticalChance, 
             player.playerStats.criticalDamage);
-            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = this.gameObject;
+
+            // 인챈트 설정
+            HitDetectionGameObject.GetComponentInChildren<Enchant>().SetSE(SEType.Count == 0 ? SE_TYPE.NONE : SEType[0]);
+            HitDetectionGameObject.GetComponentInChildren<Enchant>().SetCommon(CommonType.Count == 0 ? COMMON_TYPE.NONE : CommonType[0]);
+            HitDetectionGameObject.GetComponentInChildren<Enchant>().SetProjectile(ProjectileType.Count == 0 ? PROJECTILE_TYPE.NONE : ProjectileType[0]);
 
             // 무기 방향 
             HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);
@@ -395,31 +398,6 @@ public class Player : ObjectBasic
                 ParticleSystem.MainModule particleMain = HitDetectionGameObject.GetComponentInChildren<ParticleSystem>().main;
                 particleMain.startLifetime = player.weaponList[player.playerStats.weapon].rate / player.playerStats.attackSpeed;
 
-                if (player.weaponList[player.playerStats.weapon].statusEffect.Length > 0)
-                {
-                    switch (player.weaponList[player.playerStats.weapon].statusEffect[0])
-                    {
-                        case Buff.Slow:
-                            particleMain.startColor = Color.cyan;
-                            break;
-
-                        case Buff.Burn:
-                            particleMain.startColor = new Color(255.0f / 255.0f, 100.0f / 255.0f, 0, 1.0f);
-                            break;
-                        case Buff.Poison:
-                            particleMain.startColor = new Color(178.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f, 1.0f);
-                            break;
-                        case Buff.Bleeding:
-                            particleMain.startColor = new Color(128.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f);
-                            break;
-                        case Buff.Curse:
-                            particleMain.startColor = Color.black;
-                            break;
-                        default:
-                            particleMain.startColor = Color.white;
-                            break;
-                    }
-                }
             }
             
             // 무기 이펙트 실행
@@ -430,7 +408,6 @@ public class Player : ObjectBasic
 
             // 무기 이펙트 해제
             HitDetectionGameObject.SetActive(false);
-            HitDetectionGameObject.GetComponentInChildren<Enchant>().EnchantType = ENCHANT_TYPE.END;
 
             // 공격 상태 해제
             player.playerStatus.isAttack = false;
@@ -451,17 +428,19 @@ public class Player : ObjectBasic
             GameObject instantProjectile = ObjectPoolManager.instance.Get(projectileIndex);
             instantProjectile.transform.position = transform.position;
             instantProjectile.transform.rotation = transform.rotation;
-            instantProjectile.GetComponent<Enchant>().SetEnchant(enchant);
 
             //투사체 설정
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
-            //bulletRigid.velocity = shotPos.up * 25;
             // 투사체 설정
             hitDetection.SetHitDetection(true, player.weaponList[player.playerStats.weapon].penetrations, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage);
-            hitDetection.SetSEs(player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = this.gameObject;
+
+            // 인챈트
+            instantProjectile.GetComponentInChildren<Enchant>().SetSE(SEType.Count == 0 ? SE_TYPE.NONE : SEType[0]);
+            instantProjectile.GetComponentInChildren<Enchant>().SetCommon(CommonType.Count == 0 ? COMMON_TYPE.NONE : CommonType[0]);
+            instantProjectile.GetComponentInChildren<Enchant>().SetProjectile(ProjectileType.Count == 0 ? PROJECTILE_TYPE.NONE : ProjectileType[0]);
 
             // 방향 설정
             instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);
@@ -1105,9 +1084,34 @@ public class Player : ObjectBasic
     // 상태 관련
     #region Effect
 
-    public void SetEnchant(ENCHANT_TYPE enchantID)
+    public void AddEnchant_SE(SE_TYPE _Type)
     {
-        weaponController.SetEnchant(enchantID);
+        weaponController.SEType.Insert(0, _Type);
+    }
+
+    public void AddEnchant_Common(COMMON_TYPE _Type)
+    {
+        weaponController.CommonType.Insert(0, _Type);
+    }
+
+    public void AddEnchant_Projectile(PROJECTILE_TYPE _Type)
+    {
+        weaponController.ProjectileType.Insert(0, _Type);
+    }
+
+    public void RemoveEnchant_SE(SE_TYPE _Type)
+    {
+        weaponController.SEType.Remove(_Type);
+    }
+
+    public void RemoveEnchant_Common(COMMON_TYPE _Type)
+    {
+        weaponController.CommonType.Remove(_Type);
+    }
+
+    public void RemoveEnchant_Projectile(PROJECTILE_TYPE _Type)
+    {
+        weaponController.ProjectileType.Remove(_Type);
     }
 
     public override void AttackCancle()

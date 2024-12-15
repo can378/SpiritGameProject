@@ -36,7 +36,7 @@ public class Weapon : Equipment
     [field: SerializeField] public float projectileTime { get; private set; }       // 투사체 유지 시간
     [field: SerializeField] public int penetrations { get; private set; }           // 투사체 관통 횟수
 
-    [field: SerializeField] public Buff[] statusEffect {get; private set;}
+    [field: SerializeField] public SE_TYPE statusEffect {get; private set;}
 
 
     public override void Equip(Player user)
@@ -44,6 +44,8 @@ public class Weapon : Equipment
         this.user = user;
         Stats stats = user.GetComponent<Stats>();
         stats.addAttackPower += attackPower;
+        if(statusEffect != SE_TYPE.NONE)
+            user.AddEnchant_SE(statusEffect);
     }
 
     public override void UnEquip(Player user)
@@ -51,7 +53,8 @@ public class Weapon : Equipment
         Stats stats = user.GetComponent<Stats>();
         stats.addAttackPower -= attackPower;
         this.user = null;
-
+        if (statusEffect != SE_TYPE.NONE)
+            user.RemoveEnchant_SE(statusEffect);
     }
 
     public void Reload()

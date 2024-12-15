@@ -1,38 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public enum ENCHANT_TYPE {NONE = -1, Thunderbolt, COMMON_END, Explosion, PROJECTILE_END, END}
+
+public enum SE_TYPE { NONE = -1, Slow = 0, Burn = 3, Poison = 4, Bleeding = 8, Curse = 9, END }
+public enum COMMON_TYPE {NONE = -1, Thunderbolt, END}
+public enum PROJECTILE_TYPE {NONE = -1, Explosion, END }
 
 public class Enchant : MonoBehaviour
 {
     // 기본 공격 관련 특수 효과 스크립트
     // 우선은 플레이어 전용 스크립트
     // 인챈트는 반드시 한개만 존재
+    [field: SerializeField] public SE_TYPE SEType { get; private set; }
 
-    [field: SerializeField] public ENCHANT_TYPE EnchantType { get; set; } = ENCHANT_TYPE.END; 
+    [field: SerializeField] public COMMON_TYPE CommonType { get; private set; }
 
-    HitDetection hitDetection;
+    [field: SerializeField] public PROJECTILE_TYPE ProjectileType { get; private set; }
+
+    [field: SerializeField] HitDetection hitDetection;
 
     void Awake() 
     {
         hitDetection = GetComponent<HitDetection>();
     }
 
-    public void SetEnchant(ENCHANT_TYPE _TYPE)
-    {
-        this.EnchantType = _TYPE;
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(EnchantType == ENCHANT_TYPE.Thunderbolt)
-            Thunderbolt(other);
+        if (other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player")
+        {
+            if (CommonType == COMMON_TYPE.Thunderbolt)
+                Thunderbolt(other);
+        }
+        
+    }
+
+    void OnEnable()
+    {
+        
     }
 
     void OnDisable()
     {
-        if (EnchantType == ENCHANT_TYPE.Explosion)
+        if (ProjectileType == PROJECTILE_TYPE.Explosion)
             Explosion();
     }
 
@@ -67,5 +79,61 @@ public class Enchant : MonoBehaviour
 
     #endregion Effect
 
+    public void SetSE(SE_TYPE _Type)
+    {
+        SEType = _Type;
+        hitDetection.SetSE((Buff)SEType);
+        // 파티클
+        {
+            try
+            {
+                ParticleSystem.MainModule particleMain = hitDetection.GetComponentInChildren<ParticleSystem>().main;
+                switch (SEType)
+                {
+                    case SE_TYPE.Slow:
+                        particleMain.startColor = Color.cyan;
+                        break;
+                    case SE_TYPE.Burn:
+                        particleMain.startColor = new Color(255.0f / 255.0f, 100.0f / 255.0f, 0, 1.0f);
+                        break;
+                    case SE_TYPE.Poison:
+                        particleMain.startColor = new Color(178.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f, 1.0f);
+                        break;
+                    case SE_TYPE.Bleeding:
+                        particleMain.startColor = new Color(128.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f);
+                        break;
+                    case SE_TYPE.Curse:
+                        particleMain.startColor = Color.black;
+                        break;
+                    default:
+                        particleMain.startColor = Color.white;
+                        break;
+                }
+            }
+            catch (NullReferenceException)
+            {
 
+            }
+
+
+        }
+    }
+
+    public void SetCommon(COMMON_TYPE _Type)
+    {
+        CommonType = _Type;
+    }
+
+    public void SetProjectile(PROJECTILE_TYPE _Type)
+    {
+        ProjectileType = _Type;
+        switch (ProjectileType)
+        {
+            case PROJECTILE_TYPE.Explosion:
+                hitDetection.penetrations = 0;
+                break;
+            default:
+                break;
+        }
+    }
 }
