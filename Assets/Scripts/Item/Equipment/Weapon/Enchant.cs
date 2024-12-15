@@ -13,18 +13,7 @@ public class Enchant : MonoBehaviour
     [field: SerializeField] public ENCHANT_TYPE EnchantType { get; set; } = ENCHANT_TYPE.END; 
 
     HitDetection hitDetection;
-    /*
-    0 특수 효과 없음
 
-    1 ~ 10  상태이상 추가
-
-    11 ~ 20 공통 특수 효과
-    11 타격 성공 시 벼락
-
-    21 ~ 30 원거리 전용 특수 효과
-    21 파괴 시 폭발
-
-    */
     void Awake() 
     {
         hitDetection = GetComponent<HitDetection>();
@@ -49,7 +38,6 @@ public class Enchant : MonoBehaviour
 
     #region Effect
 
-    //11
     void Thunderbolt(Collider2D other)
     {
 
@@ -63,22 +51,18 @@ public class Enchant : MonoBehaviour
         thunderboltGO.transform.position = pos;
         thunderboltGO.transform.rotation = this.gameObject.transform.rotation;
         thunderboltGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 5 + this.hitDetection.user.GetComponent<Player>().playerStats.skillPower * 0.1f, 0);
-        thunderboltGO.GetComponent<HitDetection>().SetProjectileTime(0.1f);
     }
 
-    //21
     void Explosion()
     {
         if(!hitDetection.isProjectile)
             return;
 
         Debug.Log("Bomb");
-        AudioManager.instance.SFXPlay("Explosion");
         GameObject explosionGO = ObjectPoolManager.instance.Get2("Explosion");
         explosionGO.transform.position = this.gameObject.transform.position;
         explosionGO.transform.rotation = this.gameObject.transform.rotation;
         explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0);
-        explosionGO.GetComponent<HitDetection>().SetProjectileTime(0.3f);
     }
 
     #endregion Effect

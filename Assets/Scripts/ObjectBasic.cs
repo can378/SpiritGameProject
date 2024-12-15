@@ -72,7 +72,7 @@ public class ObjectBasic : MonoBehaviour
         if(criticalHit)
         {
             ObjectPoolManager.instance.Get2("Hit_Red").transform.position = pos;
-            AudioManager.instance.WeaponAttackAudioPlay(0);
+            AudioManager.instance.SFXPlay("Stab_Attack_Sound");
         }
         else
         {

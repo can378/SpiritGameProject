@@ -40,6 +40,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip testAudio;
     public AudioClip drop_key;
     public AudioClip hit;
+    public AudioClip hit_Critical;
     public AudioClip footStepDirt;
     public AudioClip footStepStone;
     public AudioClip[] SFXClipList;
