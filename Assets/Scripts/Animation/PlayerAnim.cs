@@ -14,57 +14,59 @@ public class PlayerAnim : AnimBasic
     public bool rightPressed;
     public bool upPressed;
     public bool downPressed;
-    */
+    
     private void Start()
     {
         //nowAnimator = animators[front];
         //animLayers[front].SetActive(true);
         //isFront = true;
     }
-
-    private void Update()
-    {
-        /*
-       if (leftPressed) { leftPressed = true; }
-       else if (rightPressed) { rightPressed = true; }
-
-       else if (upPressed)
-       {
-           upPressed = true;
-           nowAnimator = animators[back];
-           animLayers[front].SetActive(false);
-           animLayers[side].SetActive(false);
-           animLayers[back].SetActive(true);
-           isFront = false;
-       }
-       else if (downPressed)
-       {
-           downPressed = true;
-           nowAnimator = animators[front];
-           animLayers[back].SetActive(false);
-           animLayers[side].SetActive(false);
-           animLayers[front].SetActive(true);
-           isFront = true;
-       }
-      
-
-        if (!leftPressed)
+    */
+    /*
+        private void Update()
         {
-            leftPressed = true;
-        }
-        if (!rightPressed)
-        {
-            rightPressed = true;
-        }
-        if (!upPressed)
-        { upPressed = false; }
-        if (!downPressed)
-        { downPressed = false; }
 
-         */
+           if (leftPressed) { leftPressed = true; }
+           else if (rightPressed) { rightPressed = true; }
+
+           else if (upPressed)
+           {
+               upPressed = true;
+               nowAnimator = animators[back];
+               animLayers[front].SetActive(false);
+               animLayers[side].SetActive(false);
+               animLayers[back].SetActive(true);
+               isFront = false;
+           }
+           else if (downPressed)
+           {
+               downPressed = true;
+               nowAnimator = animators[front];
+               animLayers[back].SetActive(false);
+               animLayers[side].SetActive(false);
+               animLayers[front].SetActive(true);
+               isFront = true;
+           }
+
+
+            if (!leftPressed)
+            {
+                leftPressed = true;
+            }
+            if (!rightPressed)
+            {
+                rightPressed = true;
+            }
+            if (!upPressed)
+            { upPressed = false; }
+            if (!downPressed)
+            { downPressed = false; }
+
+             
         AnimationUpdate();
         Run();
     }
+    */
     /*
     public void leftGetKeyDown()
     {
@@ -105,18 +107,20 @@ public class PlayerAnim : AnimBasic
             if (horizontalMove == 1 || horizontalMove == -1) { chardir = -horizontalMove; }
         }
         else { chardir = 1; }
-        */
+        
         if(horizontalMove<0) { chardir = 1; }
         else if(horizontalMove>0) {  chardir = -1; }
 
         transform.localScale = new Vector3(chardir * charscale, charscale, charscale);
+        */
     }
     void AnimationUpdate()
     {
+        /*
         if (horizontalMove == 0 && verticalMove == 0)
         { animator.SetBool("isRun", false); }
         else { animator.SetBool("isRun", true); }
-        
+        */
     }
 
 }

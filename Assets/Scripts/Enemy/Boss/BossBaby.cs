@@ -34,7 +34,7 @@ public class BossBaby : Boss
     protected override void Update()
     {
         base.Update();
-        CheckMovement();
+        //CheckMovement();
     }
 
     protected override void AttackPattern()

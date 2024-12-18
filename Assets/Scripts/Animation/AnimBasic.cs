@@ -5,23 +5,45 @@ using UnityEngine;
 
 public class AnimBasic : MonoBehaviour
 {
-    //public List<Animator> animators;//0:front, 1:back, 2:side
-    //public List<GameObject> animLayers;//0:front 1:back, 2:side
-    //protected int front = 0, back = 1, side = 2;
     public Animator animator;
+    public Status status;
 
-    [HideInInspector]
-    public float horizontalMove { get; set; }
-    [HideInInspector]
-    public float verticalMove { get; set; }
-    //protected bool isFront;
+    void Update()
+    {
+        if (status.moveVec == Vector2.zero)
+        {
+            animator.SetBool("isRun", false);
+        }
+        else
+        {
+            animator.SetBool("isRun", true);
+            if (status.moveVec.x < 0)
+            {
+                animator.transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (status.moveVec.x > 0)
+            {
+                animator.transform.localScale = new Vector3(-1, 1, 1);
+            }
+            
+        }
+    }
 
-    protected float chardir = 1;
-    protected float charscale = 0.3f;
-
-
-
-
-    
+    /// <summary>
+    /// 해당 방향으로 애니메이션 방향을 변경한다.
+    /// 바라보는 방향을 한번 움직인다.
+    /// 
+    /// </summary>
+    public void ChangeDirection(Vector3 _Direction)
+    {
+        if (_Direction.x < 0)
+        {
+            animator.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (_Direction.x > 0)
+        {
+            animator.transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
 
 }

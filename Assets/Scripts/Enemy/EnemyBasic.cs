@@ -11,10 +11,10 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyBasic : ObjectBasic
 {
     [HideInInspector]
-    public EnemyStats enemyStats;       // ì  ìŠ¤íƒ¯
+    public EnemyStats enemyStats;       // ?  ?Š¤?ƒ¯
     [HideInInspector]
-    public EnemyStatus enemyStatus;     // ì  í–‰ë™ ìƒíƒœ
-
+    public EnemyStatus enemyStatus;     // ?  ?–‰?™ ?ƒ?ƒœ
+    [HideInInspector]
     public EnemyAnim enemyAnim;
 
     [SerializeField]
@@ -33,12 +33,13 @@ public class EnemyBasic : ObjectBasic
         }
 
         defaultLayer = this.gameObject.layer;
+
+        enemyAnim = animGameObject.GetComponent<EnemyAnim>();
     }
 
     protected virtual void Start()
     {
         enemyStatus.enemyTarget = FindObj.instance.Player.transform;
-            
     }
 
     protected virtual void Update()
@@ -72,8 +73,8 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
-    // ë„ë§ ì¤‘ì´ ì•„ë‹ ë•Œ
-    // ì  ê³µê²© íŒ¨í„´(ê¸°ë³¸ íŒ¨í„´ : ê³µê²© ì•ˆí•¨)
+    // ?„ë§? ì¤‘ì´ ?•„?‹ ?•Œ
+    // ?  ê³µê²© ?Œ¨?„´(ê¸°ë³¸ ?Œ¨?„´ : ê³µê²© ?•ˆ?•¨)
     protected virtual void AttackPattern()
     {
         enemyStatus.isAttack = false;
@@ -82,13 +83,13 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Detect()
     {
-        // íƒ€ê²Ÿì´ ìˆì„ ë•Œ
+        // ???ê²Ÿì´ ?ˆ?„ ?•Œ
         if (enemyStatus.enemyTarget != null)
         {
-            // íƒ€ê²Ÿ ìœ ì§€ ê±°ë¦¬ê°€ ì–‘ìˆ˜ ì´ê³  íƒ€ê²Ÿì´ ìœ ì§€ê±°ë¦¬ë³´ë‹¤ ë©€ë¦¬ ìˆë‹¤ë©´ íƒ€ê²Ÿ í•´ì œ
+            // ???ê²? ?œ ì§? ê±°ë¦¬ê°? ?–‘?ˆ˜ ?´ê³? ???ê²Ÿì´ ?œ ì§?ê±°ë¦¬ë³´ë‹¤ ë©?ë¦? ?ˆ?‹¤ë©? ???ê²? ?•´? œ
             if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < enemyStatus.targetDis)
             {
-                enemyStatus.enemyTarget = null; // í”Œë ˆì´ì–´ê°€ ê±°ë¦¬ ì¡°ì ˆí•˜ë©° ì ë“¤ ì£½ì¼ ìˆ˜ ìˆê²Œ, ì´ê±° ì•ˆí•˜ë©´ ì ë“¤ì´ ë„ˆë¬´ ëª°ë ¤ì™€ì„œ ë‚œì´ë„ê°€ ë„ˆë¬´ ë†’ì•„ì§.
+                enemyStatus.enemyTarget = null; // ?”Œ? ˆ?´?–´ê°? ê±°ë¦¬ ì¡°ì ˆ?•˜ë©? ? ?“¤ ì£½ì¼ ?ˆ˜ ?ˆê²?, ?´ê±? ?•ˆ?•˜ë©? ? ?“¤?´ ?„ˆë¬? ëª°ë ¤????„œ ?‚œ?´?„ê°? ?„ˆë¬? ?†’?•„ì§?.
                 return;
             }
             return;
@@ -110,7 +111,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Move()
     {
-        // ê²½ì§ê³¼ ê³µê²© ì¤‘ì—ëŠ” ì§ì ‘ ì´ë™ ë¶ˆê°€
+        // ê²½ì§ê³? ê³µê²© ì¤‘ì—?Š” ì§ì ‘ ?´?™ ë¶ˆê??
         if (enemyStatus.isFlinch)
         {
             return;
@@ -123,6 +124,7 @@ public class EnemyBasic : ObjectBasic
         else if (enemyStatus.isRun)
         {
             Run();
+            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
             return;
         }
 
@@ -132,21 +134,21 @@ public class EnemyBasic : ObjectBasic
 
     }
 
-    // ì´ë™ íŒ¨í„´(ê¸°ë³¸ íŒ¨í„´ : íƒ€ê²Ÿì´ ì—†ìœ¼ë©´ ë¬´ì‘ìœ„ ì´ë™, íƒ€ê²Ÿì´ ìˆìœ¼ë©´ ì‚¬ì •ê±°ë¦¬ ê¹Œì§€ ì¶”ì )
+    // ?´?™ ?Œ¨?„´(ê¸°ë³¸ ?Œ¨?„´ : ???ê²Ÿì´ ?—†?œ¼ë©? ë¬´ì‘?œ„ ?´?™, ???ê²Ÿì´ ?ˆ?œ¼ë©? ?‚¬? •ê±°ë¦¬ ê¹Œì?? ì¶”ì )
     protected virtual void MovePattern()
     {
         if (!enemyStatus.enemyTarget)
         {
             RandomMove();
         }
-        // ì ì´ ê³µê²© ì‚¬ì •ê±°ë¦¬ ë°–ì— ìˆì„ ì‹œ
+        // ? ?´ ê³µê²© ?‚¬? •ê±°ë¦¬ ë°–ì— ?ˆ?„ ?‹œ
         else if (enemyStatus.targetDis > enemyStats.maxAttackRange)
         {
             Chase();
         }
     }
 
-    // ë¬´ì‘ìœ„ ì´ë™
+    // ë¬´ì‘?œ„ ?´?™
     protected void RandomMove()
     {
         enemyStatus.randomMove -= Time.deltaTime;
@@ -162,7 +164,7 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
-    // ì  ì¶”ì 
+    // ?  ì¶”ì 
     protected void Chase()
     {
         if (!enemyStatus.enemyTarget)
@@ -174,16 +176,16 @@ public class EnemyBasic : ObjectBasic
     }
 
     
-    // ì¼ì‹œì ìœ¼ë¡œ ë„ë§ì¹˜ê¸°
+    // ?¼?‹œ? ?œ¼ë¡? ?„ë§ì¹˜ê¸?
     protected void Run()
     {
         if (enemyStatus.enemyTarget)
         {
-            rigid.velocity = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+            status.moveVec = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
         }
     }
 
-    // ì¼ì • ì‹œê°„ ë™ì•ˆ ë„ë§ì¹˜ê¸°
+    // ?¼? • ?‹œê°? ?™?•ˆ ?„ë§ì¹˜ê¸?
     protected IEnumerator RunAway(float time)
     {
         enemyStatus.isRun = true;
@@ -191,6 +193,7 @@ public class EnemyBasic : ObjectBasic
         enemyStatus.isRun = false;
     }
 
+    /*
     public void CheckMovement()
     {
         Vector2 velocity = rigid.velocity;
@@ -207,12 +210,12 @@ public class EnemyBasic : ObjectBasic
             {
                 if (velocity.x > 0)
                 {
-                    //Debug.Log("ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì›€ì§ì„");
+                    //Debug.Log("?˜¤ë¥¸ìª½?œ¼ë¡? ???ì§ì„");
                     enemyAnim.horizontalMove = 1;
                 }
                 else
                 {
-                    //Debug.Log("ì™¼ìª½ìœ¼ë¡œ ì›€ì§ì„");
+                    //Debug.Log("?™¼ìª½ìœ¼ë¡? ???ì§ì„");
                     enemyAnim.horizontalMove = -1;
                 }
             }
@@ -220,18 +223,18 @@ public class EnemyBasic : ObjectBasic
             {
                 if (velocity.y > 0)
                 {
-                    //Debug.Log("ìœ„ìª½ìœ¼ë¡œ ì›€ì§ì„");
+                    //Debug.Log("?œ„ìª½ìœ¼ë¡? ???ì§ì„");
                     enemyAnim.verticalMove = 1;
                 }
                 else
                 {
-                    //Debug.Log("ì•„ë˜ìª½ìœ¼ë¡œ ì›€ì§ì„");
+                    //Debug.Log("?•„?˜ìª½ìœ¼ë¡? ???ì§ì„");
                     enemyAnim.verticalMove = -1;
                 }
             }
         }
     }
-
+    */
     #endregion Move
 
     #region Effect
@@ -290,14 +293,14 @@ public class EnemyBasic : ObjectBasic
 
     void OnEnable()
     {
-        // ë³´ìŠ¤ë¼ë©´ UIì— ì •ë³´ë¥¼ ë„ìš´ë‹¤.
+        // ë³´ìŠ¤?¼ë©? UI?— ? •ë³´ë?? ?„?š´?‹¤.
         if(enemyStatus.isBoss)
             MapUIManager.instance.SetBossProgress(this.GetComponent<EnemyBasic>());
     }
 
     void OnDisable()
     {
-        // ë¹„í™œì„±í™”ì‹œ ìƒíƒœ ì´ˆê¸°í™”
+        // ë¹„í™œ?„±?™”?‹œ ?ƒ?ƒœ ì´ˆê¸°?™”
         InitStatus();
     }
 

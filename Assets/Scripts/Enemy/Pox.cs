@@ -5,15 +5,7 @@ using UnityEngine;
 
 public class Pox : EnemyBasic
 {
-
-    protected override void Start()
-    {
-        base.Start();
-    }
-    protected override void MovePattern()
-    {
-
-    }
+    public Transform ThrowPos;
 
     protected override void AttackPattern()
     {
@@ -33,17 +25,22 @@ public class Pox : EnemyBasic
     {
         Vector3 hitDir = enemyStatus.targetDirVec;
 
+        enemyAnim.animator.SetTrigger("isHit");
+        enemyAnim.ChangeDirection(enemyStatus.targetDirVec);
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
-        
+        enemyAnim.ChangeDirection(hitDir);
         hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5);
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.2f);
+
         hitEffects[0].gameObject.SetActive(false);
-        
+        yield return new WaitForSeconds(0.4f);
+
+        enemyAnim.animator.SetBool("isHit", false);
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
         StartCoroutine(RunAway(3f));
@@ -51,22 +48,26 @@ public class Pox : EnemyBasic
 
     IEnumerator Throw()
     {
-        //throwing stone
+
+        // 애니메이션을 킨다.
+        enemyAnim.animator.SetTrigger("isThrow");
+        enemyAnim.ChangeDirection(enemyStatus.targetDirVec);
+
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         
         if (enemyStatus.enemyTarget != null)
         {
             GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
-            bullet.transform.position = transform.position;
-        
-            enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
-            bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
+            bullet.transform.position = ThrowPos.position;
+            Vector3 TargetDirVec = (enemyStatus.enemyTarget.position - ThrowPos.position).normalized;
+            bullet.GetComponent<Rigidbody2D>().AddForce(TargetDirVec * 7, ForceMode2D.Impulse);
         }
 
         yield return new WaitForSeconds(2f);
 
+        enemyAnim.animator.SetBool("isThrow", false);
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 

@@ -106,7 +106,7 @@ public class WaveSkill : Skill
             }
 
             // rate 동안 유지
-            Destroy(effect);
+            Destroy(effect,time);
         }
     }
 
