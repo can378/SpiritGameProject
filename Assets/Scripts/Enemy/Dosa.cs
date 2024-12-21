@@ -22,7 +22,6 @@ public class Dosa : EnemyBasic
         //스킬 사용
         if (skill != 0 && skillList[skill].skillCoolTime <= 0)
         {
-            Debug.Log("start skill");
             enemyStatus.attackCoroutine = StartCoroutine(Skill());
         }
     }
@@ -30,26 +29,79 @@ public class Dosa : EnemyBasic
 
     IEnumerator Skill()
     {
-        print("Dosa Skill");
+        SKILL_TYPE _Type = (SKILL_TYPE)skillList[skill].skillType;
+
+        // 스킬 루틴 시작
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
-        skillList[skill].Enter(gameObject);
+        if(_Type == SKILL_TYPE.DOWN)
+        {
+            // 애니메이션 시작
+            enemyAnim.animator.SetBool("isAttack", true);
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
+            // Down 스킬 : 시전 선딜
+            yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
-        yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+            // 스킬 시작
+            skillList[skill].Enter(gameObject);
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
+            // Down 스킬 : 시전 후딜
+            yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
 
-        skillList[skill].Exit();
-        enemyStatus.attackCoroutine = null;
+            // 스킬 끝
+            skillList[skill].Exit();
+            enemyStatus.attackCoroutine = null;
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
+            // 애니메이션 끝
+            enemyAnim.animator.SetBool("isAttack", false);
+        }
+        else if(_Type == SKILL_TYPE.HOLD)
+        {
+            // 애니메이션 시작
+            enemyAnim.animator.SetBool("isAttack", true);
+
+            // 스킬 시작
+            skillList[skill].Enter(gameObject);
+
+            // Hold 스킬 : 스킬 유지되는 시간
+            yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+
+            // 종료
+            skillList[skill].Exit();
+            enemyStatus.attackCoroutine = null;
+
+            // 애니메이션 끝
+            enemyAnim.animator.SetBool("isAttack", false);
+        }
+        else if(_Type == SKILL_TYPE.UP)
+        {
+            // 스킬 시작
+            skillList[skill].Enter(gameObject);
+
+            // Up 스킬 : 키 Up 전 대기 시간 
+            yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+
+            // 애니메이션 시작
+            enemyAnim.animator.SetBool("isAttack", true);
+
+            // Up 스킬 : 시전 선딜
+            yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
+
+            // 스킬 종료
+            skillList[skill].Exit();
+            enemyStatus.attackCoroutine = null;
+
+            // Up 스킬 : 시전 후딜
+            yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
+
+            // 애니메이션 끝
+            enemyAnim.animator.SetBool("isAttack", false);
+        }
 
 
+        // 스킬 루틴 끝
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 

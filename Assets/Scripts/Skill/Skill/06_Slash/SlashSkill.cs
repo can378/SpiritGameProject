@@ -105,8 +105,6 @@ public class SlashSkill : Skill
 
     void Fire()
     {
-        Debug.Log("Slash");
-
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();

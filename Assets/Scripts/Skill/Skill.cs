@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SKILL_TYPE {DOWN, HOLD, UP}
+
 public abstract class Skill : SelectItem
 {
     [field: SerializeField] public int skillType { get; private set; }                  // 스킬 시전 타이밍

@@ -13,6 +13,7 @@ public class AnimBasic : MonoBehaviour
         if (status.moveVec == Vector2.zero)
         {
             animator.SetBool("isWalk", false);
+            animator.transform.localPosition = new Vector3(0, 0, 0);
         }
         else
         {
