@@ -21,6 +21,9 @@ public class Crow : EnemyBasic
 
         for (int i = 0; i < 2; i++)
         {
+            // 공격 시작 할 때 적의 위치
+            Vector3 targetPos = enemyStatus.enemyTarget.position;
+
             // 무작위 공격 애니메이션 실행
             int RandomParam = Random.Range(0, Param.Length);
             enemyAnim.animator.SetBool(Param[RandomParam], true);
@@ -29,10 +32,10 @@ public class Crow : EnemyBasic
 
             // 보석 던지기
             GameObject bullet = ObjectPoolManager.instance.Get2("jewel");
-            bullet.transform.position = ThrowPos[RandomParam].position;
-            Vector3 TargetDirVec = (enemyStatus.enemyTarget.position - ThrowPos[RandomParam].position).normalized;
+            bullet.transform.position = ThrowPos[RandomParam].position;     // 손을 기준으로 적의 방향
+            Vector3 TargetDirVec = (targetPos - ThrowPos[RandomParam].position).normalized;
             bullet.GetComponent<Rigidbody2D>().AddForce(TargetDirVec * 7, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.6f);
 
             // 공격 애니메이션 종료
             enemyAnim.animator.SetBool(Param[RandomParam], false);

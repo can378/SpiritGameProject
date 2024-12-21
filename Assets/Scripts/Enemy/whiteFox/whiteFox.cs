@@ -39,7 +39,6 @@ public class WhiteFox : EnemyBasic
 
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
-        StartCoroutine(RunAway(5f));
         yield return new WaitForSeconds(1f);
 
         hitDetection = hitEffects[0].GetComponent<HitDetection>();
@@ -52,31 +51,48 @@ public class WhiteFox : EnemyBasic
         hitEffects[0].SetActive(false);
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
+        StartCoroutine(RunAway(5f));
     }
 
     IEnumerator PeripheralAttack()
     {
+        // 애니메이션 시작
+        enemyAnim.animator.SetBool("isCry",true);
+
+        // 공격 루틴 시작
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
         whiteFoxStatus.blizzardCoolTime = defaulBlizzardCoolTime;
-        StartCoroutine(RunAway(5f));
+       
         yield return new WaitForSeconds(0.5f);
 
+        // 영역 활성화
         HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
         hitDetection.user = this.gameObject;
         hitDetection.SetHitDetection(false, -1, true, 3, enemyStats.attackPower * 0.5f, 0);
         hitDetection.SetSEs(blizzardDebuff);
-
         hitEffects[1].SetActive(true);
         yield return new WaitForSeconds(3f);
 
+        // 영역 끄기
         hitEffects[1].SetActive(false);
         yield return new WaitForSeconds(1f);
 
+        // 공격 루틴 끝
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
+        StartCoroutine(RunAway(5f));        // 도망치기
+
+        // 애니메이션 끝
+        enemyAnim.animator.SetBool("isCry", false);
 
 
+    }
+
+    public override void AttackCancle()
+    {
+        base.AttackCancle();
+        StartCoroutine(RunAway(5f));
     }
 
     /*

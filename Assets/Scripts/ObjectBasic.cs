@@ -13,6 +13,7 @@ public class ObjectBasic : MonoBehaviour
     public Transform buffTF;
     public GameObject animGameObject;
 
+    [HideInInspector] AnimBasic animBasic;
     [HideInInspector] public SpriteRenderer[] sprites;
     [HideInInspector] public Rigidbody2D rigid;
     
@@ -20,6 +21,7 @@ public class ObjectBasic : MonoBehaviour
     {
         sprites = animGameObject.GetComponentsInChildren<SpriteRenderer>(true);
         rigid = GetComponent<Rigidbody2D>();
+        animBasic = animGameObject.GetComponent<AnimBasic>();
     }
 
     protected virtual void LateUpdate()
@@ -166,6 +168,7 @@ public class ObjectBasic : MonoBehaviour
 
     protected IEnumerator Flinch(float time = 0)
     {
+        animBasic.animator.SetTrigger("isHurt");
         status.isFlinch = true;
         AttackCancle();
 
@@ -330,3 +333,4 @@ public class ObjectBasic : MonoBehaviour
     }
 
 }
+

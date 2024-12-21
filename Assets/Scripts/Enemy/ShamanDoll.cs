@@ -44,9 +44,13 @@ public class ShamanDoll : EnemyBasic
         enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(2f);
 
+        enemyAnim.animator.SetBool("isAttack", true);
+
         //print("shamon doll hurts hershelf");
         enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().Damaged(enemyStatus.enemyTarget.gameObject.GetComponent<Stats>().HPMax * 0.1f);
         yield return new WaitForSeconds(2f);
+
+        enemyAnim.animator.SetBool("isAttack", false);
 
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;

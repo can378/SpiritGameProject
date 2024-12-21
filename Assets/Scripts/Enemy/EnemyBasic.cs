@@ -181,7 +181,7 @@ public class EnemyBasic : ObjectBasic
     {
         if (enemyStatus.enemyTarget)
         {
-            status.moveVec = -(enemyStatus.enemyTarget.position - transform.position).normalized * stats.moveSpeed;
+            status.moveVec = -(enemyStatus.enemyTarget.position - transform.position).normalized;
         }
     }
 

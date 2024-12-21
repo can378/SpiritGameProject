@@ -12,11 +12,11 @@ public class AnimBasic : MonoBehaviour
     {
         if (status.moveVec == Vector2.zero)
         {
-            animator.SetBool("isRun", false);
+            animator.SetBool("isWalk", false);
         }
         else
         {
-            animator.SetBool("isRun", true);
+            animator.SetBool("isWalk", true);
             if (status.moveVec.x < 0)
             {
                 animator.transform.localScale = new Vector3(1, 1, 1);
