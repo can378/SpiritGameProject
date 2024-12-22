@@ -5,17 +5,11 @@ using UnityEngine.Rendering;
 
 public class GroupOrder : MonoBehaviour
 {
-    SortingGroup sortingG;
+    // 발 위치를 기준으로 정렬
+    [SerializeField] Transform PivotPos;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        sortingG = GetComponent<SortingGroup>();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        sortingG.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
+        transform.position = new Vector3(transform.position.x,transform.position.y,PivotPos.position.y/1000);
     }
 }
