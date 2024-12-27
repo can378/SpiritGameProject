@@ -46,6 +46,8 @@ GameObject:
   - component: {fileID: 3610507394969829896}
   - component: {fileID: -7980827000272133388}
   - component: {fileID: 8867718320609945860}
+  - component: {fileID: 5535274079754883823}
+  - component: {fileID: 8411445300084707363}
   m_Layer: 8
   m_Name: Dosa
   m_TagString: Enemy
@@ -245,6 +247,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.63, y: 7.46}
   m_EdgeRadius: 0
+--- !u!114 &5535274079754883823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538086322564347871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotPos: {fileID: 9170545154514505170}
+--- !u!210 &8411445300084707363
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6538086322564347871}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6664565228231300692
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,9 +329,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9170545154514505170}
   - component: {fileID: 4516141805531649479}
-  m_Layer: 8
+  m_Layer: 19
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -318,7 +345,7 @@ Transform:
   m_GameObject: {fileID: 7035687687948930107}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -356,7 +383,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.18, y: -3.44}
+  m_Offset: {x: 0, y: 0.48}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -367,7 +394,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 0.75}
+  m_Size: {x: 2.5, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &7727270129497258219
 GameObject:

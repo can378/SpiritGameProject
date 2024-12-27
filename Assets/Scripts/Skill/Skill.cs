@@ -60,9 +60,13 @@ public abstract class Skill : SelectItem
         }
 
         skillCoolTime -= Time.deltaTime;
-        skillCoolTime = Mathf.Clamp(skillCoolTime,0,skillDefalutCoolTime * 2);
+        skillCoolTime = Mathf.Clamp(skillCoolTime, 0, skillDefalutCoolTime * 2);
     }
 
+    public void HoldCoolDown()
+    {
+        skillCoolTime = skillDefalutCoolTime * 2;
+    }
 
 
 }

@@ -204,9 +204,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2101867505658190670}
   - component: {fileID: 517296476811752074}
-  m_Layer: 8
+  m_Layer: 19
   m_Name: collide
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 4600885739272810493}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -258,7 +258,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0285272, y: -1.37}
+  m_Offset: {x: -0.0285272, y: 0.51}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -416,6 +416,8 @@ GameObject:
   - component: {fileID: 2568458734840514807}
   - component: {fileID: 7338967536234966317}
   - component: {fileID: 916321001779519949}
+  - component: {fileID: 6117465419285838552}
+  - component: {fileID: 3513946093969927790}
   m_Layer: 8
   m_Name: pox
   m_TagString: Enemy
@@ -605,6 +607,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.41, y: 3.81}
   m_EdgeRadius: 0
+--- !u!114 &6117465419285838552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641949530967464337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotPos: {fileID: 2101867505658190670}
+--- !u!210 &3513946093969927790
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641949530967464337}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1001 &8692461631763589288
 PrefabInstance:
   m_ObjectHideFlags: 0

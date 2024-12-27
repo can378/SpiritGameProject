@@ -572,6 +572,7 @@ public class Player : ObjectBasic
             {
                 yield return new WaitForSeconds(0.1f);
                 timer -= 0.1f;
+                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].HoldCoolDown();      // 홀드 중일 때는 쿨타임이 줄어들지 않음
                 if (timer <= 0)
                 {
                     skillCoroutine = StartCoroutine(Exit());

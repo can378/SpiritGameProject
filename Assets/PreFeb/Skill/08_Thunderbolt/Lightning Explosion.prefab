@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2520229236398862641}
   - component: {fileID: 7151203544794728555}
   - component: {fileID: 3361026644957457091}
+  - component: {fileID: 8761265761611893033}
+  - component: {fileID: 2893733041817632827}
   m_Layer: 11
   m_Name: Lightning Explosion
   m_TagString: PlayerAttack
@@ -5259,6 +5261,31 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 0}
+--- !u!210 &8761265761611893033
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651732826295342366}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 1
+--- !u!114 &2893733041817632827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651732826295342366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotPos: {fileID: 7229794731934350907}
 --- !u!1001 &5575407509815370326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5326,6 +5353,10 @@ PrefabInstance:
     - target: {fileID: 7849791404041280643, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
       propertyPath: m_Intensity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849791404687877177, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7849791404687877180, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
       propertyPath: startDelay.scalar
@@ -5462,10 +5493,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7849791404790678207, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4834110111309500982}
   m_SourcePrefab: {fileID: 100100000, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
 --- !u!4 &2427400781954130148 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7849791404790678194, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
   m_PrefabInstance: {fileID: 5575407509815370326}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2427400781954130153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7849791404790678207, guid: 42913e44bd86c194f80b76492e6fe2fd, type: 3}
+  m_PrefabInstance: {fileID: 5575407509815370326}
+  m_PrefabAsset: {fileID: 0}
+--- !u!210 &4834110111309500982
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427400781954130153}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_SortAtRoot: 1

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8943848680252071507}
   - component: {fileID: -8433502791517103413}
   - component: {fileID: -6951733002104135056}
+  - component: {fileID: -6708198054585691205}
   m_Layer: 8
   m_Name: EyeSight
   m_TagString: Untagged
@@ -201,8 +202,8 @@ MonoBehaviour:
   <critical>k__BackingField: 0
   <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  <isShake>k__BackingField: 0
   multiHitDurationTime: 0
-  isHit: 0
 --- !u!114 &-6951733002104135056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,14 +218,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveVec: {x: 0, y: 0}
   hitTarget: {fileID: 0}
-  hitEffects: []
+  isBeAttaked: 0
   isFlinch: 0
+  isSuperArmor: 0
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
   isTouchPlayer: 0
+  isBoss: 0
   isRun: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+--- !u!210 &-6708198054585691205
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647627899137824662}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0

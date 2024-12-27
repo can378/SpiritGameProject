@@ -106,6 +106,8 @@ GameObject:
   - component: {fileID: 2639747861275732540}
   - component: {fileID: 4665542887200569295}
   - component: {fileID: -2331342458836752463}
+  - component: {fileID: 6988526811979298961}
+  - component: {fileID: -4473571472166164651}
   m_Layer: 8
   m_Name: dokabbiFire
   m_TagString: Enemy
@@ -283,6 +285,31 @@ MonoBehaviour:
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
+--- !u!114 &6988526811979298961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813673811457811203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotPos: {fileID: 6327962331640912082}
+--- !u!210 &-4473571472166164651
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5813673811457811203}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &6537886198063257128
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,9 +367,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6327962331640912082}
   - component: {fileID: 7044835911456894983}
-  m_Layer: 8
+  m_Layer: 19
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,7 +383,7 @@ Transform:
   m_GameObject: {fileID: 7398176338376627430}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -394,7 +421,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1}
+  m_Offset: {x: 0, y: 0.54}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!1 &9080265818501793171

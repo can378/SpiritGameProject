@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GroupOrder : MonoBehaviour
+public class PivotOrder : MonoBehaviour
 {
-    // 발 위치를 기준으로 정렬
+    // Pivot을 기준으로 z축을 움직여 정렬
     [SerializeField] Transform PivotPos;
 
     void Update()

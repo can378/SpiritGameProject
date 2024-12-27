@@ -42,9 +42,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8162656666673147257}
   - component: {fileID: 7208313292141521232}
-  m_Layer: 0
-  m_Name: collider
-  m_TagString: Untagged
+  m_Layer: 19
+  m_Name: Collider
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 502348570320528366}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1.19}
+  m_Offset: {x: 0, y: 0.48}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -123,6 +123,8 @@ GameObject:
   - component: {fileID: 745577100928358849}
   - component: {fileID: 490919376907538645}
   - component: {fileID: 6704394112680873745}
+  - component: {fileID: 1924146816357620963}
+  - component: {fileID: 7257715512682786520}
   m_Layer: 8
   m_Name: blackDog
   m_TagString: Enemy
@@ -317,6 +319,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.59, y: 3.03}
   m_EdgeRadius: 0
+--- !u!114 &1924146816357620963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2381619801541026782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotPos: {fileID: 8162656666673147257}
+--- !u!210 &7257715512682786520
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2381619801541026782}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &3118692497674467100
 GameObject:
   m_ObjectHideFlags: 0

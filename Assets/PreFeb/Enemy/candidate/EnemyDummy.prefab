@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2794311865228963243}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64,7 +64,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.48}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!1 &7040823031454602919
@@ -83,6 +83,7 @@ GameObject:
   - component: {fileID: 8127540157274700844}
   - component: {fileID: 81563216384718167}
   - component: {fileID: 1846630101710877559}
+  - component: {fileID: 4746652551757721408}
   m_Layer: 8
   m_Name: EnemyDummy
   m_TagString: Enemy
@@ -325,6 +326,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hpslider: {fileID: 5244156357260638476}
   BuffUI: {fileID: 6097951661136130142}
+--- !u!114 &4746652551757721408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040823031454602919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PivotPos: {fileID: 7174601102681075669}
 --- !u!1001 &2759414453898129638
 PrefabInstance:
   m_ObjectHideFlags: 0

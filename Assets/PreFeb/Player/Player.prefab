@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2744177701977405796}
   - component: {fileID: 4743166853807347730}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: playerAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3587327865102573737}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -618,6 +618,7 @@ GameObject:
   - component: {fileID: 3481271467806886931}
   - component: {fileID: 971580390121925394}
   - component: {fileID: 1969697060532571515}
+  - component: {fileID: 2007444982383773848}
   m_Layer: 11
   m_Name: StabEffect
   m_TagString: PlayerAttack
@@ -758,6 +759,18 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 4430817135633105390}
+--- !u!210 &2007444982383773848
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4069335388848529470}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 1
 --- !u!1 &4684366613993554061
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,6 +784,7 @@ GameObject:
   - component: {fileID: 4414942471104923482}
   - component: {fileID: 801754964134872807}
   - component: {fileID: 1963962968942914568}
+  - component: {fileID: 4459671199187379072}
   m_Layer: 11
   m_Name: CrackEffect
   m_TagString: PlayerAttack
@@ -896,6 +910,18 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 6763884657055603484}
+--- !u!210 &4459671199187379072
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4684366613993554061}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_SortAtRoot: 1
 --- !u!1 &6639564715339010793
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,6 +981,7 @@ GameObject:
   - component: {fileID: 8227443501481831212}
   - component: {fileID: 796167031908651993}
   - component: {fileID: 5099425017828642363}
+  - component: {fileID: 1404818674898404666}
   m_Layer: 11
   m_Name: SwingEffect
   m_TagString: PlayerAttack
@@ -1095,6 +1122,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!210 &1404818674898404666
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152641093788019855}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_SortAtRoot: 1
 --- !u!1 &7202870429704287789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,9 +1217,9 @@ GameObject:
   m_Component:
   - component: {fileID: 731373971785790677}
   - component: {fileID: 2027002630054211882}
-  m_Layer: 3
+  m_Layer: 18
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1194,7 +1233,7 @@ Transform:
   m_GameObject: {fileID: 7243290139834783462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.64, z: 0}
+  m_LocalPosition: {x: 0, y: -2.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1232,7 +1271,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.39}
+  m_Offset: {x: 0, y: 0.45}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
