@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemClass { Coin, Key, BossKey, Heal, ExtraHealth};
+//public enum ItemClass { Coin, Key, BossKey, Heal, ExtraHealth};
+public enum ItemClass { Coin, Key };
 
 public class Item : MonoBehaviour
 {

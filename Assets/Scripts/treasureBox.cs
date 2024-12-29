@@ -2,37 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RewardItem { equipment, weapon, skill,selectItem}
 public class treasureBox : MonoBehaviour
 {
+
+    [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
+
     public GameObject lockObj;
 
     [field: SerializeField] bool isOpen = false;
     [field: SerializeField] bool isLock;
-    [field: SerializeField] RewardItem rewardItemIndex;
-    [field: SerializeField] GameObject rewardPos;
+    [field: SerializeField] List<SelectItem> reward = new List<SelectItem>();
 
-    private List<GameObject> itemCandidate;
-    private int randomNum;
-
-    private void Awake()
+    void Awake()
     {
-        switch (rewardItemIndex)
+
+    }
+
+    private void Start()
+    {
+
+        // new로 생성한거 따로 지워야하나?
+        WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
+
+        // 설정한 가중치를 가중치무작위에 넣는다.
+        for (int i = 0; i < (int)SelectItemRating.END; ++i)
         {
-            case RewardItem.equipment:
-                itemCandidate = GameData.instance.equipmentList;
-                break;
-            case RewardItem.weapon:
-                itemCandidate = GameData.instance.weaponList;
-                break;
-            case RewardItem.skill:
-                itemCandidate = GameData.instance.skillList;
-                break;
-            case RewardItem.selectItem:
-                itemCandidate = GameData.instance.selectItemList;
-                break;
+            weightRandom.Add((SelectItemRating)i, RatingWeight[i]);
         }
+
+        // 상자에 들어있는 아이템 개수를 정함
+        int ItemNum = Random.Range(1,4);
+
+        for(int i = 0; i <ItemNum; ++i)
+        {
+            // 가중치에 따라 무작위로 뽑는다.
+            SelectItemRating Rating = weightRandom.GetRandomItem();
+            print(Rating);
+            // 게임 데이터 접근하여 게임오브젝트를 가져온다.
+            reward.Add(GameData.instance.SelectItemList[1].DrawRandomItem((int)Rating));
+        }
+
         if (isLock) { lockObj.SetActive(true); }
+
     }
 
 
@@ -58,12 +69,21 @@ public class treasureBox : MonoBehaviour
 
     private void Open()
     {
-        print("reward interaction2");
-        //Item appear!!
-        randomNum = UnityEngine.Random.Range(1, itemCandidate.Count);
-        Instantiate(itemCandidate[randomNum], rewardPos.transform).GetComponent<SpriteRenderer>().sortingOrder
-            =GetComponent<SpriteRenderer>().sortingOrder+1;
+        // print("reward interaction2");
+        // //Item appear!!
+        // randomNum = UnityEngine.Random.Range(1, itemCandidate.Count);
+        // Instantiate(itemCandidate[randomNum], rewardPos.transform).GetComponent<SpriteRenderer>().sortingOrder
+        //     =GetComponent<SpriteRenderer>().sortingOrder+1;
+
+        foreach(SelectItem item in reward)
+        {
+            Vector3 pos = transform.position + (Random.insideUnitSphere * 3);
+            Instantiate(item, pos, Quaternion.identity);
+        }
+
         isOpen = true;
+
+        this.gameObject.SetActive(false);
     }
 
     /*
@@ -79,3 +99,4 @@ public class treasureBox : MonoBehaviour
     }
     */
 }
+

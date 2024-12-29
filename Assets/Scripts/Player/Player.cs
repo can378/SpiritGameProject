@@ -730,10 +730,13 @@ public class Player : ObjectBasic
     void GainSelectItem()
     {
         SelectItem selectItem = playerStatus.nearObject.GetComponent<SelectItem>();
+        
+        // 아이템 획득 여부
         bool gainItem = false;
 
-        //무기////////////////////////////////////////////////////////////////////
-        if (selectItem.selectItemClass == SelectItemClass.Weapon)
+        // 무기 =======================================================
+        // 현재 장착 무기 해제 후 무기 장착
+        if (selectItem.selectItemType == SelectItemType.Weapon)
         {
             if (playerStats.weapon != 0)
             {
@@ -742,13 +745,16 @@ public class Player : ObjectBasic
             // 무기 장비
             gainItem = weaponController.EquipWeapon(selectItem.GetComponent<SelectItem>().selectItemID);
         }
-        //갑옷/////////////////////////////////////////////////////////////////////
-        else if (selectItem.selectItemClass == SelectItemClass.Equipments)
+        // 갑옷 =======================================================
+        // 비어있는 장비 슬롯으로 장착
+        // 비어있는 장비 슬롯이 없다면 장착 실패
+        else if (selectItem.selectItemType == SelectItemType.Equipments)
         {
             gainItem = EquipEquipment(selectItem.GetComponent<SelectItem>().selectItemID);
         }
-        //스킬/////////////////////////////////////////////////////////////////////
-        else if (selectItem.selectItemClass == SelectItemClass.Skill)
+        // 스킬 =======================================================
+        // 현재 사용 중인 스킬 해제 후 스킬 장착
+        else if (selectItem.selectItemType == SelectItemType.Skill)
         {
 
             if (playerStats.skill[playerStatus.skillIndex] != 0)
@@ -759,24 +765,12 @@ public class Player : ObjectBasic
             gainItem = skillController.EquipSkill(selectItem.GetComponent<SelectItem>().selectItemID);
 
         }
-        //일반 아이템/////////////////////////////////////////////////////////////////
-        else if(selectItem.selectItemClass == SelectItemClass.Consumable && selectItem.GetComponent<HPPortion>()!=null)
+        // 일반 아이템 =======================================================
+        // 획득 즉시 사용 됨
+        else if (selectItem.selectItemType == SelectItemType.Consumable)
         {
-            /*
-            //전에 가지고 있던 아이템 드랍
-            if (playerItem != null)
-            { playerItem.SetActive(true); playerItem.transform.position = transform.position; }
-            
-            //아이템 갱신
-            playerStats.item = selectItem.GetComponent<SelectItem>().selectItemID;
-            playerItem = selectItem.gameObject;
-            playerItem.SetActive(false);
-
-            MapUIManager.instance.updateItemUI(selectItem.gameObject);
-            */
-
             //UseItem
-            selectItem.GetComponent<HPPortion>().UseItem(FindObj.instance.Player.GetComponent<Player>());
+            selectItem.GetComponent<Consumable>().UseItem(this);
             gainItem = true;
         }
 
@@ -1047,6 +1041,7 @@ public class Player : ObjectBasic
                 other.gameObject.SetActive(false); //키 오브젝트 삭제
                 playerStats.key++;
             }
+            /*
             else if(item.itemClass == ItemClass.Heal)
             {
                 Destroy(other.gameObject); //코인 오브젝트 삭제
@@ -1057,7 +1052,7 @@ public class Player : ObjectBasic
                 Destroy(other.gameObject); //키 오브젝트 삭제
                 playerStats.tempHP += 10f;
             }
-
+            */
             //MapUIManager.instance.UpdateMinimapUI(false);
         }
     }

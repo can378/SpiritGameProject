@@ -86,9 +86,9 @@ public class SellingItem : MonoBehaviour
             Player.instance.playerStats.item = thisItemID;
 
             //UseItem
-            switch (itemList[thisItemIndex].GetComponent<SelectItem>().selectItemClass)
+            switch (itemList[thisItemIndex].GetComponent<SelectItem>().selectItemType)
             {
-                case SelectItemClass.Consumable:
+                case SelectItemType.Consumable:
                     itemList[thisItemIndex].GetComponent<HPPortion>().
                         UseItem(FindObj.instance.Player.GetComponent<Player>());
                     break;

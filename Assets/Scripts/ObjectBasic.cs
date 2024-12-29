@@ -168,7 +168,8 @@ public class ObjectBasic : MonoBehaviour
 
     protected IEnumerator Flinch(float time = 0)
     {
-        animBasic.animator.SetTrigger("isHurt");
+        if(animBasic !=null)
+            animBasic.animator.SetTrigger("isHurt");
         status.isFlinch = true;
         AttackCancle();
 
