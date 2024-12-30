@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
+using System;
 
 [System.Serializable]
 public class SelectItemList
 {
-    int[] StartIndex;
+    //public string SortCondition;
+    //int[] StartIndex;
     public List<SelectItem> list;
 
+    /*
     /// <summary>
-    /// 분류할 개수를 적으면 분류값의 시작을 알아서 저장한다.
+    /// 분류할 개수와 분류할 기준 변수를 적으면 분류값의 시작을 알아서 저장한다.
     /// </summary>
     /// <param name="_EnumNum">분류할 개수</param>
     /// <param name="_Name">변수의 이름</param>
@@ -48,10 +51,11 @@ public class SelectItemList
         if (StartIndex[_Type] == -1)
             return null;
 
-        int ItemIndex = Random.Range(StartIndex[_Type], StartIndex[_Type + 1]);
+        int ItemIndex = UnityEngine.Random.Range(StartIndex[_Type], StartIndex[_Type + 1]);
 
         return list[ItemIndex];
     }
+    */
 }
 
 public class GameData : MonoBehaviour
@@ -74,42 +78,35 @@ public class GameData : MonoBehaviour
     /// 건드릴 필요 있으면 말하고
     /// </summary>
     [field :SerializeField]
-    public List<SelectItemList> SelectItemList {get; private set;}
+    public List<SelectItem> ItemList {get; private set;}
 
     void Awake()
     {
+        // 유형 -> 등급 순으로 정렬
+        ItemList.Sort(SelectItem.ClassSort);
+
+        // 혹시 모를 중복 제거
+        ItemList = ItemList.Distinct().ToList();
+
+        /*
         // 유형별 정렬 ===============================================
         // 0번째 리스트는 유형별로 정렬되어있음
+        SelectItemList[0].SortCondition = "유형";
         SelectItemList[0].list.Sort(SelectItem.ClassSort);
 
         // Equipments, Weapon, Consumable, Skill, END
         // 유형별 시작 위치를 미리 저장한다.
         SelectItemList[0].SetEnumNum((int)SelectItemType.END, "selectItemType");
 
-        /*
-        for (int i = 0 ; i < (int)SelectItemType.END ; ++i)
-        {
-            ClassStartIndex[0] = SelectItemList[0].List.FindIndex(x => x.selectItemType == (SelectItemType)i);
-        }
-        ClassStartIndex[(int)SelectItemType.END] = SelectItemList[0].List.Count;
-        */
-
-
         // 등급별 정렬 =============================================
         // 1번째 리스트는 등급별로 정렬되어있음
+        SelectItemList[1].SortCondition = "등급";
         SelectItemList[1].list = SelectItemList[0].list.ToList();
         SelectItemList[1].list.Sort(SelectItem.RatingSort);
 
         // Temp, Normal, Rare, Epic, Legend, END
         // 등급별 시작 위치를 미리 저장한다.
         SelectItemList[1].SetEnumNum((int)SelectItemRating.END, "selectItemRating");
-        /*
-        for (int i = 0; i < (int)SelectItemType.END; ++i)
-        {
-            RatingStartIndex[0] = SelectItemList[1].list.FindIndex(x => x.selectItemRating == (SelectItemRating)i);
-        }
-        ClassStartIndex[(int)SelectItemType.END] = SelectItemList[0].list.Count;
-        RatingStartIndex[5] = SelectItemList[1].list.Count;
         */
     }
 
@@ -123,5 +120,76 @@ public class GameData : MonoBehaviour
     {
         return JsonUtility.ToJson(this);
     }
+
+    #region Random
+
+
+    /// <summary>
+    /// SelectItem의 변수명과 해당 변수의 값을 입력하면 조건에 맞는 아이템 중 무작위로 뽑음
+    /// </summary>
+    /// <param name="_Name">조건으로 쓸 변수 이름</param>
+    /// <param name="_Type">해당 변수의 값</param>
+    /// <returns>해당 조건에 맞는 무작위 아이템</returns>
+    public SelectItem DrawRandomItem(string _Name, int _Type)
+    {
+        List<SelectItem> FindList = ItemList.FindAll(x => (int)x.GetType().GetProperty(_Name).GetValue(x) == _Type);
+
+        if (FindList.Count == 0)
+        {   Debug.Log("해당 조건에 맞는 아이템 없음");
+            return null;
+        }
+
+        int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
+
+        return FindList[ItemIndex];
+    }
+
+    /// <summary>
+    /// SelectItem의 변수명과 해당 변수의 값을 입력하면 조건에 맞는 아이템 중 무작위로 뽑음
+    /// </summary>
+    /// <param name="_NameType">조건으로 쓸 변수 이름, 해당 변수의 값</param>
+    /// <returns></returns>
+    public SelectItem DrawRandomItem(KeyValuePair<string, int> _NameType)
+    {
+        List<SelectItem> FindList = ItemList.FindAll(x => (int)x.GetType().GetProperty(_NameType.Key).GetValue(x) == _NameType.Value);
+
+        if (FindList.Count == 0)
+        {
+            Debug.Log("해당 조건에 맞는 아이템 없음");
+            return null;
+        }
+
+        int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
+
+        return FindList[ItemIndex];
+    }
+
+    /// <summary>
+    /// 조건이 여러개 일 때
+    /// SelectItem의 변수명과 해당 변수의 값을 입력하면 조건에 맞는 아이템 중 무작위로 뽑음
+    /// </summary>
+    /// <param name="_NameType">조건으로 쓸 변수 이름, 해당 변수의 값</param>
+    /// <returns></returns>
+    public SelectItem DrawRandomItem(Dictionary<string, int> _NameType)
+    {
+        List<SelectItem> FindList = ItemList.ToList();
+
+        foreach (KeyValuePair<string, int> Pair in _NameType)
+        {
+            FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(Pair.Key).GetValue(x) == Pair.Value);
+        }
+
+        if (FindList.Count == 0)
+        {
+            Debug.Log("해당 조건에 맞는 아이템 없음");
+            return null;
+        }
+
+        int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
+
+        return FindList[ItemIndex];
+    }
+
+    #endregion Random
 
 }

@@ -8,6 +8,9 @@ using UnityEngine;
 
 public class SellingItem : MonoBehaviour
 {
+    [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
+
+    [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
 
     public GameObject info;
     public TMP_Text itemName;
@@ -43,8 +46,39 @@ public class SellingItem : MonoBehaviour
 
     private void setStore()
     {
-        thisItemIndex = Random.Range(1, itemList.Count);
-        GameObject thisSlotItem = itemList[thisItemIndex];
+        // ====================================
+        // 유형
+        // new로 생성한거 따로 지워야하나?
+        WeightRandom<SelectItemType> typeRandom = new WeightRandom<SelectItemType>();
+
+        // 설정한 가중치를 가중치무작위에 넣는다.
+        for (int i = 0; i < (int)SelectItemType.END; ++i)
+        {
+            typeRandom.Add((SelectItemType)i, TypeWeight[i]);
+        }
+
+        SelectItemType ItemType = typeRandom.GetRandomItem();
+
+        // ====================================
+        // 등급
+        // new로 생성한거 따로 지워야하나?
+        WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
+
+        // 설정한 가중치를 가중치무작위에 넣는다.
+        for (int i = 0; i < (int)SelectItemRating.END; ++i)
+        {
+            weightRandom.Add((SelectItemRating)i, RatingWeight[i]);
+        }
+
+        SelectItemRating ItemRating = weightRandom.GetRandomItem();
+
+        // 조건을 담은 Dictionary 생성
+        Dictionary<string,int> ItemCondition = new Dictionary<string, int>();
+        ItemCondition.Add("selectItemType", (int)ItemType);
+        ItemCondition.Add("selectItemRating", (int)ItemRating);
+       
+        // GameData에서 해당 조건에 맞는 무작위 아이템 반환
+        GameObject thisSlotItem = GameData.instance.DrawRandomItem(ItemCondition).GetComponent<GameObject>();
 
         //GameObject thisSlotImage = Instantiate(thisSlotItem);
         spriteR.GetComponent<SpriteRenderer>().sprite = thisSlotItem.GetComponent<SpriteRenderer>().sprite;

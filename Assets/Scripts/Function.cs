@@ -80,7 +80,7 @@ public class WeightRandom<T>
 
     public T GetRandomItem()
     {
-        if(m_Dic.Count <=0)
+        if(m_Dic.Count <= 0)
         {
             return default;
         }
@@ -88,12 +88,12 @@ public class WeightRandom<T>
         int totalWeight = GetTotalWeight();
         int weight = 0;
 
-        int pivot = Mathf.RoundToInt(Random.Range(0.0f, totalWeight));
+        int pivot = Random.Range(0, totalWeight);
 
         foreach(var item in m_Dic)
         {
             weight += item.Value;
-            if(pivot <= weight)
+            if(pivot < weight)
                 return item.Key;
         }
 
