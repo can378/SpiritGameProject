@@ -690,35 +690,7 @@ public class Player : ObjectBasic
 
         if (iDown && !playerStatus.isFlinch && !playerStatus.isDodge && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
-
-            if (playerStatus.nearObject.tag == "SelectItem")
-            {
-                GainSelectItem();
-            }
-            else if (playerStatus.nearObject.tag == "Npc")
-            {
-                playerStatus.nearObject.GetComponentInParent<NPCbasic>().Conversation();
-            }
-            else if (playerStatus.nearObject.tag == "Door")
-            {
-                if (playerStats.key > 0)
-                {
-                    playerStats.key--;
-                    playerStatus.nearObject.GetComponent<Door>().DoorInteraction();
-                }
-
-            }
-            else if (playerStatus.nearObject.tag == "ShabbyWall")
-            {
-                //open with bomb
-                //nearObject.GetComponent<Wall>().WallInteraction();
-            }
-            else if (playerStatus.nearObject.tag == "reward")
-            {
-                print("reward interaction");
-                playerStatus.nearObject.GetComponent<treasureBox>().Interaction();
-            
-            }
+            playerStatus.nearObject.GetComponent<Interactable>().Interact();
         }
 
     }
@@ -727,9 +699,9 @@ public class Player : ObjectBasic
 
     #region Item
 
-    void GainSelectItem()
+    public void GainSelectItem(SelectItem selectItem)
     {
-        SelectItem selectItem = playerStatus.nearObject.GetComponent<SelectItem>();
+        //SelectItem selectItem = playerStatus.nearObject.GetComponent<SelectItem>();
         
         // 아이템 획득 여부
         bool gainItem = false;
@@ -1059,7 +1031,9 @@ public class Player : ObjectBasic
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "SelectItem" || other.tag == "Door" || other.tag == "ShabbyWall" || other.tag == "Npc" || other.tag=="reward")
+        // 해당 tag가 붙은 대상은 상호작용이 가능
+        if (other.tag == "SelectItem" || other.tag == "Door" || 
+        other.tag == "Npc" || other.tag=="reward" || other.tag == "SellingItem")
         {
             if(playerStatus.nearObject == null || Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, playerStatus.nearObject.transform.position))
             {

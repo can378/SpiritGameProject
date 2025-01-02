@@ -13,9 +13,9 @@ public class Altar : NPCbasic
         table = CombinationRandom.CombRandom(3, 0, Player.instance.playerStats.playerStat.Length);
     }
 
-    public override void Conversation()
+    public override void Interact()
     {
-        base.Conversation();
+        base.Interact();
         if (check)
             return;
         if(Player.instance.playerStats.coin < offering)

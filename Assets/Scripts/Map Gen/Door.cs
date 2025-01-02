@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum DoorType { None, Key, Trap}
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, Interactable
 {
     [SerializeField]
     DoorType doorType;
@@ -15,9 +15,13 @@ public class Door : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
+    public string GetInteractText()
+    {
+        return "문 열기";
+    }
 
     //player 상호작용
-    public void DoorInteraction()
+    public void Interact()
     {
         // 키가 있다면
         if(this.doorType == DoorType.Key)

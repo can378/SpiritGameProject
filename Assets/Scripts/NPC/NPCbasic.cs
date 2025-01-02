@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class NPCbasic : MonoBehaviour
+public class NPCbasic : MonoBehaviour, Interactable
 {
     public bool isTalking;
 
@@ -25,8 +25,13 @@ public class NPCbasic : MonoBehaviour
 
     #region Interaction
 
+    public string GetInteractText()
+    {
+        return "대화하기";
+    }
+
     //대화
-    public virtual void Conversation()
+    public virtual void Interact()
     {
         isTalking = true;
         DialogPanel.SetActive(true);

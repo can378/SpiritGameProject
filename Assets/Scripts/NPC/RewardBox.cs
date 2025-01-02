@@ -8,9 +8,9 @@ public class RewardBox : NPCbasic
     [field: SerializeField] bool isLock;
     [field: SerializeField] public List<int> items {get; set; }
 
-    public override void Conversation()
+    public override void Interact()
     {
-        base.Conversation();
+        base.Interact();
         UnLock();
         OpenChest();
     }

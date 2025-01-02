@@ -70,15 +70,14 @@ public class GameData : MonoBehaviour
     public List<GameObject> testList;
     public List<GameObject> statusEffectList;       //5부터 시작
     
-    /// <summary>
-    /// 0번째 인덱스는 유형별로 정렬되어있음
-    /// 1번째 인덱스는 등급별로 정렬되어있음
-    /// 
-    /// 우선은 다른사람은 건들지 말것
-    /// 건드릴 필요 있으면 말하고
-    /// </summary>
     [field :SerializeField]
     public List<SelectItem> ItemList {get; private set;}
+
+    /// <summary>
+    /// 빠른 불러오기 용 Dictionary
+    /// 찾은 아이템의 리스트를 저장
+    /// </summary>zeField]
+    Dictionary<string,List<SelectItem>> ItemList_Sort = new Dictionary<string, List<SelectItem>>();
 
     void Awake()
     {
@@ -123,25 +122,75 @@ public class GameData : MonoBehaviour
 
     #region Random
 
+    public List<SelectItem> FindItemList(Dictionary<string, int> _NameType)
+    {
+        string asString = string.Join(Environment.NewLine,_NameType);
+
+        if (!ItemList_Sort.ContainsKey(asString))
+        {
+            return null;
+        }
+        return ItemList_Sort[asString];
+    }
+
+    public List<SelectItem> FindItemList(KeyValuePair<string, int> _NameType)
+    {
+        string asString = string.Join(Environment.NewLine, _NameType);
+
+        if (!ItemList_Sort.ContainsKey(asString))
+        {
+            return null;
+        }
+        return ItemList_Sort[asString];
+    }
+
+    public List<SelectItem> FindItemList(string _Name, int _Type)
+    {
+        KeyValuePair<string, int> _NameType = new KeyValuePair<string, int>(_Name, _Type);
+
+        string asString = string.Join(Environment.NewLine, _NameType);
+
+        if (!ItemList_Sort.ContainsKey(asString))
+        {
+            return null;
+        }
+        return ItemList_Sort[asString];
+    }
+
 
     /// <summary>
     /// SelectItem의 변수명과 해당 변수의 값을 입력하면 조건에 맞는 아이템 중 무작위로 뽑음
     /// </summary>
     /// <param name="_Name">조건으로 쓸 변수 이름</param>
     /// <param name="_Type">해당 변수의 값</param>
-    /// <returns>해당 조건에 맞는 무작위 아이템</returns>
-    public SelectItem DrawRandomItem(string _Name, int _Type)
+    /// <returns></returns>
+    public GameObject DrawRandomItem(string _Name, int _Type)
     {
-        List<SelectItem> FindList = ItemList.FindAll(x => (int)x.GetType().GetProperty(_Name).GetValue(x) == _Type);
+        KeyValuePair<string, int> _NameType = new KeyValuePair<string, int>(_Name, _Type);
+
+        var asString = string.Join(Environment.NewLine, _NameType);
+
+        List<SelectItem> FindList = FindItemList(_NameType);
+
+        // 리스트가 없다면
+        // 리스트 생성
+        if (FindList == null)
+        {
+            FindList = ItemList.ToList();
+
+            FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(_NameType.Key).GetValue(x) == _NameType.Value);
+
+            ItemList_Sort.Add(asString, FindList);
+        }
 
         if (FindList.Count == 0)
-        {   Debug.Log("해당 조건에 맞는 아이템 없음");
+        {
             return null;
         }
 
         int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
 
-        return FindList[ItemIndex];
+        return FindList[ItemIndex].gameObject;
     }
 
     /// <summary>
@@ -149,19 +198,31 @@ public class GameData : MonoBehaviour
     /// </summary>
     /// <param name="_NameType">조건으로 쓸 변수 이름, 해당 변수의 값</param>
     /// <returns></returns>
-    public SelectItem DrawRandomItem(KeyValuePair<string, int> _NameType)
+    public GameObject DrawRandomItem(KeyValuePair<string, int> _NameType)
     {
-        List<SelectItem> FindList = ItemList.FindAll(x => (int)x.GetType().GetProperty(_NameType.Key).GetValue(x) == _NameType.Value);
+        var asString = string.Join(Environment.NewLine, _NameType);
+
+        List<SelectItem> FindList = FindItemList(_NameType);
+
+        // 리스트가 없다면
+        // 리스트 생성
+        if (FindList == null)
+        {
+            FindList = ItemList.ToList();
+
+            FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(_NameType.Key).GetValue(x) == _NameType.Value);
+
+            ItemList_Sort.Add(asString, FindList);
+        }
 
         if (FindList.Count == 0)
         {
-            Debug.Log("해당 조건에 맞는 아이템 없음");
             return null;
         }
 
         int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
 
-        return FindList[ItemIndex];
+        return FindList[ItemIndex].gameObject;
     }
 
     /// <summary>
@@ -170,24 +231,37 @@ public class GameData : MonoBehaviour
     /// </summary>
     /// <param name="_NameType">조건으로 쓸 변수 이름, 해당 변수의 값</param>
     /// <returns></returns>
-    public SelectItem DrawRandomItem(Dictionary<string, int> _NameType)
+    public GameObject DrawRandomItem(Dictionary<string, int> _NameType)
     {
-        List<SelectItem> FindList = ItemList.ToList();
+        var asString = string.Join(Environment.NewLine, _NameType);
 
-        foreach (KeyValuePair<string, int> Pair in _NameType)
+        List<SelectItem> FindList = FindItemList(_NameType);
+
+        // 리스트가 없다면
+        // 리스트 생성
+        if(FindList == null)
         {
-            FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(Pair.Key).GetValue(x) == Pair.Value);
+            FindList = ItemList.ToList();
+
+            foreach (KeyValuePair<string, int> Pair in _NameType)
+            {
+                FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(Pair.Key).GetValue(x) == Pair.Value);
+            }
+            
+            ItemList_Sort.Add(asString, FindList);
         }
 
         if (FindList.Count == 0)
         {
-            Debug.Log("해당 조건에 맞는 아이템 없음");
-            return null;
+            // return null;
+            // 임시로 쿠키 제공으로
+            Debug.Log("아이템 없네요... 이거나 드셔");
+            FindList = ItemList.FindAll(x => (int)x.GetType().GetProperty("selectItemType").GetValue(x) == (int)SelectItemType.Consumable);
         }
 
         int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
 
-        return FindList[ItemIndex];
+        return FindList[ItemIndex].gameObject;
     }
 
     #endregion Random

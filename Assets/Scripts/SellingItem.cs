@@ -6,8 +6,116 @@ using UnityEngine;
 
 //판매하는 아이템 각각에 들어가는 스크립트
 
-public class SellingItem : MonoBehaviour
+public class SellingItem : MonoBehaviour, Interactable
 {
+    [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
+
+    [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
+
+    public GameObject info;
+    public TMP_Text itemName;
+    public TMP_Text itemPrice;
+
+    public SelectItem thisSelectItem {get; private set;}
+
+    void Start()
+    {
+        SetStore();
+    }
+    
+    private void SetStore()
+    {
+        // ====================================
+        // 유형
+        // new로 생성한거 따로 지워야하나?
+        WeightRandom<SelectItemType> typeRandom = new WeightRandom<SelectItemType>();
+
+        // 설정한 가중치를 가중치무작위에 넣는다.
+        for (int i = 0; i < (int)SelectItemType.END; ++i)
+        {
+            typeRandom.Add((SelectItemType)i, TypeWeight[i]);
+        }
+
+        SelectItemType ItemType = typeRandom.GetRandomItem();
+
+        // ====================================
+        // 등급
+        // new로 생성한거 따로 지워야하나?
+        WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
+
+        // 설정한 가중치를 가중치무작위에 넣는다.
+        for (int i = 0; i < (int)SelectItemRating.END; ++i)
+        {
+            weightRandom.Add((SelectItemRating)i, RatingWeight[i]);
+        }
+
+        SelectItemRating ItemRating = weightRandom.GetRandomItem();
+
+        // 조건을 담은 Dictionary 생성
+        Dictionary<string, int> ItemCondition = new Dictionary<string, int>();
+        ItemCondition.Add("selectItemType", (int)ItemType);
+        ItemCondition.Add("selectItemRating", (int)ItemRating);
+
+        // GameData에서 해당 조건에 맞는 무작위 아이템 반환
+        GameObject thisSlotItem = Instantiate(GameData.instance.DrawRandomItem(ItemCondition), transform.position, Quaternion.identity);
+        thisSlotItem.transform.SetParent(this.gameObject.transform);
+        thisSlotItem.GetComponent<Collider2D>().enabled = false;
+
+        thisSelectItem = thisSlotItem.GetComponent<SelectItem>();
+
+        itemName.text = thisSelectItem.selectItemName;
+        itemPrice.text = thisSelectItem.price.ToString();
+    }
+
+    public string GetInteractText()
+    {
+        return "구매하기";
+    }
+
+    public void Interact()
+    {
+        BuyItem();
+    }
+
+    public void BuyItem()
+    {
+        int cost = thisSelectItem.price;
+
+        if (Player.instance.playerStats.coin >= cost)
+        {
+            //useCoin
+            Player.instance.playerStats.coin -= cost;
+            Player.instance.GainSelectItem(thisSelectItem);
+
+            //set active false
+            gameObject.SetActive(false);
+            thisSelectItem = null;
+
+        }
+        else
+        {
+            Debug.LogWarning("Not enough coins to buy the item!");
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            //show information
+            info.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            info.SetActive(false);
+        }
+
+    }
+
+    /*
     [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
 
     [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
@@ -104,7 +212,7 @@ public class SellingItem : MonoBehaviour
             //useCoin
             Player.instance.playerStats.coin -= cost;
 
-            /*
+            
             //전에 가지고 있던 아이템 드랍
             if (Player.instance.playerItem != null)
             { 
@@ -115,7 +223,7 @@ public class SellingItem : MonoBehaviour
             MapUIManager.instance.updateItemUI(itemList[thisItemIndex]);
             Player.instance.playerItem = Instantiate(itemList[thisItemIndex]);
             Player.instance.playerItem.SetActive(false);
-            */
+            
 
             Player.instance.playerStats.item = thisItemID;
 
@@ -179,5 +287,7 @@ public class SellingItem : MonoBehaviour
         }
 
     }
-    
+
+    */
+
 }

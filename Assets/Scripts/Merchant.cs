@@ -24,9 +24,7 @@ public class Merchant : MonoBehaviour
 
             if (touchObj!=null&&touchObj.tag == "SellingItem")
             {
-                int itemI = touchObj.GetComponent<SellingItem>().thisItemIndex;
-
-                print(DataManager.instance.gameData.selectItemList[itemI].name);
+                print(touchObj.GetComponent<SellingItem>().thisSelectItem);
             }
             yield return null;
         }

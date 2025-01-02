@@ -6,13 +6,23 @@ using TMPro;
 public enum SelectItemType { Equipments, Weapon, Consumable, Skill, END };
 public enum SelectItemRating { Temp, Normal, Rare, Epic, Legend, END}
 
-public class SelectItem : MonoBehaviour
+public class SelectItem : MonoBehaviour, Interactable
 {
     [field: SerializeField] public SelectItemType selectItemType {get; private set;}
     [field: SerializeField] public SelectItemRating selectItemRating { get; private set; }
     [field: SerializeField] public string selectItemName { get; private set; }
     [field: SerializeField] public int price {get; private set;}
     [field: SerializeField] public int selectItemID { get; private set; }
+
+    public string GetInteractText()
+    {
+        return "ащ╠Б";
+    }
+
+    public void Interact()
+    {
+        Player.instance.GainSelectItem(this);
+    }
 
     #region Sort CompareFunc
     static int compareClass (SelectItem a, SelectItem b)

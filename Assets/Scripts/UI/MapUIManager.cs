@@ -312,19 +312,9 @@ public class MapUIManager : MonoBehaviour
         }
 
         nearObjectPanel.SetActive(true);
-        switch(Player.instance.playerStatus.nearObject.tag)
-        {
-            case "Npc":
-                nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
-                nearObjectInteraction.text += " ¥Î»≠";
-                break;
-            case "SelectItem":
-                nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>().selectItemName;
-                nearObjectInteraction.text += " »πµÊ";
-                break;
-            default:
-                break;
-        }
+
+        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
+        nearObjectInteraction.text += "\n" + Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText();   // GetComponent ∫Ø∞Ê«œ±‚
     }
 
     #endregion

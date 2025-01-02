@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class treasureBox : MonoBehaviour
+public class treasureBox : MonoBehaviour, Interactable
 {
 
     [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
@@ -22,7 +22,13 @@ public class treasureBox : MonoBehaviour
 
     private void Start()
     {
+        ItemChoose();
 
+        if (isLock) { lockObj.SetActive(true); }
+    }
+
+    public void ItemChoose()
+    {
         // ====================================
         // 유형
         // new로 생성한거 따로 지워야하나?
@@ -48,33 +54,37 @@ public class treasureBox : MonoBehaviour
         Dictionary<string, int> ItemCondition = new Dictionary<string, int>();
 
         // 상자에 들어있는 아이템 개수를 정함
-        int ItemNum = Random.Range(1,4);
+        int ItemNum = Random.Range(1, 4);
 
         // 아이템 개수만큼 조건에 맞게 무작위 선택
-        for(int i = 0; i <ItemNum; ++i)
+        for (int i = 0; i < ItemNum; ++i)
         {
             // 가중치에 따라 무작위로 뽑는다.
             SelectItemType ItemType = typeRandom.GetRandomItem();
             SelectItemRating ItemRating = weightRandom.GetRandomItem();
 
-            Debug.Log(ItemType + " : " + ItemRating);
+            //Debug.Log(ItemType + " : " + ItemRating);
 
             ItemCondition.Add("selectItemType", (int)ItemType);
             ItemCondition.Add("selectItemRating", (int)ItemRating);
 
             // 게임 데이터 접근하여 게임오브젝트를 가져온다.
-            SelectItem selectItem = GameData.instance.DrawRandomItem(ItemCondition);
+            GameObject selectItem = GameData.instance.DrawRandomItem(ItemCondition);
 
             if (selectItem != null)
-                reward.Add(selectItem);
+                reward.Add(selectItem.GetComponent<SelectItem>());
 
             ItemCondition.Clear();
         }
-
-        if (isLock) { lockObj.SetActive(true); }
+        Debug.Log("뽑기 완료");
     }
 
-    public void Interaction()
+    public string GetInteractText()
+    {
+        return "상자 열기";
+    }
+
+    public void Interact()
     {
         
         if (!isOpen)

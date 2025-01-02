@@ -261,26 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ceef35cb609eb439d223a0fe53d7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
-  defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
-  deadDelay: 0
-  isAttack: 0
-  isAttackReady: 0
-  hitTarget: {fileID: 0}
-  sprite: {fileID: 0}
-  rigid: {fileID: 0}
   isTalking: 0
-  isFollow: 0
-  isChase: 0
-  enemyTarget: {fileID: 0}
-  enemyTargetDis: 99
-  maxEnemyTargetDis: 0
-  companionTarget: {fileID: 0}
-  companionTargetDis: 99
-  maxCompanionTargetDis: 0
   DialogPanel: {fileID: 143811616464636645}
   chapter: 0
   side: 0
@@ -312,7 +293,8 @@ MonoBehaviour:
   <HPMax>k__BackingField: 100
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
-  <revivalStock>k__BackingField: 0
+  <poiseMax>k__BackingField: 20
+  <poise>k__BackingField: 20
   <defaultDefensivePower>k__BackingField: 0
   <defaultSEResist>k__BackingField:
   - 0
@@ -551,7 +533,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5673987185296963471}
