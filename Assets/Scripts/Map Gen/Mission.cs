@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum MissionType 
-{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse,Dream,Maze,LittleMonster}
+{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse, Dream, Maze, LittleMonster}
 
 public class Mission : MonoBehaviour
 {
@@ -15,8 +15,8 @@ public class Mission : MonoBehaviour
     private ObjectSpawn spawn;
     private float time;
     private float playerFirstHP;
-    private bool isFail;                            // ë¯¸ì…˜ ì‹¤íŒ¨
-    [SerializeField] private bool isEnd;            // ë¯¸ì…˜ ì¢…ë£Œ(ì‹¤íŒ¨í•˜ë“  ì•ˆí•˜ë“  ëë‚˜ë©´ ì²´í¬)
+    private bool isFail;                            // ë¯¸ì…˜ ?‹¤?Œ¨
+    [SerializeField] private bool isEnd;            // ë¯¸ì…˜ ì¢…ë£Œ(?‹¤?Œ¨?•˜?“  ?•ˆ?•˜?“  ??‚˜ë©? ì²´í¬)
    
 
     [Header("TimeAttack, Dream, LittleMonster")]
@@ -48,7 +48,7 @@ public class Mission : MonoBehaviour
     }
 
     //starts when the map is generated
-    // ë¯¸ì…˜ ì¢…ë£Œí•˜ë©´ ëª¬ìŠ¤í„°ë‚˜ ë¯¸ë¡œ ìž…êµ¬ í”ì  ë“± ì—†ì• ì•¼ í•  ë“¯
+    // ë¯¸ì…˜ ì¢…ë£Œ?•˜ë©? ëª¬ìŠ¤?„°?‚˜ ë¯¸ë¡œ ?ž…êµ? ?”?  ?“± ?—†?• ?•¼ ?•  ?“¯
     public IEnumerator CheckMissionEnd() 
     {
         time += Time.deltaTime;
@@ -67,21 +67,21 @@ public class Mission : MonoBehaviour
                         e.SetActive(false);
                         clock.SetActive(false);
                     }
-                    missionEnd();
+                    isEnd = true;
 
                 }
                 //kill all of them --> end
                 else if (KillAll()) 
                 {
                     print("no hurt mission success");
-                    missionEnd();
+                    isEnd = true;
                 }
                 break;
             case MissionType.KillAll:
             case MissionType.MiniBoss:
                 if (KillAll()) 
                 {
-                    missionEnd();
+                    isEnd = true;
                 }
                 break;
             case MissionType.KillAll2:
@@ -93,14 +93,14 @@ public class Mission : MonoBehaviour
                 }
                 if (KillAll())
                 {
-                    missionEnd();
+                    isEnd = true;
                 }
                 break;
             case MissionType.Curse:
 
                 if (KillAll()) 
                 {
-                    missionEnd();
+                    isEnd = true;
                 }
                 else if(curse.transform.localScale.x>=0)
                 { 
@@ -111,37 +111,48 @@ public class Mission : MonoBehaviour
             case MissionType.TimeAttack:
                 if (KillAll()) 
                 {
-                    missionEnd();
+                    isEnd = true;
                 }
                 else if (time > timeCondition) 
                 { 
                     print("fail");
                     isFail = true;
-                    missionEnd();
+                    isEnd = true;
                 }
                 break;
             case MissionType.Dream:
                 //ends over time
                 if (time > timeCondition) 
                 {
-                    missionEnd();
+                    isEnd = true;
                 }
                 break;
             case MissionType.LittleMonster:
                 if (time > timeCondition)
                 {
-                    missionEnd();
+                    isEnd = true;
                 }
                 break;
             case MissionType.Maze:
-                if (isEscapeMaze) { missionEnd(); }
+                if (isEscapeMaze) { isEnd = true; }
                 break;
             default:
                 break;
         }
 
         yield return null;
-        StartCoroutine(CheckMissionEnd());
+
+        if (isEnd)
+        {
+            if (!isFail)
+            {
+                missionReward.SetActive(true);
+            }
+
+            roomScript.UnLockDoor();
+        }
+        else
+            StartCoroutine(CheckMissionEnd());
     }
     public void startMission() 
     {
@@ -168,17 +179,5 @@ public class Mission : MonoBehaviour
         foreach (GameObject e in spawn.enemys)
         { if (e.GetComponent<EnemyStats>().HP > 0) { return false; } }
         return true;
-    }
-    private void missionEnd() 
-    {
-        if (!isFail)
-        {
-            missionReward.SetActive(true);
-        }
-
-        isEnd = true;
-        roomScript.UnLockDoor();
-        StopCoroutine(CheckMissionEnd());
-
     }
 }

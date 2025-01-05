@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class SafeArea : MonoBehaviour
 {
-    public bool isPlayerSafe=false;
+    public List<ObjectBasic> inObject = new List<ObjectBasic>();      // Safe 존에 있는 오브젝트들
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Player" || collision.tag == "Enemy")
         {
-            //print("not safe");
-            isPlayerSafe = false;
+            ObjectBasic objectBasic = collision.GetComponentInParent<ObjectBasic>();
+
+            // 영역 안에 들어온 오브젝트 추가
+            if (!inObject.Contains(objectBasic))
+            {
+                inObject.Add(objectBasic);
+            }
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Player" || collision.tag == "Enemy")
         {
-            //print("safe");
-            isPlayerSafe = true;
+            ObjectBasic objectBasic = collision.GetComponentInParent<ObjectBasic>();
+
+            inObject.Remove(objectBasic);
         }
     }
 }

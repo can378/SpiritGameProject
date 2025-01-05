@@ -12,6 +12,7 @@ public class DamageArea : HitDetection
     {
         circleCollider=GetComponent<CircleCollider2D>();
     }
+    /*
     protected override void Update()
     {
         if (safeArea.isPlayerSafe)
@@ -25,5 +26,6 @@ public class DamageArea : HitDetection
         print("not safe");
         base.OnTriggerEnter2D(collision);
     }
+    */
     
 }

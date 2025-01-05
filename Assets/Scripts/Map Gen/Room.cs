@@ -130,7 +130,7 @@ public class Room : MonoBehaviour
         else if (mapType == MapType.Mission)
         {
             // 임시로 안닫히게 처리
-            //doorType = DoorType.Trap;
+            doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
             map = Instantiate(mapTemplates.MissionMap[ran], transform.position, transform.rotation);
             
@@ -141,7 +141,7 @@ public class Room : MonoBehaviour
         else if (mapType == MapType.Boss)
         {
             // 임시로 안닫히게 처리
-            //doorType = DoorType.Trap;
+            doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.BossMap.Length);
             map = Instantiate(mapTemplates.BossMap[ran], transform.position, transform.rotation);
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);

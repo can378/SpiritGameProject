@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7604258001281279069}
   - component: {fileID: 7456811633891165276}
   - component: {fileID: 2952897418611189620}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: mazeEntrance
   m_TagString: MazeEntrance
   m_Icon: {fileID: 0}
@@ -99,10 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazePortal: 0
-  mazeEnterance: {fileID: 7241026983068072144}
-  mazeExit: {fileID: 0}
   maze: {fileID: 6520547578385569096, guid: 0c60c81b83b21dc488e16e7c35a22f59, type: 3}
-  mazePos: {x: -420, y: 0}
 --- !u!58 &2952897418611189620
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -135,6 +132,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.0057670474}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.50576705

@@ -177,13 +177,13 @@ public class RoomManager : MonoBehaviour
 
             if (crossedRoomGameObjectRoom.top && crossedRoomGameObjectRoom.bottom)
             {
-                instObj = Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 3)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
+                instObj = Instantiate(roomTemplates.verticalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
                 instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
                 instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
             }
             else if (crossedRoomGameObjectRoom.left && crossedRoomGameObjectRoom.right)
             {
-                instObj = Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 3)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
+                instObj = Instantiate(roomTemplates.horizontalCrossedRooms[Random.Range(0, 2)], crossedRoomGameObject.transform.position, crossedRoomGameObject.transform.rotation);
                 instObj.transform.localScale = new Vector3(roomSize, roomSize, 1);
                 instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
             }
