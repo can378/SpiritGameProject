@@ -132,7 +132,7 @@ public class Room : MonoBehaviour
             // 임시로 안닫히게 처리
             doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
-            map = Instantiate(mapTemplates.MissionMap[ran], transform.position, transform.rotation);
+            map = Instantiate(mapTemplates.MissionMap[4], transform.position, transform.rotation);
             
             map.GetComponent<Mission>().roomScript = this;
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);

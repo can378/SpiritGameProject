@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SafeArea : MonoBehaviour
 {
+    [Header("안전영역에 있는 오브젝트")]
     public List<ObjectBasic> inObject = new List<ObjectBasic>();      // Safe 존에 있는 오브젝트들
 
     private void OnTriggerEnter2D(Collider2D collision)
