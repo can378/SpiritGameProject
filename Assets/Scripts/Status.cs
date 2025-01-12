@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    public Vector2 moveVec;                     // ì´ë™ ë°©í–¥ ë²¡í„°
-    public Coroutine flinchCoroutine;           // ê²½ì§ ì½”ë£¨í‹´
-    public Coroutine beAttackedCoroutine;       // í”¼ê²© ìƒ‰ìƒ ë³€ê²½ ì½”ë£¨í‹´
-    public GameObject hitTarget;                // ê³µê²© ì„±ê³µ
+    public Vector2 moveVec;                     // ?´?™ ë°©í–¥ ë²¡í„°
+    public Coroutine flinchCoroutine;           // ê²½ì§ ì½”ë£¨?‹´
+    public Coroutine beAttackedCoroutine;       // ?”¼ê²? ?ƒ‰?ƒ ë³?ê²? ì½”ë£¨?‹´
+    public GameObject hitTarget;                // ê³µê²© ?„±ê³?
 
-    public bool isBeAttaked;                 // í”¼ê²© : í”¼ê²©ë¨
-    public bool isFlinch;                   // ê²½ì§ : ìŠ¤ìŠ¤ë¡œ ì›€ì§ì¼ ìˆ˜ ì—†ìœ¼ë©° ê³µê²©í•  ìˆ˜ ì—†ìŒ
-    public bool isSuperArmor;               // ê°•ì¸(ìŠˆí¼ì•„ë¨¸) : ê²½ì§ ë˜ì§€ ì•ŠëŠ”ë‹¤.
-    public bool isInvincible;               // ë¬´ì  : í”¼í•´ì™€ ì ì˜ ê³µê²© ë¬´ì‹œ
-    public bool isAttack;                   // ê³µê²© : ìŠ¤ìŠ¤ë¡œ ì›€ì§ì¼ ìˆ˜ ì—†ìœ¼ë©° ì¶”ê°€ë¡œ ê³µê²© ë¶ˆê°€
-    public bool isAttackReady = true;       // ê³µê²© ì¤€ë¹„ : falseì¼ ì‹œ ê³µê²©ì€ í•  ìˆ˜ ì—†ìœ¼ë‚˜ ìŠ¤ìŠ¤ë¡œ ì´ë™ì€ ê°€ëŠ¥
+    public bool isBeAttaked;                 // ?”¼ê²? : ?”¼ê²©ë¨
+    public bool isFlinch;                   // ê²½ì§ : ?Š¤?Š¤ë¡? ???ì§ì¼ ?ˆ˜ ?—†?œ¼ë©? ê³µê²©?•  ?ˆ˜ ?—†?Œ
+    public bool isSuperArmor;               // ê°•ì¸(?Šˆ?¼?•„ë¨?) : ê²½ì§ ?˜ì§? ?•Š?Š”?‹¤.
+    public bool isInvincible;               // ë¬´ì  : ?”¼?•´??? ? ?˜ ê³µê²© ë¬´ì‹œ
+    public bool isAttack;                   // ê³µê²© : ?Š¤?Š¤ë¡? ???ì§ì¼ ?ˆ˜ ?—†?œ¼ë©? ì¶”ê??ë¡? ê³µê²© ë¶ˆê??
+    public bool isAttackReady = true;       // ê³µê²© ì¤?ë¹? : false?¼ ?‹œ ê³µê²©??? ?•  ?ˆ˜ ?—†?œ¼?‚˜ ?Š¤?Š¤ë¡? ?´?™??? ê°??Š¥
 
-
+    public Transform fearTarget;            // °øÆ÷ ´ë»ó
+    public Coroutine runCoroutine;          // µµ¸Á°¡±â ÄÚ·çÆ¾
 
 
 

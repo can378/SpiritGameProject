@@ -43,7 +43,7 @@ public class Pox : EnemyBasic
         enemyAnim.animator.SetBool("isHit", false);
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
-        StartCoroutine(RunAway(3f));
+        RunAway(enemyStatus.enemyTarget.transform, 3.0f);
     }
 
     IEnumerator Throw()

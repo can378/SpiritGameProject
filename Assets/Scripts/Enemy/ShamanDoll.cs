@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class ShamanDoll : EnemyBasic
 {
-    [SerializeField] int defaulCurseCoolTime;
+    //[SerializeField] int defaulCurseCoolTime;
     //private bool moveReady;
 
-    Vector2 playerPos1;
-    Vector2 playerPos2;
-    Vector2 playerPath;
-    Vector2 perpendicularDir;
+    //Vector2 playerPos1;
+    //Vector2 playerPos2;
+    //Vector2 playerPath;
+    //Vector2 perpendicularDir;
 
     protected override void Start()
     {
@@ -60,9 +60,16 @@ public class ShamanDoll : EnemyBasic
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 
-        StartCoroutine(RunAway(5f));
+        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
+    public override void AttackCancle()
+    {
+        base.AttackCancle();
+        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+    }
+
+    /*
     IEnumerator runaway() 
     {
         //moveReady = false;
@@ -81,6 +88,7 @@ public class ShamanDoll : EnemyBasic
 
         //moveReady = true;
     }
+    */
 
     /*
 

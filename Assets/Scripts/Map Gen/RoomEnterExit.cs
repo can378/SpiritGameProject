@@ -71,6 +71,7 @@ public class RoomEnterExit : MonoBehaviour
         {
             room.LockDoor();
         }
+        
         if (room.map!=null) 
         { 
             room.map.SetActive(true);

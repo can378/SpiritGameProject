@@ -99,7 +99,7 @@ public class BlackDog : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (blackDogStatus.targetDis <= 2f)
+        if (blackDogStatus.targetDis <= enemyStats.maxAttackRange)
         {
             blackDogStatus.attackCoroutine = StartCoroutine(HitAndRun());
         }
@@ -116,7 +116,6 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttackReady = false;
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
-
         hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
         
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
@@ -127,8 +126,8 @@ public class BlackDog : EnemyBasic
 
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
-        
-        StartCoroutine(RunAway(5f));
+
+        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
 
@@ -159,6 +158,12 @@ public class BlackDog : EnemyBasic
         yield return new WaitForSeconds(0.01f);
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
+    }
+
+    public override void AttackCancle() 
+    {
+        base.AttackCancle();
+        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     /*

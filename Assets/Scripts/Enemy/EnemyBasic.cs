@@ -179,18 +179,31 @@ public class EnemyBasic : ObjectBasic
     // ?¼?‹œ? ?œ¼ë¡? ?„ë§ì¹˜ê¸?
     protected void Run()
     {
-        if (enemyStatus.enemyTarget)
+        if (enemyStatus.fearTarget)
         {
-            status.moveVec = -(enemyStatus.enemyTarget.position - transform.position).normalized;
+            status.moveVec = -(enemyStatus.fearTarget.position - transform.position).normalized;
         }
     }
 
+    public void RunAway(Transform _FearTarget, float _Time)
+    {
+        enemyStatus.fearTarget = _FearTarget;
+        
+        if(enemyStatus.runCoroutine != null)
+        {
+            StopCoroutine(enemyStatus.runCoroutine);
+        }
+
+        enemyStatus.runCoroutine = StartCoroutine(RunCoroutine(_Time));
+    }
+
     // ?¼? • ?‹œê°? ?™?•ˆ ?„ë§ì¹˜ê¸?
-    protected IEnumerator RunAway(float time)
+    IEnumerator RunCoroutine(float time)
     {
         enemyStatus.isRun = true;
         yield return new WaitForSeconds(time);
         enemyStatus.isRun = false;
+        enemyStatus.fearTarget = null;
     }
 
     /*

@@ -29,7 +29,6 @@ public class StunDeBuff : StatusEffect
             // 저항에 따른 지속시간 적용
             duration = (1 - objectBasic.stats.SEResist(buffId)) * defaultDuration;
 
-            if (objectBasic.status.flinchCoroutine != null) objectBasic.StopCoroutine(objectBasic.status.flinchCoroutine);
             objectBasic.SetFlinch(duration);
 
             StartCoroutine(Stun());
@@ -57,8 +56,7 @@ public class StunDeBuff : StatusEffect
         if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
             ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
-
-            if (objectBasic.status.flinchCoroutine != null) StopCoroutine(objectBasic.status.flinchCoroutine);
+            objectBasic.SetFlinch(0.0f);
         }
     }
 }

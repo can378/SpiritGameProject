@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 8889902559624257407}
   - component: {fileID: 8492139531867884543}
   - component: {fileID: 3849908418755950650}
+  - component: {fileID: 3109763882750471555}
   m_Layer: 12
   m_Name: BlizzardArea
   m_TagString: EnemyAttack
@@ -304,6 +305,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!210 &3109763882750471555
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179628487731707738}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_SortAtRoot: 1
 --- !u!1 &3642521718709155923
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +409,7 @@ MonoBehaviour:
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
+  fearTarget: {fileID: 0}
   isTouchPlayer: 0
   isBoss: 0
   isRun: 0

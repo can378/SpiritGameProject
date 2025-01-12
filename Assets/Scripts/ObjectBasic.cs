@@ -50,7 +50,6 @@ public class ObjectBasic : MonoBehaviour
         if (DamagedPoise(hitDetection.damage))
         {
             Debug.Log(gameObject.name + ":Flinch");
-            if (status.flinchCoroutine != null) StopCoroutine(status.flinchCoroutine);
             SetFlinch(0.5f);
 
             KnockBack(hitDetection.gameObject, hitDetection.knockBack);
@@ -163,15 +162,22 @@ public class ObjectBasic : MonoBehaviour
 
     public void SetFlinch(float time = 0)
     {
-        status.flinchCoroutine =  StartCoroutine(Flinch(time));
+        AttackCancle();
+    
+        if (animBasic != null)
+        {
+            animBasic.animator.Rebind();
+            animBasic.animator.SetTrigger("isHurt");
+        }
+
+        if (status.flinchCoroutine != null)
+            this.StopCoroutine(status.flinchCoroutine);
+        status.flinchCoroutine = this.StartCoroutine(Flinch(time));
     }
 
-    protected IEnumerator Flinch(float time = 0)
+    IEnumerator Flinch(float time = 0)
     {
-        if(animBasic !=null)
-            animBasic.animator.SetTrigger("isHurt");
         status.isFlinch = true;
-        AttackCancle();
 
         yield return new WaitForSeconds(time);
 
@@ -183,12 +189,6 @@ public class ObjectBasic : MonoBehaviour
         status.isAttack = false;
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
-
-        foreach(SpriteRenderer sprite in sprites)
-        {
-            sprite.color = new Color(1f, 1f, 1f, 1f);
-        }
-        
 
         foreach (GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
