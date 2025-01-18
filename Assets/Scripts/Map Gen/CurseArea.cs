@@ -81,8 +81,4 @@ public class CurseArea : MonoBehaviour
             }
         }
     }
-
-
-
-    //Áö±Ý ¾È¾¸
 }
