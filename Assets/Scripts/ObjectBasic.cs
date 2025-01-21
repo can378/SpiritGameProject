@@ -52,7 +52,11 @@ public class ObjectBasic : MonoBehaviour
             Debug.Log(gameObject.name + ":Flinch");
             SetFlinch(0.5f);
 
-            KnockBack(hitDetection.gameObject, hitDetection.knockBack);
+            // 공격을 한 주인이 있다면 그 대상을 중심으로
+            if(hitDetection.user != null)
+                KnockBack(hitDetection.user, hitDetection.knockBack);
+            else
+                KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
 
         if (hitDetection.statusEffect != null)
@@ -178,9 +182,11 @@ public class ObjectBasic : MonoBehaviour
     IEnumerator Flinch(float time = 0)
     {
         status.isFlinch = true;
+        //rigid.constraints ^=  RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX;       // 경직 시 AddForce 가능
 
         yield return new WaitForSeconds(time);
 
+        //rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         status.isFlinch = false;
     }
 

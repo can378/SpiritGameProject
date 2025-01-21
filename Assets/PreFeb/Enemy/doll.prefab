@@ -190,7 +190,6 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
-  defaulCurseCoolTime: 5
 --- !u!114 &4529116099240296461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +247,7 @@ MonoBehaviour:
   isInvincible: 0
   isAttack: 0
   isAttackReady: 1
+  fearTarget: {fileID: 0}
   isTouchPlayer: 0
   isBoss: 0
   isRun: 0
@@ -268,8 +268,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 1
+  m_LinearDrag: 10
+  m_AngularDrag: 10
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
