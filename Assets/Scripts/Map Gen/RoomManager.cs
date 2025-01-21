@@ -205,11 +205,13 @@ public class RoomManager : MonoBehaviour
         bool isBoss = false;
         bool isEvent = false;
 
+        Room room = rooms[0].GetComponent<Room>();
+        room.SetMapManager(MapType.Default);
 
         // 모든 방 생성을 완료하면 각 방들의 용도를 설정한다.
-        for( int i = 1 ; i< rooms.Count ; i++)
+        for ( int i = 1 ; i< rooms.Count ; i++)
         {
-            Room room = rooms[i].GetComponent<Room>();
+            room = rooms[i].GetComponent<Room>();
             
             int roomType = room.GetRoomWayType();
 

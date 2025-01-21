@@ -50,11 +50,6 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         playerTransform = Player.GetComponent<Transform>();
-
-
-        height = Camera.main.orthographicSize;
-        width = height * Screen.width / Screen.height;
-
     }
 
     void FixedUpdate()
@@ -72,6 +67,9 @@ public class CameraManager : MonoBehaviour
 
     void CameraChasing()
     {
+        height = Camera.main.orthographicSize;
+        width = height * Screen.width / Screen.height;
+
         transform.position = Vector3.Lerp(transform.position,
                                           playerTransform.position + cameraPosition,
                                           Time.deltaTime * cameraMoveSpeed);

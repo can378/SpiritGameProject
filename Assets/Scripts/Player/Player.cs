@@ -637,7 +637,7 @@ public class Player : ObjectBasic
         if (skDown && !playerStatus.isFlinch && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
-            if (playerStats.weapon == 0 && 
+            if (playerStats.weapon == 0 ||  
                 skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit.Length != 0 && 
             Array.IndexOf(skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit, (int)weaponList[playerStats.weapon].weaponType) == -1)
             {
