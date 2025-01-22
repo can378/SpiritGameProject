@@ -111,7 +111,6 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Move()
     {
-        // ê²½ì§ê³? ê³µê²© ì¤‘ì—?Š” ì§ì ‘ ?´?™ ë¶ˆê??
         if (enemyStatus.isFlinch)
         {
             return;

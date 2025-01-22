@@ -12,9 +12,9 @@ public abstract class StatusEffect : MonoBehaviour
     [field: SerializeField] public GameObject target { get; private set; }
     [field: SerializeField] public int buffId { get; private set; }
     [field: SerializeField] public float defaultDuration { get; private set; }          // 기본 시간
-    [field: SerializeField] public float duration {get; set; }               // 시간
-    [field: SerializeField] public int maxOverlap { get; protected set; }             // 최대 중첩
-    [field: SerializeField] public int overlap { get; protected set; }                // 현재 중첩
+    [field: SerializeField] public float duration {get; set; }                          // 시간
+    [field: SerializeField] public int maxOverlap { get; protected set; }               // 최대 중첩
+    [field: SerializeField] public int overlap { get; protected set; }                  // 현재 중첩
 
     void Update() {
         icon.fillAmount = duration / defaultDuration;
