@@ -9,12 +9,12 @@ public class PowerDeBuff : StatusEffect
     [field: SerializeField] public float decreasedAttackPower { get; set; }
     [field: SerializeField] public float decreasedSkillPower { get; set; }
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
+        Overlap();
     }
 
-    public override void ResetEffect()      //지속시간 갱신
+    public override void Overlap()      //지속시간 갱신
     {   
         // 플레이어일시
         if (target.tag == "Player")
@@ -26,10 +26,10 @@ public class PowerDeBuff : StatusEffect
             playerStats.decreasedSkillPower -= overlap * decreasedSkillPower;
 
             // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+            overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - playerStats.SEResist(buffId)) * defaultDuration;
+            duration = (1 - playerStats.SEResist((int)buffType)) * defaultDuration;
 
             playerStats.decreasedAttackPower += overlap * decreasedAttackPower;
             playerStats.decreasedSkillPower += overlap * decreasedSkillPower;
@@ -43,16 +43,21 @@ public class PowerDeBuff : StatusEffect
             stats.decreasedAttackPower -= overlap * decreasedAttackPower;
 
             // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+            overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+            duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
 
             stats.decreasedAttackPower += overlap * decreasedAttackPower;
         }
     }
 
-    public override void RemoveEffect()
+    public override void Progress()
+    {
+        
+    }
+
+    public override void Remove()
     {
         if (target.tag == "Player")
         {

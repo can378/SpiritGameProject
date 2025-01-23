@@ -9,12 +9,12 @@ public class SpeedDeBuff : StatusEffect
     [field: SerializeField] public float decreasedMoveSpeed { get; set; }
     [field: SerializeField] public float decreasedAttackSpeed { get; set; }
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
+        Overlap();
     }
 
-    public override void ResetEffect()      //지속시간 갱신
+    public override void Overlap()      //지속시간 갱신
     {
         // 플레이어일 시
         if (target.tag == "Player")
@@ -26,10 +26,10 @@ public class SpeedDeBuff : StatusEffect
             playerStats.decreasedAttackSpeed -= overlap * decreasedAttackSpeed;
 
             // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+            overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - playerStats.SEResist(buffId)) * defaultDuration;
+            duration = (1 - playerStats.SEResist((int)buffType)) * defaultDuration;
 
             playerStats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed += overlap * decreasedAttackSpeed;
@@ -44,17 +44,22 @@ public class SpeedDeBuff : StatusEffect
             stats.decreasedMoveSpeed -= overlap * decreasedMoveSpeed;
 
             // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+            overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+            duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
 
             stats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
 
         }
     }
 
-    public override void RemoveEffect()
+    public override void Progress()
+    {
+        
+    }
+
+    public override void Remove()
     {
         if (target.tag == "Player")
         {

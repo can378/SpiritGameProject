@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class CriticalChanceBuff : StatusEffect
 {
     // 배율
     // 치명타 확률
     [field: SerializeField] public float addCC { get; set; }
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
+        Overlap();
     }
 
-    public override void ResetEffect()      //지속시간 갱신
+    public override void Overlap()      //지속시간 갱신
     {   
         // 플레이어일시
         if (target.tag == "Player")
@@ -47,7 +48,7 @@ public class CriticalChanceBuff : StatusEffect
         }
     }
 
-    public override void RemoveEffect()
+    public override void Remove()
     {
         if (target.tag == "Player")
         {
@@ -65,3 +66,4 @@ public class CriticalChanceBuff : StatusEffect
 
     }
 }
+*/

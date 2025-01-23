@@ -48,7 +48,7 @@ public class BlackDog : EnemyBasic
             return;
         }
 
-        if(!blackDogStatus.isDodge && !blackDogStatus.isAttack && !blackDogStatus.isFlinch)
+        if(!blackDogStatus.isDodge && !blackDogStatus.isAttack && (0 >= blackDogStatus.isFlinch))
         {
             StartCoroutine(DodgeCoroutine());
         }

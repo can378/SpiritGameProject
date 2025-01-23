@@ -36,10 +36,10 @@ public class Stats : MonoBehaviour
     // UI : 상태이상 저항 0%
     // 상태이상 효과 = 지속시간 또는 피해량 * 상태이상 저항
     // 최소 -75%, 최대 75%
-    [field: SerializeField] public float[] defaultSEResist { get; set; } = new float[11];
-    public float[] addSEResist { get; set; } = new float[11];
-    public float[] increasedSEResist { get; set; } = new float[11];
-    public float[] decreasedSEResist { get; set; } = new float[11];
+    [field: SerializeField] public float[] defaultSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
+    public float[] addSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
+    public float[] increasedSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
+    public float[] decreasedSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
     public float SEResist(int index)
     {
         return Mathf.Clamp((defaultSEResist[index] + addSEResist[index]) * (1f + increasedSEResist[index]) * (1f - decreasedSEResist[index]), -1f, 1f);

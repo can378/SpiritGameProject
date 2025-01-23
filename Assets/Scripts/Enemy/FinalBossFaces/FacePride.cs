@@ -54,7 +54,7 @@ public class FacePride : BossFace
             }
             else
             {
-                if (enemyStatus.isFlinch == false && enemyStatus.isRun == false)
+                if ((0 >= enemyStatus.isFlinch ) && enemyStatus.isRun == false)
                 {
                     //print("pride-chase");
                     Chase();

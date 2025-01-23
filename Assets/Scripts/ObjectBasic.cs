@@ -155,7 +155,16 @@ public class ObjectBasic : MonoBehaviour
 
     protected void HealPoise()
     {
+        // 경직 중이라면
+        if( 0 < status.isFlinch)
+        {
+            status.isFlinch -= Time.deltaTime;
+            stats.poise = stats.poiseMax;
+            return;
+        }
+
         stats.poise = Mathf.Min(stats.poise + Time.deltaTime * 1f, stats.poiseMax);
+
     }
 
     public void KnockBack(GameObject agent, float knockBack)
@@ -174,21 +183,9 @@ public class ObjectBasic : MonoBehaviour
             animBasic.animator.SetTrigger("isHurt");
         }
 
-        if (status.flinchCoroutine != null)
-            this.StopCoroutine(status.flinchCoroutine);
-        status.flinchCoroutine = this.StartCoroutine(Flinch(time));
+        status.isFlinch = Mathf.Max(status.isFlinch, time);
     }
 
-    IEnumerator Flinch(float time = 0)
-    {
-        status.isFlinch = true;
-        //rigid.constraints ^=  RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX;       // 경직 시 AddForce 가능
-
-        yield return new WaitForSeconds(time);
-
-        //rigid.constraints = RigidbodyConstraints2D.FreezeAll;
-        status.isFlinch = false;
-    }
 
     public virtual void AttackCancle()
     {
@@ -232,35 +229,42 @@ public class ObjectBasic : MonoBehaviour
         if (status.isInvincible)
             return;
 
-        if (buffIndex <= 10 && 0 < stats.SEResist(buffIndex))
+        StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffId").GetValue(x) == buffIndex);
+
+        if (statusEffect)
         {
-           
-            if (buffIndex == 10)
-            {
-                Damaged(stats.HPMax * 0.1f);
-            }
+            statusEffect.Overlap();
             return;
         }
 
-        foreach (StatusEffect buff in stats.activeEffects)
-        {
-            if (buff.buffId == buffIndex)
-            {
-                buff.ResetEffect();
-                return;
-            }
-        }
 
         GameObject Buff = Instantiate(GameData.instance.statusEffectList[buffIndex], buffTF);
-        StatusEffect statusEffect = Buff.GetComponent<StatusEffect>();
+        statusEffect = Buff.GetComponent<StatusEffect>();
         statusEffect.SetTarget(gameObject);
 
-        statusEffect.ApplyEffect();
+        statusEffect.Apply();
         stats.activeEffects.Add(statusEffect);
-
-        StartCoroutine(RemoveEffectAfterDuration(statusEffect));
     }
 
+    protected void SEProgress()
+    {
+        for (int i = 0; i < stats.activeEffects.Count();)
+        {
+            // 지속 시간 종료 시
+            if(0 >= stats.activeEffects[i].duration)
+            {
+                stats.activeEffects[i].Remove();                // 버프 해제
+                Destroy(stats.activeEffects[i].gameObject);     // 버프 아이콘 삭제
+                stats.activeEffects.RemoveAt(i);                // 리스트에서 제거
+                continue;
+            }
+            stats.activeEffects[i].duration -= Time.deltaTime;  // 지속시간 감소
+            stats.activeEffects[i].Progress();                  // 효과
+            ++i;
+        }
+    }
+
+    /*
     IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
     {
         while (true)
@@ -277,12 +281,12 @@ public class ObjectBasic : MonoBehaviour
 
         Destroy(effect.gameObject);
     }
-
+    */
     public void RemoveAllEffects()
     {
         foreach (StatusEffect effect in stats.activeEffects)
         {
-            effect.RemoveEffect();
+            effect.Remove();
             Destroy(effect.gameObject);
         }
         stats.activeEffects.Clear();
@@ -313,7 +317,7 @@ public class ObjectBasic : MonoBehaviour
         status.isAttack = false;
         status.isAttackReady = true;
         status.isSuperArmor = false;
-        status.isFlinch = false;
+        status.isFlinch = 0.0f;
         status.isInvincible = false;
         status.moveVec = Vector2.zero;
 

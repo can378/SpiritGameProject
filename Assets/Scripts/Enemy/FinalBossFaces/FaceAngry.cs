@@ -64,7 +64,7 @@ public class FaceAngry : BossFace
         {
             
             // 경직 중에는 직접 이동 불가
-            if (enemyStatus.isFlinch)
+            if (0 < enemyStatus.isFlinch)
             {
                 return;
             }

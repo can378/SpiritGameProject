@@ -18,6 +18,7 @@ public class QuickReload : Equipment
             return;
         }
 
+    /*
         if(!isQuick && user.playerStatus.isReload)
         {
             print("buff");
@@ -26,12 +27,13 @@ public class QuickReload : Equipment
             AttackSpeedBuff ASBSE = attackSpeedBuff.GetComponent<AttackSpeedBuff>();
             ASBSE.SetDefaultDuration(2f);
             ASBSE.increasedAttackSpeed = 0.5f;
-            //user.ApplyBuff(attackSpeedBuff);
+            user.ApplyBuff(attackSpeedBuff);
         }
         else if(isQuick && !user.playerStatus.isReload)
         {
             isQuick = false;
         }
+        */
     }
 
     public override void Equip(Player target)

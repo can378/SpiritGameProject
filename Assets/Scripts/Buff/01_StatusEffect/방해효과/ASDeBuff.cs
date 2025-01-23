@@ -7,27 +7,25 @@ public class ASDeBuff : StatusEffect
 {
     // 공격 및 스킬 불가
     // 공격 및 스킬 사용 불가
-    Coroutine attackDelayTimeCoroutine;
     float curSkillCoolTIme;
     float curAttackDelay;
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
-        attackDelayTimeCoroutine = StartCoroutine(AttackDelayOverTime());
+        Overlap();
     }
 
-    public override void ResetEffect()
+    public override void Overlap()
     {
         if (target.tag == "Player")
         {
             Stats stats = target.GetComponent<Stats>();
 
             // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+            overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+            duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
 
         }
         else if (target.tag == "Enemy")
@@ -74,7 +72,28 @@ public class ASDeBuff : StatusEffect
         }
     }
 
-    public override void RemoveEffect()
+    public override void Progress()
+    {
+        if (target.tag == "Player")
+        {
+            Player player = target.GetComponent<Player>();
+
+            if (player.playerStats.weapon != 0)
+                player.playerStatus.attackDelay = 99f;
+
+            if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
+                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime = 99f;
+        }
+        else if (target.tag == "Enemy")
+        {
+            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
+
+            enemy.enemyStatus.isAttackReady = false;
+            enemy.enemyStatus.isRun = true;
+        }
+    }
+
+    public override void Remove()
     {
         if (target.tag == "Player")
         {
@@ -89,7 +108,6 @@ public class ASDeBuff : StatusEffect
             {
                 player.playerStatus.attackDelay = curAttackDelay;
             }
-            StopCoroutine(attackDelayTimeCoroutine);
         }
         else if (target.tag == "Enemy")
         {
@@ -98,7 +116,6 @@ public class ASDeBuff : StatusEffect
             enemy.enemyStatus.isAttackReady = true;
             enemy.enemyStatus.isRun = false;
             
-            StopCoroutine(attackDelayTimeCoroutine);
 
         }
     }

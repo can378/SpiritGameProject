@@ -7,55 +7,41 @@ public class StunDeBuff : StatusEffect
 {
     // 공격 및 스킬, 이동 불가
     // 피격 시 해제
+    ObjectBasic objectBasic;
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
+        Overlap();
     }
 
-    public override void ResetEffect()
+    public override void Overlap()
     {
         if (target.tag == "Player" || target.tag == "Enemy")
         {
-            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
-
-            // 효과 적용
-            objectBasic.status.isFlinch = true;
-            objectBasic.AttackCancle();
+            objectBasic = target.GetComponent<ObjectBasic>();
 
             // 중첩 
-            overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+            overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - objectBasic.stats.SEResist(buffId)) * defaultDuration;
+            duration = (1 - objectBasic.stats.SEResist((int)buffType)) * defaultDuration;
 
+            // 효과 적용
+            objectBasic.AttackCancle();
             objectBasic.SetFlinch(duration);
-
-            StartCoroutine(Stun());
         }
     }
 
-    IEnumerator Stun()
+    public override void Progress()
     {
-        if(target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
-        {
-            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
-
-            while (objectBasic.status.isFlinch)
-            {
-                objectBasic.stats.poise = 0;
-                yield return null;
-            }
-
-            duration = 0;
-        }
+        objectBasic.SetFlinch(duration);
     }
 
-    public override void RemoveEffect()
+    public override void Remove()
     {
         if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
-            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
+            objectBasic = target.GetComponent<ObjectBasic>();
             objectBasic.SetFlinch(0.0f);
         }
     }

@@ -7,30 +7,40 @@ public class DotDamageProportionBuff : StatusEffect
     // 최대 체력 비례 %수치
     // dotDamage가 양수이면 피해
     // 음수이면 힐
-    [field: SerializeField] public float damagePerSecond { get; set; }
+    [field: SerializeField] public float damagePerTick { get; set; }
+    float tick = 0.1f;
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
         // 주기적으로 피해를 입히는 코루틴 시작
-        ResetEffect();
-        StartCoroutine(InflictDamageOverTime());
+        Overlap();
         //Debug.Log("DoT debuff applied: " + damagePerSecond + " damage per second");
     }
 
-    public override void RemoveEffect()
+    public override void Remove()
     {
         // 디버프 종료 시 피해 코루틴 중단
         //Debug.Log("DoT debuff removed");
     }
 
-    public override void ResetEffect()      //지속시간 갱신
+    public override void Overlap()      //지속시간 갱신
     {
         // 중첩 
-        overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
+        overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+        duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
         //print(duration);
+    }
+
+    public override void Progress()
+    {
+        tick -= Time.deltaTime;
+        if (tick < 0)
+        {
+            DealDamageToTarget(damagePerTick);
+            tick += 0.1f;
+        }
     }
 
     private IEnumerator InflictDamageOverTime()
@@ -38,7 +48,7 @@ public class DotDamageProportionBuff : StatusEffect
         while (duration > 0)
         {
             // 피해를 입히는 부분
-            DealDamageToTarget(damagePerSecond);
+            DealDamageToTarget(damagePerTick);
 
             // 주기적으로 피해를 입히는 간격(예: 1초)을 기다립니다.
             yield return new WaitForSeconds(1f);

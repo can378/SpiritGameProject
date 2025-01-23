@@ -19,7 +19,7 @@ public class HideEquipment : Equipment
             return;
         }
 
-        if (user.playerStatus.isAttack || user.playerStatus.isFlinch)
+        if (user.playerStatus.isAttack || (0 < user.playerStatus.isFlinch))
         {
             HideOut();
             hideCoolTime = 10f;

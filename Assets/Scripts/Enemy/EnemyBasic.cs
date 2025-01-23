@@ -48,6 +48,7 @@ public class EnemyBasic : ObjectBasic
         {
             return;
         }
+        SEProgress();
         HealPoise();
         Attack();
         Move();
@@ -66,7 +67,7 @@ public class EnemyBasic : ObjectBasic
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (this.gameObject.activeSelf && !enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        if (this.gameObject.activeSelf && !enemyStatus.isRun && (0 >= enemyStatus.isFlinch) && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
             enemyStatus.moveVec = Vector2.zero;
             AttackPattern();
@@ -111,7 +112,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Move()
     {
-        if (enemyStatus.isFlinch)
+        if (0 < enemyStatus.isFlinch)
         {
             return;
         }

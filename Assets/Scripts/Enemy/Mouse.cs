@@ -122,7 +122,7 @@ public class Mouse : EnemyBasic
 
     void Change()
     {
-        if(isChange || !enemyStatus.hitTarget || enemyStatus.isFlinch)
+        if(isChange || !enemyStatus.hitTarget || (0 < enemyStatus.isFlinch))
             return;
 
         if (enemyStatus.hitTarget.tag == "Player")

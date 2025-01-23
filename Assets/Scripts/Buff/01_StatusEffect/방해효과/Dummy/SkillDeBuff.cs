@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Ä§¹¬
-// 
+//
+/*
 public class SkillDeBuff : StatusEffect
 {
     // Ä§¹¬
     // ½ºÅ³ »ç¿ë ºÒ°¡
     Coroutine skillCoolTimeCoroutine;
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
+        Overlap();
         skillCoolTimeCoroutine = StartCoroutine(SkillCoolOverTime());
     }
 
-    public override void ResetEffect()
+    public override void Overlap()
     {
         Stats stats = target.GetComponent<Stats>();
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;
@@ -38,8 +39,9 @@ public class SkillDeBuff : StatusEffect
         }
     }
 
-    public override void RemoveEffect()
+    public override void Remove()
     {
         StopCoroutine(skillCoolTimeCoroutine);
     }
 }
+*/

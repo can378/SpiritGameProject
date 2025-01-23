@@ -64,7 +64,7 @@ public class SnowBall : EnemyBasic
         for(int i = 0; i < 20 ;i++)
         {
             snowBallStatus.moveVec -= snowBallStatus.moveVec * 0.1f;
-            if(snowBallStatus.isHit || snowBallStatus.isFlinch)
+            if(snowBallStatus.isHit || (0 < snowBallStatus.isFlinch))
             {
                 break;
             }

@@ -131,7 +131,7 @@ public class BossFace : EnemyBasic
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (!enemyStatus.isRun && !enemyStatus.isFlinch && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        if (!enemyStatus.isRun && (0 >= enemyStatus.isFlinch) && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
         {
             AttackPattern();
         }

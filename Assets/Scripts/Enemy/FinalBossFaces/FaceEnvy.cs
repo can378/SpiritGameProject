@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FaceEnvy : BossFace
 {
-    //����=��ų���(�� ó�� ��� ������ �� ���ϰ�)
+    //����=��ų���?(�� ó�� ���? ������ �� ���ϰ�)
 
     [field: SerializeField] public List<Skill> skillList { get; private set; }
     [field: SerializeField] public int skill { get; private set; }
@@ -88,7 +88,7 @@ public class FaceEnvy : BossFace
 
     void Change()
     {
-        if (!enemyStatus.hitTarget || enemyStatus.isFlinch)
+        if (!enemyStatus.hitTarget || (0 < enemyStatus.isFlinch))
             return;
 
         if (enemyStatus.hitTarget.tag == "Player")

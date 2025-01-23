@@ -78,7 +78,9 @@ public class Player : ObjectBasic
         }
         */
 
+        SEProgress();
         HealPoise();
+        
         Turn();
         //Run();
         Dodge();
@@ -165,7 +167,7 @@ public class Player : ObjectBasic
 
     void Move()     //이동
     {
-        if( playerStatus.isFlinch )
+        if( (0 < playerStatus.isFlinch) )
             return;
 
         playerStatus.moveVec = new Vector2(hAxis, vAxis).normalized;
@@ -201,7 +203,7 @@ public class Player : ObjectBasic
         if(playerStatus.moveVec == Vector2.zero)
             return;
         
-        if (dDown && !playerStatus.isFlinch && !playerStatus.isAttack && !playerStatus.isSkill  && !playerStatus.isDodge && !playerStatus.isSkillHold)
+        if (dDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isSkill  && !playerStatus.isDodge && !playerStatus.isSkillHold)
         {
             dodgeVec = playerStatus.moveVec;
             playerStatus.isDodge = true;
@@ -249,13 +251,13 @@ public class Player : ObjectBasic
         if (weaponList[playerStats.weapon].maxAmmo == weaponList[playerStats.weapon].ammo)
             return;
 
-        if (rDown && !playerStatus.isFlinch && !playerStatus.isDodge && !playerStatus.isReload && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
+        if (rDown && (0 >= playerStatus.isFlinch) && !playerStatus.isDodge && !playerStatus.isReload && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
             playerStatus.isReload = true;
             playerStatus.reloadDelay = 0f;
         }
 
-        if (aDown && !playerStatus.isFlinch && playerStatus.attackDelay < 0 && weaponList[playerStats.weapon].ammo == 0 && !playerStatus.isDodge && !playerStatus.isReload && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
+        if (aDown && (0 >= playerStatus.isFlinch) && playerStatus.attackDelay < 0 && weaponList[playerStats.weapon].ammo == 0 && !playerStatus.isDodge && !playerStatus.isReload && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
             playerStatus.isReload = true;
             playerStatus.reloadDelay = 0f;
@@ -482,7 +484,7 @@ public class Player : ObjectBasic
 
         playerStatus.isAttackReady = playerStatus.attackDelay <= 0;
 
-        if (aDown && !playerStatus.isFlinch && !playerStatus.isAttack && !playerStatus.isReload && !playerStatus.isDodge && playerStatus.isAttackReady && !playerStatus.isSkill && !playerStatus.isSkillHold )
+        if (aDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isReload && !playerStatus.isDodge && playerStatus.isAttackReady && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
             weaponController.Use(playerStatus.mousePos);
 
@@ -634,7 +636,7 @@ public class Player : ObjectBasic
             return;
 
         // 스킬 키 다운
-        if (skDown && !playerStatus.isFlinch && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && !playerStatus.isSkillHold )
+        if (skDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
             //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
             if (playerStats.weapon == 0 ||  
@@ -654,7 +656,7 @@ public class Player : ObjectBasic
             return;
 
         //스킬 hold 상태에서 스킬 키 up
-        if ((!skDown)&& !playerStatus.isFlinch && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && playerStatus.isSkillHold)
+        if ((!skDown)&& (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && playerStatus.isSkillHold)
         {
             skillController.SkillUp();
             playerStatus.isReload = false;
@@ -665,7 +667,7 @@ public class Player : ObjectBasic
     {
         playerStatus.skillChangeDelay -= Time.deltaTime;
 
-        if (skcDown != 0f && !playerStatus.isFlinch && !playerStatus.isSkill && !playerStatus.isSkillHold && playerStatus.skillChangeDelay <= 0f)
+        if (skcDown != 0f && (0 >= playerStatus.isFlinch) && !playerStatus.isSkill && !playerStatus.isSkillHold && playerStatus.skillChangeDelay <= 0f)
         {
             playerStatus.skillChangeDelay = 0.1f;
             if(skcDown > 0f)
@@ -688,7 +690,7 @@ public class Player : ObjectBasic
         if(playerStatus.nearObject == null)
             return;
 
-        if (iDown && !playerStatus.isFlinch && !playerStatus.isDodge && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
+        if (iDown && (0 >= playerStatus.isFlinch) && !playerStatus.isDodge && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
             playerStatus.nearObject.GetComponent<Interactable>().Interact();
         }

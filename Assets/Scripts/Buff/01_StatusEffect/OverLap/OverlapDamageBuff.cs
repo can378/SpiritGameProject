@@ -6,23 +6,27 @@ using TMPro;
 
 public class OverlapDamageBuff : StatusEffect
 {
+    [field: SerializeField] public int maxOverlap { get; set; }
     [field: SerializeField] public float damagePer { get; set; }
     public TMP_Text overlapText;
     // 최대 중첩 시 피해를 주고 제거되는 디버프
     // 저항에 따라 피해량이 감소
     
-    public override void ApplyEffect()     //추가
+    public override void Apply()     //추가
     {
-        ResetEffect();
+        Overlap();
     }
-    public override void ResetEffect()     //갱신
+    public override void Overlap()     //갱신
     {
+        Stats stats = target.GetComponent<Stats>();
+
+        maxOverlap = DefaultMaxOverlap + (int)(stats.SEResist((int)buffType) * 10);
+
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
         overlapText.text = overlap > 1 ? overlap.ToString() : null;
         
-        Stats stats = target.GetComponent<Stats>();
 
-        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+        duration = defaultDuration;
 
         if (overlap == maxOverlap)
         {
@@ -30,7 +34,7 @@ public class OverlapDamageBuff : StatusEffect
             if (target.tag == "Player" || target.tag == "Npc")
             {
                 ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
-                objectBasic.Damaged(objectBasic.stats.HPMax * (1 - objectBasic.stats.SEResist(buffId)) * damagePer);
+                objectBasic.Damaged(objectBasic.stats.HPMax * damagePer);
 
             }
             else if (target.tag == "Enemy")
@@ -44,7 +48,7 @@ public class OverlapDamageBuff : StatusEffect
                 }
                 else
                 {
-                    enemy.Damaged(enemy.stats.HPMax * (1 - enemy.stats.SEResist(buffId)) * damagePer);
+                    enemy.Damaged(enemy.stats.HPMax * damagePer);
                 }
                 
             }
@@ -56,7 +60,12 @@ public class OverlapDamageBuff : StatusEffect
             duration = 0;
         }
     }
-    public override void RemoveEffect()    //제거
+
+    public override void Progress()
+    {
+        
+    }
+    public override void Remove()    //제거
     {
            
     }

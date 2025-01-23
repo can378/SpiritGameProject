@@ -5,19 +5,15 @@ using UnityEngine;
 public class ImmunityEquipment : Equipment
 {
 
-    [SerializeField] int[] statusEffectID;
+    [SerializeField] BuffType ImmunBuffType;
 
     public override void Equip(Player target)
     {
         if (target.tag == "Player")
         {
             this.user = target;
-            for(int i = 0; i < statusEffectID.Length;i++)
-            {
-                user.stats.addSEResist[statusEffectID[i]]++;
-                Debug.Log(statusEffectID[i] + "번호 디버프에 면역");
-            }
-            
+            user.stats.addSEResist[(int)ImmunBuffType]++;
+            Debug.Log(ImmunBuffType + "번호 디버프에 면역");
         }
     }
 
@@ -26,10 +22,7 @@ public class ImmunityEquipment : Equipment
     {
         if (target.tag == "Player")
         {
-            for (int i = 0; i < statusEffectID.Length; i++)
-            {
-                user.stats.addSEResist[statusEffectID[i]]--;
-            }
+            user.stats.addSEResist[(int)ImmunBuffType]--;
             this.user = null;
         }
     }

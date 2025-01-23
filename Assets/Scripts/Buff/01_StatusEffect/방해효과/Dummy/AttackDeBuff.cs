@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 공격불가
+/*
 public class AttackDeBuff : StatusEffect
 {
     // 공격 불가
     // 공격 사용 불가
     private Coroutine ASTimeCoroutine;
 
-    public override void ApplyEffect()
+    public override void Apply()
     {
-        ResetEffect();
+        Overlap();
         ASTimeCoroutine = StartCoroutine(ASOverTime());
     }
 
-    public override void ResetEffect()
+    public override void Overlap()
     {
         Stats stats = target.GetComponent<Stats>();
         duration = (1 - stats.SEResist(buffId)) * defaultDuration;
@@ -38,8 +39,9 @@ public class AttackDeBuff : StatusEffect
         }
     }
 
-    public override void RemoveEffect()
+    public override void Remove()
     {
         StopCoroutine(ASTimeCoroutine);
     }
 }
+*/
