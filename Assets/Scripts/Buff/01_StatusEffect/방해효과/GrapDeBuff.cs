@@ -5,6 +5,10 @@ using UnityEngine;
 // 기절
 public class GrapDeBuff : StatusEffect
 {
+
+    ObjectBasic GrapOwner;      // 잡기를 시전한 대상
+    Transform GrapPos;
+
     // 공격 및 스킬, 이동 불가
     // 피격 시 해제
     ObjectBasic objectBasic;
@@ -12,6 +16,9 @@ public class GrapDeBuff : StatusEffect
     EnemyBasic enemyBasic;
 
     bool LeftRight;     // False면 Left, True면 Right;
+    int KeyDownCount;
+
+    float Tick = 0.0f;         // 0.1초
 
     public override void Apply()
     {
@@ -53,19 +60,41 @@ public class GrapDeBuff : StatusEffect
 
     public override void Progress()
     {
+        // 잡기를 시전한 대상이 있을 때 경직 상태거나 죽었다면 해제
+        // 또는 KeyDownCount가 조건을 만족할 때
+        if(GrapOwner != null && 0 < GrapOwner.status.isFlinch && !GrapOwner.gameObject.activeSelf || KeyDownCount > 25 )
+        {
+            duration = 0.0f;
+            return;
+        }
+
+        // 붙잡힐 위치
+        if(GrapPos!= null)
+            target.transform.position = GrapPos.position;
+            
+        // 경직 시킴
         objectBasic.status.isFlinch = Mathf.Max(objectBasic.status.isFlinch, duration);
+
         if (target.tag == "Player")
         {
             // 왼쪽 눌러야 할 때 왼쪽 누름
             if ((!LeftRight && player.hAxis < 0.0f) || (LeftRight && player.hAxis > 0.0f))
             {
-                duration -= 0.5f;
+                KeyDownCount += 1;
                 LeftRight = !LeftRight;
             }
         }
         if (target.tag == "Enemy")
         {
+            Tick += Time.deltaTime;
 
+            // 해당 Tick마다 몬스터가 KeyCount를 누름
+            // 방해 저항
+            if (Tick > 0.5f)
+            {
+                KeyDownCount += (int)(1  + enemyBasic.stats.SEResist(2) * 10);
+                Tick -= 0.5f;
+            }
         }
     }
 
@@ -77,5 +106,12 @@ public class GrapDeBuff : StatusEffect
             objectBasic.ClearFlinch();
         }
     }
+
+    public void SetGrapOwner(ObjectBasic _GrapOwner, Transform _GrapPos = null)
+    {
+        GrapOwner = _GrapOwner;
+        GrapPos = _GrapPos;
+    }
+
 }
 

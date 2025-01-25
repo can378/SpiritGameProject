@@ -229,17 +229,17 @@ public class ObjectBasic : MonoBehaviour
 
     #region Buff
 
-    public void ApplyBuff(int buffIndex)
+    public StatusEffect ApplyBuff(int buffIndex)
     {
         if (status.isInvincible)
-            return;
+            return null;
 
         StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffId").GetValue(x) == buffIndex);
 
         if (statusEffect)
         {
             statusEffect.Overlap();
-            return;
+            return statusEffect;
         }
 
 
@@ -249,6 +249,8 @@ public class ObjectBasic : MonoBehaviour
 
         statusEffect.Apply();
         stats.activeEffects.Add(statusEffect);
+
+        return statusEffect;
     }
 
     protected void SEProgress()

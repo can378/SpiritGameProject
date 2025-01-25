@@ -12,7 +12,7 @@ public class BossBaby : Boss
     public new AnimJukqwi enemyAnim;
 
     private GameObject floor;
-    private int patternIndex = 3;
+    private int patternIndex;
     private bool isHitWall;
     Bounds bounds;
     float randomX, randomY;
@@ -53,11 +53,9 @@ public class BossBaby : Boss
 
     IEnumerator StartAttack()
     {
-       
-
         switch (patternIndex%5)
         { 
-            case 0: yield return enemyStatus.attackCoroutine = StartCoroutine(Rush()); break;
+            case 0: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
             case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); break;
             case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
             case 3: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding()); break;
@@ -68,39 +66,75 @@ public class BossBaby : Boss
     }
 
 
-    IEnumerator Rush() 
+    IEnumerator Grap() 
     {
+        bool grapSucces = false;
+        GrapDeBuff grapDeBuff = null;
+        float time = 0;
+
         //start
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Rush");
         enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
 
-        float time = 0;
-
-
         rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         
-        while (time<3.0f)
+        while (time<5.0f)
         {
-            hitEffects[(int)BossBabyHitEffect.RushHitArea].transform.position = transform.position;
-            enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
-            enemyStatus.moveVec = enemyStatus.targetDirVec;
-            yield return new WaitForSeconds(0.01f);
+            enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
             time += Time.deltaTime;
+
+            // 잡기 성공 
+            if(status.hitTarget)
+            {
+                // 대상에게 잡기 디버프 부여
+                grapDeBuff = (GrapDeBuff)status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(9);
+                grapDeBuff.SetGrapOwner(GetComponent<ObjectBasic>(),transform);
+                grapSucces = true;
+                break;
+            }
+
+            yield return null;
         }
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
+        enemyStatus.moveVec = Vector2.zero;
+
+        // 잡기 성공 시
+        if (grapSucces)
+        {
+            time = 0;
+            
+            // 대상이 계속 잡기 상태라면
+            while (grapDeBuff != null)
+            {
+                time += Time.deltaTime;
+
+                // 3초동안 잡기 상태라면
+                if(3.5 < time)
+                {
+                    // 큰 피해와 잡기를 1초 후에 해제
+                    grapDeBuff.target.GetComponent<ObjectBasic>().Damaged(50);
+                    break;
+                }
+
+                yield return null;
+            }
+        }
+
         yield return new WaitForSeconds(0.1f);
-        rigid.velocity = Vector2.zero;
 
         //end
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
+
+
+
     }
 
 
