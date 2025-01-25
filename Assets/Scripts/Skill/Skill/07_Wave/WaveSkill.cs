@@ -11,7 +11,7 @@ public class WaveSkill : Skill
     // 기본 크기, 이펙트 유지시간, 이펙트
     [field: SerializeField] float time;
     [field: SerializeField] GameObject waveEffect;
-    [field: SerializeField] Buff[] statusEffect;
+    [field: SerializeField] int[] statusEffect;
 
     public override void Enter(GameObject user)
     {

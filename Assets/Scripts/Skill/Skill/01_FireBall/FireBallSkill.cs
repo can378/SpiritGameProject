@@ -96,7 +96,7 @@ public class FireBallSkill : Skill
             Effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack);
-            hitDetection.SetSE(Buff.Burn);
+            hitDetection.SetSE(3);
             hitDetection.user = user;
             
         }
@@ -116,7 +116,7 @@ public class FireBallSkill : Skill
             Effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack);
-            hitDetection.SetSE(Buff.Burn);
+            hitDetection.SetSE(3);
             hitDetection.user = user;
         }
     }

@@ -82,7 +82,7 @@ public class Enchant : MonoBehaviour
     public void SetSE(SE_TYPE _Type)
     {
         SEType = _Type;
-        hitDetection.SetSE((Buff)SEType);
+        hitDetection.SetSE((int)SEType);
         // ÆÄÆ¼Å¬
         {
             try

@@ -48,11 +48,11 @@ public class ShamanDoll : EnemyBasic
 
         //print("shamon doll hurts hershelf");
         yield return new WaitForSeconds(0.6f);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff((int)Buff.Bleeding);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff((int)Buff.Bleeding);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff((int)Buff.Bleeding);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff((int)Buff.Bleeding);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff((int)Buff.Bleeding);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
         yield return new WaitForSeconds(2f);
 
         enemyAnim.animator.SetBool("isAttack", false);

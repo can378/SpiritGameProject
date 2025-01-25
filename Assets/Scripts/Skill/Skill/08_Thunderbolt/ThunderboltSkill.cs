@@ -17,7 +17,7 @@ public class ThunderboltSkill : Skill
     [field: SerializeField] float summonAreaSize;
     [field: SerializeField] GameObject summonAreaSimul;
     [field: SerializeField] GameObject thunderbolt;
-    [field: SerializeField] Buff[] statusEffect;
+    [field: SerializeField] int[] statusEffect;
 
     //소환 범위 시뮬
     GameObject simul;

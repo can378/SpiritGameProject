@@ -16,7 +16,7 @@ public class IcicleSkill : Skill
     [field: SerializeField] float time;
     [field: SerializeField] GameObject icicleEffect;
     [field: SerializeField] GameObject fireSimul;
-    [field: SerializeField] Buff[] statusEffect;
+    [field: SerializeField] int[] statusEffect;
 
     //���� ǥ�ñ�
     GameObject simul;

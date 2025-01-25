@@ -6,7 +6,7 @@ public class WhiteFox : EnemyBasic
 {
     WhiteFoxStatus whiteFoxStatus;
     [SerializeField] int defaulBlizzardCoolTime = 10;
-    [SerializeField] Buff[] blizzardDebuff;
+    [SerializeField] int[] blizzardDebuff;
 
     protected override void Awake()
     {

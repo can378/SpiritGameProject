@@ -118,7 +118,7 @@ public class SpinAttackSkill : Skill
              player.weaponList[player.playerStats.weapon].knockBack * 10 * holdPower, 
              player.playerStats.criticalChance, 
              player.playerStats.criticalDamage);
-            hitDetection.SetSE((Buff)player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
             // rate 동안 유지

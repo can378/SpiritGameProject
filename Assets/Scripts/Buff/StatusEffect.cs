@@ -4,7 +4,6 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum Buff {None = -1, Slow, PowerWeaken, DefensiveWeaken, Burn, Poison, Stun, Fear, Root, Bleeding, Curse, End}
 public enum BuffType { ABILITY , CONTINUOUS_DAMAGE , DISTURBING_EFFECT ,OVERLAP, SPECIAL, Buff }
 
 public abstract class StatusEffect : MonoBehaviour

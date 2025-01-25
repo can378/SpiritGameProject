@@ -186,6 +186,11 @@ public class ObjectBasic : MonoBehaviour
         status.isFlinch = Mathf.Max(status.isFlinch, time);
     }
 
+    public void ClearFlinch()
+    {
+        status.isFlinch = 0;
+    }
+
 
     public virtual void AttackCancle()
     {

@@ -34,7 +34,7 @@ public class StunDeBuff : StatusEffect
 
     public override void Progress()
     {
-        objectBasic.SetFlinch(duration);
+        objectBasic.status.isFlinch = Mathf.Max(objectBasic.status.isFlinch, duration);
     }
 
     public override void Remove()
@@ -42,7 +42,7 @@ public class StunDeBuff : StatusEffect
         if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
             objectBasic = target.GetComponent<ObjectBasic>();
-            objectBasic.SetFlinch(0.0f);
+            objectBasic.ClearFlinch();
         }
     }
 }

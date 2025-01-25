@@ -141,7 +141,7 @@ public class SlashSkill : Skill
                 player.weaponList[player.playerStats.weapon].knockBack * holdPower,
                 player.playerStats.criticalChance,
                 player.playerStats.criticalDamage);
-            hitDetection.SetSE((Buff)player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
             bulletRigid.velocity = player.playerStatus.mouseDir * 10 * speed;
 

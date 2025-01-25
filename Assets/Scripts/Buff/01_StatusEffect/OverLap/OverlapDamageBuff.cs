@@ -44,7 +44,7 @@ public class OverlapDamageBuff : StatusEffect
                 // 최대 체력이 1000 이상이라면
                 if(enemy.stats.HPMax >= 1000)
                 {
-                    enemy.Damaged(1000 * (1 - enemy.stats.SEResist(buffId)) * damagePer);
+                    enemy.Damaged(1000 * damagePer);
                 }
                 else
                 {

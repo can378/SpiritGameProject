@@ -60,7 +60,7 @@ public class WheelWindSkill : Skill
              player.weaponList[player.playerStats.weapon].knockBack,
              player.playerStats.criticalChance,
              player.playerStats.criticalDamage);
-            hitDetection.SetSE((Buff)player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
         }
         else if (user.tag == "Enemy")
