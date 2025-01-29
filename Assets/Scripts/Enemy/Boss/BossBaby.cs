@@ -55,16 +55,17 @@ public class BossBaby : Boss
     {
         switch (patternIndex%5)
         { 
-            case 0: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
-            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); break;
-            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
-            case 3: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding()); break;
-            case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Crying());break;
+            case 0: yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); break;
+            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
+            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
+            case 3: yield return enemyStatus.attackCoroutine = StartCoroutine(Crying()); break;
+            case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding());break;
         }
         patternIndex++;
         
     }
 
+#region 어른
 
     IEnumerator Grap() 
     {
@@ -78,14 +79,13 @@ public class BossBaby : Boss
         print("Rush");
         enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
 
-        rigid.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         
         while (time<5.0f)
         {
-            enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+            enemyStatus.moveVec = enemyStatus.targetDirVec * 5.0f;
             time += Time.deltaTime;
 
             // 잡기 성공 
@@ -133,10 +133,73 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 
+    }
 
+    IEnumerator MadRush()
+    {
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+        print("MadRush");
+        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
+
+        madRushVec = enemyStatus.targetDirVec;
+
+        float time = 0;
+        yield return new WaitForSeconds(0.1f);
+
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+        while (time < 10.0f)
+        {
+            if (isHitWall)
+            {
+                isHitWall = false;
+                madRushVec = enemyStatus.targetDirVec;
+                yield return new WaitForSeconds(0.3f);
+            }
+
+            enemyStatus.moveVec = madRushVec * 10.0f;
+
+            yield return null;
+            time += Time.deltaTime;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+        enemyStatus.moveVec = Vector2.zero;
+
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
+        enemyStatus.isAttack = false;
+        yield return new WaitForSeconds(3f);
+        enemyStatus.isAttackReady = true;
 
     }
 
+    IEnumerator Screaming()
+    {
+        enemyStatus.isAttack = true;
+        enemyStatus.isAttackReady = false;
+        print("Screaming");
+        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
+
+        enemyAnim.animator.SetBool("isScream", true);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
+        //플레이어 느려지게 만든다.
+        yield return new WaitForSeconds(1f);
+
+        enemyAnim.animator.SetBool("isScream", false);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
+
+        yield return new WaitForSeconds(3f);
+        enemyStatus.isAttack = false;
+        enemyStatus.isAttackReady = true;
+    }
+
+
+
+
+    #endregion 어른
+
+
+    #region 응애
 
     IEnumerator Crying() 
     {
@@ -157,10 +220,18 @@ public class BossBaby : Boss
         rigid.velocity = Vector2.zero;
 
         //start crying
-        for (int i = 0; i < 20; i++)
-        { 
-            StartCoroutine(DropTear());
-            yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 50; i++)
+        {
+            int DropCount = Random.Range(2,4);
+            int PlayerPos = Random.Range(0, 5);
+            for(int j = 0; j < DropCount; ++j)
+            {
+                StartCoroutine(DropTear());
+            }
+            if(PlayerPos == 0)
+                StartCoroutine(DropTear_PlayerPos());
+
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }
 
         enemyStatus.isAttack = false;
@@ -169,12 +240,10 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = true;
     }
 
-
     IEnumerator DropTear() 
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-
 
         randomX = Random.Range(bounds.min.x, bounds.max.x);
         randomY = Random.Range(bounds.min.y, bounds.max.y);
@@ -183,65 +252,32 @@ public class BossBaby : Boss
         thisTear.SetActive(true);
         thisTear.transform.position=new Vector2(randomX, randomY);
 
-        thisTear.GetComponent<SpriteRenderer>().color = Color.white;
+        thisTear.GetComponent<SpriteRenderer>().color = Color.blue / 2.0f;
         yield return new WaitForSeconds(0.5f);
         
-        thisTear.GetComponent<HitDetection>().enabled = true;
-        thisTear.GetComponent<SpriteRenderer>().color = Color.red;
+        thisTear.GetComponent<Collider2D>().enabled = true;
+        thisTear.GetComponent<SpriteRenderer>().color = Color.red / 2.0f;
         yield return new WaitForSeconds(0.5f);
         Destroy(thisTear);
-
     }
 
-
-    IEnumerator MadRush() 
+    IEnumerator DropTear_PlayerPos()
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        print("MadRush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
 
-        randomX = Random.Range(bounds.min.x, bounds.max.x);
-        randomY = Random.Range(bounds.min.y, bounds.max.y);
-        madRushVec = (new Vector3(randomX, randomY, 0) - transform.position).normalized;
+        GameObject thisTear = Instantiate(hitEffects[(int)BossBabyHitEffect.Tear]);
+        thisTear.SetActive(true);
+        thisTear.transform.position = enemyStatus.enemyTarget.position;
 
+        thisTear.GetComponent<SpriteRenderer>().color = Color.blue / 2.0f;
+        yield return new WaitForSeconds(0.5f);
 
-        float time = 0;
-        rigid.velocity = Vector2.zero;
-        yield return new WaitForSeconds(0.1f);
-
-        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
-        while (time < 2.0f)
-        {
-            hitEffects[(int)BossBabyHitEffect.RushHitArea].transform.position = transform.position;
-            if (isHitWall==true)
-            {
-                print("hit wall!");
-                isHitWall = false;
-
-                //벽에 부딫힘
-                randomX = Random.Range(bounds.min.x, bounds.max.x);
-                randomY = Random.Range(bounds.min.y, bounds.max.y);
-                madRushVec= (new Vector3(randomX, randomY, 0) - transform.position).normalized;
-                yield return new WaitForSeconds(0.1f);
-            }
-
-            rigid.AddForce(madRushVec * GetComponent<EnemyStats>().defaultMoveSpeed * 600);
-            yield return new WaitForSeconds(0.05f);
-            time += Time.deltaTime;
-        }
-
-        yield return new WaitForSeconds(0.1f);
-        rigid.velocity = Vector2.zero;
-
-        hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
-        enemyStatus.isAttack = false;
-        yield return new WaitForSeconds(3f);
-        enemyStatus.isAttackReady = true;
-
+        thisTear.GetComponent<Collider2D>().enabled = true;
+        thisTear.GetComponent<SpriteRenderer>().color = Color.red / 2.0f;
+        yield return new WaitForSeconds(0.5f);
+        Destroy(thisTear);
     }
-
-
 
     IEnumerator Hiding() 
     {
@@ -252,10 +288,9 @@ public class BossBaby : Boss
         enemyAnim.animator.SetBool("isHide", true);
 
         hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(true);
-        yield return new WaitForSeconds(2f);
-
         hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(true);
-        yield return StartCoroutine(DamageAreaIncrease());
+        
+        yield return StartCoroutine(SafeAreaDecrease());
         yield return new WaitForSeconds(1f);
 
         hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(false);
@@ -265,6 +300,25 @@ public class BossBaby : Boss
         enemyAnim.animator.SetBool("isHide", false);
         yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;
+
+    }
+
+    IEnumerator SafeAreaDecrease()
+    {
+        float time = 0.0f;
+
+        // initiate scale
+        hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = new Vector3(50, 50, 1);
+
+        // 완전히 가릴 때까지 스케일 조정
+        //while (renderer1.bounds.Intersects(renderer2.bounds))
+        while (time < 3)
+        {
+            hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = new Vector3(50, 50, 1) / (1 + time);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
 
     }
 
@@ -291,28 +345,7 @@ public class BossBaby : Boss
 
     }
 
-
-    IEnumerator Screaming() 
-    {
-        enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
-        print("Screaming");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
-
-        enemyAnim.animator.SetBool("isScream",true);
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
-        //플레이어 느려지게 만든다.
-        yield return new WaitForSeconds(1f);
-
-        enemyAnim.animator.SetBool("isScream", false);
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
-        
-        yield return new WaitForSeconds(3f);
-        enemyStatus.isAttack = false;
-        enemyStatus.isAttackReady = true;
-    }
-
-
+    #endregion 응애
 
 
     private Vector3 FindCorner()
@@ -355,16 +388,14 @@ public class BossBaby : Boss
         return new Vector3(x,y,0);
     }
 
-    
-
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
 
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
         {
             isHitWall = true;
         }
-        
+
     }
 }
