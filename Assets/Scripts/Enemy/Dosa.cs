@@ -45,7 +45,7 @@ public class Dosa : EnemyBasic
             yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
             // 스킬 시작
-            skillList[skill].Enter(gameObject);
+            skillList[skill].Enter(this);
 
             // Down 스킬 : 시전 후딜
             yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
@@ -63,7 +63,7 @@ public class Dosa : EnemyBasic
             enemyAnim.animator.SetBool("isAttack", true);
 
             // 스킬 시작
-            skillList[skill].Enter(gameObject);
+            skillList[skill].Enter(this);
 
             // Hold 스킬 : 스킬 유지되는 시간
             yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
@@ -78,7 +78,7 @@ public class Dosa : EnemyBasic
         else if(_Type == SKILL_TYPE.UP)
         {
             // 스킬 시작
-            skillList[skill].Enter(gameObject);
+            skillList[skill].Enter(this);
 
             // Up 스킬 : 키 Up 전 대기 시간 
             yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);

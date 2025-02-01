@@ -71,7 +71,7 @@ public class FaceAngry : BossFace
 
             MovePattern();
 
-            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
         }
 
 

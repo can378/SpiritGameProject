@@ -22,7 +22,7 @@ public class IcicleSkill : Skill
     GameObject simul;
     Vector3 simulVector;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         this.user = user;
         StartCoroutine(Simulation());
@@ -116,7 +116,7 @@ public class IcicleSkill : Skill
             ġ�� = 0
             �����? = ȭ��
             */
-            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack, 0, 0);
+            hitDetection.SetHit_Ratio(defalutDamage, ratio, player.playerStats.SkillPower, knockBack);
             hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ���� ����
@@ -153,7 +153,7 @@ public class IcicleSkill : Skill
             ġ�� = 0
             �����? = ȭ��
             */
-            hitDetection.SetHitDetection(true, 0, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack);
+            hitDetection.SetHit_Ratio(defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
             hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ���� ����

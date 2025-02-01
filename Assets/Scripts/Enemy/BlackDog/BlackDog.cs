@@ -67,11 +67,11 @@ public class BlackDog : EnemyBasic
         {
             blackDogStatus.moveVec = new Vector2(-blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x).normalized;
         }
-        enemyStats.increasedMoveSpeed += 2f;
+        enemyStats.MoveSpeed.IncreasedValue += 2f;
 
         yield return new WaitForSeconds(0.3f);
         blackDogStatus.moveVec = Vector2.zero;
-        enemyStats.increasedMoveSpeed -= 2f;
+        enemyStats.MoveSpeed.IncreasedValue -= 2f;
 
         yield return new WaitForSeconds(0.3f);
         blackDogStatus.isDodge = false;
@@ -116,7 +116,7 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttackReady = false;
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
+        hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(5, 0.5f, enemyStats.AttackPower);
         
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);
@@ -148,11 +148,11 @@ public class BlackDog : EnemyBasic
             print("blackdog evasion1!!!");
             //evasion!!
             perpendicularDir = new Vector2(blackDogStatus.targetDirVec.y, -blackDogStatus.targetDirVec.x).normalized;
-            rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().defaultMoveSpeed * 200);
+            rigid.AddForce(perpendicularDir * GetComponent<EnemyStats>().MoveSpeed.Value * 200);
         }
         else 
         {
-            rigid.AddForce(blackDogStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+            rigid.AddForce(blackDogStatus.targetDirVec * GetComponent<EnemyStats>().MoveSpeed.Value * 100);
         }
 
         yield return new WaitForSeconds(0.01f);

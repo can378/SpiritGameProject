@@ -85,7 +85,7 @@ public class JangSanBum : EnemyBasic
             //move to player
             while (moveTime > 0)
             {
-                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 100);
+                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.MoveSpeed.Value * 100);
                 moveTime -= Time.deltaTime;
                 yield return null;
             }
@@ -113,7 +113,7 @@ public class JangSanBum : EnemyBasic
         {
             for (int j = 0; j < 5; j++)
             {
-                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.defaultMoveSpeed * 500);
+                rigid.AddForce(enemyStatus.targetDirVec * enemyStats.MoveSpeed.Value * 500);
                 yield return new WaitForSeconds(0.01f);
             }
             hitEffects[(int)JangSanBumHitEffect.Scratch].transform.rotation = enemyStatus.targetQuaternion;

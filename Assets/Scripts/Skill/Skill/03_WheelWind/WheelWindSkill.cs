@@ -17,7 +17,7 @@ public class WheelWindSkill : Skill
     //����Ʈ
     GameObject WheelWindEffect;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine("Attack");
@@ -37,7 +37,7 @@ public class WheelWindSkill : Skill
             skillCoolTime = 99;
 
             // ���� �ӵ� ����
-            player.stats.decreasedMoveSpeed += 0.5f;
+            player.stats.MoveSpeed.DecreasedValue += 0.5f;
             
             // �ð��� ���� ���� �� ȸ�� ����
             yield return new WaitForSeconds(preDelay * attackRate);
@@ -55,11 +55,11 @@ public class WheelWindSkill : Skill
             // ���� ���� ����
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
 
-            hitDetection.SetHitDetection(false, -1, true, (int)((float)DPS / attackRate),
-             defaultDamage + player.stats.attackPower * ratio,
+            hitDetection.SetHit_Ratio(defaultDamage, ratio, player.stats.AttackPower,
              player.weaponList[player.playerStats.weapon].knockBack,
-             player.playerStats.criticalChance,
-             player.playerStats.criticalDamage);
+             player.playerStats.CriticalChance,
+             player.playerStats.CriticalDamage);
+            hitDetection.SetMultiHit(true, 1 / DPS);
             hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
         }
@@ -71,7 +71,7 @@ public class WheelWindSkill : Skill
             skillCoolTime = 99;
 
             // ���� �ӵ� ����
-            enemy.stats.decreasedMoveSpeed += 0.5f;
+            enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
 
             // ��Ÿ�� ����
             skillCoolTime = skillDefalutCoolTime;
@@ -103,9 +103,10 @@ public class WheelWindSkill : Skill
             ġ�� = �÷��̾� ġ��
             �����? = ����
             */
-            hitDetection.SetHitDetection(false, -1, true, DPS,
-             defaultDamage + enemy.stats.attackPower * ratio,
+            hitDetection.SetHit_Ratio(
+             defaultDamage, ratio, enemy.stats.AttackPower,
              1);
+            hitDetection.SetMultiHit(true,1/DPS);
             hitDetection.user = user;
         }
     }
@@ -114,7 +115,7 @@ public class WheelWindSkill : Skill
     {
         base.Cancle();
         Destroy(WheelWindEffect);
-        user.GetComponent<Stats>().decreasedMoveSpeed -= 0.5f;
+        user.GetComponent<Stats>().MoveSpeed.DecreasedValue -= 0.5f;
     }
 
 
@@ -141,7 +142,7 @@ public class WheelWindSkill : Skill
             // ��Ÿ�� ����
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
-            player.stats.decreasedMoveSpeed -= 0.5f;
+            player.stats.MoveSpeed.DecreasedValue -= 0.5f;
         }
         else if(user.tag == "Enemy")
         {
@@ -158,7 +159,7 @@ public class WheelWindSkill : Skill
             // ��Ÿ�� ����
             skillCoolTime = skillDefalutCoolTime;
 
-            enemy.stats.decreasedMoveSpeed -= 0.5f;
+            enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
         }
     }
 

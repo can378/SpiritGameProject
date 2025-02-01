@@ -42,7 +42,7 @@ public class DotDamageBuff : StatusEffect
         overlapText.text = overlap > 1 ? overlap.ToString() : null;
 
         Stats stats = target.GetComponent<Stats>();
-        duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
+        duration = (1 - stats.SEResist[(int)buffType].Value) * defaultDuration;
         //print(duration);
     }
 

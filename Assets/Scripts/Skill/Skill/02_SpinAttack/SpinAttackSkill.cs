@@ -21,7 +21,7 @@ public class SpinAttackSkill : Skill
     float holdPower;
     GameObject spinSimul;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine(Simulation());
@@ -32,7 +32,7 @@ public class SpinAttackSkill : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            player.stats.decreasedMoveSpeed += 0.5f;
+            player.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
             spinSimul = Instantiate(spinSimulPrefab, user.gameObject.transform.position, Quaternion.identity);
@@ -50,7 +50,7 @@ public class SpinAttackSkill : Skill
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             float timer;
 
-            enemy.stats.decreasedMoveSpeed += 0.5f;
+            enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
 
             spinSimul = Instantiate(spinSimulPrefab, user.gameObject.transform.position, Quaternion.identity);
             spinSimul.transform.parent = user.transform;
@@ -71,7 +71,7 @@ public class SpinAttackSkill : Skill
     {
         base.Cancle();
         StopCoroutine(Simulation());
-        user.GetComponent<Stats>().decreasedMoveSpeed -= 0.5f;
+        user.GetComponent<Stats>().MoveSpeed.DecreasedValue -= 0.5f;
         Destroy(spinSimul);
     }
 
@@ -113,16 +113,16 @@ public class SpinAttackSkill : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, false, -1,
-             defalutDamage + player.stats.attackPower * ratio * holdPower,
-             player.weaponList[player.playerStats.weapon].knockBack * 10 * holdPower, 
-             player.playerStats.criticalChance, 
-             player.playerStats.criticalDamage);
+            hitDetection.SetHit_Ratio(
+             defalutDamage * holdPower, ratio * holdPower, player.stats.AttackPower,
+             player.weaponList[player.playerStats.weapon].knockBack * holdPower, 
+             player.playerStats.CriticalChance, 
+             player.playerStats.CriticalDamage);
             hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
             // rate 동안 유지
-            player.stats.decreasedMoveSpeed -= 0.5f;
+            player.stats.MoveSpeed.DecreasedValue -= 0.5f;
             Destroy(effect, time * attackRate);
         }
         else if (user.tag == "Enemy")
@@ -152,13 +152,13 @@ public class SpinAttackSkill : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, false, -1,
-             defalutDamage + enemy.stats.attackPower * ratio * holdPower,
+            hitDetection.SetHit_Ratio(
+             defalutDamage * holdPower, ratio * holdPower, enemy.stats.AttackPower,
              10 * holdPower);
             hitDetection.user = user;
 
             // rate 동안 유지
-            enemy.stats.decreasedMoveSpeed -= 0.5f;
+            enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
             Destroy(effect, time);
         }
     }

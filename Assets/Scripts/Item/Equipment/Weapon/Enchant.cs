@@ -62,7 +62,7 @@ public class Enchant : MonoBehaviour
         GameObject thunderboltGO = ObjectPoolManager.instance.Get2("Lightning Explosion");
         thunderboltGO.transform.position = pos;
         thunderboltGO.transform.rotation = this.gameObject.transform.rotation;
-        thunderboltGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 5 + this.hitDetection.user.GetComponent<Player>().playerStats.skillPower * 0.1f, 0);
+        thunderboltGO.GetComponent<HitDetection>().SetHit_Ratio(5, 0.1f, hitDetection.user.GetComponent<Player>().playerStats.SkillPower);
     }
 
     void Explosion()
@@ -74,7 +74,7 @@ public class Enchant : MonoBehaviour
         GameObject explosionGO = ObjectPoolManager.instance.Get2("Explosion");
         explosionGO.transform.position = this.gameObject.transform.position;
         explosionGO.transform.rotation = this.gameObject.transform.rotation;
-        explosionGO.GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, 20f, 0);
+        explosionGO.GetComponent<HitDetection>().SetHit(20f,10);
     }
 
     #endregion Effect

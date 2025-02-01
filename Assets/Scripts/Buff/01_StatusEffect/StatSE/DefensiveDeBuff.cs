@@ -19,22 +19,22 @@ public class DefensiveDeBuff : StatusEffect
         Stats stats = target.GetComponent<Stats>();
 
         // 효과 잠시 제거
-        stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-        for(int i = 0; i < stats.defaultSEResist.Length ; i++ )
+        stats.DefensivePower.DecreasedValue -= overlap * decreasedDefensivePower;
+        for(int i = 0; i < stats.SEResist.Length ; i++ )
         {
-            stats.decreasedSEResist[i] -= overlap * decreasedSEResist;
+            stats.SEResist[i].DecreasedValue -= overlap * decreasedSEResist;
         }
 
         // 중첩 
         overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
         // 저항에 따른 지속시간 적용
-        duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
+        duration = (1 - stats.SEResist[(int)buffType].Value) * defaultDuration;
 
-        stats.decreasedDefensivePower += overlap * decreasedDefensivePower;
-        for (int i = 0; i < stats.defaultSEResist.Length; i++)
+        stats.DefensivePower.DecreasedValue += overlap * decreasedDefensivePower;
+        for (int i = 0; i < stats.SEResist.Length; i++)
         {
-            stats.decreasedSEResist[i] += overlap * decreasedSEResist;
+            stats.SEResist[i].DecreasedValue += overlap * decreasedSEResist;
         }
     }
 
@@ -47,10 +47,10 @@ public class DefensiveDeBuff : StatusEffect
     {
         Stats stats = target.GetComponent<Stats>();
 
-        stats.decreasedDefensivePower -= overlap * decreasedDefensivePower;
-        for (int i = 0; i < stats.defaultSEResist.Length; i++)
+        stats.DefensivePower.DecreasedValue -= overlap * decreasedDefensivePower;
+        for (int i = 0; i < stats.SEResist.Length; i++)
         {
-            stats.decreasedSEResist[i] -= overlap * decreasedSEResist;
+            stats.SEResist[i].DecreasedValue -= overlap * decreasedSEResist;
         }
     }
 }

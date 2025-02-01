@@ -7,7 +7,7 @@ public class SpottingWeaknessSkill : Skill
     // ÇÇÇØ·®
     [field: SerializeField] int spottingWeaknessBuff;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         Buff();

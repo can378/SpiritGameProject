@@ -69,7 +69,7 @@ public class FaceEnvy : BossFace
 
         yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
-        skillList[skill].Enter(gameObject);
+        skillList[skill].Enter(this);
 
         yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
 

@@ -14,7 +14,7 @@ public class LittleStarSkill : Skill
     [field: SerializeField] GameObject littleStarOrbitPrefab;
     GameObject effect;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         Summon();
@@ -58,7 +58,7 @@ public class LittleStarSkill : Skill
 
                 littleStar.tag = "PlayerAttack";
                 littleStar.layer = LayerMask.NameToLayer("PlayerAttack");
-                hitDetection.SetHitDetection(false,-1,false,-1,(defalutDamage + ratio * player.playerStats.skillPower) * 0.5f, knockBack);
+                hitDetection.SetHit_Ratio(defalutDamage, ratio, player.playerStats.SkillPower, knockBack);
             }
 
             // rate 동안 유지
@@ -89,7 +89,7 @@ public class LittleStarSkill : Skill
 
                 littleStar.tag = "EnemyAttack";
                 littleStar.layer = LayerMask.NameToLayer("EnemyAttack");
-                hitDetection.SetHitDetection(false, -1, false, -1, (defalutDamage) * 0.5f, knockBack);
+                hitDetection.SetHit_Ratio(defalutDamage, ratio, objectBasic.stats.SkillPower, knockBack);
             }
         }
     }

@@ -152,7 +152,7 @@ public class Player : ObjectBasic
         playerPosition = transform.position;
         Vector2 end= 
             playerPosition + 
-            new Vector2(playerPosition.x * playerStats.moveSpeed, playerPosition.y * playerStats.moveSpeed);
+            new Vector2(playerPosition.x * playerStats.MoveSpeed.Value, playerPosition.y * playerStats.MoveSpeed.Value);
         
 
         // 레이저 발사 (시작, 끝, 레이어마스크)
@@ -179,12 +179,12 @@ public class Player : ObjectBasic
         
         if (playerStatus.isDodge)             // 회피시 현재 속도 유지
         {
-            rigid.velocity  = dodgeVec * playerStats.moveSpeed * (1 + playerStats.dodgeSpeed);
+            rigid.velocity  = dodgeVec * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed);
         }
         else
         {
             // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            rigid.velocity = playerStatus.moveVec * playerStats.moveSpeed;
+            rigid.velocity = playerStatus.moveVec * playerStats.MoveSpeed.Value;
         }
     }
 
@@ -209,7 +209,7 @@ public class Player : ObjectBasic
             playerStatus.isDodge = true;
             playerStatus.isReload = false;
             playerStats.HP += 100;
-            playerStats.addMoveSpeed = 20;
+            playerStats.MoveSpeed.AddValue = 20;
 
             Invoke("DodgeOut", playerStats.dodgeTime);
 
@@ -374,16 +374,13 @@ public class Player : ObjectBasic
         
             // 이펙트 수치 설정
             HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
-            hitDetection.SetHitDetection(false, 
-            -1, 
-            player.weaponList[player.playerStats.weapon].isMultiHit, 
-            player.weaponList[player.playerStats.weapon].DPS, 
-            player.playerStats.attackPower, 
+            hitDetection.SetHit_Ratio(
+            0, 1, player.playerStats.AttackPower,
             player.weaponList[player.playerStats.weapon].knockBack, 
-            player.playerStats.criticalChance, 
-            player.playerStats.criticalDamage);
-            hitDetection.user = this.gameObject;
-
+            player.playerStats.CriticalChance, 
+            player.playerStats.CriticalDamage);
+            hitDetection.user = player;
+            hitDetection.SetMultiHit(player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS);
             // 인챈트 설정
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetSE(SEType.Count == 0 ? SE_TYPE.NONE : SEType[0]);
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetCommon(CommonType.Count == 0 ? COMMON_TYPE.NONE : CommonType[0]);
@@ -434,8 +431,16 @@ public class Player : ObjectBasic
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
             // 투사체 설정
-            hitDetection.SetHitDetection(true, player.weaponList[player.playerStats.weapon].penetrations, player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS, player.playerStats.attackPower, player.weaponList[player.playerStats.weapon].knockBack, player.playerStats.criticalChance, player.playerStats.criticalDamage);
-            hitDetection.user = this.gameObject;
+            hitDetection.SetProjectile( player.weaponList[player.playerStats.weapon].penetrations
+                ,0
+                ,1
+                , player.playerStats.AttackPower
+                , player.weaponList[player.playerStats.weapon].knockBack
+                , player.playerStats.CriticalChance
+                , player.playerStats.CriticalDamage);
+            hitDetection.SetMultiHit(player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS);
+            hitDetection.user = player;
+
 
             // 인챈트
             instantProjectile.GetComponentInChildren<Enchant>().SetSE(SEType.Count == 0 ? SE_TYPE.NONE : SEType[0]);
@@ -552,7 +557,7 @@ public class Player : ObjectBasic
                 yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].preDelay);
             }
 
-            player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Enter(gameObject);
+            player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Enter(player);
 
             if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillType == 0)
             {
@@ -613,7 +618,7 @@ public class Player : ObjectBasic
 
         public void SkillCancle()
         {
-            print("Cancle");
+            //print("Cancle");
             player.playerStatus.isSkillHold = false;
             player.playerStatus.isSkill = false;
             if (skillCoroutine != null) 
@@ -883,13 +888,13 @@ public class Player : ObjectBasic
             }
 
             Player.instance.playerStats.HPMax                       += Player.instance.playerStats.playerStat[(int)StatID.HP] * StatIV[(int)StatID.HP];
-            Player.instance.playerStats.increasedAttackPower        += Player.instance.playerStats.playerStat[(int)StatID.AP] * StatIV[(int)StatID.AP];
+            Player.instance.playerStats.AttackPower.IncreasedValue        += Player.instance.playerStats.playerStat[(int)StatID.AP] * StatIV[(int)StatID.AP];
             Player.instance.playerStats.increasedAttackSpeed        += Player.instance.playerStats.playerStat[(int)StatID.AS] * StatIV[(int)StatID.AS];
-            Player.instance.playerStats.addCriticalChance           += Player.instance.playerStats.playerStat[(int)StatID.CC] * StatIV[(int)StatID.CC];
-            Player.instance.playerStats.addCriticalDamage           += Player.instance.playerStats.playerStat[(int)StatID.CD] * StatIV[(int)StatID.CD];
-            Player.instance.playerStats.addSkillPower               += Player.instance.playerStats.playerStat[(int)StatID.SP] * StatIV[(int)StatID.SP];
+            Player.instance.playerStats.CriticalChance.AddValue           += Player.instance.playerStats.playerStat[(int)StatID.CC] * StatIV[(int)StatID.CC];
+            Player.instance.playerStats.CriticalDamage.AddValue          += Player.instance.playerStats.playerStat[(int)StatID.CD] * StatIV[(int)StatID.CD];
+            Player.instance.playerStats.SkillPower.AddValue               += Player.instance.playerStats.playerStat[(int)StatID.SP] * StatIV[(int)StatID.SP];
             Player.instance.playerStats.addSkillCoolTime            += Player.instance.playerStats.playerStat[(int)StatID.SCT] * StatIV[(int)StatID.SCT];
-            Player.instance.playerStats.increasedMoveSpeed          += Player.instance.playerStats.playerStat[(int)StatID.MS] * StatIV[(int)StatID.MS];
+            Player.instance.playerStats.MoveSpeed.IncreasedValue          += Player.instance.playerStats.playerStat[(int)StatID.MS] * StatIV[(int)StatID.MS];
 
             playerStats.coin = DataManager.instance.userData.playerCoin;
             playerStats.key = DataManager.instance.userData.playerKey;
@@ -935,25 +940,25 @@ public class Player : ObjectBasic
             Player.instance.playerStats.HPMax                       += StatIV[(int)_StatID];
             break;
             case StatID.AP:
-            Player.instance.playerStats.increasedAttackPower        += StatIV[(int)_StatID];
+            Player.instance.playerStats.AttackPower.IncreasedValue        += StatIV[(int)_StatID];
             break;
             case StatID.AS:
             Player.instance.playerStats.increasedAttackSpeed        += StatIV[(int)_StatID];
             break;
             case StatID.CC:
-            Player.instance.playerStats.addCriticalChance           += StatIV[(int)_StatID];
+            Player.instance.playerStats.CriticalChance.AddValue           += StatIV[(int)_StatID];
             break;
             case StatID.CD:
-            Player.instance.playerStats.addCriticalDamage           += StatIV[(int)_StatID];
+            Player.instance.playerStats.CriticalDamage.AddValue           += StatIV[(int)_StatID];
             break;
             case StatID.SP:
-            Player.instance.playerStats.addSkillPower               += StatIV[(int)_StatID];
+            Player.instance.playerStats.SkillPower.AddValue               += StatIV[(int)_StatID];
             break;
             case StatID.SCT:
             Player.instance.playerStats.addSkillCoolTime            += StatIV[(int)_StatID];
             break;
             case StatID.MS:
-            Player.instance.playerStats.increasedMoveSpeed          += StatIV[(int)_StatID];
+            Player.instance.playerStats.MoveSpeed.IncreasedValue          += StatIV[(int)_StatID];
             break;
 
         }

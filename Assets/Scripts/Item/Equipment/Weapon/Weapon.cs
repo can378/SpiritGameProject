@@ -43,7 +43,7 @@ public class Weapon : Equipment
     {
         this.user = user;
         Stats stats = user.GetComponent<Stats>();
-        stats.addAttackPower += attackPower;
+        stats.AttackPower.AddValue += attackPower;
         if(statusEffect != SE_TYPE.NONE)
             user.AddEnchant_SE(statusEffect);
     }
@@ -51,7 +51,7 @@ public class Weapon : Equipment
     public override void UnEquip(Player user)
     {
         Stats stats = user.GetComponent<Stats>();
-        stats.addAttackPower -= attackPower;
+        stats.AttackPower.AddValue -= attackPower;
         this.user = null;
         if (statusEffect != SE_TYPE.NONE)
             user.RemoveEnchant_SE(statusEffect);

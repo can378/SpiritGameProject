@@ -21,14 +21,14 @@ public abstract class Skill : SelectItem
     [field: SerializeField] public float skillDefalutCoolTime { get; private set; }     //기본 대기 시간
     [field: SerializeField] public float skillCoolTime { get; set; }                    //현재 대기 시간
 
-    [field: SerializeField] public GameObject user { get; set; }                        //사용자
+    [field: SerializeField] public ObjectBasic user { get; set; }                        //사용자
 
     void Update() 
     {
         CoolDown();
     }
 
-    public virtual void Enter(GameObject user)
+    public virtual void Enter(ObjectBasic user)
     {
         this.user = user;
         print(user.name + " : " + this.name);

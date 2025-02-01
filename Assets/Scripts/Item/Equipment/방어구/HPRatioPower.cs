@@ -29,13 +29,13 @@ public class HPRatioPower : Equipment
 
     void RePower()
     {
-        user.playerStats.increasedAttackPower -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
-        user.playerStats.increasedSkillPower -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
+        user.playerStats.AttackPower.IncreasedValue -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
+        user.playerStats.SkillPower.IncreasedValue -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
 
         curLostHP = (float)Math.Round((user.stats.HPMax - user.stats.HP) / user.stats.HPMax, 2);
 
-        user.playerStats.increasedAttackPower += Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
-        user.playerStats.increasedSkillPower += Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
+        user.playerStats.AttackPower.IncreasedValue += Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
+        user.playerStats.SkillPower.IncreasedValue += Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
 
         Debug.Log(Mathf.Clamp(ratio * curLostHP,0,maxPowerUP) * 100 + "% powerUp");
     }
@@ -55,8 +55,8 @@ public class HPRatioPower : Equipment
     {
         if (target.tag == "Player")
         {
-            user.playerStats.increasedAttackPower -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
-            user.playerStats.increasedSkillPower -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
+            user.playerStats.AttackPower.IncreasedValue -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
+            user.playerStats.SkillPower.IncreasedValue -= Mathf.Clamp(ratio * curLostHP, 0, maxPowerUP);
             this.user = null;
         }
     }

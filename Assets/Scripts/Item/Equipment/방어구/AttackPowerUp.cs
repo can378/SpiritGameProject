@@ -16,7 +16,7 @@ public class AttackPowerUp : Equipment
             this.user = target;
             Debug.Log("플레이어 공격력 +" + variation * 100 +"% 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.increasedAttackPower += variation;
+            plyaerStats.AttackPower.IncreasedValue += variation;
         }
     }
 
@@ -26,7 +26,7 @@ public class AttackPowerUp : Equipment
         if (target.tag == "Player")
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.increasedAttackPower -= variation;
+            plyaerStats.AttackPower.IncreasedValue -= variation;
             this.user = null;
         }
     }

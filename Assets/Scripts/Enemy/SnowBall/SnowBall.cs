@@ -40,7 +40,7 @@ public class SnowBall : EnemyBasic
         }
 
         transform.localScale = new Vector3(snowBallStatus.size, snowBallStatus.size, 1f);
-        enemyStats.increasedAttackPower = snowBallStatus.size - 1f;
+        enemyStats.AttackPower.IncreasedValue = snowBallStatus.size - 1f;
     }
 
     protected override void AttackPattern()
@@ -56,7 +56,7 @@ public class SnowBall : EnemyBasic
         // 돌진 전 준비
         snowBallStatus.isAttack = true;
         snowBallStatus.isAttackReady = false;
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,enemyStats.attackPower * snowBallStatus.size,20);
+        hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(10, 1, enemyStats.AttackPower, 20);
         yield return new WaitForSeconds(0.6f);
 
         hitEffects[0].gameObject.SetActive(true);

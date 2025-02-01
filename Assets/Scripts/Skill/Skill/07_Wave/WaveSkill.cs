@@ -13,7 +13,7 @@ public class WaveSkill : Skill
     [field: SerializeField] GameObject waveEffect;
     [field: SerializeField] int[] statusEffect;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine(Attack());
@@ -57,9 +57,9 @@ public class WaveSkill : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, false, -1,
-             defalutDamage + player.stats.attackPower * ratio,
-             0);
+            hitDetection.SetHit_Ratio(
+             defalutDamage , ratio, player.stats.AttackPower,
+             10);
             hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
 
@@ -92,9 +92,9 @@ public class WaveSkill : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 없음
             */
-            hitDetection.SetHitDetection(false, -1, false, -1,
-             defalutDamage + enemy.stats.attackPower * ratio,
-             0);
+            hitDetection.SetHit_Ratio(
+             defalutDamage, ratio, enemy.stats.SkillPower,
+             10);
             hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
 

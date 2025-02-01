@@ -92,7 +92,7 @@ public class GrapDeBuff : StatusEffect
             // 방해 저항
             if (Tick > 0.5f)
             {
-                KeyDownCount += (int)(1  + enemyBasic.stats.SEResist(2) * 10);
+                KeyDownCount += (int)(1  + enemyBasic.stats.SEResist[2].Value * 10);
                 Tick -= 0.5f;
             }
         }

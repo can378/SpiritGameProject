@@ -18,7 +18,7 @@ public class FireBallSkill : Skill
 
 
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine(Simulation());
@@ -95,7 +95,7 @@ public class FireBallSkill : Skill
             Effect.tag = "PlayerAttack";
             Effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + player.playerStats.skillPower * ratio, knockBack);
+            hitDetection.SetHit_Ratio(defalutDamage, ratio, player.playerStats.SkillPower, knockBack);
             hitDetection.SetSE(3);
             hitDetection.user = user;
             
@@ -115,7 +115,7 @@ public class FireBallSkill : Skill
             Effect.tag = "EnemyAttack";
             Effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
-            hitDetection.SetHitDetection(false, -1, false, -1, defalutDamage + enemy.stats.attackPower * ratio, knockBack);
+            hitDetection.SetHit_Ratio(defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
             hitDetection.SetSE(3);
             hitDetection.user = user;
         }

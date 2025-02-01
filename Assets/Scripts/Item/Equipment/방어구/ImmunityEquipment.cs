@@ -12,7 +12,7 @@ public class ImmunityEquipment : Equipment
         if (target.tag == "Player")
         {
             this.user = target;
-            user.stats.addSEResist[(int)ImmunBuffType]++;
+            user.stats.SEResist[(int)ImmunBuffType].AddValue++;
             Debug.Log(ImmunBuffType + "번호 디버프에 면역");
         }
     }
@@ -22,7 +22,7 @@ public class ImmunityEquipment : Equipment
     {
         if (target.tag == "Player")
         {
-            user.stats.addSEResist[(int)ImmunBuffType]--;
+            user.stats.SEResist[(int)ImmunBuffType].AddValue--;
             this.user = null;
         }
     }

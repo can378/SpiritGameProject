@@ -22,7 +22,7 @@ public class ThunderboltSkill : Skill
     //소환 범위 시뮬
     GameObject simul;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine("Attack");
@@ -39,7 +39,7 @@ public class ThunderboltSkill : Skill
             skillCoolTime = 99;
 
             // 먼저 속도 감소
-            player.stats.decreasedMoveSpeed += 99f;
+            player.stats.MoveSpeed.DecreasedValue += 99f;
 
             // 사용자 위치에 생성
             if (simul != null)
@@ -63,8 +63,8 @@ public class ThunderboltSkill : Skill
                 effect.tag = "PlayerAttack";
                 effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
-                hitDetection.SetHitDetection(false, -1, false, -1,
-                defaultDamage + player.playerStats.skillPower * ratio,
+                hitDetection.SetHit_Ratio(
+                defaultDamage, ratio, player.playerStats.SkillPower,
                 knockBack);
                 hitDetection.SetSEs(statusEffect);
 
@@ -82,7 +82,7 @@ public class ThunderboltSkill : Skill
             skillCoolTime = 99;
 
             // 먼저 속도 감소
-            enemy.stats.decreasedMoveSpeed += 99f;
+            enemy.stats.MoveSpeed.DecreasedValue += 99f;
 
             
 
@@ -108,8 +108,8 @@ public class ThunderboltSkill : Skill
                 effect.tag = "EnemyAttack";
                 effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
-                hitDetection.SetHitDetection(false, -1, false, -1,
-                defaultDamage,
+                hitDetection.SetHit_Ratio(
+                defaultDamage,ratio, enemy.stats.SkillPower,
                 knockBack);
                 hitDetection.SetSEs(statusEffect);
                 hitDetection.user = user;
@@ -151,7 +151,7 @@ public class ThunderboltSkill : Skill
             // 쿨타임 적용
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
-            player.stats.decreasedMoveSpeed -= 99f;
+            player.stats.MoveSpeed.DecreasedValue -= 99f;
         }
         else if (user.tag == "Enemy")
         {
@@ -167,7 +167,7 @@ public class ThunderboltSkill : Skill
             // 쿨타임 적용
             skillCoolTime = skillDefalutCoolTime;
 
-            enemy.stats.decreasedMoveSpeed -= 99f;
+            enemy.stats.MoveSpeed.DecreasedValue -= 99f;
         }
     }
 

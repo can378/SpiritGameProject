@@ -15,7 +15,7 @@ public class HealSkill : Skill
     //이펙트
     GameObject effect;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine(HealCoroutine());
@@ -30,7 +30,7 @@ public class HealSkill : Skill
             Player player = this.user.GetComponent<Player>();
 
             // 먼저 속도 감소
-            player.stats.decreasedMoveSpeed += 0.9f;
+            player.stats.MoveSpeed.DecreasedValue += 0.9f;
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -54,7 +54,7 @@ public class HealSkill : Skill
             float timer = 0;
 
             // 먼저 속도 감소
-            enemy.stats.decreasedMoveSpeed += 0.9f;
+            enemy.stats.MoveSpeed.DecreasedValue += 0.9f;
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -85,14 +85,14 @@ public class HealSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            player.stats.decreasedMoveSpeed -= 0.9f;
+            player.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
-            enemy.stats.decreasedMoveSpeed -= 0.9f;
+            enemy.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = skillDefalutCoolTime;
         }
     }
@@ -106,14 +106,14 @@ public class HealSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            player.stats.decreasedMoveSpeed -= 0.9f;
+            player.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
-            enemy.stats.decreasedMoveSpeed -= 0.9f;
+            enemy.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = skillDefalutCoolTime;
         }
     }

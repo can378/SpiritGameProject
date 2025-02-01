@@ -24,7 +24,7 @@ public class Tiger_tiger : EnemyBasic
 
         //hunt
         yield return new WaitForSeconds(3f);
-        rigid.AddForce(enemyStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 100);
+        rigid.AddForce(enemyStatus.targetDirVec * GetComponent<EnemyStats>().MoveSpeed.Value * 100);
         yield return new WaitForSeconds(2f);
         rigid.velocity = new Vector2(0, 0);
 
@@ -35,7 +35,7 @@ public class Tiger_tiger : EnemyBasic
         while (enemyStatus.targetDis > 2f)
         {
             enemyStatus.targetDirVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
-            rigid.AddForce(enemyStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed*50);
+            rigid.AddForce(enemyStatus.targetDirVec * GetComponent<EnemyStats>().MoveSpeed.Value*50);
             enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
             yield return new WaitForSeconds(0.1f);
         }
@@ -78,7 +78,7 @@ public class Tiger_tiger : EnemyBasic
             collision.gameObject.SetActive(false);
             //stronger
             //???????????????????
-            GetComponent<EnemyStats>().defaultMoveSpeed += 5;
+            GetComponent<EnemyStats>().MoveSpeed.AddValue += 5;
         }
         if (collision.tag == "PlayerAttack")
         {

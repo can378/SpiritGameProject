@@ -149,14 +149,14 @@ public class MapUIManager : MonoBehaviour
         // 아니면 final 씬 에서 설정을 안해서 일 듯
 
         InvenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
-        InvenStatsValueTxt[1].text = Player.instance.playerStats.attackPower.ToString();
+        InvenStatsValueTxt[1].text = Player.instance.playerStats.AttackPower.Value.ToString();
         InvenStatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
-        InvenStatsValueTxt[3].text = (Player.instance.playerStats.criticalChance * 100).ToString() + " %";
-        InvenStatsValueTxt[4].text = (Player.instance.playerStats.criticalDamage * 100).ToString() + " %";
-        InvenStatsValueTxt[5].text = Player.instance.playerStats.skillPower.ToString();
+        InvenStatsValueTxt[3].text = (Player.instance.playerStats.CriticalChance.Value * 100).ToString() + " %";
+        InvenStatsValueTxt[4].text = (Player.instance.playerStats.CriticalDamage.Value * 100).ToString() + " %";
+        InvenStatsValueTxt[5].text = Player.instance.playerStats.SkillPower.ToString();
         InvenStatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
-        InvenStatsValueTxt[7].text = (Player.instance.playerStats.defensivePower * 100).ToString() + " %";
-        InvenStatsValueTxt[8].text = Player.instance.playerStats.moveSpeed.ToString();
+        InvenStatsValueTxt[7].text = (Player.instance.playerStats.DefensivePower.Value * 100).ToString() + " %";
+        InvenStatsValueTxt[8].text = Player.instance.playerStats.MoveSpeed.ToString();
         
     }
 

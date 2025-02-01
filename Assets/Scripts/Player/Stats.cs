@@ -1,6 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+
+[System.Serializable]
+public class Stat
+{
+    [Header("최종값")]
+    [field: SerializeField, ReadOnly] float _Value;
+    [Header("기본값")]
+    [field: SerializeField] float _DefalutValue;
+    float _MaxValue;
+    float _MinValue;
+    [Header("수정값")]
+    [field: SerializeField, ReadOnly] float _AddValue;
+    [field: SerializeField, ReadOnly] float _IncreasedValue;
+    [field: SerializeField, ReadOnly] float _DecreasedValue;
+
+    public Stat(float _DefalutValue, float _MaxValue = float.MaxValue, float _MinValue = float.MinValue)
+    {
+        this._DefalutValue = _DefalutValue;
+        this._MaxValue = _MaxValue;
+        this._MinValue = _MinValue;
+    }
+
+    public void SetDefaultValue(float _DefalutValue) { this._DefalutValue = _DefalutValue; }
+
+    public void ResetValue()
+    {
+        _Value = Mathf.Clamp((_DefalutValue + _AddValue) * (1f + _IncreasedValue) * (1f - _DecreasedValue), _MinValue, _MaxValue);
+    }
+
+    public float Value
+    {
+        get
+        {
+            ResetValue();
+            return _Value;
+        }
+    }
+
+    public float AddValue
+    {
+        get {return _AddValue;}
+        set
+        {
+            _AddValue = value;
+            ResetValue();
+        }
+    }
+
+    public float IncreasedValue
+    {
+        get { return _IncreasedValue; }
+        set
+        {
+            _IncreasedValue = value;
+            ResetValue();
+        }
+    }
+
+    public float DecreasedValue
+    {
+        get { return _DecreasedValue; }
+        set
+        {
+            _DecreasedValue = value;
+            ResetValue();
+        }
+    }
+
+}
 
 public class Stats : MonoBehaviour
 {
@@ -23,54 +93,33 @@ public class Stats : MonoBehaviour
     // UI : 방어력 0%
     // 받는 피해 = 피해량 * 방어력
     // 최소 -50%, 최대 50%
-    [field: SerializeField] public float defaultDefensivePower { get; set; } = 0f;
-    public float addDefensivePower { get; set; }
-    public float increasedDefensivePower { get; set; }
-    public float decreasedDefensivePower { get; set; }
-    public float defensivePower
-    {
-        get { return Mathf.Clamp((defaultDefensivePower + addDefensivePower) * (1f + increasedDefensivePower) * (1f - decreasedDefensivePower), -0.5f, 0.5f); }
-    }
+    [field: SerializeField] public Stat DefensivePower = new Stat(0.0f,0.5f,-0.5f);
 
     // 상태이상 저항
     // UI : 상태이상 저항 0%
     // 상태이상 효과 = 지속시간 또는 피해량 * 상태이상 저항
     // 최소 -75%, 최대 75%
-    [field: SerializeField] public float[] defaultSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
-    public float[] addSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
-    public float[] increasedSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
-    public float[] decreasedSEResist { get; set; } = new float[(int)BuffType.SPECIAL];
-    public float SEResist(int index)
-    {
-        return Mathf.Clamp((defaultSEResist[index] + addSEResist[index]) * (1f + increasedSEResist[index]) * (1f - decreasedSEResist[index]), -1f, 1f);
-    }
+    [field: SerializeField] public Stat[] SEResist { get; set; } = new Stat[(int)BuffType.SPECIAL];
 
     // Attack
     // 공격력
     // UI : 공격력 0
     // 기본 공격 피해량 = 공격력
     // 최소 0
-    [field: SerializeField] public float defaultAttackPower { get; set; } = 0f;
-    public float addAttackPower { get; set; }
-    public float increasedAttackPower { get; set; }
-    public float decreasedAttackPower { get; set; }
-    public float attackPower
-    {
-        get{ return Mathf.Clamp((defaultAttackPower + addAttackPower) * (1f + increasedAttackPower) * (1f - decreasedAttackPower), 0, 9999f); }
-    }
+    [field: SerializeField] public Stat AttackPower = new Stat(0.0f, float.MaxValue, 0);
+
+    // Skill
+    // SkillPower
+    // UI 도력 0
+    // 도술 피해량 = 도술 기본 피해량 + 도력 * 스킬 계수
+    // 최소 0
+    [field: SerializeField] public Stat SkillPower = new Stat(0.0f, float.MaxValue, 0);
 
     // Speed
     // 이동 속도 5
     // 이동 속도 = 이동속도
     // 최소 0
-    [field: SerializeField] public float defaultMoveSpeed { get; set; } = 5f;
-    public float addMoveSpeed { get; set; }
-    public float increasedMoveSpeed { get; set; }
-    public float decreasedMoveSpeed { get; set; }
-    public float moveSpeed
-    {
-        get { return Mathf.Clamp((defaultMoveSpeed + addMoveSpeed) * (1f + increasedMoveSpeed) * (1f - decreasedMoveSpeed), 0, 20f); }
-    }
+    [field: SerializeField] public Stat MoveSpeed = new Stat(5f, float.MaxValue, 0);
 
     [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
 }

@@ -25,7 +25,9 @@ public class ASDeBuff : StatusEffect
             overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
+
+            float Resist = (int)buffType < (int)BuffType.SPECIAL ? stats.SEResist[(int)buffType].Value : 0;
+            duration = (1 - Resist) * defaultDuration;
 
         }
         else if (target.tag == "Enemy")

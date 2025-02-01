@@ -7,8 +7,8 @@ public class BossBaby : Boss
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, RushHitArea,None };
-
+    enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, RushHitArea, None };
+ 
     public new AnimJukqwi enemyAnim;
 
     private GameObject floor;
@@ -33,6 +33,16 @@ public class BossBaby : Boss
 
         enemyStatus.isAttackReady = true;
         bounds = floor.GetComponent<Collider2D>().bounds;
+
+
+        // 공격 판정 초기화
+
+        hitEffects[(int)BossBabyHitEffect.RushHitArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.AttackPower, 100);
+
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 0.2f, stats.AttackPower, 20);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 2);
+
+        hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
     }
 
     protected override void MovePattern()
@@ -53,19 +63,25 @@ public class BossBaby : Boss
 
     IEnumerator StartAttack()
     {
-        switch (patternIndex%5)
+        int Pattern = patternIndex++;
+        switch (Pattern % 5)
         { 
-            case 0: yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); break;
+            case 0:
+                RemoveDisarm();
+                yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); 
+                break;
             case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
             case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
-            case 3: yield return enemyStatus.attackCoroutine = StartCoroutine(Crying()); break;
+            case 3: 
+                Disarm();
+                yield return enemyStatus.attackCoroutine = StartCoroutine(Crying());
+                break;
             case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding());break;
         }
-        patternIndex++;
         
     }
 
-#region 어른
+    #region 어른
 
     IEnumerator Grap() 
     {
@@ -118,7 +134,7 @@ public class BossBaby : Boss
                 if(3.5 < time)
                 {
                     // 큰 피해와 잡기를 1초 후에 해제
-                    grapDeBuff.target.GetComponent<ObjectBasic>().Damaged(50);
+                    grapDeBuff.target.GetComponent<ObjectBasic>().Damaged(stats.AttackPower.Value);
                     break;
                 }
 
@@ -148,6 +164,7 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+
         while (time < 10.0f)
         {
             if (isHitWall)
@@ -182,8 +199,9 @@ public class BossBaby : Boss
 
         enemyAnim.animator.SetBool("isScream", true);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
+
         //플레이어 느려지게 만든다.
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         enemyAnim.animator.SetBool("isScream", false);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
@@ -222,15 +240,19 @@ public class BossBaby : Boss
         //start crying
         for (int i = 0; i < 50; i++)
         {
-            int DropCount = Random.Range(2,4);
+            int DropCount = Random.Range(2, 4);
             int PlayerPos = Random.Range(0, 5);
-            for(int j = 0; j < DropCount; ++j)
+            Vector2 DropPos;
+            for (int j = 0; j < DropCount; ++j)
             {
-                StartCoroutine(DropTear());
+                DropPos = new (Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y));
+                StartCoroutine(DropTear(DropPos));
             }
             if(PlayerPos == 0)
-                StartCoroutine(DropTear_PlayerPos());
-
+            {
+                DropPos = enemyStatus.enemyTarget.position;
+                StartCoroutine(DropTear(DropPos));
+            }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }
 
@@ -240,39 +262,19 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = true;
     }
 
-    IEnumerator DropTear() 
+    IEnumerator DropTear(Vector2 _Pos) 
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
-        randomX = Random.Range(bounds.min.x, bounds.max.x);
-        randomY = Random.Range(bounds.min.y, bounds.max.y);
-
         GameObject thisTear = Instantiate(hitEffects[(int)BossBabyHitEffect.Tear]);
+        thisTear.GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
         thisTear.SetActive(true);
-        thisTear.transform.position=new Vector2(randomX, randomY);
+        thisTear.transform.position = _Pos;
 
         thisTear.GetComponent<SpriteRenderer>().color = Color.blue / 2.0f;
         yield return new WaitForSeconds(0.5f);
         
-        thisTear.GetComponent<Collider2D>().enabled = true;
-        thisTear.GetComponent<SpriteRenderer>().color = Color.red / 2.0f;
-        yield return new WaitForSeconds(0.5f);
-        Destroy(thisTear);
-    }
-
-    IEnumerator DropTear_PlayerPos()
-    {
-        enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
-
-        GameObject thisTear = Instantiate(hitEffects[(int)BossBabyHitEffect.Tear]);
-        thisTear.SetActive(true);
-        thisTear.transform.position = enemyStatus.enemyTarget.position;
-
-        thisTear.GetComponent<SpriteRenderer>().color = Color.blue / 2.0f;
-        yield return new WaitForSeconds(0.5f);
-
         thisTear.GetComponent<Collider2D>().enabled = true;
         thisTear.GetComponent<SpriteRenderer>().color = Color.red / 2.0f;
         yield return new WaitForSeconds(0.5f);
@@ -344,6 +346,16 @@ public class BossBaby : Boss
 
 
     }
+
+    void Disarm()
+    {
+        enemyStatus.enemyTarget.GetComponent<ObjectBasic>().ApplyBuff(10);
+    }
+    void RemoveDisarm()
+    {
+        enemyStatus.enemyTarget.GetComponent<ObjectBasic>().RemoveBuff(10);
+    }
+
 
     #endregion 응애
 

@@ -55,8 +55,8 @@ public class InventoryThief : EnemyBasic
         yield return new WaitForSeconds(0.3f);
 
         hitDetection = stealArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
+        hitDetection.user = this;
+        hitDetection.SetHit_Ratio(10, 1, enemyStats.AttackPower);
         stealArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         stealArea.SetActive(true);
         yield return new WaitForSeconds(0.7f);

@@ -12,6 +12,7 @@ public class ObjectBasic : MonoBehaviour
     public int defaultLayer;
     public Transform buffTF;
     public GameObject animGameObject;
+    HashSet<int> ReceivedAttackID = new HashSet<int>();
 
     [HideInInspector] AnimBasic animBasic;
     [HideInInspector] public SpriteRenderer[] sprites;
@@ -32,29 +33,52 @@ public class ObjectBasic : MonoBehaviour
 
     #region BeAttacked
 
+    bool DuplicateAttack(int _AttackID)
+    {
+        // 중복 될 시 True 반환
+        if(ReceivedAttackID.Contains(_AttackID))
+            return true;
+
+        ReceivedAttackID.Add(_AttackID);
+        StartCoroutine(RemoveAttackID(_AttackID));
+        return false;
+    }
+
+    private IEnumerator RemoveAttackID(int _AttackID)
+    {
+        yield return new WaitForSeconds(0.5f); // 0.5초 후 다시 피격 가능
+        ReceivedAttackID.Remove(_AttackID);
+    }
+
     public void BeAttacked(HitDetection hitDetection)
     {
+        if(DuplicateAttack(hitDetection.AttackID))
+            return;
+
         if (status.isInvincible)
             return;
 
         status.isBeAttaked = true;
 
-       
-        bool criticalHit = Damaged(hitDetection.damage, hitDetection.critical, hitDetection.criticalDamage);
+        bool criticalHit = false;
+        if (hitDetection.critical == null || hitDetection.criticalDamage == null)
+            criticalHit = Damaged(hitDetection.Damage);
+        else
+            criticalHit = Damaged(hitDetection.Damage, hitDetection.critical.Value, hitDetection.criticalDamage.Value);
 
         // if enemy is Dead, Don't Flinch and Buff
         if(stats.HP <= 0)
             return;
 
 
-        if (DamagedPoise(hitDetection.damage))
+        if (DamagedPoise(hitDetection.Damage))
         {
-            Debug.Log(gameObject.name + ":Flinch");
+            //Debug.Log(gameObject.name + ":Flinch");
             SetFlinch(0.5f);
 
             // 공격을 한 주인이 있다면 그 대상을 중심으로
             if(hitDetection.user != null)
-                KnockBack(hitDetection.user, hitDetection.knockBack);
+                KnockBack(hitDetection.user.gameObject, hitDetection.knockBack);
             else
                 KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
@@ -104,9 +128,10 @@ public class ObjectBasic : MonoBehaviour
 
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
+        Debug.Log(name + " : " + damage);
 
         //Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
-        stats.HP = Mathf.Min(stats.HP - ((1 - stats.defensivePower) * damage), stats.HPMax);
+        stats.HP = Mathf.Min(stats.HP - ((1 - stats.DefensivePower.Value) * damage), stats.HPMax);
 
         if(stats.HP <= 0)
             Dead();
@@ -142,7 +167,7 @@ public class ObjectBasic : MonoBehaviour
         if(status.isInvincible || status.isSuperArmor)
             return false;
 
-        stats.poise = Mathf.Min(stats.poise - ((1 - stats.defensivePower) * damage), stats.poiseMax);
+        stats.poise = Mathf.Min(stats.poise - ((1 - stats.DefensivePower.Value) * damage), stats.poiseMax);
 
         if(stats.poise <= 0)
         {
@@ -170,7 +195,7 @@ public class ObjectBasic : MonoBehaviour
     public void KnockBack(GameObject agent, float knockBack)
     {
         Vector2 dir = (transform.position - agent.transform.position).normalized;
-        rigid.AddForce(dir * (knockBack * (1 - stats.defensivePower)), ForceMode2D.Impulse);
+        rigid.AddForce(dir * (knockBack * (1 - stats.DefensivePower.Value)), ForceMode2D.Impulse);
     }
 
     public void SetFlinch(float time = 0)
@@ -234,7 +259,7 @@ public class ObjectBasic : MonoBehaviour
         if (status.isInvincible)
             return null;
 
-        StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffId").GetValue(x) == buffIndex);
+        StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffID").GetValue(x) == buffIndex);
 
         if (statusEffect)
         {
@@ -251,6 +276,18 @@ public class ObjectBasic : MonoBehaviour
         stats.activeEffects.Add(statusEffect);
 
         return statusEffect;
+    }
+
+    public void RemoveBuff(int buffIndex)
+    {
+        StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffID").GetValue(x) == buffIndex);
+
+        if (statusEffect)
+        {
+            statusEffect.Remove();                                  // 버프 해제
+            Destroy(statusEffect.gameObject);                       // 버프 아이콘 삭제
+            stats.activeEffects.Remove(statusEffect);               // 리스트에서 제거
+        }
     }
 
     protected void SEProgress()
@@ -271,24 +308,6 @@ public class ObjectBasic : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator RemoveEffectAfterDuration(StatusEffect effect)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f);
-            effect.duration -= 0.1f;
-            if (effect.duration <= 0)
-            {
-                break;
-            }
-        }
-        effect.RemoveEffect();
-        stats.activeEffects.Remove(effect);
-
-        Destroy(effect.gameObject);
-    }
-    */
     public void RemoveAllEffects()
     {
         foreach (StatusEffect effect in stats.activeEffects)

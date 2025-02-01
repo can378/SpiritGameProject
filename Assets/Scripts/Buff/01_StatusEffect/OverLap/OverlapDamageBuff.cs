@@ -20,7 +20,7 @@ public class OverlapDamageBuff : StatusEffect
     {
         Stats stats = target.GetComponent<Stats>();
 
-        maxOverlap = DefaultMaxOverlap + (int)(stats.SEResist((int)buffType) * 10);
+        maxOverlap = DefaultMaxOverlap + (int)(stats.SEResist[(int)buffType].Value * 10);
 
         overlap = overlap < maxOverlap ? overlap + 1 : maxOverlap;
         overlapText.text = overlap > 1 ? overlap.ToString() : null;

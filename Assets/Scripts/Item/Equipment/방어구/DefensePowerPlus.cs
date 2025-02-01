@@ -15,7 +15,7 @@ public class DefensivePowerPlus : Equipment
             this.user = target;
             Debug.Log("플레이어 방어력+" + variation * 100 + "%p 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addDefensivePower += variation;
+            plyaerStats.DefensivePower.AddValue += variation;
         }
     }
 
@@ -24,7 +24,7 @@ public class DefensivePowerPlus : Equipment
         if (target.tag == "Player")
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addDefensivePower -= variation;
+            plyaerStats.DefensivePower.AddValue -= variation;
             this.user = null;
         }
     }

@@ -44,7 +44,7 @@ public class BossIceGeneral : EnemyBasic
                     for (int i = 0; i < 5; i++)
                     {
                         enemyStatus.targetDirVec=enemyStatus.enemyTarget.transform.position - transform.position;
-                        rigid.AddForce(enemyStatus.targetDirVec*GetComponent<EnemyStats>().defaultMoveSpeed, ForceMode2D.Impulse);
+                        rigid.AddForce(enemyStatus.targetDirVec*GetComponent<EnemyStats>().MoveSpeed.Value, ForceMode2D.Impulse);
                         print("sword swing!!");
                         yield return new WaitForSeconds(0.1f);
                     }

@@ -24,7 +24,7 @@ public class SlashSkill : Skill
     float holdPower;
     GameObject simul;
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         this.user = user;
         StartCoroutine(Simulation());
@@ -37,7 +37,7 @@ public class SlashSkill : Skill
             Player player = user.GetComponent<Player>();
             float powerTimer = 0;
 
-            player.stats.decreasedMoveSpeed += 0.5f;
+            player.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
             simul = Instantiate(slashEffectSimul, user.gameObject.transform.position, Quaternion.identity);
@@ -64,7 +64,7 @@ public class SlashSkill : Skill
             float timer = 0;
             float powerTimer = 0;
 
-            enemy.stats.decreasedMoveSpeed += 0.5f;
+            enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
             simul = Instantiate(slashEffectSimul, user.gameObject.transform.position, Quaternion.identity);
@@ -94,7 +94,7 @@ public class SlashSkill : Skill
         // 시뮬 삭제
         // 이동 속도 회복
         Destroy(simul);
-        user.GetComponent<Stats>().decreasedMoveSpeed -= 0.5f;
+        user.GetComponent<Stats>().MoveSpeed.DecreasedValue -= 0.5f;
     }
 
     public override void Exit()
@@ -114,7 +114,7 @@ public class SlashSkill : Skill
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             float attackRate = weapon.SPA / player.playerStats.attackSpeed;                               // 공격 1회당 걸리는 시간
 
-            player.stats.decreasedMoveSpeed -= 0.5f;
+            player.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
             // 쿨타임 적용
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
@@ -136,11 +136,12 @@ public class SlashSkill : Skill
             치뎀 = 플레이어 치뎀
             디버프 = 무기 상태이상
             */
-            hitDetection.SetHitDetection(true, -1, true, (int)((float)DPS / attackRate),
-                (int)((defalutDamage + player.stats.attackPower * ratio) * holdPower),
+            hitDetection.SetHit_Ratio(
+                defalutDamage * holdPower, ratio * holdPower, player.stats.AttackPower,
                 player.weaponList[player.playerStats.weapon].knockBack * holdPower,
-                player.playerStats.criticalChance,
-                player.playerStats.criticalDamage);
+                player.playerStats.CriticalChance,
+                player.playerStats.CriticalDamage);
+            hitDetection.SetMultiHit(true, (int)((float)DPS / attackRate));
             hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
             bulletRigid.velocity = player.playerStatus.mouseDir * 10 * speed;
@@ -156,7 +157,7 @@ public class SlashSkill : Skill
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             float angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
 
-            enemy.stats.decreasedMoveSpeed -= 0.5f;
+            enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
             // 쿨타임 적용
             skillCoolTime = skillDefalutCoolTime;
@@ -177,9 +178,8 @@ public class SlashSkill : Skill
             치뎀 = 0
             디버프 = 0
             */
-            hitDetection.SetHitDetection(true, -1, true, DPS,
-                (int)((defalutDamage + enemy.stats.attackPower * ratio) * holdPower),
-                1 * holdPower);
+            hitDetection.SetHit_Ratio(defalutDamage, ratio, enemy.stats.AttackPower, 1 * holdPower);
+            hitDetection.SetMultiHit(true,DPS);
             hitDetection.user = user;
             bulletRigid.velocity = (enemy.enemyStatus.enemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
 

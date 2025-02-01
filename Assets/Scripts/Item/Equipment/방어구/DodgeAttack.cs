@@ -21,7 +21,7 @@ public class DodgeAttack : Equipment
 
         if(!dodgeHitBox.activeSelf && user.playerStatus.isDodge)
         {
-            dodgeHitBox.GetComponent<HitDetection>().SetHitDetection(false,-1,false,-1,user.playerStats.attackPower * 0.1f + 1,10);
+            dodgeHitBox.GetComponent<HitDetection>().SetHit_Ratio(5,10.0f, user.playerStats.DefensivePower);
             dodgeHitBox.SetActive(true);
         }
         else if(dodgeHitBox.activeSelf && !user.playerStatus.isDodge)

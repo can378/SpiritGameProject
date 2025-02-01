@@ -15,7 +15,7 @@ public class SkillPowerPlus : Equipment
             this.user = target;
             Debug.Log("플레이어 도력 +" + variation + " 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addSkillPower += variation;
+            plyaerStats.SkillPower.AddValue += variation;
         }
     }
 
@@ -25,7 +25,7 @@ public class SkillPowerPlus : Equipment
         if (target.tag == "Player")
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addSkillPower -= variation;
+            plyaerStats.SkillPower.AddValue -= variation;
             this.user = null;
         }
     }

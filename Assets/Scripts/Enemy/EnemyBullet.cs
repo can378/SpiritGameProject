@@ -21,7 +21,7 @@ public class EnemyBullet : MonoBehaviour
 
         //플레이어쪽으로 발사
         Vector2 direction = playerPos.position- transform.position;
-        transform.Translate(direction * stats.defaultMoveSpeed * Time.deltaTime);  
+        transform.Translate(direction * stats.MoveSpeed.Value * Time.deltaTime);  
     }
 
     // private void OnTriggerEnter2D(Collider2D collision)

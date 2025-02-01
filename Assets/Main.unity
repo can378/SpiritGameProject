@@ -2594,15 +2594,65 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 8
+  DefensivePower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillPower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefalutValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   activeEffects: []
-  <defaultCriticalChance>k__BackingField: 0
-  <defaultCriticalDamage>k__BackingField: 1.5
+  CriticalChance:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <CriticalDamage>k__BackingField:
+    _Value: 0
+    _DefalutValue: 1.5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <defaultAttackSpeed>k__BackingField: 1
-  <defaultSkillPower>k__BackingField: 0
   <defaultSkillCoolTime>k__BackingField: 0
   <defaultDodgeSpeed>k__BackingField: 0.66
   <defaultDodgeTime>k__BackingField: 0.4
@@ -11296,7 +11346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: statusEffectList.Array.size
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: SelectItemList.Array.data[0]
@@ -11642,6 +11692,10 @@ PrefabInstance:
       propertyPath: statusEffectList.Array.data[9]
       value: 
       objectReference: {fileID: 5535729302175816803, guid: b5b5f37566d8a2a4c9fae0f0310ad4bd, type: 3}
+    - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
+      propertyPath: statusEffectList.Array.data[10]
+      value: 
+      objectReference: {fileID: 5535729302175816803, guid: e8ad40ea8dec2874e9e4be8be0a1d2a9, type: 3}
     - target: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
       propertyPath: SelectItemList.m_List.Array.size
       value: 12

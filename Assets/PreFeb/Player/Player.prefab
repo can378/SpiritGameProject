@@ -286,7 +286,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &320829814975973146
 CapsuleCollider2D:
@@ -456,19 +456,65 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField:
-  - 0
-  - 0
-  - 0
-  - 0
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 8
+  DefensivePower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillPower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefalutValue: 10
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   activeEffects: []
-  <defaultCriticalChance>k__BackingField: 0
-  <defaultCriticalDamage>k__BackingField: 1.5
+  CriticalChance:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <CriticalDamage>k__BackingField:
+    _Value: 0
+    _DefalutValue: 1.5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <defaultAttackSpeed>k__BackingField: 1
-  <defaultSkillPower>k__BackingField: 0
   <defaultSkillCoolTime>k__BackingField: 0
   <defaultDodgeSpeed>k__BackingField: 0.66
   <defaultDodgeTime>k__BackingField: 0.3
@@ -654,10 +700,9 @@ MonoBehaviour:
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
+  <DefaultDamage>k__BackingField: 0
+  <Ratio>k__BackingField: 0
   <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <isShake>k__BackingField: 0
   multiHitDurationTime: 0
@@ -819,10 +864,9 @@ MonoBehaviour:
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
+  <DefaultDamage>k__BackingField: 0
+  <Ratio>k__BackingField: 0
   <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <isShake>k__BackingField: 0
   multiHitDurationTime: 0
@@ -1100,10 +1144,9 @@ MonoBehaviour:
   <penetrations>k__BackingField: 0
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
+  <DefaultDamage>k__BackingField: 0
+  <Ratio>k__BackingField: 0
   <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
   <isShake>k__BackingField: 0
   multiHitDurationTime: 0

@@ -18,8 +18,8 @@ public class GrowthDeBuff : StatusEffect
         Stats stats = target.GetComponent<Stats>();
 
         // 효과 잠시 제거
-        stats.increasedAttackPower -= overlap * increasedStat;
-        stats.increasedMoveSpeed -= overlap * increasedStat;
+        stats.AttackPower.IncreasedValue -= overlap * increasedStat;
+        stats.MoveSpeed.IncreasedValue -= overlap * increasedStat;
         target.transform.localScale = new Vector3(1,1,1);
 
         // 중첩 
@@ -31,10 +31,10 @@ public class GrowthDeBuff : StatusEffect
         }
 
         // 저항에 따른 지속시간 적용
-        duration = (1 - stats.SEResist(buffId)) * defaultDuration;
+        duration = (1 - stats.SEResist[buffID].Value) * defaultDuration;
 
-        stats.increasedAttackPower += overlap * increasedStat;
-        stats.increasedMoveSpeed += overlap * increasedStat;
+        stats.AttackPower.IncreasedValue += overlap * increasedStat;
+        stats.MoveSpeed.IncreasedValue += overlap * increasedStat;
         target.transform.localScale = new Vector3(1 + overlap * increasedStat, 1 + overlap * increasedStat, 1 + overlap * increasedStat);
 
     }

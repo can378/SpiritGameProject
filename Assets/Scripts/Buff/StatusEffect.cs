@@ -11,7 +11,7 @@ public abstract class StatusEffect : MonoBehaviour
     [field: SerializeField] public string buffName { get; private set; }
     [field: SerializeField] public Image icon { get; private set; }
     [field: SerializeField] public GameObject target { get; private set; }
-    [field: SerializeField] public int buffId { get; private set; }
+    [field: SerializeField] public int buffID { get; private set; }
     [field: SerializeField] public BuffType buffType { get; private set; }
     [field: SerializeField] public float defaultDuration { get; private set; }          // 기본 시간
     [field: SerializeField] public float duration {get; set; }                          // 시간

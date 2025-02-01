@@ -80,8 +80,8 @@ public class Mouse : EnemyBasic
         yield return new WaitForSeconds(0.5f);
 
         hitDetection = biteArea.GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
+        hitDetection.user = this;
+        hitDetection.SetHit_Ratio(1, 1, enemyStats.AttackPower);
         biteArea.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         biteArea.SetActive(true);
         yield return new WaitForSeconds(0.5f);
@@ -103,7 +103,7 @@ public class Mouse : EnemyBasic
 
         yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
 
-        skillList[skill].Enter(gameObject);
+        skillList[skill].Enter(this);
 
         yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
 
@@ -136,7 +136,7 @@ public class Mouse : EnemyBasic
 
             //Run away
             enemyStatus.targetDirVec = enemyStatus.hitTarget.transform.position - transform.position;
-            rigid.AddForce(-enemyStatus.targetDirVec * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+            rigid.AddForce(-enemyStatus.targetDirVec * GetComponent<EnemyStats>().MoveSpeed.Value * 10);
         }
     }
 

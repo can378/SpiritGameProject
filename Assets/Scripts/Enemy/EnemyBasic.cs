@@ -29,7 +29,7 @@ public class EnemyBasic : ObjectBasic
         foreach (GameObject hitEffect in hitEffects)
         {
             if (hitEffect.GetComponent<HitDetection>())
-                hitEffect.GetComponent<HitDetection>().user = this.gameObject;
+                hitEffect.GetComponent<HitDetection>().user = this;
         }
 
         defaultLayer = this.gameObject.layer;
@@ -118,19 +118,19 @@ public class EnemyBasic : ObjectBasic
         }
         else if (enemyStatus.isAttack)
         {
-            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
             return;
         }
         else if (enemyStatus.isRun)
         {
             Run();
-            rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
             return;
         }
 
         MovePattern();
 
-        rigid.velocity = enemyStatus.moveVec * stats.moveSpeed;
+        rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
 
     }
 

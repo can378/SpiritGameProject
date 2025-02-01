@@ -15,7 +15,7 @@ public class MoveSpeedPlus : Equipment
             this.user = target;
             Debug.Log("플레이어 이동속도 +" + variation + " 증가");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addMoveSpeed += variation;
+            plyaerStats.MoveSpeed.AddValue += variation;
         }
     }
 
@@ -25,7 +25,7 @@ public class MoveSpeedPlus : Equipment
         if (target.tag == "Player")
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addMoveSpeed -= variation;
+            plyaerStats.MoveSpeed.AddValue -= variation;
             this.user = null;
         }
     }

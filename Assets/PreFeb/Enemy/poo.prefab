@@ -79,19 +79,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 1000
-  <HP>k__BackingField: 1000
+  <HPMax>k__BackingField: 10
+  <HP>k__BackingField: 10
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 1
   <poise>k__BackingField: 1
-  <defaultDefensivePower>k__BackingField: 0.5
-  <defaultSEResist>k__BackingField:
-  - 0
-  - 0
-  - 0
-  - 0
-  <defaultAttackPower>k__BackingField: 2
-  <defaultMoveSpeed>k__BackingField: 1
+  DefensivePower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefalutValue: 10
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillPower:
+    _Value: 0
+    _DefalutValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefalutValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   activeEffects: []
   enemyName: "\uB625"
   detectionDis: 10
@@ -401,17 +438,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 0}
+  <AttackID>k__BackingField: 0
+  user: {fileID: 4425346596907691044}
   <isProjectile>k__BackingField: 0
   <penetrations>k__BackingField: -1
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField: -1
-  <damage>k__BackingField: 5
+  <DefaultDamage>k__BackingField: 0
+  <Ratio>k__BackingField: 0
   <knockBack>k__BackingField: 5
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 04000000
-  <isShake>k__BackingField: 0
   multiHitDurationTime: 0
 --- !u!1 &7940180268011986199
 GameObject:

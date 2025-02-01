@@ -28,9 +28,9 @@ public class Worm : EnemyBasic
         
 
         //player move slowly
-        enemyStatus.enemyTarget.GetComponent<PlayerStats>().decreasedMoveSpeed += 0.5f;
+        enemyStatus.enemyTarget.GetComponent<PlayerStats>().MoveSpeed.DecreasedValue += 0.5f;
         yield return new WaitForSeconds(3f);
-        enemyStatus.enemyTarget.GetComponent<PlayerStats>().decreasedMoveSpeed -= 0.5f;
+        enemyStatus.enemyTarget.GetComponent<PlayerStats>().MoveSpeed.DecreasedValue -= 0.5f;
         Destroy(this.gameObject);
 
     }

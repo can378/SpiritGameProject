@@ -42,8 +42,8 @@ public class WhiteFox : EnemyBasic
         yield return new WaitForSeconds(1f);
 
         hitDetection = hitEffects[0].GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 10);
+        hitDetection.user = this;
+        hitDetection.SetHit_Ratio(10, 1, enemyStats.AttackPower);
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].SetActive(true);
         yield return new WaitForSeconds(0.6f);
@@ -68,8 +68,9 @@ public class WhiteFox : EnemyBasic
 
         // 영역 활성화
         HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
-        hitDetection.user = this.gameObject;
-        hitDetection.SetHitDetection(false, -1, true, 3, enemyStats.attackPower * 0.5f, 0);
+        hitDetection.user = this;
+        hitDetection.SetHit_Ratio(1f, 0.1f,  enemyStats.SkillPower);
+        hitDetection.SetMultiHit(true, 10);
         hitDetection.SetSEs(blizzardDebuff);
         hitEffects[1].SetActive(true);
         yield return new WaitForSeconds(3f);

@@ -32,7 +32,7 @@ public class Pox : EnemyBasic
         yield return new WaitForSeconds(0.3f);
 
         enemyAnim.ChangeDirection(hitDir);
-        hitEffects[0].GetComponent<HitDetection>().SetHitDetection(false, -1, false, -1, enemyStats.attackPower, 5);
+        hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(10, 1, enemyStats.AttackPower);
         hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
         hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.2f);

@@ -16,7 +16,7 @@ public class RandomBoxSkill : Skill
     Transform rangeSimul;
 
 
-    public override void Enter(GameObject user)
+    public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
         StartCoroutine(Simulation());

@@ -24,7 +24,7 @@ public class StunDeBuff : StatusEffect
             overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - objectBasic.stats.SEResist((int)buffType)) * defaultDuration;
+            duration = (1 - objectBasic.stats.SEResist[(int)buffType].Value) * defaultDuration;
 
             // 효과 적용
             objectBasic.AttackCancle();

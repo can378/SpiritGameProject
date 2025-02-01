@@ -37,17 +37,17 @@ public class Tiger_head : EnemyBasic
         if (rightOrLeft > 0)
         {
             //move right
-            transform.Rotate(new Vector3(0, 0, -GetComponent<EnemyStats>().defaultMoveSpeed));
+            transform.Rotate(new Vector3(0, 0, -GetComponent<EnemyStats>().MoveSpeed.Value));
         }
         else if (rightOrLeft < 0)
         {
             //move left
-            transform.Rotate(new Vector3(0, 0, GetComponent<EnemyStats>().defaultMoveSpeed));
+            transform.Rotate(new Vector3(0, 0, GetComponent<EnemyStats>().MoveSpeed.Value));
         }
 
         if (isChaseTiger)
         {
-            rigid.AddForce(dir * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+            rigid.AddForce(dir * GetComponent<EnemyStats>().MoveSpeed.Value * 10);
             dir=(detectTiger.transform.position - transform.position).normalized;
             yield return new WaitForSeconds(0.1f);
         }
@@ -65,7 +65,7 @@ public class Tiger_head : EnemyBasic
                     dir += new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
                     isHit = false;
                 }
-                rigid.AddForce(dir * GetComponent<EnemyStats>().defaultMoveSpeed * 10);
+                rigid.AddForce(dir * GetComponent<EnemyStats>().MoveSpeed.Value * 10);
                 yield return new WaitForSeconds(0.1f);
 
             }

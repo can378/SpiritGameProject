@@ -22,17 +22,17 @@ public class PowerDeBuff : StatusEffect
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
 
             // 효과 잠시 제거
-            playerStats.decreasedAttackPower -= overlap * decreasedAttackPower;
-            playerStats.decreasedSkillPower -= overlap * decreasedSkillPower;
+            playerStats.AttackPower.DecreasedValue -= overlap * decreasedAttackPower;
+            playerStats.SkillPower.DecreasedValue -= overlap * decreasedSkillPower;
 
             // 중첩 
             overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - playerStats.SEResist((int)buffType)) * defaultDuration;
+            duration = (1 - playerStats.SEResist[(int)buffType].Value) * defaultDuration;
 
-            playerStats.decreasedAttackPower += overlap * decreasedAttackPower;
-            playerStats.decreasedSkillPower += overlap * decreasedSkillPower;
+            playerStats.AttackPower.DecreasedValue += overlap * decreasedAttackPower;
+            playerStats.SkillPower.DecreasedValue += overlap * decreasedSkillPower;
         }
         // 그 외에
         else
@@ -40,15 +40,17 @@ public class PowerDeBuff : StatusEffect
             Stats stats = target.GetComponent<Stats>();
 
             // 효과 잠시 제거
-            stats.decreasedAttackPower -= overlap * decreasedAttackPower;
+            stats.AttackPower.DecreasedValue -= overlap * decreasedAttackPower;
+            stats.SkillPower.DecreasedValue -= overlap * decreasedSkillPower;
 
             // 중첩 
             overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
+            duration = (1 - stats.SEResist[(int)buffType].Value) * defaultDuration;
 
-            stats.decreasedAttackPower += overlap * decreasedAttackPower;
+            stats.AttackPower.DecreasedValue += overlap * decreasedAttackPower;
+            stats.SkillPower.DecreasedValue += overlap * decreasedSkillPower;
         }
     }
 
@@ -63,15 +65,16 @@ public class PowerDeBuff : StatusEffect
         {
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
 
-            playerStats.decreasedAttackPower -= overlap * decreasedAttackPower;
-            playerStats.decreasedSkillPower -= overlap * decreasedSkillPower;
+            playerStats.AttackPower.DecreasedValue -= overlap * decreasedAttackPower;
+            playerStats.SkillPower.DecreasedValue -= overlap * decreasedSkillPower;
 
         }
         else
         {
             Stats stats = target.GetComponent<Stats>();
 
-            stats.decreasedAttackPower -= overlap * decreasedAttackPower;
+            stats.AttackPower.DecreasedValue -= overlap * decreasedAttackPower;
+            stats.SkillPower.DecreasedValue -= overlap * decreasedSkillPower;
         }
 
     }

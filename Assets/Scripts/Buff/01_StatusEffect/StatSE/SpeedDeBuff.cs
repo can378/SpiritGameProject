@@ -22,16 +22,16 @@ public class SpeedDeBuff : StatusEffect
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
 
             // 효과 잠시 제거
-            playerStats.decreasedMoveSpeed -= overlap * decreasedMoveSpeed;
+            playerStats.MoveSpeed.DecreasedValue -= overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed -= overlap * decreasedAttackSpeed;
 
             // 중첩 
             overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - playerStats.SEResist((int)buffType)) * defaultDuration;
+            duration = (1 - playerStats.SEResist[(int)buffType].Value) * defaultDuration;
 
-            playerStats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
+            playerStats.MoveSpeed.DecreasedValue += overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed += overlap * decreasedAttackSpeed;
 
         }
@@ -41,15 +41,15 @@ public class SpeedDeBuff : StatusEffect
             Stats stats = target.GetComponent<Stats>();
 
             // 효과 잠시 제거
-            stats.decreasedMoveSpeed -= overlap * decreasedMoveSpeed;
+            stats.MoveSpeed.DecreasedValue -= overlap * decreasedMoveSpeed;
 
             // 중첩 
             overlap = overlap < DefaultMaxOverlap ? overlap + 1 : DefaultMaxOverlap;
 
             // 저항에 따른 지속시간 적용
-            duration = (1 - stats.SEResist((int)buffType)) * defaultDuration;
+            duration = (1 - stats.SEResist[(int)buffType].Value) * defaultDuration;
 
-            stats.decreasedMoveSpeed += overlap * decreasedMoveSpeed;
+            stats.MoveSpeed.DecreasedValue += overlap * decreasedMoveSpeed;
 
         }
     }
@@ -65,14 +65,14 @@ public class SpeedDeBuff : StatusEffect
         {
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
 
-            playerStats.decreasedMoveSpeed -= overlap * decreasedMoveSpeed;
+            playerStats.MoveSpeed.DecreasedValue -= overlap * decreasedMoveSpeed;
             playerStats.decreasedAttackSpeed -= overlap * decreasedAttackSpeed;
         }
         else
         {
             Stats stats = target.GetComponent<Stats>();
 
-            stats.decreasedMoveSpeed -= overlap * decreasedMoveSpeed;
+            stats.MoveSpeed.DecreasedValue -= overlap * decreasedMoveSpeed;
 
         }
 

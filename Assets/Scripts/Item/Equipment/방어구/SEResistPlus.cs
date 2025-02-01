@@ -15,9 +15,9 @@ public class SEResistPlus : Equipment
             this.user = target;
             Debug.Log("플레이어 상태이상 저항 +" + variation * 100 + "%p 증가");
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
-            for(int i = 0; i< playerStats.defaultSEResist.Length ; i++)
+            for(int i = 0; i< playerStats.SEResist.Length ; i++)
             {
-                playerStats.addSEResist[i] += variation;
+                playerStats.SEResist[i].AddValue += variation;
             }
                 
         }
@@ -29,9 +29,9 @@ public class SEResistPlus : Equipment
         if (target.tag == "Player")
         {
             PlayerStats playerStats = target.GetComponent<PlayerStats>();
-            for (int i = 0; i < playerStats.defaultSEResist.Length; i++)
+            for (int i = 0; i < playerStats.SEResist.Length; i++)
             {
-                playerStats.addSEResist[i] -= variation;
+                playerStats.SEResist[i].AddValue -= variation;
             }
             this.user = null;
         }

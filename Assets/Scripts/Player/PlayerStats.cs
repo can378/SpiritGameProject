@@ -15,27 +15,13 @@ public class PlayerStats : Stats
     // UI : 치명타 확률 0%
     // 치명타 = 무작위(0 ~ 100) < 치명타 확률 * 100 ? 참 : 거짓
     // 최소 0%, 최대 100%
-    [field: SerializeField] public float defaultCriticalChance { get; set; } = 0;
-    public float addCriticalChance { get; set; }
-    public float increasedCriticalChance { get; set; }
-    public float decreasedCriticalChance { get; set; }
-    public float criticalChance
-    {
-        get { return Mathf.Clamp((defaultCriticalChance + addCriticalChance) * (1f + increasedCriticalChance) * (1f - decreasedCriticalChance), 0, 1f); }
-    }
+    [field: SerializeField] public Stat CriticalChance = new Stat(0.0f, 1.0f, 0.0f);
 
     //CriticalDamage
     // UI : 치명타 피해량 150%
     // 피해량 = 치명타 ? 치명타 피해량 * 기본 피해량 : 기본 피해량
     // 최소 100%, 최대 300%
-    [field: SerializeField] public float defaultCriticalDamage { get; set; } = 1.5f;
-    public float addCriticalDamage { get; set; }
-    public float increasedCriticalDamage { get; set; }
-    public float decreasedCriticalDamage { get; set; }
-    public float criticalDamage
-    {
-        get { return Mathf.Clamp((defaultCriticalDamage + addCriticalDamage) * (1f + increasedCriticalDamage) * (1f - decreasedCriticalDamage), 1f, 3f); }
-    }
+    [field: SerializeField] public Stat CriticalDamage { get; set; } = new Stat(1.5f, 1.0f, 3.0f);
 
     // attackSpeed
     // UI 0%
@@ -51,19 +37,6 @@ public class PlayerStats : Stats
         get { return Mathf.Clamp((defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f, 3f); }
     }
 
-    // Skill
-    // SkillPower
-    // UI 도력 0
-    // 도술 피해량 = 도술 기본 피해량 + 도력 * 스킬 계수
-    // 최소 0
-    [field: SerializeField] public float defaultSkillPower { get; set; } = 0;
-    public float addSkillPower { get; set; }
-    public float increasedSkillPower { get; set; }
-    public float decreasedSkillPower { get; set; }
-    public float skillPower
-    {
-        get { return Mathf.Clamp((defaultSkillPower + addSkillPower) * (1f + increasedSkillPower) * (1f - decreasedSkillPower), 0f, 9999f); }
-    }
 
     // SkillCoolTime
     // 도술 재사용 대기 시간
