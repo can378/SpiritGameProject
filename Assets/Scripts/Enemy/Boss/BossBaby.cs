@@ -129,10 +129,14 @@ public class BossBaby : Boss
             while (grapDeBuff != null)
             {
                 time += Time.deltaTime;
-
-                // 3초동안 잡기 상태라면
-                if(3.5 < time)
+                if( 3 < time)
                 {
+                    enemyAnim.animator.SetBool("isGrap", true);
+                }
+                // 3초동안 잡기 상태라면
+                else if (3.5 < time)
+                {
+                    
                     // 큰 피해와 잡기를 1초 후에 해제
                     grapDeBuff.target.GetComponent<ObjectBasic>().Damaged(stats.AttackPower.Value);
                     break;
@@ -141,6 +145,7 @@ public class BossBaby : Boss
                 yield return null;
             }
         }
+        enemyAnim.animator.SetBool("isGrap", false);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -165,28 +170,26 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
-
+        enemyAnim.animator.SetBool("isRush",true);
 
         while (time < 10.0f)
         {
-            Debug.DrawRay(transform.position, madRushVec.normalized * 6.0f);
-            ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 6.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
+            Debug.DrawRay(transform.position, madRushVec.normalized * 9.0f, Color.green);
+            ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
             if (ray)
             {
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1.0f);
 
-                madRushVec = enemyStatus.targetDirVec;
+                // 이전 돌진 방향과 다음 돌진 방향의 각도가 120 도 이하라면 뒤로 돌진
+                madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec);
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+                continue;
             }
-            else
-            {
-                enemyStatus.moveVec = madRushVec * 10.0f;
-
-                yield return null;
-                
-            }
+            
+            enemyStatus.moveVec = madRushVec * 10.0f;
+            yield return null;
 
             time += Time.deltaTime;
         }
@@ -195,6 +198,7 @@ public class BossBaby : Boss
         enemyStatus.moveVec = Vector2.zero;
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
+        enemyAnim.animator.SetBool("isRush", false);
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
@@ -222,7 +226,20 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = true;
     }
 
+    
+    public Vector3 NextRushVec(Vector2 _PrevVec, Vector2 _TargetVec)
+    {
+        Vector2 v = _TargetVec - _PrevVec;
 
+        float degree = Mathf.Atan2(_TargetVec.y, _TargetVec.x) * Mathf.Rad2Deg - Mathf.Atan2(_PrevVec.y, _PrevVec.x) * Mathf.Rad2Deg;
+
+        if (-60.0f < degree && degree < 60.0f)
+        {
+            return Quaternion.Euler(0, 0, 180.0f) * _PrevVec;
+        }
+
+        return _TargetVec;
+    }
 
 
     #endregion 어른

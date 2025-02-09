@@ -4,7 +4,6 @@ using UnityEngine;
 
 // 공용으로 쓸만한 함수, 클래스 모음
 
-
 /// <summary>
 /// 가중치 확률 함수
 /// </summary>
@@ -128,3 +127,4 @@ public interface Interactable
     string GetInteractText();
     void Interact();
 }
+
