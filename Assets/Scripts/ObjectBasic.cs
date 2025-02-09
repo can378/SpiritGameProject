@@ -128,12 +128,11 @@ public class ObjectBasic : MonoBehaviour
 
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
         damage = criticalHit ? damage * criticalDamage : damage;
-        Debug.Log(name + " : " + damage);
 
-        //Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.defensivePower) * damage);
+        Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.DefensivePower.Value) * damage);
         stats.HP = Mathf.Min(stats.HP - ((1 - stats.DefensivePower.Value) * damage), stats.HPMax);
 
-        if(stats.HP <= 0)
+        if (stats.HP <= 0)
             Dead();
 
         return criticalHit;

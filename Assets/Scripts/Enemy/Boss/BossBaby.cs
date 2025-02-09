@@ -161,22 +161,33 @@ public class BossBaby : Boss
         madRushVec = enemyStatus.targetDirVec;
 
         float time = 0;
+        RaycastHit2D ray;
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
 
+
         while (time < 10.0f)
         {
-            if (isHitWall)
+            Debug.DrawRay(transform.position, madRushVec.normalized * 6.0f);
+            ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 6.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
+            if (ray)
             {
-                isHitWall = false;
+                hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
+                enemyStatus.moveVec = Vector2.zero;
+                yield return new WaitForSeconds(0.5f);
+
                 madRushVec = enemyStatus.targetDirVec;
-                yield return new WaitForSeconds(0.3f);
+                hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+            }
+            else
+            {
+                enemyStatus.moveVec = madRushVec * 10.0f;
+
+                yield return null;
+                
             }
 
-            enemyStatus.moveVec = madRushVec * 10.0f;
-
-            yield return null;
             time += Time.deltaTime;
         }
 
