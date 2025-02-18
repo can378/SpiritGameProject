@@ -340,17 +340,18 @@ public class Player : ObjectBasic
             //MapUIManager.instance.UpdateWeaponUI();
         }
 
-        public void Use(Vector3 clickPos)
+        public void Use()
         {
             player.weaponList[player.playerStats.weapon].ConsumeAmmo();
+            
             if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.MELEE)
             {
                 // 플레이어 애니메이션 실행
-                attackCoroutine = StartCoroutine("Swing");
+                attackCoroutine = StartCoroutine(Swing(player.playerStatus.mouseDir, player.playerStatus.mouseAngle));
             }
             else if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.RANGE)
             {
-                attackCoroutine = StartCoroutine("Shot");
+                attackCoroutine = StartCoroutine(Shot(player.playerStatus.mouseDir, player.playerStatus.mouseAngle));
             }
 
             //Debug.Log(playerStats.weapon.attackSpeed);
@@ -358,10 +359,18 @@ public class Player : ObjectBasic
 
         }
 
-        IEnumerator Swing()
+        IEnumerator Swing(Vector2 _AttackDir, float _AttackAngle)
         {
+
             // 공격 상태
             player.playerStatus.isAttack = true;
+
+            // 애니메이션 설정
+            player.playerAnim.ChangeDirection(_AttackDir);
+            player.playerAnim.animator.Rebind();
+            player.playerAnim.animator.SetBool("isAttack", true);
+            player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);
+
 
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
@@ -369,7 +378,8 @@ public class Player : ObjectBasic
             yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
 
             // 무기 이펙트 크기 설정
-            HitDetectionGameObject.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
+            int SwingDir = 0 <= _AttackDir.x ? 1 :-1; 
+            HitDetectionGameObject.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize * SwingDir, player.weaponList[player.playerStats.weapon].attackSize, 1);
         
         
             // 이펙트 수치 설정
@@ -381,13 +391,14 @@ public class Player : ObjectBasic
             player.playerStats.CriticalDamage);
             hitDetection.user = player;
             hitDetection.SetMultiHit(player.weaponList[player.playerStats.weapon].isMultiHit, player.weaponList[player.playerStats.weapon].DPS);
+
             // 인챈트 설정
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetSE(SEType.Count == 0 ? SE_TYPE.NONE : SEType[0]);
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetCommon(CommonType.Count == 0 ? COMMON_TYPE.NONE : CommonType[0]);
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetProjectile(ProjectileType.Count == 0 ? PROJECTILE_TYPE.NONE : ProjectileType[0]);
 
             // 무기 방향 
-            HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);
+            HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
 
             // 파티클
             {
@@ -407,15 +418,21 @@ public class Player : ObjectBasic
             HitDetectionGameObject.SetActive(false);
 
             // 공격 상태 해제
+            player.playerAnim.animator.SetBool("isAttack", false);
             player.playerStatus.isAttack = false;
         }
 
-        IEnumerator Shot()
+        IEnumerator Shot(Vector2 _AttackDir, float _AttackAngle)
         {
+
             player.playerStatus.isAttack = true;
 
-            float attackAngle = player.playerStatus.mouseAngle;
-            Vector2 attackDir = player.playerStatus.mouseDir;
+            // 애니메이션 설정
+            player.playerAnim.ChangeDirection(_AttackDir);
+            player.playerAnim.animator.Rebind();
+            player.playerAnim.animator.SetBool("isAttack", true);
+            player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);
+
 
             // 선딜
             yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
@@ -448,18 +465,19 @@ public class Player : ObjectBasic
             instantProjectile.GetComponentInChildren<Enchant>().SetProjectile(ProjectileType.Count == 0 ? PROJECTILE_TYPE.NONE : ProjectileType[0]);
 
             // 방향 설정
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(attackAngle - 90, Vector3.forward);
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
 
             // 크기 설정
             instantProjectile.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
 
             // 속도 설정
-            bulletRigid.velocity = attackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;
+            bulletRigid.velocity = _AttackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;
 
             // 사정거리 설정
             hitDetection.SetProjectileTime(player.weaponList[player.playerStats.weapon].projectileTime);
 
             // 공격 상태 해제
+            player.playerAnim.animator.SetBool("isAttack", false);
             player.playerStatus.isAttack = false;
         }
 
@@ -491,7 +509,7 @@ public class Player : ObjectBasic
 
         if (aDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isReload && !playerStatus.isDodge && playerStatus.isAttackReady && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
-            weaponController.Use(playerStatus.mousePos);
+            weaponController.Use();
 
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
             playerStatus.attackDelay = weaponList[playerStats.weapon].SPA / playerStats.attackSpeed;

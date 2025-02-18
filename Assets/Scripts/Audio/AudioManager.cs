@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour
 
    
     [field:SerializeField, Header("Player Weapon")]
-    public AudioClip[] weaponAttack {get; private set; } = new AudioClip[(int)WEAPON_TYPE.NONE];
+    public AudioClip[] weaponAttack {get; private set; } = new AudioClip[(int)WEAPON_TYPE.END];
 
     //instance
     public static AudioManager instance;

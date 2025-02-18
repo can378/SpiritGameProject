@@ -37,6 +37,7 @@ public class AnimBasic : MonoBehaviour
     /// </summary>
     public void ChangeDirection(Vector3 _Direction)
     {
+        status.moveVec = Vector2.zero;
         if (_Direction.x < 0)
         {
             animator.transform.localScale = new Vector3(1, 1, 1);

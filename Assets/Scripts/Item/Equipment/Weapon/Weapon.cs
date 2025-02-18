@@ -4,11 +4,12 @@ using UnityEngine;
 
 // 무기 종류 늘릴시 MELEE과 RANGE 조정할 것
 public enum WEAPON_TYPE {
+    NONE = -1,
     // 근거리 
     SWING, STAB, CRACK, MELEE,
     // 원거리
     GUN, BOW, THROW, CANNON, RANGE,
-    NONE}
+    END}
 
 public class Weapon : Equipment
 {
