@@ -70,8 +70,8 @@ public class BossBaby : Boss
                 RemoveDisarm();
                 yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); 
                 break;
-            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
-            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
+            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
+            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
             case 3: 
                 Disarm();
                 yield return enemyStatus.attackCoroutine = StartCoroutine(Crying());
@@ -129,15 +129,17 @@ public class BossBaby : Boss
             while (grapDeBuff != null)
             {
                 time += Time.deltaTime;
-                if( 3 < time)
+                if(time < 3)
                 {
+                    //print("isGrap");
                     enemyAnim.animator.SetBool("isGrap", true);
                 }
                 // 3초동안 잡기 상태라면
-                else if (3.5 < time)
+                else if (4.0f < time)
                 {
-                    
+
                     // 큰 피해와 잡기를 1초 후에 해제
+                    enemyAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.GetComponent<ObjectBasic>().Damaged(stats.AttackPower.Value);
                     break;
                 }
@@ -216,12 +218,12 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
 
         //플레이어 느려지게 만든다.
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
 
         enemyAnim.animator.SetBool("isScream", false);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
     }
