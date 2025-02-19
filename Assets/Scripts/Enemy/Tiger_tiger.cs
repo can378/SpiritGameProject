@@ -54,7 +54,7 @@ public class Tiger_tiger : EnemyBasic
     }
 
     
-
+/*
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -85,4 +85,5 @@ public class Tiger_tiger : EnemyBasic
             BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
     }
+    */
 }

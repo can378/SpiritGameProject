@@ -73,13 +73,12 @@ public class FaceDumb : BossFace
 
     }
 
-
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);
 
 
-        if (collision.CompareTag("Wall")) 
+        if (collision.CompareTag("Wall"))
         {
             isHitWall = true;
         }

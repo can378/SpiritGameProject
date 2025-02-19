@@ -256,7 +256,7 @@ public class EnemyBasic : ObjectBasic
     {
         if (collision.CompareTag("PlayerAttack") || collision.CompareTag("AllAttack"))
         {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>());
+            BeAttacked(collision.gameObject.GetComponent<HitDetection>(), collision.ClosestPoint(transform.position));
         }
         enemyStatus.isTouchPlayer= false;
         if (collision.tag == "Player")

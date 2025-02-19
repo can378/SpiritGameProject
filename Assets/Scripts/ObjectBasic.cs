@@ -50,7 +50,7 @@ public class ObjectBasic : MonoBehaviour
         ReceivedAttackID.Remove(_AttackID);
     }
 
-    public void BeAttacked(HitDetection hitDetection)
+    public void BeAttacked(HitDetection hitDetection, Vector3 _HitPos)
     {
         if(DuplicateAttack(hitDetection.AttackID))
             return;
@@ -93,19 +93,14 @@ public class ObjectBasic : MonoBehaviour
 
         #region Effect
 
-        Vector2 oCenter = this.GetComponent<Collider2D>().bounds.center;
-        Vector2 hCenter = hitDetection.GetComponent<Collider2D>().bounds.center;
-        Vector2 dirVec = (hCenter - oCenter).normalized;
-        Vector2 pos = oCenter + dirVec * 0.25f;
-
         if(criticalHit)
         {
-            ObjectPoolManager.instance.Get2("Hit_Red").transform.position = pos;
+            ObjectPoolManager.instance.Get2("Hit_Red").transform.position = _HitPos;
             AudioManager.instance.SFXPlay("Stab_Attack_Sound");
         }
         else
         {
-            ObjectPoolManager.instance.Get2("Hit_White").transform.position = pos;
+            ObjectPoolManager.instance.Get2("Hit_White").transform.position = _HitPos;
             AudioManager.instance.SFXPlay("Hit_SFX");
         }
         
@@ -116,6 +111,37 @@ public class ObjectBasic : MonoBehaviour
 
         if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
             status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
+
+        #endregion Effect
+    }
+
+    // 단순 피해
+    public void BeAttacked(float _Damage, Vector3 _HitPos)
+    {
+
+        if (status.isInvincible)
+            return;
+
+        status.isBeAttaked = true;
+
+        Damaged(_Damage);
+
+        // if enemy is Dead, Don't Flinch and Buff
+        if (stats.HP <= 0)
+            return;
+
+        #region Effect
+
+        ObjectPoolManager.instance.Get2("Hit_White").transform.position = _HitPos;
+        AudioManager.instance.SFXPlay("Hit_SFX");
+
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.red;
+        }
+
+        if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
+        status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
 
         #endregion Effect
     }

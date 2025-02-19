@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AnimJukqwi : EnemyAnim
 {
-    public enum Version {Baby, Monster };
+    public enum Version {Baby, Adult };
     public Animator[] animators = new Animator[2];
+    public GameObject[] animationObject = new GameObject[2];
 
     public Version curVersion;
 
@@ -16,12 +17,10 @@ public class AnimJukqwi : EnemyAnim
 
     public void ChangeVersion(Version _version)
     {
-        if(animator != null)
-            animator.gameObject.SetActive(false);
-
+        animationObject[(int)curVersion].SetActive(false);
 
         curVersion = _version;
         animator = animators[(int)curVersion];
-        animator.gameObject.SetActive(true);
+        animationObject[(int)curVersion].SetActive(true);
     }
 }

@@ -37,11 +37,11 @@ public class LittleMonster : EnemyBasic
     }
 
 
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    /*
+    protected override  void OnCollisionEnter2D(Collision2D other)
     {
         //Detect player
-        if (collision.tag == "Player" && isEye)
+        if (other.collider.tag == "Player" && isEye)
         {
             //Eye Screaming
             isDetected = true;
@@ -50,6 +50,7 @@ public class LittleMonster : EnemyBasic
                 mouths[i].GetComponent<LittleMonster>().isDetected = true;
             }
         }
-        base.OnTriggerEnter2D(collision);
+        base.OnCollisionEnter2D(other);
     }
+    */
 }

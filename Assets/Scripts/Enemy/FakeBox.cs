@@ -60,6 +60,7 @@ public class FakeBox : EnemyBasic
 
     }
 
+    /*
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
@@ -69,7 +70,7 @@ public class FakeBox : EnemyBasic
             player = other.gameObject.GetComponent<Player>();
         }
     }
-
+*/
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")

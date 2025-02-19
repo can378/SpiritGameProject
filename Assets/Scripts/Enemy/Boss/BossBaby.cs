@@ -8,8 +8,8 @@ public class BossBaby : Boss
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
     enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, RushHitArea, None };
- 
-    public new AnimJukqwi enemyAnim;
+
+    new public AnimJukqwi enemyAnim;
 
     private GameObject floor;
     private int patternIndex;
@@ -93,7 +93,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Rush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
+        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -140,7 +140,7 @@ public class BossBaby : Boss
 
                     // 큰 피해와 잡기를 1초 후에 해제
                     enemyAnim.animator.SetTrigger("Hug");
-                    grapDeBuff.target.GetComponent<ObjectBasic>().Damaged(stats.AttackPower.Value);
+                    grapDeBuff.target.GetComponent<ObjectBasic>().BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
                     break;
                 }
 
@@ -163,7 +163,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("MadRush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
+        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         madRushVec = enemyStatus.targetDirVec;
 
@@ -212,7 +212,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Screaming");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Monster);
+        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         enemyAnim.animator.SetBool("isScream", true);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
@@ -438,6 +438,5 @@ public class BossBaby : Boss
         {
             isHitWall = true;
         }
-
     }
 }

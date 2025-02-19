@@ -137,9 +137,6 @@ public class FaceAngry : BossFace
         fire.SetActive(false);
     }
 
-
-
-
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         base.OnTriggerEnter2D(collision);

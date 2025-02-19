@@ -94,7 +94,7 @@ public class Tiger_head : EnemyBasic
         enemyStatus.isAttackReady = true;
     }
 
-
+/*
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         
@@ -141,5 +141,5 @@ public class Tiger_head : EnemyBasic
             BeAttacked(collision.gameObject.GetComponent<HitDetection>());
         }
     }
-
+*/
 }
