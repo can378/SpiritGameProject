@@ -99,7 +99,13 @@ public class Stats : MonoBehaviour
     // UI : 상태이상 저항 0%
     // 상태이상 효과 = 지속시간 또는 피해량 * 상태이상 저항
     // 최소 -75%, 최대 75%
-    [field: SerializeField] public Stat[] SEResist { get; set; } = new Stat[(int)BuffType.SPECIAL];
+    [field: SerializeField] public Stat[] SEResist { get; set; } = 
+    {
+        new Stat(0.0f, 0.75f, -0.75f), 
+        new Stat(0.0f, 0.75f, -0.75f), 
+        new Stat(0.0f, 0.75f, -0.75f), 
+        new Stat(0.0f, 0.75f, -0.75f)
+    };
 
     // Attack
     // 공격력

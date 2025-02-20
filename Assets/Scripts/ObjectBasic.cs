@@ -39,6 +39,7 @@ public class ObjectBasic : MonoBehaviour
         if(ReceivedAttackID.Contains(_AttackID))
             return true;
 
+        // 중복이 아니면 저장한 후 0.5초 후 삭제
         ReceivedAttackID.Add(_AttackID);
         StartCoroutine(RemoveAttackID(_AttackID));
         return false;
@@ -48,6 +49,7 @@ public class ObjectBasic : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); // 0.5초 후 다시 피격 가능
         ReceivedAttackID.Remove(_AttackID);
+
     }
 
     public void BeAttacked(HitDetection hitDetection, Vector3 _HitPos)
@@ -354,6 +356,7 @@ public class ObjectBasic : MonoBehaviour
         RemoveAllEffects();
         AttackCancle();
         StopAllCoroutines();
+        ReceivedAttackID.Clear();
         this.gameObject.SetActive(false);
         //Destroy(this.gameObject);
     }
@@ -371,8 +374,9 @@ public class ObjectBasic : MonoBehaviour
         status.isFlinch = 0.0f;
         status.isInvincible = false;
         status.moveVec = Vector2.zero;
+        ReceivedAttackID.Clear();
 
-        foreach(SpriteRenderer sprite in sprites)
+        foreach (SpriteRenderer sprite in sprites)
         {
             sprite.color = new Color(1f, 1f, 1f, 1f);
         }

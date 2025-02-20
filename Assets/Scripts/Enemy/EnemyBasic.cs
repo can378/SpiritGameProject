@@ -286,22 +286,24 @@ public class EnemyBasic : ObjectBasic
 
     public override void AttackCancle()
     {
-        base.AttackCancle();
-        if(enemyStatus.attackCoroutine != null) 
+        if (enemyStatus.attackCoroutine != null)
         {
             StopCoroutine(enemyStatus.attackCoroutine);
         }
+        base.AttackCancle();
+
     }
 
     public override void InitStatus()
     {
         enemyStatus.isRun = false;
         enemyStatus.isTouchPlayer = false;
-        base.InitStatus();
-        if(enemyStatus.attackCoroutine != null) 
+        if (enemyStatus.attackCoroutine != null)
         {
             StopCoroutine(enemyStatus.attackCoroutine);
         }
+        base.InitStatus();
+
     }
 
     void OnEnable()

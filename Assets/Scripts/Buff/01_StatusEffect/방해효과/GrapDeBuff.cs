@@ -13,7 +13,6 @@ public class GrapDeBuff : StatusEffect
     // 피격 시 해제
     ObjectBasic objectBasic;
     Player player;
-    EnemyBasic enemyBasic;
 
     bool LeftRight;     // False면 Left, True면 Right;
     int KeyDownCount;
@@ -44,7 +43,6 @@ public class GrapDeBuff : StatusEffect
         }
         if (target.tag == "Enemy")
         {
-            enemyBasic = target.GetComponent<EnemyBasic>();
             objectBasic = target.GetComponent<ObjectBasic>();
 
             // 중첩 
@@ -56,13 +54,14 @@ public class GrapDeBuff : StatusEffect
             // 효과 적용
             objectBasic.SetFlinch(duration);
         }
+        KeyDownCount = 0;
     }
 
     public override void Progress()
     {
         // 잡기를 시전한 대상이 있을 때 경직 상태거나 죽었다면 해제
         // 또는 KeyDownCount가 조건을 만족할 때
-        if(GrapOwner != null && 0 < GrapOwner.status.isFlinch && !GrapOwner.gameObject.activeSelf || KeyDownCount > 25 )
+        if(GrapOwner == null || 0 < GrapOwner.status.isFlinch || !GrapOwner.gameObject.activeSelf || KeyDownCount > 30 )
         {
             duration = 0.0f;
             return;
@@ -80,7 +79,7 @@ public class GrapDeBuff : StatusEffect
             // 왼쪽 눌러야 할 때 왼쪽 누름
             if ((!LeftRight && player.hAxis < 0.0f) || (LeftRight && player.hAxis > 0.0f))
             {
-                KeyDownCount += 1;
+                KeyDownCount += (int)(1 + objectBasic.stats.SEResist[(int)buffType].Value * 10);
                 LeftRight = !LeftRight;
             }
         }
@@ -92,7 +91,7 @@ public class GrapDeBuff : StatusEffect
             // 방해 저항
             if (Tick > 0.5f)
             {
-                KeyDownCount += (int)(1  + enemyBasic.stats.SEResist[2].Value * 10);
+                KeyDownCount += (int)(1  + objectBasic.stats.SEResist[(int)buffType].Value * 10);
                 Tick -= 0.5f;
             }
         }

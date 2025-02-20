@@ -39,8 +39,8 @@ public class BossBaby : Boss
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.AttackPower, 100);
 
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 0.2f, stats.AttackPower, 20);
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 2);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 50);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 4);
 
         hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
     }
@@ -124,20 +124,14 @@ public class BossBaby : Boss
         if (grapSucces)
         {
             time = 0;
-            
+            enemyAnim.animator.SetBool("isGrap", true);
             // 대상이 계속 잡기 상태라면
             while (grapDeBuff != null)
             {
                 time += Time.deltaTime;
-                if(time < 3)
-                {
-                    //print("isGrap");
-                    enemyAnim.animator.SetBool("isGrap", true);
-                }
                 // 3초동안 잡기 상태라면
-                else if (4.0f < time)
+                if (4.0f < time)
                 {
-
                     // 큰 피해와 잡기를 1초 후에 해제
                     enemyAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.GetComponent<ObjectBasic>().BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
@@ -438,5 +432,11 @@ public class BossBaby : Boss
         {
             isHitWall = true;
         }
+    }
+
+    public override void Dead()
+    {
+        RemoveDisarm();
+        base.Dead();
     }
 }

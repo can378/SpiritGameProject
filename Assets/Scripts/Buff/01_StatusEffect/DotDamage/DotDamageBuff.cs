@@ -42,6 +42,7 @@ public class DotDamageBuff : StatusEffect
         overlapText.text = overlap > 1 ? overlap.ToString() : null;
 
         Stats stats = target.GetComponent<Stats>();
+        Debug.Log(stats.SEResist[(int)buffType].Value);
         duration = (1 - stats.SEResist[(int)buffType].Value) * defaultDuration;
         //print(duration);
     }
@@ -60,15 +61,7 @@ public class DotDamageBuff : StatusEffect
 
     private void DealDamageToTarget(float damage)
     {
-        if (target.tag == "Player" || target.tag == "Npc")
-        {
-            ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
-            objectBasic.Damaged(damage * overlap);
-        }
-        else if(target.tag == "Enemy")
-        {
-            EnemyBasic enemy = target.GetComponent<EnemyBasic>();
-            enemy.Damaged(damage * overlap);
-        }
+        ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
+        objectBasic.Damaged(damage * overlap);
     }
 }
