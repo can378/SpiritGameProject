@@ -105,19 +105,9 @@ public class IcicleSkill : Skill
 
             Destroy(simul);
             
-            /*
-            ����ü = true
-            �����? = 0
-            �ٴ���Ʈ = false
-            �ʴ� Ÿ�� Ƚ�� = -1 
-            ���ط� = ���ط� * �÷��̾� ����
-            �˹� = �˹�
-            ġȮ = 0
-            ġ�� = 0
-            �����? = ȭ��
-            */
-            hitDetection.SetHit_Ratio(defalutDamage, ratio, player.playerStats.SkillPower, knockBack);
+            hitDetection.SetProjectile(0, defalutDamage, ratio, player.playerStats.SkillPower);
             hitDetection.SetSEs(statusEffect);
+            hitDetection.SetProjectileTime(time);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ���� ����
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // �ӵ� ����
@@ -141,24 +131,12 @@ public class IcicleSkill : Skill
             // ����Ʈ ����
             Destroy(simul);
 
-
-            /*
-            ����ü = true
-            �����? = 0
-            �ٴ���Ʈ = false
-            �ʴ� Ÿ�� Ƚ�� = -1 
-            ���ط� = ���ط� * �÷��̾� ����
-            �˹� = �˹�
-            ġȮ = 0
-            ġ�� = 0
-            �����? = ȭ��
-            */
-            hitDetection.SetHit_Ratio(defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
+            hitDetection.SetProjectile(0, defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
             hitDetection.SetSEs(statusEffect);
+            hitDetection.SetProjectileTime(time);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ���� ����
             bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // �ӵ� ����
-            Destroy(instantProjectile, time);  //��Ÿ�? ����
         }
     }
 }
