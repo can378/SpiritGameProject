@@ -261,6 +261,8 @@ public class BossBaby : Boss
         }
         rigid.velocity = Vector2.zero;
 
+        yield return new WaitForSeconds(1.5f);
+
         //start crying
         for (int i = 0; i < 50; i++)
         {
