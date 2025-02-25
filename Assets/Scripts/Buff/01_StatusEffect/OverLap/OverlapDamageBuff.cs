@@ -53,7 +53,7 @@ public class OverlapDamageBuff : StatusEffect
                 
             }
 
-            GameObject BleedObject = ObjectPoolManager.instance.Get2("Bleeding");
+            GameObject BleedObject = ObjectPoolManager.instance.Get("Bleeding");
             BleedObject.transform.position = target.transform.position;
             BleedObject.transform.localScale = Vector3.one * 3;
 

@@ -43,7 +43,7 @@ public class EnemyPattern : EnemyBasic
 
         for (int i = 0; i < gunNum; i++)
         {
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
 
             bullet.transform.position = GunMuzzle[i].transform.position;
             bullet.transform.rotation = Quaternion.identity;

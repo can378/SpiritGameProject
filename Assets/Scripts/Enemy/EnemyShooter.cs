@@ -45,7 +45,7 @@ public class EnemyShooter : EnemyBasic
 
         //한발씩 발사
 
-        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+        GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
         //bullet.transform.position = transform.position + Vector3.right * 0.5f;
         bullet.transform.position = transform.position;
 
@@ -80,7 +80,7 @@ public class EnemyShooter : EnemyBasic
         //여러개 한번에 발사
         for (int i = 0; i < 5; i++)
         {
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = transform.position;
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
@@ -117,7 +117,7 @@ public class EnemyShooter : EnemyBasic
 
         for (int i = 0; i < roundNum; i++)
         {
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = transform.position;
             bullet.transform.rotation = Quaternion.identity;
 

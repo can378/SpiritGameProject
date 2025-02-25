@@ -29,7 +29,7 @@ public class NormalGhost : EnemyBasic
             enemyAnim.ChangeDirection(enemyStatus.targetDirVec);
             yield return new WaitForSeconds(0.5f);
 
-            GameObject knife = ObjectPoolManager.instance.Get2("knife");
+            GameObject knife = ObjectPoolManager.instance.Get("knife");
             knife.transform.position = transform.position;
             yield return new WaitForSeconds(1f);
         }

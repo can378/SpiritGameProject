@@ -18,7 +18,7 @@ public class FaceDelusion : BossFace
         //여러개 한번에 발사
         for (int i = 0; i < 7; i++)
         {
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = transform.position;
             Rigidbody2D bulletRigid = bullet.GetComponent<Rigidbody2D>();
 

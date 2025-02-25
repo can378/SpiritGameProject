@@ -31,7 +31,7 @@ public class Crow : EnemyBasic
             yield return new WaitForSeconds(0.5f);         // 던지기 모션 
 
             // 보석 던지기
-            GameObject bullet = ObjectPoolManager.instance.Get2("jewel");
+            GameObject bullet = ObjectPoolManager.instance.Get("jewel");
             bullet.transform.position = ThrowPos[RandomParam].position;     // 손을 기준으로 적의 방향
             Vector3 TargetDirVec = (targetPos - ThrowPos[RandomParam].position).normalized;
             bullet.GetComponent<Rigidbody2D>().AddForce(TargetDirVec * 7, ForceMode2D.Impulse);

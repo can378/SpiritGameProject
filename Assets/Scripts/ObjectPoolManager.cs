@@ -36,7 +36,7 @@ public class ObjectPoolManager : MonoBehaviour
             pools[index] = new List<GameObject>();
     }
 
-    public GameObject Get(int index)//get object with index
+    public GameObject Get(int index, Vector3 _Position = default)//get object with index
     {
         GameObject select = null;
 
@@ -45,6 +45,7 @@ public class ObjectPoolManager : MonoBehaviour
             if (!item.activeSelf)
             {
                 select = item;
+                select.transform.position = _Position;
                 select.SetActive(true);
                 break;
             }
@@ -59,7 +60,7 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    public GameObject Get2(string name)//get object iwth name
+    public GameObject Get(string name, Vector3 _Position = default)//get object iwth name
     {
         GameObject select = null;
        
@@ -67,7 +68,7 @@ public class ObjectPoolManager : MonoBehaviour
         {
             if (prefabs[i].name == name)
             {
-                select=Get(i);
+                select = Get(i, _Position);
                 return select;
             }    
         
@@ -82,7 +83,7 @@ public class ObjectPoolManager : MonoBehaviour
     public GameObject ExplosionSFX(Sprite sprite) 
     {
 
-        GameObject select = Get2("explosionSFX");
+        GameObject select = Get("explosionSFX");
         select.GetComponent<SpriteRenderer>().sprite = sprite;
         
         return select;

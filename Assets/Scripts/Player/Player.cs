@@ -377,8 +377,15 @@ public class Player : ObjectBasic
             //선딜
             yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
 
+
+            // 베기 방향만 우선 반전
+            int SwingDir = 1;
+            if (player.weaponList[player.playerStats.weapon].weaponType == WEAPON_TYPE.SWING)
+            {
+                SwingDir = 0 <= _AttackDir.x ? 1 : -1;
+            }
+            
             // 무기 이펙트 크기 설정
-            int SwingDir = 0 <= _AttackDir.x ? 1 :-1; 
             HitDetectionGameObject.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize * SwingDir, player.weaponList[player.playerStats.weapon].attackSize, 1);
         
         
@@ -397,8 +404,10 @@ public class Player : ObjectBasic
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetCommon(CommonType.Count == 0 ? COMMON_TYPE.NONE : CommonType[0]);
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetProjectile(ProjectileType.Count == 0 ? PROJECTILE_TYPE.NONE : ProjectileType[0]);
 
-            // 무기 방향 
+            // 무기 방향
             HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
+
+            
 
             // 파티클
             {
@@ -474,7 +483,7 @@ public class Player : ObjectBasic
             bulletRigid.velocity = _AttackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;
 
             // 사정거리 설정
-            hitDetection.SetProjectileTime(player.weaponList[player.playerStats.weapon].projectileTime);
+            hitDetection.SetDisableTime(player.weaponList[player.playerStats.weapon].projectileTime);
 
             // 공격 상태 해제
             player.playerAnim.animator.SetBool("isAttack", false);

@@ -23,7 +23,7 @@ public class DeerWoman : EnemyBasic
         yield return new WaitForSeconds(0.5f);
 
         //shot arrow
-        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+        GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
         bullet.transform.position = transform.position;
 
         Rigidbody2D rigidBullet = bullet.GetComponent<Rigidbody2D>();

@@ -43,7 +43,7 @@ public class FaceHostility : BossFace
         for (int i = 0; i < bulletCount; i++)
         {
             //create bullet
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = startPoint;
             Rigidbody2D bulletRigid = bullet.GetComponent<Rigidbody2D>();
 

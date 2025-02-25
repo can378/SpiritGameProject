@@ -330,14 +330,14 @@ public class EnemyBasic : ObjectBasic
 
     public void shot()
     {
-        GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+        GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
         bullet.transform.position = transform.position;
         bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 7, ForceMode2D.Impulse);
     }
 
     public void shotWhat(string name)
     {
-        GameObject bullet = ObjectPoolManager.instance.Get2(name);
+        GameObject bullet = ObjectPoolManager.instance.Get(name);
         bullet.transform.position = transform.position;
         bullet.GetComponent<Rigidbody2D>().AddForce(enemyStatus.targetDirVec.normalized * 2, ForceMode2D.Impulse);
 

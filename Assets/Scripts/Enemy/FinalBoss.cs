@@ -239,7 +239,7 @@ public class FinalBoss : EnemyBasic
 
         for (int i = 0; i < roundNum; i++)
         {
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = transform.position;
             bullet.transform.rotation = Quaternion.identity;
 

@@ -7,7 +7,7 @@ public class BossBaby : Boss
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect { Tear, SafeArea, DamageArea, ScreamArea, RushHitArea, None };
+    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, None };
 
     new public AnimJukqwi enemyAnim;
 
@@ -42,7 +42,7 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 50);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 4);
 
-        hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
+        //hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
     }
 
     protected override void MovePattern()
@@ -272,12 +272,14 @@ public class BossBaby : Boss
             for (int j = 0; j < DropCount; ++j)
             {
                 DropPos = new (Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y));
-                StartCoroutine(DropTear(DropPos));
+                GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
+                ThisTear.GetComponent<HitDetection>().SetDisableTime(0.5f, ENABLE_TYPE.Time);
             }
             if(PlayerPos == 0)
             {
                 DropPos = enemyStatus.enemyTarget.position;
-                StartCoroutine(DropTear(DropPos));
+                GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
+                ThisTear.GetComponent<HitDetection>().SetDisableTime(0.5f, ENABLE_TYPE.Time);
             }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }
@@ -288,11 +290,9 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = true;
     }
 
+    /*
     IEnumerator DropTear(Vector2 _Pos) 
     {
-        enemyStatus.isAttack = true;
-        enemyStatus.isAttackReady = false;
-
         GameObject thisTear = Instantiate(hitEffects[(int)BossBabyHitEffect.Tear]);
         thisTear.GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
         thisTear.SetActive(true);
@@ -306,7 +306,7 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(0.5f);
         Destroy(thisTear);
     }
-
+    */
     IEnumerator Hiding() 
     {
         enemyStatus.isAttack = true;

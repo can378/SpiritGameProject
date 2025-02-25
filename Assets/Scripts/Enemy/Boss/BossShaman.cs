@@ -41,7 +41,7 @@ public class BossShaman : EnemyBasic
     {
         for(int i=0;i < 3; i++) 
         {
-            GameObject ghost = ObjectPoolManager.instance.Get2("ghost");
+            GameObject ghost = ObjectPoolManager.instance.Get("ghost");
             ghost.transform.position = transform.position;
             yield return new WaitForSeconds(1f);
         }
@@ -69,7 +69,7 @@ public class BossShaman : EnemyBasic
     {
         for (int i = 0; i < 10; i++)
         {
-            GameObject knife = ObjectPoolManager.instance.Get2("knife");
+            GameObject knife = ObjectPoolManager.instance.Get("knife");
             knife.transform.position = transform.position;
             yield return new WaitForSeconds(0.5f);
         }

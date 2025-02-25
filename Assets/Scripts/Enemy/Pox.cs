@@ -59,7 +59,7 @@ public class Pox : EnemyBasic
         
         if (enemyStatus.enemyTarget != null)
         {
-            GameObject bullet = ObjectPoolManager.instance.Get2("Bullet");
+            GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = ThrowPos.position;
             Vector3 TargetDirVec = (enemyStatus.enemyTarget.position - ThrowPos.position).normalized;
             bullet.GetComponent<Rigidbody2D>().AddForce(TargetDirVec * 7, ForceMode2D.Impulse);

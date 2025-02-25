@@ -59,7 +59,7 @@ public class Enchant : MonoBehaviour
         Vector2 pos = oCenter + dirVec * 0.25f;
 
         Debug.Log("Crack");
-        GameObject thunderboltGO = ObjectPoolManager.instance.Get2("Lightning Explosion");
+        GameObject thunderboltGO = ObjectPoolManager.instance.Get("Lightning Explosion");
         thunderboltGO.transform.position = pos;
         thunderboltGO.transform.rotation = this.gameObject.transform.rotation;
         thunderboltGO.GetComponent<HitDetection>().SetHit_Ratio(5, 0.1f, hitDetection.user.GetComponent<Player>().playerStats.SkillPower);
@@ -67,11 +67,11 @@ public class Enchant : MonoBehaviour
 
     void Explosion()
     {
-        if(!hitDetection.isProjectile)
+        if(hitDetection.EnableType == ENABLE_TYPE.Projectile)
             return;
 
         Debug.Log("Bomb");
-        GameObject explosionGO = ObjectPoolManager.instance.Get2("Explosion");
+        GameObject explosionGO = ObjectPoolManager.instance.Get("Explosion");
         explosionGO.transform.position = this.gameObject.transform.position;
         explosionGO.transform.rotation = this.gameObject.transform.rotation;
         explosionGO.GetComponent<HitDetection>().SetHit(20f,10);

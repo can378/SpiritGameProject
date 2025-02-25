@@ -97,12 +97,12 @@ public class ObjectBasic : MonoBehaviour
 
         if(criticalHit)
         {
-            ObjectPoolManager.instance.Get2("Hit_Red").transform.position = _HitPos;
+            ObjectPoolManager.instance.Get("Hit_Red").transform.position = _HitPos;
             AudioManager.instance.SFXPlay("Stab_Attack_Sound");
         }
         else
         {
-            ObjectPoolManager.instance.Get2("Hit_White").transform.position = _HitPos;
+            ObjectPoolManager.instance.Get("Hit_White").transform.position = _HitPos;
             AudioManager.instance.SFXPlay("Hit_SFX");
         }
         
@@ -134,7 +134,7 @@ public class ObjectBasic : MonoBehaviour
 
         #region Effect
 
-        ObjectPoolManager.instance.Get2("Hit_White").transform.position = _HitPos;
+        ObjectPoolManager.instance.Get("Hit_White").transform.position = _HitPos;
         AudioManager.instance.SFXPlay("Hit_SFX");
 
         foreach (SpriteRenderer sprite in sprites)
