@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
   - component: {fileID: 6596617988752096334}
-  - component: {fileID: 4840919077573514999}
   - component: {fileID: 1915170276612133450}
+  - component: {fileID: 7815952780113004741}
   m_Layer: 11
   m_Name: PlayerBullet
   m_TagString: PlayerAttack
@@ -167,30 +167,6 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 0}
---- !u!114 &4840919077573514999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <isShake>k__BackingField: 0
-  multiHitDurationTime: 0
 --- !u!210 &1915170276612133450
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -203,3 +179,31 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &7815952780113004741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465481353037356265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AttackID>k__BackingField: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
+  <knockBack>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  isPooling: 1
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  isDisableObjcet_Instant: 0
+  DisableObject_Instant: {fileID: 0}
+  isDisableObjcet_Pool: 0
+  DisableObject_Pool: 

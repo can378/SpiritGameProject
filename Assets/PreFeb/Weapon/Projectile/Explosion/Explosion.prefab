@@ -4910,11 +4910,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7229794731934350907}
   - component: {fileID: 3623754899108670778}
-  - component: {fileID: 4434662236347001478}
   - component: {fileID: 7663488357461922154}
   - component: {fileID: 3805877414578243981}
   - component: {fileID: 8856789783031168521}
   - component: {fileID: 6811422703325405344}
+  - component: {fileID: 1300314655977493683}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: PlayerAttack
@@ -4978,30 +4978,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2
---- !u!114 &4434662236347001478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5651732826295342366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <isShake>k__BackingField: 0
-  multiHitDurationTime: 0
 --- !u!82 &7663488357461922154
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9993,6 +9969,34 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 0}
+--- !u!114 &1300314655977493683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5651732826295342366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AttackID>k__BackingField: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
+  <knockBack>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  isPooling: 1
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  isDisableObjcet_Instant: 0
+  DisableObject_Instant: {fileID: 0}
+  isDisableObjcet_Pool: 0
+  DisableObject_Pool: 
 --- !u!1 &6629381145518134005
 GameObject:
   m_ObjectHideFlags: 0

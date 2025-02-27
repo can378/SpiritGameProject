@@ -105,7 +105,7 @@ public class IcicleSkill : Skill
 
             Destroy(simul);
             
-            hitDetection.SetProjectile(0, defalutDamage, ratio, player.playerStats.SkillPower);
+            hitDetection.SetProjectile_Ratio(0, defalutDamage, ratio, player.playerStats.SkillPower);
             hitDetection.SetSEs(statusEffect);
             hitDetection.SetDisableTime(time);
             hitDetection.user = user;
@@ -131,7 +131,7 @@ public class IcicleSkill : Skill
             // ����Ʈ ����
             Destroy(simul);
 
-            hitDetection.SetProjectile(0, defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
+            hitDetection.SetProjectile_Ratio(0, defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
             hitDetection.SetSEs(statusEffect);
             hitDetection.SetDisableTime(time);
             hitDetection.user = user;

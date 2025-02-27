@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2709215477121815719}
   - component: {fileID: 1711866502859185947}
   - component: {fileID: -1192987079018899415}
-  - component: {fileID: -597308780756370395}
   - component: {fileID: 2762865616378550424}
+  - component: {fileID: 3123209186504010613}
   m_Layer: 11
   m_Name: Bomb
   m_TagString: PlayerAttack
@@ -115,30 +115,6 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 0}
---- !u!114 &-597308780756370395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237688199151948138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <isShake>k__BackingField: 0
-  multiHitDurationTime: 0
 --- !u!210 &2762865616378550424
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -151,6 +127,34 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &3123209186504010613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237688199151948138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AttackID>k__BackingField: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
+  <knockBack>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  isPooling: 1
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  isDisableObjcet_Instant: 0
+  DisableObject_Instant: {fileID: 0}
+  isDisableObjcet_Pool: 0
+  DisableObject_Pool: 
 --- !u!1 &9154743223894945601
 GameObject:
   m_ObjectHideFlags: 0

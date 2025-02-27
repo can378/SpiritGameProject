@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3771491851752741642}
   - component: {fileID: 1662742096732015433}
   - component: {fileID: 6016990201301183377}
-  - component: {fileID: 8771328345539678233}
   - component: {fileID: -7144343060905554660}
+  - component: {fileID: 2650292151264556245}
   m_Layer: 12
   m_Name: Bullet2
   m_TagString: EnemyAttack
@@ -163,30 +163,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8771328345539678233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5940983208176413738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babab020a58e6f9438265c2acccdff84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 1
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 10
-  <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  <isShake>k__BackingField: 0
-  multiHitDurationTime: 0
 --- !u!210 &-7144343060905554660
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -199,3 +175,30 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_SortAtRoot: 0
+--- !u!114 &2650292151264556245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5940983208176413738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AttackID>k__BackingField: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
+  <knockBack>k__BackingField: 0
+  <statusEffect>k__BackingField: 
+  isPooling: 1
+  isMultiHit: 0
+  DPS: 0
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  isDisableObjcet_Instant: 0
+  DisableObject_Instant: {fileID: 0}
+  isDisableObjcet_Pool: 0
+  DisableObject_Pool: 

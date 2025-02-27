@@ -457,7 +457,7 @@ public class Player : ObjectBasic
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
             // 투사체 설정
-            hitDetection.SetProjectile( player.weaponList[player.playerStats.weapon].penetrations
+            hitDetection.SetProjectile_Ratio( player.weaponList[player.playerStats.weapon].penetrations
                 ,0
                 ,1
                 , player.playerStats.AttackPower
