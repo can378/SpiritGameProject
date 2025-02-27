@@ -54,7 +54,8 @@ public class ObjectBasic : MonoBehaviour
 
     public void BeAttacked(HitDetection hitDetection, Vector3 _HitPos)
     {
-        if(DuplicateAttack(hitDetection.AttackID))
+        
+        if (DuplicateAttack(hitDetection.AttackID))
             return;
 
         if (status.isInvincible)
@@ -94,8 +95,11 @@ public class ObjectBasic : MonoBehaviour
         }
 
         #region Effect
+        if(hitDetection.Damage == 0)
+            return;
 
-        if(criticalHit)
+
+        if (criticalHit)
         {
             ObjectPoolManager.instance.Get("Hit_Red").transform.position = _HitPos;
             AudioManager.instance.SFXPlay("Stab_Attack_Sound");

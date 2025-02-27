@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
+  AttackID: 0
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
@@ -179,8 +179,6 @@ MonoBehaviour:
   isAttackIDManage: 1
   isMultiHit: 0
   DPS: 1
-  hitCollider: {fileID: 0}
-  multiHitDurationTime: 0
   EnableType: 0
   penetrations: 0
   DisableTime: 0
@@ -193,10 +191,16 @@ MonoBehaviour:
   GuideEffect: {fileID: 1497213971519033128}
   GuideEndEffect: {fileID: 4578427945383783337}
   FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
   isGuided: 0
   GuidingTarget: {fileID: 0}
   GuidingSpeed: 0
   GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!50 &3313022623333993190
 Rigidbody2D:
   serializedVersion: 4
@@ -721,6 +725,53 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2704612775559256278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3979755610878815755}
+  - component: {fileID: 1148314547634748637}
+  m_Layer: 0
+  m_Name: Poision_Trail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3979755610878815755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2704612775559256278}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 719926463281466553}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1148314547634748637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2704612775559256278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27579832d20014d4ebf20b9e772fec77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnTerm: 0.1
+  LifeTime: 1
+  Effect: Poison_Trail
 --- !u!1 &2782923192199990112
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,12 +1002,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2215939217147641811}
   - {fileID: 2756650729498918617}
   - {fileID: 2512288874402595472}
   - {fileID: 7269049884737396280}
+  - {fileID: 3979755610878815755}
   - {fileID: 5571818337507709769}
   - {fileID: 2090801207017801494}
-  - {fileID: 2215939217147641811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &974839499037157393
@@ -978,6 +1030,7 @@ MonoBehaviour:
   - {fileID: 1749037725384822060}
   - {fileID: 1187609413563084987}
   - {fileID: 5086274386454289508}
+  - {fileID: 2704612775559256278}
   defaultLayer: 0
   buffTF: {fileID: 0}
   animGameObject: {fileID: 6939599685599458559}
@@ -1307,7 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
+  AttackID: 0
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
@@ -1316,8 +1369,6 @@ MonoBehaviour:
   isAttackIDManage: 1
   isMultiHit: 0
   DPS: 1
-  hitCollider: {fileID: 0}
-  multiHitDurationTime: 0
   EnableType: 0
   penetrations: 0
   DisableTime: 0
@@ -1330,10 +1381,16 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
   isGuided: 0
   GuidingTarget: {fileID: 0}
   GuidingSpeed: 0
   GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!50 &825585655899856437
 Rigidbody2D:
   serializedVersion: 4

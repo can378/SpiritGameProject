@@ -54,6 +54,7 @@ public class ObjectPoolManager : MonoBehaviour
         if (!select)
         {
             select = Instantiate(prefabs[index], transform);
+            select.transform.position = _Position;
             pools[index].Add(select);
         }
 

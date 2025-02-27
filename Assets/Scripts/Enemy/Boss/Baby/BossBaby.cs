@@ -7,7 +7,7 @@ public class BossBaby : Boss
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, None };
+    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea,Poision_Trail, None };
 
     new public AnimJukqwi enemyAnim;
 
@@ -166,6 +166,7 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+        hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
         enemyAnim.animator.SetBool("isRush",true);
 
         while (time < 10.0f)
@@ -175,12 +176,14 @@ public class BossBaby : Boss
             if (ray)
             {
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
+                hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;
                 yield return new WaitForSeconds(1.0f);
 
                 // 이전 돌진 방향과 다음 돌진 방향의 각도가 120 도 이하라면 뒤로 돌진
                 madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec);
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
+                hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
                 continue;
             }
             
@@ -193,6 +196,7 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(0.1f);
         enemyStatus.moveVec = Vector2.zero;
 
+        hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
         enemyAnim.animator.SetBool("isRush", false);
         enemyStatus.isAttack = false;
@@ -273,13 +277,20 @@ public class BossBaby : Boss
             {
                 DropPos = new (Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y));
                 GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
-                ThisTear.GetComponent<HitDetection>().SetDisableTime(0.5f, ENABLE_TYPE.Time);
+                HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
+                hitDetection.user = this;
+                hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
+                hitDetection.SetHit_Ratio(10, 1.0f, enemyStats.SkillPower, 10);
+
             }
             if(PlayerPos == 0)
             {
                 DropPos = enemyStatus.enemyTarget.position;
                 GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
-                ThisTear.GetComponent<HitDetection>().SetDisableTime(0.5f, ENABLE_TYPE.Time);
+                HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
+                hitDetection.user = this;
+                hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
+                hitDetection.SetHit_Ratio(10, 1.0f, enemyStats.SkillPower, 10);
             }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }

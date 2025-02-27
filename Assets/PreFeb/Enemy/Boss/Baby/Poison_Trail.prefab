@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2866315741150197865}
   - component: {fileID: 3978095356988821543}
-  - component: {fileID: 7373249481174834579}
   - component: {fileID: 8510872055871966389}
   - component: {fileID: 3554602792875490206}
-  m_Layer: 13
-  m_Name: 04_Poison
-  m_TagString: AllAttack
+  m_Layer: 12
+  m_Name: Poison_Trail
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,9 +74,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.56298196, g: 0, b: 0.735849, a: 1}
+  m_Color: {r: 0.56298196, g: 0, b: 0.735849, a: 0.16862746}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -87,33 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &7373249481174834579
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5535729302175816803}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!58 &8510872055871966389
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -161,17 +133,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
+  AttackID: 0
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 05000000
-  isPooling: 0
-  isAttackIDManage: 1
+  <statusEffect>k__BackingField: 04000000
+  isPooling: 1
+  isAttackIDManage: 0
   isMultiHit: 0
   DPS: 1
-  hitCollider: {fileID: 0}
-  multiHitDurationTime: 0
   EnableType: 0
   penetrations: 0
   DisableTime: 0

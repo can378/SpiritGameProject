@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7785426860531856017}
   - component: {fileID: 1769986925097791942}
   - component: {fileID: 5552892049581883999}
+  - component: {fileID: 8504999261051517263}
   m_Layer: 8
   m_Name: poo
   m_TagString: Enemy
@@ -249,6 +250,21 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &8504999261051517263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997188540857653842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27579832d20014d4ebf20b9e772fec77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnTerm: 0.5
+  LifeTime: 5
+  Effect: Poison_Trail
 --- !u!1 &3196380019888756832
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,16 +455,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AttackID>k__BackingField: 0
-  user: {fileID: 4425346596907691044}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: -1
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: -1
-  <DefaultDamage>k__BackingField: 0
-  <Ratio>k__BackingField: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 5
   <statusEffect>k__BackingField: 04000000
-  multiHitDurationTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  isDisableObjcet_Instant: 0
+  DisableObject_Instant: {fileID: 0}
+  isDisableObjcet_Pool: 0
+  DisableObject_Pool: 
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isGuided: 0
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!1 &7940180268011986199
 GameObject:
   m_ObjectHideFlags: 0
