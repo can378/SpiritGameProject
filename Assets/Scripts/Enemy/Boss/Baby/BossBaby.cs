@@ -13,9 +13,7 @@ public class BossBaby : Boss
 
     private GameObject floor;
     private int patternIndex;
-    private bool isHitWall;
     Bounds bounds;
-    float randomX, randomY;
     Vector2 madRushVec;
     Vector3 corner;
 
@@ -159,7 +157,7 @@ public class BossBaby : Boss
         print("MadRush");
         enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
-        madRushVec = enemyStatus.targetDirVec;
+        madRushVec = (new Vector2(Random.Range(0,10), Random.Range(0, 10))).normalized;
 
         float time = 0;
         RaycastHit2D ray;
@@ -187,7 +185,7 @@ public class BossBaby : Boss
                 continue;
             }
             
-            enemyStatus.moveVec = madRushVec * 10.0f;
+            enemyStatus.moveVec = madRushVec;
             yield return null;
 
             time += Time.deltaTime;
@@ -296,8 +294,11 @@ public class BossBaby : Boss
         }
 
         enemyStatus.isAttack = false;
-        
+        yield return new WaitForSeconds(1f);
+        enemyAnim.animator.SetBool("isCry", false);
+
         yield return new WaitForSeconds(3f);
+        
         enemyStatus.isAttackReady = true;
     }
 
@@ -323,6 +324,22 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Hiding");
+
+        // 구석으로 이동한다.
+        enemyStatus.moveVec = (FindCorner() - transform.position).normalized;
+        while (true)
+        {
+            // 벽에 닿으면 움직임을 멈춘다.
+            Debug.DrawRay(transform.position, madRushVec.normalized * 5.0f, Color.green);
+            if (Physics2D.Raycast(transform.position, enemyStatus.moveVec, 5.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall")))
+            {
+               break;
+            }
+            yield return null;
+        }
+        enemyStatus.moveVec = Vector3.zero;
+
+        yield return new WaitForSeconds(1f);
         enemyAnim.ChangeVersion(AnimJukqwi.Version.Baby);
         enemyAnim.animator.SetBool("isHide", true);
 
@@ -347,13 +364,17 @@ public class BossBaby : Boss
         float time = 0.0f;
 
         // initiate scale
-        hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = new Vector3(50, 50, 1);
+        hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = new Vector3(80, 80, 1);
 
         // 완전히 가릴 때까지 스케일 조정
         //while (renderer1.bounds.Intersects(renderer2.bounds))
-        while (time < 3)
+        while (time < 8)
         {
-            hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = new Vector3(50, 50, 1) / (1 + time);
+
+            Vector3 Scale = hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale;
+            Scale.x -= Time.deltaTime * 10;
+            Scale.y -= Time.deltaTime * 10;
+            hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = Scale;
             time += Time.deltaTime;
             yield return null;
         }
@@ -435,16 +456,6 @@ public class BossBaby : Boss
         }
 
         return new Vector3(x,y,0);
-    }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-
-        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
-        {
-            isHitWall = true;
-        }
     }
 
     public override void Dead()

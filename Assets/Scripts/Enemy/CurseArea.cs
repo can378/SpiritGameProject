@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using System.Linq;
 using UnityEngine;
 
-public class CurseArea : MonoBehaviour
+public abstract class CurseArea : MonoBehaviour
 {
     [Header("안전 영역 리스트")]
     [field: SerializeField]
     List<SafeArea> safeAreas = new List<SafeArea>();
-    Dictionary<ObjectBasic,bool> inAreaSafe = new Dictionary<ObjectBasic, bool>();      // 영역 안에 있는 오브젝트 리스트 그리고 안전 여부
+    Dictionary<ObjectBasic, bool> inAreaSafe = new Dictionary<ObjectBasic, bool>();      // 영역 안에 있는 오브젝트 리스트 그리고 안전 여부
 
     void OnEnable()
     {
@@ -19,7 +20,7 @@ public class CurseArea : MonoBehaviour
     // 최적화는 우선 개한테 있음
     IEnumerator Curse()
     {
-        while(gameObject.activeSelf)
+        while (gameObject.activeSelf)
         {
             yield return new WaitForSeconds(0.2f);
 
@@ -42,18 +43,16 @@ public class CurseArea : MonoBehaviour
                 if (!objectBasic.Value)
                 {
                     inAreaSafe[objectBasic.Key] = false;
-                    objectBasic.Key.Damaged(1);
+                    CurseEffect(objectBasic.Key);
                 }
                 else
                     inAreaSafe[objectBasic.Key] = false;
 
             }
         }
-        
-
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player" || collision.tag == "Enemy")
         {
@@ -68,7 +67,7 @@ public class CurseArea : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player" || collision.tag == "Enemy")
         {
@@ -81,4 +80,8 @@ public class CurseArea : MonoBehaviour
             }
         }
     }
+
+    protected abstract void CurseEffect(ObjectBasic _Object);
+
 }
+

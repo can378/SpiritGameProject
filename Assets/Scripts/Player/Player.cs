@@ -62,7 +62,6 @@ public class Player : ObjectBasic
     void Start()
     {
         userData = DataManager.instance.userData;
-        defaultLayer = this.gameObject.layer;
     }
     void Update()
     {

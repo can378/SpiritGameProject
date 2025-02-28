@@ -127,4 +127,3 @@ public interface Interactable
     string GetInteractText();
     void Interact();
 }
-

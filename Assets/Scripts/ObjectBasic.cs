@@ -9,7 +9,6 @@ public class ObjectBasic : MonoBehaviour
     [HideInInspector] public Status status;
 
     public GameObject[] hitEffects;
-    public int defaultLayer;
     public Transform buffTF;
     public GameObject animGameObject;
     HashSet<int> ReceivedAttackID = new HashSet<int>();

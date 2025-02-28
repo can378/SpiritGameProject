@@ -32,8 +32,6 @@ public class EnemyBasic : ObjectBasic
                 hitEffect.GetComponent<HitDetection>().user = this;
         }
 
-        defaultLayer = this.gameObject.layer;
-
         enemyAnim = animGameObject.GetComponent<EnemyAnim>();
     }
 
@@ -112,6 +110,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Move()
     {
+        enemyStatus.moveVec.Normalize();
         if (0 < enemyStatus.isFlinch)
         {
             return;
@@ -268,9 +267,9 @@ public class EnemyBasic : ObjectBasic
     public override void Dead()
     {
         //drop coin
-        int dropCoinNum = 3;
+        // enemyStats.DropCoin을 수정하여 떨꾸는 코인 수 변경 가능
         Vector3 coinDropPoint = transform.position;
-        GameManager.instance.dropCoin(dropCoinNum, coinDropPoint);
+        GameManager.instance.dropCoin(enemyStats.DropCoin, coinDropPoint);
         
         base.Dead();
     }
