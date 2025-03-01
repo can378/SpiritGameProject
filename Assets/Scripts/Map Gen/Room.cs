@@ -35,11 +35,13 @@ public class Room : MonoBehaviour
     RoomManager roomManager;
     MapTemplates mapTemplates;
     TileBaseTemplate tileBaseTemplate;
+    MapManager mapManager;
 
     void Start() {
         roomManager = FindObj.instance.roomManagerScript;
         mapTemplates = FindObj.instance.roomManager.GetComponent<MapTemplates>();
         tileBaseTemplate = FindObj.instance.roomManager.GetComponent<TileBaseTemplate>();
+        mapManager=FindObj.instance.roomManager.GetComponent<MapManager>();
 
         roomManager.rooms.Add(this.gameObject);
         
@@ -147,12 +149,26 @@ public class Room : MonoBehaviour
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
             
         }
+        /*
         else if(mapType == MapType.Default)
         {
             map = Instantiate(mapTemplates.GetDefaultMap(top, bottom, left, right), transform.position, transform.rotation);
             minimapIcon = null;
         }
-        else if(mapType == MapType.None)
+        */
+        else if (mapType == MapType.Default)
+        {
+            if (mapManager != null)
+            {
+                map = Instantiate(mapManager.GetDefaultMap(top, bottom, left, right), transform.position, transform.rotation);
+                minimapIcon = null;
+            }
+            else
+            {
+                Debug.LogError("MapManager를 찾을 수 없습니다!");
+            }
+        }
+        else if (mapType == MapType.None)
         {
             map = null;
             minimapIcon = null;
