@@ -168,7 +168,7 @@ public class Room : MonoBehaviour
             
         map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
         map.transform.SetParent(this.transform);
-        map.SetActive(false);
+        //map.SetActive(false);
     }
 
     //

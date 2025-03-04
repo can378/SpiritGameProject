@@ -13,7 +13,7 @@ public class RoomEnterExit : MonoBehaviour
 
 
     public SpriteRenderer forMiniMapSprite;
-    public GameObject forMap;
+    //public GameObject forMap;
     public List<SpriteRenderer> aisleSprite;
 
 
@@ -61,7 +61,7 @@ public class RoomEnterExit : MonoBehaviour
 
 
         //map가리고 있는 검정색 제거
-        forMap.SetActive(false);
+        //forMap.SetActive(false);
 
         //플레이어 위치 표시
         playerPos.SetActive(true);
@@ -73,8 +73,8 @@ public class RoomEnterExit : MonoBehaviour
         }
         
         if (room.map!=null) 
-        { 
-            room.map.SetActive(true);
+        {
+            room.map.GetComponent<ObjectSpawn>().EnableEnemy();
         }
 
         if(room.mapType==MapType.Boss) 
@@ -99,10 +99,10 @@ public class RoomEnterExit : MonoBehaviour
         */
         if (room.map != null)
         {
-            room.map.SetActive(false);
+            room.map.GetComponent<ObjectSpawn>().DisableEnemy();
         }
 
-        forMap.SetActive(true);
+        //forMap.SetActive(true);
 
     }
 
