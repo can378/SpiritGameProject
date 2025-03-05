@@ -15,6 +15,7 @@ public class Crow : EnemyBasic
 
     IEnumerator LRShot()
     {
+        Vector3 targetPos = enemyStatus.enemyTarget.position;
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(1f);
@@ -22,7 +23,7 @@ public class Crow : EnemyBasic
         for (int i = 0; i < 2; i++)
         {
             // 공격 시작 할 때 적의 위치
-            Vector3 targetPos = enemyStatus.enemyTarget.position;
+            targetPos = enemyStatus.enemyTarget ? enemyStatus.enemyTarget.position : targetPos;
 
             // 무작위 공격 애니메이션 실행
             int RandomParam = Random.Range(0, Param.Length);

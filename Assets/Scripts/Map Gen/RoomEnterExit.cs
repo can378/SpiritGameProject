@@ -44,10 +44,10 @@ public class RoomEnterExit : MonoBehaviour
     {
 
         //최초방문시 miniMap에서 보이도록
-        forMiniMapSprite.color = new Color(1, 1, 1, 1);
+        forMiniMapSprite.color = new Color(0.8f, 0.8f, 0.8f, 1);
         forMiniMapSprite.sortingOrder = -1;
         foreach (SpriteRenderer spr in aisleSprite) 
-        { spr.color = new Color(1, 1, 1, 1); }
+        { spr.color = new Color(0.8f, 0.8f, 0.8f, 1); }
 
         //show minimap icon
         if (room.minimapIcon != null)
@@ -80,6 +80,10 @@ public class RoomEnterExit : MonoBehaviour
         if(room.mapType==MapType.Boss) 
         {
             enterBossRoom();
+        }
+        else if(room.mapType == MapType.Mission)
+        {
+            room.map.GetComponent<Mission>().startMission();
         }
 
         //플레이어가 현재 있는 맵 위치

@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     [SerializeField] bool unLockTrigger;
 
     [field: SerializeField] public MapType mapType { get; private set; }
-    MapType preMapType;
+    MapType preMapType = MapType.None;
     [field: SerializeField] public DoorType doorType { get; private set; }
     DoorType preDoorType;
     [field: SerializeField] public Door door { get; private set; }
@@ -44,9 +44,6 @@ public class Room : MonoBehaviour
         roomManager.rooms.Add(this.gameObject);
         
         //this.transform.SetParent(roomManager.transform);
-
-        preMapType = mapType;
-        preDoorType = doorType;
 
         //SetSprite();
 
@@ -80,7 +77,7 @@ public class Room : MonoBehaviour
         instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
 
         // ?òÑ?û¨ Î∞©Ïùò ?†ïÎ≥¥Î?? Î≥?Í≤ΩÌï† Î∞©ÏóêÍ≤? Í≥ÑÏäπ
-        instObj.GetComponent<Room>().mapType = mapType;
+        instObj.GetComponent<Room>().mapType = roomManager.ResetMapType(GetRoomWayType());
             
         // ?òÑ?û¨ Î∞©Ïùò ?†ïÎ≥? ?Ç≠?†ú
         roomManager.rooms.Remove(this.gameObject);
@@ -123,17 +120,16 @@ public class Room : MonoBehaviour
         if (mapType == MapType.Reward)
         {
             ran = UnityEngine.Random.Range(0, mapTemplates.RewardMap.Length);
-            map = Instantiate(mapTemplates.RewardMap[ran], transform.position, transform.rotation);
+            map = Instantiate(mapTemplates.GetRewardMap(top, bottom, left, right), transform.position, transform.rotation); 
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
           
         }
         else if (mapType == MapType.Mission)
         {
-            // ¿”Ω√∑Œ æ»¥›»˜∞‘ √≥∏Æ
             doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
-            map = Instantiate(mapTemplates.MissionMap[ran], transform.position, transform.rotation);
-            
+            map = Instantiate(mapTemplates.GetMissionMap(top, bottom, left, right), transform.position, transform.rotation);
+
             map.GetComponent<Mission>().roomScript = this;
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
             
