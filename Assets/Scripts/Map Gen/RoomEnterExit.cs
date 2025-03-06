@@ -72,15 +72,19 @@ public class RoomEnterExit : MonoBehaviour
             room.LockDoor();
         }
         
+        // 몬스터 활동 시작
         if (room.map!=null) 
         {
             room.map.GetComponent<ObjectSpawn>().EnableEnemy();
         }
 
+        // 보스맵이라면 보스 연출
         if(room.mapType==MapType.Boss) 
         {
             enterBossRoom();
         }
+
+        //미션 맵이라면 미션 시작
         else if(room.mapType == MapType.Mission)
         {
             room.map.GetComponent<Mission>().startMission();
@@ -92,6 +96,7 @@ public class RoomEnterExit : MonoBehaviour
     }
     void exitRoom()
     {
+        // 미니맵 플레이어 현 위치 꺼짐
         playerPos.SetActive(false);
 
         /*
@@ -101,6 +106,7 @@ public class RoomEnterExit : MonoBehaviour
             miniIcon.transform.parent = room.transform;
         }
         */
+        // 몬스터 활동 중지
         if (room.map != null)
         {
             room.map.GetComponent<ObjectSpawn>().DisableEnemy();

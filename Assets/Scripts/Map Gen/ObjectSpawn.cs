@@ -15,6 +15,7 @@ public class ObjectSpawn : MonoBehaviour
     private Dictionary<string, GameObject[]> enemyTemplatesDic;
     private int nowChapter;
 
+    // 몬스터 활동 중지
     public void DisableEnemy()
     {
         for (int i = enemys.Count - 1; i >= 0; i--)
@@ -30,6 +31,7 @@ public class ObjectSpawn : MonoBehaviour
         }
     }
 
+    // 몬스터 활동 시작
     public void EnableEnemy()
     {
         for (int i = enemys.Count - 1; i >= 0; i--)
