@@ -16,7 +16,7 @@ public class MapTemplates : MonoBehaviour
     public DefaultMapWay[] DefaultMap = new DefaultMapWay[16];
     public DefaultMapWay[] RewardMap = new DefaultMapWay[16];
     public DefaultMapWay[] MissionMap = new DefaultMapWay[16];
-    public GameObject[] BossMap;
+    public DefaultMapWay[] BossMap = new DefaultMapWay[16];
 
     public GameObject GetDefaultMap(bool _Top, bool _Bottom, bool _Left, bool _Right)
     {
@@ -34,6 +34,12 @@ public class MapTemplates : MonoBehaviour
     {
         int BitNumber = (Convert.ToByte(_Top) << 0) | (Convert.ToByte(_Bottom) << 1) | (Convert.ToByte(_Left) << 2) | (Convert.ToByte(_Right) << 3);
         return MissionMap[BitNumber].References[UnityEngine.Random.Range(0, MissionMap[BitNumber].References.Length)];
+    }
+
+    public GameObject GetBossMap(bool _Top, bool _Bottom, bool _Left, bool _Right)
+    {
+        int BitNumber = (Convert.ToByte(_Top) << 0) | (Convert.ToByte(_Bottom) << 1) | (Convert.ToByte(_Left) << 2) | (Convert.ToByte(_Right) << 3);
+        return BossMap[BitNumber].References[UnityEngine.Random.Range(0, BossMap[BitNumber].References.Length)];
     }
 }
 

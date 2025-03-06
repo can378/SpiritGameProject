@@ -139,7 +139,7 @@ public class Room : MonoBehaviour
             // 임시로 안닫히게 처리
             doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.BossMap.Length);
-            map = Instantiate(mapTemplates.BossMap[ran], transform.position, transform.rotation);
+            map = Instantiate(mapTemplates.GetBossMap(top, bottom, left, right), transform.position, transform.rotation);
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
             
         }
