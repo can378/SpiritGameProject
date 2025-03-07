@@ -15,6 +15,31 @@ public class ObjectSpawn : MonoBehaviour
     private Dictionary<string, GameObject[]> enemyTemplatesDic;
     private int nowChapter;
 
+    // 몬스터 활동 중지
+    public void DisableEnemy()
+    {
+        for (int i = enemys.Count - 1; i >= 0; i--)
+        {
+            if (enemys[i].GetComponent<Stats>().HP <= 0)
+            {
+                GameObject enemy = enemys[i];
+                enemys.RemoveAt(i);
+                Destroy(enemy);
+            }
+            else
+                enemys[i].SetActive(false);
+        }
+    }
+
+    // 몬스터 활동 시작
+    public void EnableEnemy()
+    {
+        for (int i = enemys.Count - 1; i >= 0; i--)
+        {
+            enemys[i].SetActive(true);
+        }
+    }
+
 
     public void SpawnEnemy(MapType mapType)
     {
@@ -77,6 +102,11 @@ public class ObjectSpawn : MonoBehaviour
         // 위치 정보 초기화
         // 안 없애도 되나?
         enemySpawnPoint.Clear();
+
+        foreach (GameObject enemy in enemys)
+        {
+            enemy.SetActive(false);
+        }
         
     }
 

@@ -13,7 +13,7 @@ public class RoomEnterExit : MonoBehaviour
 
 
     public SpriteRenderer forMiniMapSprite;
-    public GameObject forMap;
+    //public GameObject forMap;
     public List<SpriteRenderer> aisleSprite;
 
 
@@ -44,10 +44,10 @@ public class RoomEnterExit : MonoBehaviour
     {
 
         //최초방문시 miniMap에서 보이도록
-        forMiniMapSprite.color = new Color(1, 1, 1, 1);
+        forMiniMapSprite.color = new Color(0.8f, 0.8f, 0.8f, 1);
         forMiniMapSprite.sortingOrder = -1;
         foreach (SpriteRenderer spr in aisleSprite) 
-        { spr.color = new Color(1, 1, 1, 1); }
+        { spr.color = new Color(0.8f, 0.8f, 0.8f, 1); }
 
         //show minimap icon
         if (room.minimapIcon != null)
@@ -61,7 +61,7 @@ public class RoomEnterExit : MonoBehaviour
 
 
         //map가리고 있는 검정색 제거
-        forMap.SetActive(false);
+        //forMap.SetActive(false);
 
         //플레이어 위치 표시
         playerPos.SetActive(true);
@@ -72,14 +72,22 @@ public class RoomEnterExit : MonoBehaviour
             room.LockDoor();
         }
         
+        // 몬스터 활동 시작
         if (room.map!=null) 
-        { 
-            room.map.SetActive(true);
+        {
+            room.map.GetComponent<ObjectSpawn>().EnableEnemy();
         }
 
+        // 보스맵이라면 보스 연출
         if(room.mapType==MapType.Boss) 
         {
             enterBossRoom();
+        }
+
+        //미션 맵이라면 미션 시작
+        else if(room.mapType == MapType.Mission)
+        {
+            room.map.GetComponent<Mission>().startMission();
         }
 
         //플레이어가 현재 있는 맵 위치
@@ -88,6 +96,7 @@ public class RoomEnterExit : MonoBehaviour
     }
     void exitRoom()
     {
+        // 미니맵 플레이어 현 위치 꺼짐
         playerPos.SetActive(false);
 
         /*
@@ -97,12 +106,13 @@ public class RoomEnterExit : MonoBehaviour
             miniIcon.transform.parent = room.transform;
         }
         */
+        // 몬스터 활동 중지
         if (room.map != null)
         {
-            room.map.SetActive(false);
+            room.map.GetComponent<ObjectSpawn>().DisableEnemy();
         }
 
-        forMap.SetActive(true);
+        //forMap.SetActive(true);
 
     }
 

@@ -203,8 +203,6 @@ public class RoomManager : MonoBehaviour
     void SetMapType()
     {
         bool isBoss = false;
-        bool isEvent = false;
-
         Room room = rooms[0].GetComponent<Room>();
         room.SetMapManager(MapType.Default);
 
@@ -219,7 +217,7 @@ public class RoomManager : MonoBehaviour
             // 1-1 무조건 보상방
             if(roomType == 0)
             {
-                room.SetMapManager(MapType.Reward);
+                room.SetMapManager(MapType.Default);
             }
             // 2. 통로가 하나인 방이라면
             // 2-1 미션방
@@ -240,26 +238,47 @@ public class RoomManager : MonoBehaviour
             else if (roomType == 2)
             {
                 int ran = Random.Range(0, 50);
-                if(ran == 0)
-                {
-                    room.SetMapManager(MapType.Reward);
-                    continue;
-                }
+                //if(ran == 0)
+                //{
+                //    room.SetMapManager(MapType.Reward);
+                //    continue;
+                //}
                 room.SetMapManager(MapType.Default);
             }
             // 4. 통로가 3개인 방이라면
             // 4-1 보상방 : 적이 없는 잠시 휴식을 위한 방
             else if (roomType == 3)
             {
-                if(!isEvent)
-                {
-                    room.SetMapManager(MapType.Reward);
-                    isEvent = true;
-                    continue;
-                }
                 room.SetMapManager(MapType.Reward);
             }
         }
+    }
+
+    public MapType ResetMapType(int _WayType)
+    {
+
+        // 2. 통로가 하나인 방이라면
+        // 2-1 미션방
+        // 2-2 보스방 : 세팅되어있지않다면 보스방 세팅
+        if (_WayType == 1)
+        {
+            return MapType.Mission;
+        }
+        // 3. 통로가 2개인 방이라면
+        // 3-1 일반방 
+        // 3-2 보상방 : 낮은 확률로 적이 없는 잠시 휴식을 위한 방
+        else if (_WayType == 2)
+        {
+            return MapType.Default;
+        }
+        // 4. 통로가 3개인 방이라면
+        // 4-1 보상방 : 적이 없는 잠시 휴식을 위한 방
+        else if (_WayType == 3)
+        {
+            return MapType.Reward;
+        }
+
+        return MapType.Default;
     }
 
     public Transform GetBossRoomPos()

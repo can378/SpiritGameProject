@@ -42,11 +42,6 @@ public class Mission : MonoBehaviour
         isEnd = false;
     }
 
-    private void OnEnable()
-    {
-        startMission();
-    }
-
     //starts when the map is generated
     // ë¯¸ì…˜ ì¢…ë£Œ?•˜ë©? ëª¬ìŠ¤?„°?‚˜ ë¯¸ë¡œ ?…êµ? ?”?  ?“± ?—†?• ?•¼ ?•  ?“¯
     public IEnumerator CheckMissionEnd() 
