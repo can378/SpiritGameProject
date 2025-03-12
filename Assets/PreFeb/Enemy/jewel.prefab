@@ -150,21 +150,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
+  AttackID: 0
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
   isPooling: 1
+  isAttackIDManage: 1
   isMultiHit: 0
   DPS: 0
-  EnableType: 0
+  EnableType: 1
   penetrations: 0
-  DisableTime: 0
+  DisableTime: 10
   isDisableObjcet_Instant: 0
   DisableObject_Instant: {fileID: 0}
+  DOI_Range: 1
   isDisableObjcet_Pool: 0
   DisableObject_Pool: 
+  DOP_Range: 1
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isGuided: 0
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!1 &1563961434368542426
 GameObject:
   m_ObjectHideFlags: 0
