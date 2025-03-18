@@ -7,7 +7,7 @@ public class BossBaby : Boss
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea,Poision_Trail, None };
+    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, None };
 
     new public AnimJukqwi enemyAnim;
 
@@ -16,6 +16,8 @@ public class BossBaby : Boss
     Bounds bounds;
     Vector2 madRushVec;
     Vector3 corner;
+
+    Bounds BabyBounds;
 
     protected override void Awake()
     {
@@ -31,27 +33,24 @@ public class BossBaby : Boss
 
         enemyStatus.isAttackReady = true;
         bounds = floor.GetComponent<Collider2D>().bounds;
+        BabyBounds = GetComponent<CapsuleCollider2D>().bounds;
 
 
         // 공격 판정 초기화
-
         hitEffects[(int)BossBabyHitEffect.RushHitArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.AttackPower, 100);
-
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 50);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 4);
-
         //hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
     }
 
     protected override void MovePattern()
     {
-        //Chase();
+
     }
 
     protected override void Update()
     {
         base.Update();
-        //CheckMovement();
     }
 
     protected override void AttackPattern()
@@ -161,15 +160,17 @@ public class BossBaby : Boss
 
         float time = 0;
         RaycastHit2D ray;
+        Vector2 VecSize = new Vector2(0, 0);
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
         enemyAnim.animator.SetBool("isRush",true);
 
-        while (time < 10.0f)
+        while (time < 20.0f)
         {
-            Debug.DrawRay(transform.position, madRushVec.normalized * 9.0f, Color.green);
+            //VecSize = madRushVec * Mathf.Abs(Vector2.Dot(BabyBounds.extents, new Vector2(madRushVec.x, madRushVec.y)));
+            //Debug.DrawRay(transform.position, VecSize, Color.green);
             ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
             if (ray)
             {
@@ -179,7 +180,7 @@ public class BossBaby : Boss
                 yield return new WaitForSeconds(1.0f);
 
                 // 이전 돌진 방향과 다음 돌진 방향의 각도가 120 도 이하라면 뒤로 돌진
-                madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec);
+                madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec).normalized;
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
                 continue;
@@ -201,6 +202,13 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 
+    }
+
+    // 해당 방향벡터로부터 캡슐 경계까지 거리 구하는 함수
+    // 미구현
+    Vector2 CapsuleBounds(Vector2 _DirVec)
+    {
+        return new Vector2(0f,0f);
     }
 
     IEnumerator Screaming()
@@ -273,7 +281,8 @@ public class BossBaby : Boss
             Vector2 DropPos;
             for (int j = 0; j < DropCount; ++j)
             {
-                DropPos = new (Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y));
+                Vector2 RoomSize = bounds.extents * 0.2f;
+                DropPos = new (Random.Range(bounds.min.x + RoomSize.x, bounds.max.x - RoomSize.x), Random.Range(bounds.min.y + RoomSize.y, bounds.max.y - RoomSize.y));
                 GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
@@ -417,8 +426,7 @@ public class BossBaby : Boss
 
     #endregion 응애
 
-
-    private Vector3 FindCorner()
+    Vector3 FindCorner()
     {
         float floorPosX=floor.transform.position.x;
         float floorPosY=floor.transform.position.y;
