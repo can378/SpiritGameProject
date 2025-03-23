@@ -401,5 +401,13 @@ public class ObjectBasic : MonoBehaviour
         }
     }
 
+    public void ChangeColor(Vector4 _Color)
+    {
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.color = _Color;
+        }
+    }
+
 }
 

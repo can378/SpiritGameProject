@@ -9,6 +9,7 @@ public class BossBaby : Boss
     /// </summary>
     enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, None };
 
+    [ReadOnly]
     new public AnimJukqwi enemyAnim;
 
     private GameObject floor;
@@ -17,7 +18,10 @@ public class BossBaby : Boss
     Vector2 madRushVec;
     Vector3 corner;
 
-    Bounds BabyBounds;
+    [SerializeField]
+    Transform GrapPos;
+
+    bool HitWall;
 
     protected override void Awake()
     {
@@ -33,7 +37,6 @@ public class BossBaby : Boss
 
         enemyStatus.isAttackReady = true;
         bounds = floor.GetComponent<Collider2D>().bounds;
-        BabyBounds = GetComponent<CapsuleCollider2D>().bounds;
 
 
         // 공격 판정 초기화
@@ -106,7 +109,7 @@ public class BossBaby : Boss
             {
                 // 대상에게 잡기 디버프 부여
                 grapDeBuff = (GrapDeBuff)status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(9);
-                grapDeBuff.SetGrapOwner(GetComponent<ObjectBasic>(),transform);
+                grapDeBuff.SetGrapOwner(GetComponent<ObjectBasic>(), GrapPos);
                 grapSucces = true;
                 break;
             }
@@ -159,8 +162,8 @@ public class BossBaby : Boss
         madRushVec = (new Vector2(Random.Range(0,10), Random.Range(0, 10))).normalized;
 
         float time = 0;
-        RaycastHit2D ray;
         Vector2 VecSize = new Vector2(0, 0);
+        HitWall = false;
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
@@ -170,9 +173,9 @@ public class BossBaby : Boss
         while (time < 20.0f)
         {
             //VecSize = madRushVec * Mathf.Abs(Vector2.Dot(BabyBounds.extents, new Vector2(madRushVec.x, madRushVec.y)));
-            //Debug.DrawRay(transform.position, VecSize, Color.green);
-            ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
-            if (ray)
+            Debug.DrawRay(transform.position, madRushVec.normalized, Color.green);
+            //ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
+            if (HitWall)
             {
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
@@ -180,6 +183,7 @@ public class BossBaby : Boss
                 yield return new WaitForSeconds(1.0f);
 
                 // 이전 돌진 방향과 다음 돌진 방향의 각도가 120 도 이하라면 뒤로 돌진
+                HitWall = false;
                 madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec).normalized;
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
@@ -471,4 +475,14 @@ public class BossBaby : Boss
         RemoveDisarm();
         base.Dead();
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 충돌체 충돌 시 돌진 멈춤
+        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
+        {
+            HitWall = true;
+        }
+    }
+
 }

@@ -69,7 +69,11 @@ public class GrapDeBuff : StatusEffect
 
         // ºÙÀâÈú À§Ä¡
         if(GrapPos!= null)
-            target.transform.position = GrapPos.position;
+        {
+            target.GetComponent<ObjectBasic>().ChangeColor(new Vector4(1f,1f,1f,0f));
+            target.transform.position = new Vector3(GrapPos.position.x, GrapPos.position.y, GrapPos.position.z + 0.1f);
+        }
+            
             
         // °æÁ÷ ½ÃÅ´
         objectBasic.status.isFlinch = Mathf.Max(objectBasic.status.isFlinch, duration);
@@ -101,6 +105,7 @@ public class GrapDeBuff : StatusEffect
     {
         if (target.tag == "Player" || target.tag == "Enemy" || target.tag == "Npc")
         {
+            target.GetComponent<ObjectBasic>().ChangeColor(new Vector4(1f, 1f, 1f, 1f));
             objectBasic = target.GetComponent<ObjectBasic>();
             objectBasic.ClearFlinch();
         }

@@ -10,6 +10,7 @@ public class PivotOrder : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(transform.position.x,transform.position.y,PivotPos.position.y/1000);
+        transform.position = new Vector3(transform.position.x, transform.position.y, PivotPos.position.y/1000);
+        
     }
 }
