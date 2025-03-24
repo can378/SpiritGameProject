@@ -252,7 +252,7 @@ public class ObjectBasic : MonoBehaviour
         status.isAttack = false;
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
-
+        status.moveSpeedMultiplier = 1.0f;
         foreach (GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
     }

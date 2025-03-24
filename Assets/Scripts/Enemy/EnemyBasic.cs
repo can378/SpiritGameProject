@@ -117,19 +117,19 @@ public class EnemyBasic : ObjectBasic
         }
         else if (enemyStatus.isAttack)
         {
-            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
             return;
         }
         else if (enemyStatus.isRun)
         {
             Run();
-            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
             return;
         }
 
         MovePattern();
 
-        rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
+        rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
 
     }
 

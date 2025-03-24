@@ -48,7 +48,10 @@ public class BossBaby : Boss
 
     protected override void MovePattern()
     {
+        if(madRushVec != Vector2.zero)
+        {
 
+        }
     }
 
     protected override void Update()
@@ -156,10 +159,11 @@ public class BossBaby : Boss
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
+        enemyStatus.moveSpeedMultiplier = 4.0f;
         print("MadRush");
         enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
-        madRushVec = (new Vector2(Random.Range(0,10), Random.Range(0, 10))).normalized;
+        madRushVec = (new Vector2(Random.Range(-10, 10), Random.Range(-10, 10))).normalized;
 
         float time = 0;
         Vector2 VecSize = new Vector2(0, 0);
@@ -198,6 +202,7 @@ public class BossBaby : Boss
 
         yield return new WaitForSeconds(0.1f);
         enemyStatus.moveVec = Vector2.zero;
+        enemyStatus.moveSpeedMultiplier = 1.0f;
 
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
@@ -206,13 +211,6 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 
-    }
-
-    // 해당 방향벡터로부터 캡슐 경계까지 거리 구하는 함수
-    // 미구현
-    Vector2 CapsuleBounds(Vector2 _DirVec)
-    {
-        return new Vector2(0f,0f);
     }
 
     IEnumerator Screaming()

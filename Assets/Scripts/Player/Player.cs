@@ -166,7 +166,7 @@ public class Player : ObjectBasic
 
     void Move()     //이동
     {
-        if( (0 < playerStatus.isFlinch) )
+        if(0 < playerStatus.isFlinch)
             return;
 
         playerStatus.moveVec = new Vector2(hAxis, vAxis).normalized;
@@ -178,12 +178,12 @@ public class Player : ObjectBasic
         
         if (playerStatus.isDodge)             // 회피시 현재 속도 유지
         {
-            rigid.velocity  = dodgeVec * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed);
+            rigid.velocity  = dodgeVec.normalized * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed) * status.moveSpeedMultiplier;
         }
         else
         {
-            // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            rigid.velocity = playerStatus.moveVec * playerStats.MoveSpeed.Value;
+            // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 추가 이동 속도
+            rigid.velocity = playerStatus.moveVec * playerStats.MoveSpeed.Value * status.moveSpeedMultiplier;
         }
     }
 
