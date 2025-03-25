@@ -41,7 +41,7 @@ public class BossBaby : Boss
 
         // 공격 판정 초기화
         hitEffects[(int)BossBabyHitEffect.RushHitArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.AttackPower, 100);
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 50);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 10);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 4);
         //hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
     }
@@ -174,7 +174,7 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
         enemyAnim.animator.SetBool("isRush",true);
 
-        while (time < 20.0f)
+        while (true)
         {
             //VecSize = madRushVec * Mathf.Abs(Vector2.Dot(BabyBounds.extents, new Vector2(madRushVec.x, madRushVec.y)));
             Debug.DrawRay(transform.position, madRushVec.normalized, Color.green);
@@ -184,7 +184,10 @@ public class BossBaby : Boss
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.5f);
+
+                if(time > 10.0f)
+                    break;
 
                 // 이전 돌진 방향과 다음 돌진 방향의 각도가 120 도 이하라면 뒤로 돌진
                 HitWall = false;
