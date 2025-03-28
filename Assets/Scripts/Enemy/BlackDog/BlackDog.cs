@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlackDog : EnemyBasic
@@ -133,7 +134,8 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
 
-        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(!enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+
     }
 
 
@@ -169,7 +171,7 @@ public class BlackDog : EnemyBasic
     public override void AttackCancle() 
     {
         base.AttackCancle();
-        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(!enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     /*

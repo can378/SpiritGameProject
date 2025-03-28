@@ -186,6 +186,11 @@ public class EnemyBasic : ObjectBasic
 
     public void RunAway(Transform _FearTarget, float _Time)
     {
+        if(_FearTarget == null)
+        {
+            Debug.LogWarning("no enemy target. cancel runaway");
+            return;
+        }
         enemyStatus.fearTarget = _FearTarget;
         
         if(enemyStatus.runCoroutine != null)
