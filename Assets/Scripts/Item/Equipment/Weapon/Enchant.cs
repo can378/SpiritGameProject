@@ -22,6 +22,8 @@ public class Enchant : MonoBehaviour
 
     [field: SerializeField] HitDetection hitDetection;
 
+    [field: SerializeField] public GameObject Explosion { get; private set; }
+
     void Awake() 
     {
         hitDetection = GetComponent<HitDetection>();
@@ -112,7 +114,7 @@ public class Enchant : MonoBehaviour
         switch (ProjectileType)
         {
             case PROJECTILE_TYPE.Explosion:
-                hitDetection.SetDisableObject("Explosion");
+                hitDetection.SetDisableObject(true,Explosion);
                 break;
             default:
                 break;

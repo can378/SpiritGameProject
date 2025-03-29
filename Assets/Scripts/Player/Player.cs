@@ -293,7 +293,7 @@ public class Player : ObjectBasic
 
         [field: SerializeField] public List<PROJECTILE_TYPE> ProjectileType { get; set; } = new List<PROJECTILE_TYPE>();
         [SerializeField] GameObject HitDetectionGameObject;
-        int projectileIndex;
+        GameObject projectile;
         void Awake()
         {
             player = GetComponent<Player>();
@@ -314,7 +314,7 @@ public class Player : ObjectBasic
             }
             else if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.RANGE)
             {
-                projectileIndex = player.weaponList[player.playerStats.weapon].projectileIndex;
+                projectile = player.weaponList[player.playerStats.weapon].projectile;
             }
 
             // 장비 UI 적용
@@ -325,7 +325,7 @@ public class Player : ObjectBasic
         public void UnEquipWeapon()
         {
             HitDetectionGameObject = null;
-            projectileIndex = -1;
+            projectile = null;
 
             // 현재 위치에 장비를 놓는다.
             Instantiate(GameData.instance.weaponList[player.playerStats.weapon], gameObject.transform.position, gameObject.transform.localRotation);
@@ -447,7 +447,7 @@ public class Player : ObjectBasic
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             // 무기 투사체 적용
-            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectileIndex);
+            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile);
             instantProjectile.transform.position = transform.position;
             instantProjectile.transform.rotation = transform.rotation;
 

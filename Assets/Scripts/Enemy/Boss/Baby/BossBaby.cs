@@ -7,7 +7,7 @@ public class BossBaby : Boss
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, None };
+    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, Tear, None };
 
     [ReadOnly]
     new public AnimJukqwi enemyAnim;
@@ -18,8 +18,10 @@ public class BossBaby : Boss
     Vector2 madRushVec;
     Vector3 corner;
 
-    [SerializeField]
-    Transform GrapPos;
+
+    [SerializeField] Transform GrapPos;
+
+    [SerializeField] GameObject CrackPrefab;
 
     bool HitWall;
 
@@ -181,6 +183,7 @@ public class BossBaby : Boss
             //ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
             if (HitWall)
             {
+                Instantiate(CrackPrefab, transform.position, Quaternion.identity);
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;
@@ -288,7 +291,7 @@ public class BossBaby : Boss
             {
                 Vector2 RoomSize = bounds.extents * 0.2f;
                 DropPos = new (Random.Range(bounds.min.x + RoomSize.x, bounds.max.x - RoomSize.x), Random.Range(bounds.min.y + RoomSize.y, bounds.max.y - RoomSize.y));
-                GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
+                GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
                 hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
@@ -298,7 +301,7 @@ public class BossBaby : Boss
             if(PlayerPos == 0)
             {
                 DropPos = enemyStatus.enemyTarget.position;
-                GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
+                GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
                 hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);

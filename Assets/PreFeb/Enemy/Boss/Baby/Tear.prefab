@@ -5012,7 +5012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6718675135629908364
 Transform:
   m_ObjectHideFlags: 0
@@ -5101,12 +5101,10 @@ MonoBehaviour:
   EnableType: 0
   penetrations: 0
   DisableTime: 0
-  isDisableObjcet_Instant: 0
-  DisableObject_Instant: {fileID: 0}
-  DOI_Range: 1
-  isDisableObjcet_Pool: 1
-  DisableObject_Pool: Abscess
-  DOP_Range: 0.2
+  DisableObjects:
+  - IsPooling: 1
+    Object: {fileID: 7040823031454602919, guid: cac2891973dabcf4c96dd52859c6b4a9, type: 3}
+    Range: 0.2
   isGuide: 1
   GuideTime: 0.5
   GuideEffect: {fileID: 6818876238546001310}
