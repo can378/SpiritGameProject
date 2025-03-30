@@ -183,7 +183,7 @@ public class BossBaby : Boss
             //ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
             if (HitWall)
             {
-                Instantiate(CrackPrefab, transform.position, Quaternion.identity);
+                Instantiate(CrackPrefab, CenterPivot.position, Quaternion.identity);
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;

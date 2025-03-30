@@ -8,6 +8,8 @@ public class ObjectBasic : MonoBehaviour
     [HideInInspector] public Stats stats;
     [HideInInspector] public Status status;
 
+    public Transform CenterPivot;
+
     public GameObject[] hitEffects;
     public Transform buffTF;
     public GameObject animGameObject;
