@@ -58,7 +58,7 @@ public class WhiteFox : EnemyBasic
         }
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
-        if(!enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     IEnumerator PeripheralAttack()
@@ -96,7 +96,7 @@ public class WhiteFox : EnemyBasic
         whiteFoxStatus.isAttackReady = true;
 
 
-        if(!enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
 
 
         // 애니메이션 끝
