@@ -207,8 +207,8 @@ public class Player : ObjectBasic
             dodgeVec = playerStatus.moveVec;
             playerStatus.isDodge = true;
             playerStatus.isReload = false;
-            playerStats.HP += 100;
-            playerStats.MoveSpeed.AddValue = 20;
+            //playerStats.HP += 100;
+            //playerStats.MoveSpeed.AddValue = 20;
 
             Invoke("DodgeOut", playerStats.dodgeTime);
 
