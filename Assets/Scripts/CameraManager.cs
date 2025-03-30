@@ -49,7 +49,7 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-        playerTransform = Player.GetComponent<Transform>();
+        playerTransform = Player.GetComponent<Player>().CenterPivot;
     }
 
     void FixedUpdate()

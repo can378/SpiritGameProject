@@ -190,9 +190,9 @@ public class Player : ObjectBasic
     void Turn()
     {
         playerStatus.mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        playerStatus.mouseDir = (Vector2)(playerStatus.mousePos - transform.position).normalized;
+        playerStatus.mouseDir = (Vector2)(playerStatus.mousePos - CenterPivot.position).normalized;
 
-        playerStatus.mouseAngle = Mathf.Atan2(playerStatus.mousePos.y - transform.position.y, playerStatus.mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+        playerStatus.mouseAngle = Mathf.Atan2(playerStatus.mousePos.y - CenterPivot.position.y, playerStatus.mousePos.x - CenterPivot.position.x) * Mathf.Rad2Deg;
         //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
 
     }
@@ -406,8 +406,6 @@ public class Player : ObjectBasic
             // 무기 방향
             HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
 
-            
-
             // 파티클
             {
                 // 공격 속도에 따른 이펙트 가속
@@ -447,16 +445,14 @@ public class Player : ObjectBasic
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             // 무기 투사체 적용
-            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile);
-            instantProjectile.transform.position = transform.position;
-            instantProjectile.transform.rotation = transform.rotation;
+            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile, player.CenterPivot.position);
 
             //투사체 설정
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
             // 투사체 설정
-            hitDetection.SetProjectile_Ratio( player.weaponList[player.playerStats.weapon].penetrations
+            hitDetection.SetProjectile_Ratio(player.weaponList[player.playerStats.weapon].penetrations
                 ,0
                 ,1
                 , player.playerStats.AttackPower
