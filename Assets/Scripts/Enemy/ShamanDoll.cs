@@ -60,13 +60,13 @@ public class ShamanDoll : EnemyBasic
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 
-        if(!enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     public override void AttackCancle()
     {
         base.AttackCancle();
-        if(!enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     /*
