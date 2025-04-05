@@ -34,7 +34,7 @@ public class NormalGhost : EnemyBasic
             GameObject knife = ObjectPoolManager.instance.Get("knife");
             Debug.Log(knife.name+" throwing");
 
-            if (enemyStatus.enemyTarget == null) { Debug.Log("enemy null - normal ghost"); }
+
             knife.transform.position = transform.position;
             Vector3 distTest= knife.transform.position - gameObject.transform.position;
             Debug.Log("distance from knife to enmey" +distTest.x+" "+distTest.y+" "+distTest.z);

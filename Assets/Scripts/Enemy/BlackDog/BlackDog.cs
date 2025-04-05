@@ -84,7 +84,7 @@ public class BlackDog : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(!blackDogStatus.enemyTarget)
+        if(!blackDogStatus.isTarget)
         {
             RandomMove();
         }

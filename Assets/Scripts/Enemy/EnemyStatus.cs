@@ -8,6 +8,7 @@ public class EnemyStatus : Status
     public bool isTouchPlayer;
     public bool isBoss;                 // 보스 여부
     public bool isRun;                  // 도망 중 : 공격 할 수 없으며 적에게서 멀어짐
+    public bool isTarget;               // 타겟을 인식하고 있는지
     public float randomMove = 0;        // 무작위 이동
     public Transform enemyTarget;       // 현재 타겟
     public Vector2 targetDirVec;        // 공격 방향
