@@ -92,7 +92,9 @@ public class EnemyBasic : ObjectBasic
         if (enemyStatus.isTarget)
         {
             // 타겟이 시야 범위 안에 들어왔어도, 타겟이 시야 유지 거리보다 멀리 있다면 타겟을 해제.
-            if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < enemyStatus.targetDis)
+            if (!enemyStatus.isTargetForced && 
+                0 <= enemyStats.detectionKeepDis && 
+                enemyStats.detectionKeepDis < enemyStatus.targetDis)
             {
                 enemyStatus.isTarget = false;
                 return;
@@ -288,6 +290,19 @@ public class EnemyBasic : ObjectBasic
 
     #endregion Effect
 
+
+    //enemy attacked
+    public override bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
+    {
+        bool criticalHit = base.Damaged(damage, critical, criticalDamage);
+
+        // Detect the target (player) when the enemy is attacked.
+        enemyStatus.isTarget = true;
+        enemyStatus.isTargetForced= true;
+        return criticalHit;
+    }
+
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -309,6 +324,8 @@ public class EnemyBasic : ObjectBasic
     {
         enemyStatus.isRun = false;
         enemyStatus.isTouchPlayer = false;
+        enemyStatus.isTarget = false;
+        enemyStatus.isTargetForced = false;
         if (enemyStatus.attackCoroutine != null)
         {
             StopCoroutine(enemyStatus.attackCoroutine);
