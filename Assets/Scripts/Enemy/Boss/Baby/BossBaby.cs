@@ -10,7 +10,7 @@ public class BossBaby : Boss
     enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, Tear, None };
 
     [ReadOnly]
-    new public AnimJukqwi enemyAnim;
+    new public AnimJukqwi jukqwiAnim;
 
     private GameObject floor;
     private int patternIndex;
@@ -29,7 +29,7 @@ public class BossBaby : Boss
     {
         base.Awake();
 
-        enemyAnim = animGameObject.GetComponent<AnimJukqwi>();
+        jukqwiAnim = animGameObject.GetComponent<AnimJukqwi>();
     }
 
     protected override void Start()
@@ -98,7 +98,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Rush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -129,7 +129,7 @@ public class BossBaby : Boss
         if (grapSucces)
         {
             time = 0;
-            enemyAnim.animator.SetBool("isGrap", true);
+            jukqwiAnim.animator.SetBool("isGrap", true);
             // 대상이 계속 잡기 상태라면
             while (grapDeBuff != null)
             {
@@ -138,7 +138,7 @@ public class BossBaby : Boss
                 if (4.0f < time)
                 {
                     // 큰 피해와 잡기를 1초 후에 해제
-                    enemyAnim.animator.SetTrigger("Hug");
+                    jukqwiAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.GetComponent<ObjectBasic>().BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
                     break;
                 }
@@ -146,7 +146,7 @@ public class BossBaby : Boss
                 yield return null;
             }
         }
-        enemyAnim.animator.SetBool("isGrap", false);
+        jukqwiAnim.animator.SetBool("isGrap", false);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -163,7 +163,7 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = false;
         enemyStatus.moveSpeedMultiplier = 4.0f;
         print("MadRush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         madRushVec = (new Vector2(Random.Range(-10, 10), Random.Range(-10, 10))).normalized;
 
@@ -174,7 +174,7 @@ public class BossBaby : Boss
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
-        enemyAnim.animator.SetBool("isRush",true);
+        jukqwiAnim.animator.SetBool("isRush",true);
 
         while (true)
         {
@@ -212,7 +212,7 @@ public class BossBaby : Boss
 
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
-        enemyAnim.animator.SetBool("isRush", false);
+        jukqwiAnim.animator.SetBool("isRush", false);
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
@@ -224,15 +224,15 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Screaming");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
-        enemyAnim.animator.SetBool("isScream", true);
+        jukqwiAnim.animator.SetBool("isScream", true);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
 
         //플레이어 느려지게 만든다.
         yield return new WaitForSeconds(5f);
 
-        enemyAnim.animator.SetBool("isScream", false);
+        jukqwiAnim.animator.SetBool("isScream", false);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
 
         yield return new WaitForSeconds(2f);
@@ -266,8 +266,8 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Crying");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Baby);
-        enemyAnim.animator.SetBool("isCry",true);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Baby);
+        jukqwiAnim.animator.SetBool("isCry",true);
 
         //move to corner
         corner = FindCorner();
@@ -312,7 +312,7 @@ public class BossBaby : Boss
 
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(1f);
-        enemyAnim.animator.SetBool("isCry", false);
+        jukqwiAnim.animator.SetBool("isCry", false);
 
         yield return new WaitForSeconds(3f);
         
@@ -357,8 +357,8 @@ public class BossBaby : Boss
         enemyStatus.moveVec = Vector3.zero;
 
         yield return new WaitForSeconds(1f);
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Baby);
-        enemyAnim.animator.SetBool("isHide", true);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Baby);
+        jukqwiAnim.animator.SetBool("isHide", true);
 
         hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(true);
         hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(true);
@@ -370,7 +370,7 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(false);
 
         enemyStatus.isAttack = false;
-        enemyAnim.animator.SetBool("isHide", false);
+        jukqwiAnim.animator.SetBool("isHide", false);
         yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;
 
