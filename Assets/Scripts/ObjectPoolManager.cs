@@ -17,6 +17,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     void Awake()
     {
+        //Singleton pattern/////////////////////
         if (instance == null)
         {
             instance = this;
@@ -29,14 +30,15 @@ public class ObjectPoolManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        //pools 초기화
+        //pools 초기화/////////////////////////
         pools = new List<List<GameObject>>();
         for (int index = 0; index < prefabs.Count; ++index)
             pools.Add(new List<GameObject>());
-        print(pools.Count);
+        //print(pools.Count);
     }
 
-    public GameObject Get(int index, Vector3 _Position = default)//get object with index
+    //get object with index
+    public GameObject Get(int index, Vector3 _Position = default)
     {
         GameObject select = null;
 
@@ -47,7 +49,7 @@ public class ObjectPoolManager : MonoBehaviour
                 select = item;
                 select.transform.position = _Position;
                 select.SetActive(true);
-                break;
+                return select;
             }
         }
 
@@ -61,7 +63,8 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    public GameObject Get(string _name, Vector3 _Position = default)//get object iwth name
+    //get object iwth name
+    public GameObject Get(string _name, Vector3 _Position = default)
     {
         GameObject select = null;
        
@@ -81,7 +84,9 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    public GameObject Get(GameObject _Prefab, Vector3 _Position = default)//get object iwth name
+
+    //get object with prefab
+    public GameObject Get(GameObject _Prefab, Vector3 _Position = default)
     {
         GameObject select = null;
 

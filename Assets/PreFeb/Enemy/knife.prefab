@@ -186,46 +186,46 @@ MonoBehaviour:
   <poise>k__BackingField: 20
   DefensivePower:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   <SEResist>k__BackingField:
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   AttackPower:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   SkillPower:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   MoveSpeed:
     _Value: 0
-    _DefalutValue: 5
+    _DefaultValue: 5
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
@@ -235,6 +235,7 @@ MonoBehaviour:
   detectionDis: 0
   detectionKeepDis: 0
   maxAttackRange: 0
+  disableTime: 5
 --- !u!61 &1032769423933587562
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -319,7 +320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotPos: {fileID: 2864567993269191809}
 --- !u!210 &-2750975026207697917
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -356,12 +356,7 @@ MonoBehaviour:
   EnableType: 1
   penetrations: 0
   DisableTime: 0.5
-  isDisableObjcet_Instant: 0
-  DisableObject_Instant: {fileID: 0}
-  DOI_Range: 1
-  isDisableObjcet_Pool: 0
-  DisableObject_Pool: 
-  DOP_Range: 1
+  DisableObjects: []
   isGuide: 0
   GuideTime: 0
   GuideEffect: {fileID: 0}

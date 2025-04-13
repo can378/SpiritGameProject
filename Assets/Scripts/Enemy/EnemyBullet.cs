@@ -13,6 +13,13 @@ public class EnemyBullet : MonoBehaviour
         playerPos = FindObj.instance.Player.transform;
         stats = GetComponent<EnemyStats>();
     }
+
+    private void OnEnable()
+    {
+        time = 0;
+        playerPos=FindObj.instance.Player.transform;
+    }
+
     private void Update()
     {
         //5초뒤에는 비활성화
@@ -20,7 +27,7 @@ public class EnemyBullet : MonoBehaviour
         if (time >= 5f) { gameObject.SetActive(false); time = 0; }
 
         //플레이어쪽으로 발사
-        Vector2 direction = playerPos.position- transform.position;
+        Vector2 direction = (playerPos.position- transform.position).normalized;
         transform.Translate(direction * stats.MoveSpeed.Value * Time.deltaTime);  
     }
 
