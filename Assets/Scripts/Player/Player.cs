@@ -166,7 +166,7 @@ public class Player : ObjectBasic
 
     void Move()     //이동
     {
-        if( (0 < playerStatus.isFlinch) )
+        if(0 < playerStatus.isFlinch)
             return;
 
         playerStatus.moveVec = new Vector2(hAxis, vAxis).normalized;
@@ -178,21 +178,21 @@ public class Player : ObjectBasic
         
         if (playerStatus.isDodge)             // 회피시 현재 속도 유지
         {
-            rigid.velocity  = dodgeVec * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed);
+            rigid.velocity  = dodgeVec.normalized * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed) * status.moveSpeedMultiplier;
         }
         else
         {
-            // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도
-            rigid.velocity = playerStatus.moveVec * playerStats.MoveSpeed.Value;
+            // 기본 속도 = 플레이어 이동속도 * 플레이어 디폴트 이동속도 * 추가 이동 속도
+            rigid.velocity = playerStatus.moveVec * playerStats.MoveSpeed.Value * status.moveSpeedMultiplier;
         }
     }
 
     void Turn()
     {
         playerStatus.mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        playerStatus.mouseDir = (Vector2)(playerStatus.mousePos - transform.position).normalized;
+        playerStatus.mouseDir = (Vector2)(playerStatus.mousePos - CenterPivot.position).normalized;
 
-        playerStatus.mouseAngle = Mathf.Atan2(playerStatus.mousePos.y - transform.position.y, playerStatus.mousePos.x - transform.position.x) * Mathf.Rad2Deg;
+        playerStatus.mouseAngle = Mathf.Atan2(playerStatus.mousePos.y - CenterPivot.position.y, playerStatus.mousePos.x - CenterPivot.position.x) * Mathf.Rad2Deg;
         //this.transform.rotation = Quaternion.AngleAxis(mouseAngle - 90, Vector3.forward);
 
     }
@@ -207,8 +207,8 @@ public class Player : ObjectBasic
             dodgeVec = playerStatus.moveVec;
             playerStatus.isDodge = true;
             playerStatus.isReload = false;
-            playerStats.HP += 100;
-            playerStats.MoveSpeed.AddValue = 20;
+            //playerStats.HP += 100;
+            //playerStats.MoveSpeed.AddValue = 20;
 
             Invoke("DodgeOut", playerStats.dodgeTime);
 
@@ -293,7 +293,7 @@ public class Player : ObjectBasic
 
         [field: SerializeField] public List<PROJECTILE_TYPE> ProjectileType { get; set; } = new List<PROJECTILE_TYPE>();
         [SerializeField] GameObject HitDetectionGameObject;
-        int projectileIndex;
+        GameObject projectile;
         void Awake()
         {
             player = GetComponent<Player>();
@@ -314,7 +314,7 @@ public class Player : ObjectBasic
             }
             else if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.RANGE)
             {
-                projectileIndex = player.weaponList[player.playerStats.weapon].projectileIndex;
+                projectile = player.weaponList[player.playerStats.weapon].projectile;
             }
 
             // 장비 UI 적용
@@ -325,7 +325,7 @@ public class Player : ObjectBasic
         public void UnEquipWeapon()
         {
             HitDetectionGameObject = null;
-            projectileIndex = -1;
+            projectile = null;
 
             // 현재 위치에 장비를 놓는다.
             Instantiate(GameData.instance.weaponList[player.playerStats.weapon], gameObject.transform.position, gameObject.transform.localRotation);
@@ -406,8 +406,6 @@ public class Player : ObjectBasic
             // 무기 방향
             HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
 
-            
-
             // 파티클
             {
                 // 공격 속도에 따른 이펙트 가속
@@ -447,16 +445,14 @@ public class Player : ObjectBasic
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             // 무기 투사체 적용
-            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectileIndex);
-            instantProjectile.transform.position = transform.position;
-            instantProjectile.transform.rotation = transform.rotation;
+            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile, player.CenterPivot.position);
 
             //투사체 설정
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
             // 투사체 설정
-            hitDetection.SetProjectile_Ratio( player.weaponList[player.playerStats.weapon].penetrations
+            hitDetection.SetProjectile_Ratio(player.weaponList[player.playerStats.weapon].penetrations
                 ,0
                 ,1
                 , player.playerStats.AttackPower

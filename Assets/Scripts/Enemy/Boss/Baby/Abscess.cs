@@ -5,7 +5,7 @@ using UnityEngine;
 public class Abscess : EnemyBasic
 {
     [SerializeField]
-    string m_Pus;       // Á×À» ¶§ Æø¹ßÇÏ´Â Á¾±â
+    GameObject m_Pus;       // Á×À» ¶§ Æø¹ßÇÏ´Â Á¾±â
 
     [SerializeField]
     float m_PusDamage;

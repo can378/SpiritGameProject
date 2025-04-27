@@ -7,9 +7,10 @@ public class BossBaby : Boss
     /// <summary>
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
-    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea,Poision_Trail, None };
+    enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, Tear, None };
 
-    new public AnimJukqwi enemyAnim;
+    [ReadOnly]
+    new public AnimJukqwi jukqwiAnim;
 
     private GameObject floor;
     private int patternIndex;
@@ -17,11 +18,18 @@ public class BossBaby : Boss
     Vector2 madRushVec;
     Vector3 corner;
 
+
+    [SerializeField] Transform GrapPos;
+
+    [SerializeField] GameObject CrackPrefab;
+
+    bool HitWall;
+
     protected override void Awake()
     {
         base.Awake();
 
-        enemyAnim = animGameObject.GetComponent<AnimJukqwi>();
+        jukqwiAnim = animGameObject.GetComponent<AnimJukqwi>();
     }
 
     protected override void Start()
@@ -34,24 +42,23 @@ public class BossBaby : Boss
 
 
         // 공격 판정 초기화
-
         hitEffects[(int)BossBabyHitEffect.RushHitArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.AttackPower, 100);
-
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 50);
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 10);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetMultiHit(true, 4);
-
         //hitEffects[(int)BossBabyHitEffect.Tear].GetComponent<HitDetection>().SetHit_Ratio(0, 2, stats.SkillPower);
     }
 
     protected override void MovePattern()
     {
-        //Chase();
+        if(madRushVec != Vector2.zero)
+        {
+
+        }
     }
 
     protected override void Update()
     {
         base.Update();
-        //CheckMovement();
     }
 
     protected override void AttackPattern()
@@ -91,7 +98,7 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Rush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -107,7 +114,7 @@ public class BossBaby : Boss
             {
                 // 대상에게 잡기 디버프 부여
                 grapDeBuff = (GrapDeBuff)status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(9);
-                grapDeBuff.SetGrapOwner(GetComponent<ObjectBasic>(),transform);
+                grapDeBuff.SetGrapOwner(GetComponent<ObjectBasic>(), GrapPos);
                 grapSucces = true;
                 break;
             }
@@ -122,7 +129,7 @@ public class BossBaby : Boss
         if (grapSucces)
         {
             time = 0;
-            enemyAnim.animator.SetBool("isGrap", true);
+            jukqwiAnim.animator.SetBool("isGrap", true);
             // 대상이 계속 잡기 상태라면
             while (grapDeBuff != null)
             {
@@ -131,7 +138,7 @@ public class BossBaby : Boss
                 if (4.0f < time)
                 {
                     // 큰 피해와 잡기를 1초 후에 해제
-                    enemyAnim.animator.SetTrigger("Hug");
+                    jukqwiAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.GetComponent<ObjectBasic>().BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
                     break;
                 }
@@ -139,7 +146,7 @@ public class BossBaby : Boss
                 yield return null;
             }
         }
-        enemyAnim.animator.SetBool("isGrap", false);
+        jukqwiAnim.animator.SetBool("isGrap", false);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -154,32 +161,40 @@ public class BossBaby : Boss
     {
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
+        enemyStatus.moveSpeedMultiplier = 4.0f;
         print("MadRush");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
-        madRushVec = (new Vector2(Random.Range(0,10), Random.Range(0, 10))).normalized;
+        madRushVec = (new Vector2(Random.Range(-10, 10), Random.Range(-10, 10))).normalized;
 
         float time = 0;
-        RaycastHit2D ray;
+        Vector2 VecSize = new Vector2(0, 0);
+        HitWall = false;
         yield return new WaitForSeconds(0.1f);
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
-        enemyAnim.animator.SetBool("isRush",true);
+        jukqwiAnim.animator.SetBool("isRush",true);
 
-        while (time < 10.0f)
+        while (true)
         {
-            Debug.DrawRay(transform.position, madRushVec.normalized * 9.0f, Color.green);
-            ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
-            if (ray)
+            //VecSize = madRushVec * Mathf.Abs(Vector2.Dot(BabyBounds.extents, new Vector2(madRushVec.x, madRushVec.y)));
+            Debug.DrawRay(transform.position, madRushVec.normalized, Color.green);
+            //ray = Physics2D.Raycast(transform.position, madRushVec.normalized, 9.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall"));
+            if (HitWall)
             {
+                Instantiate(CrackPrefab, CenterPivot.position, Quaternion.identity);
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.5f);
+
+                if(time > 10.0f)
+                    break;
 
                 // 이전 돌진 방향과 다음 돌진 방향의 각도가 120 도 이하라면 뒤로 돌진
-                madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec);
+                HitWall = false;
+                madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec).normalized;
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
                 continue;
@@ -193,10 +208,11 @@ public class BossBaby : Boss
 
         yield return new WaitForSeconds(0.1f);
         enemyStatus.moveVec = Vector2.zero;
+        enemyStatus.moveSpeedMultiplier = 1.0f;
 
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
-        enemyAnim.animator.SetBool("isRush", false);
+        jukqwiAnim.animator.SetBool("isRush", false);
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
@@ -208,15 +224,15 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Screaming");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Adult);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
-        enemyAnim.animator.SetBool("isScream", true);
+        jukqwiAnim.animator.SetBool("isScream", true);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
 
         //플레이어 느려지게 만든다.
         yield return new WaitForSeconds(5f);
 
-        enemyAnim.animator.SetBool("isScream", false);
+        jukqwiAnim.animator.SetBool("isScream", false);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(false);
 
         yield return new WaitForSeconds(2f);
@@ -250,8 +266,8 @@ public class BossBaby : Boss
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         print("Crying");
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Baby);
-        enemyAnim.animator.SetBool("isCry",true);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Baby);
+        jukqwiAnim.animator.SetBool("isCry",true);
 
         //move to corner
         corner = FindCorner();
@@ -273,8 +289,9 @@ public class BossBaby : Boss
             Vector2 DropPos;
             for (int j = 0; j < DropCount; ++j)
             {
-                DropPos = new (Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y));
-                GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
+                Vector2 RoomSize = bounds.extents * 0.2f;
+                DropPos = new (Random.Range(bounds.min.x + RoomSize.x, bounds.max.x - RoomSize.x), Random.Range(bounds.min.y + RoomSize.y, bounds.max.y - RoomSize.y));
+                GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
                 hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
@@ -284,7 +301,7 @@ public class BossBaby : Boss
             if(PlayerPos == 0)
             {
                 DropPos = enemyStatus.enemyTarget.position;
-                GameObject ThisTear = ObjectPoolManager.instance.Get("Tear", DropPos);
+                GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
                 hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
@@ -295,7 +312,7 @@ public class BossBaby : Boss
 
         enemyStatus.isAttack = false;
         yield return new WaitForSeconds(1f);
-        enemyAnim.animator.SetBool("isCry", false);
+        jukqwiAnim.animator.SetBool("isCry", false);
 
         yield return new WaitForSeconds(3f);
         
@@ -340,8 +357,8 @@ public class BossBaby : Boss
         enemyStatus.moveVec = Vector3.zero;
 
         yield return new WaitForSeconds(1f);
-        enemyAnim.ChangeVersion(AnimJukqwi.Version.Baby);
-        enemyAnim.animator.SetBool("isHide", true);
+        jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Baby);
+        jukqwiAnim.animator.SetBool("isHide", true);
 
         hitEffects[(int)BossBabyHitEffect.SafeArea].SetActive(true);
         hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(true);
@@ -353,7 +370,7 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.DamageArea].SetActive(false);
 
         enemyStatus.isAttack = false;
-        enemyAnim.animator.SetBool("isHide", false);
+        jukqwiAnim.animator.SetBool("isHide", false);
         yield return new WaitForSeconds(2f);
         enemyStatus.isAttackReady = true;
 
@@ -417,8 +434,7 @@ public class BossBaby : Boss
 
     #endregion 응애
 
-
-    private Vector3 FindCorner()
+    Vector3 FindCorner()
     {
         float floorPosX=floor.transform.position.x;
         float floorPosY=floor.transform.position.y;
@@ -463,4 +479,14 @@ public class BossBaby : Boss
         RemoveDisarm();
         base.Dead();
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 충돌체 충돌 시 돌진 멈춤
+        if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
+        {
+            HitWall = true;
+        }
+    }
+
 }

@@ -32,7 +32,7 @@ public class Weapon : Equipment
     [field: SerializeField] public int ammo { get; private set; }                // 재장전 필요 없는 무기는 음수로 표기
     [field: SerializeField] public float reloadTime { get; private set; }
 
-    [field: SerializeField] public int projectileIndex {get; private set; } = -1;
+    [field: SerializeField] public GameObject projectile {get; private set; }
     [field: SerializeField] public float projectileSpeed { get; private set; }      // 투사체 속도
     [field: SerializeField] public float projectileTime { get; private set; }       // 투사체 유지 시간
     [field: SerializeField] public int penetrations { get; private set; }           // 투사체 관통 횟수

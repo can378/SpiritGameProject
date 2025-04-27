@@ -13,7 +13,7 @@ public class Trail : MonoBehaviour
     //[SerializeField] float TickTerm;     // 생성 시간
 
     [SerializeField] float LifeTime;     // 유지 시간
-    [SerializeField] string Effect;
+    [SerializeField] GameObject Effect;
 
     List<GameObject> EffectList = new List<GameObject>();
 

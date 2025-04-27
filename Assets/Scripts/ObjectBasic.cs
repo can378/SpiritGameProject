@@ -8,6 +8,8 @@ public class ObjectBasic : MonoBehaviour
     [HideInInspector] public Stats stats;
     [HideInInspector] public Status status;
 
+    public Transform CenterPivot;
+
     public GameObject[] hitEffects;
     public Transform buffTF;
     public GameObject animGameObject;
@@ -252,7 +254,7 @@ public class ObjectBasic : MonoBehaviour
         status.isAttack = false;
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
-
+        status.moveSpeedMultiplier = 1.0f;
         foreach (GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
     }
@@ -396,6 +398,14 @@ public class ObjectBasic : MonoBehaviour
     public void ChangeColor(Color _Color)
     {
         foreach(SpriteRenderer sprite in sprites)
+        {
+            sprite.color = _Color;
+        }
+    }
+
+    public void ChangeColor(Vector4 _Color)
+    {
+        foreach (SpriteRenderer sprite in sprites)
         {
             sprite.color = _Color;
         }

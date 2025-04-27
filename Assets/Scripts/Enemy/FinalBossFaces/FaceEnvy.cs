@@ -21,7 +21,7 @@ public class FaceEnvy : BossFace
     {
         if (nowAttack)
         {
-            if (!enemyStatus.enemyTarget)
+            if (!enemyStatus.isTarget)
             {
                 RandomMove();
             }

@@ -79,6 +79,39 @@ Transform:
   - {fileID: 5363062130714968670}
   m_Father: {fileID: 2037569523088966379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1977584747723066568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5092264433144509538}
+  m_Layer: 0
+  m_Name: CenterPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5092264433144509538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977584747723066568}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7949061878809416093}
+  - {fileID: 6469687433694640058}
+  m_Father: {fileID: 8884761542970708304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2218474225785230373
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +137,7 @@ Transform:
   m_GameObject: {fileID: 2218474225785230373}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.26, z: 0}
+  m_LocalPosition: {x: 0, y: -0.48, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -135,7 +168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3105114939551070920}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -232,6 +265,7 @@ GameObject:
   - component: {fileID: 6162495839983942233}
   - component: {fileID: 2680101835875493889}
   - component: {fileID: 8541102717995228091}
+  - component: {fileID: 3171004510718720288}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -252,13 +286,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7949061878809416093}
-  - {fileID: 6469687433694640058}
-  - {fileID: 788934946776095346}
   - {fileID: 8694477693269452269}
   - {fileID: 3418451821682442538}
+  - {fileID: 788934946776095346}
   - {fileID: 731373971785790677}
   - {fileID: 2744177701977405796}
+  - {fileID: 5092264433144509538}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4369510584889721068
@@ -320,7 +353,7 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 2.6}
   m_Size: {x: 1, y: 5}
   m_Direction: 0
 --- !u!210 &5997293420027666641
@@ -349,11 +382,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
+  CenterPivot: {fileID: 5092264433144509538}
   hitEffects:
   - {fileID: 1369341997654721744}
   - {fileID: 3390848125582378263}
   - {fileID: 3475945037996605182}
-  defaultLayer: 0
   buffTF: {fileID: 0}
   animGameObject: {fileID: 14492875779528660}
   sprites: []
@@ -458,65 +491,65 @@ MonoBehaviour:
   <poise>k__BackingField: 20
   DefensivePower:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   <SEResist>k__BackingField:
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   AttackPower:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   SkillPower:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   MoveSpeed:
     _Value: 0
-    _DefalutValue: 10
+    _DefaultValue: 12
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   activeEffects: []
   CriticalChance:
     _Value: 0
-    _DefalutValue: 0
+    _DefaultValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   <CriticalDamage>k__BackingField:
     _Value: 0
-    _DefalutValue: 1.5
+    _DefaultValue: 1.5
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   <defaultAttackSpeed>k__BackingField: 1
   <defaultSkillCoolTime>k__BackingField: 0
-  <defaultDodgeSpeed>k__BackingField: 0.66
+  <defaultDodgeSpeed>k__BackingField: 2
   <defaultDodgeTime>k__BackingField: 0.3
   blind: 0
   coin: 0
@@ -542,6 +575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveVec: {x: 0, y: 0}
+  moveSpeedMultiplier: 1
   hitTarget: {fileID: 0}
   isBeAttaked: 0
   isFlinch: 0
@@ -577,7 +611,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotPos: {fileID: 731373971785790677}
+--- !u!212 &3171004510718720288
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3504708173630329506}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 245
+  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &4061476216747264001
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +693,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8884761542970708304}
+  m_Father: {fileID: 5092264433144509538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &3279172400100275085
 CircleCollider2D:
@@ -695,17 +780,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <DefaultDamage>k__BackingField: 0
-  <Ratio>k__BackingField: 0
+  AttackID: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isGuided: 0
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!60 &3481271467806886931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -798,6 +900,7 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 4430817135633105390}
+  <Explosion>k__BackingField: {fileID: 0}
 --- !u!210 &2007444982383773848
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -859,17 +962,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <DefaultDamage>k__BackingField: 0
-  <Ratio>k__BackingField: 0
+  AttackID: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isGuided: 0
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!58 &4414942471104923482
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -948,6 +1068,7 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 6763884657055603484}
+  <Explosion>k__BackingField: {fileID: 0}
 --- !u!210 &4459671199187379072
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -976,7 +1097,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7146305915754617851
 Transform:
   m_ObjectHideFlags: 0
@@ -1139,17 +1260,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <DefaultDamage>k__BackingField: 0
-  <Ratio>k__BackingField: 0
+  AttackID: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isGuided: 0
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!114 &8227443501481831212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,6 +1304,7 @@ MonoBehaviour:
   <CommonType>k__BackingField: -1
   <ProjectileType>k__BackingField: -1
   hitDetection: {fileID: 2337001387749416503}
+  <Explosion>k__BackingField: {fileID: 0}
 --- !u!60 &796167031908651993
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1354,7 +1493,7 @@ Transform:
   m_GameObject: {fileID: 7243290139834783462}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.73, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1465,13 +1604,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9072190913098653964}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2037569523088966379}
-  m_Father: {fileID: 8884761542970708304}
+  m_Father: {fileID: 5092264433144509538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3543736066135281685
 Animator:

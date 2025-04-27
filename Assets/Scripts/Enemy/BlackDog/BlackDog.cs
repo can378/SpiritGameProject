@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlackDog : EnemyBasic
@@ -83,7 +84,7 @@ public class BlackDog : EnemyBasic
 
     protected override void MovePattern()
     {
-        if(!blackDogStatus.enemyTarget)
+        if(!blackDogStatus.isTarget)
         {
             RandomMove();
         }
@@ -116,18 +117,25 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttackReady = false;
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
-        hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(5, 0.5f, enemyStats.AttackPower);
-        
-        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
-        hitEffects[0].gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        hitEffects[0].gameObject.SetActive(false);
-        
+        if (hitEffects.Length > 0 && hitEffects[0] != null)
+        {
+            hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(5, 0.5f, enemyStats.AttackPower);
+
+            hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
+            hitEffects[0].gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            hitEffects[0].gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("hitEffects[0] is missing in BlackDog!");
+        }
 
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
 
-        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+
     }
 
 
@@ -163,7 +171,7 @@ public class BlackDog : EnemyBasic
     public override void AttackCancle() 
     {
         base.AttackCancle();
-        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     /*

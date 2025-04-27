@@ -2,20 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 해당 오브젝트의 상태를 나타내는 클래스
+/// 영구적이지 않은 값들을 저장
+/// </summary>
 public class Status : MonoBehaviour
 {
-    public Vector2 moveVec;                     // ?씠?룞 諛⑺뼢 踰≫꽣
-    public Coroutine beAttackedCoroutine;       // ?뵾寃? ?깋?긽 蹂?寃? 肄붾（?떞
-    public GameObject hitTarget;                // 怨듦꺽 ?꽦怨?
+    public Vector2 moveVec;                     // 이동 방향
 
-    public bool isBeAttaked;                 // ?뵾寃? : ?뵾寃⑸맖
-    public float isFlinch;                   // 寃쎌쭅 : ?뒪?뒪濡? ???吏곸씪 ?닔 ?뾾?쑝硫? 怨듦꺽?븷 ?닔 ?뾾?쓬
-    public bool isSuperArmor;               // 媛뺤씤(?뒋?띁?븘癒?) : 寃쎌쭅 ?릺吏? ?븡?뒗?떎.
-    public bool isInvincible;               // 臾댁쟻 : ?뵾?빐??? ?쟻?쓽 怨듦꺽 臾댁떆
-    public bool isAttack;                   // 怨듦꺽 : ?뒪?뒪濡? ???吏곸씪 ?닔 ?뾾?쑝硫? 異붽??濡? 怨듦꺽 遺덇??
-    public bool isAttackReady = true;       // 怨듦꺽 以?鍮? : false?씪 ?떆 怨듦꺽??? ?븷 ?닔 ?뾾?쑝?굹 ?뒪?뒪濡? ?씠?룞??? 媛??뒫
+    /// <summary>
+    /// 추가 속도 (특정 상태일 때 잠시 적용 되는 속도, 우선 Status 소유 오브젝트만 사용할 것)
+    /// </summary>
+    public float moveSpeedMultiplier = 1f;                     
+    public Coroutine beAttackedCoroutine;       // 피격 코루틴
+    public GameObject hitTarget;                // 공격을 받은 대상
 
-    public Transform fearTarget;            // 공포 대상
+    public bool isBeAttaked;                 // 공격 받은 상태
+    public float isFlinch;                   // 경직 상태, 조작 불가
+    public bool isSuperArmor;               // 경직 무시
+    public bool isInvincible;               // 무적
+    public bool isAttack;                   // 공격
+    public bool isAttackReady = true;       // 공격 준비 (true면 공격 가능, false면 공격 불가)
+
+    public Transform fearTarget;            // 공포를 건 대상
     public Coroutine runCoroutine;          // 도망가기 코루틴
 
 

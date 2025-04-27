@@ -11,12 +11,13 @@ public class ObjectPoolManager : MonoBehaviour
 {
     public static ObjectPoolManager instance = null;
 
-    public GameObject[] prefabs;
-    List<GameObject>[] pools;
+    public List<GameObject> prefabs;
+    List<List<GameObject>> pools;
 
 
     void Awake()
     {
+        //Singleton pattern/////////////////////
         if (instance == null)
         {
             instance = this;
@@ -29,14 +30,15 @@ public class ObjectPoolManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-
-        //pools 초기화
-        pools = new List<GameObject>[prefabs.Length];
-        for (int index = 0; index < pools.Length; index++)
-            pools[index] = new List<GameObject>();
+        //pools 초기화/////////////////////////
+        pools = new List<List<GameObject>>();
+        for (int index = 0; index < prefabs.Count; ++index)
+            pools.Add(new List<GameObject>());
+        //print(pools.Count);
     }
 
-    public GameObject Get(int index, Vector3 _Position = default)//get object with index
+    //get object with index
+    public GameObject Get(int index, Vector3 _Position = default)
     {
         GameObject select = null;
 
@@ -47,7 +49,7 @@ public class ObjectPoolManager : MonoBehaviour
                 select = item;
                 select.transform.position = _Position;
                 select.SetActive(true);
-                break;
+                return select;
             }
         }
 
@@ -61,13 +63,14 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    public GameObject Get(string name, Vector3 _Position = default)//get object iwth name
+    //get object iwth name
+    public GameObject Get(string _name, Vector3 _Position = default)
     {
         GameObject select = null;
        
-        for (int i = 0; i < prefabs.Length; i++)
+        for (int i = 0; i < prefabs.Count; i++)
         {
-            if (prefabs[i].name == name)
+            if (prefabs[i].name == _name)
             {
                 select = Get(i, _Position);
                 return select;
@@ -78,6 +81,32 @@ public class ObjectPoolManager : MonoBehaviour
         print("WARNING:there is no name!!!");
         select = Instantiate(prefabs[0]);
         pools[0].Add(select);
+        return select;
+    }
+
+
+    //get object with prefab
+    public GameObject Get(GameObject _Prefab, Vector3 _Position = default)
+    {
+        GameObject select = null;
+
+        int PrefabIndex = prefabs.FindIndex(x => x == _Prefab);
+        print(PrefabIndex);
+        if (PrefabIndex != -1)
+        {
+            select = Get(PrefabIndex, _Position);
+            return select;
+        }
+
+        print("WARNING:there is no name!!!");
+
+        // if Not Found _Prefab in prefabs
+        PrefabIndex = prefabs.Count;
+
+        prefabs.Add(_Prefab);
+        pools.Add(new List<GameObject>());
+        select = Instantiate(_Prefab, _Position, Quaternion.identity);
+        pools[PrefabIndex].Add(select);
         return select;
     }
 
@@ -100,7 +129,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     public void ClearAll()
     {
-        for (int index = 0; index < pools.Length; index++)
+        for (int index = 0; index < pools.Count; index++)
             foreach (GameObject item in pools[index])
                 item.SetActive(false);
     }

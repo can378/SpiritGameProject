@@ -41,48 +41,63 @@ public class WhiteFox : EnemyBasic
         whiteFoxStatus.isAttackReady = false;
         yield return new WaitForSeconds(1f);
 
-        hitDetection = hitEffects[0].GetComponent<HitDetection>();
-        hitDetection.user = this;
-        hitDetection.SetHit_Ratio(10, 1, enemyStats.AttackPower);
-        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
-        hitEffects[0].SetActive(true);
-        yield return new WaitForSeconds(0.6f);
+        if (hitEffects[0] != null)
+        {
+            hitDetection = hitEffects[0].GetComponent<HitDetection>();
+            hitDetection.user = this;
+            hitDetection.SetHit_Ratio(10, 1, enemyStats.AttackPower);
+            hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(hitDir.y, hitDir.x) * Mathf.Rad2Deg - 90);
+            hitEffects[0].SetActive(true);
+            yield return new WaitForSeconds(0.6f);
 
-        hitEffects[0].SetActive(false);
+            hitEffects[0].SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("hitEffects[1]이 null");
+        }
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
-        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
     }
 
     IEnumerator PeripheralAttack()
     {
         // 애니메이션 시작
-        enemyAnim.animator.SetBool("isCry",true);
+        enemyAnim.animator.SetBool("isCry", true);
 
         // 공격 루틴 시작
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
         whiteFoxStatus.blizzardCoolTime = defaulBlizzardCoolTime;
-       
+
         yield return new WaitForSeconds(0.5f);
 
-        // 영역 활성화
-        HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
-        hitDetection.user = this;
-        hitDetection.SetHit_Ratio(1f, 0.1f,  enemyStats.SkillPower);
-        hitDetection.SetMultiHit(true, 10);
-        hitDetection.SetSEs(blizzardDebuff);
-        hitEffects[1].SetActive(true);
-        yield return new WaitForSeconds(3f);
+        if (hitEffects[1] != null) { 
+                // 영역 활성화
+                HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
+            hitDetection.user = this;
+            hitDetection.SetHit_Ratio(1f, 0.1f, enemyStats.SkillPower);
+            hitDetection.SetMultiHit(true, 10);
+            hitDetection.SetSEs(blizzardDebuff);
+            hitEffects[1].SetActive(true);
+            yield return new WaitForSeconds(3f);
 
-        // 영역 끄기
-        hitEffects[1].SetActive(false);
-        yield return new WaitForSeconds(1f);
-
+            // 영역 끄기
+            hitEffects[1].SetActive(false);
+            yield return new WaitForSeconds(1f);
+        }
+        else
+        {
+            Debug.LogError("hitEffects[1]이 null");
+        }
         // 공격 루틴 끝
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
-        RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+
+
+        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+
 
         // 애니메이션 끝
         enemyAnim.animator.SetBool("isCry", false);

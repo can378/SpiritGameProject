@@ -57,15 +57,21 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Attack()
     {
-        if (!enemyStatus.enemyTarget)
+        if (!enemyStatus.isTarget)
             return;
 
-        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
         enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
-        if (this.gameObject.activeSelf && !enemyStatus.isRun && (0 >= enemyStatus.isFlinch) && !enemyStatus.isAttack && enemyStatus.isAttackReady && (enemyStatus.targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0))
+        if (gameObject.activeSelf && 
+            !enemyStatus.isRun && 
+            (0 >= enemyStatus.isFlinch) && 
+            !enemyStatus.isAttack && 
+            enemyStatus.isAttackReady && 
+            (enemyStatus.targetDis <= enemyStats.maxAttackRange || 
+            enemyStats.maxAttackRange < 0))
         {
             enemyStatus.moveVec = Vector2.zero;
             AttackPattern();
@@ -82,19 +88,21 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Detect()
     {
-        // ???ê²Ÿì´ ?žˆ?„ ?•Œ
-        if (enemyStatus.enemyTarget != null)
+        // When there is a target
+        if (enemyStatus.isTarget)
         {
-            // ???ê²? ?œ ì§? ê±°ë¦¬ê°? ?–‘?ˆ˜ ?´ê³? ???ê²Ÿì´ ?œ ì§?ê±°ë¦¬ë³´ë‹¤ ë©?ë¦? ?žˆ?‹¤ë©? ???ê²? ?•´? œ
-            if (0 <= enemyStats.detectionKeepDis && enemyStats.detectionKeepDis < enemyStatus.targetDis)
+            // Å¸°ÙÀÌ ½Ã¾ß ¹üÀ§ ¾È¿¡ µé¾î¿Ô¾îµµ, Å¸°ÙÀÌ ½Ã¾ß À¯Áö °Å¸®º¸´Ù ¸Ö¸® ÀÖ´Ù¸é Å¸°ÙÀ» ÇØÁ¦.
+            if (!enemyStatus.isTargetForced && 
+                0 <= enemyStats.detectionKeepDis && 
+                enemyStats.detectionKeepDis < enemyStatus.targetDis)
             {
-                enemyStatus.enemyTarget = null; // ?”Œ? ˆ?´?–´ê°? ê±°ë¦¬ ì¡°ì ˆ?•˜ë©? ? ?“¤ ì£½ì¼ ?ˆ˜ ?žˆê²?, ?´ê±? ?•ˆ?•˜ë©? ? ?“¤?´ ?„ˆë¬? ëª°ë ¤????„œ ?‚œ?´?„ê°? ?„ˆë¬? ?†’?•„ì§?.
+                enemyStatus.isTarget = false;
                 return;
             }
             return;
         }
 
-        var target = Physics2D.OverlapCircle(this.transform.position, enemyStats.detectionDis, targetLayer);
+        var target = Physics2D.OverlapCircle(transform.position, enemyStats.detectionDis, targetLayer);
 
         if (target == null)
         {
@@ -102,6 +110,7 @@ public class EnemyBasic : ObjectBasic
         }
 
         enemyStatus.enemyTarget = target.transform;
+        enemyStatus.isTarget = true;
     }
 
     #endregion Attack
@@ -117,26 +126,26 @@ public class EnemyBasic : ObjectBasic
         }
         else if (enemyStatus.isAttack)
         {
-            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
             return;
         }
         else if (enemyStatus.isRun)
         {
             Run();
-            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
+            rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
             return;
         }
 
         MovePattern();
 
-        rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value;
+        rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
 
     }
 
     // ?´?™ ?Œ¨?„´(ê¸°ë³¸ ?Œ¨?„´ : ???ê²Ÿì´ ?—†?œ¼ë©? ë¬´ìž‘?œ„ ?´?™, ???ê²Ÿì´ ?žˆ?œ¼ë©? ?‚¬? •ê±°ë¦¬ ê¹Œì?? ì¶”ì )
     protected virtual void MovePattern()
     {
-        if (!enemyStatus.enemyTarget)
+        if (!enemyStatus.isTarget)
         {
             RandomMove();
         }
@@ -166,7 +175,7 @@ public class EnemyBasic : ObjectBasic
     // ?  ì¶”ì 
     protected void Chase()
     {
-        if (!enemyStatus.enemyTarget)
+        if (!enemyStatus.isTarget)
         {
             return;
         }
@@ -186,6 +195,11 @@ public class EnemyBasic : ObjectBasic
 
     public void RunAway(Transform _FearTarget, float _Time)
     {
+        if(_FearTarget == null)
+        {
+            Debug.LogWarning("no enemy target. cancel runaway");
+            return;
+        }
         enemyStatus.fearTarget = _FearTarget;
         
         if(enemyStatus.runCoroutine != null)
@@ -276,6 +290,19 @@ public class EnemyBasic : ObjectBasic
 
     #endregion Effect
 
+
+    //enemy attacked
+    public override bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
+    {
+        bool criticalHit = base.Damaged(damage, critical, criticalDamage);
+
+        // Detect the target (player) when the enemy is attacked.
+        enemyStatus.isTarget = true;
+        enemyStatus.isTargetForced= true;
+        return criticalHit;
+    }
+
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -297,6 +324,8 @@ public class EnemyBasic : ObjectBasic
     {
         enemyStatus.isRun = false;
         enemyStatus.isTouchPlayer = false;
+        enemyStatus.isTarget = false;
+        enemyStatus.isTargetForced = false;
         if (enemyStatus.attackCoroutine != null)
         {
             StopCoroutine(enemyStatus.attackCoroutine);

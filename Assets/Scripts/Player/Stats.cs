@@ -9,7 +9,7 @@ public class Stat
     [Header("최종값")]
     [field: SerializeField, ReadOnly] float _Value;
     [Header("기본값")]
-    [field: SerializeField] float _DefalutValue;
+    [field: SerializeField] float _DefaultValue;
     float _MaxValue;
     float _MinValue;
     [Header("수정값")]
@@ -19,16 +19,17 @@ public class Stat
 
     public Stat(float _DefalutValue, float _MaxValue = float.MaxValue, float _MinValue = float.MinValue)
     {
-        this._DefalutValue = _DefalutValue;
+        this._DefaultValue = _DefalutValue;
         this._MaxValue = _MaxValue;
         this._MinValue = _MinValue;
     }
 
-    public void SetDefaultValue(float _DefalutValue) { this._DefalutValue = _DefalutValue; }
+    //public void SetDefaultValue(float _DefalutValue) { this._DefalutValue = _DefalutValue; }
 
-    public void ResetValue()
+    // 최종 값을 수정합니다.
+    void ResetValue()
     {
-        _Value = Mathf.Clamp((_DefalutValue + _AddValue) * (1f + _IncreasedValue) * (1f - _DecreasedValue), _MinValue, _MaxValue);
+        _Value = Mathf.Clamp((_DefaultValue + _AddValue) * (1f + _IncreasedValue) * (1f - _DecreasedValue), _MinValue, _MaxValue);
     }
 
     public float Value
