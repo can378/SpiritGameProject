@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackID: 0
   <user>k__BackingField: {fileID: 0}
-  DefaultDamage: 0
+  DefaultDamage: 15
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
   isPooling: 1
@@ -92,12 +92,7 @@ MonoBehaviour:
   EnableType: 0
   penetrations: 0
   DisableTime: 0
-  isDisableObjcet_Instant: 0
-  DisableObject_Instant: {fileID: 0}
-  DOI_Range: 1
-  isDisableObjcet_Pool: 0
-  DisableObject_Pool: 
-  DOP_Range: 1
+  DisableObjects: []
   isGuide: 0
   GuideTime: 0
   GuideEffect: {fileID: 0}
@@ -230,6 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
+  CenterPivot: {fileID: 0}
   hitEffects: []
   buffTF: {fileID: 0}
   animGameObject: {fileID: 6537886198063257128}
@@ -309,6 +305,7 @@ MonoBehaviour:
   detectionDis: 5
   detectionKeepDis: 0
   maxAttackRange: -1
+  disableTime: 0
 --- !u!114 &-2331342458836752463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +331,8 @@ MonoBehaviour:
   isTouchPlayer: 0
   isBoss: 0
   isRun: 0
+  isTarget: 0
+  isTargetForced: 0
   randomMove: 0
   enemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
@@ -350,7 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotPos: {fileID: 6327962331640912082}
 --- !u!210 &-4473571472166164651
 SortingGroup:
   m_ObjectHideFlags: 0
