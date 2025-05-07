@@ -29,7 +29,7 @@ public class Tiger_head : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
-        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.EnemyTarget.CenterPivot.position);
 
 
         //ROLLING

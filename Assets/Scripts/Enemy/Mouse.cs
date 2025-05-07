@@ -20,7 +20,7 @@ public class Mouse : EnemyBasic
     {
         if (!isChange)
         {
-            if(!enemyStatus.enemyTarget)
+            if(!enemyStatus.EnemyTarget)
             {
                 RandomMove();
             }
@@ -31,7 +31,7 @@ public class Mouse : EnemyBasic
         }
         else
         {
-            if (!enemyStatus.enemyTarget)
+            if (!enemyStatus.EnemyTarget)
             {
                 RandomMove();
             }

@@ -21,8 +21,8 @@ public class NoHead_Head : EnemyBasic
         //targetDirVec = (enemyTarget.position - transform.position).normalized;
 
         float angle = Mathf.Atan2
-            (enemyStatus.enemyTarget.transform.position.y - transform.position.y,
-             enemyStatus.enemyTarget.transform.position.x - transform.position.x)
+            (enemyStatus.EnemyTarget.transform.position.y - transform.position.y,
+             enemyStatus.EnemyTarget.transform.position.x - transform.position.x)
            * Mathf.Rad2Deg;
         
         vomit.transform.rotation = Quaternion.Euler(0, 0, angle-180);

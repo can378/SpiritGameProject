@@ -113,7 +113,7 @@ public class FaceAngry : BossFace
 
     protected override void Detect()
     {
-        enemyStatus.enemyTarget = FindObj.instance.Player.transform;
+        enemyStatus.EnemyTarget = FindObj.instance.Player.GetComponent<ObjectBasic>();
     }
 
     protected override void faceAttack()

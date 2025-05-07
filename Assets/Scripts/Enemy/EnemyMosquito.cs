@@ -15,7 +15,7 @@ public class EnemyMosquito : EnemyBasic
 
     IEnumerator attack() 
     {
-        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
+        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.EnemyTarget.CenterPivot.position);
 
         if (enemyStatus.targetDis <= enemyStats.detectionDis && enemyStatus.targetDis >= 1f)
         {

@@ -43,7 +43,7 @@ public class Pox : EnemyBasic
         enemyAnim.animator.SetBool("isHit", false);
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
-        RunAway(enemyStatus.enemyTarget.transform, 3.0f);
+        RunAway(enemyStatus.EnemyTarget.transform, 3.0f);
     }
 
     IEnumerator Throw()
@@ -57,11 +57,11 @@ public class Pox : EnemyBasic
         enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.75f);
         
-        if (enemyStatus.enemyTarget != null)
+        if (enemyStatus.EnemyTarget != null)
         {
             GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = ThrowPos.position;
-            Vector3 TargetDirVec = (enemyStatus.enemyTarget.position - ThrowPos.position).normalized;
+            Vector3 TargetDirVec = (enemyStatus.EnemyTarget.CenterPivot.position - ThrowPos.position).normalized;
             bullet.GetComponent<Rigidbody2D>().AddForce(TargetDirVec * 7, ForceMode2D.Impulse);
         }
 

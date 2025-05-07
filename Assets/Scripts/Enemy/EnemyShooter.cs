@@ -52,7 +52,7 @@ public class EnemyShooter : EnemyBasic
 
         Rigidbody2D rigidBullet = bullet.GetComponent<Rigidbody2D>();
 
-        Vector2 dirVec = enemyStatus.enemyTarget.transform.position - transform.position;
+        Vector2 dirVec = enemyStatus.EnemyTarget.transform.position - transform.position;
         rigidBullet.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
 
         //Repeat
@@ -85,7 +85,7 @@ public class EnemyShooter : EnemyBasic
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
 
-            Vector2 dirVec = enemyStatus.enemyTarget.transform.position - transform.position;
+            Vector2 dirVec = enemyStatus.EnemyTarget.transform.position - transform.position;
             Vector2 ranVec = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(0f, 2f));
             dirVec += ranVec;
             rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);

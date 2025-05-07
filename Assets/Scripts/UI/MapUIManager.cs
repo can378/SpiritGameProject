@@ -339,7 +339,7 @@ public class MapUIManager : MonoBehaviour
             return;
         }
 
-        if(Boss.enemyStatus.enemyTarget && !BossProgressPanel.activeSelf)
+        if(Boss.enemyStatus.EnemyTarget && !BossProgressPanel.activeSelf)
         {
             BossProgressPanel.SetActive(true);
             return;
@@ -352,7 +352,7 @@ public class MapUIManager : MonoBehaviour
         if(Boss == null||Boss.isActiveAndEnabled==false)
             return;
 
-        if(!Boss.enemyStatus.enemyTarget)
+        if(!Boss.enemyStatus.EnemyTarget)
             return;
 
         float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax) * 100;
@@ -364,7 +364,7 @@ public class MapUIManager : MonoBehaviour
         if(Boss == null || Boss.isActiveAndEnabled == false)
             return;
 
-        if(!Boss.enemyStatus.enemyTarget)
+        if(!Boss.enemyStatus.EnemyTarget)
             return;
         
         BossName.text = Boss.enemyStats.enemyName;

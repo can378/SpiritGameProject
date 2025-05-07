@@ -86,7 +86,7 @@ public class BossShadow : Boss
         while (time < 10f)
         {
             if(shotTime > 0.5f) { shot(); shotTime = 0f; }
-            hitEffects[(int)ShadowHitEffect.SightBlock].transform.position=enemyStatus.enemyTarget.transform.position;
+            hitEffects[(int)ShadowHitEffect.SightBlock].transform.position=enemyStatus.EnemyTarget.transform.position;
             yield return null;
             time += Time.deltaTime;
             shotTime += Time.deltaTime;
@@ -190,7 +190,7 @@ public class BossShadow : Boss
         for (int i = 0; i < circles.Count; i++)
         {
             
-            circles[i].transform.position = enemyStatus.enemyTarget.position;
+            circles[i].transform.position = enemyStatus.EnemyTarget.CenterPivot.position;
             yield return new WaitForSeconds(0.5f);
             circles[i].SetActive(true);
             yield return new WaitForSeconds(1f);

@@ -51,7 +51,7 @@ public class IcicleSkill : Skill
         else if(user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            float angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
 
             if (simul != null)
@@ -59,12 +59,12 @@ public class IcicleSkill : Skill
             simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.enemyTarget != null  && enemy.enemyStatus.isAttack)
+            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.EnemyTarget != null  && enemy.enemyStatus.isAttack)
             {
                 // ���߿� �� ���·� �ִ� ���� �����ϱ�
                 // ���߿� �� ���·� �ִ� ���� ǥ���ϱ�
-                angle = Mathf.Atan2(enemy.enemyStatus.enemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.enemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
-                simulVector = enemy.enemyStatus.enemyTarget.transform.position;
+                angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+                simulVector = enemy.enemyStatus.EnemyTarget.transform.position;
                 simul.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
                 timer += Time.deltaTime;
                 yield return null;

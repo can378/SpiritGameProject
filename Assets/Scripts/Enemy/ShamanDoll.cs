@@ -48,11 +48,11 @@ public class ShamanDoll : EnemyBasic
 
         //print("shamon doll hurts hershelf");
         yield return new WaitForSeconds(0.6f);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
-        enemyStatus.enemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().ApplyBuff(8);
         yield return new WaitForSeconds(2f);
 
         enemyAnim.animator.SetBool("isAttack", false);
@@ -60,13 +60,13 @@ public class ShamanDoll : EnemyBasic
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 
-        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
     }
 
     public override void AttackCancle()
     {
         base.AttackCancle();
-        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
     }
 
     /*

@@ -300,7 +300,7 @@ public class BossBaby : Boss
             }
             if(PlayerPos == 0)
             {
-                DropPos = enemyStatus.enemyTarget.position;
+                DropPos = enemyStatus.EnemyTarget.CenterPivot.position;
                 GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
@@ -424,11 +424,11 @@ public class BossBaby : Boss
 
     void Disarm()
     {
-        enemyStatus.enemyTarget.GetComponent<ObjectBasic>().ApplyBuff(10);
+        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().ApplyBuff(10);
     }
     void RemoveDisarm()
     {
-        enemyStatus.enemyTarget.GetComponent<ObjectBasic>().RemoveBuff(10);
+        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().RemoveBuff(10);
     }
 
 

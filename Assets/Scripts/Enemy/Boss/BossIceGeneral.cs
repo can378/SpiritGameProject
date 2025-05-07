@@ -21,7 +21,7 @@ public class BossIceGeneral : EnemyBasic
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
-        enemyStatus.targetDis =Vector2.Distance(enemyStatus.enemyTarget.transform.position,transform.position);
+        enemyStatus.targetDis =Vector2.Distance(enemyStatus.EnemyTarget.transform.position,transform.position);
 
 
         if (enemyStatus.targetDis > 10f)
@@ -30,7 +30,7 @@ public class BossIceGeneral : EnemyBasic
             GameObject bullet = ObjectPoolManager.instance.Get("Bullet");
             bullet.transform.position = transform.position;
             Rigidbody2D bulletRigid = bullet.GetComponent<Rigidbody2D>();
-            enemyStatus.targetDirVec = enemyStatus.enemyTarget.transform.position - transform.position;
+            enemyStatus.targetDirVec = enemyStatus.EnemyTarget.transform.position - transform.position;
             bulletRigid.AddForce(enemyStatus.targetDirVec.normalized * 5, ForceMode2D.Impulse);
 
             yield return new WaitForSeconds(2f);
@@ -43,7 +43,7 @@ public class BossIceGeneral : EnemyBasic
                     //sword swing
                     for (int i = 0; i < 5; i++)
                     {
-                        enemyStatus.targetDirVec=enemyStatus.enemyTarget.transform.position - transform.position;
+                        enemyStatus.targetDirVec=enemyStatus.EnemyTarget.transform.position - transform.position;
                         rigid.AddForce(enemyStatus.targetDirVec*GetComponent<EnemyStats>().MoveSpeed.Value, ForceMode2D.Impulse);
                         print("sword swing!!");
                         yield return new WaitForSeconds(0.1f);

@@ -184,7 +184,7 @@ public class FinalBoss : EnemyBasic
 
                 for (int i = 0; i < 10; i++)
                 {
-                    enemyStatus.enemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce((enemyStatus.enemyTarget.position - transform.position).normalized * 10000);
+                    enemyStatus.EnemyTarget.gameObject.GetComponent<Rigidbody2D>().AddForce((enemyStatus.EnemyTarget.CenterPivot.position - transform.position).normalized * 10000);
                     yield return new WaitForSeconds(0.01f);
                 }
                 
@@ -288,12 +288,12 @@ public class FinalBoss : EnemyBasic
 
         while (time > 0)
         {
-            aboveTarget = new Vector3(enemyStatus.enemyTarget.transform.position.x, enemyStatus.enemyTarget.transform.position.y + 20, 0);
+            aboveTarget = new Vector3(enemyStatus.EnemyTarget.transform.position.x, enemyStatus.EnemyTarget.transform.position.y + 20, 0);
 
             //if find Player!
             if (MoveTo(hitEffects[(int)FinalBossHitEffect.FIST], 100, hitEffects[(int)FinalBossHitEffect.FIST].transform.position, aboveTarget) == true) 
             {
-                Vector3 tar = enemyStatus.enemyTarget.position;
+                Vector3 tar = enemyStatus.EnemyTarget.CenterPivot.position;
                 hitEffects[(int)FinalBossHitEffect.FIST].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 yield return new WaitForSeconds(2f);
 
@@ -354,7 +354,7 @@ public class FinalBoss : EnemyBasic
         time = 5f;
         while (time > 0)
         {
-           enemyStatus.enemyTarget.GetComponent<Rigidbody2D>().
+           enemyStatus.EnemyTarget.GetComponent<Rigidbody2D>().
                 AddForce(new Vector3(0, -1, 0) * 100);
             time -= Time.deltaTime;
             yield return null;

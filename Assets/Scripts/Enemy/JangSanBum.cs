@@ -134,7 +134,7 @@ public class JangSanBum : EnemyBasic
         //잡아먹으면 플레이어 큰 피해입고 장산범은 일부 체력회복
         enemyStatus.isAttackReady = false;
 
-        enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized * 3f;
+        enemyStatus.moveVec = (enemyStatus.EnemyTarget.transform.position - transform.position).normalized * 3f;
         hitEffects[(int)JangSanBumHitEffect.Bite].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(enemyStatus.targetDirVec.y, enemyStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
 
         //입을 크게 벌리는 모션
@@ -279,7 +279,7 @@ public class JangSanBum : EnemyBasic
         }
         else if(patternNum == 3 && enemyStatus.hitTarget.CompareTag("Player"))
         {
-            enemyStatus.enemyTarget.GetComponent<PlayerStats>().blind = blindTime;
+            enemyStatus.EnemyTarget.GetComponent<PlayerStats>().blind = blindTime;
         }
     }
 }

@@ -37,7 +37,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Start()
     {
-        enemyStatus.enemyTarget = FindObj.instance.Player.transform;
+        enemyStatus.EnemyTarget = FindObj.instance.Player.transform.GetComponent<Player>();
     }
 
     protected virtual void Update()
@@ -60,8 +60,8 @@ public class EnemyBasic : ObjectBasic
         if (!enemyStatus.isTarget)
             return;
 
-        enemyStatus.targetDis = Vector2.Distance(transform.position, enemyStatus.enemyTarget.position);
-        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
+        enemyStatus.targetDis = Vector2.Distance(CenterPivot.position, enemyStatus.EnemyTarget.CenterPivot.position);
+        enemyStatus.targetDirVec = (enemyStatus.EnemyTarget.CenterPivot.position - CenterPivot.position).normalized;
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 
@@ -109,7 +109,7 @@ public class EnemyBasic : ObjectBasic
             return;
         }
 
-        enemyStatus.enemyTarget = target.transform;
+        //enemyStatus.enemyTarget = target.transform;
         enemyStatus.isTarget = true;
     }
 
@@ -180,7 +180,7 @@ public class EnemyBasic : ObjectBasic
             return;
         }
 
-       enemyStatus.moveVec = (enemyStatus.enemyTarget.transform.position - transform.position).normalized;
+       enemyStatus.moveVec = (enemyStatus.EnemyTarget.transform.position - transform.position).normalized;
     }
 
     

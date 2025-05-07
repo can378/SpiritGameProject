@@ -70,14 +70,14 @@ public class Dokkaebi : EnemyBasic
 
     IEnumerator Hammer()
     {
-        Vector2 attackTarget = dokkeabieStatus.targetDirVec;
+        Quaternion attackTarget = enemyStatus.targetQuaternion;
 
         dokkeabieStatus.isAttack = true;
         dokkeabieStatus.isAttackReady = false;
         yield return new WaitForSeconds(1f);
        
         hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(10,1, enemyStats.AttackPower, 30);
-        hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(attackTarget.y, attackTarget.x) * Mathf.Rad2Deg - 90);
+        hitEffects[0].transform.rotation = attackTarget;
         hitEffects[0].gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
 

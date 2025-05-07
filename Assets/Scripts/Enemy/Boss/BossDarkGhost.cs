@@ -56,7 +56,7 @@ public class BossDarkGhost : EnemyBasic
         for (int i = 0; i < zones.Count; i++)
         {
             zones[i].SetActive(true);
-            zones[i].transform.position = enemyStatus.enemyTarget.transform.position;
+            zones[i].transform.position = enemyStatus.EnemyTarget.transform.position;
             yield return new WaitForSeconds(1f);
         
         }

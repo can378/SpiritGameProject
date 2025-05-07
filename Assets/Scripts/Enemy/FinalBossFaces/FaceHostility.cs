@@ -34,7 +34,7 @@ public class FaceHostility : BossFace
         startPoint = circleCenter + enemyStatus.targetDirVec * radius;
 
         // 시작 방향 설정
-        playerCenter = enemyStatus.enemyTarget.transform.position;
+        playerCenter = enemyStatus.EnemyTarget.transform.position;
         startDir = (playerCenter - startPoint).normalized;
         float angleStep = spreadAngle / (bulletCount - 1);
         float startAngle = -spreadAngle / 2;

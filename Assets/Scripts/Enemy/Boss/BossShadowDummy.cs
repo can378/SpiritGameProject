@@ -7,7 +7,7 @@ public class BossShadowDummy : EnemyBasic
 {
     protected override void MovePattern()
     {
-        enemyStatus.moveVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
+        enemyStatus.moveVec = (enemyStatus.EnemyTarget.CenterPivot.position - transform.position).normalized;
     }
     protected override void AttackPattern()
     {

@@ -134,7 +134,7 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
 
-        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
 
     }
 
@@ -147,7 +147,7 @@ public class BlackDog : EnemyBasic
 
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        playerForward = (blackDogStatus.enemyTarget.position - mousePos);
+        playerForward = (blackDogStatus.EnemyTarget.CenterPivot.position - mousePos);
         angle = Vector3.Angle(playerForward, blackDogStatus.targetDirVec);
 
 
@@ -171,7 +171,7 @@ public class BlackDog : EnemyBasic
     public override void AttackCancle() 
     {
         base.AttackCancle();
-        if(enemyStatus.enemyTarget) RunAway(enemyStatus.enemyTarget.transform, 5.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
     }
 
     /*

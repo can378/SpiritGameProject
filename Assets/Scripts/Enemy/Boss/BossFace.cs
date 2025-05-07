@@ -123,11 +123,11 @@ public class BossFace : EnemyBasic
     //ATTACK///////////////////////////////////////////////////////
     protected override void Attack()
     {
-        if (!enemyStatus.enemyTarget)
+        if (!enemyStatus.EnemyTarget)
             return;
 
-        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.enemyTarget.position);
-        enemyStatus.targetDirVec = (enemyStatus.enemyTarget.position - transform.position).normalized;
+        enemyStatus.targetDis = Vector2.Distance(this.transform.position, enemyStatus.EnemyTarget.CenterPivot.position);
+        enemyStatus.targetDirVec = (enemyStatus.EnemyTarget.CenterPivot.position - transform.position).normalized;
 
         //print(!isRun+" "+ !isFlinch+" "+!isAttack+" "+ isAttackReady+" "+ (targetDis <= enemyStats.maxAttackRange || enemyStats.maxAttackRange < 0));
 

@@ -15,7 +15,7 @@ public class InventoryThief : EnemyBasic
 
     protected override void MovePattern()
     {
-        if (!enemyStatus.enemyTarget)
+        if (!enemyStatus.EnemyTarget)
         {
             RandomMove();
         }

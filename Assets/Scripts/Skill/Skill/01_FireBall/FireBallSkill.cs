@@ -55,7 +55,7 @@ public class FireBallSkill : Skill
 
             while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
-                fireBallSimulPrefab.transform.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.enemyTarget.transform.position - enemy.transform.position, range);
+                fireBallSimulPrefab.transform.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.EnemyTarget.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }
