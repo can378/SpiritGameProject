@@ -35,8 +35,8 @@ public class NormalGhost : EnemyBasic
             Debug.Log(knife.name+" throwing");
 
 
-            knife.transform.position = transform.position;
-            Vector3 distTest= knife.transform.position - gameObject.transform.position;
+            knife.transform.position = CenterPivot.transform.position;
+            Vector3 distTest= knife.transform.position - CenterPivot.transform.position;
             Debug.Log("distance from knife to enmey" +distTest.x+" "+distTest.y+" "+distTest.z);
             yield return new WaitForSeconds(1f);
         }

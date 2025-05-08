@@ -102,7 +102,7 @@ public class EnemyBasic : ObjectBasic
             return;
         }
 
-        var target = Physics2D.OverlapCircle(transform.position, enemyStats.detectionDis, targetLayer);
+        var target = Physics2D.OverlapCircle(CenterPivot.position, enemyStats.detectionDis, targetLayer);
 
         if (target == null)
         {
@@ -180,7 +180,7 @@ public class EnemyBasic : ObjectBasic
             return;
         }
 
-       enemyStatus.moveVec = (enemyStatus.EnemyTarget.transform.position - transform.position).normalized;
+       enemyStatus.moveVec = (enemyStatus.EnemyTarget.transform.position - CenterPivot.position).normalized;
     }
 
     
@@ -269,7 +269,7 @@ public class EnemyBasic : ObjectBasic
     {
         if (collision.CompareTag("PlayerAttack") || collision.CompareTag("AllAttack"))
         {
-            BeAttacked(collision.gameObject.GetComponent<HitDetection>(), collision.ClosestPoint(transform.position));
+            BeAttacked(collision.gameObject.GetComponent<HitDetection>(), collision.ClosestPoint(CenterPivot.position));
         }
         enemyStatus.isTouchPlayer= false;
         if (collision.tag == "Player")

@@ -18,6 +18,7 @@ public class OverlapDamageBuff : StatusEffect
     }
     public override void Overlap()     //갱신
     {
+        ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
         Stats stats = target.GetComponent<Stats>();
 
         maxOverlap = DefaultMaxOverlap + (int)(stats.SEResist[(int)buffType].Value * 10);
@@ -33,28 +34,26 @@ public class OverlapDamageBuff : StatusEffect
             Debug.Log(target.name +":출혈!");
             if (target.tag == "Player" || target.tag == "Npc")
             {
-                ObjectBasic objectBasic = target.GetComponent<ObjectBasic>();
                 objectBasic.Damaged(objectBasic.stats.HPMax * damagePer);
 
             }
             else if (target.tag == "Enemy")
             {
-                EnemyBasic enemy = target.GetComponent<EnemyBasic>();
                 
                 // 최대 체력이 1000 이상이라면
-                if(enemy.stats.HPMax >= 1000)
+                if(objectBasic.stats.HPMax >= 1000)
                 {
-                    enemy.Damaged(1000 * damagePer);
+                    objectBasic.Damaged(1000 * damagePer);
                 }
                 else
                 {
-                    enemy.Damaged(enemy.stats.HPMax * damagePer);
+                    objectBasic.Damaged(objectBasic.stats.HPMax * damagePer);
                 }
                 
             }
 
             GameObject BleedObject = ObjectPoolManager.instance.Get("Bleeding");
-            BleedObject.transform.position = target.transform.position;
+            BleedObject.transform.position = objectBasic.CenterPivot.transform.position;
             BleedObject.transform.localScale = Vector3.one * 3;
 
             duration = 0;

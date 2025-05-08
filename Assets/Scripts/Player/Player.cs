@@ -999,7 +999,7 @@ public class Player : ObjectBasic
             // 피해를 입고
             // 뒤로 밀려나며
             // 잠시 무적이 된다.
-            BeAttacked(other.gameObject.GetComponent<HitDetection>(), other.ClosestPoint(transform.position));
+            BeAttacked(other.gameObject.GetComponent<HitDetection>(), other.ClosestPoint(CenterPivot.position));
 
         }
         else if (other.tag == "EnterDungeon")
