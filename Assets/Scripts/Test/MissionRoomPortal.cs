@@ -61,17 +61,13 @@ public class MissionRoomPortal : MonoBehaviour
             Debug.Log("ready to move to mission room");
             MapUIManager.instance.UpdateMinimapUI(true);
 
-            if (roomId < missionRooms.Count)
-            {
+
                 // 이동
                 FindObj.instance.Player.transform.position = missionRooms[roomId].position;
                 CameraManager.instance.CameraMove(FindObj.instance.Player.gameObject);
                 CameraManager.instance.CenterMove(FindObj.instance.Player.gameObject);
-            }
-            else
-            {
-                Debug.LogWarning($"roomId {roomId} is out of range for missionRooms!");
-            }
+            
+
         }
     }
 }
