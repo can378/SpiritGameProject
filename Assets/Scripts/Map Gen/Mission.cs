@@ -25,6 +25,7 @@ public class Mission : MonoBehaviour
 
     [Header("Curse")]
     public GameObject curse;
+    public GameObject safeAisle;
 
     [Header("Maze")]
     public bool isEscapeMaze;
@@ -97,7 +98,7 @@ public class Mission : MonoBehaviour
                 {
                     isEnd = true;
                 }
-                else if(curse.transform.localScale.x>=0)
+                else if(curse.transform.localScale.x>=2)
                 { 
                     //curse safe area decreased
                     curse.transform.localScale-= new Vector3(0.001f, 0.001f, 0.001f);
@@ -144,6 +145,10 @@ public class Mission : MonoBehaviour
                 missionReward.SetActive(true);
             }
 
+            if(type== MissionType.Curse)
+            {
+                safeAisle.SetActive(true);
+            }
             roomScript.UnLockDoor();
         }
         else
