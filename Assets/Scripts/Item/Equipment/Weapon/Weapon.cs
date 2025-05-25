@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 무기 종류 늘릴시 MELEE과 RANGE 조정할 것
-public enum WEAPON_TYPE {
+public enum WEAPON_TYPE
+{
     NONE = -1,
     // 근거리 
-    SWING, STAB, CRACK, MELEE,
+    SWORD, SHORT_SWORD, LONG_SWORD, SCYTHE, HAMMER, GREAT_HAMMER, SPEAR, MELEE,
     // 원거리
-    GUN, BOW, THROW, CANNON, RANGE,
-    END}
+    BOW, CROSS_BOW, RIFLE, HAND_GUN, THROW, RANGE,
+    END
+}
 
 public class Weapon : Equipment
 {
-    [field: SerializeField] public WEAPON_TYPE weaponType {get; private set;}       //근거리 : 0 - 베기, 1 - 찌르기, 2 - 휘두르기
-                                                                                    //원거리 : 10 - 총, 11 - 활, 12 - 던지기
+    [field: SerializeField] public WEAPON_TYPE weaponType {get; private set;}       
+                                                                                    
     
     [field: SerializeField] public bool isMultiHit { get; private set; }            // 다단히트 여부
     [field: SerializeField] public int DPS { get; private set; }                    // 초당 타격 횟수 필요 없을 시 음수
@@ -70,6 +72,53 @@ public class Weapon : Equipment
         if (maxAmmo < 0)
             return;
         ammo--;
+    }
+
+    public int SwingEffectType
+    {
+        get {
+            if((int)WEAPON_TYPE.NONE < (int)weaponType && (int)weaponType < (int)WEAPON_TYPE.HAMMER)
+                return 0;
+            else if ((int)WEAPON_TYPE.SCYTHE < (int)weaponType && (int)weaponType < (int)WEAPON_TYPE.SPEAR)
+                return 2;
+            else if (weaponType == WEAPON_TYPE.SPEAR)
+                return 1;
+            else
+                return -1;
+        }
+    }
+
+    public int MaxAnimationCount
+    {
+        get{
+            switch(weaponType)
+            {
+                case WEAPON_TYPE.SWORD:
+                    return 2;
+                case WEAPON_TYPE.SHORT_SWORD:
+                    return 2;
+                case WEAPON_TYPE.LONG_SWORD:
+                    return 2;
+                case WEAPON_TYPE.SCYTHE:
+                    return 2;
+                case WEAPON_TYPE.HAMMER:
+                    return 2;
+                case WEAPON_TYPE.GREAT_HAMMER:
+                    return 2;
+                case WEAPON_TYPE.SPEAR:
+                    return 2;
+                case WEAPON_TYPE.BOW:
+                    return 2;
+                case WEAPON_TYPE.CROSS_BOW:
+                    return 2;
+                case WEAPON_TYPE.RIFLE:
+                    return 2;
+                case WEAPON_TYPE.THROW:
+                    return 1;
+                default:
+                return -1; 
+            }
+        }
     }
 
 }

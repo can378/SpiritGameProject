@@ -177,19 +177,58 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField:
-  - 0
-  - 0
-  - 0
-  - 0
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 0
+  DefensivePower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefaultValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   activeEffects: []
   enemyName: 
+  DropCoin: 3
   detectionDis: 5
   detectionKeepDis: 0
   maxAttackRange: 0
+  disableTime: 0
 --- !u!114 &-8087181390332544628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveVec: {x: 0, y: 0}
+  moveSpeedMultiplier: 1
   hitTarget: {fileID: 0}
   isBeAttaked: 0
   isFlinch: 0
@@ -214,8 +254,10 @@ MonoBehaviour:
   isTouchPlayer: 0
   isBoss: 0
   isRun: 0
+  isTarget: 0
+  isTargetForced: 0
   randomMove: 0
-  enemyTarget: {fileID: 0}
+  EnemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
 --- !u!114 &-385527214193204063
@@ -232,8 +274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
   status: {fileID: 0}
+  CenterPivot: {fileID: 2333220693945864348}
   hitEffects: []
-  defaultLayer: 0
   buffTF: {fileID: 883088692791154741}
   animGameObject: {fileID: 7040823031454602919}
   sprites: []
@@ -332,7 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotPos: {fileID: 7174601102681075669}
 --- !u!1001 &2759414453898129638
 PrefabInstance:
   m_ObjectHideFlags: 0

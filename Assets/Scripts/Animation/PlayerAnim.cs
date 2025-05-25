@@ -2,12 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Newtonsoft.Json;
 
+
+public class AttackAnimation
+{
+    public int SwingDir;
+}
+
+[System.Serializable]
+public class WeaponAnimationInfo
+{
+    public float PreDelay;
+    public float Rate;
+    public float PostDelay;
+    public List<AttackAnimation> Animation;
+}
 
 
 public class PlayerAnim : AnimBasic
 {
+    public TextAsset jsonFile;
 
+    public Dictionary<string, WeaponAnimationInfo> AttackAnimationData;
+
+    void Start()
+    {
+        AttackAnimationData = JsonConvert.DeserializeObject<Dictionary<string, WeaponAnimationInfo>>(jsonFile.text);
+    }
     //Player GetInput에서 받아온다.
     /*
     public bool leftPressed;

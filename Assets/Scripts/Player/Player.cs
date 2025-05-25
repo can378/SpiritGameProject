@@ -294,9 +294,27 @@ public class Player : ObjectBasic
         [field: SerializeField] public List<PROJECTILE_TYPE> ProjectileType { get; set; } = new List<PROJECTILE_TYPE>();
         [SerializeField] GameObject HitDetectionGameObject;
         GameObject projectile;
+
+        public float ComboTimer = 0;
+        public int AttackCombo = 0;
+
         void Awake()
         {
             player = GetComponent<Player>();
+        }
+
+        void Update()
+        {
+            if (0 < AttackCombo)
+            {
+                ComboTimer += Time.deltaTime;
+                if (1 < ComboTimer)
+                {
+                    AttackCombo = 0;
+                    ComboTimer = 0;
+                }
+            }
+
         }
 
         // 무기를 획득
@@ -310,7 +328,7 @@ public class Player : ObjectBasic
 
             if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.MELEE)
             {
-                HitDetectionGameObject = player.hitEffects[(int)player.weaponList[player.playerStats.weapon].weaponType];
+                HitDetectionGameObject = player.hitEffects[(int)player.weaponList[player.playerStats.weapon].SwingEffectType];
             }
             else if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.RANGE)
             {
@@ -341,8 +359,12 @@ public class Player : ObjectBasic
 
         public void Use()
         {
-            player.weaponList[player.playerStats.weapon].ConsumeAmmo();
             
+            player.weaponList[player.playerStats.weapon].ConsumeAmmo();
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[player.weaponList[player.playerStats.weapon].weaponType.ToSafeString()];
+            AttackCombo = animationInfo.Animation.Count <= AttackCombo + 1 ? 0 : (AttackCombo + 1);
+            ComboTimer = 0;
+
             if ((int)player.weaponList[player.playerStats.weapon].weaponType < (int)WEAPON_TYPE.MELEE)
             {
                 // 플레이어 애니메이션 실행
@@ -352,6 +374,8 @@ public class Player : ObjectBasic
             {
                 attackCoroutine = StartCoroutine(Shot(player.playerStatus.mouseDir, player.playerStatus.mouseAngle));
             }
+
+            
 
             //Debug.Log(playerStats.weapon.attackSpeed);
             //Debug.Log(playerStats.attackSpeed);
@@ -369,21 +393,25 @@ public class Player : ObjectBasic
             player.playerAnim.animator.Rebind();
             player.playerAnim.animator.SetBool("isAttack", true);
             player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);
-
+            player.playerAnim.animator.SetInteger("AttackCombo", AttackCombo);
+            player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.attackSpeed);
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[player.weaponList[player.playerStats.weapon].weaponType.ToSafeString()];
 
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             //선딜
-            yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
-
+            yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.attackSpeed);
 
             // 베기 방향만 우선 반전
-            int SwingDir = 1;
-            if (player.weaponList[player.playerStats.weapon].weaponType == WEAPON_TYPE.SWING)
+            int SwingDir = animationInfo.Animation[AttackCombo].SwingDir;
+            if (player.weaponList[player.playerStats.weapon].weaponType == WEAPON_TYPE.SWORD ||
+            player.weaponList[player.playerStats.weapon].weaponType == WEAPON_TYPE.SHORT_SWORD ||
+            player.weaponList[player.playerStats.weapon].weaponType == WEAPON_TYPE.LONG_SWORD ||
+            player.weaponList[player.playerStats.weapon].weaponType == WEAPON_TYPE.SCYTHE)
             {
-                SwingDir = 0 <= _AttackDir.x ? 1 : -1;
+                SwingDir = 0 <= _AttackDir.x ? SwingDir : -SwingDir;
             }
-            
+
             // 무기 이펙트 크기 설정
             HitDetectionGameObject.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize * SwingDir, player.weaponList[player.playerStats.weapon].attackSize, 1);
         
@@ -418,7 +446,7 @@ public class Player : ObjectBasic
             HitDetectionGameObject.SetActive(true);
 
             // 공격 시간
-            yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].rate / player.playerStats.attackSpeed);
+            yield return new WaitForSeconds(animationInfo.Rate / player.playerStats.attackSpeed);
 
             // 무기 이펙트 해제
             HitDetectionGameObject.SetActive(false);
@@ -438,10 +466,13 @@ public class Player : ObjectBasic
             player.playerAnim.animator.Rebind();
             player.playerAnim.animator.SetBool("isAttack", true);
             player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);
+            player.playerAnim.animator.SetInteger("AttackCombo", AttackCombo);
+            player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.attackSpeed);
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[player.weaponList[player.playerStats.weapon].weaponType.ToSafeString()];
 
 
             // 선딜
-            yield return new WaitForSeconds(player.weaponList[player.playerStats.weapon].preDelay / player.playerStats.attackSpeed);
+            yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.attackSpeed);
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             // 무기 투사체 적용
@@ -513,10 +544,15 @@ public class Player : ObjectBasic
 
         if (aDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isReload && !playerStatus.isDodge && playerStatus.isAttackReady && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
+            WeaponAnimationInfo animationInfo = playerAnim.AttackAnimationData[weaponList[playerStats.weapon].weaponType.ToSafeString()];
+
+            float SPA = animationInfo.PostDelay + animationInfo.Rate + animationInfo.PreDelay;
+
             weaponController.Use();
 
+
             // 다음 공격까지 대기 시간 = 1 / 초당 공격 횟수
-            playerStatus.attackDelay = weaponList[playerStats.weapon].SPA / playerStats.attackSpeed;
+            playerStatus.attackDelay = SPA / playerStats.attackSpeed;
         }
     }
 
