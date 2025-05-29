@@ -308,7 +308,7 @@ public class Player : ObjectBasic
             if (0 < AttackCombo)
             {
                 ComboTimer += Time.deltaTime;
-                if (1 < ComboTimer)
+                if (2 < ComboTimer)
                 {
                     AttackCombo = 0;
                     ComboTimer = 0;
@@ -385,11 +385,14 @@ public class Player : ObjectBasic
         IEnumerator Swing(Vector2 _AttackDir, float _AttackAngle)
         {
 
+            Weapon CurWeapon = player.weaponList[player.playerStats.weapon];
+
             // 공격 상태
             player.playerStatus.isAttack = true;
 
             // 애니메이션 설정
             player.playerAnim.ChangeDirection(_AttackDir);
+            player.playerAnim.ChangeWeaponSprite(CurWeapon.weaponType, CurWeapon.selectItemID);
             player.playerAnim.animator.Rebind();
             player.playerAnim.animator.SetBool("isAttack", true);
             player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);
@@ -514,6 +517,26 @@ public class Player : ObjectBasic
             // 공격 상태 해제
             player.playerAnim.animator.SetBool("isAttack", false);
             player.playerStatus.isAttack = false;
+        }
+
+
+        // 활 시위 당기기
+        IEnumerator Bow_Ready()
+        {
+
+            yield return null;
+        }
+
+        // 활 시위 당기는 중
+        IEnumerator Bow_Draw()
+        {
+            yield return null;
+        }
+
+        // 화살 쏘기
+        IEnumerator Bow_Shot()
+        {
+            yield return null;
         }
 
         public void AttackCancle()

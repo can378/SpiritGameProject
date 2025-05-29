@@ -26,10 +26,23 @@ public class PlayerAnim : AnimBasic
 
     public Dictionary<string, WeaponAnimationInfo> AttackAnimationData;
 
+    public SpriteRenderer[] WeaponSpriteRenderer = new SpriteRenderer[(int)WEAPON_TYPE.END];
+
+    public Sprite[] WeaponSprite;
+
     void Start()
     {
         AttackAnimationData = JsonConvert.DeserializeObject<Dictionary<string, WeaponAnimationInfo>>(jsonFile.text);
     }
+
+    public void ChangeWeaponSprite(WEAPON_TYPE _Type, int _WeaponIndex)
+    {
+        //if(WeaponSpriteRenderer[(int)_Type] == null)
+
+
+        WeaponSpriteRenderer[(int)_Type].sprite = WeaponSprite[_WeaponIndex];
+    }
+
     //Player GetInput에서 받아온다.
     /*
     public bool leftPressed;
