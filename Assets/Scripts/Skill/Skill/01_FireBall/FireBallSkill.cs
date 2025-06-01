@@ -38,7 +38,7 @@ public class FireBallSkill : Skill
             
             while (player.playerStatus.isSkillHold)
             {
-                fireBallSimulPrefab.transform.position = player.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.transform.position, range);
+                fireBallSimulPrefab.transform.position = player.CenterPivot.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.CenterPivot.transform.position, range);
                 yield return null;
             }
         }
@@ -55,7 +55,7 @@ public class FireBallSkill : Skill
 
             while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
-                fireBallSimulPrefab.transform.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.EnemyTarget.transform.position - enemy.transform.position, range);
+                fireBallSimulPrefab.transform.position = enemy.CenterPivot.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.EnemyTarget.CenterPivot.transform.position - enemy.CenterPivot.transform.position, range);
                 timer += Time.deltaTime;
                 yield return null;
             }

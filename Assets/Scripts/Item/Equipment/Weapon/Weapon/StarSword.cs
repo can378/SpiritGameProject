@@ -40,7 +40,7 @@ public class StarSword : Weapon
         // 이펙트 생성
         if (effect)
             Destroy(effect);
-        effect = Instantiate(littleStarOrbitPrefab, user.transform.position, user.transform.rotation);
+        effect = Instantiate(littleStarOrbitPrefab, user.CenterPivot.transform.position, user.CenterPivot.transform.rotation);
         effect.transform.localScale = new Vector3(1, 1, 1);
 
         // 공전 설정

@@ -11,6 +11,7 @@ public class SelectItem : MonoBehaviour, Interactable
     [field: SerializeField] public SelectItemType selectItemType {get; private set;}
     [field: SerializeField] public SelectItemRating selectItemRating { get; private set; }
     [field: SerializeField] public string selectItemName { get; private set; }
+    [field: SerializeField] public string description { get; private set; }
     [field: SerializeField] public int price {get; private set;}
     [field: SerializeField] public int selectItemID { get; private set; }
 

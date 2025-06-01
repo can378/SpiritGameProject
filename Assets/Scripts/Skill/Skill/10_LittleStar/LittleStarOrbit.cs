@@ -25,7 +25,7 @@ public class LittleStarOrbit : MonoBehaviour
     void Update()
     {
         WaitTarget();
-        this.transform.position = user.transform.position;
+        this.transform.position = new Vector3(user.CenterPivot.transform.position.x, user.CenterPivot.transform.position.y,0);
         if(user.gameObject.activeSelf == false)
             Destroy(this.gameObject);
     }

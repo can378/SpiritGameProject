@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7258524340916383928
+--- !u!1 &483665318862555546
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6205669209840993893}
-  - component: {fileID: 5875472149444471155}
-  - component: {fileID: 8238157437368939851}
-  - component: {fileID: 3890777255982791601}
-  - component: {fileID: 4593309725509122058}
-  m_Layer: 6
-  m_Name: sansam
-  m_TagString: SelectItem
+  - component: {fileID: 1930755099528716942}
+  - component: {fileID: 4753093050013614870}
+  m_Layer: 0
+  m_Name: Sprite
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6205669209840993893
+--- !u!4 &1930755099528716942
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7258524340916383928}
+  m_GameObject: {fileID: 483665318862555546}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3411, y: 0.3411, z: 0.3411}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 6205669209840993893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5875472149444471155
+--- !u!212 &4753093050013614870
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7258524340916383928}
+  m_GameObject: {fileID: 483665318862555546}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -81,12 +78,47 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.03, y: 5.07}
+  m_Size: {x: 3.4, y: 4.87}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7258524340916383928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6205669209840993893}
+  - component: {fileID: 8238157437368939851}
+  - component: {fileID: 3890777255982791601}
+  - component: {fileID: 4593309725509122058}
+  m_Layer: 6
+  m_Name: sansam
+  m_TagString: SelectItem
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6205669209840993893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258524340916383928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1930755099528716942}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8238157437368939851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +134,7 @@ MonoBehaviour:
   <selectItemType>k__BackingField: 2
   <selectItemRating>k__BackingField: 3
   <selectItemName>k__BackingField: sanSam
+  <description>k__BackingField: 
   <price>k__BackingField: 4
   <selectItemID>k__BackingField: 3
   <finishUse>k__BackingField: 0
