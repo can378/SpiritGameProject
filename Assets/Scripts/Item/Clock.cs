@@ -1,41 +1,32 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Clock : MonoBehaviour
 {
-    public float rotationDur; // 한 바퀴를 도는 데 걸리는 시간 (초)
-    public Transform hourHand;
+    [SerializeField] private Transform hourHand;
 
-    
+
+    /// 12시 정각 방향에서 시작해서 rotationDuration동안 시계 방향으로 한 바퀴 회전
     public IEnumerator ClockStart(float rotationDuration)
     {
-        while (true)
+        float startAngle = 0f;
+        float endAngle = 360f;
+        float elapsed = 0f;
+
+        // set start angle
+        hourHand.rotation = Quaternion.Euler(0f, 0f, -startAngle);
+
+        while (elapsed < rotationDuration)
         {
-            // 초기 각도
-            float startHourAngle = hourHand.rotation.eulerAngles.z;
-            // 목표 각도
-            float targetHourAngle = startHourAngle + 360f;
-            // 회전 시작 시간
-            float startTime = Time.time;
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / rotationDuration);
+            float currentAngle = Mathf.Lerp(startAngle, endAngle, t);
+            hourHand.rotation = Quaternion.Euler(0f, 0f, -currentAngle); // 시계방향 회전
 
-
-            while (Time.time - startTime < rotationDuration)
-            {
-                float t = (Time.time - startTime) / rotationDuration;
-                float currentHourAngle = Mathf.Lerp(startHourAngle, targetHourAngle, t);
-
-                // rotation
-                hourHand.rotation = Quaternion.Euler(0f, 0f, -currentHourAngle);
-
-                yield return null;
-            }
-
-
-            break;
+            yield return null;
         }
-    }
 
+        // set end angle(360)
+        hourHand.rotation = Quaternion.Euler(0f, 0f, -endAngle);
+    }
 }
