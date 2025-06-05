@@ -24,7 +24,7 @@ public class MazeEnter : MonoBehaviour
         {
             if (mazePortal == mazePortal.enter)
             {
-
+                // rooms deactivate
                 foreach (Transform child in roomParent.transform)
                 {
                     child.gameObject.SetActive(false);
@@ -43,11 +43,11 @@ public class MazeEnter : MonoBehaviour
                 //player move
                 //collision.transform.position = mazePos;
                 collision.transform.position = new Vector2(0,0);
-                
+
                 //camera move
-                CameraManager.instance.CameraMove(collision.gameObject);
                 CameraManager.instance.CenterMove(collision.gameObject);
-                CameraManager.instance.mapSize = new Vector2(25, 25);
+                CameraManager.instance.CameraMove(collision.gameObject);
+                //CameraManager.instance.mapSize = new Vector2(25, 25);
 
                 
                 gameObject.GetComponent<Collider2D>().enabled = false;
@@ -76,9 +76,9 @@ public class MazeEnter : MonoBehaviour
 
 
                 //camera move
-                CameraManager.instance.CameraMove(collision.gameObject);
                 CameraManager.instance.CenterMove(collision.gameObject);
-                CameraManager.instance.mapSize = new Vector2(25, 25);
+                CameraManager.instance.CameraMove(collision.gameObject);
+                //CameraManager.instance.mapSize = new Vector2(25, 25);
 
 
                 GameManager.instance.nowRoomScript.map.GetComponent<Mission>().isEscapeMaze = true;

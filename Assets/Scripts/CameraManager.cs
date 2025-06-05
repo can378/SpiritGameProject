@@ -30,7 +30,7 @@ public class CameraManager : MonoBehaviour
     Transform playerTransform;
     Camera cam;
     float startSize;
-   
+
 
 
     [HideInInspector]
@@ -116,11 +116,19 @@ public class CameraManager : MonoBehaviour
 
 
     //Directly move to "obj.transform.position"/////////////////////////////////////////
-    public void CameraMove(GameObject obj) 
+    public void CameraMove(GameObject obj)
     {
-        transform.position = obj.transform.position;
-        transform.position+= new Vector3(0,0,-10f);
+        isCameraChasing = false;
+        transform.position = obj.transform.position + new Vector3(0, 0, -10f);
+        StartCoroutine(ResumeChasingAfterDelay(0.1f));
     }
+
+    private IEnumerator ResumeChasingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isCameraChasing = true;
+    }
+
     public void CenterMove(GameObject obj) 
     {
         postCenter = obj.transform.position;
