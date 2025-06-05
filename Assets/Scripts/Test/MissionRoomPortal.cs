@@ -63,7 +63,7 @@ public class MissionRoomPortal : MonoBehaviour
 
 
                 // 이동
-                FindObj.instance.Player.transform.position = missionRooms[roomId].position;
+                FindObj.instance.Player.transform.position = missionRooms[roomId].position+new Vector3(10,0,0);
                 CameraManager.instance.CameraMove(FindObj.instance.Player.gameObject);
                 CameraManager.instance.CenterMove(FindObj.instance.Player.gameObject);
             
