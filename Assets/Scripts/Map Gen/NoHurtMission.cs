@@ -7,10 +7,8 @@ public class NoHurtMission : MonoBehaviour
     public GameObject Enemies;
     public GameObject NPC;
     public GameObject NPCSprite;
-
+    
     private bool isFirst;
-    [HideInInspector]
-    public bool noHurtMissionStart=false;
 
     void Start()
     {
@@ -39,10 +37,9 @@ public class NoHurtMission : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         NPC.SetActive(false);
-        noHurtMissionStart = true;
         Enemies.SetActive(true);
 
-        GetComponent<Mission>().enabled = true;
+        GetComponent<Mission>().isStart = true;
         GetComponent<Mission>().startMission();
     }
 }

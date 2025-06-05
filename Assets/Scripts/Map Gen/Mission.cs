@@ -13,10 +13,12 @@ public class Mission : MonoBehaviour
     
 
     private ObjectSpawn spawn;
-    private float time;
+    [SerializeField][ReadOnly] private float time;
     private float playerFirstHP;
-    private bool isFail;                            // ë¯¸ì…˜ ?‹¤?Œ¨
-    [SerializeField] private bool isEnd;            // ë¯¸ì…˜ ì¢…ë£Œ(?‹¤?Œ¨?•˜?“  ?•ˆ?•˜?“  ??‚˜ë©? ì²´í¬)
+    [HideInInspector]
+    public bool isStart=true;
+    private bool isFail;                           //is player fail for mission
+    [SerializeField] private bool isEnd;            //is mission ended
    
 
     [Header("TimeAttack, Dream, LittleMonster")]
@@ -41,28 +43,27 @@ public class Mission : MonoBehaviour
         isEscapeMaze = false;
         isFail = false;
         isEnd = false;
+        if (MissionType.NoHurt == type) { isStart = false; }
+        else { isStart = true; }
+        
+        if(clock != null) { clock.SetActive(false); }
+        
     }
-
     //starts when the map is generated
-    // ë¯¸ì…˜ ì¢…ë£Œ?•˜ë©? ëª¬ìŠ¤?„°?‚˜ ë¯¸ë¡œ ?ž…êµ? ?”?  ?“± ?—†?• ?•¼ ?•  ?“¯
     public IEnumerator CheckMissionEnd() 
     {
-        time += Time.deltaTime;
+        if(isStart) time += Time.deltaTime;
+
         switch (type)
         {  
             case MissionType.NoHurt:
                 //hurts --> fail
-                if (FindObj.instance.Player.GetComponent<PlayerStats>().HP < playerFirstHP)
+                if (FindObj.instance.Player.GetComponent<PlayerStats>().HP < playerFirstHP || 
+                    time > timeCondition)
                 { 
                     print("nohurt mission fail");
                     isFail = true;
-
-                    foreach (GameObject e in spawn.enemys)
-                    { 
-                        e.GetComponent<EnemyStats>().HP = 0;
-                        e.SetActive(false);
-                        clock.SetActive(false);
-                    }
+                    clock.SetActive(false);
                     isEnd = true;
 
                 }
@@ -72,6 +73,7 @@ public class Mission : MonoBehaviour
                     print("no hurt mission success");
                     isEnd = true;
                 }
+
                 break;
             case MissionType.KillAll:
             case MissionType.MiniBoss:
@@ -171,6 +173,7 @@ public class Mission : MonoBehaviour
         //Start clock
         if (MissionType.Dream == type || MissionType.LittleMonster == type || MissionType.TimeAttack == type||MissionType.NoHurt==type)
         {
+            clock.SetActive(true);
             StartCoroutine(clock.GetComponent<Clock>().ClockStart(timeCondition));
         }
     }
