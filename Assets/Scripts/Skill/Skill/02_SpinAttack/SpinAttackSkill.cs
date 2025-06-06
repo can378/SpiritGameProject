@@ -35,7 +35,7 @@ public class SpinAttackSkill : Skill
             player.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
-            spinSimul = Instantiate(spinSimulPrefab, user.gameObject.transform.position, Quaternion.identity);
+            spinSimul = Instantiate(spinSimulPrefab, player.CenterPivot.transform.position, Quaternion.identity);
             spinSimul.transform.parent = user.transform;
 
             while (holdPower < maxHoldPower && player.playerStatus.isSkillHold)
@@ -52,7 +52,7 @@ public class SpinAttackSkill : Skill
 
             enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
 
-            spinSimul = Instantiate(spinSimulPrefab, user.gameObject.transform.position, Quaternion.identity);
+            spinSimul = Instantiate(spinSimulPrefab, enemy.CenterPivot.transform.position, Quaternion.identity);
             spinSimul.transform.parent = user.transform;
 
             holdPower = 1f;
@@ -89,9 +89,11 @@ public class SpinAttackSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
             Weapon weapon = player.weaponList[player.playerStats.weapon];
-            GameObject effect = Instantiate(spinPrefab, user.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(spinPrefab, player.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
-            float attackRate = weapon.SPA / player.playerStats.attackSpeed;
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponType.ToString()];
+
+            float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
             // 쿨타임 적용
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
@@ -121,6 +123,13 @@ public class SpinAttackSkill : Skill
             hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
+            // 파티클
+            {
+                // 공격 속도에 따른 이펙트 가속
+                ParticleSystem.MainModule particleMain = effect.GetComponentInChildren<ParticleSystem>().main;
+                particleMain.startLifetime = animationInfo.Rate / player.playerStats.attackSpeed;
+            }
+
             // rate 동안 유지
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
             Destroy(effect, time * attackRate);
@@ -128,11 +137,11 @@ public class SpinAttackSkill : Skill
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject effect = Instantiate(spinPrefab, user.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(spinPrefab, enemy.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime =skillDefalutCoolTime;
+            skillCoolTime = skillDefalutCoolTime;
 
             Destroy(spinSimul);
 

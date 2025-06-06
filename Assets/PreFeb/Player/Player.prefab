@@ -143,7 +143,6 @@ Transform:
   m_Children:
   - {fileID: 7949061878809416093}
   - {fileID: 6469687433694640058}
-  - {fileID: 788934946776095346}
   m_Father: {fileID: 8884761542970708304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2218474225785230373
@@ -203,7 +202,7 @@ Transform:
   m_GameObject: {fileID: 3105114939551070920}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -217,7 +216,7 @@ Transform:
   - {fileID: 9149904707233210373}
   - {fileID: 8624637705369123013}
   - {fileID: 2209553971368608466}
-  m_Father: {fileID: 5092264433144509538}
+  m_Father: {fileID: 8884761542970708304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3390848125582378263
 GameObject:
@@ -322,6 +321,7 @@ Transform:
   m_Children:
   - {fileID: 8694477693269452269}
   - {fileID: 3418451821682442538}
+  - {fileID: 788934946776095346}
   - {fileID: 731373971785790677}
   - {fileID: 2744177701977405796}
   - {fileID: 5092264433144509538}
@@ -3386,6 +3386,22 @@ PrefabInstance:
     - target: {fileID: 146938879965455529, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
       propertyPath: m_Name
       value: 02_SpinAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268479786500307209, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
+      propertyPath: <skillLimit>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268479786500307209, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
+      propertyPath: <skillLimit>k__BackingField.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268479786500307209, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
+      propertyPath: <skillLimit>k__BackingField.Array.data[4]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268479786500307209, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
+      propertyPath: <skillLimit>k__BackingField.Array.data[5]
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5990749010697458930, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
       propertyPath: m_LocalPosition.x

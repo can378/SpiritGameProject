@@ -6,14 +6,30 @@ public class Dosa : EnemyBasic
 {
     [field: SerializeField] public List<Skill> skillList { get; private set; }
 
-    int skill;
+    public int skill ;
 
 
     protected override void Start()
     {
         base.Start();
-        skill=UnityEngine.Random.Range(1,skillList.Count);
-        skillList[skill].gameObject.SetActive(true);
+
+        // 기술 무작위 장착
+        skill = -1;
+        while (true)
+        {
+            skill = UnityEngine.Random.Range(1, skillList.Count);
+            if (skillList[skill] == null)
+            {
+                skill = -1;
+                continue;
+            }
+            else
+            {
+                skillList[skill].gameObject.SetActive(true);
+                break;
+            }
+        }
+
     }
 
     protected override void AttackPattern()

@@ -45,7 +45,7 @@ public class ThunderboltSkill : Skill
             if (simul != null)
                 Destroy(simul);
 
-            simul = Instantiate(summonAreaSimul, user.transform.position, user.transform.rotation);
+            simul = Instantiate(summonAreaSimul, player.CenterPivot.transform.position, user.transform.rotation);
             simul.transform.localScale = new Vector3(summonAreaSize, summonAreaSize, 0);
 
             // 선딜의 시간이 지난 후 시작
@@ -54,7 +54,7 @@ public class ThunderboltSkill : Skill
             while (player.playerStatus.isSkillHold)
             {
                 // 무작위 생성 위치 선정
-                Vector3 pos = transform.position + (Random.insideUnitSphere * summonAreaSize/2);
+                Vector3 pos = player.CenterPivot.transform.position + (Random.insideUnitSphere * summonAreaSize/2);
                 pos.z = 0;
                 GameObject effect = Instantiate(thunderbolt, pos, Quaternion.identity);
                 HitDetection hitDetection = effect.GetComponent<HitDetection>();
@@ -90,7 +90,7 @@ public class ThunderboltSkill : Skill
             if (simul != null)
                 Destroy(simul);
 
-            simul = Instantiate(summonAreaSimul, user.transform.position, user.transform.rotation);
+            simul = Instantiate(summonAreaSimul, enemy.CenterPivot.transform.position, user.transform.rotation);
             simul.transform.localScale = new Vector3(summonAreaSize, summonAreaSize, 0);
 
             // 선딜의 시간이 지난 후 시작
@@ -99,7 +99,7 @@ public class ThunderboltSkill : Skill
             while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 // 무작위 생성 위치 선정
-                Vector3 pos = transform.position + (Random.insideUnitSphere * summonAreaSize / 2);
+                Vector3 pos = enemy.CenterPivot.transform.position + (Random.insideUnitSphere * summonAreaSize / 2);
                 pos.z = 0;
                 GameObject effect = Instantiate(thunderbolt, pos, Quaternion.identity);
                 HitDetection hitDetection = effect.GetComponent<HitDetection>();

@@ -36,7 +36,7 @@ public class WaveSkill : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            GameObject effect = Instantiate(waveEffect, user.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(waveEffect, player.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // ÄðÅ¸ÀÓ Àû¿ë
@@ -69,7 +69,7 @@ public class WaveSkill : Skill
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject effect = Instantiate(waveEffect, user.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(waveEffect, enemy.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
             float timer = 0;
 

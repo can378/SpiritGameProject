@@ -25,10 +25,10 @@ public class Weapon : Equipment
 
     [field: SerializeField] public float knockBack { get; private set; }
 
-    [field: SerializeField] public float preDelay { get; private set; }             // 선딜레이
-    [field: SerializeField] public float rate { get; private set; }                 // 공격 시간
-    [field: SerializeField] public float postDelay { get; private set; }            // 대기 시간
-    public float SPA { get { return preDelay + rate + postDelay; } }                // 1회 공격에 걸리는 시간
+    //[field: SerializeField] public float preDelay { get; private set; }             // 선딜레이
+    //[field: SerializeField] public float rate { get; private set; }                 // 공격 시간
+    //[field: SerializeField] public float postDelay { get; private set; }            // 대기 시간
+    //public float SPA { get { return preDelay + rate + postDelay; } }                // 1회 공격에 걸리는 시간
 
     [field: SerializeField] public int maxAmmo { get; private set; }             // 재장전 필요 없는 무기는 음수로 표기
     [field: SerializeField] public int ammo { get; private set; }                // 재장전 필요 없는 무기는 음수로 표기

@@ -36,7 +36,7 @@ public class IcicleSkill : Skill
 
             if(simul != null)
                 Destroy(simul);
-            simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(fireSimul, player.CenterPivot.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             while (player.playerStatus.isSkillHold)
@@ -51,19 +51,19 @@ public class IcicleSkill : Skill
         else if(user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - enemy.CenterPivot.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
 
             if (simul != null)
                 Destroy(simul);
-            simul = Instantiate(fireSimul, user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(fireSimul, enemy.CenterPivot.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             while (timer <= maxHoldTime / 2 && enemy.enemyStatus.EnemyTarget != null  && enemy.enemyStatus.isAttack)
             {
                 // ���߿� �� ���·� �ִ� ���� �����ϱ�
                 // ���߿� �� ���·� �ִ� ���� ǥ���ϱ�
-                angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+                angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - enemy.CenterPivot.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
                 simulVector = enemy.enemyStatus.EnemyTarget.transform.position;
                 simul.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
                 timer += Time.deltaTime;
@@ -92,7 +92,7 @@ public class IcicleSkill : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
-            GameObject instantProjectile = Instantiate(icicleEffect, transform.position, transform.rotation);
+            GameObject instantProjectile = Instantiate(icicleEffect, player.CenterPivot.transform.position, player.CenterPivot.transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
 
@@ -110,16 +110,17 @@ public class IcicleSkill : Skill
             hitDetection.SetDisableTime(time);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ���� ����
-            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // �ӵ� ����
+            bulletRigid.velocity = (simulVector - player.CenterPivot.transform.position).normalized * 10 * speed;  // �ӵ� ����
             
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject instantProjectile = Instantiate(icicleEffect, transform.position, transform.rotation);
+            print(enemy);
+            GameObject instantProjectile = Instantiate(icicleEffect, enemy.CenterPivot.transform.position, enemy.CenterPivot.transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            float angle = Mathf.Atan2(simulVector.y - user.transform.position.y, simulVector.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(simulVector.y - enemy.CenterPivot.transform.position.y, simulVector.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
 
             // ��Ÿ�� ����
             skillCoolTime = skillDefalutCoolTime;
@@ -136,7 +137,7 @@ public class IcicleSkill : Skill
             hitDetection.SetDisableTime(time);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ���� ����
-            bulletRigid.velocity = (simulVector - user.transform.position).normalized * 10 * speed;  // �ӵ� ����
+            bulletRigid.velocity = (simulVector - enemy.CenterPivot.transform.position).normalized * 10 * speed;  // �ӵ� ����
         }
     }
 }

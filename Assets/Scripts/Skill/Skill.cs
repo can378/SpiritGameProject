@@ -11,8 +11,8 @@ public abstract class Skill : SelectItem
                                                                                         //스킬 키 Hold : 1
                                                                                         //스킬 키 Up   : 2
                                                                                         
-    [field: SerializeField] public int[] skillLimit { get; private set; }               //근거리 : 0 - 베기, 1 - 찌르기, 2 - 휘두르기
-                                                                                        //원거리 : 10 - 총, 11 - 활, 12 - 던지기, 13 - 범위 공격
+    [field: SerializeField] public WEAPON_TYPE[] skillLimit { get; private set; }       // 해당 무기를 가지고 있을 때만 스킬 사용이 가능하다.
+                                                                                        // 없다면 제한이 없는 스킬이다.                                                                            
 
     [field: SerializeField] public float maxHoldTime { get; private set; }              // 홀드 최대 유지시간
     [field: SerializeField] public float preDelay { get; private set; }                 // 스킬 발동 전 대기 시간

@@ -346,7 +346,7 @@ public class Player : ObjectBasic
             projectile = null;
 
             // 현재 위치에 장비를 놓는다.
-            Instantiate(GameData.instance.weaponList[player.playerStats.weapon], gameObject.transform.position, gameObject.transform.localRotation);
+            Instantiate(GameData.instance.weaponList[player.playerStats.weapon], player.CenterPivot.transform.position, gameObject.transform.localRotation);
 
             // 무기 능력치 해제
             player.weaponList[player.playerStats.weapon].UnEquip(this.gameObject.GetComponent<Player>());
@@ -386,6 +386,7 @@ public class Player : ObjectBasic
         {
 
             Weapon CurWeapon = player.weaponList[player.playerStats.weapon];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[player.weaponList[player.playerStats.weapon].weaponType.ToSafeString()];
 
             // 공격 상태
             player.playerStatus.isAttack = true;
@@ -398,7 +399,7 @@ public class Player : ObjectBasic
             player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);
             player.playerAnim.animator.SetInteger("AttackCombo", AttackCombo);
             player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.attackSpeed);
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[player.weaponList[player.playerStats.weapon].weaponType.ToSafeString()];
+
 
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
@@ -441,7 +442,7 @@ public class Player : ObjectBasic
             {
                 // 공격 속도에 따른 이펙트 가속
                 ParticleSystem.MainModule particleMain = HitDetectionGameObject.GetComponentInChildren<ParticleSystem>().main;
-                particleMain.startLifetime = player.weaponList[player.playerStats.weapon].rate / player.playerStats.attackSpeed;
+                particleMain.startLifetime = animationInfo.Rate / player.playerStats.attackSpeed;
 
             }
             
@@ -610,7 +611,7 @@ public class Player : ObjectBasic
         // 스킬 해제
         public void UnEquipSkill()
         {
-            Instantiate(DataManager.instance.gameData.skillList[player.playerStats.skill[player.playerStatus.skillIndex]], gameObject.transform.position, gameObject.transform.localRotation);
+            Instantiate(DataManager.instance.gameData.skillList[player.playerStats.skill[player.playerStatus.skillIndex]], player.CenterPivot.transform.position, gameObject.transform.localRotation);
             player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].gameObject.SetActive(false);
             player.playerStats.skill[player.playerStatus.skillIndex] = 0;
         }
@@ -623,6 +624,7 @@ public class Player : ObjectBasic
 
         public void SkillUp()
         {
+            StopCoroutine(skillCoroutine);
             skillCoroutine = StartCoroutine(Exit());
         }
 
@@ -632,17 +634,21 @@ public class Player : ObjectBasic
             // 홀드 중
             player.playerStatus.isSkillHold = true;
 
+            // 스킬 키 다운 즉시 시전
             if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillType == 0)
             {
                 player.playerStatus.isSkill = true;
+                yield return null;
                 yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].preDelay);
             }
 
             player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Enter(player);
 
+            // 스킬 키 다운 즉시 시전
             if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillType == 0)
             {
                 yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].postDelay);
+                yield return null;
                 player.playerStatus.isSkill = false;
             }
 
@@ -656,17 +662,17 @@ public class Player : ObjectBasic
             //print("Stay");
             float timer = player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].maxHoldTime;
 
-            while (player.playerStatus.isSkillHold)
-            {
-                yield return new WaitForSeconds(0.1f);
-                timer -= 0.1f;
-                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].HoldCoolDown();      // 홀드 중일 때는 쿨타임이 줄어들지 않음
-                if (timer <= 0)
+            while (player.playerStatus.isSkillHold && timer > 0)
                 {
-                    skillCoroutine = StartCoroutine(Exit());
-                    break;
+                    yield return null;          // 안 넣으면 코루틴 저장이 안됨
+                    timer -= Time.deltaTime;
+                    player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].HoldCoolDown();      // 홀드 중일 때는 쿨타임이 줄어들지 않음
+                    if (timer <= 0)
+                    {
+                        skillCoroutine = StartCoroutine(Exit());
+                        break;
+                    }
                 }
-            }
 
             yield return null;          // 안 넣으면 코루틴 저장이 안됨
         }
@@ -678,6 +684,7 @@ public class Player : ObjectBasic
             if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillType == 2)
             {
                 player.playerStatus.isSkill = true;
+                yield return null;
                 yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].preDelay);
             }
 
@@ -688,6 +695,7 @@ public class Player : ObjectBasic
             if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillType == 2)
             {
                 yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].postDelay);
+                yield return null;
                 player.playerStatus.isSkill = false;
             }
 
@@ -724,12 +732,21 @@ public class Player : ObjectBasic
         // 스킬 키 다운
         if (skDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && !playerStatus.isSkillHold )
         {
-            //스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
-            if (playerStats.weapon == 0 ||  
-                skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit.Length != 0 && 
-            Array.IndexOf(skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit, (int)weaponList[playerStats.weapon].weaponType) == -1)
+            // 스킬이 제한이 있는 상태에서 적절한 무기가 가지고 있지 않을 때
+            // 해당 무기만 사용이 가능하다.
+
+            // 무기 제한이 있을 때
+            if (skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit.Length != 0)
             {
-                return;
+                // 무기가 없거나
+                // 제한 무기를 가지고 있지 않거나
+                int SkillUseOk = Array.IndexOf(skillList[playerStats.skill[playerStatus.skillIndex]].skillLimit, weaponList[playerStats.weapon].weaponType);
+                print(SkillUseOk);
+                if (playerStats.weapon == 0 || SkillUseOk == -1)
+                {
+                    return;
+                }
+
             }
             skillController.SkillDown();
         }
@@ -744,8 +761,9 @@ public class Player : ObjectBasic
         //스킬 hold 상태에서 스킬 키 up
         if ((!skDown)&& (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && playerStatus.isSkillHold)
         {
-            skillController.SkillUp();
             playerStatus.isReload = false;
+            skillController.SkillUp();
+            
         }
     }
     
@@ -897,7 +915,7 @@ public class Player : ObjectBasic
             return false;
 
         // 현재 위치에 장비를 놓는다.
-        Instantiate(GameData.instance.equipmentList[playerStats.equipments[index]], gameObject.transform.position, gameObject.transform.localRotation);
+        Instantiate(GameData.instance.equipmentList[playerStats.equipments[index]], CenterPivot.transform.position, gameObject.transform.localRotation);
 
         // 무기 능력치 해제
         equipmentList[playerStats.equipments[index]].UnEquip(this.gameObject.GetComponent<Player>());
@@ -1123,7 +1141,7 @@ public class Player : ObjectBasic
         if (other.tag == "SelectItem" || other.tag == "Door" || 
         other.tag == "Npc" || other.tag=="reward" || other.tag == "SellingItem")
         {
-            if(playerStatus.nearObject == null || Vector2.Distance(transform.position, other.transform.position) < Vector2.Distance(transform.position, playerStatus.nearObject.transform.position))
+            if(playerStatus.nearObject == null || Vector2.Distance(CenterPivot.transform.position, other.transform.position) < Vector2.Distance(CenterPivot.transform.position, playerStatus.nearObject.transform.position))
             {
                 playerStatus.nearObject = other.gameObject;
             }

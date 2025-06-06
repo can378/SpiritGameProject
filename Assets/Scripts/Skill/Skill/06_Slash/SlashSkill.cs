@@ -40,7 +40,7 @@ public class SlashSkill : Skill
             player.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
-            simul = Instantiate(slashEffectSimul, user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(slashEffectSimul, player.CenterPivot.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
             simul.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
 
@@ -60,14 +60,14 @@ public class SlashSkill : Skill
         else if(user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - enemy.CenterPivot.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
             float timer = 0;
             float powerTimer = 0;
 
             enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
-            simul = Instantiate(slashEffectSimul, user.gameObject.transform.position, Quaternion.identity);
+            simul = Instantiate(slashEffectSimul, enemy.CenterPivot.gameObject.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
             simul.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);
 
@@ -109,10 +109,12 @@ public class SlashSkill : Skill
         {
             Player player = user.GetComponent<Player>();
             Weapon weapon = player.weaponList[player.playerStats.weapon];
-            GameObject instantProjectile = Instantiate(slashEffect, transform.position, transform.rotation);
+            GameObject instantProjectile = Instantiate(slashEffect, player.CenterPivot.transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            float attackRate = weapon.SPA / player.playerStats.attackSpeed;                               // 공격 1회당 걸리는 시간
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponType.ToString()];
+
+            float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;                               // 공격 1회당 걸리는 시간
 
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
@@ -152,10 +154,10 @@ public class SlashSkill : Skill
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject instantProjectile = Instantiate(slashEffect, transform.position, transform.rotation);
+            GameObject instantProjectile = Instantiate(slashEffect, enemy.CenterPivot.transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - user.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - user.transform.position.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(enemy.enemyStatus.EnemyTarget.transform.position.y - enemy.CenterPivot.transform.position.y, enemy.enemyStatus.EnemyTarget.transform.position.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
 
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
@@ -181,7 +183,7 @@ public class SlashSkill : Skill
             hitDetection.SetHit_Ratio(defalutDamage, ratio, enemy.stats.AttackPower, 1 * holdPower);
             hitDetection.SetMultiHit(true,DPS);
             hitDetection.user = user;
-            bulletRigid.velocity = (enemy.enemyStatus.EnemyTarget.transform.position - transform.position).normalized * 10 * speed;  // 속도 설정
+            bulletRigid.velocity = (enemy.enemyStatus.EnemyTarget.transform.position - enemy.CenterPivot.transform.position).normalized * 10 * speed;  // 속도 설정
 
             Destroy(simul);
             Destroy(instantProjectile, time);  //사거리 설정

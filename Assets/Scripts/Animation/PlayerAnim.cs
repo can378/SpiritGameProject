@@ -17,6 +17,18 @@ public class WeaponAnimationInfo
     public float Rate;
     public float PostDelay;
     public List<AttackAnimation> Animation;
+
+    // 공격 한번당 걸리는 시간
+    public float GetSPA()
+    {
+        return PreDelay + Rate + PostDelay;
+    }
+
+    // 1초당 공격가능 횟수
+    public float GetAPS()
+    {
+        return 1 / GetSPA();
+    }
 }
 
 
