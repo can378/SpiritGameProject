@@ -1054,7 +1054,7 @@ public class Player : ObjectBasic
             Player.instance.playerStats.SkillPower.AddValue               += StatIV[(int)_StatID];
             break;
             case StatID.SCT:
-            Player.instance.playerStats.addSkillCoolTime            += StatIV[(int)_StatID];
+            Player.instance.playerStats.addSkillCoolTime            = StatIV[(int)_StatID];
             break;
             case StatID.MS:
             Player.instance.playerStats.MoveSpeed.IncreasedValue          += StatIV[(int)_StatID];

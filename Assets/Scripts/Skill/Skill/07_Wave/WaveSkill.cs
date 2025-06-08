@@ -74,7 +74,6 @@ public class WaveSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             GameObject effect = Instantiate(waveEffect, enemy.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
-            float timer = 0;
 
             // 쿨타임 적용
             skillCoolTime = skillDefalutCoolTime;
