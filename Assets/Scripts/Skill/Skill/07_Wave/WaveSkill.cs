@@ -16,7 +16,7 @@ public class WaveSkill : Skill
     public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
-        StartCoroutine(Attack());
+        Attack();
     }
 
     public override void Cancle()
@@ -29,7 +29,7 @@ public class WaveSkill : Skill
 
     }
 
-    IEnumerator Attack()
+    void Attack()
     {
         Debug.Log("Wave");
 
@@ -62,6 +62,9 @@ public class WaveSkill : Skill
              10);
             hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
+
+            // Growing 모듈
+            hitDetection.SetGrowing(true, 3);
 
             // rate 동안 유지
             Destroy(effect,time);
@@ -98,12 +101,8 @@ public class WaveSkill : Skill
             hitDetection.SetSEs(statusEffect);
             hitDetection.user = user;
 
-            while (timer < time)
-            {
-                effect.transform.localScale = new Vector3(1 + timer * 10, 1 + timer * 10, 1);
-                timer += Time.deltaTime;
-                yield return null;
-            }
+            // Growing 모듈
+            hitDetection.SetGrowing(true, 3);
 
             // rate 동안 유지
             Destroy(effect,time);

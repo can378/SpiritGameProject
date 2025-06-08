@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3591179236587915755}
   - component: {fileID: 8463777130386602006}
   - component: {fileID: 6475669372283048094}
-  - component: {fileID: 2769082231498236392}
+  - component: {fileID: 5065196112516315232}
   m_Layer: 11
   m_Name: Little Star
   m_TagString: PlayerAttack
@@ -117,6 +117,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -130,6 +131,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -168,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angular: 360
---- !u!114 &2769082231498236392
+--- !u!114 &5065196112516315232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,9 +181,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1465481353037356265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Script: {fileID: 11500000, guid: a6587c84f3701a843b5d0f58a94e4703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Center: {fileID: 0}
 --- !u!1 &7984515985627358397
 GameObject:
   m_ObjectHideFlags: 0

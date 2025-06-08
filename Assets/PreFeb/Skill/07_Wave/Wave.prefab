@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 8056939154375420388}
   - component: {fileID: 7343399755032385016}
   - component: {fileID: 786419763627698833}
+  - component: {fileID: 6444280634167121260}
   m_Layer: 11
   m_Name: Wave
   m_TagString: PlayerAttack
@@ -171,6 +172,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 04000000
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -184,6 +186,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -194,6 +199,18 @@ MonoBehaviour:
   GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
+--- !u!210 &6444280634167121260
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8986035067505207802}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
+  m_SortAtRoot: 0
 --- !u!1001 &4201043784652366123
 PrefabInstance:
   m_ObjectHideFlags: 0

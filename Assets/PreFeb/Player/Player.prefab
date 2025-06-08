@@ -644,6 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!212 &3171004510718720288
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -818,6 +819,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -831,6 +833,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -1000,6 +1005,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -1013,6 +1019,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -1298,6 +1307,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -1311,6 +1321,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -3865,6 +3878,10 @@ PrefabInstance:
     - target: {fileID: 52840390030133931, guid: c17f60061ec6a6942ab103b145684ad6, type: 3}
       propertyPath: m_Name
       value: 08_SevenBladeSword
+      objectReference: {fileID: 0}
+    - target: {fileID: 2959451362780544040, guid: c17f60061ec6a6942ab103b145684ad6, type: 3}
+      propertyPath: <attackSize>k__BackingField
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2959451362780544040, guid: c17f60061ec6a6942ab103b145684ad6, type: 3}
       propertyPath: <weaponType>k__BackingField
