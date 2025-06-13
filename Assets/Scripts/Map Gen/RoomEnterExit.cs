@@ -119,11 +119,12 @@ public class RoomEnterExit : MonoBehaviour
     void enterBossRoom() 
     {
         GameObject boss = room.map.GetComponent<ObjectSpawn>().enemys[0];
+        ObjectBasic bossOB = boss.GetComponent<ObjectBasic>();
         //start audio
         AudioManager.instance.Bgm_boss(DataManager.instance.userData.nowChapter);
         //camera moving
         CameraManager.instance.isCameraChasing = false;
-        StartCoroutine(CameraManager.instance.BossRoomEnterEffect(boss,room.gameObject));
+        StartCoroutine(CameraManager.instance.BossRoomEnterEffect(bossOB, room.gameObject));
     }
 
     bool HasComponent(GameObject obj, string componentType)

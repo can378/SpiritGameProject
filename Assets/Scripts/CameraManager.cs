@@ -13,7 +13,7 @@ public class CameraManager : MonoBehaviour
     Vector3 cameraPosition;
 
     [SerializeField]
-    Vector2 center;                 
+    Vector2 center;
     public Vector2 postCenter;
 
     [SerializeField]
@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
     float width;
     Transform playerTransform;
     Camera cam;
-    float startSize;
+    float startOrtSize;
 
 
 
@@ -43,8 +43,8 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        cam=GetComponent<Camera>();
-        startSize = cam.orthographicSize;
+        cam = GetComponent<Camera>();
+        startOrtSize = cam.orthographicSize;
     }
 
     void Start()
@@ -54,8 +54,8 @@ public class CameraManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isCameraChasing) CameraChasing();
-        
+        if (isCameraChasing) CameraChasing();
+
 
         if (Player.GetComponent<PlayerStats>().blind > 0)
         {
@@ -93,19 +93,18 @@ public class CameraManager : MonoBehaviour
 
     //Boss room enter effect
     private bool isCameraMoving = true;
-    public IEnumerator BossRoomEnterEffect(GameObject boss,GameObject room)
+    public IEnumerator BossRoomEnterEffect(ObjectBasic boss, GameObject room)
     {
         isShowingBoss = true;
         //startSize = cam.orthographicSize;
 
         //boss zoom in
-        StartCoroutine(CameraZoom(boss, 2f, true));
-        while (isCameraMoving) { yield return new WaitForSeconds(0.1f); }
+        StartCoroutine(CameraZoom(boss, boss, 2f, true));
+        while (isCameraMoving) { yield return null; }
 
-        
         //zoom out
-        StartCoroutine(CameraZoom(FindObj.instance.Player, 2f, false));
-        while (isCameraMoving) { yield return new WaitForSeconds(0.1f); }
+        StartCoroutine(CameraZoom(boss, FindObj.instance.Player.GetComponent<ObjectBasic>(), 2f, false));
+        while (isCameraMoving) { yield return null; }
 
 
         //Finish
@@ -129,10 +128,10 @@ public class CameraManager : MonoBehaviour
         isCameraChasing = true;
     }
 
-    public void CenterMove(GameObject obj) 
+    public void CenterMove(GameObject obj)
     {
         postCenter = obj.transform.position;
-        center=obj.transform.position;
+        center = obj.transform.position;
     }
     //Slowly move to "obj"//////////////////////////////////////////////////////////////
     /*
@@ -169,8 +168,8 @@ public class CameraManager : MonoBehaviour
 
         isCameraMoving = true;
 
-        
-        float targetSize = zoomIn ? 2f : startSize; // ÁÜ ÀÎÀÌ¸é 2, ÁÜ ¾Æ¿ôÀÌ¸é ¿ø·¡ »çÀÌÁî
+        float startSize = zoomIn ? startOrtSize : 2f;
+        float targetSize = zoomIn ? 2f : startOrtSize; // ÁÜ ÀÎÀÌ¸é 2, ÁÜ ¾Æ¿ôÀÌ¸é ¿ø·¡ »çÀÌÁî
 
         Vector3 startPosition = cam.transform.position;
         Vector3 targetPosition = target.transform.position;
@@ -198,6 +197,45 @@ public class CameraManager : MonoBehaviour
         isCameraMoving = false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="startPos"></param>
+    /// <param name="targetPos"></param>
+    /// <param name="duration"></param>
+    /// <param name="zoomIn">true : ZoomIn, false : ZoomOut</param>
+    /// <returns></returns>
+    public IEnumerator CameraZoom(ObjectBasic startOB, ObjectBasic targetOB, float duration, bool zoomIn)
+    {
+        isCameraMoving = true;
 
+        float startSize = zoomIn ? startOrtSize : 8f;
+        float targetSize = zoomIn ? 8f : startOrtSize; // ÁÜ ÀÎÀÌ¸é 2, ÁÜ ¾Æ¿ôÀÌ¸é ¿ø·¡ »çÀÌÁî
+
+        Vector3 startPosition = startOB.CenterPivot.position;
+        Vector3 targetPosition = targetOB.CenterPivot.position;
+
+        startPosition.z = cam.transform.position.z;
+        targetPosition.z = cam.transform.position.z;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // Ä«¸Þ¶óÀÇ orthographicSize¸¦ Lerp·Î °è»ê
+            cam.orthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / duration);
+            cam.transform.position = Vector3.Lerp(startPosition, new Vector3(targetPosition.x, targetPosition.y, startPosition.z), elapsedTime / duration);
+
+            yield return null;
+        }
+
+        // ÃÖÁ¾ °ªÀ¸·Î ¼¼ÆÃ
+        cam.orthographicSize = targetSize;
+        cam.transform.position = new Vector3(targetPosition.x, targetPosition.y, startPosition.z);
+
+        isCameraMoving = false;
+    }
 
 }
