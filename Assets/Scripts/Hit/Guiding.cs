@@ -20,7 +20,7 @@ public class Guiding : MonoBehaviour
         //StartGuide();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Guide();
     }
@@ -44,7 +44,7 @@ public class Guiding : MonoBehaviour
         }
 
         Vector2 angle = ((Vector2)(guidingTarget.position - transform.position).normalized - rigid.velocity.normalized).normalized;
-        rigid.velocity = (rigid.velocity.normalized + angle * Time.deltaTime * angular).normalized * speed;
+        rigid.velocity = (rigid.velocity.normalized + angle * Time.fixedDeltaTime * angular).normalized * speed;
     }
 
 

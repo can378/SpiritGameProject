@@ -14,7 +14,7 @@ public class HitSkillCoolTimeDown : Equipment
 
     void Passive()
     {
-        if (user == null || !user.playerStatus.hitTarget)
+        if (user == null || !user.playerStatus.hitTarget || user.playerStats.skill[user.playerStatus.skillIndex] == 0)
             return;
 
         if (user.playerStatus.hitTarget.gameObject.tag == "Wall" || user.playerStatus.hitTarget.gameObject.tag == "Door" || user.playerStatus.hitTarget.gameObject.tag == "ShabbyWall")

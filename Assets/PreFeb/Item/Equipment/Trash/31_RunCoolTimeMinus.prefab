@@ -127,11 +127,11 @@ GameObject:
   m_Component:
   - component: {fileID: 9000933290160733339}
   - component: {fileID: 6601849473291929727}
-  - component: {fileID: 6175688899191494511}
-  - component: {fileID: 1731076950308089067}
-  - component: {fileID: 697633694900622017}
+  - component: {fileID: 3226874571170732221}
+  - component: {fileID: 1965088743047500656}
+  - component: {fileID: -6594030634981035119}
   m_Layer: 6
-  m_Name: 32_RunCoolTimeZero
+  m_Name: 31_RunCoolTimeMinus
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,7 +150,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8749169571237284572}
+  - {fileID: 8382701018788245242}
   - {fileID: 1561321374059137630}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -189,7 +189,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &6175688899191494511
+--- !u!114 &3226874571170732221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,12 +202,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <selectItemType>k__BackingField: 0
-  <selectItemRating>k__BackingField: 2
-  <selectItemName>k__BackingField: "\uAF43\uC2E0"
+  <selectItemRating>k__BackingField: 1
+  <selectItemName>k__BackingField: "\uCD08\uD61C"
   <description>k__BackingField: 
   <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 32
---- !u!114 &1731076950308089067
+  <selectItemID>k__BackingField: 31
+--- !u!114 &1965088743047500656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,7 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!210 &697633694900622017
+  WorldPos: {x: 0, y: 0, z: 0}
+--- !u!210 &-6594030634981035119
 SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,37 +232,6 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!1 &4116239443481334862
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8749169571237284572}
-  m_Layer: 0
-  m_Name: Pivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8749169571237284572
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4116239443481334862}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9000933290160733339}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7983337870403065992
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +305,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1998492800, guid: 0f1d483afaa72c244a48b83f3bedab1b, type: 3}
+  m_Sprite: {fileID: -145356695, guid: 0f1d483afaa72c244a48b83f3bedab1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -346,3 +316,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8585864210025611301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8382701018788245242}
+  m_Layer: 0
+  m_Name: Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8382701018788245242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585864210025611301}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9000933290160733339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

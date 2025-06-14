@@ -65,8 +65,11 @@ public class Player : ObjectBasic
     }
     void Update()
     {
+        if (Time.timeScale == 0)
+            return;
+
         //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
-        GetInput();
+            GetInput();
 
         /*
         if (isMoveable())
@@ -83,7 +86,6 @@ public class Player : ObjectBasic
         Turn();
         //Run();
         Dodge();
-        Move();
         //UseItem();
         Interaction();
 
@@ -108,6 +110,12 @@ public class Player : ObjectBasic
         string layerName = LayerMask.LayerToName(gameObject.layer);
         //Debug.Log("My layer name is: " + layerName);
     }
+
+    void FixedUpdate()
+    {
+        Move();
+    }
+
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");

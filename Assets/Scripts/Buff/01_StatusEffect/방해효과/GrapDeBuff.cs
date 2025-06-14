@@ -15,7 +15,7 @@ public class GrapDeBuff : StatusEffect
     Player player;
 
     bool LeftRight;     // False∏È Left, True∏È Right;
-    int KeyDownCount;
+    [SerializeField] int KeyDownCount;
 
     float Tick = 0.0f;         // 0.1√ 
 

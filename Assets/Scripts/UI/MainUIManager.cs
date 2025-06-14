@@ -25,7 +25,7 @@ public class MainUIManager : MonoBehaviour
             warningPanel.SetActive(false);
         }
 
-        if(taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf)
+        if(mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf)
         {
             Time.timeScale = 0f;
         }
