@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 1}
+  m_LocalScale: {x: 300, y: 300, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8908154486098788984}
@@ -205,11 +205,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa3e605f2652d3842a975251ce39ce69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayGridGizmos: 1
+  displayGridGizmos: 0
   OBSTACLE:
     serializedVersion: 2
     m_Bits: 2147483648
-  gridWorldSize: {x: 50, y: 50}
+  gridWorldSize: {x: 300, y: 300}
   nodeRadius: 0.5
 --- !u!1 &6520547578385569096
 GameObject:
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9330fc7b1fcb4be48b3d7b06f8b58e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeRows: 10
-  mazeColumns: 10
+  mazeRows: 30
+  mazeColumns: 30
   cellPrefab: {fileID: 6213171574985650615, guid: f051187f03e2bff41bb1175bdd729e8b, type: 3}
   disableCellSprite: 1
   mazeExitPortal: {fileID: 2202882308573228913, guid: 771d3a777979f0844bbbe3ce869b79a6, type: 3}
@@ -366,18 +366,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 2
+  AttackID: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
   <statusEffect>k__BackingField: 
-  <isShake>k__BackingField: 0
-  multiHitDurationTime: 0
+  EnableTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isGuided: 0
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!114 &1871809996767737918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,26 +415,58 @@ MonoBehaviour:
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
+  DefensivePower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefaultValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   activeEffects: []
   enemyName: mazeEnemy
+  DropCoin: 3
   detectionDis: 100
   detectionKeepDis: 100
   maxAttackRange: 100
+  disableTime: 0
 --- !u!114 &6898114759386961955
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -128,12 +128,20 @@ public class Room : MonoBehaviour
         {
             doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
-            map = Instantiate(mapTemplates.GetMissionMap(top, bottom, left, right), transform.position, transform.rotation);
 
+            GameObject missionMapPrefab = mapTemplates.GetMissionMap(top, bottom, left, right);
+
+            if (missionMapPrefab == null)
+            {
+                //Debug.LogError("GetMissionMap() returned null. Skipping instantiation.");
+                return;
+            }
+
+            map = Instantiate(missionMapPrefab, transform.position, transform.rotation);
             map.GetComponent<Mission>().roomScript = this;
-            minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
-            
+            minimapIcon = Instantiate(map.GetComponent<MinimapIcon>().minimapIcon);
         }
+
         else if (mapType == MapType.Boss)
         {
             // 임시로 안닫히게 처리

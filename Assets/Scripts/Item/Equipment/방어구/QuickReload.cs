@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuickReload : Equipment
 {
-    bool isQuick = false;
+    //bool isQuick = false;
 
     void Update()
     {

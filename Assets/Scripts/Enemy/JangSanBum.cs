@@ -18,7 +18,7 @@ public class JangSanBum : EnemyBasic
     
     private int patternNum;
     private int blindTime = 5;
-    private int spawnEnemyHP = 50;
+    //private int spawnEnemyHP = 50;
 
     int randomNum;
 

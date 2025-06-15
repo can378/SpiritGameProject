@@ -10,7 +10,7 @@ public class BossBaby : Boss
     enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, Tear, None };
 
     [ReadOnly]
-    new public AnimJukqwi jukqwiAnim;
+    public AnimJukqwi jukqwiAnim;
 
     private GameObject floor;
     private int patternIndex;

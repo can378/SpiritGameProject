@@ -32,9 +32,30 @@ public class MapTemplates : MonoBehaviour
 
     public GameObject GetMissionMap(bool _Top, bool _Bottom, bool _Left, bool _Right)
     {
-        int BitNumber = (Convert.ToByte(_Top) << 0) | (Convert.ToByte(_Bottom) << 1) | (Convert.ToByte(_Left) << 2) | (Convert.ToByte(_Right) << 3);
-        return MissionMap[BitNumber].References[UnityEngine.Random.Range(0, MissionMap[BitNumber].References.Length)];
+        int BitNumber = (Convert.ToByte(_Top) << 0)
+                      | (Convert.ToByte(_Bottom) << 1)
+                      | (Convert.ToByte(_Left) << 2)
+                      | (Convert.ToByte(_Right) << 3);
+
+        // 배열 범위 체크
+        if (BitNumber < 0 || BitNumber >= MissionMap.Length)
+        {
+            Debug.LogError($"BitNumber {BitNumber} is out of range for MissionMap (length={MissionMap.Length})");
+            return null;
+        }
+
+        var references = MissionMap[BitNumber].References;
+
+        // References 배열이 null이거나 비어있는지 확인
+        if (references == null || references.Length == 0)
+        {
+            Debug.LogWarning($"MissionMap[{BitNumber}].References is null or empty");
+            return null;
+        }
+
+        return references[UnityEngine.Random.Range(0, references.Length)];
     }
+
 
     public GameObject GetBossMap(bool _Top, bool _Bottom, bool _Left, bool _Right)
     {

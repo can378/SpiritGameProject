@@ -206,8 +206,7 @@ public class MapUIManager : MonoBehaviour
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
 
-    private float fillSpeed = 0.5f;
-    private float targetFillAmount = 1.0f;
+
     private float fillValue;
     private float skillCoolTime_max;
     private float skillCoolTime_now;

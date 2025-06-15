@@ -17,7 +17,7 @@ public class RoomEnterExit : MonoBehaviour
     public List<SpriteRenderer> aisleSprite;
 
 
-    private string minimapIconString = "MinimapIcon";
+    //private string minimapIconString = "MinimapIcon";
 
     void Start()
     {

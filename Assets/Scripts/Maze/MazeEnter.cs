@@ -22,6 +22,8 @@ public class MazeEnter : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            roomParent = GameObject.FindWithTag("roomParent");
+
             if (mazePortal == mazePortal.enter)
             {
                 // rooms deactivate
