@@ -249,8 +249,13 @@ public class Player : ObjectBasic
 
     void Reload()
     {
+        
+        
         if (playerStats.weapon == 0)
             return;
+
+        playerAnim.animator.SetBool("isReload", playerStatus.isReload);
+        playerAnim.animator.SetFloat("ReloadTime", playerStatus.reloadDelay / weaponList[playerStats.weapon].reloadTime);
 
         if (weaponList[playerStats.weapon].maxAmmo < 0)
             return;
@@ -470,11 +475,13 @@ public class Player : ObjectBasic
 
         IEnumerator Shot(Vector2 _AttackDir, float _AttackAngle)
         {
+            Weapon CurWeapon = player.weaponList[player.playerStats.weapon];
 
             player.playerStatus.isAttack = true;
 
             // 애니메이션 설정
             player.playerAnim.ChangeDirection(_AttackDir);
+            player.playerAnim.ChangeWeaponSprite(CurWeapon.weaponType, CurWeapon.selectItemID);
             player.playerAnim.animator.Rebind();
             player.playerAnim.animator.SetBool("isAttack", true);
             player.playerAnim.animator.SetInteger("AttackType", (int)player.weaponList[player.playerStats.weapon].weaponType);

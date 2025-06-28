@@ -17,7 +17,7 @@ public class PlayerStatus : Status
     [field: SerializeField] public bool isPlayerMove { get; set; }
 
     [field: SerializeField] public bool isReload {get; set;}                        // 장전
-    [field: SerializeField] public float reloadDelay {get; set;}
+    [field: SerializeField] public float reloadDelay { get; set; }
     [field: SerializeField] public bool isDodge { get; set; }                       // 회피
 
     [field: SerializeField] public bool isAttackable { get; set; }                  // 공격가능 상태

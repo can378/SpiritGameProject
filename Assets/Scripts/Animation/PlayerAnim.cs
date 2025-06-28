@@ -49,7 +49,8 @@ public class PlayerAnim : AnimBasic
 
     public void ChangeWeaponSprite(WEAPON_TYPE _Type, int _WeaponIndex)
     {
-        //if(WeaponSpriteRenderer[(int)_Type] == null)
+        if (WeaponSpriteRenderer[(int)_Type] == null || WeaponSprite[_WeaponIndex] == null)
+            return;
 
 
         WeaponSpriteRenderer[(int)_Type].sprite = WeaponSprite[_WeaponIndex];

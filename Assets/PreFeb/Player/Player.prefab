@@ -57,10 +57,10 @@ MonoBehaviour:
   - {fileID: 6495576722671401516}
   - {fileID: 5759551219534831159}
   - {fileID: 0}
+  - {fileID: 8116469857022718263}
+  - {fileID: 5521537523776146486}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8116469857022718263}
   - {fileID: 0}
   - {fileID: 0}
   WeaponSprite:
@@ -624,7 +624,7 @@ MonoBehaviour:
   <runCurrentCoolTime>k__BackingField: 0
   <isPlayerMove>k__BackingField: 0
   <isReload>k__BackingField: 0
-  <reloadDelay>k__BackingField: 0
+  <reloadDelay>k__BackingField: 1
   <isDodge>k__BackingField: 0
   <isAttackable>k__BackingField: 1
   <attackDelay>k__BackingField: 0
@@ -5003,7 +5003,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: f39b9d8411b348a46ae0ba88fa4e6426, type: 3}
       propertyPath: m_Name
-      value: 12
+      value: CrossBow
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: f39b9d8411b348a46ae0ba88fa4e6426, type: 3}
       propertyPath: m_IsActive
@@ -5082,6 +5082,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 4843985084834002234, guid: f39b9d8411b348a46ae0ba88fa4e6426, type: 3}
+--- !u!212 &5521537523776146486 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: -8138700813514671267, guid: f39b9d8411b348a46ae0ba88fa4e6426, type: 3}
+  m_PrefabInstance: {fileID: 4876826257606358891}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6089466684177469109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: f39b9d8411b348a46ae0ba88fa4e6426, type: 3}
@@ -5693,6 +5698,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3418451821682442538}
     m_Modifications:
+    - target: {fileID: 6789793356100364209, guid: 3f590a93ccb82cd47a7eb2593f2800f9, type: 3}
+      propertyPath: <ammo>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789793356100364209, guid: 3f590a93ccb82cd47a7eb2593f2800f9, type: 3}
+      propertyPath: <maxAmmo>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789793356100364209, guid: 3f590a93ccb82cd47a7eb2593f2800f9, type: 3}
+      propertyPath: <reloadTime>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789793356100364209, guid: 3f590a93ccb82cd47a7eb2593f2800f9, type: 3}
+      propertyPath: <weaponType>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8260112940017585919, guid: 3f590a93ccb82cd47a7eb2593f2800f9, type: 3}
       propertyPath: m_Name
       value: 06_Bomb Pocket
@@ -5841,7 +5862,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: bf952a0921dfb654aae1610b3e53e463, type: 3}
       propertyPath: m_Name
-      value: 3
+      value: HandGun
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: bf952a0921dfb654aae1610b3e53e463, type: 3}
       propertyPath: m_IsActive
@@ -8487,7 +8508,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: fcf04c01d5aa3634abf3907a4dd2b8e7, type: 3}
       propertyPath: m_Name
-      value: 4
+      value: Bow
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: fcf04c01d5aa3634abf3907a4dd2b8e7, type: 3}
       propertyPath: m_IsActive
@@ -8565,5 +8586,10 @@ PrefabInstance:
 --- !u!4 &7530351613178983348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: fcf04c01d5aa3634abf3907a4dd2b8e7, type: 3}
+  m_PrefabInstance: {fileID: 9200564790240954986}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8116469857022718263 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: -8138700813514671267, guid: fcf04c01d5aa3634abf3907a4dd2b8e7, type: 3}
   m_PrefabInstance: {fileID: 9200564790240954986}
   m_PrefabAsset: {fileID: 0}
