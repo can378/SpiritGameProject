@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,20 +7,22 @@ public class MazeEnter : MonoBehaviour
 {
     public mazePortal mazePortal;
 
-    public GameObject maze;
+    public GameObject maze;//mazeBgr임
     //public Vector2 mazePos;
 
-    private GameObject mazeInst=null;
+    private Vector2 originalCameraAreaSize;
+    private GameObject mazeInstance = null;
     private GameObject roomParent=null;
 
-    void Start()
+    private void Awake()
     {
-        roomParent = GameObject.FindWithTag("roomParent");
+        originalCameraAreaSize = CameraManager.instance.mapSize;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D playerCollision)
     {
-        if (collision.CompareTag("Player"))
+        if (playerCollision.CompareTag("Player"))
         {
             roomParent = GameObject.FindWithTag("roomParent");
 
@@ -33,25 +35,35 @@ public class MazeEnter : MonoBehaviour
                 }
 
                 //generate maze
-                mazeInst = Instantiate(maze);
-                
-                
-                //mazeInst.transform.position = mazePos;
-                //mazeInst.GetComponent<MazeGenerator>().GenerateMaze();
-                //GameObject.FindWithTag("Maze").transform.position = mazePos;
+                mazeInstance = Instantiate(maze);
+                var generator = mazeInstance.GetComponent<MazeGenerator>();
 
 
+                if (generator != null)
+                {
+                    generator.OnMazeGenerated += () =>
+                    {
+                        if (generator.RandomEdgePos != null)
+                        {
+                            //player Move
+                            playerCollision.transform.position = generator.RandomEdgePos.position;
+                            //camera move
+                            MoveCamera(playerCollision, new Vector2(400, 400));
+                        }
+                        else
+                        {
+                            Debug.LogWarning("RandomEdgePos is still null.");
+                            return;
+                        }
+                    };
+                }
+                else
+                {
+                    return;
+                   
+                }
 
-                //player move
-                //collision.transform.position = mazePos;
-                collision.transform.position = new Vector2(0,0);
-
-                //camera move
-                CameraManager.instance.CenterMove(collision.gameObject);
-                CameraManager.instance.CameraMove(collision.gameObject);
-                //CameraManager.instance.mapSize = new Vector2(25, 25);
-
-                
+                //entrance disabled
                 gameObject.GetComponent<Collider2D>().enabled = false;
 
             }
@@ -62,31 +74,31 @@ public class MazeEnter : MonoBehaviour
                     child.gameObject.SetActive(true);
                 }
 
-                //entrance disabled
-                
-                //GameObject.FindWithTag("MazeEntrance").SetActive(false);
-                //GetComponent<CircleCollider2D>().enabled = false;
-
-
+                //maze disabled
                 GameObject.FindWithTag("Maze").SetActive(false);
                 GameObject.FindWithTag("MazeBgr").SetActive(false);
 
 
                 //player move
                 Vector3 backToMap = new Vector3(5, 0, 0);
-                collision.transform.position = GameManager.instance.nowRoom.transform.position+ backToMap;
-
+                playerCollision.transform.position = GameManager.instance.nowRoom.transform.position+ backToMap;
 
                 //camera move
-                CameraManager.instance.CenterMove(collision.gameObject);
-                CameraManager.instance.CameraMove(collision.gameObject);
-                //CameraManager.instance.mapSize = new Vector2(25, 25);
+                MoveCamera(playerCollision, originalCameraAreaSize);
 
-
+                //Mission Complete(지금은 안해도되긴함)
                 GameManager.instance.nowRoomScript.map.GetComponent<Mission>().isEscapeMaze = true;
 
             }
             
         }
+    }
+
+    private void MoveCamera(Collider2D target, Vector2 cameraSize)
+    {
+        if (target == null) return;
+        CameraManager.instance.CenterMove(target.gameObject);
+        CameraManager.instance.CameraMove(target.gameObject);
+        CameraManager.instance.mapSize = cameraSize;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class MazeGenerator : MonoBehaviour
 
     #region Variables:
     // ------------------------------------------------------
-    // User
+    // We cn change here
     // ------------------------------------------------------
     [Header("Maze generation")]
     [Tooltip("maze tall, wide")]
@@ -28,6 +29,9 @@ public class MazeGenerator : MonoBehaviour
 
     public GameObject mazeExitPortal;
     public AGrid AGrid;
+
+    public Transform RandomEdgePos;
+    public Action OnMazeGenerated;
     // ------------------------------------------------------
     // System variables -dont need to change
     // ------------------------------------------------------
@@ -64,6 +68,8 @@ public class MazeGenerator : MonoBehaviour
 
         AGrid.CreateGrid();
         //AGrid.instance.CreateGrid();
+
+        OnMazeGenerated?.Invoke();
     }
 
     public void GenerateMaze()
@@ -102,6 +108,7 @@ public class MazeGenerator : MonoBehaviour
 
         CreateCentre();
         RunAlgorithm();
+        SetPlayerStartPos();
         MakeExit();
     }
 
@@ -117,7 +124,7 @@ public class MazeGenerator : MonoBehaviour
             if (unvisitedNeighbours.Count > 0)
             {
                 // Get a random unvisited neighbour.
-                checkCell = unvisitedNeighbours[Random.Range(0, unvisitedNeighbours.Count)];
+                checkCell = unvisitedNeighbours[UnityEngine.Random.Range(0, unvisitedNeighbours.Count)];
                 // Add current cell to stack.
                 stack.Add(currentCell);
                 // Compare and remove walls.
@@ -137,22 +144,22 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    public void MakeExit()
+
+    public Cell SelectRandomEdgeSell()
     {
-        
         // Create aall possible edge cells.
         List<Cell> edgeCells = new List<Cell>();
 
         foreach (KeyValuePair<Vector2, Cell> cell in allCells)
         {
-            if (cell.Key.x == 0 || cell.Key.x == mazeColumns  || cell.Key.y == 0  || cell.Key.y == mazeRows)
+            if (cell.Key.x == 0 || cell.Key.x == mazeColumns || cell.Key.y == 0 || cell.Key.y == mazeRows)
             {
                 edgeCells.Add(cell.Value);
             }
         }
 
         // random  edge cell
-        Cell newCell = edgeCells[Random.Range(0, edgeCells.Count)];
+        Cell newCell = edgeCells[UnityEngine.Random.Range(0, edgeCells.Count)];
         /*
         // Remove appropriate wall for chosen edge cell.
         if (newCell.gridPos.x == 0) 
@@ -164,15 +171,24 @@ public class MazeGenerator : MonoBehaviour
         else 
             RemoveWall(newCell.cScript, 4);
         */
+        return newCell;
+    }
 
+    public void SetPlayerStartPos()
+    {
+        RandomEdgePos= SelectRandomEdgeSell().cellObject.transform;
+    }
+    public void MakeExit()
+    {
         //make Exit
         GameObject exit = Instantiate(mazeExitPortal);
-        exit.transform.position = newCell.cellObject.transform.position;
-        exit.transform.parent = this.transform;
+        Vector3 exitPos = SelectRandomEdgeSell().cellObject.transform.position;
+        exit.transform.position=mazeParent.transform.position;
+        //exit.transform.position = exitPos;
+        exit.transform.parent = transform;
         //print(newCell.gridPos);
 
         Debug.Log("Maze generation finished.");
-
     }
 
     public List<Cell> GetUnvisitedNeighbours(Cell curCell)
@@ -259,7 +275,7 @@ public class MazeGenerator : MonoBehaviour
         // This ensures that one of the centre cells will connect to the maze but the other three won't.
         // This way, the centre room will only have 1 entry / exit point.
         List<int> rndList = new List<int> { 0, 1, 2, 3 };
-        int startCell = rndList[Random.Range(0, rndList.Count)];
+        int startCell = rndList[UnityEngine.Random.Range(0, rndList.Count)];
         rndList.Remove(startCell);
         currentCell = centreCells[startCell];
         foreach(int c in rndList)
