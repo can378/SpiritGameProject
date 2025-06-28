@@ -132,7 +132,8 @@ public class Mission : MonoBehaviour
                 }
                 break;
             case MissionType.Maze:
-                if (isEscapeMaze) { isEnd = true; }
+                isEnd = true;
+                //if (isEscapeMaze) { isEnd = true; }
                 break;
             default:
                 break;
@@ -142,7 +143,7 @@ public class Mission : MonoBehaviour
 
         if (isEnd)
         {
-            if (!isFail)
+            if (!isFail && missionReward!=null)
             {
                 missionReward.SetActive(true);
             }
