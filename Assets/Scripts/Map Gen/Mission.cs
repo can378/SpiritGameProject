@@ -53,7 +53,7 @@ public class Mission : MonoBehaviour
     {
         if (type == MissionType.MazeCurse)
         {
-            Debug.Log("start maze curse");
+            //Debug.Log("start maze curse");
             startMission();
         }
     }
@@ -144,7 +144,7 @@ public class Mission : MonoBehaviour
                 //if (isEscapeMaze) { isEnd = true; }
                 break;
             case MissionType.MazeCurse:
-                Debug.Log("mazeCurse");
+                //Debug.Log("mazeCurse");
                 if (curse.transform.localScale.x >= 2)
                 {
                     //curse safe area decreased

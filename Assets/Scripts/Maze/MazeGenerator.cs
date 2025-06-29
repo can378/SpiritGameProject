@@ -28,7 +28,7 @@ public class MazeGenerator : MonoBehaviour
     public bool disableCellSprite;
 
     public GameObject mazeExitPortal;
-    public AGrid AGrid;
+    public AGrid AGrid;//안쓴다. 누가 쫓아오는거 구현할때만 쓴다
 
     public Transform RandomEdgePos;
     public Action OnMazeGenerated;
@@ -66,8 +66,7 @@ public class MazeGenerator : MonoBehaviour
         //mazePos = GameObject.FindWithTag("MazeEntrance").GetComponent<MazeEnter>().mazePos;
         GenerateMaze();
 
-        AGrid.CreateGrid();
-        //AGrid.instance.CreateGrid();
+        //AGrid.CreateGrid();
 
         OnMazeGenerated?.Invoke();
     }
