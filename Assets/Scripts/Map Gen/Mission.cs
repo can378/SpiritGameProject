@@ -168,7 +168,12 @@ public class Mission : MonoBehaviour
             {
                 safeAisle.SetActive(true);
             }
-            roomScript.UnLockDoor();
+
+            if (roomScript != null)
+            {
+                roomScript.UnLockDoor();
+            }
+            
         }
         else
             StartCoroutine(CheckMissionEnd());
