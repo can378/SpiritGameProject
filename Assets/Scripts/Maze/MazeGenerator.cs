@@ -37,7 +37,7 @@ public class MazeGenerator : MonoBehaviour
     // ------------------------------------------------------
 
     // Variable to store size of centre room. Hard coded to be 2.
-    private int centreSize = 2;
+    //private int centreSize = 2;
 
     private Dictionary<Vector2, Cell> allCells = new Dictionary<Vector2, Cell>(); // all cells information
     private List<Cell> unvisited = new List<Cell>(); //store unvisited cells

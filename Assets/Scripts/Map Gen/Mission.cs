@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum MissionType 
-{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse, Dream, Maze, LittleMonster}
+{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse, Dream, Maze, LittleMonster, MazeCurse}
 
 public class Mission : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class Mission : MonoBehaviour
     public float timeCondition;
     public GameObject clock;
 
-    [Header("Curse")]
+    [Header("Curse, MazeCurse")]
     public GameObject curse;
     public GameObject safeAisle;
 
@@ -48,6 +48,14 @@ public class Mission : MonoBehaviour
         
         if(clock != null) { clock.SetActive(false); }
         
+    }
+    private void Start()
+    {
+        if (type == MissionType.MazeCurse)
+        {
+            Debug.Log("start maze curse");
+            startMission();
+        }
     }
     //starts when the map is generated
     public IEnumerator CheckMissionEnd() 
@@ -134,6 +142,14 @@ public class Mission : MonoBehaviour
             case MissionType.Maze:
                 isEnd = true;
                 //if (isEscapeMaze) { isEnd = true; }
+                break;
+            case MissionType.MazeCurse:
+                Debug.Log("mazeCurse");
+                if (curse.transform.localScale.x >= 2)
+                {
+                    //curse safe area decreased
+                    curse.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
+                }
                 break;
             default:
                 break;
