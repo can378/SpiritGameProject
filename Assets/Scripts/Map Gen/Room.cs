@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -63,29 +63,29 @@ public class Room : MonoBehaviour
     }
 
     /// <summary>
-    /// ë°©ì„ ?‹¤?‹œ ë³?ê²½í•œ?‹¤.
+    /// è«›â‘¹ì“£ ?ë–?ë–† è¹‚?å¯ƒì€ë¸³?ë–.
     /// </summary>
     void SetReRoom()
     {
         if(preTop == top && preBottom == bottom && preLeft == left && preRight == right)
             return;
 
-        // ë³?ê²½í•  ë°©ì„ ?ƒ?„±
+        // è¹‚?å¯ƒì€ë¸· è«›â‘¹ì“£ ?ê¹®?ê½¦
         int roomIndex = GetRoomIndex();
         GameObject instObj = Instantiate(roomManager.roomTemplates.rooms[roomIndex], transform.position, roomManager.roomTemplates.rooms[roomIndex].transform.rotation);
         instObj.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, 1);
         instObj.transform.parent = GameObject.FindWithTag("roomParent").transform;
 
-        // ?˜„?¬ ë°©ì˜ ? •ë³´ë?? ë³?ê²½í•  ë°©ì—ê²? ê³„ìŠ¹
+        // ?ì½?ì˜± è«›â‘¹ì“½ ?ì ™è¹‚ëŒ€?? è¹‚?å¯ƒì€ë¸· è«›â‘¹ë¿‰å¯ƒ? æ€¨ê¾©ë“…
         instObj.GetComponent<Room>().mapType = roomManager.ResetMapType(GetRoomWayType());
             
-        // ?˜„?¬ ë°©ì˜ ? •ë³? ?‚­? œ
+        // ?ì½?ì˜± è«›â‘¹ì“½ ?ì ™è¹‚? ?ê¶˜?ì £
         roomManager.rooms.Remove(this.gameObject);
         Destroy(this.gameObject);
     }
 
     /// <summary>
-    /// ë°©ì„ ì±•í„°?— ë§ëŠ” ?Š¤?”„?¼?´?Š¸ë¡? ë³?ê²½í•œ?‹¤.
+    /// è«›â‘¹ì“£ ï§¢ëº¥ê½£?ë¿‰ ï§ìšŒë’— ?ë’ª?ë´½?ì”ª?ì” ?ë“ƒæ¿¡? è¹‚?å¯ƒì€ë¸³?ë–.
     /// </summary>
     void SetSprite()
     {
@@ -103,7 +103,7 @@ public class Room : MonoBehaviour
     }
     
     /// <summary>
-    /// ë°©ì— ë§? ????…?— ë§ê²Œ ë³?ê²½í•œ?‹¤.
+    /// è«›â‘¹ë¿‰ ï§? ????ì—¯?ë¿‰ ï§ìšŠì¾¶ è¹‚?å¯ƒì€ë¸³?ë–.
     /// </summary>
     void SetMap()
     {
@@ -127,14 +127,19 @@ public class Room : MonoBehaviour
         else if (mapType == MapType.Mission)
         {
             doorType = DoorType.Trap;
-            ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
-
+            //ran = UnityEngine.Random.Range(0, mapTemplates.MissionMap.Length);
             GameObject missionMapPrefab = mapTemplates.GetMissionMap(top, bottom, left, right);
 
             if (missionMapPrefab == null)
             {
                 //Debug.LogError("GetMissionMap() returned null. Skipping instantiation.");
                 return;
+            }
+
+            if (missionMapPrefab.name.Contains("Maze"))//is this okay...?ğŸ˜…
+            {
+                Debug.Log("maze - no door trap");
+                doorType = DoorType.None;
             }
 
             map = Instantiate(missionMapPrefab, transform.position, transform.rotation);
@@ -144,7 +149,7 @@ public class Room : MonoBehaviour
 
         else if (mapType == MapType.Boss)
         {
-            // ÀÓ½Ã·Î ¾È´İÈ÷°Ô Ã³¸®
+            // ì„ì‹œë¡œ ì•ˆë‹«íˆê²Œ ì²˜ë¦¬
             doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.BossMap.Length);
             map = Instantiate(mapTemplates.GetBossMap(top, bottom, left, right), transform.position, transform.rotation);
