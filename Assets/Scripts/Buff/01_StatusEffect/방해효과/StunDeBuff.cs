@@ -27,7 +27,7 @@ public class StunDeBuff : StatusEffect
             duration = (1 - objectBasic.stats.SEResist[(int)buffType].Value) * defaultDuration;
 
             // 효과 적용
-            objectBasic.AttackCancle();
+            objectBasic.FlinchCancle();
             objectBasic.SetFlinch(duration);
         }
     }

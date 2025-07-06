@@ -310,13 +310,13 @@ public class EnemyBasic : ObjectBasic
         //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionKeepDis);
     }
 
-    public override void AttackCancle()
+    public override void FlinchCancle()
     {
         if (enemyStatus.attackCoroutine != null)
         {
             StopCoroutine(enemyStatus.attackCoroutine);
         }
-        base.AttackCancle();
+        base.FlinchCancle();
 
     }
 

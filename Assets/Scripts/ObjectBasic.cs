@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class ObjectBasic : MonoBehaviour
@@ -55,7 +56,7 @@ public class ObjectBasic : MonoBehaviour
 
     public void BeAttacked(HitDetection hitDetection, Vector3 _HitPos)
     {
-        
+
         if (DuplicateAttack(hitDetection.AttackID))
             return;
 
@@ -71,7 +72,7 @@ public class ObjectBasic : MonoBehaviour
             criticalHit = Damaged(hitDetection.Damage, hitDetection.critical.Value, hitDetection.criticalDamage.Value);
 
         // if enemy is Dead, Don't Flinch and Buff
-        if(stats.HP <= 0)
+        if (stats.HP <= 0)
             return;
 
 
@@ -81,7 +82,7 @@ public class ObjectBasic : MonoBehaviour
             SetFlinch(0.5f);
 
             // 공격을 한 주인이 있다면 그 대상을 중심으로
-            if(hitDetection.user != null)
+            if (hitDetection.user != null)
                 KnockBack(hitDetection.user.gameObject, hitDetection.knockBack);
             else
                 KnockBack(hitDetection.gameObject, hitDetection.knockBack);
@@ -96,7 +97,7 @@ public class ObjectBasic : MonoBehaviour
         }
 
         #region Effect
-        if(hitDetection.Damage == 0)
+        if (hitDetection.Damage == 0)
             return;
 
 
@@ -110,14 +111,16 @@ public class ObjectBasic : MonoBehaviour
             ObjectPoolManager.instance.Get("Hit_White").transform.position = _HitPos;
             AudioManager.instance.SFXPlay("Hit_SFX");
         }
-        
-        foreach(SpriteRenderer sprite in sprites)
+
+        foreach (SpriteRenderer sprite in sprites)
         {
             sprite.color = Color.red;
         }
 
         if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
-            status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
+        status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
+
+        transform.DOShakePosition(0.1f, 0.1f);
 
         #endregion Effect
     }
@@ -149,6 +152,8 @@ public class ObjectBasic : MonoBehaviour
 
         if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
         status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
+
+        transform.DOShakePosition(0.1f, 0.1f);
 
         #endregion Effect
     }
@@ -232,7 +237,7 @@ public class ObjectBasic : MonoBehaviour
 
     public void SetFlinch(float time = 0)
     {
-        AttackCancle();
+        FlinchCancle();
     
         if (animBasic != null)
         {
@@ -249,7 +254,7 @@ public class ObjectBasic : MonoBehaviour
     }
 
 
-    public virtual void AttackCancle()
+    public virtual void FlinchCancle()
     {
         status.isAttack = false;
         status.isAttackReady = true;
@@ -359,7 +364,7 @@ public class ObjectBasic : MonoBehaviour
         print(this.name + " Dead");
         
         RemoveAllEffects();
-        AttackCancle();
+        FlinchCancle();
         StopAllCoroutines();
         ReceivedAttackID.Clear();
         this.gameObject.SetActive(false);

@@ -105,10 +105,10 @@ public class WhiteFox : EnemyBasic
 
     }
 
-    public override void AttackCancle()
+    public override void FlinchCancle()
     {
         RunAway(whiteFoxStatus.EnemyTarget.CenterPivot, 5.0f);
-        base.AttackCancle();
+        base.FlinchCancle();
     }
 
     /*

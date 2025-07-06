@@ -31,7 +31,7 @@ public class BossShadowDummy : EnemyBasic
         print(this.name + " Dead");
 
         RemoveAllEffects();
-        AttackCancle();
+        FlinchCancle();
         StopAllCoroutines();
         this.gameObject.SetActive(false);
     }

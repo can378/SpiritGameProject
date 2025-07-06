@@ -87,11 +87,34 @@ public class Weapon : Equipment
                 return -1;
         }
     }
+    
+    public int ShotPosType
+    {
+        get
+        {
+            switch (weaponType)
+            {
+                case WEAPON_TYPE.BOW:
+                    return 3;
+                case WEAPON_TYPE.CROSS_BOW:
+                    return 4;
+                case WEAPON_TYPE.RIFLE:
+                    return 5;
+                case WEAPON_TYPE.HAND_GUN:
+                    return 6;
+                case WEAPON_TYPE.THROW:
+                    return 7;
+                default:
+                    return -1;
+            }
+        }
+    }
 
     public int MaxAnimationCount
     {
-        get{
-            switch(weaponType)
+        get
+        {
+            switch (weaponType)
             {
                 case WEAPON_TYPE.SWORD:
                     return 2;
@@ -116,7 +139,7 @@ public class Weapon : Equipment
                 case WEAPON_TYPE.THROW:
                     return 1;
                 default:
-                return -1; 
+                    return -1;
             }
         }
     }

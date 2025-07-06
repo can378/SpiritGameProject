@@ -56,6 +56,11 @@ public class PlayerAnim : AnimBasic
         WeaponSpriteRenderer[(int)_Type].sprite = WeaponSprite[_WeaponIndex];
     }
 
+    public Vector3 WeaponSpritePos(WEAPON_TYPE _Type)
+    {
+        return WeaponSpriteRenderer[(int)_Type].transform.position;
+    }
+
     //Player GetInput에서 받아온다.
     /*
     public bool leftPressed;

@@ -254,6 +254,7 @@ public class Player : ObjectBasic
         if (playerStats.weapon == 0)
             return;
 
+
         playerAnim.animator.SetBool("isReload", playerStatus.isReload);
         playerAnim.animator.SetFloat("ReloadTime", playerStatus.reloadDelay / weaponList[playerStats.weapon].reloadTime);
 
@@ -267,12 +268,14 @@ public class Player : ObjectBasic
         {
             playerStatus.isReload = true;
             playerStatus.reloadDelay = 0f;
+            playerAnim.animator.SetInteger("AttackType", (int)weaponList[playerStats.weapon].weaponType);
         }
 
         if (aDown && (0 >= playerStatus.isFlinch) && playerStatus.attackDelay < 0 && weaponList[playerStats.weapon].ammo == 0 && !playerStatus.isDodge && !playerStatus.isReload && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
             playerStatus.isReload = true;
             playerStatus.reloadDelay = 0f;
+            playerAnim.animator.SetInteger("AttackType", (int)weaponList[playerStats.weapon].weaponType);
         }
     }
 
@@ -481,6 +484,10 @@ public class Player : ObjectBasic
 
             // 애니메이션 설정
             player.playerAnim.ChangeDirection(_AttackDir);
+            Vector3 ShotPos = player.hitEffects[(int)player.weaponList[player.playerStats.weapon].ShotPosType].transform.position;
+            Vector3 ShotDir = (player.playerStatus.mousePos - ShotPos).normalized;
+            float ShotAngle = Mathf.Atan2(player.playerStatus.mousePos.y - ShotPos.y, player.playerStatus.mousePos.x - ShotPos.x) * Mathf.Rad2Deg;
+
             player.playerAnim.ChangeWeaponSprite(CurWeapon.weaponType, CurWeapon.selectItemID);
             player.playerAnim.animator.Rebind();
             player.playerAnim.animator.SetBool("isAttack", true);
@@ -489,13 +496,13 @@ public class Player : ObjectBasic
             player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.attackSpeed);
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[player.weaponList[player.playerStats.weapon].weaponType.ToSafeString()];
 
-
             // 선딜
             yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.attackSpeed);
             AudioManager.instance.WeaponAttackAudioPlay(player.weaponList[player.playerStats.weapon].weaponType);
 
             // 무기 투사체 적용
-            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile, player.CenterPivot.position);
+
+            GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile, ShotPos);
 
             //투사체 설정
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
@@ -519,13 +526,13 @@ public class Player : ObjectBasic
             instantProjectile.GetComponentInChildren<Enchant>().SetProjectile(ProjectileType.Count == 0 ? PROJECTILE_TYPE.NONE : ProjectileType[0]);
 
             // 방향 설정
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(ShotAngle - 90, Vector3.forward);
 
             // 크기 설정
             instantProjectile.transform.localScale = new Vector3(player.weaponList[player.playerStats.weapon].attackSize, player.weaponList[player.playerStats.weapon].attackSize, 1);
 
             // 속도 설정
-            bulletRigid.velocity = _AttackDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;
+            bulletRigid.velocity = ShotDir * 10 * player.weaponList[player.playerStats.weapon].projectileSpeed;
 
             // 사정거리 설정
             hitDetection.SetDisableTime(player.weaponList[player.playerStats.weapon].projectileTime);
@@ -1203,10 +1210,11 @@ public class Player : ObjectBasic
         weaponController.ProjectileType.Remove(_Type);
     }
 
-    public override void AttackCancle()
+    public override void FlinchCancle()
     {
-        base.AttackCancle();
+        base.FlinchCancle();
         playerStatus.attackDelay = 0;
+        playerStatus.isReload = false;
         skillController.SkillCancle();
         weaponController.AttackCancle();
     }
