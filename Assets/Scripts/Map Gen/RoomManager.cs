@@ -207,15 +207,16 @@ public class RoomManager : MonoBehaviour
         room.SetMapManager(MapType.Default);
 
         // 모든 방 생성을 완료하면 각 방들의 용도를 설정한다.
-        for ( int i = 1 ; i< rooms.Count ; i++)
+        // 첫번째 방은 몬스터 없음
+        for (int i = 1; i < rooms.Count; i++)
         {
             room = rooms[i].GetComponent<Room>();
-            
+
             int roomType = room.GetRoomWayType();
 
             // 1. 통로가 없는 방이라면
             // 1-1 무조건 보상방
-            if(roomType == 0)
+            if (roomType == 0)
             {
                 room.SetMapManager(MapType.Default);
             }
@@ -224,7 +225,7 @@ public class RoomManager : MonoBehaviour
             // 2-2 보스방 : 세팅되어있지않다면 보스방 세팅
             else if (roomType == 1)
             {
-                if(!isBoss)
+                if (!isBoss)
                 {
                     room.SetMapManager(MapType.Boss);
                     isBoss = true;

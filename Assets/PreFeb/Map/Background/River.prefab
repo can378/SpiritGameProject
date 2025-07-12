@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7364855348251009812}
   - component: {fileID: 8381711072544893604}
   - component: {fileID: 4594417294964595039}
-  - component: {fileID: 8448557279846141979}
   - component: {fileID: 5621433247564274957}
   m_Layer: 14
   m_Name: River
@@ -175,19 +174,6 @@ PolygonCollider2D:
       - {x: -0.959527, y: -0.6938456}
       - {x: -0.14434955, y: -1.2425147}
   m_UseDelaunayMesh: 0
---- !u!114 &8448557279846141979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5680931898727662072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!210 &5621433247564274957
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -198,7 +184,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_SortAtRoot: 0
 --- !u!1 &6680624972932953913
 GameObject:
@@ -227,7 +213,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15620999, y: 0.15620999, z: 0.15620999}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5067286636326498110}
@@ -272,7 +258,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 139
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
