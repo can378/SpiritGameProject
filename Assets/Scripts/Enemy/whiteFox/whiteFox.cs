@@ -58,46 +58,40 @@ public class WhiteFox : EnemyBasic
         }
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
-        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
     }
 
     IEnumerator PeripheralAttack()
     {
         // 애니메이션 시작
-        enemyAnim.animator.SetBool("isCry", true);
+
 
         // 공격 루틴 시작
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
         whiteFoxStatus.blizzardCoolTime = defaulBlizzardCoolTime;
 
-        yield return new WaitForSeconds(0.5f);
+        // 영역 미리 활성화
+        HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
+        hitDetection.user = this;
+        hitDetection.SetHit_Ratio(1f, 0.1f, enemyStats.SkillPower);
+        hitDetection.SetMultiHit(true, 4);
+        hitDetection.SetSEs(blizzardDebuff);
+        hitEffects[1].SetActive(true);
+        yield return new WaitForSeconds(1f);
 
-        if (hitEffects[1] != null) { 
-                // 영역 활성화
-                HitDetection hitDetection = hitEffects[1].GetComponent<HitDetection>();
-            hitDetection.user = this;
-            hitDetection.SetHit_Ratio(1f, 0.1f, enemyStats.SkillPower);
-            hitDetection.SetMultiHit(true, 10);
-            hitDetection.SetSEs(blizzardDebuff);
-            hitEffects[1].SetActive(true);
-            yield return new WaitForSeconds(3f);
+        enemyAnim.animator.SetBool("isCry", true);
+        yield return new WaitForSeconds(3f);
 
-            // 영역 끄기
-            hitEffects[1].SetActive(false);
-            yield return new WaitForSeconds(1f);
-        }
-        else
-        {
-            Debug.LogError("hitEffects[1]이 null");
-        }
+        // 영역 끄기
+        hitEffects[1].SetActive(false);
+        yield return new WaitForSeconds(1f);
+
         // 공격 루틴 끝
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
 
-
-        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
-
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
 
         // 애니메이션 끝
         enemyAnim.animator.SetBool("isCry", false);
@@ -107,7 +101,7 @@ public class WhiteFox : EnemyBasic
 
     public override void FlinchCancle()
     {
-        RunAway(whiteFoxStatus.EnemyTarget.CenterPivot, 5.0f);
+        RunAway(whiteFoxStatus.EnemyTarget.CenterPivot, 1.0f);
         base.FlinchCancle();
     }
 

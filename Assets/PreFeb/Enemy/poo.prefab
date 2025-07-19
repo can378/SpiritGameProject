@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 10
-  <HP>k__BackingField: 10
+  <HPMax>k__BackingField: 30
+  <HP>k__BackingField: 30
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 1
   <poise>k__BackingField: 1
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!210 &5552892049581883999
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -548,6 +549,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 5
   <statusEffect>k__BackingField: 04000000
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -561,6 +563,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0

@@ -134,7 +134,7 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
 
-        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 2.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
 
     }
 
@@ -171,7 +171,7 @@ public class BlackDog : EnemyBasic
     public override void FlinchCancle() 
     {
         base.FlinchCancle();
-        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
     }
 
     /*
