@@ -10,6 +10,7 @@ public class AnimJukqwi : EnemyAnim
     public Animator[] animators = new Animator[2];
     public GameObject[] animationObject = new GameObject[2];
     public Vector2[] hitBox = new Vector2[2];
+    public Vector2[] hitBoxOffset = new Vector2[2];
 
     public Version curVersion;
 
@@ -26,5 +27,6 @@ public class AnimJukqwi : EnemyAnim
         animator = animators[(int)curVersion];
         animationObject[(int)curVersion].SetActive(true);
         JukquwiCollider.size = hitBox[(int)curVersion];
+        JukquwiCollider.offset = hitBoxOffset[(int)curVersion];
     }
 }

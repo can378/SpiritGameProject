@@ -152,6 +152,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 01000000
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -165,6 +166,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 1497213971519033128}
   GuideEndEffect: {fileID: 4578427945383783337}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -10653,7 +10657,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 7.19}
-  m_Size: {x: 9, y: 16.5}
+  m_Size: {x: 3, y: 7}
   m_Direction: 0
 --- !u!114 &974839499037157393
 MonoBehaviour:
@@ -10687,7 +10691,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
-  enemyAnim: {fileID: 0}
+  jukqwiAnim: {fileID: 0}
   GrapPos: {fileID: 2977670295039493966}
   CrackPrefab: {fileID: 9181631073716312681, guid: 470a91000999a4140b4f9debf6cdaf80, type: 3}
 --- !u!114 &4368071184651363648
@@ -10758,6 +10762,7 @@ MonoBehaviour:
   detectionDis: 200
   detectionKeepDis: 200
   maxAttackRange: 200
+  disableTime: 0
 --- !u!114 &-4622490269095961020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10783,8 +10788,10 @@ MonoBehaviour:
   isTouchPlayer: 0
   isBoss: 1
   isRun: 0
+  isTarget: 0
+  isTargetForced: 0
   randomMove: 0
-  enemyTarget: {fileID: 0}
+  EnemyTarget: {fileID: 0}
   targetDirVec: {x: 0, y: 0}
   targetDis: 0
 --- !u!212 &3877083246949903002
@@ -10851,6 +10858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!1 &5086274386454289508
 GameObject:
   m_ObjectHideFlags: 0
@@ -10938,6 +10946,7 @@ MonoBehaviour:
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
+  EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
@@ -10951,6 +10960,9 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
@@ -11058,6 +11070,9 @@ MonoBehaviour:
   hitBox:
   - {x: 3, y: 7}
   - {x: 9, y: 16.5}
+  hitBoxOffset:
+  - {x: 0, y: 3.5}
+  - {x: 0, y: 7.2}
   curVersion: 1
 --- !u!1001 &92162104493930776
 PrefabInstance:

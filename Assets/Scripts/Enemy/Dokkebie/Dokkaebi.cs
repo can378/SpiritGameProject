@@ -72,18 +72,26 @@ public class Dokkaebi : EnemyBasic
     {
         Quaternion attackTarget = enemyStatus.targetQuaternion;
 
+
+
         dokkeabieStatus.isAttack = true;
         dokkeabieStatus.isAttackReady = false;
-        yield return new WaitForSeconds(1f);
-       
-        hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(10,1, enemyStats.AttackPower, 30);
+
+        hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(10, 1, enemyStats.AttackPower, 30);
         hitEffects[0].transform.rotation = attackTarget;
         hitEffects[0].gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+
+        // 애니메이션 시작
+        enemyAnim.animator.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.5f);
 
         hitEffects[0].gameObject.SetActive(false);
         dokkeabieStatus.isAttack = false;
         dokkeabieStatus.isAttackReady = true;
+
+        // 애니메이션 시작
+        enemyAnim.animator.SetBool("isAttack", false);
     }
 
     /*
