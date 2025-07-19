@@ -14,7 +14,7 @@ public class ObjectBasic : MonoBehaviour
     public GameObject[] hitEffects;
     public Transform buffTF;
     public GameObject animGameObject;
-    HashSet<int> ReceivedAttackID = new HashSet<int>();
+    HashSet<int> ReceivedAttackID = new HashSet<int>(); // ID의 빠른 추가와 제거, 그리고 중복되어 있는지만 확인하면 되기 때문에 HashSet
 
     [HideInInspector] AnimBasic animBasic;
     [HideInInspector] public SpriteRenderer[] sprites;
@@ -35,6 +35,7 @@ public class ObjectBasic : MonoBehaviour
 
     #region BeAttacked
 
+    // BeAttacked 함수에서 호출함
     bool DuplicateAttack(int _AttackID)
     {
         // 중복 될 시 True 반환
@@ -57,14 +58,18 @@ public class ObjectBasic : MonoBehaviour
     public void BeAttacked(HitDetection hitDetection, Vector3 _HitPos)
     {
 
+        // 같은 공격에 다시 피격되지 않음
         if (DuplicateAttack(hitDetection.AttackID))
             return;
 
+        // 무적일 시 피격되지 않음
         if (status.isInvincible)
             return;
 
+        // 피격 상태
         status.isBeAttaked = true;
 
+        // 피해량 계산
         bool criticalHit = false;
         if (hitDetection.critical == null || hitDetection.criticalDamage == null)
             criticalHit = Damaged(hitDetection.Damage);
@@ -75,7 +80,7 @@ public class ObjectBasic : MonoBehaviour
         if (stats.HP <= 0)
             return;
 
-
+        // 경직 상태 계산
         if (DamagedPoise(hitDetection.Damage))
         {
             //Debug.Log(gameObject.name + ":Flinch");
@@ -88,6 +93,7 @@ public class ObjectBasic : MonoBehaviour
                 KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
 
+        // 상태이상 적용
         if (hitDetection.statusEffect != null)
         {
             foreach (int statusEffectIndex in hitDetection.statusEffect)
@@ -95,7 +101,8 @@ public class ObjectBasic : MonoBehaviour
                 ApplyBuff(statusEffectIndex);
             }
         }
-
+        
+        // 피격 시 이펙트 효과
         #region Effect
         if (hitDetection.Damage == 0)
             return;

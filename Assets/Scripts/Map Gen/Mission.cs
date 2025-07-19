@@ -28,6 +28,9 @@ public class Mission : MonoBehaviour
     [Header("Curse, MazeCurse")]
     public GameObject curse;
     public GameObject safeAisle;
+    public float curseDuration;
+    public float curseTime;
+    Vector3 curseDefaultScale;
 
     [Header("Maze")]
     public bool isEscapeMaze;
@@ -145,10 +148,12 @@ public class Mission : MonoBehaviour
                 break;
             case MissionType.MazeCurse:
                 //Debug.Log("mazeCurse");
-                if (curse.transform.localScale.x >= 2)
+                curseTime += Time.deltaTime;
+                if (curseTime < curseDuration)
                 {
                     //curse safe area decreased
-                    curse.transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f);
+                    float ratio = (curseDuration - curseTime) / curseDuration;
+                    curse.transform.localScale = curseDefaultScale * (ratio);
                 }
                 break;
             default:
@@ -188,6 +193,12 @@ public class Mission : MonoBehaviour
 
         time = 0;
         playerFirstHP = FindObj.instance.Player.GetComponent<PlayerStats>().HP;
+
+        if (MissionType.MazeCurse == type || MissionType.Curse == type)
+        {
+            curseTime = 0.0f;
+            curseDefaultScale = curse.transform.localScale;
+        }
 
 
         StartCoroutine(CheckMissionEnd());
