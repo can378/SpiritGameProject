@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625870126245836114}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.9996412, w: 0.02678781}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0, z: 0.36081082, w: -0.9326391}
+  m_LocalPosition: {x: 0, y: 0.89, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2240183684125499985}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 176.93}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 317.7}
 --- !u!212 &8938215335310088806
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 83a25e36e64bfb446a5247cdc69be202, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a0f8d55580bd5b745a5a6d0caee6aac5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 2240183684125499985}
   - component: {fileID: 4326583180886243799}
   - component: {fileID: 9107496811486071938}
-  - component: {fileID: -7854297448508829772}
   - component: {fileID: 2507343545209854660}
   m_Layer: 6
   m_Name: 08_SevenBladeSword
@@ -117,7 +116,6 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4126592165340173552}
   - {fileID: 7644411156738352893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,7 +151,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.71}
   serializedVersion: 2
   m_Radius: 1
 --- !u!114 &9107496811486071938
@@ -174,18 +172,6 @@ MonoBehaviour:
   <description>k__BackingField: 
   <price>k__BackingField: 0
   <selectItemID>k__BackingField: 8
---- !u!114 &-7854297448508829772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!210 &2507343545209854660
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -198,34 +184,3 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!1 &7495556103150340894
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4126592165340173552}
-  m_Layer: 0
-  m_Name: Pivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4126592165340173552
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7495556103150340894}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.86, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2240183684125499985}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
