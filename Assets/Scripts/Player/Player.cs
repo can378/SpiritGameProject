@@ -207,10 +207,12 @@ public class Player : ObjectBasic
  
     void Dodge()    // È¸ÇÇ
     {
-        if(playerStatus.moveVec == Vector2.zero)
+        playerAnim.animator.SetBool("isDodge", playerStatus.isDodge);
+        
+        if (playerStatus.moveVec == Vector2.zero)
             return;
         
-        if (dDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isSkill  && !playerStatus.isDodge && !playerStatus.isSkillHold)
+        if (dDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isDodge && !playerStatus.isSkillHold)
         {
             dodgeVec = playerStatus.moveVec;
             playerStatus.isDodge = true;
