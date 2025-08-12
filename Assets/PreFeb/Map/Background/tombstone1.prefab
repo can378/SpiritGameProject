@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4203771294188744617}
   - component: {fileID: 5650932434868562128}
-  - component: {fileID: 186311838983813565}
+  - component: {fileID: 842064133963435370}
   m_Layer: 0
   m_Name: ch1BG1_1
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5905784617015521899}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.02810147, w: -0.9996051}
-  m_LocalPosition: {x: 0.05999756, y: 0.35, z: 0}
+  m_LocalPosition: {x: 0.05999756, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &186311838983813565
+--- !u!60 &842064133963435370
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +120,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2.6202724, y: 0.8400001}
     newSize: {x: 2.6202724, y: 0.8400001}
     adaptiveTilingThreshold: 0.5
@@ -129,24 +129,24 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.318122, y: -0.3201374}
-      - {x: 1.318122, y: -0.15827216}
-      - {x: 1.2807685, y: -0.033760432}
-      - {x: 1.168708, y: 0.065848954}
-      - {x: 0.8947821, y: 0.19036068}
-      - {x: 0.47144225, y: 0.35222593}
-      - {x: 0.18506528, y: 0.42693296}
-      - {x: -0.30053046, y: 0.42693296}
-      - {x: -0.698968, y: 0.3148724}
-      - {x: -0.94799143, y: 0.17790951}
-      - {x: -1.1098567, y: 0.065848954}
-      - {x: -1.271722, y: -0.096016295}
-      - {x: -1.2966243, y: -0.2329792}
-      - {x: -1.2966243, y: -0.4072956}
-      - {x: -0.8732844, y: -0.4072956}
-      - {x: 0.5087958, y: -0.3201374}
-      - {x: 1.168708, y: -0.3201374}
-      - {x: 1.3056709, y: -0.33258858}
+    - - {x: 1.318122, y: 0.09986321}
+      - {x: 1.318122, y: 0.26172847}
+      - {x: 1.2807685, y: 0.38624018}
+      - {x: 1.168708, y: 0.48584956}
+      - {x: 0.8947821, y: 0.6103613}
+      - {x: 0.47144225, y: 0.7722265}
+      - {x: 0.18506528, y: 0.8469336}
+      - {x: -0.30053046, y: 0.8469336}
+      - {x: -0.698968, y: 0.734873}
+      - {x: -0.94799143, y: 0.5979101}
+      - {x: -1.1098567, y: 0.48584956}
+      - {x: -1.271722, y: 0.32398432}
+      - {x: -1.2966243, y: 0.18702142}
+      - {x: -1.2966243, y: 0.012704999}
+      - {x: -0.8732844, y: 0.012704999}
+      - {x: 0.5087958, y: 0.09986321}
+      - {x: 1.168708, y: 0.09986321}
+      - {x: 1.3056709, y: 0.08741204}
   m_UseDelaunayMesh: 0
 --- !u!1 &7002693634979408748
 GameObject:
@@ -174,7 +174,7 @@ Transform:
   m_GameObject: {fileID: 7002693634979408748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.32, z: 0}
+  m_LocalPosition: {x: 0, y: 0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -241,7 +241,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5311137253300899603}
-  - component: {fileID: 3267378063646384791}
   - component: {fileID: 3746923486533366406}
   m_Layer: 0
   m_Name: tombstone1
@@ -267,19 +266,6 @@ Transform:
   - {fileID: 5485102529498127684}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3267378063646384791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8693614924709572104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!210 &3746923486533366406
 SortingGroup:
   m_ObjectHideFlags: 0

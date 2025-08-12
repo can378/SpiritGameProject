@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 483665318862555546}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.93, z: 0}
   m_LocalScale: {x: 0.3411, y: 0.3411, z: 0.3411}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &7258524340916383928
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6205669209840993893}
   - component: {fileID: 8238157437368939851}
   - component: {fileID: 3890777255982791601}
-  - component: {fileID: 4593309725509122058}
+  - component: {fileID: 9288117015805262}
   m_Layer: 6
   m_Name: sansam
   m_TagString: SelectItem
@@ -167,8 +167,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &4593309725509122058
-CapsuleCollider2D:
+--- !u!58 &9288117015805262
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -199,6 +199,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.11894368, y: 0.23788455}
-  m_Size: {x: 4.589432, y: 6.4400496}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0.85}
+  serializedVersion: 2
+  m_Radius: 1.19

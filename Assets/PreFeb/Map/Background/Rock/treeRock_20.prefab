@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 768683585125344788}
   - component: {fileID: 2347528442462490402}
-  - component: {fileID: 8134647654188003037}
   m_Layer: 0
   m_Name: treeRock_20
   m_TagString: Untagged
@@ -47,19 +46,6 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!114 &8134647654188003037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5452292413751892418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!1 &5518294486755355795
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +73,7 @@ Transform:
   m_GameObject: {fileID: 5518294486755355795}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.47, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -180,7 +166,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2.18, y: 2.3}
     newSize: {x: 2.18, y: 2.3}
     adaptiveTilingThreshold: 0.5
@@ -189,19 +175,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.1010249, y: -0.5638386}
-      - {x: -1.0469524, y: -0.8876012}
-      - {x: -0.8720306, y: -1.0877075}
-      - {x: -0.4757513, y: -1.1511264}
-      - {x: -0.19915645, y: -0.93527627}
-      - {x: 0.53999996, y: -1.11}
-      - {x: 0.64, y: -1.11}
-      - {x: 0.79999995, y: -1.04}
-      - {x: 0.94, y: -0.97999996}
-      - {x: 1.06, y: -0.83}
-      - {x: 1.09, y: -0.78999996}
-      - {x: 1.09, y: -0.59999996}
-      - {x: 1.04, y: -0.51}
+    - - {x: -1.1010249, y: 0.76}
+      - {x: -1.0469524, y: 0.21}
+      - {x: -0.8720306, y: 0.06}
+      - {x: -0.4757513, y: -0.01}
+      - {x: -0.19915645, y: 0.22}
+      - {x: 0.53999996, y: 0.05}
+      - {x: 0.64, y: 0.08}
+      - {x: 0.79999995, y: 0.14}
+      - {x: 0.94, y: 0.2}
+      - {x: 1.06, y: 0.29}
+      - {x: 1.09, y: 0.37}
+      - {x: 1.09, y: 0.62}
+      - {x: 1.04, y: 0.9}
   m_UseDelaunayMesh: 0
 --- !u!1 &5579009791943063301
 GameObject:
@@ -229,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 5579009791943063301}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.64, z: 1.25}
+  m_LocalPosition: {x: 0, y: 0.3, z: 1.25}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []

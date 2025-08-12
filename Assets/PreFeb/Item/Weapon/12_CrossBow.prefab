@@ -1,36 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6337146410427283645
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5299846797824583246}
-  m_Layer: 0
-  m_Name: Pivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5299846797824583246
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6337146410427283645}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.68, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5242110244964992286}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8179586051210863248
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8179586051210863248}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: -0.09671446, w: -0.9953122}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalRotation: {x: -0, y: 0, z: -0.3387383, w: -0.9408806}
+  m_LocalPosition: {x: 0, y: 0.48, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5242110244964992286}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -348.9}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -320.4}
 --- !u!212 &2073606632708401803
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -104,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7f2a8884f6d38cf40b533c42d4116534, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 443b5e28fc50d984884bfd0c35ba8820, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,7 +95,6 @@ GameObject:
   - component: {fileID: 5242110244964992286}
   - component: {fileID: 7923798826213622146}
   - component: {fileID: 4639669922516677371}
-  - component: {fileID: -5339316197877659939}
   - component: {fileID: 693949529152182007}
   m_Layer: 6
   m_Name: 12_CrossBow
@@ -148,7 +116,6 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5299846797824583246}
   - {fileID: 5425582260772677607}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,7 +151,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.48}
   serializedVersion: 2
   m_Radius: 1
 --- !u!114 &4639669922516677371
@@ -205,18 +172,6 @@ MonoBehaviour:
   <description>k__BackingField: 
   <price>k__BackingField: 0
   <selectItemID>k__BackingField: 12
---- !u!114 &-5339316197877659939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830712857820811360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!210 &693949529152182007
 SortingGroup:
   m_ObjectHideFlags: 0
