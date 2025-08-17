@@ -159,7 +159,7 @@ public class WheelWindSkill : Skill
             yield return new WaitForSeconds(postDelay);
 
             // ��Ÿ�� ����
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
         }

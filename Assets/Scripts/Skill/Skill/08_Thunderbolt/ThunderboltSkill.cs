@@ -165,7 +165,7 @@ public class ThunderboltSkill : Skill
             yield return new WaitForSeconds(postDelay);
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
             enemy.stats.MoveSpeed.DecreasedValue -= 99f;
         }

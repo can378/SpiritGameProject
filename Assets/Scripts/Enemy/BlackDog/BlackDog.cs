@@ -60,7 +60,7 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isDodge = true;
         blackDogStatus.isAttackReady = false;
         //적 방향 수직으로 회피
-        if(Random.Range(0,2) == 0)
+        if (Random.Range(0, 2) == 0)
         {
             blackDogStatus.moveVec = new Vector2(blackDogStatus.targetDirVec.y, -blackDogStatus.targetDirVec.x).normalized;
         }
@@ -77,6 +77,7 @@ public class BlackDog : EnemyBasic
         yield return new WaitForSeconds(0.3f);
         blackDogStatus.isDodge = false;
         blackDogStatus.isAttackReady = true;
+        Waiting(0.3f);
 
     }
 
@@ -116,6 +117,8 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttack = true;
         blackDogStatus.isAttackReady = false;
         //yield return new WaitForSeconds(biteTime * 0.4f);
+
+        enemyAnim.ChangeDirection(blackDogStatus.targetDirVec);
 
         if (hitEffects.Length > 0 && hitEffects[0] != null)
         {

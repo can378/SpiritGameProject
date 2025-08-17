@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7445279127465039832
 Transform:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.84967804, a: 0.2784314}
+  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0.2784314}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -177,6 +177,7 @@ MonoBehaviour:
   isTouchPlayer: 0
   isBoss: 0
   isRun: 0
+  isWating: 0
   isTarget: 0
   isTargetForced: 0
   randomMove: 0
@@ -366,7 +367,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7445279127465039832}
@@ -434,14 +435,16 @@ MonoBehaviour:
   isGrowing: 0
   DefaultScale: {x: 0, y: 0, z: 0}
   GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
 --- !u!61 &1225111332828004709
@@ -505,7 +508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8252272022030622066
 Transform:
   m_ObjectHideFlags: 0

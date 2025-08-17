@@ -169,14 +169,16 @@ MonoBehaviour:
   isGrowing: 0
   DefaultScale: {x: 0, y: 0, z: 0}
   GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
 --- !u!50 &3313022623333993190
@@ -10787,6 +10789,7 @@ MonoBehaviour:
   isTouchPlayer: 0
   isBoss: 1
   isRun: 0
+  isWating: 0
   isTarget: 0
   isTargetForced: 0
   randomMove: 0
@@ -10949,14 +10952,16 @@ MonoBehaviour:
   isGrowing: 0
   DefaultScale: {x: 0, y: 0, z: 0}
   GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
 --- !u!50 &825585655899856437
@@ -11044,7 +11049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04333df0588d36439c4d80b91ee5c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 3595450763688375954}
   status: {fileID: -4622490269095961020}
   JukquwiCollider: {fileID: 4296047115030410375}
   animators:

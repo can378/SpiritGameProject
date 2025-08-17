@@ -32,18 +32,21 @@ public class NormalGhost : EnemyBasic
 
             //throw knife
             GameObject knife = ObjectPoolManager.instance.Get("knife");
+            HitDetection HD = knife.GetComponent<HitDetection>();
+            HD.SetGuiding(true, enemyStatus.EnemyTarget.CenterPivot, 20, 0.3f, true);
             Debug.Log(knife.name+" throwing");
 
 
             knife.transform.position = CenterPivot.transform.position;
-            Vector3 distTest= knife.transform.position - CenterPivot.transform.position;
-            Debug.Log("distance from knife to enmey" +distTest.x+" "+distTest.y+" "+distTest.z);
+            knife.transform.rotation = Quaternion.LookRotation(Vector3.forward, enemyStatus.targetDirVec);
+            //Vector3 distTest= knife.transform.position - CenterPivot.transform.position;
+            //Debug.Log("distance from knife to enmey" +distTest.x+" "+distTest.y+" "+distTest.z);
             yield return new WaitForSeconds(1f);
         }
         enemyAnim.animator.SetBool("isAttack", false);
 
         enemyStatus.isAttack = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         enemyStatus.isAttackReady = true;
 
     }

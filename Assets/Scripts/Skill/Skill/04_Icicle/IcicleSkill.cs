@@ -123,7 +123,7 @@ public class IcicleSkill : Skill
             float angle = Mathf.Atan2(simulVector.y - enemy.CenterPivot.transform.position.y, simulVector.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
 
             // ��Ÿ�� ����
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
             instantProjectile.transform.localScale = new Vector3(size, size,0);
             instantProjectile.tag = "EnemyAttack";

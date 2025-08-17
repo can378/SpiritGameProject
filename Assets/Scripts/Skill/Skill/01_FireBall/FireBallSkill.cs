@@ -107,7 +107,7 @@ public class FireBallSkill : Skill
             GameObject Effect = Instantiate(fireBallPrefab, fireBallSimulPrefab.transform.position, Quaternion.identity);
             HitDetection hitDetection = Effect.GetComponent<HitDetection>();
 
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
             simulPrefab.SetActive(false);
             fireBallSimulPrefab.SetActive(false);

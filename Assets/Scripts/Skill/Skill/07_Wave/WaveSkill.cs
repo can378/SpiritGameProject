@@ -76,7 +76,7 @@ public class WaveSkill : Skill
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
 
             effect.transform.localScale = new Vector3(1, 1, 1);

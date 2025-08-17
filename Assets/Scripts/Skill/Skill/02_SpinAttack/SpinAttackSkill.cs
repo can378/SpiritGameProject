@@ -141,7 +141,7 @@ public class SpinAttackSkill : Skill
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
             Destroy(spinSimul);
 

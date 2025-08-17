@@ -8,6 +8,13 @@ public class LittleStarOrbit : MonoBehaviour
     [field: SerializeField] public GameObject[] littleStars = new GameObject[3];
     [field: SerializeField] float angular;
 
+    [field: SerializeField] float StarSpeed;
+    [field: SerializeField] float StarAngularSpeed;
+
+    [field: SerializeField] public float DefaultDamage;
+    [field: SerializeField] public float Ratio;
+
+
     Rigidbody2D rigid;
 
     void Awake()
@@ -49,11 +56,11 @@ public class LittleStarOrbit : MonoBehaviour
 
         foreach (GameObject littleStar in littleStars)
         {
-            Guiding guiding = littleStar.GetComponent<Guiding>();
             HitDetection hitDetection = littleStar.GetComponent<HitDetection>();
 
-            guiding.guidingTarget = target;
-            hitDetection.SetDamage(hitDetection.Damage * 2, hitDetection.knockBack);
+            hitDetection.SetGuiding(true, target.GetComponent<ObjectBasic>().CenterPivot, StarSpeed, StarAngularSpeed,false);
+            hitDetection.SetHit_Ratio(DefaultDamage * 2, Ratio * 2, user.stats.SkillPower, hitDetection.knockBack);
+            hitDetection.SetDisableTime(5, ENABLE_TYPE.Projectile);
 
             littleStar.transform.parent = null;
             Destroy(littleStar.gameObject, 10f);

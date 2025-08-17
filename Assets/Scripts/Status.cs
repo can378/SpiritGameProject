@@ -13,7 +13,7 @@ public class Status : MonoBehaviour
     /// <summary>
     /// 추가 속도 (특정 상태일 때 잠시 적용 되는 속도, 우선 Status 소유 오브젝트만 사용할 것)
     /// </summary>
-    public float moveSpeedMultiplier = 1f;                     
+    public float moveSpeedMultiplier = 1f;
     public Coroutine beAttackedCoroutine;       // 피격 코루틴
     public GameObject hitTarget;                // 공격을 받은 대상
 
@@ -26,6 +26,8 @@ public class Status : MonoBehaviour
 
     public Transform fearTarget;            // 공포를 건 대상
     public Coroutine runCoroutine;          // 도망가기 코루틴
+
+    public Coroutine watingCoroutine;       // 대기 코루틴
 
 
 

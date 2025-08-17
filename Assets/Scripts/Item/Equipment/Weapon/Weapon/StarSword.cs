@@ -46,6 +46,8 @@ public class StarSword : Weapon
         // 공전 설정
         littleStarOrbit = effect.GetComponent<LittleStarOrbit>();
         littleStarOrbit.user = user.GetComponent<ObjectBasic>();
+        littleStarOrbit.DefaultDamage = defalutDamage;
+        littleStarOrbit.Ratio = ratio;
 
         foreach (GameObject littleStar in littleStarOrbit.littleStars)
         {

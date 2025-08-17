@@ -162,7 +162,7 @@ public class SlashSkill : Skill
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 5;
 
             // 이펙트 살정
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // 방향 설정

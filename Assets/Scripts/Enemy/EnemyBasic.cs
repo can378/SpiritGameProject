@@ -70,7 +70,8 @@ public class EnemyBasic : ObjectBasic
             (0 >= enemyStatus.isFlinch) && 
             !enemyStatus.isAttack && 
             enemyStatus.isAttackReady && 
-            (enemyStatus.targetDis <= enemyStats.maxAttackRange || 
+            !enemyStatus.isWating &&
+            (enemyStatus.targetDis <= enemyStats.maxAttackRange ||
             enemyStats.maxAttackRange < 0))
         {
             enemyStatus.moveVec = Vector2.zero;
@@ -92,8 +93,8 @@ public class EnemyBasic : ObjectBasic
         if (enemyStatus.isTarget)
         {
             // Å¸°ÙÀÌ ½Ã¾ß ¹üÀ§ ¾È¿¡ µé¾î¿Ô¾îµµ, Å¸°ÙÀÌ ½Ã¾ß À¯Áö °Å¸®º¸´Ù ¸Ö¸® ÀÖ´Ù¸é Å¸°ÙÀ» ÇØÁ¦.
-            if (!enemyStatus.isTargetForced && 
-                0 <= enemyStats.detectionKeepDis && 
+            if (!enemyStatus.isTargetForced &&
+                0 <= enemyStats.detectionKeepDis &&
                 enemyStats.detectionKeepDis < enemyStatus.targetDis)
             {
                 enemyStatus.isTarget = false;
@@ -111,6 +112,7 @@ public class EnemyBasic : ObjectBasic
 
         //enemyStatus.enemyTarget = target.transform;
         enemyStatus.isTarget = true;
+        Waiting(0.5f);
     }
 
     #endregion Attack
@@ -133,6 +135,11 @@ public class EnemyBasic : ObjectBasic
         {
             Run();
             rigid.velocity = enemyStatus.moveVec * stats.MoveSpeed.Value * status.moveSpeedMultiplier;
+            return;
+        }
+        else if (enemyStatus.isWating)
+        {
+            enemyStatus.moveVec = Vector2.zero;
             return;
         }
 
@@ -175,12 +182,14 @@ public class EnemyBasic : ObjectBasic
     // ?  ì¶”ì 
     protected void Chase()
     {
-        if (!enemyStatus.isTarget)
+        if (!enemyStatus.isTarget || enemyStatus.targetDis < 1f)
         {
+            enemyStatus.moveVec = Vector2.zero;
             return;
         }
 
-       enemyStatus.moveVec = (enemyStatus.EnemyTarget.transform.position - CenterPivot.position).normalized;
+
+       enemyStatus.moveVec = (enemyStatus.EnemyTarget.CenterPivot.transform.position - CenterPivot.position).normalized;
     }
 
     
@@ -195,14 +204,14 @@ public class EnemyBasic : ObjectBasic
 
     public void RunAway(Transform _FearTarget, float _Time)
     {
-        if(_FearTarget == null)
+        if (_FearTarget == null)
         {
             Debug.LogWarning("no enemy target. cancel runaway");
             return;
         }
         enemyStatus.fearTarget = _FearTarget;
-        
-        if(enemyStatus.runCoroutine != null)
+
+        if (enemyStatus.runCoroutine != null)
         {
             StopCoroutine(enemyStatus.runCoroutine);
         }
@@ -217,6 +226,25 @@ public class EnemyBasic : ObjectBasic
         yield return new WaitForSeconds(time);
         enemyStatus.isRun = false;
         enemyStatus.fearTarget = null;
+        Waiting(1f);
+    }
+
+    public void Waiting(float _Time)
+    {
+        if (enemyStatus.watingCoroutine != null)
+        {
+            StopCoroutine(enemyStatus.watingCoroutine);
+        }
+
+        enemyStatus.watingCoroutine = StartCoroutine(WaitingCoroutine(_Time));
+    }
+
+    // ?¼? • ?‹œê°? ?™?•ˆ ?„ë§ì¹˜ê¸?
+    IEnumerator WaitingCoroutine(float time)
+    {
+        enemyStatus.isWating = true;
+        yield return new WaitForSeconds(time);
+        enemyStatus.isWating = false;
     }
 
     /*
@@ -271,7 +299,7 @@ public class EnemyBasic : ObjectBasic
         {
             BeAttacked(collision.gameObject.GetComponent<HitDetection>(), collision.ClosestPoint(CenterPivot.position));
         }
-        enemyStatus.isTouchPlayer= false;
+        enemyStatus.isTouchPlayer = false;
         if (collision.tag == "Player")
         {
             enemyStatus.isTouchPlayer = true;

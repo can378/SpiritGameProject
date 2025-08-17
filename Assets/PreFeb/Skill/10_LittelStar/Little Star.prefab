@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 7530864278459449910}
   - component: {fileID: 2622631770527259423}
   - component: {fileID: 3591179236587915755}
-  - component: {fileID: 8463777130386602006}
-  - component: {fileID: 6475669372283048094}
   - component: {fileID: 5065196112516315232}
   m_Layer: 11
   m_Name: Little Star
@@ -114,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackID: 0
   <user>k__BackingField: {fileID: 0}
-  DefaultDamage: 0
+  DefaultDamage: 5
   <knockBack>k__BackingField: 0
   <statusEffect>k__BackingField: 
   EnableTime: 0
@@ -134,44 +132,18 @@ MonoBehaviour:
   isGrowing: 0
   DefaultScale: {x: 0, y: 0, z: 0}
   GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
---- !u!114 &8463777130386602006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052a6d8e0b39b4845b5bccb6ac7f591f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guidingTarget: {fileID: 0}
-  speed: 5
-  angular: 10
---- !u!114 &6475669372283048094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1465481353037356265}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7f96b6228a0ac94e8cf13a4f5463343, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angular: 360
 --- !u!114 &5065196112516315232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Center: {fileID: 0}
+  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!1 &7984515985627358397
 GameObject:
   m_ObjectHideFlags: 0
