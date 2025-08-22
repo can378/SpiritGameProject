@@ -27,7 +27,10 @@ public class ObjectSpawn : MonoBehaviour
                 Destroy(enemy);
             }
             else
-                enemys[i].SetActive(false);
+            {
+                enemys[i].GetComponent<EnemyBasic>().enemyStatus.isTargetNoThisRoom = true;
+                enemys[i].GetComponent<EnemyBasic>().enemyStatus.isTargetNoThisRoomTime = 0;
+            }
         }
     }
 
@@ -36,6 +39,8 @@ public class ObjectSpawn : MonoBehaviour
     {
         for (int i = enemys.Count - 1; i >= 0; i--)
         {
+            enemys[i].GetComponent<EnemyBasic>().enemyStatus.isTargetNoThisRoom = false;
+            enemys[i].GetComponent<EnemyBasic>().enemyStatus.isTargetNoThisRoomTime = 0;
             enemys[i].SetActive(true);
         }
     }

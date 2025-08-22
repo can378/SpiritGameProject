@@ -89,6 +89,16 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Detect()
     {
+        if (enemyStatus.isTargetNoThisRoom)
+        {
+            enemyStatus.isTargetNoThisRoomTime += Time.deltaTime;
+            enemyStatus.isTarget = false;
+            if (1 <= enemyStatus.isTargetNoThisRoomTime)
+                gameObject.SetActive(false);
+
+            return;
+        }
+
         // When there is a target
         if (enemyStatus.isTarget)
         {

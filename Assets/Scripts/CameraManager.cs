@@ -73,7 +73,7 @@ public class CameraManager : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position,
                                           playerTransform.position + cameraPosition,
                                           Time.deltaTime * cameraMoveSpeed);
-        center = Vector3.Lerp(center, postCenter, Time.deltaTime * cameraMoveSpeed);
+        center = Vector3.Lerp(center, postCenter, Time.deltaTime * cameraMoveSpeed * 4);
 
         float lx = mapSize.x - width;
         float clampX = Mathf.Clamp(transform.position.x, -lx + center.x, lx + center.x);

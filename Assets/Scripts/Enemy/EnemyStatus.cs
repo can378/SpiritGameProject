@@ -9,6 +9,9 @@ public class EnemyStatus : Status
     public bool isBoss;                 // ë³´ìŠ¤ ?—¬ë¶?
     public bool isRun;                  // ?„ë§? ì¤? : ê³µê²© ?•  ?ˆ˜ ?—†?œ¼ë©? ? ?—ê²Œì„œ ë©??–´ì§?
     public bool isWating;
+
+    public bool isTargetNoThisRoom;            // Å¸°ÙÀ» Ã£Áö ¾Ê´Â´Ù.
+    public float isTargetNoThisRoomTime;
     public bool isTarget;               // ???ê²Ÿì„ ?¸?‹?•˜ê³? ?ˆ?Š”ì§?
     public bool isTargetForced;         // ë©?ë¦? ?ˆ?”?¼?„ ê³µê²©ë°›ìœ¼ë©? ???ê²Ÿì„ ?¸?‹?•˜?Š”ì§?
     public float randomMove = 0;        // ë¬´ì‘?œ„ ?´?™

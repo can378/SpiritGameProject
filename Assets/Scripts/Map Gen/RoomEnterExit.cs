@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class RoomEnterExit : MonoBehaviour
 {
-    
-    public GameObject playerPos;
+    Transform playerPos;
+    public GameObject playerPosCheker;
     
     public Room room;
     GameObject enemyGroup;
     private GameObject minimapIcon;
 
+
+    BoxCollider2D boxCol;
 
     public SpriteRenderer forMiniMapSprite;
     //public GameObject forMap;
@@ -19,12 +21,31 @@ public class RoomEnterExit : MonoBehaviour
 
     //private string minimapIconString = "MinimapIcon";
 
-    void Start()
+    void Awake()
     {
-
+        boxCol = GetComponent<BoxCollider2D>();
     }
 
+    void Start()
+    {
+        playerPos = Player.instance.transform;
+    }
 
+    void Update()
+    {
+        bool PlayerHere = boxCol.bounds.Contains(playerPos.position);
+
+        if (!playerPosCheker.activeSelf && PlayerHere)
+        {
+            enterRoom();
+        }
+        else if (playerPosCheker.activeSelf && !PlayerHere)
+        {
+            exitRoom();
+        }
+    }
+
+/*
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -32,6 +53,7 @@ public class RoomEnterExit : MonoBehaviour
             enterRoom();
         }
     }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -39,9 +61,10 @@ public class RoomEnterExit : MonoBehaviour
             exitRoom();
         }
     }
-
+*/
     void enterRoom()
     {
+        GameObject.FindWithTag("MainCamera").GetComponent<CameraManager>().postCenter = transform.position;
 
         //최초방문시 miniMap에서 보이도록
         forMiniMapSprite.color = new Color(0.8f, 0.8f, 0.8f, 1);
@@ -64,7 +87,7 @@ public class RoomEnterExit : MonoBehaviour
         //forMap.SetActive(false);
 
         //플레이어 위치 표시
-        playerPos.SetActive(true);
+        playerPosCheker.SetActive(true);
 
 
         if (room.doorType == DoorType.Trap)
@@ -97,7 +120,7 @@ public class RoomEnterExit : MonoBehaviour
     void exitRoom()
     {
         // 미니맵 플레이어 현 위치 꺼짐
-        playerPos.SetActive(false);
+        playerPosCheker.SetActive(false);
 
         /*
         if (HasComponent(room.map.gameObject, minimapIconString))

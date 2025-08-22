@@ -5,6 +5,8 @@ using UnityEngine;
 public class CameraArea : MonoBehaviour
 {
     CameraManager cam;
+    [SerializeField]
+    Transform OtherTransform;
 
     void Awake()
     {
@@ -15,7 +17,14 @@ public class CameraArea : MonoBehaviour
     {
         if (other.CompareTag("Player") == true)
         {
-            cam.postCenter = transform.position;
+            if (OtherTransform != null)
+            {
+                cam.postCenter = OtherTransform.position;
+            }
+            else
+            {
+                cam.postCenter = transform.position;
+            }
         }
     }
 }
