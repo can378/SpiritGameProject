@@ -90,10 +90,10 @@ public class RoomEnterExit : MonoBehaviour
         playerPosCheker.SetActive(true);
 
 
-        if (room.doorType == DoorType.Trap)
-        {
-            room.LockDoor();
-        }
+        //if (room.doorType == DoorType.Trap)
+        //{
+        //    room.LockDoor();
+        //}
         
         // 몬스터 활동 시작
         if (room.map!=null) 
