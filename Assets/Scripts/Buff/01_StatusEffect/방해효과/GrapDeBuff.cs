@@ -71,7 +71,7 @@ public class GrapDeBuff : StatusEffect
         if(GrapPos!= null)
         {
             target.GetComponent<ObjectBasic>().ChangeColor(new Vector4(1f,1f,1f,0f));
-            target.transform.position = new Vector3(GrapPos.position.x, GrapPos.position.y, GrapPos.position.z + 0.1f);
+            target.transform.position = new Vector3(GrapPos.position.x, GrapPos.position.y, GrapPos.position.z);
         }
             
             

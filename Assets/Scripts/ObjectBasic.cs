@@ -101,7 +101,7 @@ public class ObjectBasic : MonoBehaviour
                 ApplyBuff(statusEffectIndex);
             }
         }
-        
+
         // 피격 시 이펙트 효과
         #region Effect
         if (hitDetection.Damage == 0)
@@ -127,7 +127,8 @@ public class ObjectBasic : MonoBehaviour
         if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
         status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
 
-        transform.DOShakePosition(0.1f, 0.1f);
+        transform.DOShakePosition(0.1f, new Vector3(0.1f, 0.1f,0.0f));
+        //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         #endregion Effect
     }
