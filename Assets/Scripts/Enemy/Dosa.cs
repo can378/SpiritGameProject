@@ -6,29 +6,38 @@ public class Dosa : EnemyBasic
 {
     [field: SerializeField] public List<Skill> skillList { get; private set; }
 
-    public int skill ;
+    public int skill;
 
 
     protected override void Start()
     {
         base.Start();
 
-        // 기술 무작위 장착
-        skill = -1;
-        while (true)
+        if (skill == -1)
         {
-            skill = UnityEngine.Random.Range(1, skillList.Count);
-            if (skillList[skill] == null)
+            // 기술 무작위 장착
+            skill = -1;
+            while (true)
             {
-                skill = -1;
-                continue;
-            }
-            else
-            {
-                skillList[skill].gameObject.SetActive(true);
-                break;
+                skill = UnityEngine.Random.Range(1, skillList.Count);
+                if (skillList[skill] == null)
+                {
+                    skill = -1;
+                    continue;
+                }
+                else
+                {
+                    skillList[skill].gameObject.SetActive(true);
+                    break;
+                }
             }
         }
+        else
+        {
+            skillList[skill].gameObject.SetActive(true);
+        }
+
+
 
     }
 
@@ -41,7 +50,6 @@ public class Dosa : EnemyBasic
             enemyStatus.attackCoroutine = StartCoroutine(Skill());
         }
     }
-
 
     IEnumerator Skill()
     {

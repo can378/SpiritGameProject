@@ -127,6 +127,7 @@ public class ThunderboltSkill : Skill
     {
         base.Cancle();
         StartCoroutine(AttackOut());
+        Destroy(simul);
     }
 
 
