@@ -7,6 +7,7 @@ Shader "Silhouette/Silhouette"
     {
         _MainTex("Sprite Texture", 2D) = "white" {}
         _Color("Color", Color) = (0,0,0,0)
+        _StencilRef ("Stencil Reference", Int) = 0
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
     }
     SubShader
@@ -19,7 +20,7 @@ Shader "Silhouette/Silhouette"
         }
         LOD 100
 
-        // 항상 스텐실 1을 남긴다.
+        // 항상 스텐실 _StencilRef을을 남긴다.
         // 나머지는 Default처럼 작동한다.
         Pass
         {
@@ -27,12 +28,12 @@ Shader "Silhouette/Silhouette"
             Cull off                        // 앞면 뒷면 모두 보이게
             ZWrite Off
     
-            // 항상 스텐실 1을 남긴다.
+            // 항상 스텐실 _StencilRef을 남긴다.
             Stencil
             {
-                Ref 1
+                Ref [_StencilRef]
                 Comp Always     // 항상 스텐실을 통과한다.
-                Pass Replace    // 통과한 부분은 1로 대체한다.
+                Pass Replace    // 통과한 부분은 _StencilRef을로 대체한다.
             }
 
             CGPROGRAM
