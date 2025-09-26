@@ -25,8 +25,27 @@ public class SelectItem : MonoBehaviour, Interactable
         Player.instance.GainSelectItem(this);
     }
 
+    public Color GetRatingColor()
+    {
+        switch (selectItemRating)
+        {
+            case SelectItemRating.Temp:
+                return Color.gray;
+            case SelectItemRating.Normal:
+                return Color.black;
+            case SelectItemRating.Rare:
+                return Color.blue;
+            case SelectItemRating.Epic:
+                return new Color(0.5f, 0.0f, 0.5f);
+            case SelectItemRating.Legend:
+                return new Color(1.0f, 0.8f, 0.0f);
+            default:
+                return Color.white;
+        }
+    }
+
     #region Sort CompareFunc
-    static int compareClass (SelectItem a, SelectItem b)
+    static int compareClass(SelectItem a, SelectItem b)
     {
         if (a.selectItemType < b.selectItemType)
         {
