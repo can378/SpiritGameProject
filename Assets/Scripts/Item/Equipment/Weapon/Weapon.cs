@@ -110,36 +110,37 @@ public class Weapon : Equipment
         }
     }
 
-    public int MaxAnimationCount
+    public string TypeToKorean()
     {
-        get
         {
             switch (weaponType)
             {
                 case WEAPON_TYPE.SWORD:
-                    return 2;
+                    return "∞À";
                 case WEAPON_TYPE.SHORT_SWORD:
-                    return 2;
+                    return "¥‹∞À";
                 case WEAPON_TYPE.LONG_SWORD:
-                    return 2;
+                    return "¥Î∞À";
                 case WEAPON_TYPE.SCYTHE:
-                    return 2;
+                    return "≥¥";
                 case WEAPON_TYPE.HAMMER:
-                    return 2;
+                    return "µ–±‚";
                 case WEAPON_TYPE.GREAT_HAMMER:
-                    return 2;
+                    return "¥Î«¸ µ–±‚";
                 case WEAPON_TYPE.SPEAR:
-                    return 2;
+                    return "√¢";
                 case WEAPON_TYPE.BOW:
-                    return 2;
+                    return "»∞";
                 case WEAPON_TYPE.CROSS_BOW:
-                    return 2;
+                    return "ºË≥˙";
+                case WEAPON_TYPE.HAND_GUN:
+                    return "√—";
                 case WEAPON_TYPE.RIFLE:
-                    return 2;
+                    return "¿Â√—";
                 case WEAPON_TYPE.THROW:
-                    return 1;
+                    return "≈ı√¥";
                 default:
-                    return -1;
+                    return "???";
             }
         }
     }
