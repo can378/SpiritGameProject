@@ -8,7 +8,7 @@ public class BroomStick : EnemyBasic
     float radius = 50;
     float attackTime = 2;
 
-    int FearIndex;
+    BuffData FearSE;
 
     protected override void MovePattern()
     {
@@ -36,7 +36,7 @@ public class BroomStick : EnemyBasic
         yield return new WaitForSeconds(0.5f);
         colObj.transform.localScale = new Vector3(0.1f, 0.1f, 1);
         colObj.GetComponent<HitDetection>().SetHit_Ratio(10, 1,enemyStats.AttackPower);
-        colObj.GetComponent<HitDetection>().SetSE(FearIndex);
+        colObj.GetComponent<HitDetection>().SetSE(FearSE);
         colObj.GetComponent<SpriteRenderer>().color = Color.white;
         colObj.SetActive(true);
         
@@ -66,7 +66,7 @@ public class BroomStick : EnemyBasic
 
         colObj.transform.localScale = new Vector3(0.1f * radius, 0.1f * radius, 1);
         colObj.GetComponent<HitDetection>().SetHit_Ratio(1, 2, stats.AttackPower);
-        colObj.GetComponent<HitDetection>().SetSE(FearIndex);
+        colObj.GetComponent<HitDetection>().SetSE(FearSE);
         colObj.GetComponent<SpriteRenderer>().color = Color.magenta;
         colObj.SetActive(true);
 

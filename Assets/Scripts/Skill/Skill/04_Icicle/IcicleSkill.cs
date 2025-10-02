@@ -3,25 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class IcicleSkill : Skill
+public class IcicleSkill : SkillBase
 {
-    // ���ط�
-    [field: SerializeField] int defalutDamage;
-    [field: SerializeField] float ratio;
+    [field: SerializeField] IcicleSkillData ISData;
 
-    // ũ��, �˹�, �ӵ�, ����Ʈ �����ð�, ����Ʈ, �����̻�
-    [field: SerializeField] float size;
-    [field: SerializeField] float knockBack;
-    [field: SerializeField] float speed;
-    [field: SerializeField] float time;
-    [field: SerializeField] GameObject icicleEffect;
-    [field: SerializeField] GameObject fireSimul;
-    [field: SerializeField] int[] statusEffect;
-
-    //���� ǥ�ñ�
     GameObject simul;
     Vector3 simulVector;
-
+    protected void Awake()
+    {
+        skillData = ISData;
+    }
     public override void Enter(ObjectBasic user)
     {
         this.user = user;
@@ -36,7 +27,7 @@ public class IcicleSkill : Skill
 
             if(simul != null)
                 Destroy(simul);
-            simul = Instantiate(fireSimul, player.CenterPivot.transform.position, Quaternion.identity);
+            simul = Instantiate(ISData.icicleSimulPrefab, player.CenterPivot.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
             while (player.playerStatus.isSkillHold)
@@ -56,10 +47,10 @@ public class IcicleSkill : Skill
 
             if (simul != null)
                 Destroy(simul);
-            simul = Instantiate(fireSimul, enemy.CenterPivot.transform.position, Quaternion.identity);
+            simul = Instantiate(ISData.icicleSimulPrefab, enemy.CenterPivot.transform.position, Quaternion.identity);
             simul.transform.parent = user.transform;
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.EnemyTarget != null  && enemy.enemyStatus.isAttack)
+            while (timer <= ISData.maxHoldTime / 2 && enemy.enemyStatus.EnemyTarget != null  && enemy.enemyStatus.isAttack)
             {
                 // ���߿� �� ���·� �ִ� ���� �����ϱ�
                 // ���߿� �� ���·� �ִ� ���� ǥ���ϱ�
@@ -92,32 +83,32 @@ public class IcicleSkill : Skill
         if (user.tag == "Player")
         {
             Player player = user.GetComponent<Player>();
-            GameObject instantProjectile = Instantiate(icicleEffect, player.CenterPivot.transform.position, player.CenterPivot.transform.rotation);
+            GameObject instantProjectile = Instantiate(ISData.iciclePrefab, player.CenterPivot.transform.position, player.CenterPivot.transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
 
             // ��Ÿ�� ����
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * ISData.skillDefalutCoolTime;
 
-            instantProjectile.transform.localScale = new Vector3(size, size, 0);
+            instantProjectile.transform.localScale = new Vector3(ISData.defaultSize, ISData.defaultSize, 0);
             instantProjectile.tag = "PlayerAttack";
             instantProjectile.layer = LayerMask.NameToLayer("PlayerAttack");
 
             Destroy(simul);
             
-            hitDetection.SetProjectile_Ratio(0, defalutDamage, ratio, player.playerStats.SkillPower);
-            hitDetection.SetSEs(statusEffect);
-            hitDetection.SetDisableTime(time);
+            hitDetection.SetProjectile_Ratio(0, ISData.defaultDamage, ISData.ratio, player.playerStats.SkillPower);
+            hitDetection.SetSEs(ISData.statusEffect);
+            hitDetection.SetDisableTime(ISData.projectileTime);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ���� ����
-            bulletRigid.velocity = (simulVector - player.CenterPivot.transform.position).normalized * 10 * speed;  // �ӵ� ����
+            bulletRigid.velocity = (simulVector - player.CenterPivot.transform.position).normalized * 10 * ISData.projectileSpeed;  // �ӵ� ����
             
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             print(enemy);
-            GameObject instantProjectile = Instantiate(icicleEffect, enemy.CenterPivot.transform.position, enemy.CenterPivot.transform.rotation);
+            GameObject instantProjectile = Instantiate(ISData.iciclePrefab, enemy.CenterPivot.transform.position, enemy.CenterPivot.transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             float angle = Mathf.Atan2(simulVector.y - enemy.CenterPivot.transform.position.y, simulVector.x - enemy.CenterPivot.transform.position.x) * Mathf.Rad2Deg;
@@ -125,19 +116,19 @@ public class IcicleSkill : Skill
             // ��Ÿ�� ����
             skillCoolTime = 5;
 
-            instantProjectile.transform.localScale = new Vector3(size, size,0);
+            instantProjectile.transform.localScale = new Vector3(ISData.defaultSize, ISData.defaultSize, 0);
             instantProjectile.tag = "EnemyAttack";
             instantProjectile.layer = LayerMask.NameToLayer("EnemyAttack");
 
             // ����Ʈ ����
             Destroy(simul);
 
-            hitDetection.SetProjectile_Ratio(0, defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
-            hitDetection.SetSEs(statusEffect);
-            hitDetection.SetDisableTime(time);
+            hitDetection.SetProjectile_Ratio(0, ISData.defaultDamage, ISData.ratio, enemy.stats.SkillPower, ISData.knockBack);
+            hitDetection.SetSEs(ISData.statusEffect);
+            hitDetection.SetDisableTime(ISData.projectileTime);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ���� ����
-            bulletRigid.velocity = (simulVector - enemy.CenterPivot.transform.position).normalized * 10 * speed;  // �ӵ� ����
+            bulletRigid.velocity = (simulVector - enemy.CenterPivot.transform.position).normalized * 10 * ISData.projectileSpeed;  // �ӵ� ����
         }
     }
 }

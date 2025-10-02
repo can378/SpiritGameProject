@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2240183684125499985}
   - component: {fileID: 4326583180886243799}
-  - component: {fileID: 7000965197718825190}
   - component: {fileID: -1813131999926222435}
+  - component: {fileID: 3719017307208504517}
   m_Layer: 6
   m_Name: 13_StarSword
   m_TagString: SelectItem
@@ -154,24 +154,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.59}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &7000965197718825190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 1
-  <selectItemRating>k__BackingField: 4
-  <selectItemName>k__BackingField: "\uC0AC\uC778\uAC80"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 13
 --- !u!210 &-1813131999926222435
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -184,3 +166,17 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &3719017307208504517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179661334137346525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <itemData>k__BackingField: {fileID: 0}
+  <weaponData>k__BackingField: {fileID: 11400000, guid: 132803b1896522f41830761b0cbfb853, type: 2}

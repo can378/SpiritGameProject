@@ -8,6 +8,7 @@ public class BossBaby : Boss
     /// 저퀴의 공격 이펙트 자료형, hitEffect에 저장할 때 꼭 이 순서대로 저장할 것
     /// </summary>
     enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, Tear, None };
+    public List<BuffData> BuffDatas = new List<BuffData>();
 
     [ReadOnly]
     public AnimJukqwi jukqwiAnim;
@@ -92,7 +93,7 @@ public class BossBaby : Boss
     IEnumerator Grap() 
     {
         bool grapSucces = false;
-        GrapDeBuff grapDeBuff = null;
+        Buff grapDeBuff = null;
         float time = 0;
 
         //start
@@ -114,8 +115,9 @@ public class BossBaby : Boss
             if(status.hitTarget)
             {
                 // 대상에게 잡기 디버프 부여
-                grapDeBuff = (GrapDeBuff)status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(9);
-                grapDeBuff.SetGrapOwner(GetComponent<ObjectBasic>(), GrapPos);
+                grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(BuffDatas[0]);
+                GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;
+                GrapDeBuffData.SetGrapCustomData(grapDeBuff, this.GetComponent<ObjectBasic>(), GrapPos);
                 grapSucces = true;
                 break;
             }
@@ -140,7 +142,7 @@ public class BossBaby : Boss
                 {
                     // 큰 피해와 잡기를 1초 후에 해제
                     jukqwiAnim.animator.SetTrigger("Hug");
-                    grapDeBuff.target.GetComponent<ObjectBasic>().BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
+                    grapDeBuff.target.BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
                     break;
                 }
 
@@ -425,11 +427,11 @@ public class BossBaby : Boss
 
     void Disarm()
     {
-        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().ApplyBuff(10);
+        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().ApplyBuff(BuffDatas[1]);
     }
     void RemoveDisarm()
     {
-        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().RemoveBuff(10);
+        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().RemoveBuff(BuffDatas[1]);
     }
 
 

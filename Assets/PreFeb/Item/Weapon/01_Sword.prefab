@@ -93,10 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2240183684125499985}
-  - component: {fileID: -1276249048069186198}
   - component: {fileID: 4326583180886243799}
   - component: {fileID: 809015038409040641}
-  - component: {fileID: 2065331820585241469}
+  - component: {fileID: 557063787906922769}
   m_Layer: 6
   m_Name: 01_Sword
   m_TagString: SelectItem
@@ -120,24 +119,6 @@ Transform:
   - {fileID: 7644411156738352893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1276249048069186198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 1
-  <selectItemRating>k__BackingField: 1
-  <selectItemName>k__BackingField: "\uD658\uB3C4"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 1
 --- !u!58 &4326583180886243799
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -185,7 +166,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!114 &2065331820585241469
+--- !u!114 &557063787906922769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,7 +175,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3179661334137346525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
+  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
+  <itemData>k__BackingField: {fileID: 0}
+  <weaponData>k__BackingField: {fileID: 11400000, guid: a674fe951080690428aecd7bfa03c0f8, type: 2}

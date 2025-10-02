@@ -93,9 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6655219446528008014}
-  - component: {fileID: 5237684185765060848}
   - component: {fileID: 2664106718838857999}
   - component: {fileID: 7869593570828431591}
+  - component: {fileID: 6461551382985316643}
   m_Layer: 6
   m_Name: riceCake
   m_TagString: SelectItem
@@ -119,27 +119,6 @@ Transform:
   - {fileID: 5665802476555883017}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5237684185765060848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6030742068263377988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6b42a55f9ef9144b36fe9fc158b730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 2
-  <selectItemRating>k__BackingField: 2
-  <selectItemName>k__BackingField: riceCake
-  <description>k__BackingField: 
-  <price>k__BackingField: 3
-  <selectItemID>k__BackingField: 2
-  <finishUse>k__BackingField: 0
-  <throwItem>k__BackingField: 0
-  healValue: 30
 --- !u!58 &2664106718838857999
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -202,3 +181,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6461551382985316643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6030742068263377988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c96a009cead91e408fcc25ba048bce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <consumableData>k__BackingField: {fileID: 11400000, guid: fb9ad96eba43ee046a83cbfc491d78ec, type: 2}

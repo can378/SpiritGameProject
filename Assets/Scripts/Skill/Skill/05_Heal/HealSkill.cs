@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealSkill : Skill
+public class HealSkill : SkillBase
 {
-    // 회복량
-    [field: SerializeField] float defaultHeal;
-    [field: SerializeField] float dotHeal;
-
-
-    // 초당 타격 횟수, 크기, 이펙트
-    [field: SerializeField] GameObject HealEffect;
-
-    //이펙트
+    [field: SerializeField] HealSkillData HSData;
     GameObject effect;
-
+    protected void Awake()
+    {
+        skillData = HSData;
+    }
     public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
@@ -36,14 +31,14 @@ public class HealSkill : Skill
             if (effect != null)
                 Destroy(effect);
                 
-            effect = Instantiate(HealEffect, user.transform.position, user.transform.rotation);
+            effect = Instantiate(HSData.HealEffectPrefab, user.transform.position, user.transform.rotation);
             effect.transform.parent = user.transform;
 
-            player.Damaged(-player.stats.HPMax * defaultHeal);
+            player.Damaged(-player.stats.HPMax.Value * HSData.defaultHeal);
 
             while(player.playerStatus.isSkillHold)
             {
-                player.Damaged(-player.stats.HPMax * dotHeal * 0.1f);
+                player.Damaged(-player.stats.HPMax.Value * HSData.dotHeal * 0.1f);
                 yield return new WaitForSeconds(0.1f / player.playerStats.attackSpeed);
             }
 
@@ -60,14 +55,14 @@ public class HealSkill : Skill
             if (effect != null)
                 Destroy(effect);
 
-            effect = Instantiate(HealEffect, user.transform.position, user.transform.rotation);
+            effect = Instantiate(HSData.HealEffectPrefab, user.transform.position, user.transform.rotation);
             effect.transform.parent = user.transform;
 
-            enemy.Damaged(-enemy.stats.HPMax * defaultHeal);
+            enemy.Damaged(-enemy.stats.HPMax.Value * HSData.defaultHeal);
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
+            while (timer <= HSData.maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
-                enemy.Damaged(-enemy.stats.HPMax * dotHeal * 0.1f);
+                enemy.Damaged(-enemy.stats.HPMax.Value * HSData.dotHeal * 0.1f);
                 timer += 0.1f;
                 yield return new WaitForSeconds(0.1f);
             }
@@ -86,14 +81,14 @@ public class HealSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
             player.stats.MoveSpeed.DecreasedValue -= 0.9f;
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * HSData.skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             enemy.stats.MoveSpeed.DecreasedValue -= 0.9f;
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = HSData.skillDefalutCoolTime;
         }
     }
 
@@ -107,14 +102,14 @@ public class HealSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
             player.stats.MoveSpeed.DecreasedValue -= 0.9f;
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * HSData.skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             enemy.stats.MoveSpeed.DecreasedValue -= 0.9f;
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = HSData.skillDefalutCoolTime;
         }
     }
 

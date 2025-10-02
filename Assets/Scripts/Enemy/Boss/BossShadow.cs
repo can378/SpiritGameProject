@@ -156,7 +156,7 @@ public class BossShadow : Boss
         for (int i = 0; i < dummies.Count; i++)
         {
             dummies[i].GetComponent<EnemyStats>().HP 
-                = dummies[i].GetComponent<EnemyStats>().HPMax;
+                = dummies[i].GetComponent<EnemyStats>().HPMax.Value;
         }
 
         isDummiesAllDie = false;

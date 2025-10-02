@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WheelWindSkill : Skill
+public class WheelWindSkill : SkillBase
 {
-    //���ط�
-    [field: SerializeField] int defaultDamage;
-    [field: SerializeField] float ratio;
-
-
-    // �ʴ� Ÿ�� Ƚ��, ũ��, ����Ʈ
-    [field: SerializeField] int DPS;
-    [field: SerializeField] float size;
-    [field: SerializeField] GameObject WheelWindPrefab;
+    [field: SerializeField] WheelWindSkillData WWSData;
 
     //����Ʈ
     GameObject WheelWindEffect;
+
+    protected void Awake()
+    {
+        skillData = WWSData;
+    }
 
     public override void Enter(ObjectBasic user)
     {
@@ -30,9 +27,9 @@ public class WheelWindSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponList[player.playerStats.weapon];
+            PlayerWeapon weapon = player.playerStats.weapon;
             HitDetection hitDetection;
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponType.ToString()];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
             skillCoolTime = 99;
@@ -41,27 +38,27 @@ public class WheelWindSkill : Skill
             player.stats.MoveSpeed.DecreasedValue += 0.5f;
             
             // �ð��� ���� ���� �� ȸ�� ����
-            yield return new WaitForSeconds(preDelay * attackRate);
+            yield return new WaitForSeconds(WWSData.preDelay * attackRate);
 
             // �����? ��ġ�� ����
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
-            WheelWindEffect = Instantiate(WheelWindPrefab, user.transform.position, user.transform.rotation);
+            WheelWindEffect = Instantiate(WWSData.WheelWindPrefab, user.transform.position, user.transform.rotation);
             WheelWindEffect.transform.parent = user.transform;
-            WheelWindEffect.transform.localScale = new Vector3(size * player.weaponList[player.playerStats.weapon].attackSize, size * player.weaponList[player.playerStats.weapon].attackSize, 1);
+            WheelWindEffect.transform.localScale = new Vector3(WWSData.defaultSize * weapon.GetAttackSize(), WWSData.defaultSize * weapon.GetAttackSize(), 1);
             WheelWindEffect.tag = "PlayerAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("PlayerAttack");
 
             // ���� ���� ����
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
 
-            hitDetection.SetHit_Ratio(defaultDamage, ratio, player.stats.AttackPower,
-             player.weaponList[player.playerStats.weapon].knockBack,
+            hitDetection.SetHit_Ratio(WWSData.defaultDamage, WWSData.ratio, player.stats.AttackPower,
+             weapon.GetKnockBack(),
              player.playerStats.CriticalChance,
              player.playerStats.CriticalDamage);
-            hitDetection.SetMultiHit(true, 1 / DPS);
-            hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
+            hitDetection.SetMultiHit(true, 1 / WWSData.DPS);
+            //hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
         }
         else if (user.tag == "Enemy")
@@ -75,18 +72,18 @@ public class WheelWindSkill : Skill
             enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
 
             // ��Ÿ�� ����
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = WWSData.skillDefalutCoolTime;
 
             // �ð��� ���� ���� �� ȸ�� ����
-            yield return new WaitForSeconds(preDelay);
+            yield return new WaitForSeconds(WWSData.preDelay);
 
             // �����? ��ġ�� ����
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
-            WheelWindEffect = Instantiate(WheelWindPrefab, user.transform.position, user.transform.rotation);
+            WheelWindEffect = Instantiate(WWSData.WheelWindPrefab, user.transform.position, user.transform.rotation);
             WheelWindEffect.transform.parent = user.transform;
-            WheelWindEffect.transform.localScale = new Vector3(size, size, 0);
+            WheelWindEffect.transform.localScale = new Vector3(WWSData.defaultSize, WWSData.defaultSize, 0);
             WheelWindEffect.tag = "EnemyAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("EnemyAttack");
 
@@ -105,9 +102,9 @@ public class WheelWindSkill : Skill
             �����? = ����
             */
             hitDetection.SetHit_Ratio(
-             defaultDamage, ratio, enemy.stats.AttackPower,
+             WWSData.defaultDamage, WWSData.ratio, enemy.stats.AttackPower,
              1);
-            hitDetection.SetMultiHit(true,1/DPS);
+            hitDetection.SetMultiHit(true,1/ WWSData.DPS);
             hitDetection.user = user;
         }
     }
@@ -130,8 +127,8 @@ public class WheelWindSkill : Skill
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponList[player.playerStats.weapon];
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponType.ToString()];
+            PlayerWeapon weapon = player.playerStats.weapon;
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
             yield return new WaitForSeconds(0.5f * attackRate);
@@ -139,10 +136,10 @@ public class WheelWindSkill : Skill
             Destroy(WheelWindEffect);
 
             // ���� �ð��� ���� �� �ӵ� ���� ����
-            yield return new WaitForSeconds(postDelay * attackRate);
+            yield return new WaitForSeconds(WWSData.postDelay * attackRate);
 
             // ��Ÿ�� ����
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * WWSData.skillDefalutCoolTime;
 
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
         }
@@ -156,7 +153,7 @@ public class WheelWindSkill : Skill
             Destroy(WheelWindEffect);
 
             // ���� �ð��� ���� �� �ӵ� ���� ����
-            yield return new WaitForSeconds(postDelay);
+            yield return new WaitForSeconds(WWSData.postDelay);
 
             // ��Ÿ�� ����
             skillCoolTime = 5;

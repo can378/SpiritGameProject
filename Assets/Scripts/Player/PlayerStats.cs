@@ -21,7 +21,7 @@ public class PlayerStats : Stats
     // UI : 치명타 피해량 150%
     // 피해량 = 치명타 ? 치명타 피해량 * 기본 피해량 : 기본 피해량
     // 최소 100%, 최대 300%
-    [field: SerializeField] public Stat CriticalDamage { get; set; } = new Stat(1.5f, 1.0f, 3.0f);
+    [field: SerializeField] public Stat CriticalDamage { get; set; } = new Stat(1.5f, 3.0f, 1.0f);
 
     // attackSpeed
     // UI 0%
@@ -124,13 +124,13 @@ public class PlayerStats : Stats
     public int item;
 
     //Equipments
-    public int weapon;
+    public PlayerWeapon weapon;
 
     public int maxSkillSlot;
     public int[] skill = new int[5];
 
     public int maxEquipment;
-    public int[] equipments = new int[5];
+    public EquipmentData[] equipments = new EquipmentData[5];
 
     //Stat
     public int[] playerStat = new int[8];

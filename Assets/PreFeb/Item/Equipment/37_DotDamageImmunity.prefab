@@ -127,9 +127,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9000933290160733339}
   - component: {fileID: 6601849473291929727}
-  - component: {fileID: 17576607014334082}
-  - component: {fileID: -7214689365420038696}
   - component: {fileID: -7419339772885541375}
+  - component: {fileID: 1257599354484383976}
   m_Layer: 6
   m_Name: 37_DotDamageImmunity
   m_TagString: SelectItem
@@ -189,37 +188,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &17576607014334082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296880656510438592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 0
-  <selectItemRating>k__BackingField: 3
-  <selectItemName>k__BackingField: "\uC625 \uBC18\uC9C0"
-  <description>k__BackingField: 
-  <price>k__BackingField: 3
-  <selectItemID>k__BackingField: 37
---- !u!114 &-7214689365420038696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296880656510438592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!210 &-7419339772885541375
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -232,6 +200,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &1257599354484383976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3296880656510438592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa86b508b8af9643a3092b50d75d2af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <equipmentData>k__BackingField: {fileID: 11400000, guid: dd74ea31322987f468240c3402c37920, type: 2}
 --- !u!1 &5912839696623530766
 GameObject:
   m_ObjectHideFlags: 0

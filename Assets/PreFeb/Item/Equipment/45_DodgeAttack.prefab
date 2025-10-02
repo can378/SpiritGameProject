@@ -127,9 +127,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9000933290160733339}
   - component: {fileID: 6601849473291929727}
-  - component: {fileID: 107807492667658965}
-  - component: {fileID: -4626717789980962556}
   - component: {fileID: -1853679010710311807}
+  - component: {fileID: -8123217692731861106}
   m_Layer: 6
   m_Name: 45_DodgeAttack
   m_TagString: SelectItem
@@ -189,37 +188,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &107807492667658965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296880656510438592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 0
-  <selectItemRating>k__BackingField: 2
-  <selectItemName>k__BackingField: "\uAC00\uC2DC \uAC11\uC637"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 45
---- !u!114 &-4626717789980962556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296880656510438592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!210 &-1853679010710311807
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -232,6 +200,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &-8123217692731861106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3296880656510438592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa86b508b8af9643a3092b50d75d2af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <equipmentData>k__BackingField: {fileID: 11400000, guid: cba1e6c93ba1c9841b713dfdc1ced556, type: 2}
 --- !u!1 &7225943224937636104
 GameObject:
   m_ObjectHideFlags: 0

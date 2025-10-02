@@ -2,26 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThunderboltSkill : Skill
+public class ThunderboltSkill : SkillBase
 {
-    //피해량
-    [field: SerializeField] int defaultDamage;
-    [field: SerializeField] float ratio;
-
-
-    // 초당 생성 횟수, 벼락 크기, 넉백, 벼락 유지 시간, 소환 범위, 소환 범위 시뮬, 벼락, 상태이상
-    [field: SerializeField] float DPS;
-    [field: SerializeField] float size;
-    [field: SerializeField] float knockBack;
-    [field: SerializeField] float time;
-    [field: SerializeField] float summonAreaSize;
-    [field: SerializeField] GameObject summonAreaSimul;
-    [field: SerializeField] GameObject thunderbolt;
-    [field: SerializeField] int[] statusEffect;
+    [field: SerializeField] ThunderboltSkillData TSData;
 
     //소환 범위 시뮬
     GameObject simul;
-
+    protected void Awake()
+    {
+        skillData = TSData;
+    }
     public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
@@ -45,32 +35,32 @@ public class ThunderboltSkill : Skill
             if (simul != null)
                 Destroy(simul);
 
-            simul = Instantiate(summonAreaSimul, player.CenterPivot.transform.position, user.transform.rotation);
-            simul.transform.localScale = new Vector3(summonAreaSize, summonAreaSize, 0);
+            simul = Instantiate(TSData.summonAreaSimul, player.CenterPivot.transform.position, user.transform.rotation);
+            simul.transform.localScale = new Vector3(TSData.summonAreaSize, TSData.summonAreaSize, 0);
 
             // 선딜의 시간이 지난 후 시작
-            yield return new WaitForSeconds(preDelay);
+            yield return new WaitForSeconds(TSData.preDelay);
 
             while (player.playerStatus.isSkillHold)
             {
                 // 무작위 생성 위치 선정
-                Vector3 pos = player.CenterPivot.transform.position + (Random.insideUnitSphere * summonAreaSize/2);
+                Vector3 pos = player.CenterPivot.transform.position + (Random.insideUnitSphere * TSData.summonAreaSize /2);
                 pos.z = 0;
-                GameObject effect = Instantiate(thunderbolt, pos, Quaternion.identity);
+                GameObject effect = Instantiate(TSData.thunderboltEffectSimul, pos, Quaternion.identity);
                 HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-                effect.transform.localScale = new Vector3(size, size, 0);
+                effect.transform.localScale = new Vector3(TSData.defaultSize, TSData.defaultSize, 0);
                 effect.tag = "PlayerAttack";
                 effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
                 hitDetection.SetHit_Ratio(
-                defaultDamage, ratio, player.playerStats.SkillPower,
-                knockBack);
-                hitDetection.SetSEs(statusEffect);
+                TSData.defaultDamage, TSData.ratio, player.playerStats.SkillPower,
+                TSData.knockBack);
+                hitDetection.SetSEs(TSData.statusEffect);
 
-                Destroy(effect, time);
+                Destroy(effect, TSData.effectTime);
 
-                yield return new WaitForSeconds(1f/ DPS);
+                yield return new WaitForSeconds(1f/ TSData.DPS);
             }
         }
         else if (user.tag == "Enemy")
@@ -90,35 +80,35 @@ public class ThunderboltSkill : Skill
             if (simul != null)
                 Destroy(simul);
 
-            simul = Instantiate(summonAreaSimul, enemy.CenterPivot.transform.position, user.transform.rotation);
-            simul.transform.localScale = new Vector3(summonAreaSize, summonAreaSize, 0);
+            simul = Instantiate(TSData.summonAreaSimul, enemy.CenterPivot.transform.position, user.transform.rotation);
+            simul.transform.localScale = new Vector3(TSData.summonAreaSize, TSData.summonAreaSize, 0);
 
             // 선딜의 시간이 지난 후 시작
-            yield return new WaitForSeconds(preDelay);
+            yield return new WaitForSeconds(TSData.preDelay);
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
+            while (timer <= TSData.maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 // 무작위 생성 위치 선정
-                Vector3 pos = enemy.CenterPivot.transform.position + (Random.insideUnitSphere * summonAreaSize / 2);
+                Vector3 pos = enemy.CenterPivot.transform.position + (Random.insideUnitSphere * TSData.summonAreaSize / 2);
                 pos.z = 0;
-                GameObject effect = Instantiate(thunderbolt, pos, Quaternion.identity);
+                GameObject effect = Instantiate(TSData.thunderboltEffectSimul, pos, Quaternion.identity);
                 HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-                effect.transform.localScale = new Vector3(size, size, 0);
+                effect.transform.localScale = new Vector3(TSData.defaultSize, TSData.defaultSize, 0);
                 effect.tag = "EnemyAttack";
                 effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
                 hitDetection.SetHit_Ratio(
-                defaultDamage,ratio, enemy.stats.SkillPower,
-                knockBack);
-                hitDetection.SetSEs(statusEffect);
+                TSData.defaultDamage, TSData.ratio, enemy.stats.SkillPower,
+                TSData.knockBack);
+                hitDetection.SetSEs(TSData.statusEffect);
                 hitDetection.user = user;
 
-                Destroy(effect, time);
+                Destroy(effect, TSData.effectTime);
 
-                timer += 1f/ DPS;
+                timer += 1f/ TSData.DPS;
 
-                yield return new WaitForSeconds(1f / DPS);
+                yield return new WaitForSeconds(1f / TSData.DPS);
             }
         }
     }
@@ -142,15 +132,15 @@ public class ThunderboltSkill : Skill
         {
             Player player = this.user.GetComponent<Player>();
 
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(TSData.effectTime);
 
             Destroy(simul);
 
             // 조금 시간이 지난 후 속도 감소 해제
-            yield return new WaitForSeconds(postDelay);
+            yield return new WaitForSeconds(TSData.postDelay);
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * TSData.skillDefalutCoolTime;
 
             player.stats.MoveSpeed.DecreasedValue -= 99f;
         }
@@ -158,12 +148,12 @@ public class ThunderboltSkill : Skill
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
 
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(TSData.effectTime);
 
             Destroy(simul);
 
             // 조금 시간이 지난 후 속도 감소 해제
-            yield return new WaitForSeconds(postDelay);
+            yield return new WaitForSeconds(TSData.postDelay);
 
             // 쿨타임 적용
             skillCoolTime = 5;

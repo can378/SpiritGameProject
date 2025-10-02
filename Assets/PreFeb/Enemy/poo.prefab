@@ -111,7 +111,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 30
+  HPMax:
+    _Value: 0
+    _DefaultValue: 100
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 30
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 1
@@ -149,6 +154,9 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
   SkillPower:
     _Value: 0
     _DefaultValue: 10
@@ -161,7 +169,10 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
-  activeEffects: []
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
   enemyName: "\uB625"
   DropCoin: 3
   detectionDis: 10
@@ -255,6 +266,9 @@ MonoBehaviour:
   isTouchPlayer: 0
   isBoss: 0
   isRun: 0
+  isWating: 0
+  isTargetNoThisRoom: 0
+  isTargetNoThisRoomTime: 0
   isTarget: 0
   isTargetForced: 0
   randomMove: 0
@@ -280,13 +294,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997188540857653842}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27579832d20014d4ebf20b9e772fec77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnTerm: 0.5
-  LifeTime: 5
+  SpawnTerm: 2
+  LifeTime: 3
   Effect: {fileID: 5535729302175816803, guid: bb93a9f1daf956d4abfbfcee5a80deea, type: 3}
 --- !u!1 &3196380019888756832
 GameObject:
@@ -534,7 +548,7 @@ MonoBehaviour:
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 5
-  <statusEffect>k__BackingField: 04000000
+  <statusEffect>k__BackingField: []
   EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
@@ -552,14 +566,16 @@ MonoBehaviour:
   isGrowing: 0
   DefaultScale: {x: 0, y: 0, z: 0}
   GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
 --- !u!1 &7940180268011986199

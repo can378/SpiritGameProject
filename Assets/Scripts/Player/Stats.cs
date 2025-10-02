@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 [System.Serializable]
@@ -22,6 +23,12 @@ public class Stat
         this._DefaultValue = _DefalutValue;
         this._MaxValue = _MaxValue;
         this._MinValue = _MinValue;
+    }
+
+    public void SetDefaultValue(float _DefalutValue)
+    {
+        this._DefaultValue = _DefalutValue;
+        ResetValue();
     }
 
     //public void SetDefaultValue(float _DefalutValue) { this._DefalutValue = _DefalutValue; }
@@ -83,7 +90,7 @@ public class Stats : MonoBehaviour
     /// </summary>
 
     //HP
-    [field :SerializeField] public float HPMax { get; set; } = 100f;
+    [field: SerializeField] public Stat HPMax = new Stat(100, 999999, 0);
     [field: SerializeField] public float HP { get; set; } = 100f;
     [field: SerializeField] public float tempHP { get; set; } = 0;
     // 강인도
@@ -115,6 +122,16 @@ public class Stats : MonoBehaviour
     // 최소 0
     [field: SerializeField] public Stat AttackPower = new Stat(0.0f, float.MaxValue, 0);
 
+    // 오브젝트의 공격 시 효과
+    // 상태이상 효과
+    [field: SerializeField] public List<SE_TYPE> SEType { get; set; } = new List<SE_TYPE>();
+
+    // 공격 성공 시 효과
+    [field: SerializeField] public List<COMMON_TYPE> CommonType { get; set; } = new List<COMMON_TYPE>();
+
+    // 투사체 전용 효과
+    [field: SerializeField] public List<PROJECTILE_TYPE> ProjectileType { get; set; } = new List<PROJECTILE_TYPE>();
+
     // Skill
     // SkillPower
     // UI 도력 0
@@ -128,5 +145,7 @@ public class Stats : MonoBehaviour
     // 최소 0
     [field: SerializeField] public Stat MoveSpeed = new Stat(5f, float.MaxValue, 0);
 
-    [field: SerializeField] public List<StatusEffect> activeEffects = new List<StatusEffect>();         //버프 디버프
+    
+    [field: SerializeField] public SerializedDictionary<int, PassiveData> activePassive = new SerializedDictionary<int, PassiveData>();         //버프 디버프
+    [field: SerializeField] public SerializedDictionary<int, Buff> activeEffects = new SerializedDictionary<int, Buff>();         //버프 디버프
 }

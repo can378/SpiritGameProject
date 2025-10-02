@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2240183684125499985}
   - component: {fileID: 4326583180886243799}
-  - component: {fileID: 2558469160367410418}
   - component: {fileID: 2434766156480643662}
+  - component: {fileID: 1064557892315499336}
   m_Layer: 6
   m_Name: 14_DokkabeBat
   m_TagString: SelectItem
@@ -154,24 +154,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.54}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &2558469160367410418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 1
-  <selectItemRating>k__BackingField: 3
-  <selectItemName>k__BackingField: "\uB3C4\uAE68\uBE44 \uBC29\uB9DD\uC774"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 14
 --- !u!210 &2434766156480643662
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -184,3 +166,17 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &1064557892315499336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179661334137346525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <itemData>k__BackingField: {fileID: 0}
+  <weaponData>k__BackingField: {fileID: 11400000, guid: 195021dae6875074589d0ee21bf192f4, type: 2}

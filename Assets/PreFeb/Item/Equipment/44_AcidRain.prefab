@@ -158,9 +158,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9000933290160733339}
   - component: {fileID: 6601849473291929727}
-  - component: {fileID: 8131880233171108186}
-  - component: {fileID: 910505386702928194}
   - component: {fileID: 2266536775405133761}
+  - component: {fileID: 4311340882171419891}
   m_Layer: 6
   m_Name: 44_AcidRain
   m_TagString: SelectItem
@@ -220,37 +219,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &8131880233171108186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296880656510438592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 0
-  <selectItemRating>k__BackingField: 3
-  <selectItemName>k__BackingField: "\uC6B0\uBE44"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 44
---- !u!114 &910505386702928194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3296880656510438592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!210 &2266536775405133761
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -263,6 +231,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &4311340882171419891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3296880656510438592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa86b508b8af9643a3092b50d75d2af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <equipmentData>k__BackingField: {fileID: 11400000, guid: 9d4ab3058f8e3054e86d66e77e8a0a2f, type: 2}
 --- !u!1 &7983337870403065992
 GameObject:
   m_ObjectHideFlags: 0

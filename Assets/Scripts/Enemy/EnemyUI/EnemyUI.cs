@@ -23,7 +23,7 @@ public class EnemyUI : MonoBehaviour
 
     public void UpdateHealthUI()
     {
-        float normalizedHealth = (stats.HP / stats.HPMax) * 100;
+        float normalizedHealth = (stats.HP / stats.HPMax.Value) * 100;
 
         if( normalizedHealth >= 100f)
         {

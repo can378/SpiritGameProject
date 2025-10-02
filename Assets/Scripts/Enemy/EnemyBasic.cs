@@ -46,7 +46,8 @@ public class EnemyBasic : ObjectBasic
         {
             return;
         }
-        SEProgress();
+        Update_Buff();
+        Update_Passive();
         HealPoise();
         Attack();
         Move();

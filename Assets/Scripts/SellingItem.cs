@@ -63,8 +63,8 @@ public class SellingItem : MonoBehaviour, Interactable
 
         thisSelectItem = thisSlotItem.GetComponent<SelectItem>();
 
-        itemName.text = thisSelectItem.selectItemName;
-        itemPrice.text = thisSelectItem.price.ToString();
+        itemName.text = thisSelectItem.itemData.selectItemName;
+        itemPrice.text = thisSelectItem.itemData.price.ToString();
     }
 
     public string GetInteractText()
@@ -79,7 +79,7 @@ public class SellingItem : MonoBehaviour, Interactable
 
     public void BuyItem()
     {
-        int cost = thisSelectItem.price;
+        int cost = thisSelectItem.itemData.price;
 
         if (Player.instance.playerStats.coin >= cost)
         {

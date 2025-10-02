@@ -2,24 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpinAttackSkill : Skill
+public class SpinAttackSkill : SkillBase
 {
-    // 피해량
-    [field: SerializeField] int defalutDamage;
-    [field: SerializeField] float ratio;
+    [field: SerializeField] SpinAttackSkillData SASData;
 
-    // 최대 강화량
-    [field: SerializeField] float maxHoldPower;
+    
+    float holdPower;        // 강화 수치
+    GameObject spinSimul;   // 작동 중인 시뮬레이션
 
-    // 기본 크기, 이펙트 유지시간, 이펙트
-    [field: SerializeField] float size;
-    [field: SerializeField] float time;
-    [field: SerializeField] GameObject spinPrefab;
-    [field: SerializeField] GameObject spinSimulPrefab;
-
-    // 강화 수치
-    float holdPower;
-    GameObject spinSimul;
+    protected void Awake()
+    {
+        skillData = SASData;
+    }
 
     public override void Enter(ObjectBasic user)
     {
@@ -35,13 +29,13 @@ public class SpinAttackSkill : Skill
             player.stats.MoveSpeed.DecreasedValue += 0.5f;
             holdPower = 1f;
 
-            spinSimul = Instantiate(spinSimulPrefab, player.CenterPivot.transform.position, Quaternion.identity);
+            spinSimul = Instantiate(SASData.spinSimulPrefab, player.CenterPivot.transform.position, Quaternion.identity);
             spinSimul.transform.parent = user.transform;
 
-            while (holdPower < maxHoldPower && player.playerStatus.isSkillHold)
+            while (holdPower < SASData.maxHoldPower && player.playerStatus.isSkillHold)
             {
                 holdPower += 0.05f;
-                spinSimul.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
+                spinSimul.transform.localScale = new Vector3(holdPower * SASData.defaultSize * player.playerStats.weapon.GetAttackSize(), holdPower * SASData.defaultSize * player.playerStats.weapon.GetAttackSize(), 0);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -52,16 +46,16 @@ public class SpinAttackSkill : Skill
 
             enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
 
-            spinSimul = Instantiate(spinSimulPrefab, enemy.CenterPivot.transform.position, Quaternion.identity);
+            spinSimul = Instantiate(SASData.spinSimulPrefab, enemy.CenterPivot.transform.position, Quaternion.identity);
             spinSimul.transform.parent = user.transform;
 
             holdPower = 1f;
             timer = 0;
 
-            while (holdPower < maxHoldPower && timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
+            while (holdPower < SASData.maxHoldPower && timer <= SASData.maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
                 holdPower += 0.05f;
-                spinSimul.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);
+                spinSimul.transform.localScale = new Vector3(holdPower * SASData.defaultSize, holdPower * SASData.defaultSize, 0);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -88,20 +82,20 @@ public class SpinAttackSkill : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            Weapon weapon = player.weaponList[player.playerStats.weapon];
-            GameObject effect = Instantiate(spinPrefab, player.CenterPivot.transform.position, user.transform.rotation);
+            PlayerWeapon weapon = player.playerStats.weapon;
+            GameObject effect = Instantiate(SASData.spinPrefab, player.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponType.ToString()];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
 
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * SASData.skillDefalutCoolTime;
 
             Destroy(spinSimul);
 
             effect.transform.parent = user.transform;
-            effect.transform.localScale = new Vector3(holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, holdPower * size * player.weaponList[player.playerStats.weapon].attackSize, 0);
+            effect.transform.localScale = new Vector3(holdPower * SASData.defaultSize * weapon.GetAttackSize(), holdPower * SASData.defaultSize * weapon.GetAttackSize(), 0);
             effect.tag = "PlayerAttack";
             effect.layer = LayerMask.NameToLayer("PlayerAttack");
             /*
@@ -116,11 +110,11 @@ public class SpinAttackSkill : Skill
             디버프 = 없음
             */
             hitDetection.SetHit_Ratio(
-             defalutDamage * holdPower, ratio * holdPower, player.stats.AttackPower,
-             player.weaponList[player.playerStats.weapon].knockBack * holdPower, 
+             SASData.defaultDamage * holdPower, SASData.ratio * holdPower, player.stats.AttackPower,
+             weapon.GetKnockBack() * holdPower, 
              player.playerStats.CriticalChance, 
              player.playerStats.CriticalDamage);
-            hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
+            //hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
             // 파티클
@@ -132,12 +126,12 @@ public class SpinAttackSkill : Skill
 
             // rate 동안 유지
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
-            Destroy(effect, time * attackRate);
+            Destroy(effect, SASData.effectTime * attackRate);
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject effect = Instantiate(spinPrefab, enemy.CenterPivot.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(SASData.spinPrefab, enemy.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
@@ -146,7 +140,7 @@ public class SpinAttackSkill : Skill
             Destroy(spinSimul);
 
             effect.transform.parent = user.transform;
-            effect.transform.localScale = new Vector3(holdPower * size, holdPower * size, 0);
+            effect.transform.localScale = new Vector3(holdPower * SASData.defaultSize, holdPower * SASData.defaultSize, 0);
             effect.tag = "EnemyAttack";
             effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
@@ -162,13 +156,13 @@ public class SpinAttackSkill : Skill
             디버프 = 없음
             */
             hitDetection.SetHit_Ratio(
-             defalutDamage * holdPower, ratio * holdPower, enemy.stats.AttackPower,
+             SASData.defaultDamage * holdPower, SASData.ratio * holdPower, enemy.stats.AttackPower,
              10 * holdPower);
             hitDetection.user = user;
 
             // rate 동안 유지
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
-            Destroy(effect, time);
+            Destroy(effect, SASData.effectTime);
         }
     }
 

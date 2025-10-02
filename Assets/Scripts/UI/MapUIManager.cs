@@ -174,7 +174,7 @@ public class MapUIManager : MonoBehaviour
         // Main 씬 안거치고 Map 씬 들어가면 걸리는 듯
         // 아니면 final 씬 에서 설정을 안해서 일 듯
 
-        InvenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.ToString();
+        InvenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.Value.ToString();
         InvenStatsValueTxt[1].text = Player.instance.playerStats.AttackPower.Value.ToString();
         InvenStatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
         InvenStatsValueTxt[3].text = (Player.instance.playerStats.CriticalChance.Value * 100).ToString() + " %";
@@ -188,7 +188,7 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateHealthUI()
     {
-        float normalizedHealth = (Player.instance.stats.HP / Player.instance.stats.HPMax) *100;
+        float normalizedHealth = (Player.instance.stats.HP / Player.instance.stats.HPMax.Value) *100;
         Hpslider.value = normalizedHealth;
     }
 
@@ -227,7 +227,7 @@ public class MapUIManager : MonoBehaviour
     {
         if (Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex] != 0)
         {
-            skillImg.GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex]].GetComponentInChildren<SpriteRenderer>().sprite;
+            skillImg.GetComponent<Image>().sprite = Player.instance.skillList[Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex]].GetComponent<SkillBase>().skillData.sprite;
         }
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
@@ -267,17 +267,17 @@ public class MapUIManager : MonoBehaviour
             return;
 
         // 무기 이미지
-        if (Player.instance.playerStats.weapon != 0)
+        if (Player.instance.playerStats.weapon.weaponData != null)
         {
-            InvenWeaponImage.GetComponent<Image>().sprite = GameData.instance.weaponList[Player.instance.playerStats.weapon].GetComponentInChildren<SpriteRenderer>().sprite; ;
+            InvenWeaponImage.GetComponent<Image>().sprite = Player.instance.playerStats.weapon.weaponData.sprite;
         }
         else { InvenWeaponImage.GetComponent<Image>().sprite = null;}
 
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
-            if (Player.instance.playerStats.equipments[i] != 0)
-                InvenEquipmentsImage[i].GetComponent<Image>().sprite = GameData.instance.equipmentList[Player.instance.playerStats.equipments[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+            if (Player.instance.playerStats.equipments[i] != null)
+                InvenEquipmentsImage[i].GetComponent<Image>().sprite = Player.instance.playerStats.equipments[i].sprite;
             else
                 InvenEquipmentsImage[i].GetComponent<Image>().sprite = null;
         }
@@ -338,7 +338,7 @@ public class MapUIManager : MonoBehaviour
 
         nearObjectPanel.SetActive(true);
 
-        //nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
+        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
         nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText();   // GetComponent 변경하기
     }
 
@@ -362,35 +362,35 @@ public class MapUIManager : MonoBehaviour
 
         toolTipPanel.SetActive(true);
 
-        ToolTipNameText.text = ToolTipCurItem.selectItemName.Replace("\\n", "\n");
+        ToolTipNameText.text = ToolTipCurItem.itemData.selectItemName;
         ToolTipNameText.color = ToolTipCurItem.GetRatingColor();
 
-        ToolTipDescriptionText.text = ToolTipCurItem.description;
+        ToolTipDescriptionText.text = ToolTipCurItem.itemData.Update_Description(Player.instance.playerStats);
 
         if (ToolTipCurItem is Weapon weapon)
         {
             ToolTipNum.text = "피해량";
-            ToolTipNumText.text = weapon.attackPower.ToString();
+            ToolTipNumText.text = weapon.weaponData.attackPower.ToString();
             ToolTipType.text = "분류";
-            ToolTipTypeText.text = weapon.TypeToKorean();
+            ToolTipTypeText.text = weapon.weaponData.TypeToKorean();
         }
-        else if (ToolTipCurItem is Skill skill)
+        else if (ToolTipCurItem is SkillItem skill)
         {
-            ToolTipNum.text = "";
-            ToolTipNumText.text = "";
-            ToolTipType.text = "";
+            ToolTipNum.text = "피해량";
+            ToolTipNumText.text = skill.skillData.DamageText(Player.instance.playerStats).ToString();
+            ToolTipType.text = skill.skillData.skillType.ToString();
             ToolTipTypeText.text = "";
         }
         else
         {
-            if (ToolTipCurItem.selectItemType == SelectItemType.Equipments)
+            if (ToolTipCurItem.itemData.selectItemType == SelectItemType.Equipments)
             {
                 ToolTipNum.text = "";
                 ToolTipNumText.text = "";
                 ToolTipType.text = "";
                 ToolTipTypeText.text = "";
             }
-            else if (ToolTipCurItem.selectItemType == SelectItemType.Consumable)
+            else if (ToolTipCurItem.itemData.selectItemType == SelectItemType.Consumable)
             {
                 ToolTipNum.text = "";
                 ToolTipNumText.text = "";
@@ -443,7 +443,7 @@ public class MapUIManager : MonoBehaviour
         if(!Boss.enemyStatus.EnemyTarget)
             return;
 
-        float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax) * 100;
+        float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax.Value) * 100;
         BossHpslider.value = normalizedHealth;
     }
 

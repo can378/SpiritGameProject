@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 61008333135758939}
   - component: {fileID: 2859637313133851327}
-  - component: {fileID: 8078449976750141569}
   - component: {fileID: 663711853687901856}
+  - component: {fileID: 1568661603291473065}
   m_Layer: 6
   m_Name: 02_SpinAttack
   m_TagString: SelectItem
@@ -154,24 +154,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &8078449976750141569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5904743163423667712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 3
-  <selectItemRating>k__BackingField: 0
-  <selectItemName>k__BackingField: "\uD68C\uC804\uBCA0\uAE30"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 2
 --- !u!210 &663711853687901856
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -184,6 +166,19 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &1568661603291473065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5904743163423667712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05818f2a4b9ac77498a2687e5340b335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <skillData>k__BackingField: {fileID: 11400000, guid: c495f0c1961f9d44289ca6cc6ee47986, type: 2}
 --- !u!1 &6746357915241212528
 GameObject:
   m_ObjectHideFlags: 0

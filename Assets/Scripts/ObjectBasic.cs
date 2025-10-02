@@ -96,9 +96,10 @@ public class ObjectBasic : MonoBehaviour
         // 상태이상 적용
         if (hitDetection.statusEffect != null)
         {
-            foreach (int statusEffectIndex in hitDetection.statusEffect)
+            foreach (BuffData statusEffect in hitDetection.statusEffect)
             {
-                ApplyBuff(statusEffectIndex);
+                print(statusEffect.buffName);
+                ApplyBuff(statusEffect);
             }
         }
 
@@ -176,7 +177,7 @@ public class ObjectBasic : MonoBehaviour
         damage = criticalHit ? damage * criticalDamage : damage;
 
         Debug.Log(this.gameObject.name + " damaged : " + (1 - stats.DefensivePower.Value) * damage);
-        stats.HP = Mathf.Min(stats.HP - ((1 - stats.DefensivePower.Value) * damage), stats.HPMax);
+        stats.HP = Mathf.Min(stats.HP - ((1 - stats.DefensivePower.Value) * damage), stats.HPMax.Value);
 
         if (stats.HP <= 0)
             Dead();
@@ -299,79 +300,172 @@ public class ObjectBasic : MonoBehaviour
 
     #region Buff
 
-    public StatusEffect ApplyBuff(int buffIndex)
+    public Buff ApplyBuff(BuffData _Buff)
     {
-        if (status.isInvincible)
-            return null;
+        Buff buff;
+        stats.activeEffects.TryGetValue(_Buff.buffID,out buff);
 
-        StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffID").GetValue(x) == buffIndex);
-
-        if (statusEffect)
+        // 이미 같은 버프가 있다면 중첩 처리
+        if (buff != null)
         {
-            statusEffect.Overlap();
-            return statusEffect;
+            buff.Overlap();
+            return buff;
         }
 
+        buff = new Buff(_Buff, this);
 
-        GameObject Buff = Instantiate(GameData.instance.statusEffectList[buffIndex], buffTF);
-        statusEffect = Buff.GetComponent<StatusEffect>();
-        statusEffect.SetTarget(gameObject);
+        buff.Apply();
+        stats.activeEffects.Add(_Buff.buffID,buff);
 
-        statusEffect.Apply();
-        stats.activeEffects.Add(statusEffect);
-
-        return statusEffect;
+        return buff;
     }
 
-    public void RemoveBuff(int buffIndex)
+    public Buff FindBuff(BuffData _Buff)
     {
-        StatusEffect statusEffect = stats.activeEffects.Find(x => (int)x.GetType().GetProperty("buffID").GetValue(x) == buffIndex);
+        Buff buff;
+        stats.activeEffects.TryGetValue(_Buff.buffID, out buff);
+        return buff;
+    }
 
-        if (statusEffect)
+    public void RemoveBuff(BuffData _Buff)
+    {
+        Buff buff;
+        stats.activeEffects.TryGetValue(_Buff.buffID, out buff);
+
+        if (buff != null)
         {
-            statusEffect.Remove();                                  // 버프 해제
-            Destroy(statusEffect.gameObject);                       // 버프 아이콘 삭제
-            stats.activeEffects.Remove(statusEffect);               // 리스트에서 제거
+            buff.Remove();                                  // 버프 해제
+            //Destroy(buff.gameObject);                       // 버프 아이콘 삭제
+            stats.activeEffects.Remove(_Buff.buffID);               // 리스트에서 제거
         }
     }
 
-    protected void SEProgress()
+    protected void Update_Buff()
     {
-        for (int i = 0; i < stats.activeEffects.Count();)
+        List<int> toRemove = new();
+
+        foreach (var kvp in stats.activeEffects)
         {
             // 지속 시간 종료 시
-            if(0 >= stats.activeEffects[i].duration)
+            Buff buff = kvp.Value;
+            if (0 >= buff.curDuration)
             {
-                stats.activeEffects[i].Remove();                // 버프 해제
-                Destroy(stats.activeEffects[i].gameObject);     // 버프 아이콘 삭제
-                stats.activeEffects.RemoveAt(i);                // 리스트에서 제거
+                stats.activeEffects[buff.buffData.buffID].Remove();                // 버프 해제
+                //Destroy(stats.activeEffects[i].gameObject);     // 버프 아이콘 삭제
+                toRemove.Add(buff.buffData.buffID);              // 리스트에서 제거
                 continue;
             }
-            stats.activeEffects[i].duration -= Time.deltaTime;  // 지속시간 감소
-            stats.activeEffects[i].Progress();                  // 효과
-            ++i;
+            buff.curDuration -= Time.deltaTime;  // 지속시간 감소
+            buff.Update_Buff();                  // 효과
         }
+
+        foreach (int id in toRemove)
+            stats.activeEffects.Remove(id);
     }
 
-    public void RemoveAllEffects()
+    public void RemoveAllBuff()
     {
-        foreach (StatusEffect effect in stats.activeEffects)
+        foreach (var kvp in stats.activeEffects)
         {
-            effect.Remove();
-            Destroy(effect.gameObject);
+            Buff buff = kvp.Value;
+            buff.Remove();
+            //Destroy(effect.gameObject);
         }
         stats.activeEffects.Clear();
     }
 
     #endregion Buff
 
+    #region Passive
+    
+    public PassiveData ApplyPassive(PassiveData _Passive)
+    {
+        PassiveData passive;
+        stats.activePassive.TryGetValue(_Passive.PID, out passive);
+
+        if (passive)
+        {
+            return passive;
+        }
+        _Passive.Apply(this);
+        stats.activePassive.Add(_Passive.PID,_Passive);
+
+        return passive;
+    }
+
+    public PassiveData FindPassive(PassiveData _Passive)
+    {
+        // 있는지 찾아보고 반환한다.
+        PassiveData passive;
+        stats.activePassive.TryGetValue(_Passive.PID, out passive);
+        return passive;
+    }
+
+    public void RemovePassive(PassiveData _Passive)
+    {
+        PassiveData passive;
+        stats.activePassive.TryGetValue(_Passive.PID, out passive);
+
+        if (passive)
+        {
+            passive.Remove(this);                                   // 버프 해제
+            stats.activePassive.Remove(passive.PID);                    // 리스트에서 제거
+        }
+        else
+        {
+            Debug.Log("존재하지 않는 패시브 제거");
+        }
+    }
+
+    protected void Update_Passive()
+    {
+        foreach (var kvp in stats.activePassive)
+        {
+            // 지속 시간 종료 시
+            PassiveData passive = kvp.Value;
+            passive.Update_Passive(this);
+        }
+    }
+
+    public void AddEnchant_SE(SE_TYPE _Type)
+    {
+        stats.SEType.Insert(0, _Type);
+    }
+
+    public void AddEnchant_Common(COMMON_TYPE _Type)
+    {
+        stats.CommonType.Insert(0, _Type);
+    }
+
+    public void AddEnchant_Projectile(PROJECTILE_TYPE _Type)
+    {
+        stats.ProjectileType.Insert(0, _Type);
+    }
+
+    public void RemoveEnchant_SE(SE_TYPE _Type)
+    {
+        stats.SEType.Remove(_Type);
+    }
+
+    public void RemoveEnchant_Common(COMMON_TYPE _Type)
+    {
+        stats.CommonType.Remove(_Type);
+    }
+
+    public void RemoveEnchant_Projectile(PROJECTILE_TYPE _Type)
+    {
+        stats.ProjectileType.Remove(_Type);
+    }
+    
+    #endregion
+
     #region Dead
 
     public virtual void Dead()
     {
         print(this.name + " Dead");
-        
-        RemoveAllEffects();
+
+        RemoveAllBuff();
         FlinchCancle();
         StopAllCoroutines();
         ReceivedAttackID.Clear();
@@ -401,7 +495,7 @@ public class ObjectBasic : MonoBehaviour
 
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
-        RemoveAllEffects();
+        RemoveAllBuff();
     }
 
     /// <summary>

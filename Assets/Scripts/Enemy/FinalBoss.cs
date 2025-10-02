@@ -23,7 +23,7 @@ public class FinalBoss : EnemyBasic
     public GameObject face;
     public List<GameObject> faces;
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         
@@ -46,7 +46,7 @@ public class FinalBoss : EnemyBasic
         //print("start finall boss pattern");
         
 
-        if ( (enemyStats.HP <= (enemyStats.HPMax / 2))
+        if ( (enemyStats.HP <= (enemyStats.HPMax.Value / 2))
             && phase == finalBossPhase.phase1 )
         {
             StopAllCoroutines();

@@ -5,20 +5,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public enum SE_TYPE { NONE = -1, Slow = 0, Burn = 3, Poison = 4, Bleeding = 8, Curse = 9, END }
-public enum COMMON_TYPE {NONE = -1, Thunderbolt, END}
-public enum PROJECTILE_TYPE {NONE = -1, Explosion, END }
+public enum SE_TYPE { None = -1, Slow = 0, Burn = 3, Poison = 4, Bleeding = 8, END }
+public enum COMMON_TYPE { None = -1, Thunderbolt, END}
+public enum PROJECTILE_TYPE { None = -1, Explosion, END }
 
 public class Enchant : MonoBehaviour
 {
-    // 기본 공격 관련 특수 효과 스크립트
+    // 기본 관련 특수 효과 스크립트
     // 우선은 플레이어 전용 스크립트
-    // 인챈트는 반드시 한개만 존재
-    [field: SerializeField] public SE_TYPE SEType { get; private set; }
+    [field: SerializeField] public SE_TYPE SEType { get; private set; } = SE_TYPE.END;                 // 상태이상 효과
 
-    [field: SerializeField] public COMMON_TYPE CommonType { get; private set; }
+    [field: SerializeField] public COMMON_TYPE CommonType { get; private set; } = COMMON_TYPE.END;       // 타격 성공 시 효과
 
-    [field: SerializeField] public PROJECTILE_TYPE ProjectileType { get; private set; }
+    [field: SerializeField] public PROJECTILE_TYPE ProjectileType { get; private set; } = PROJECTILE_TYPE.END;// 투사체 전용 효과
 
     [field: SerializeField] HitDetection hitDetection;
 
@@ -65,8 +64,18 @@ public class Enchant : MonoBehaviour
 
     public void SetSE(SE_TYPE _Type)
     {
+        
         SEType = _Type;
-        hitDetection.SetSE((int)SEType);
+
+        if (SEType != SE_TYPE.None)
+        {
+            hitDetection.SetSE(DataManager.instance.gameData.statusEffectList[(int)_Type]);
+        }
+        else
+        {
+            hitDetection.SetSE(null);
+        }
+
         // 파티클
         {
             try
@@ -85,9 +94,6 @@ public class Enchant : MonoBehaviour
                         break;
                     case SE_TYPE.Bleeding:
                         particleMain.startColor = new Color(128.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 1.0f);
-                        break;
-                    case SE_TYPE.Curse:
-                        particleMain.startColor = Color.black;
                         break;
                     default:
                         particleMain.startColor = Color.white;
@@ -114,7 +120,7 @@ public class Enchant : MonoBehaviour
         switch (ProjectileType)
         {
             case PROJECTILE_TYPE.Explosion:
-                hitDetection.SetDisableObject(true,Explosion);
+                hitDetection.SetDisableObject(true, Explosion);
                 break;
             default:
                 break;

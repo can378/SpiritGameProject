@@ -93,9 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6205669209840993893}
-  - component: {fileID: 8238157437368939851}
   - component: {fileID: 3890777255982791601}
   - component: {fileID: 9288117015805262}
+  - component: {fileID: 5242060714080859572}
   m_Layer: 6
   m_Name: sansam
   m_TagString: SelectItem
@@ -119,27 +119,6 @@ Transform:
   - {fileID: 1930755099528716942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8238157437368939851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7258524340916383928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6b42a55f9ef9144b36fe9fc158b730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 2
-  <selectItemRating>k__BackingField: 3
-  <selectItemName>k__BackingField: sanSam
-  <description>k__BackingField: 
-  <price>k__BackingField: 4
-  <selectItemID>k__BackingField: 3
-  <finishUse>k__BackingField: 0
-  <throwItem>k__BackingField: 0
-  healValue: 100
 --- !u!50 &3890777255982791601
 Rigidbody2D:
   serializedVersion: 4
@@ -202,3 +181,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.85}
   serializedVersion: 2
   m_Radius: 1.19
+--- !u!114 &5242060714080859572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258524340916383928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c96a009cead91e408fcc25ba048bce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <consumableData>k__BackingField: {fileID: 11400000, guid: f8944933938831b42a72b28bb9db27cf, type: 2}

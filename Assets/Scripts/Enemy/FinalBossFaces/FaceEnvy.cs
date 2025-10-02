@@ -6,7 +6,7 @@ public class FaceEnvy : BossFace
 {
     //ï¿½ï¿½ï¿½ï¿½=ï¿½ï¿½Å³ï¿½ï¿½ï¿?(ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿? ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½)
 
-    [field: SerializeField] public List<Skill> skillList { get; private set; }
+    [field: SerializeField] public List<SkillBase> skillList { get; private set; }
     [field: SerializeField] public int skill { get; private set; }
     public GameObject biteArea;
 
@@ -67,19 +67,19 @@ public class FaceEnvy : BossFace
         //mimic player skill
         print("mimic player skill");
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
+        yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.DOWN ? skillList[skill].skillData.preDelay : 0);
 
         skillList[skill].Enter(this);
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
+        yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.DOWN ? skillList[skill].skillData.postDelay : 0);
 
-        yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+        yield return new WaitForSeconds(skillList[skill].skillData.skillType != SKILL_TYPE.DOWN ? skillList[skill].skillData.maxHoldTime / 2 : 0);
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
+        yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.UP ? skillList[skill].skillData.preDelay : 0);
 
         skillList[skill].Exit();
 
-        yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
+        yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.UP ? skillList[skill].skillData.postDelay : 0);
 
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;

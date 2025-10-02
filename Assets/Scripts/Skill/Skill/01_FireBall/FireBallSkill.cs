@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBallSkill : Skill
+public class FireBallSkill : SkillBase
 {
-    [Header("Information")]
-    [field: SerializeField] int defalutDamage;              // 기본 대미지
-    [field: SerializeField] float ratio;                    // 도력 비율
+    [field: SerializeField] FireBallSkillData FBSData;
+    [field: SerializeField] public GameObject rangeSimul { get; private set; }
 
-    [field: SerializeField] float knockBack;                // 넉백 거리
-    [field: SerializeField] float range;                    // 사정거리
+    [field: SerializeField] public GameObject fireBallSimul { get; private set; }
 
-    [Header ("GameObject")]
-    [field: SerializeField] GameObject fireBallPrefab;
-    [field: SerializeField] GameObject simulPrefab;
-    [field: SerializeField] GameObject fireBallSimulPrefab;
-
-
+    protected void Awake()
+    {
+        skillData = FBSData;
+    }
 
     public override void Enter(ObjectBasic user)
     {
@@ -30,15 +26,15 @@ public class FireBallSkill : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            fireBallSimulPrefab.SetActive(true);
-            fireBallSimulPrefab.transform.localScale = Vector3.one * 10;
+            fireBallSimul.SetActive(true);
+            fireBallSimul.transform.localScale = Vector3.one * 10;
 
-            simulPrefab.SetActive(true);
-            simulPrefab.transform.localScale = Vector3.one * range * 2;
+            rangeSimul.SetActive(true);
+            rangeSimul.transform.localScale = Vector3.one * FBSData.range * 2;
             
             while (player.playerStatus.isSkillHold)
             {
-                fireBallSimulPrefab.transform.position = player.CenterPivot.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.CenterPivot.transform.position, range);
+                fireBallSimul.transform.position = player.CenterPivot.transform.position + Vector3.ClampMagnitude(player.playerStatus.mousePos - player.CenterPivot.transform.position, FBSData.range);
                 yield return null;
             }
         }
@@ -47,15 +43,15 @@ public class FireBallSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            fireBallSimulPrefab.SetActive(true);
-            fireBallSimulPrefab.transform.localScale = Vector3.one * 10;
+            fireBallSimul.SetActive(true);
+            fireBallSimul.transform.localScale = Vector3.one * 10;
 
-            simulPrefab.SetActive(true);
-            simulPrefab.transform.localScale = Vector3.one * range * 2;
+            rangeSimul.SetActive(true);
+            rangeSimul.transform.localScale = Vector3.one * FBSData.range * 2;
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
+            while (timer <= FBSData.maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
-                fireBallSimulPrefab.transform.position = enemy.CenterPivot.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.EnemyTarget.CenterPivot.transform.position - enemy.CenterPivot.transform.position, range);
+                fireBallSimul.transform.position = enemy.CenterPivot.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.EnemyTarget.CenterPivot.transform.position - enemy.CenterPivot.transform.position, FBSData.range);
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -66,8 +62,8 @@ public class FireBallSkill : Skill
     {
         base.Cancle();
         StopCoroutine("Simulation");
-        fireBallSimulPrefab.SetActive(false);
-        simulPrefab.SetActive(false);
+        fireBallSimul.SetActive(false);
+        rangeSimul.SetActive(false);
     }
 
     public override void Exit()
@@ -84,19 +80,19 @@ public class FireBallSkill : Skill
         {
             Player player = user.GetComponent<Player>();
 
-            GameObject Effect = Instantiate(fireBallPrefab, fireBallSimulPrefab.transform.position,Quaternion.identity);
+            GameObject Effect = Instantiate(FBSData.fireBallPrefab, fireBallSimul.transform.position,Quaternion.identity);
             HitDetection hitDetection = Effect.GetComponent<HitDetection>();
 
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * FBSData.skillDefalutCoolTime;
 
-            simulPrefab.SetActive(false);
-            fireBallSimulPrefab.SetActive(false);
+            rangeSimul.SetActive(false);
+            fireBallSimul.SetActive(false);
 
             Effect.tag = "PlayerAttack";
             Effect.layer = LayerMask.NameToLayer("PlayerAttack");
 
-            hitDetection.SetHit_Ratio(defalutDamage, ratio, player.playerStats.SkillPower, knockBack);
-            hitDetection.SetSE(3);
+            hitDetection.SetHit_Ratio(FBSData.defaultDamage, FBSData.ratio, player.playerStats.SkillPower, FBSData.knockBack);
+            hitDetection.SetSE(FBSData.BurnDeBuff);
             hitDetection.user = user;
             
         }
@@ -104,19 +100,19 @@ public class FireBallSkill : Skill
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
 
-            GameObject Effect = Instantiate(fireBallPrefab, fireBallSimulPrefab.transform.position, Quaternion.identity);
+            GameObject Effect = Instantiate(FBSData.fireBallPrefab, fireBallSimul.transform.position, Quaternion.identity);
             HitDetection hitDetection = Effect.GetComponent<HitDetection>();
 
             skillCoolTime = 5;
 
-            simulPrefab.SetActive(false);
-            fireBallSimulPrefab.SetActive(false);
+            rangeSimul.SetActive(false);
+            fireBallSimul.SetActive(false);
 
             Effect.tag = "EnemyAttack";
             Effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
-            hitDetection.SetHit_Ratio(defalutDamage, ratio, enemy.stats.SkillPower, knockBack);
-            hitDetection.SetSE(3);
+            hitDetection.SetHit_Ratio(FBSData.defaultDamage, FBSData.ratio, enemy.stats.SkillPower, FBSData.knockBack);
+            hitDetection.SetSE(FBSData.BurnDeBuff);
             hitDetection.user = user;
         }
     }

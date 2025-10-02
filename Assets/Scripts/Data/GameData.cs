@@ -68,7 +68,7 @@ public class GameData : MonoBehaviour
     public List<GameObject> selectItemList;         //3부터 시작
     public List<GameObject> skillList;              //4부터 시작
     public List<GameObject> testList;
-    public List<GameObject> statusEffectList;       //5부터 시작
+    public List<BuffData> statusEffectList;       //5부터 시작
     
     [field :SerializeField]
     public List<SelectItem> ItemList {get; private set;}

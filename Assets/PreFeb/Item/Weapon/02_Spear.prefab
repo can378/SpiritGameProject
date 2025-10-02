@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2240183684125499985}
   - component: {fileID: 4326583180886243799}
-  - component: {fileID: 5448845741910072288}
   - component: {fileID: -4592213054346901940}
+  - component: {fileID: 4221323244393845973}
   m_Layer: 6
   m_Name: 02_Spear
   m_TagString: SelectItem
@@ -70,24 +70,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.68}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &5448845741910072288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3179661334137346525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 1
-  <selectItemRating>k__BackingField: 1
-  <selectItemName>k__BackingField: "\uAE30\uCC3D"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 2
 --- !u!210 &-4592213054346901940
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -100,6 +82,20 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &4221323244393845973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3179661334137346525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <itemData>k__BackingField: {fileID: 0}
+  <weaponData>k__BackingField: {fileID: 11400000, guid: b6f36126693fdb947a26d8a95d2b8bc7, type: 2}
 --- !u!1 &3373618800750160635
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomBoxSkill : Skill
+public class RandomBoxSkill : SkillBase
 {
 
     [field: SerializeField] float range;
@@ -56,7 +56,7 @@ public class RandomBoxSkill : Skill
             rangeSimul.parent = enemy.transform;
             rangeSimul.localScale = new Vector3(range * 2, range * 2, 1);
 
-            while (timer <= maxHoldTime / 2 && enemy.enemyStatus.isAttack)
+            while (timer <= 9999999999999999 / 2 && enemy.enemyStatus.isAttack)
             {
                 randomBoxSimul.position = enemy.transform.position + Vector3.ClampMagnitude(enemy.enemyStatus.transform.position - enemy.transform.position, range);
                 timer += Time.deltaTime;
@@ -90,12 +90,12 @@ public class RandomBoxSkill : Skill
             Player player = user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * 9999999999999999;
         }
         else if(user.tag == "Enemy")
         {
             // 쿨타임 적용
-            skillCoolTime = skillDefalutCoolTime;
+            skillCoolTime = 9999999999999999;
         }
 
         GameObject box = Instantiate(randomBoxPrefab, randomBoxSimul.position, Quaternion.identity);

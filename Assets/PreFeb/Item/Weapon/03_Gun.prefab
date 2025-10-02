@@ -94,8 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5242110244964992286}
   - component: {fileID: 7923798826213622146}
-  - component: {fileID: 6582382542316258914}
   - component: {fileID: 1583950236061177525}
+  - component: {fileID: 4946466174543720509}
   m_Layer: 6
   m_Name: 03_Gun
   m_TagString: SelectItem
@@ -154,24 +154,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.71}
   serializedVersion: 2
   m_Radius: 1
---- !u!114 &6582382542316258914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830712857820811360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7586ef5fe7133ed498fb90f2642ce14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 1
-  <selectItemRating>k__BackingField: 2
-  <selectItemName>k__BackingField: "\uB9AC\uBCFC\uBC84"
-  <description>k__BackingField: 
-  <price>k__BackingField: 0
-  <selectItemID>k__BackingField: 3
 --- !u!210 &1583950236061177525
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -184,3 +166,17 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &4946466174543720509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830712857820811360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828460f7115800a43b5b866ef8652453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <itemData>k__BackingField: {fileID: 0}
+  <weaponData>k__BackingField: {fileID: 11400000, guid: 776e6295127b3ab47a75d6206a88aeff, type: 2}

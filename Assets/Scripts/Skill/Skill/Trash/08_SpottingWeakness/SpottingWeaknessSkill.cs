@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpottingWeaknessSkill : Skill
+public class SpottingWeaknessSkill : SkillBase
 {
     // 피해량
-    [field: SerializeField] int spottingWeaknessBuff;
+    [field: SerializeField] BuffData spottingWeaknessBuff;
 
     public override void Enter(ObjectBasic user)
     {
@@ -22,7 +22,7 @@ public class SpottingWeaknessSkill : Skill
             Player player = this.user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 - player.playerStats.skillCoolTime) * 9999999999;
 
             player.ApplyBuff(spottingWeaknessBuff);
         }
@@ -31,7 +31,7 @@ public class SpottingWeaknessSkill : Skill
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
 
             // 쿨타임 적용
-            skillCoolTime =skillDefalutCoolTime;
+            skillCoolTime =99999999;
 
             enemy.ApplyBuff(spottingWeaknessBuff);
 

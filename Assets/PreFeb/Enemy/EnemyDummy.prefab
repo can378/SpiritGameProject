@@ -171,7 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 1000000
+  HPMax:
+    _Value: 0
+    _DefaultValue: 1000000
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 1000000
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
@@ -209,6 +214,9 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
   SkillPower:
     _Value: 0
     _DefaultValue: 0
@@ -221,7 +229,7 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
-  activeEffects: []
+  activePassive: []
   enemyName: 
   DropCoin: 3
   detectionDis: 5
@@ -254,6 +262,8 @@ MonoBehaviour:
   isBoss: 0
   isRun: 0
   isWating: 0
+  isTargetNoThisRoom: 0
+  isTargetNoThisRoomTime: 0
   isTarget: 0
   isTargetForced: 0
   randomMove: 0

@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveSkill : Skill
+public class WaveSkill : SkillBase
 {
-    // 피해량
-    [field: SerializeField] public int defalutDamage { get; private set; }
-    [field: SerializeField] public float ratio { get; private set; }
-
-    // 기본 크기, 이펙트 유지시간, 이펙트
-    [field: SerializeField] float time;
-    [field: SerializeField] GameObject waveEffect;
-    [field: SerializeField] int[] statusEffect;
-
+    [field: SerializeField] WaveSkillData WSData;
+    protected void Awake()
+    {
+        skillData = WSData;
+    }
     public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
@@ -36,11 +32,11 @@ public class WaveSkill : Skill
         if(user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            GameObject effect = Instantiate(waveEffect, player.CenterPivot.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(WSData.waveEffectPrefab, player.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.skillCoolTime) * WSData.skillDefalutCoolTime;
 
             effect.transform.localScale = new Vector3(1, 1, 1);
             effect.tag = "PlayerAttack";
@@ -58,21 +54,21 @@ public class WaveSkill : Skill
             디버프 = 없음
             */
             hitDetection.SetHit_Ratio(
-             defalutDamage , ratio, player.stats.AttackPower,
+             WSData.defaultDamage, WSData.ratio, player.stats.AttackPower,
              10);
-            hitDetection.SetSEs(statusEffect);
+            hitDetection.SetSE(WSData.statusEffect);
             hitDetection.user = user;
 
             // Growing 모듈
             hitDetection.SetGrowing(true, 3);
 
             // rate 동안 유지
-            Destroy(effect,time);
+            Destroy(effect, WSData.effectTime);
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = user.GetComponent<EnemyBasic>();
-            GameObject effect = Instantiate(waveEffect, enemy.CenterPivot.transform.position, user.transform.rotation);
+            GameObject effect = Instantiate(WSData.waveEffectPrefab, enemy.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
@@ -95,16 +91,16 @@ public class WaveSkill : Skill
             디버프 = 없음
             */
             hitDetection.SetHit_Ratio(
-             defalutDamage, ratio, enemy.stats.SkillPower,
+             WSData.defaultDamage, WSData.ratio, enemy.stats.SkillPower,
              10);
-            hitDetection.SetSEs(statusEffect);
+            hitDetection.SetSE(WSData.statusEffect);
             hitDetection.user = user;
 
             // Growing 모듈
             hitDetection.SetGrowing(true, 3);
 
             // rate 동안 유지
-            Destroy(effect,time);
+            Destroy(effect, WSData.effectTime);
         }
     }
 

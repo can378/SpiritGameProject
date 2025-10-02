@@ -138,7 +138,9 @@ MonoBehaviour:
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 04000000
+  <statusEffect>k__BackingField:
+  - {fileID: 11400000, guid: 7c65e62b47e793f41a22f05448698b1d, type: 2}
+  EnableTime: 0
   isPooling: 1
   isAttackIDManage: 0
   isMultiHit: 0
@@ -152,14 +154,19 @@ MonoBehaviour:
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
 --- !u!1001 &8754528625552101300

@@ -91,7 +91,7 @@ public class ObjectPoolManager : MonoBehaviour
         GameObject select = null;
 
         int PrefabIndex = prefabs.FindIndex(x => x == _Prefab);
-        print(PrefabIndex);
+        //print(PrefabIndex);
         if (PrefabIndex != -1)
         {
             select = Get(PrefabIndex, _Position);

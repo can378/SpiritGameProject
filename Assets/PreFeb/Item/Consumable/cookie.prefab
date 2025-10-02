@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7818639722795423906}
-  - component: {fileID: 6537961527661919587}
   - component: {fileID: 4038675113644370370}
   - component: {fileID: 492999446186039694}
+  - component: {fileID: 1335857205756935207}
   m_Layer: 6
   m_Name: cookie
   m_TagString: SelectItem
@@ -35,27 +35,6 @@ Transform:
   - {fileID: 3811250516467284418}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6537961527661919587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261134953656015004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6b42a55f9ef9144b36fe9fc158b730, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <selectItemType>k__BackingField: 2
-  <selectItemRating>k__BackingField: 1
-  <selectItemName>k__BackingField: cookie
-  <description>k__BackingField: 
-  <price>k__BackingField: 2
-  <selectItemID>k__BackingField: 1
-  <finishUse>k__BackingField: 0
-  <throwItem>k__BackingField: 0
-  healValue: 10
 --- !u!50 &4038675113644370370
 Rigidbody2D:
   serializedVersion: 4
@@ -118,6 +97,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.57}
   serializedVersion: 2
   m_Radius: 1.49
+--- !u!114 &1335857205756935207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261134953656015004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c96a009cead91e408fcc25ba048bce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <consumableData>k__BackingField: {fileID: 11400000, guid: 4d8b6c01658fa9a46b0a16beb2953301, type: 2}
 --- !u!1 &4007513487866669974
 GameObject:
   m_ObjectHideFlags: 0

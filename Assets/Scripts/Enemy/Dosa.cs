@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dosa : EnemyBasic
 {
-    [field: SerializeField] public List<Skill> skillList { get; private set; }
+    [field: SerializeField] public List<SkillBase> skillList { get; private set; }
 
     public int skill;
 
@@ -53,7 +53,7 @@ public class Dosa : EnemyBasic
 
     IEnumerator Skill()
     {
-        SKILL_TYPE _Type = (SKILL_TYPE)skillList[skill].skillType;
+        SKILL_TYPE _Type = (SKILL_TYPE)skillList[skill].skillData.skillType;
 
         // 스킬 루틴 시작
         enemyStatus.isAttack = true;
@@ -66,13 +66,13 @@ public class Dosa : EnemyBasic
             enemyAnim.animator.SetBool("isAttack", true);
 
             // Down 스킬 : 시전 선딜
-            yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].preDelay : 0);
+            yield return new WaitForSeconds(skillList[skill].skillData.skillType == 0 ? skillList[skill].skillData.preDelay : 0);
 
             // 스킬 시작
             skillList[skill].Enter(this);
 
             // Down 스킬 : 시전 후딜
-            yield return new WaitForSeconds(skillList[skill].skillType == 0 ? skillList[skill].postDelay : 0);
+            yield return new WaitForSeconds(skillList[skill].skillData.skillType == 0 ? skillList[skill].skillData.postDelay : 0);
 
             // 스킬 끝
             skillList[skill].Exit();
@@ -90,7 +90,7 @@ public class Dosa : EnemyBasic
             skillList[skill].Enter(this);
 
             // Hold 스킬 : 스킬 유지되는 시간
-            yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+            yield return new WaitForSeconds(skillList[skill].skillData.skillType != 0 ? skillList[skill].skillData.maxHoldTime / 2 : 0);
 
             // 종료
             skillList[skill].Exit();
@@ -105,20 +105,20 @@ public class Dosa : EnemyBasic
             skillList[skill].Enter(this);
 
             // Up 스킬 : 키 Up 전 대기 시간 
-            yield return new WaitForSeconds(skillList[skill].skillType != 0 ? skillList[skill].maxHoldTime / 2 : 0);
+            yield return new WaitForSeconds(skillList[skill].skillData.skillType != SKILL_TYPE.DOWN ? skillList[skill].skillData.maxHoldTime / 2 : 0);
 
             // 애니메이션 시작
             enemyAnim.animator.SetBool("isAttack", true);
 
             // Up 스킬 : 시전 선딜
-            yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].preDelay : 0);
+            yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.UP ? skillList[skill].skillData.preDelay : 0);
 
             // 스킬 종료
             skillList[skill].Exit();
             enemyStatus.attackCoroutine = null;
 
             // Up 스킬 : 시전 후딜
-            yield return new WaitForSeconds(skillList[skill].skillType == 2 ? skillList[skill].postDelay : 0);
+            yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.UP ? skillList[skill].skillData.postDelay : 0);
 
             // 애니메이션 끝
             enemyAnim.animator.SetBool("isAttack", false);
