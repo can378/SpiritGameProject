@@ -21,6 +21,9 @@ public class ThunderboltSkillData : SkillData
     [field: SerializeField, Header("GameObject"), Tooltip("º­¶ô ÇÁ¸®ÆÕ")] public GameObject thunderboltEffectSimul { get; private set; }
     [field: SerializeField, Header("GameObject"), Tooltip("º­·« ¼Ò¿ø ¹üÀ§ ½Ã¹Ä ÇÁ¸®ÆÕ")] public GameObject summonAreaSimul { get; private set; }
 
-
+    public override string Update_NumText(Stats _Stats)
+    {
+        return "Å¸´ç " + (defaultDamage + _Stats.SkillPower.Value * ratio).ToString();
+    }
 
 }

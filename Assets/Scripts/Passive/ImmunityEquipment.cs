@@ -22,4 +22,9 @@ public class Immunity : PassiveData
     {
         _User.stats.SEResist[(int)ImmunBuffType].AddValue--;
     }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, ImmunBuffType);
+    }
 }

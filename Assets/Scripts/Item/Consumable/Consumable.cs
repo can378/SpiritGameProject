@@ -7,7 +7,12 @@ public class Consumable : SelectItem
 {
     [field: SerializeField] public ConsumableData consumableData { get; protected set; }
 
-    protected virtual void Awake()
+    protected void Awake()
+    {
+        itemData = consumableData;
+    }
+
+    protected void OnValidate()
     {
         itemData = consumableData;
     }

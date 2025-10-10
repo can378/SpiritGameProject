@@ -40,4 +40,10 @@ public class CriticalChanceFull : PassiveData
             playerStats.CriticalDamage.AddValue += damageVariation;
         }
     }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, chanceVariation * 100, damageVariation * 100);
+    }
+
 }

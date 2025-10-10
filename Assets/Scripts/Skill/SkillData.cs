@@ -28,20 +28,21 @@ public class SkillData : ItemData
             switch (skillType)
             {
                 case SKILL_TYPE.UP:
-                    return "즉시";
+                    return "집중";
                 case SKILL_TYPE.HOLD:
                     return "지속";
                 case SKILL_TYPE.DOWN:
-                    return "집중";
+                    return "발동";
                 default:
                     return "???";
             }
         }
     }
 
-    public virtual float DamageText(Stats _Stats)
+    public override string Update_Num()
     {
-        return 0;
+        return "피해량";
     }
+
 }
 

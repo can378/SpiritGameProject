@@ -7,5 +7,10 @@ using UnityEngine;
 
 public class LittleStarSkillData : SkillData
 {
-    [field: SerializeField, Header("Information"), Tooltip("Little Skill Buff")] public BuffData LSBuff { get; private set; }
+    [field: SerializeField, Header("Information"), Tooltip("Little Skill Buff")] public LittleStarBuff LSBuff { get; private set; }
+
+    public override string Update_NumText(Stats _Stats)
+    {
+        return (LSBuff.defalutDamage + LSBuff.ratio * _Stats.SkillPower.Value).ToString() + " X 3";
+    }
 }

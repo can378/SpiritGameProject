@@ -89,6 +89,8 @@ public class SpinAttackSkill : SkillBase
 
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
+            holdPower = SASData.maxHoldPower < holdPower ? SASData.maxHoldPower : holdPower; 
+
             // ÄðÅ¸ÀÓ Àû¿ë
             skillCoolTime = (1 + player.playerStats.skillCoolTime) * SASData.skillDefalutCoolTime;
 

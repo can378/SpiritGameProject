@@ -34,4 +34,9 @@ public class CriticalDamagePlus : PassiveData
             plyaerStats.CriticalDamage.AddValue -= variation;
         }
     }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation * 100);
+    }
 }

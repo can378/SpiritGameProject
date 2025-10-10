@@ -16,7 +16,7 @@ public class SellingItem : MonoBehaviour, Interactable
     public TMP_Text itemName;
     public TMP_Text itemPrice;
 
-    public SelectItem thisSelectItem {get; private set;}
+    [field: SerializeField] public SelectItem thisSelectItem {get; private set;}
 
     void Start()
     {
@@ -102,7 +102,7 @@ public class SellingItem : MonoBehaviour, Interactable
         if (collision.tag == "Player")
         {
             //show information
-            info.SetActive(true);
+            MapUIManager.instance.toolTipPanel.GetComponent<ToolTipUI>().OpenToolTipUI(thisSelectItem);
         }
     }
 
@@ -110,7 +110,7 @@ public class SellingItem : MonoBehaviour, Interactable
     {
         if (collision.tag == "Player")
         {
-            info.SetActive(false);
+            MapUIManager.instance.toolTipPanel.GetComponent<ToolTipUI>().CloseToolTipUI();
         }
 
     }

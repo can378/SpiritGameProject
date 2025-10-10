@@ -25,5 +25,8 @@ public class DefensivePowerPlus : PassiveData
         stats.DefensivePower.AddValue -= variation;
     }
 
-
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation * 100);
+    }
 }

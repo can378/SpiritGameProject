@@ -26,6 +26,11 @@ public class AttackCoin : PassiveData
 
     public override void Remove(ObjectBasic _User)
     {
-        
+
+    }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, m_Coin);
     }
 }

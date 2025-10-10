@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System;
+using AYellowpaper.SerializedCollections;
 
 [System.Serializable]
 public class SelectItemList
@@ -77,15 +78,11 @@ public class GameData : MonoBehaviour
     /// 빠른 불러오기 용 Dictionary
     /// 찾은 아이템의 리스트를 저장
     /// </summary>zeField]
-    Dictionary<string,List<SelectItem>> ItemList_Sort = new Dictionary<string, List<SelectItem>>();
+    [field:SerializeField]SerializedDictionary<string,List<SelectItem>> ItemList_Sort = new SerializedDictionary<string, List<SelectItem>>();
 
     void Awake()
     {
-        // 유형 -> 등급 순으로 정렬
-        ItemList.Sort(SelectItem.ClassSort);
 
-        // 혹시 모를 중복 제거
-        ItemList = ItemList.Distinct().ToList();
 
         /*
         // 유형별 정렬 ===============================================
@@ -113,6 +110,12 @@ public class GameData : MonoBehaviour
     {
         instance = this;
 
+        // 유형 -> 등급 순으로 정렬
+        ItemList.Sort(SelectItem.ClassSort);
+
+        // 혹시 모를 중복 제거
+        ItemList = ItemList.Distinct().ToList();
+
     }
 
     public string SaveToString()
@@ -124,8 +127,7 @@ public class GameData : MonoBehaviour
 
     public List<SelectItem> FindItemList(Dictionary<string, int> _NameType)
     {
-        string asString = string.Join(Environment.NewLine,_NameType);
-
+        string asString = string.Join(Environment.NewLine, _NameType);
         if (!ItemList_Sort.ContainsKey(asString))
         {
             return null;
@@ -178,7 +180,7 @@ public class GameData : MonoBehaviour
         {
             FindList = ItemList.ToList();
 
-            FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(_NameType.Key).GetValue(x) == _NameType.Value);
+            FindList = FindList.FindAll(x => (int)x.itemData.GetType().GetProperty(_NameType.Key).GetValue(x.itemData) == _NameType.Value);
 
             ItemList_Sort.Add(asString, FindList);
         }
@@ -210,7 +212,7 @@ public class GameData : MonoBehaviour
         {
             FindList = ItemList.ToList();
 
-            FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(_NameType.Key).GetValue(x) == _NameType.Value);
+            FindList = FindList.FindAll(x => (int)x.itemData.GetType().GetProperty(_NameType.Key).GetValue(x.itemData) == _NameType.Value);
 
             ItemList_Sort.Add(asString, FindList);
         }
@@ -245,7 +247,7 @@ public class GameData : MonoBehaviour
 
             foreach (KeyValuePair<string, int> Pair in _NameType)
             {
-                FindList = FindList.FindAll(x => (int)x.GetType().GetProperty(Pair.Key).GetValue(x) == Pair.Value);
+                FindList = FindList.FindAll(x => (int)x.itemData.GetType().GetProperty(Pair.Key).GetValue(x.itemData) == Pair.Value);
             }
             
             ItemList_Sort.Add(asString, FindList);
@@ -256,7 +258,7 @@ public class GameData : MonoBehaviour
             // return null;
             // 임시로 쿠키 제공으로
             Debug.Log("아이템 없네요... 이거나 드셔");
-            FindList = ItemList.FindAll(x => (int)x.GetType().GetProperty("selectItemType").GetValue(x) == (int)SelectItemType.Consumable);
+            FindList = ItemList.FindAll(x => (int)x.itemData.GetType().GetProperty("selectItemType").GetValue(x.itemData) == (int)SelectItemType.Consumable);
         }
 
         int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);

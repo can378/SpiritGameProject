@@ -12,17 +12,19 @@ public class MaxHPPlus : PassiveData
     { }
     public override void Apply(ObjectBasic _User)
     {
-        Debug.Log("플레이어 최대체력 +" + variation + " 증가");
         Stats stats = _User.GetComponent<PlayerStats>();
         stats.HPMax.AddValue += variation;
     }
 
     public override void Remove(ObjectBasic _User)
     {
-        Debug.Log("플레이어 최대체력 +" + variation + " 증가");
         Stats stats = _User.GetComponent<PlayerStats>();
         stats.HPMax.AddValue -= variation;
     }
 
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation);
+    }
 
 }

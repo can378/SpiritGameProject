@@ -26,7 +26,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject statSelectPanel;      // 스탯 선택창
     public GameObject nearObjectPanel;      // 상호작용
     public GameObject inventoryPanel;       // 장비 창
-    public GameObject toolTipPanel;
+    public ToolTipUI toolTipPanel;
 
     [SerializeField] GameObject BossProgressPanel;
 
@@ -61,30 +61,10 @@ public class MapUIManager : MonoBehaviour
     [Header("근처 아이템 관련")]
     public TMP_Text nearObjectInteraction;
 
-    // nearObject
-    [Header("툴팁 관련")]
-    [Tooltip("아이템 이름")]
-    public TMP_Text ToolTipNameText;
-    [Tooltip("아이템 수치 : 무기 또는 스킬은 피해량, 방어구는 지울 것")]
-    public TMP_Text ToolTipNum;
-    [Tooltip("아이템 수치 : 무기 또는 스킬은 피해량, 방어구는 지울 것")]
-    public TMP_Text ToolTipNumText;
-    [Tooltip("아이템 분류 ")]
-    public TMP_Text ToolTipType;
-    [Tooltip("아이템 분류 : 무기 또는 스킬은 분류, 방어구는 방어구")]
-    public TMP_Text ToolTipTypeText;
-    [Tooltip("아이템 설명")]
-    public TMP_Text ToolTipDescriptionText;
-    SelectItem ToolTipCurItem;
-
     //gameObject
     [Header("챕터 관련")]
     public TMP_Text chapterTxt;
 
-
-
-    //private bool sidePanelVisible = false;
-    //private bool EquipmentPanelVisible = false;
     UserData userData;
 
     private void Awake()
@@ -349,61 +329,19 @@ public class MapUIManager : MonoBehaviour
 
         if (Player.instance.playerStatus.nearObject == null)
         {
-            toolTipPanel.SetActive(false);
+            toolTipPanel.CloseToolTipUI();
             return;
         }
 
-
-        if (ToolTipCurItem == null || ToolTipCurItem != Player.instance.playerStatus.nearObject)
-            ToolTipCurItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>();
-
-        if (ToolTipCurItem == null)
+        SelectItem curItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>();
+        if (curItem == null)
             return;
 
-        toolTipPanel.SetActive(true);
+        toolTipPanel.OpenToolTipUI(curItem);
 
-        ToolTipNameText.text = ToolTipCurItem.itemData.selectItemName;
-        ToolTipNameText.color = ToolTipCurItem.GetRatingColor();
-
-        ToolTipDescriptionText.text = ToolTipCurItem.itemData.Update_Description(Player.instance.playerStats);
-
-        if (ToolTipCurItem is Weapon weapon)
-        {
-            ToolTipNum.text = "피해량";
-            ToolTipNumText.text = weapon.weaponData.attackPower.ToString();
-            ToolTipType.text = "분류";
-            ToolTipTypeText.text = weapon.weaponData.TypeToKorean();
-        }
-        else if (ToolTipCurItem is SkillItem skill)
-        {
-            ToolTipNum.text = "피해량";
-            ToolTipNumText.text = skill.skillData.DamageText(Player.instance.playerStats).ToString();
-            ToolTipType.text = skill.skillData.skillType.ToString();
-            ToolTipTypeText.text = "";
-        }
-        else
-        {
-            if (ToolTipCurItem.itemData.selectItemType == SelectItemType.Equipments)
-            {
-                ToolTipNum.text = "";
-                ToolTipNumText.text = "";
-                ToolTipType.text = "";
-                ToolTipTypeText.text = "";
-            }
-            else if (ToolTipCurItem.itemData.selectItemType == SelectItemType.Consumable)
-            {
-                ToolTipNum.text = "";
-                ToolTipNumText.text = "";
-                ToolTipType.text = "";
-                ToolTipTypeText.text = "";
-            }
-        }
-        //ToolTipNum;
-        //ToolTipNumText;
-        //ToolTipType;
-        //ToolTipTypeText;
 
     }
+
 
     #endregion
 

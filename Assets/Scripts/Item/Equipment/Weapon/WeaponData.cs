@@ -118,7 +118,7 @@ public class WeaponData : ItemData
         string des = description;
 
         if (passives.Count > 0)
-            des += "\n∆–Ω√∫Í";
+            des += "\n";
         for (int i = 0; i < passives.Count; ++i)
             {
                 des += "\n" + passives[i].Update_Description(_Stats);

@@ -14,4 +14,9 @@ public class Weapon : SelectItem
     {
         itemData = weaponData;
     }
+
+    protected void OnValidate()
+    {
+        itemData = weaponData;
+    }
 }

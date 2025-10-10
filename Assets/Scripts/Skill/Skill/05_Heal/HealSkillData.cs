@@ -12,6 +12,14 @@ public class HealSkillData : SkillData
 
     [field: SerializeField, Header("GameObject"), Tooltip("¿Ã∆Â∆Æ «¡∏Æ∆’")] public GameObject HealEffectPrefab { get; private set; }
 
+    public override string Update_Num()
+    {
+        return "»∏∫π∑Æ";
+    }
 
+    public override string Update_NumText(Stats _Stats)
+    {
+        return (defaultHeal * _Stats.HPMax.Value).ToString() + " ~ " + (defaultHeal * _Stats.HPMax.Value + dotHeal * maxHoldTime * _Stats.HPMax.Value).ToString();
+    }
 
 }

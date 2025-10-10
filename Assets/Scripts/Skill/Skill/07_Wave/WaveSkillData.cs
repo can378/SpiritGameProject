@@ -14,4 +14,9 @@ public class WaveSkillData : SkillData
 
     [field: SerializeField, Header("GameObject"), Tooltip("이펙트 프리팹")] public GameObject waveEffectPrefab { get; private set; }
     [field: SerializeField, Tooltip("기절 디버프")] public BuffData statusEffect { get; private set; }
+
+    public override string Update_NumText(Stats _Stats)
+    {
+        return (defaultDamage + _Stats.SkillPower.Value * ratio).ToString();
+    }
 }

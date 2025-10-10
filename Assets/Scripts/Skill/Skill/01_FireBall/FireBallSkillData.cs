@@ -16,14 +16,9 @@ public class FireBallSkillData : SkillData
 
     [field: SerializeField, Tooltip("화상 디버프")] public BuffData BurnDeBuff { get; private set; }
 
-    public override string Update_Description(Stats _Stats)
+    public override string Update_NumText(Stats _Stats)
     {
-        return string.Format(description, defaultDamage + _Stats.SkillPower.Value * ratio);
-    }
-
-    public override float DamageText(Stats _Stats)
-    {
-        return defaultDamage + ratio * _Stats.SkillPower.Value;
+        return (defaultDamage + ratio * _Stats.SkillPower.Value).ToString();
     }
 
 }

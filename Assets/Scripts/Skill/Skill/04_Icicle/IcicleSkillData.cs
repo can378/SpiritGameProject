@@ -21,7 +21,10 @@ public class IcicleSkillData : SkillData
     [field: SerializeField, Header("GameObject"), Tooltip("¿Ã∆Â∆Æ «¡∏Æ∆’")] public GameObject iciclePrefab { get; private set; }
     [field: SerializeField, Tooltip("¿Ã∆Â∆Æ Ω√πƒ «¡∏Æ∆’")] public GameObject icicleSimulPrefab { get; private set; }
 
-
+    public override string Update_NumText(Stats _Stats)
+    {
+        return (defaultDamage + ratio * _Stats.SkillPower.Value).ToString();
+    }
 
 
 }

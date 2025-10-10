@@ -11,6 +11,11 @@ public class Equipment : SelectItem
         itemData = equipmentData;
     }
 
+    protected virtual void OnValidate()
+    {
+        itemData = equipmentData;
+    }
+
     /*
     public virtual void Equip(Player user)
     {

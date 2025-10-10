@@ -38,4 +38,9 @@ public class HitSkillCoolTimeDown : PassiveData
     {
 
     }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation);
+    }
 }

@@ -18,6 +18,16 @@ public class ItemData : ScriptableObject
     [field: SerializeField] public Sprite sprite { get; private set; }
 
 
+    public virtual string Update_Num()
+    {
+        return "숫자";
+    }
+
+    public virtual string Update_NumText(Stats _Stats)
+    {
+        return "???";
+    }
+
     // 자식 클래스(Weapon, Skill 등)에서 인자를 넣는데 사용할 수 있다.
     public virtual string Update_Description(Stats _Stats)
     {

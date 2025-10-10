@@ -17,4 +17,9 @@ public class SpinAttackSkillData : SkillData
 
     [field: SerializeField, Header("GameObject"), Tooltip("¿Ã∆Â∆Æ «¡∏Æ∆’")] public GameObject spinPrefab { get; private set; }
     [field: SerializeField, Tooltip("¿Ã∆Â∆Æ Ω√πƒ «¡∏Æ∆’")] public GameObject spinSimulPrefab { get; private set; }
+
+    public override string Update_NumText(Stats _Stats)
+    {
+        return (defaultDamage + ratio * _Stats.AttackPower.Value).ToString() + "~" + ((defaultDamage + ratio * _Stats.AttackPower.Value) * maxHoldPower).ToString();
+    }
 }

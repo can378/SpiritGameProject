@@ -24,4 +24,9 @@ public class MoveSpeedPlus : PassiveData
         Stats stats = target.GetComponent<PlayerStats>();
         stats.MoveSpeed.AddValue -= variation;
     }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation);
+    }
 }

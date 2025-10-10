@@ -29,4 +29,9 @@ public class HitHeal : PassiveData
     {
 
     }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation * 100);
+    }
 }

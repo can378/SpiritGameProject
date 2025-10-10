@@ -15,14 +15,17 @@ public class AttackPowerUp : PassiveData
 
     public override void Apply(ObjectBasic _User)
     {
-        Debug.Log("플레이어 공격력 +" + variation * 100 + "% 증가");
         _User.stats.AttackPower.IncreasedValue += variation;
     }
 
     // Update is called once per frame
     public override void Remove(ObjectBasic _User)
     {
-        Debug.Log("플레이어 공격력 +" + variation * 100 + "% 증가");
         _User.stats.AttackPower.IncreasedValue -= variation;
+    }
+
+    public override string Update_Description(Stats _Stats)
+    {
+        return string.Format(PDescription, variation * 100);
     }
 }
