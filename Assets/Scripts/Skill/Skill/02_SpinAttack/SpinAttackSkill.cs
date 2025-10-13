@@ -92,7 +92,7 @@ public class SpinAttackSkill : SkillBase
             holdPower = SASData.maxHoldPower < holdPower ? SASData.maxHoldPower : holdPower; 
 
             // ÄðÅ¸ÀÓ Àû¿ë
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * SASData.skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * SASData.skillDefalutCoolTime;
 
             Destroy(spinSimul);
 

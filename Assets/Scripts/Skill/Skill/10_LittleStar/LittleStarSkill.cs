@@ -35,7 +35,7 @@ public class LittleStarSkill : SkillBase
             Player player = this.user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * LSSData.skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * LSSData.skillDefalutCoolTime;
 
             player.ApplyBuff(LSSData.LSBuff);
 

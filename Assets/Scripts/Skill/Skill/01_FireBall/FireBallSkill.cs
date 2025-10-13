@@ -83,7 +83,7 @@ public class FireBallSkill : SkillBase
             GameObject Effect = Instantiate(FBSData.fireBallPrefab, fireBallSimul.transform.position,Quaternion.identity);
             HitDetection hitDetection = Effect.GetComponent<HitDetection>();
 
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * FBSData.skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * FBSData.skillDefalutCoolTime;
 
             rangeSimul.SetActive(false);
             fireBallSimul.SetActive(false);

@@ -139,7 +139,7 @@ public class WheelWindSkill : SkillBase
             yield return new WaitForSeconds(WWSData.postDelay * attackRate);
 
             // ��Ÿ�� ����
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * WWSData.skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * WWSData.skillDefalutCoolTime;
 
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
         }

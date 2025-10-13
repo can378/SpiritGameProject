@@ -44,14 +44,7 @@ public class PlayerStats : Stats
     // 낮을수록 도술 자수 사용 가능
     // 도술 재사용 대기 시간 = 도술 기본 재사용 대기 시간 * 재사용 대기시간
     // 최소 -80% ,최대 80%
-    [field: SerializeField] public float defaultSkillCoolTime { get; set; } = 0;
-    public float addSkillCoolTime { get; set; }
-    public float increasedSkillCoolTime { get; set; }
-    public float decreasedSkillCoolTime { get; set; }
-    public float skillCoolTime
-    {
-        get { return Mathf.Clamp((defaultSkillCoolTime + addSkillCoolTime) * (1f + increasedSkillCoolTime) * (1f - decreasedSkillCoolTime), -0.8f, 0.8f); }
-    }
+    [field: SerializeField] public Stat SkillCoolTime = new Stat(0.0f, 0.8f, -0.8f);
 
     // Move
 

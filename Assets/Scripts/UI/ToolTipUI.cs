@@ -9,17 +9,26 @@ public class ToolTipUI : MonoBehaviour
 {
 
     // nearObject
-    [Header("툴팁 관련")]
+    [Header("아이템 이름")]
     [Tooltip("아이템 이름")]
     public TMP_Text ToolTipNameText;
-    [Tooltip("아이템 수치 : 무기 또는 스킬은 피해량, 방어구는 지울 것")]
+
+
+    [Header("아이템 정보")]
+    [Header("아이템 간단정보")]
+    [Tooltip("아이템 간단 정보")]   // 방어구는 비활성화
+    public GameObject ToolTipSimpleInfo;
+    [Tooltip("아이템 수치 : 무기 또는 스킬은 피해량")]
     public TMP_Text ToolTipNum;
-    [Tooltip("아이템 수치 : 무기 또는 스킬은 피해량, 방어구는 지울 것")]
+    [Tooltip("아이템 수치 : 무기 또는 스킬은 피해량")]
     public TMP_Text ToolTipNumText;
-    [Tooltip("아이템 분류 ")]
+    [Tooltip("아이템 기타 ")]
     public TMP_Text ToolTipType;
-    [Tooltip("아이템 분류 : 무기 또는 스킬은 분류, 방어구는 방어구")]
+    [Tooltip("아이템 기타 : 무기는 분류, 스킬은 재사용 대기 시간")]
     public TMP_Text ToolTipTypeText;
+
+
+    [Header("아이템 설명")]
     [Tooltip("아이템 설명")]
     public TMP_Text ToolTipDescriptionText;
     SelectItem ToolTipCurItem;
@@ -52,8 +61,8 @@ public class ToolTipUI : MonoBehaviour
         {
             ToolTipNum.text = skill.skillData.Update_Num();
             ToolTipNumText.text = skill.skillData.Update_NumText(Player.instance.playerStats);
-            ToolTipType.text = "분류";
-            ToolTipTypeText.text = skill.skillData.TypeToKorean();
+            ToolTipType.text = "대기 시간";
+            ToolTipTypeText.text = skill.skillData.Update_CoolTime(Player.instance.playerStats);
         }
         else
         {

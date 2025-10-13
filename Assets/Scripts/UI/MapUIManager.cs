@@ -160,7 +160,7 @@ public class MapUIManager : MonoBehaviour
         InvenStatsValueTxt[3].text = (Player.instance.playerStats.CriticalChance.Value * 100).ToString() + " %";
         InvenStatsValueTxt[4].text = (Player.instance.playerStats.CriticalDamage.Value * 100).ToString() + " %";
         InvenStatsValueTxt[5].text = Player.instance.playerStats.SkillPower.Value.ToString();
-        InvenStatsValueTxt[6].text = (Player.instance.playerStats.skillCoolTime * 100).ToString() + " %";
+        InvenStatsValueTxt[6].text = (Player.instance.playerStats.SkillCoolTime.Value * 100).ToString() + " %";
         InvenStatsValueTxt[7].text = (Player.instance.playerStats.DefensivePower.Value * 100).ToString() + " %";
         InvenStatsValueTxt[8].text = Player.instance.playerStats.MoveSpeed.Value.ToString();
         

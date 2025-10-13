@@ -36,7 +36,7 @@ public abstract class SkillBase : MonoBehaviour
             PlayerStats playerStats = this.user.GetComponent<PlayerStats>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - playerStats.skillCoolTime) * skillData.skillDefalutCoolTime;
+            skillCoolTime = (1 - playerStats.SkillCoolTime.Value) * skillData.skillDefalutCoolTime;
         }
         else if (user.tag == "Enemy")
         {

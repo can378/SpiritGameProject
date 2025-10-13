@@ -36,7 +36,7 @@ public class WaveSkill : SkillBase
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * WSData.skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * WSData.skillDefalutCoolTime;
 
             effect.transform.localScale = new Vector3(1, 1, 1);
             effect.tag = "PlayerAttack";

@@ -22,7 +22,7 @@ public class SpottingWeaknessSkill : SkillBase
             Player player = this.user.GetComponent<Player>();
 
             // 쿨타임 적용
-            skillCoolTime = (1 - player.playerStats.skillCoolTime) * 9999999999;
+            skillCoolTime = (1 - player.playerStats.SkillCoolTime.Value) * 9999999999;
 
             player.ApplyBuff(spottingWeaknessBuff);
         }

@@ -16,7 +16,7 @@ public class SkillCoolTimeMinus : PassiveData
         {
             Debug.Log("플레이어 도술 재사용 대기시간 +" + variation * 100 + "% 감소");
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addSkillCoolTime -= variation;
+            plyaerStats.SkillCoolTime.AddValue -= variation;
         }
     }
 
@@ -26,7 +26,7 @@ public class SkillCoolTimeMinus : PassiveData
         if (target.tag == "Player")
         {
             PlayerStats plyaerStats = target.GetComponent<PlayerStats>();
-            plyaerStats.addSkillCoolTime += variation;
+            plyaerStats.SkillCoolTime.AddValue += variation;
         }
     }
 

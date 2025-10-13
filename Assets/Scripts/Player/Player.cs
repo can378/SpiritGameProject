@@ -1032,7 +1032,7 @@ public class Player : ObjectBasic
             Player.instance.playerStats.CriticalChance.AddValue += Player.instance.playerStats.playerStat[(int)StatID.CC] * StatIV[(int)StatID.CC];
             Player.instance.playerStats.CriticalDamage.AddValue += Player.instance.playerStats.playerStat[(int)StatID.CD] * StatIV[(int)StatID.CD];
             Player.instance.playerStats.SkillPower.AddValue += Player.instance.playerStats.playerStat[(int)StatID.SP] * StatIV[(int)StatID.SP];
-            Player.instance.playerStats.addSkillCoolTime += Player.instance.playerStats.playerStat[(int)StatID.SCT] * StatIV[(int)StatID.SCT];
+            Player.instance.playerStats.SkillCoolTime.AddValue += Player.instance.playerStats.playerStat[(int)StatID.SCT] * StatIV[(int)StatID.SCT];
             Player.instance.playerStats.MoveSpeed.IncreasedValue += Player.instance.playerStats.playerStat[(int)StatID.MS] * StatIV[(int)StatID.MS];
 
             playerStats.coin = DataManager.instance.userData.playerCoin;
@@ -1094,7 +1094,7 @@ public class Player : ObjectBasic
                 Player.instance.playerStats.SkillPower.AddValue += StatIV[(int)_StatID];
                 break;
             case StatID.SCT:
-                Player.instance.playerStats.addSkillCoolTime = StatIV[(int)_StatID];
+                Player.instance.playerStats.SkillCoolTime.AddValue = StatIV[(int)_StatID];
                 break;
             case StatID.MS:
                 Player.instance.playerStats.MoveSpeed.IncreasedValue += StatIV[(int)_StatID];

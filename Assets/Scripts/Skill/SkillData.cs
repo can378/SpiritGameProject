@@ -44,5 +44,10 @@ public class SkillData : ItemData
         return "ÇÇÇØ·®";
     }
 
+    public virtual string Update_CoolTime(PlayerStats _PlayerStats)
+    {
+        return ((1 + _PlayerStats.SkillCoolTime.Value) * skillDefalutCoolTime).ToString();
+    }
+
 }
 

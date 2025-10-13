@@ -140,7 +140,7 @@ public class ThunderboltSkill : SkillBase
             yield return new WaitForSeconds(TSData.postDelay);
 
             // 쿨타임 적용
-            skillCoolTime = (1 + player.playerStats.skillCoolTime) * TSData.skillDefalutCoolTime;
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * TSData.skillDefalutCoolTime;
 
             player.stats.MoveSpeed.DecreasedValue -= 99f;
         }
