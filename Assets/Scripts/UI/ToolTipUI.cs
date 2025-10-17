@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 
 public class ToolTipUI : MonoBehaviour
@@ -31,7 +32,7 @@ public class ToolTipUI : MonoBehaviour
     [Header("아이템 설명")]
     [Tooltip("아이템 설명")]
     public TMP_Text ToolTipDescriptionText;
-    SelectItem ToolTipCurItem;
+    public SelectItem ToolTipCurItem { get; private set; }
 
     public void OpenToolTipUI(SelectItem _SelectItem)
     {
@@ -52,6 +53,7 @@ public class ToolTipUI : MonoBehaviour
 
         if (ToolTipCurItem is Weapon weapon)
         {
+            ToolTipSimpleInfo.SetActive(true);
             ToolTipNum.text = "공격력";
             ToolTipNumText.text = weapon.weaponData.attackPower.ToString();
             ToolTipType.text = "분류";
@@ -59,6 +61,7 @@ public class ToolTipUI : MonoBehaviour
         }
         else if (ToolTipCurItem is SkillItem skill)
         {
+            ToolTipSimpleInfo.SetActive(true);
             ToolTipNum.text = skill.skillData.Update_Num();
             ToolTipNumText.text = skill.skillData.Update_NumText(Player.instance.playerStats);
             ToolTipType.text = "대기 시간";
@@ -68,6 +71,7 @@ public class ToolTipUI : MonoBehaviour
         {
             if (ToolTipCurItem.itemData.selectItemType == SelectItemType.Equipments)
             {
+                ToolTipSimpleInfo.SetActive(false);
                 ToolTipNum.text = "";
                 ToolTipNumText.text = "";
                 ToolTipType.text = "";
@@ -75,6 +79,7 @@ public class ToolTipUI : MonoBehaviour
             }
             else if (ToolTipCurItem.itemData.selectItemType == SelectItemType.Consumable)
             {
+                ToolTipSimpleInfo.SetActive(true);
                 ToolTipNum.text = "";
                 ToolTipNumText.text = "";
                 ToolTipType.text = "";

@@ -20,7 +20,7 @@ public class SlashSkillData : SkillData
 
     public override string Update_NumText(Stats _Stats)
     {
-        return "Å¸´ç " +(defaultDamage).ToString() + " ~ " + ((defaultDamage + ratio * _Stats.AttackPower.Value) * maxHoldPower).ToString();
+        return (defaultDamage).ToString() + " ~ " + ((defaultDamage + ratio * _Stats.AttackPower.Value) * maxHoldPower).ToString();
     }
 
 }

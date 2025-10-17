@@ -337,7 +337,8 @@ public class MapUIManager : MonoBehaviour
         if (curItem == null)
             return;
 
-        toolTipPanel.OpenToolTipUI(curItem);
+        if (!toolTipPanel.gameObject.activeSelf || curItem != toolTipPanel.ToolTipCurItem)
+            toolTipPanel.OpenToolTipUI(curItem);
 
 
     }

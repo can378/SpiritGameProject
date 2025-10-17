@@ -23,7 +23,7 @@ public class ThunderboltSkillData : SkillData
 
     public override string Update_NumText(Stats _Stats)
     {
-        return "Å¸´ç " + (defaultDamage + _Stats.SkillPower.Value * ratio).ToString();
+        return (defaultDamage + _Stats.SkillPower.Value * ratio).ToString();
     }
 
 }

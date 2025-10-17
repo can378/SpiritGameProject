@@ -11,6 +11,6 @@ public class LittleStarSkillData : SkillData
 
     public override string Update_NumText(Stats _Stats)
     {
-        return (LSBuff.defalutDamage + LSBuff.ratio * _Stats.SkillPower.Value).ToString() + " X 3";
+        return (LSBuff.defalutDamage + LSBuff.ratio * _Stats.SkillPower.Value).ToString();
     }
 }
