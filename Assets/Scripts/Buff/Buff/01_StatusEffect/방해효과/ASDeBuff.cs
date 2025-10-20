@@ -71,7 +71,7 @@ public class ASDeBuff : BuffData
         {
             Player player = _Buff.target.GetComponent<Player>();
 
-            if (player.playerStats.weapon.weaponData == null)
+            if (player.playerStats.weapon.weaponInstance == null)
                 player.playerStatus.attackDelay = 99f;
 
             if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
@@ -97,7 +97,7 @@ public class ASDeBuff : BuffData
                 player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime = curSkillCoolTIme;
             }
 
-            if (player.playerStats.weapon.weaponData == null)
+            if (player.playerStats.weapon.weaponInstance == null)
             {
                 player.playerStatus.attackDelay = curAttackDelay;
             }

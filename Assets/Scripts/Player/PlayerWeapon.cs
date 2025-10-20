@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
     // 패시브로 수치 변경 시 적용
-    [field: SerializeField] public WeaponData weaponData { get; private set; }
+    [field: SerializeField] public WeaponInstance weaponInstance { get; private set; }      // itemData가 null 이라면 무기를 장착하고 있지 않음
     [field: SerializeField] public bool isMultiHit { private get; set; }                // 무기의 다단히트로 변경
     [field: SerializeField] public Stat DPS { private get; set; } = new Stat(0, 30, 1);                     // 무기의 추가 DPS 수치
     [field: SerializeField] public Stat attackSize { private get; set; } = new Stat(0, 5f, 0.1f);       // 무기, 투사체 추가 크기
@@ -21,24 +21,24 @@ public class PlayerWeapon : MonoBehaviour
     {
         if (_Weapon == null)
         {
-            weaponData = null;
+            weaponInstance.weaponData = null;
             return;
         }
-        weaponData = _Weapon.weaponData;
-        DPS.SetDefaultValue(weaponData.DPS);
-        attackSize.SetDefaultValue(weaponData.attackSize);
-        knockBack.SetDefaultValue(weaponData.knockBack);
-        maxAmmo.SetDefaultValue(weaponData.maxAmmo);
-        reloadTime.SetDefaultValue(weaponData.reloadTime);
-        projectileSpeed.SetDefaultValue(weaponData.projectileSpeed);
-        projectileTime.SetDefaultValue(weaponData.projectileTime);
-        maxPenetrations.SetDefaultValue(weaponData.maxPenetrations);
-        ammo = weaponData.maxAmmo;
+        weaponInstance = _Weapon.weaponInstance;
+        DPS.SetDefaultValue(weaponInstance.weaponData.DPS);
+        attackSize.SetDefaultValue(weaponInstance.weaponData.attackSize);
+        knockBack.SetDefaultValue(weaponInstance.weaponData.knockBack);
+        maxAmmo.SetDefaultValue(weaponInstance.weaponData.maxAmmo);
+        reloadTime.SetDefaultValue(weaponInstance.weaponData.reloadTime);
+        projectileSpeed.SetDefaultValue(weaponInstance.weaponData.projectileSpeed);
+        projectileTime.SetDefaultValue(weaponInstance.weaponData.projectileTime);
+        maxPenetrations.SetDefaultValue(weaponInstance.weaponData.maxPenetrations);
+        ammo = weaponInstance.weaponData.maxAmmo;
     }
 
     public bool GetMultiHit()
     {
-        return isMultiHit || weaponData.isMultiHit;
+        return isMultiHit || weaponInstance.weaponData.isMultiHit;
     }
 
     public int GetDPS()
@@ -84,14 +84,14 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Reload()
     {
-        if (weaponData.maxAmmo < 0)
+        if (weaponInstance.weaponData.maxAmmo < 0)
             return;
-        ammo = weaponData.maxAmmo;
+        ammo = weaponInstance.weaponData.maxAmmo;
     }
 
     public void ConsumeAmmo()
     {
-        if (weaponData.maxAmmo < 0)
+        if (weaponInstance.weaponData.maxAmmo < 0)
             return;
         ammo--;
     }
@@ -99,19 +99,19 @@ public class PlayerWeapon : MonoBehaviour
     public void Equip(Player user)
     {
         // 데이터에 있는 패시브를 적용 시킨다.
-        for (int i = 0; i < weaponData.passives.Count; ++i)
+        for (int i = 0; i < weaponInstance.weaponData.passives.Count; ++i)
         {
-            user.ApplyPassive(weaponData.passives[i]);
+            user.ApplyPassive(weaponInstance.weaponData.passives[i]);
         }
         Stats stats = user.GetComponent<Stats>();
-        stats.AttackPower.SetDefaultValue(weaponData.attackPower);
+        stats.AttackPower.SetDefaultValue(weaponInstance.weaponData.attackPower);
     }
 
     public void UnEquip(Player user)
     {
-        for (int i = 0; i < weaponData.passives.Count; ++i)
+        for (int i = 0; i < weaponInstance.weaponData.passives.Count; ++i)
         {
-            user.RemovePassive(weaponData.passives[i]);
+            user.RemovePassive(weaponInstance.weaponData.passives[i]);
         }
         Stats stats = user.GetComponent<Stats>();
         stats.AttackPower.SetDefaultValue(0);

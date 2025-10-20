@@ -32,17 +32,17 @@ public class ToolTipUI : MonoBehaviour
     [Header("아이템 설명")]
     [Tooltip("아이템 설명")]
     public TMP_Text ToolTipDescriptionText;
-    public SelectItem ToolTipCurItem { get; private set; }
+    public ItemInstance ToolTipCurItem { get; private set; }
 
-    public void OpenToolTipUI(SelectItem _SelectItem)
+    public void OpenToolTipUI(ItemInstance _ItemInstance)
     {
 
-        if (_SelectItem == null)
+        if (_ItemInstance == null)
         {
             gameObject.SetActive(false);
             return;
         }
-        ToolTipCurItem = _SelectItem;
+        ToolTipCurItem = _ItemInstance;
 
         gameObject.SetActive(true);
 
@@ -51,7 +51,7 @@ public class ToolTipUI : MonoBehaviour
 
         ToolTipDescriptionText.text = ToolTipCurItem.itemData.Update_Description(Player.instance.playerStats);
 
-        if (ToolTipCurItem is Weapon weapon)
+        if (ToolTipCurItem is WeaponInstance weapon)
         {
             ToolTipSimpleInfo.SetActive(true);
             ToolTipNum.text = "공격력";
@@ -59,7 +59,7 @@ public class ToolTipUI : MonoBehaviour
             ToolTipType.text = "분류";
             ToolTipTypeText.text = weapon.weaponData.TypeToKorean();
         }
-        else if (ToolTipCurItem is SkillItem skill)
+        else if (ToolTipCurItem is SkillInstance skill)
         {
             ToolTipSimpleInfo.SetActive(true);
             ToolTipNum.text = skill.skillData.Update_Num();

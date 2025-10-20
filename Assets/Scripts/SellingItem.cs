@@ -63,8 +63,8 @@ public class SellingItem : MonoBehaviour, Interactable
 
         thisSelectItem = thisSlotItem.GetComponent<SelectItem>();
 
-        itemName.text = thisSelectItem.itemData.selectItemName;
-        itemPrice.text = thisSelectItem.itemData.price.ToString();
+        itemName.text = thisSelectItem.itemInstance.itemData.selectItemName;
+        itemPrice.text = thisSelectItem.itemInstance.itemData.price.ToString();
     }
 
     public string GetInteractText()
@@ -79,7 +79,7 @@ public class SellingItem : MonoBehaviour, Interactable
 
     public void BuyItem()
     {
-        int cost = thisSelectItem.itemData.price;
+        int cost = thisSelectItem.itemInstance.itemData.price;
 
         if (Player.instance.playerStats.coin >= cost)
         {
@@ -102,7 +102,7 @@ public class SellingItem : MonoBehaviour, Interactable
         if (collision.tag == "Player")
         {
             //show information
-            MapUIManager.instance.toolTipPanel.GetComponent<ToolTipUI>().OpenToolTipUI(thisSelectItem);
+            MapUIManager.instance.toolTipPanel.GetComponent<ToolTipUI>().OpenToolTipUI(thisSelectItem.itemInstance);
         }
     }
 

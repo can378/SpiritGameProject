@@ -51,7 +51,7 @@ public class MapUIManager : MonoBehaviour
 
     // Inventory
     [Header("인벤토리 관련")]
-    [SerializeField] Image InvenWeaponImage;                                                                  // 장비 이미지
+    [SerializeField] ItemSlotUI InvenWeaponSlot;                                                                  // 장비 이미지
     [SerializeField] Image[] InvenSkillImage = new Image[5];                                                  // 스킬 이미지
     [SerializeField] Image InvenItemImage;
     [SerializeField] Image[] InvenEquipmentsImage = new Image[3];                                             // 장비 이미지
@@ -109,8 +109,14 @@ public class MapUIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.I))
         {
-            if (inventoryPanel.activeSelf == true) { inventoryPanel.SetActive(false); }
-            else { inventoryPanel.SetActive(true); }
+            if (inventoryPanel.activeSelf == true) {
+                inventoryPanel.SetActive(false);
+                
+            }
+            else {
+                inventoryPanel.SetActive(true);
+                toolTipPanel.gameObject.SetActive(false);
+            }
         }
 
 
@@ -247,11 +253,11 @@ public class MapUIManager : MonoBehaviour
             return;
 
         // 무기 이미지
-        if (Player.instance.playerStats.weapon.weaponData != null)
+        if (Player.instance.playerStats.weapon.weaponInstance.weaponData != null)
         {
-            InvenWeaponImage.GetComponent<Image>().sprite = Player.instance.playerStats.weapon.weaponData.sprite;
+            InvenWeaponSlot.SetItemData(Player.instance.playerStats.weapon.weaponInstance);
         }
-        else { InvenWeaponImage.GetComponent<Image>().sprite = null;}
+        else { InvenWeaponSlot.SetItemData(); }
 
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
@@ -325,15 +331,17 @@ public class MapUIManager : MonoBehaviour
     // 현재 플레이어가 아이템 근처에 있으면 툴팁을 띄우고 정보를 변경한다.
     public void UpdateNearObjectToolTipUI()
     {
-        // 현재 플레이어 근처에 아이템이 있는 지 확인한다.
+        if (inventoryPanel.activeSelf)
+            return;
 
+        // 현재 플레이어 근처에 아이템이 있는 지 확인한다.
         if (Player.instance.playerStatus.nearObject == null)
         {
             toolTipPanel.CloseToolTipUI();
             return;
         }
 
-        SelectItem curItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>();
+        ItemInstance curItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>().itemInstance;
         if (curItem == null)
             return;
 

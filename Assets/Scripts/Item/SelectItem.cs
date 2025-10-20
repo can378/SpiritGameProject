@@ -7,7 +7,7 @@ using TMPro;
 
 public class SelectItem : MonoBehaviour, Interactable
 {
-    [HideInInspector] public ItemData itemData { get; protected set; }
+    [HideInInspector] public ItemInstance itemInstance { get; protected set; }
     public string GetInteractText()
     {
         return "줍기";
@@ -18,33 +18,14 @@ public class SelectItem : MonoBehaviour, Interactable
         Player.instance.GainSelectItem(this);
     }
 
-    public Color GetRatingColor()
-    {
-        switch (itemData.selectItemRating)
-        {
-            case SelectItemRating.Temp:
-                return Color.gray;
-            case SelectItemRating.Normal:
-                return Color.black;
-            case SelectItemRating.Rare:
-                return Color.blue;
-            case SelectItemRating.Epic:
-                return new Color(0.5f, 0.0f, 0.5f);
-            case SelectItemRating.Legend:
-                return new Color(1.0f, 0.8f, 0.0f);
-            default:
-                return Color.white;
-        }
-    }
-
     #region Sort CompareFunc
     static int compareClass(SelectItem a, SelectItem b)
     {
-        if (a.itemData.selectItemType < b.itemData.selectItemType)
+        if (a.itemInstance.itemData.selectItemType < b.itemInstance.itemData.selectItemType)
         {
             return -1;
         }
-        else if (a.itemData.selectItemType > b.itemData.selectItemType)
+        else if (a.itemInstance.itemData.selectItemType > b.itemInstance.itemData.selectItemType)
         {
             return 1;
         }
@@ -53,11 +34,11 @@ public class SelectItem : MonoBehaviour, Interactable
 
     static int compareRating(SelectItem a, SelectItem b)
     {
-        if (a.itemData.selectItemRating < b.itemData.selectItemRating)
+        if (a.itemInstance.itemData.selectItemRating < b.itemInstance.itemData.selectItemRating)
         {
             return -1;
         }
-        else if (a.itemData.selectItemRating > b.itemData.selectItemRating)
+        else if (a.itemInstance.itemData.selectItemRating > b.itemInstance.itemData.selectItemRating)
         {
             return 1;
         }
@@ -66,7 +47,7 @@ public class SelectItem : MonoBehaviour, Interactable
 
     static int compareID(SelectItem a, SelectItem b)
     {
-        return a.itemData.selectItemID < b.itemData.selectItemID ? -1 : 1;
+        return a.itemInstance.itemData.selectItemID < b.itemInstance.itemData.selectItemID ? -1 : 1;
     }
     
     // 후에 가격별 정렬 추가?

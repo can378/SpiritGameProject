@@ -82,7 +82,7 @@ public class DataManager : MonoBehaviour
         userData.playerKey = Player.instance.playerStats.key;
         userData.playerDice = Player.instance.playerStats.dice;
 
-        userData.playerWeapon = Player.instance.playerStats.weapon.weaponData == null ? 0 : Player.instance.playerStats.weapon.weaponData.selectItemID;
+        userData.playerWeapon = Player.instance.playerStats.weapon.weaponInstance.weaponData == null ? 0 : Player.instance.playerStats.weapon.weaponInstance.weaponData.selectItemID;
 
         for(int i = 0;i < Player.instance.playerStats.skill.Length ; i++)
         {

@@ -180,7 +180,7 @@ public class GameData : MonoBehaviour
         {
             FindList = ItemList.ToList();
 
-            FindList = FindList.FindAll(x => (int)x.itemData.GetType().GetProperty(_NameType.Key).GetValue(x.itemData) == _NameType.Value);
+            FindList = FindList.FindAll(x => (int)x.itemInstance.itemData.GetType().GetProperty(_NameType.Key).GetValue(x.itemInstance.itemData) == _NameType.Value);
 
             ItemList_Sort.Add(asString, FindList);
         }
@@ -212,7 +212,7 @@ public class GameData : MonoBehaviour
         {
             FindList = ItemList.ToList();
 
-            FindList = FindList.FindAll(x => (int)x.itemData.GetType().GetProperty(_NameType.Key).GetValue(x.itemData) == _NameType.Value);
+            FindList = FindList.FindAll(x => (int)x.itemInstance.itemData.GetType().GetProperty(_NameType.Key).GetValue(x.itemInstance.itemData) == _NameType.Value);
 
             ItemList_Sort.Add(asString, FindList);
         }
@@ -247,7 +247,7 @@ public class GameData : MonoBehaviour
 
             foreach (KeyValuePair<string, int> Pair in _NameType)
             {
-                FindList = FindList.FindAll(x => (int)x.itemData.GetType().GetProperty(Pair.Key).GetValue(x.itemData) == Pair.Value);
+                FindList = FindList.FindAll(x => (int)x.itemInstance.itemData.GetType().GetProperty(Pair.Key).GetValue(x.itemInstance.itemData) == Pair.Value);
             }
             
             ItemList_Sort.Add(asString, FindList);
@@ -258,7 +258,7 @@ public class GameData : MonoBehaviour
             // return null;
             // 임시로 쿠키 제공으로
             Debug.Log("아이템 없네요... 이거나 드셔");
-            FindList = ItemList.FindAll(x => (int)x.itemData.GetType().GetProperty("selectItemType").GetValue(x.itemData) == (int)SelectItemType.Consumable);
+            FindList = ItemList.FindAll(x => (int)x.itemInstance.itemData.GetType().GetProperty("selectItemType").GetValue(x.itemInstance.itemData) == (int)SelectItemType.Consumable);
         }
 
         int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);

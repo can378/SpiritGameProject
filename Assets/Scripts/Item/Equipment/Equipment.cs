@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Equipment : SelectItem
 {
-    [field: SerializeField] public EquipmentData equipmentData { get; protected set; }
+    [field: SerializeField] public EquipmentInstance equipmentInstance { get; protected set; }
 
     protected virtual void Awake()
     {
-        itemData = equipmentData;
+        itemInstance = equipmentInstance;
+        itemInstance.Init();
     }
 
     protected virtual void OnValidate()
     {
-        itemData = equipmentData;
+        itemInstance = equipmentInstance;
+        itemInstance.Init();
     }
 
     /*

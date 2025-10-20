@@ -104,7 +104,7 @@ public class SlashSkill : SkillBase
             GameObject instantProjectile = Instantiate(SSData.slashPrefab, player.CenterPivot.transform.position, transform.rotation);
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
 
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;                               // 공격 1회당 걸리는 시간
 

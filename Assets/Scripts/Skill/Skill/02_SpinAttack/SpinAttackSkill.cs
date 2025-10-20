@@ -85,7 +85,7 @@ public class SpinAttackSkill : SkillBase
             PlayerWeapon weapon = player.playerStats.weapon;
             GameObject effect = Instantiate(SASData.spinPrefab, player.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
 
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 

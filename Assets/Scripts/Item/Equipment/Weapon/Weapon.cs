@@ -8,15 +8,17 @@ using UnityEngine;
 // 무기의 기본 정보
 public class Weapon : SelectItem
 {
-    [field: SerializeField] public WeaponData weaponData { get; protected set; }
+    [field: SerializeField] public WeaponInstance weaponInstance { get; protected set; }
 
     protected void Awake()
     {
-        itemData = weaponData;
+        itemInstance = weaponInstance;
+        itemInstance.Init();
     }
 
     protected void OnValidate()
     {
-        itemData = weaponData;
+        itemInstance = weaponInstance;
+        itemInstance.Init();
     }
 }

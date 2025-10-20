@@ -29,7 +29,7 @@ public class WheelWindSkill : SkillBase
             Player player = this.user.GetComponent<Player>();
             PlayerWeapon weapon = player.playerStats.weapon;
             HitDetection hitDetection;
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
             skillCoolTime = 99;
@@ -128,7 +128,7 @@ public class WheelWindSkill : SkillBase
         {
             Player player = this.user.GetComponent<Player>();
             PlayerWeapon weapon = player.playerStats.weapon;
-            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponData.weaponType.ToString()];
+            WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
             float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
 
             yield return new WaitForSeconds(0.5f * attackRate);

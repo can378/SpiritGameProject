@@ -8,15 +8,19 @@ using UnityEngine;
 // 무기의 기본 정보
 public class SkillItem : SelectItem
 {
-    [field: SerializeField] public SkillData skillData { get; protected set; }
+    [field: SerializeField] public SkillInstance skillInstance { get; protected set; }
 
     protected void Awake()
     {
-        itemData = skillData;
+        itemInstance = skillInstance;
+        itemInstance.Init();
+
     }
 
     protected void OnValidate()
     {
-        itemData = skillData;
+        itemInstance = skillInstance;
+        itemInstance.Init();
+
     }
 }
