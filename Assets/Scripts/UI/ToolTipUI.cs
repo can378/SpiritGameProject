@@ -37,7 +37,7 @@ public class ToolTipUI : MonoBehaviour
     public void OpenToolTipUI(ItemInstance _ItemInstance)
     {
 
-        if (_ItemInstance == null)
+        if (!_ItemInstance.IsValid())
         {
             gameObject.SetActive(false);
             return;

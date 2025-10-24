@@ -54,7 +54,7 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] ItemSlotUI InvenWeaponSlot;                                                                  // 장비 이미지
     [SerializeField] Image[] InvenSkillImage = new Image[5];                                                  // 스킬 이미지
     [SerializeField] Image InvenItemImage;
-    [SerializeField] Image[] InvenEquipmentsImage = new Image[3];                                             // 장비 이미지
+    [SerializeField] ItemSlotUI[] InvenEquipmentsSlot = new ItemSlotUI[3];                                             // 장비 이미지
     [SerializeField] TMP_Text[] InvenStatsValueTxt = new TMP_Text[10];                                        // 스탯 수치
 
     // nearObject
@@ -253,7 +253,7 @@ public class MapUIManager : MonoBehaviour
             return;
 
         // 무기 이미지
-        if (Player.instance.playerStats.weapon.weaponInstance.weaponData != null)
+        if (Player.instance.playerStats.weapon.weaponInstance.IsValid())
         {
             InvenWeaponSlot.SetItemData(Player.instance.playerStats.weapon.weaponInstance);
         }
@@ -262,10 +262,11 @@ public class MapUIManager : MonoBehaviour
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
-            if (Player.instance.playerStats.equipments[i] != null)
-                InvenEquipmentsImage[i].GetComponent<Image>().sprite = Player.instance.playerStats.equipments[i].sprite;
-            else
-                InvenEquipmentsImage[i].GetComponent<Image>().sprite = null;
+            if (Player.instance.playerStats.equipments[i].IsValid())
+            {
+                InvenEquipmentsSlot[i].SetItemData(Player.instance.playerStats.equipments[i]);
+            }
+            else { InvenEquipmentsSlot[i].SetItemData(); }
         }
 
         // 스킬 이미지
@@ -493,7 +494,6 @@ public class MapUIManager : MonoBehaviour
 
     public void EquipmentUnEquipBtn(int index)
     {
-        print("장비 해제");
         Player.instance.UnEquipEquipment(index);
         //UpdateEquipmentUI();
     }

@@ -123,7 +123,7 @@ public class PlayerStats : Stats
     public int[] skill = new int[5];
 
     public int maxEquipment;
-    public EquipmentData[] equipments = new EquipmentData[5];
+    public EquipmentInstance[] equipments = new EquipmentInstance[5];
 
     //Stat
     public int[] playerStat = new int[8];

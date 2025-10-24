@@ -855,7 +855,7 @@ public class Player : ObjectBasic
         // 비어있는 장비 슬롯이 없다면 장착 실패
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Equipments)
         {
-            gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentInstance.equipmentData);
+            gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentInstance);
         }
         // 스킬 =======================================================
         // 현재 사용 중인 스킬 해제 후 스킬 장착
@@ -909,20 +909,20 @@ public class Player : ObjectBasic
     */
 
     // 장착할 장비의 index
-    public bool EquipEquipment(EquipmentData _EData)
+    public bool EquipEquipment(EquipmentInstance _EI)
     {
         bool equipOK = false;
 
         for (int i = 0; i < playerStats.equipments.Length; i++)
         {
-            // 중복 장착 불가
-            if (playerStats.equipments[i] == _EData && playerStats.equipments[i] != null)
+            // 장비하고 있을 때 같은 장비라면
+            if (playerStats.equipments[i].IsValid() && playerStats.equipments[i].equipmentData == _EI.equipmentData)
                 break;
             // 장착 중
-            if (playerStats.equipments[i] != null)
+            if (playerStats.equipments[i].IsValid())
                 continue;
 
-            playerStats.equipments[i] = _EData;
+            playerStats.equipments[i] = _EI;
             equipOK = true;
             break;
         }
@@ -931,7 +931,7 @@ public class Player : ObjectBasic
             return false;
 
         // 방어구 패시브 적용
-        foreach (PassiveData passiveData in _EData.passives)
+        foreach (PassiveData passiveData in _EI.equipmentData.passives)
         {
             ApplyPassive(passiveData);
         }
@@ -942,11 +942,13 @@ public class Player : ObjectBasic
     // 현재 장착한 장비 중 해제할 index
     public bool UnEquipEquipment(int index)
     {
-        if (playerStats.equipments[index] == null)
+       
+
+        if (!playerStats.equipments[index].IsValid())
             return false;
 
         // 현재 위치에 장비를 놓는다.
-        GameObject EGO = Instantiate(DataManager.instance.gameData.equipmentList[playerStats.equipments[index].selectItemID], CenterPivot.transform.position, gameObject.transform.localRotation);
+        GameObject EGO = Instantiate(DataManager.instance.gameData.equipmentList[playerStats.equipments[index].equipmentData.selectItemID], CenterPivot.transform.position, gameObject.transform.localRotation);
         EquipmentData EData= EGO.GetComponent<Equipment>().equipmentInstance.equipmentData;
         // 무기 능력치 해제
         //equipmentList[playerStats.equipments[index]].UnEquip(this.gameObject.GetComponent<Player>());
@@ -957,8 +959,9 @@ public class Player : ObjectBasic
         }
 
         // 무기 해제
-        playerStats.equipments[index] = null;
+        playerStats.equipments[index].SetEI(null);
         //MapUIManager.instance.UpdateEquipmentUI();
+        print("장비 해제");
         return true;
     }
     #endregion
@@ -1015,8 +1018,9 @@ public class Player : ObjectBasic
                 if (playerEquipment[i] != 0)
                 {
                     EquipmentData EData = DataManager.instance.gameData.weaponList[playerEquipment[i]].GetComponent<Equipment>().equipmentInstance.equipmentData;
-                    EquipEquipment(EData);
-
+                    EquipmentInstance EI = new EquipmentInstance();
+                    EI.SetEI(EData);
+                    EquipEquipment(EI);
                 }
             }
 

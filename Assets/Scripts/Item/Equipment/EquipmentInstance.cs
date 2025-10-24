@@ -11,4 +11,10 @@ public class EquipmentInstance : ItemInstance
     {
         itemData = equipmentData;
     }
+
+    public void SetEI(EquipmentData _EquipmentData)
+    {
+        equipmentData = _EquipmentData;
+        itemData = equipmentData;
+    }
 }

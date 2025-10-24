@@ -7,26 +7,52 @@ using UnityEngine.EventSystems;
 public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [field :SerializeField] public ToolTipUI toolTipUI { get; private set; }
-    [field: SerializeField] public ItemInstance itemInstance { get; private set; }
+    [field: SerializeField] public ItemInstance itemInstance { get; private set; } = null;
     [field: SerializeField] public Image itemImage { get; private set; }
+
+    [field: SerializeField] public bool isHover { get; private set; }
 
     public void SetItemData(ItemInstance _itemInstance = null)
     {
-        itemInstance = _itemInstance;
-        if (itemInstance == null)
+        // 안전한 null 체크: ItemInstance 자체뿐 아니라 내부의 ScriptableObject(ItemData)도 검사
+        if (_itemInstance == null)
+        {
+            itemInstance.itemData = null;
+            itemImage.sprite = null;
+            if (isHover)
+            {
+                toolTipUI.OpenToolTipUI(itemInstance);
+            }
             return;
-        itemImage.sprite = _itemInstance.itemData.sprite;
+        }
+        itemInstance = _itemInstance;
+        itemImage.sprite = itemInstance.itemData.sprite;
+
+        if(isHover)
+        {
+            toolTipUI.OpenToolTipUI(itemInstance);
+        }
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (itemInstance == null)
+        // 마우스 오버 시 툴팁을 열기 전에 ItemInstance와 내부 ItemData가 유효한지 확인
+        isHover = true;
+        if (!itemInstance.IsValid())
+        {
             return;
-        toolTipUI.OpenToolTipUI(itemInstance);
+        }
+
+        if (toolTipUI != null)
+        {
+            toolTipUI.OpenToolTipUI(itemInstance);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        isHover = false;
         toolTipUI.CloseToolTipUI();
     }
 

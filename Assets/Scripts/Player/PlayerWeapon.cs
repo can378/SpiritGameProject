@@ -21,7 +21,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         if (_Weapon == null)
         {
-            weaponInstance.weaponData = null;
+            weaponInstance = null;
             return;
         }
         weaponInstance = _Weapon.weaponInstance;

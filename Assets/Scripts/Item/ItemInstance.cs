@@ -7,7 +7,7 @@ public class ItemInstance
 {
     public string id; // UUID
 
-    [HideInInspector] public ItemData itemData; // SO 참조
+    public ItemData itemData; // SO 참조
 
     public virtual void Init()
     {}
@@ -29,5 +29,17 @@ public class ItemInstance
             default:
                 return Color.white;
         }
+    }
+
+    public void SetII(ItemData _ItemData)
+    {
+        itemData = _ItemData;
+    }
+
+    public bool IsValid()
+    {
+        // itemData는 ScriptableObject (UnityEngine.Object)이므로
+        // Unity의 ==/!= 오버로딩을 사용해 파괴된(가짜) null을 올바르게 감지한다.
+        return itemData != null;
     }
 }
