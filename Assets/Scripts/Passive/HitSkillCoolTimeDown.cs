@@ -19,13 +19,13 @@ public class HitSkillCoolTimeDown : PassiveData
             return;
 
 
-        if (!player.playerStatus.hitTarget || player.playerStats.skill[player.playerStatus.skillIndex] == 0)
+        if (!player.playerStatus.hitTarget || !player.playerStats.skill[player.playerStatus.skillIndex].IsValid())
             return;
 
         if (player.playerStatus.hitTarget.gameObject.tag == "Wall" || player.playerStatus.hitTarget.gameObject.tag == "Door" || player.playerStatus.hitTarget.gameObject.tag == "ShabbyWall")
             return;
 
-        player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime -= variation;
+        player.skillList[player.playerStats.skill[player.playerStatus.skillIndex].itemData.selectItemID].skillCoolTime -= variation;
     }
 
     public override void Apply(ObjectBasic _User)

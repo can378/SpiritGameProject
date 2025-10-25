@@ -12,4 +12,10 @@ public class SkillInstance : ItemInstance
         itemData = skillData;
     }
 
+    public void SetSI(SkillData _SkillData)
+    {
+        skillData = _SkillData;
+        itemData = skillData;
+    }
+
 }

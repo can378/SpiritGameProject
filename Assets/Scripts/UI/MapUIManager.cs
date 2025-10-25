@@ -52,7 +52,7 @@ public class MapUIManager : MonoBehaviour
     // Inventory
     [Header("인벤토리 관련")]
     [SerializeField] ItemSlotUI InvenWeaponSlot;                                                                  // 장비 이미지
-    [SerializeField] Image[] InvenSkillImage = new Image[5];                                                  // 스킬 이미지
+    [SerializeField] ItemSlotUI[] InvenSkillSlot = new ItemSlotUI[5];                                                  // 스킬 이미지
     [SerializeField] Image InvenItemImage;
     [SerializeField] ItemSlotUI[] InvenEquipmentsSlot = new ItemSlotUI[3];                                             // 장비 이미지
     [SerializeField] TMP_Text[] InvenStatsValueTxt = new TMP_Text[10];                                        // 스탯 수치
@@ -211,9 +211,9 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateSkillUI()
     {
-        if (Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex] != 0)
+        if (Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex].IsValid())
         {
-            skillImg.GetComponent<Image>().sprite = Player.instance.skillList[Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex]].GetComponent<SkillBase>().skillData.sprite;
+            skillImg.GetComponent<Image>().sprite = Player.instance.skillList[Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex].itemData.selectItemID].GetComponent<SkillBase>().skillData.sprite;
         }
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
@@ -255,38 +255,39 @@ public class MapUIManager : MonoBehaviour
         // 무기 이미지
         if (Player.instance.playerStats.weapon.weaponInstance.IsValid())
         {
-            InvenWeaponSlot.SetItemData(Player.instance.playerStats.weapon.weaponInstance);
+            InvenWeaponSlot.SetItemInstance(Player.instance.playerStats.weapon.weaponInstance);
         }
-        else { InvenWeaponSlot.SetItemData(); }
+        else { InvenWeaponSlot.SetItemInstance(); }
 
         // 장비 이미지
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
             if (Player.instance.playerStats.equipments[i].IsValid())
             {
-                InvenEquipmentsSlot[i].SetItemData(Player.instance.playerStats.equipments[i]);
+                InvenEquipmentsSlot[i].SetItemInstance(Player.instance.playerStats.equipments[i]);
             }
-            else { InvenEquipmentsSlot[i].SetItemData(); }
+            else { InvenEquipmentsSlot[i].SetItemInstance(); }
         }
 
         // 스킬 이미지
         for (int i = 0; i < Player.instance.playerStats.maxSkillSlot; i++)
         {
-            
-            if (Player.instance.playerStats.skill[i] != 0)
+
+            if (Player.instance.playerStats.skill[i].IsValid())
             {
-                InvenSkillImage[i].GetComponent<Image>().sprite = GameData.instance.skillList[Player.instance.playerStats.skill[i]].GetComponentInChildren<SpriteRenderer>().sprite;
+                InvenSkillSlot[i].SetItemInstance(Player.instance.playerStats.skill[i]);
             }
-            else { InvenSkillImage[i].GetComponent<Image>().sprite =  null; }
+            else { InvenSkillSlot[i].SetItemInstance(); }
         }
 
         // 소모품 이미지
+        /*
         if (Player.instance.playerStats.item != 0)
         {
             InvenItemImage.GetComponent<Image>().sprite = GameData.instance.selectItemList[Player.instance.playerStats.item].GetComponentInChildren<SpriteRenderer>().sprite;
         }
         else { InvenItemImage.GetComponent<Image>().sprite = null; }
-
+        */
     }
 
     /*
@@ -347,7 +348,10 @@ public class MapUIManager : MonoBehaviour
             return;
 
         if (!toolTipPanel.gameObject.activeSelf || curItem != toolTipPanel.ToolTipCurItem)
+        {
             toolTipPanel.OpenToolTipUI(curItem);
+            toolTipPanel.ChangePosition(ToolTipUIPos.InGameItem);
+        }
 
 
     }

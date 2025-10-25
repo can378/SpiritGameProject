@@ -120,7 +120,7 @@ public class PlayerStats : Stats
     public PlayerWeapon weapon;
 
     public int maxSkillSlot;
-    public int[] skill = new int[5];
+    public SkillInstance[] skill = new SkillInstance[5];
 
     public int maxEquipment;
     public EquipmentInstance[] equipments = new EquipmentInstance[5];

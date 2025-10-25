@@ -4,10 +4,19 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using System;
 
+public enum ToolTipUIPos
+{
+    InventorySlot,
+    InGameItem,
+    END
+}
 
 public class ToolTipUI : MonoBehaviour
 {
+    [field: SerializeField] ToolTipUIPos toolTipUIPos;
+    [field: SerializeField] Vector2[] LeftTopPos = new Vector2[(int)ToolTipUIPos.END];
 
     // nearObject
     [Header("아이템 이름")]
@@ -92,5 +101,12 @@ public class ToolTipUI : MonoBehaviour
     {
         ToolTipCurItem = null;
         gameObject.SetActive(false);
+    }
+
+    public void ChangePosition(ToolTipUIPos _pos)
+    {
+        toolTipUIPos = _pos;
+        RectTransform rect = GetComponent<RectTransform>();
+        rect.anchoredPosition = LeftTopPos[(int)_pos];
     }
 }

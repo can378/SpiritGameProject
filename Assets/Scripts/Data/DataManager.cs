@@ -86,12 +86,12 @@ public class DataManager : MonoBehaviour
 
         for(int i = 0;i < Player.instance.playerStats.skill.Length ; i++)
         {
-            userData.playerSkill[i] = Player.instance.playerStats.skill[i];
+            userData.playerSkill[i] = Player.instance.playerStats.skill[i].itemData.selectItemID;
         }
     
         for(int i = 0;i < Player.instance.playerStats.equipments.Length; i++)
         {
-            userData.playerEquipments[i] = Player.instance.playerStats.equipments[i] != null ? Player.instance.playerStats.equipments[i].equipmentData.selectItemID : 0;
+            userData.playerEquipments[i] = Player.instance.playerStats.equipments[i].IsValid() ? Player.instance.playerStats.equipments[i].equipmentData.selectItemID : 0;
         }
 
         for (int i = 0; i < 8; i++)

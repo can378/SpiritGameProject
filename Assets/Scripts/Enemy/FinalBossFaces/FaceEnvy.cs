@@ -93,7 +93,7 @@ public class FaceEnvy : BossFace
 
         if (enemyStatus.hitTarget.tag == "Player")
         {
-            int playerSkill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex];
+            int playerSkill = enemyStatus.hitTarget.GetComponent<Player>().playerStats.skill[enemyStatus.hitTarget.GetComponent<Player>().playerStatus.skillIndex].itemData.selectItemID;
             if (playerSkill != 0 || playerSkill!=9) { skill = playerSkill; }
 
             print("envy");

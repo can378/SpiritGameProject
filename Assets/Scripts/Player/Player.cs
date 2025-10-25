@@ -99,11 +99,11 @@ public class Player : ObjectBasic
             SkillDown();
             SkillChange();
             //skill cool time
-            if (playerStats.skill[playerStatus.skillIndex] != 0)
+            if (playerStats.skill[playerStatus.skillIndex].IsValid())
             {
                 MapUIManager.instance.UpdateSkillCoolTime
-                (skillList[playerStats.skill[playerStatus.skillIndex]].skillData.skillDefalutCoolTime,
-                skillList[playerStats.skill[playerStatus.skillIndex]].skillCoolTime);
+                (skillList[playerStats.skill[playerStatus.skillIndex].itemData.selectItemID].skillData.skillDefalutCoolTime,
+                skillList[playerStats.skill[playerStatus.skillIndex].itemData.selectItemID].skillCoolTime);
             }
 
         }
@@ -626,23 +626,26 @@ public class Player : ObjectBasic
         }
 
         // 스킬 획득
-        public bool EquipSkill(int skillID)
+        public bool EquipSkill(SkillInstance _SkillInstance)
         {
+            int SkillIndex = _SkillInstance.skillData.selectItemID;
+
             // 이미 보유한 스킬이라면
-            if (player.skillList[skillID].gameObject.activeSelf == true)
+            if (player.skillList[SkillIndex].gameObject.activeSelf == true)
                 return false;
 
-            player.playerStats.skill[player.playerStatus.skillIndex] = skillID;
-            player.skillList[skillID].gameObject.SetActive(true);
+            player.playerStats.skill[player.playerStatus.skillIndex] = _SkillInstance;
+            player.skillList[SkillIndex].gameObject.SetActive(true);
             return true;
         }
 
         // 스킬 해제
         public void UnEquipSkill()
         {
-            Instantiate(DataManager.instance.gameData.skillList[player.playerStats.skill[player.playerStatus.skillIndex]], player.CenterPivot.transform.position, gameObject.transform.localRotation);
-            player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].gameObject.SetActive(false);
-            player.playerStats.skill[player.playerStatus.skillIndex] = 0;
+            int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
+            Instantiate(DataManager.instance.gameData.skillList[SkillIndex], player.CenterPivot.transform.position, gameObject.transform.localRotation);
+            player.skillList[SkillIndex].gameObject.SetActive(false);
+            player.playerStats.skill[player.playerStatus.skillIndex].SetSI(null);
         }
 
         // 스킬키 입력
@@ -659,24 +662,26 @@ public class Player : ObjectBasic
 
         IEnumerator Enter()
         {
+            int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
+
             //print("Enter");
             // 홀드 중
             player.playerStatus.isSkillHold = true;
 
             // 스킬 키 다운 즉시 시전
-            if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.skillType == 0)
+            if (player.skillList[SkillIndex].skillData.skillType == 0)
             {
                 player.playerStatus.isSkill = true;
                 yield return null;
-                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.preDelay);
+                yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.preDelay);
             }
 
-            player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Enter(player);
+            player.skillList[SkillIndex].Enter(player);
 
             // 스킬 키 다운 즉시 시전
-            if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.skillType == 0)
+            if (player.skillList[SkillIndex].skillData.skillType == 0)
             {
-                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.postDelay);
+                yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.postDelay);
                 yield return null;
                 player.playerStatus.isSkill = false;
             }
@@ -688,14 +693,16 @@ public class Player : ObjectBasic
 
         IEnumerator Stay()
         {
+            int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
+
             //print("Stay");
-            float timer = player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.maxHoldTime;
+            float timer = player.skillList[SkillIndex].skillData.maxHoldTime;
 
             while (player.playerStatus.isSkillHold && timer > 0)
             {
                 yield return null;          // 안 넣으면 코루틴 저장이 안됨
                 timer -= Time.deltaTime;
-                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].HoldCoolDown();      // 홀드 중일 때는 쿨타임이 줄어들지 않음
+                player.skillList[SkillIndex].HoldCoolDown();      // 홀드 중일 때는 쿨타임이 줄어들지 않음
                 if (timer <= 0)
                 {
                     skillCoroutine = StartCoroutine(Exit());
@@ -708,22 +715,24 @@ public class Player : ObjectBasic
 
         IEnumerator Exit()
         {
+            int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
+
             player.playerStatus.isSkillHold = false;
 
-            if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.skillType == SKILL_TYPE.UP)
+            if (player.skillList[SkillIndex].skillData.skillType == SKILL_TYPE.UP)
             {
                 player.playerStatus.isSkill = true;
                 yield return null;
-                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.preDelay);
+                yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.preDelay);
             }
 
-            player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Exit();
+            player.skillList[SkillIndex].Exit();
 
             skillCoroutine = null;
 
-            if (player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.skillType == SKILL_TYPE.UP)
+            if (player.skillList[SkillIndex].skillData.skillType == SKILL_TYPE.UP)
             {
-                yield return new WaitForSeconds(player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillData.postDelay);
+                yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.postDelay);
                 yield return null;
                 player.playerStatus.isSkill = false;
             }
@@ -736,6 +745,8 @@ public class Player : ObjectBasic
 
         public void SkillCancle()
         {
+            int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
+
             //print("Cancle");
             player.playerStatus.isSkillHold = false;
             player.playerStatus.isSkill = false;
@@ -743,8 +754,8 @@ public class Player : ObjectBasic
             {
                 StopCoroutine(skillCoroutine);
                 skillCoroutine = null;
-                if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
-                    player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].Cancle();
+                if (player.playerStats.skill[player.playerStatus.skillIndex].IsValid())
+                    player.skillList[SkillIndex].Cancle();
             }
         }
 
@@ -752,10 +763,14 @@ public class Player : ObjectBasic
 
     void SkillDown()
     {
-        if (playerStats.skill[playerStatus.skillIndex] == 0)
+        
+        if (!playerStats.skill[playerStatus.skillIndex].IsValid())
             return;
 
-        if (skillList[playerStats.skill[playerStatus.skillIndex]].skillCoolTime > 0)
+        int SkillIndex = playerStats.skill[playerStatus.skillIndex].skillData.selectItemID;
+
+
+        if (skillList[SkillIndex].skillCoolTime > 0)
             return;
 
         // 스킬 키 다운
@@ -765,11 +780,11 @@ public class Player : ObjectBasic
             // 해당 무기만 사용이 가능하다.
 
             // 무기 제한이 있을 때
-            if (skillList[playerStats.skill[playerStatus.skillIndex]].skillData.skillLimit.Length != 0)
+            if (skillList[SkillIndex].skillData.skillLimit.Length != 0)
             {
                 // 무기가 없거나
                 // 제한 무기를 가지고 있지 않거나
-                int SkillUseOk = Array.IndexOf(skillList[playerStats.skill[playerStatus.skillIndex]].skillData.skillLimit, playerStats.weapon.weaponInstance.weaponData.weaponType);
+                int SkillUseOk = Array.IndexOf(skillList[SkillIndex].skillData.skillLimit, playerStats.weapon.weaponInstance.weaponData.weaponType);
                 print(SkillUseOk);
                 if (playerStats.weapon.weaponInstance == null || SkillUseOk == -1)
                 {
@@ -784,7 +799,7 @@ public class Player : ObjectBasic
 
     void SkillUp()
     {
-        if (playerStats.skill[playerStatus.skillIndex] == 0)
+        if (!playerStats.skill[playerStatus.skillIndex].IsValid())
             return;
 
         //스킬 hold 상태에서 스킬 키 up
@@ -862,12 +877,12 @@ public class Player : ObjectBasic
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Skill)
         {
 
-            if (playerStats.skill[playerStatus.skillIndex] != 0)
+            if (playerStats.skill[playerStatus.skillIndex].IsValid())
             {
                 skillController.UnEquipSkill();
             }
             // 스킬 장착
-            gainItem = skillController.EquipSkill(selectItem.GetComponent<SelectItem>().itemInstance.itemData.selectItemID);
+            gainItem = skillController.EquipSkill(selectItem.GetComponent<SkillItem>().skillInstance);
 
         }
         // 일반 아이템 =======================================================
@@ -1007,7 +1022,12 @@ public class Player : ObjectBasic
             for (int i = 0; i < playerSkill.Length; i++)
             {
                 if (playerSkill[i] != 0)
-                    skillController.EquipSkill(playerSkill[i]);
+                {
+                    SkillData SData = DataManager.instance.gameData.skillList[playerSkill[i]].GetComponent<SkillInstance>().skillData;
+                    SkillInstance SI = new SkillInstance();
+                    SI.SetSI(SData);
+                    skillController.EquipSkill(SI);
+                }
             }
 
             // 방어구
@@ -1017,7 +1037,7 @@ public class Player : ObjectBasic
             {
                 if (playerEquipment[i] != 0)
                 {
-                    EquipmentData EData = DataManager.instance.gameData.weaponList[playerEquipment[i]].GetComponent<Equipment>().equipmentInstance.equipmentData;
+                    EquipmentData EData = DataManager.instance.gameData.equipmentList[playerEquipment[i]].GetComponent<Equipment>().equipmentInstance.equipmentData;
                     EquipmentInstance EI = new EquipmentInstance();
                     EI.SetEI(EData);
                     EquipEquipment(EI);

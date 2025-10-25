@@ -74,8 +74,8 @@ public class ASDeBuff : BuffData
             if (player.playerStats.weapon.weaponInstance == null)
                 player.playerStatus.attackDelay = 99f;
 
-            if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
-                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime = 99f;
+            if (player.playerStats.skill[player.playerStatus.skillIndex].IsValid())
+                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex].itemData.selectItemID].skillCoolTime = 99f;
         }
         else if (_Buff.target.tag == "Enemy")
         {
@@ -92,9 +92,9 @@ public class ASDeBuff : BuffData
         {
             Player player = _Buff.target.GetComponent<Player>();
 
-            if (player.playerStats.skill[player.playerStatus.skillIndex] != 0)
+            if (player.playerStats.skill[player.playerStatus.skillIndex].IsValid())
             {
-                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex]].skillCoolTime = curSkillCoolTIme;
+                player.skillList[player.playerStats.skill[player.playerStatus.skillIndex].itemData.selectItemID].skillCoolTime = curSkillCoolTIme;
             }
 
             if (player.playerStats.weapon.weaponInstance == null)

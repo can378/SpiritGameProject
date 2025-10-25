@@ -12,7 +12,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [field: SerializeField] public bool isHover { get; private set; }
 
-    public void SetItemData(ItemInstance _itemInstance = null)
+    public void SetItemInstance(ItemInstance _itemInstance = null)
     {
         // 안전한 null 체크: ItemInstance 자체뿐 아니라 내부의 ScriptableObject(ItemData)도 검사
         if (_itemInstance == null)
@@ -22,6 +22,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if (isHover)
             {
                 toolTipUI.OpenToolTipUI(itemInstance);
+                toolTipUI.ChangePosition(ToolTipUIPos.InventorySlot);
             }
             return;
         }
@@ -31,6 +32,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if(isHover)
         {
             toolTipUI.OpenToolTipUI(itemInstance);
+            toolTipUI.ChangePosition(ToolTipUIPos.InventorySlot);
         }
 
     }
@@ -47,6 +49,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (toolTipUI != null)
         {
             toolTipUI.OpenToolTipUI(itemInstance);
+            toolTipUI.ChangePosition(ToolTipUIPos.InventorySlot);
         }
     }
 
