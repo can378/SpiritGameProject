@@ -745,6 +745,9 @@ public class Player : ObjectBasic
 
         public void SkillCancle()
         {
+            if (player.playerStats.skill[player.playerStatus.skillIndex] == null)
+                return;
+
             int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
 
             //print("Cancle");

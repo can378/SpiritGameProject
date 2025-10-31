@@ -343,13 +343,13 @@ public class MapUIManager : MonoBehaviour
             return;
         }
 
-        ItemInstance curItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>().itemInstance;
+        SelectItem curItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>();
         if (curItem == null)
             return;
 
-        if (!toolTipPanel.gameObject.activeSelf || curItem != toolTipPanel.ToolTipCurItem)
+        if (!toolTipPanel.gameObject.activeSelf || curItem.itemInstance != toolTipPanel.ToolTipCurItem)
         {
-            toolTipPanel.OpenToolTipUI(curItem);
+            toolTipPanel.OpenToolTipUI(curItem.itemInstance);
             toolTipPanel.ChangePosition(ToolTipUIPos.InGameItem);
         }
 

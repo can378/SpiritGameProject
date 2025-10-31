@@ -13,7 +13,7 @@ public class SellingItem : MonoBehaviour, Interactable
     [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
 
     public GameObject info;
-    public TMP_Text itemName;
+    //public TMP_Text itemName;
     public TMP_Text itemPrice;
 
     [field: SerializeField] public SelectItem thisSelectItem {get; private set;}
@@ -63,7 +63,7 @@ public class SellingItem : MonoBehaviour, Interactable
 
         thisSelectItem = thisSlotItem.GetComponent<SelectItem>();
 
-        itemName.text = thisSelectItem.itemInstance.itemData.selectItemName;
+        //itemName.text = thisSelectItem.itemInstance.itemData.selectItemName;
         itemPrice.text = thisSelectItem.itemInstance.itemData.price.ToString();
     }
 
