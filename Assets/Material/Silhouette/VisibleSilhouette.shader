@@ -110,29 +110,40 @@ Shader "Silhouette/VisibleSilhouette"
             struct appdata
             {
                 float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
                 float4 color    : COLOR;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
                 float4 color    : COLOR;
             };
 
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            fixed4 _Color;
             fixed4 _Color1;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.color = _Color1;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.color = v.color * _Color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
+                fixed4 col = tex2D(_MainTex, i.uv) * i.color;
                 // sample the texture
-                fixed4 col = i.color;
+                if(col.a < 0.5f)
+                {
+                    discard;
+                }
+                col = _Color1;
                 return col;
             }
 
@@ -163,29 +174,40 @@ Shader "Silhouette/VisibleSilhouette"
             struct appdata
             {
                 float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
                 float4 color    : COLOR;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
+                float2 uv : TEXCOORD0;
                 float4 color    : COLOR;
             };
 
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            fixed4 _Color;
             fixed4 _Color2;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.color = _Color2;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.color = v.color * _Color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
+                fixed4 col = tex2D(_MainTex, i.uv) * i.color;
                 // sample the texture
-                fixed4 col = i.color;
+                if(col.a < 0.5f)
+                {
+                    discard;
+                }
+                col = _Color2;
                 return col;
             }
 

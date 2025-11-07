@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 6601849473291929727}
   - component: {fileID: 4205198980569435817}
   - component: {fileID: 8370369533593860149}
+  - component: {fileID: 3875550913936231185}
   m_Layer: 6
   m_Name: 05_AttackPowerUp+
   m_TagString: SelectItem
@@ -214,8 +215,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <equipmentInstance>k__BackingField:
     id: 
-    itemData: {fileID: 0}
+    itemData: {fileID: 11400000, guid: 3465850e760af25498d83446162cc4a0, type: 2}
     equipmentData: {fileID: 11400000, guid: 3465850e760af25498d83446162cc4a0, type: 2}
+--- !u!50 &3875550913936231185
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3296880656510438592}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 5
+  m_LinearDrag: 5
+  m_AngularDrag: 5
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5759832513149127079
 GameObject:
   m_ObjectHideFlags: 0

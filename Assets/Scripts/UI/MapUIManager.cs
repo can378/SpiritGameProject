@@ -318,7 +318,13 @@ public class MapUIManager : MonoBehaviour
 
     public void UpdateNearObjectUI()
     {
-        if(Player.instance.playerStatus.nearObject == null)
+        if (Player.instance.playerStatus.nearObject == null)
+        {
+            nearObjectPanel.SetActive(false);
+            return;
+        }
+        
+        if(Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText() == "")
         {
             nearObjectPanel.SetActive(false);
             return;

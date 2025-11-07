@@ -5,6 +5,9 @@ using UnityEngine;
 public class treasureBox : MonoBehaviour, Interactable
 {
 
+    [field: SerializeField] int MinItemNum = 1;
+    [field: SerializeField] int MaxItemNum = 5;
+
     [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
 
     [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
@@ -14,6 +17,12 @@ public class treasureBox : MonoBehaviour, Interactable
     [field: SerializeField] bool isOpen = false;
     [field: SerializeField] bool isLock;
     [field: SerializeField] List<SelectItem> reward = new List<SelectItem>();
+
+    [field: SerializeField] SpriteRenderer spriteRenderer;
+
+    [field: SerializeField] Sprite ClosedBoxSprite;
+    [field: SerializeField] Sprite OpenedBoxSprite;
+
 
     void Awake()
     {
@@ -54,7 +63,7 @@ public class treasureBox : MonoBehaviour, Interactable
         Dictionary<string, int> ItemCondition = new Dictionary<string, int>();
 
         // 상자에 들어있는 아이템 개수를 정함
-        int ItemNum = Random.Range(1, 4);
+        int ItemNum = Random.Range(MinItemNum, MaxItemNum + 1);
 
         // 아이템 개수만큼 조건에 맞게 무작위 선택
         for (int i = 0; i < ItemNum; ++i)
@@ -81,6 +90,10 @@ public class treasureBox : MonoBehaviour, Interactable
 
     public string GetInteractText()
     {
+        if(isOpen)
+        {
+            return "";
+        }
         return "상자 열기";
     }
 
@@ -111,15 +124,33 @@ public class treasureBox : MonoBehaviour, Interactable
         // Instantiate(itemCandidate[randomNum], rewardPos.transform).GetComponent<SpriteRenderer>().sortingOrder
         //     =GetComponent<SpriteRenderer>().sortingOrder+1;
 
-        foreach(SelectItem item in reward)
+        foreach (SelectItem item in reward)
         {
             Vector3 pos = transform.position + (Random.insideUnitSphere * 3);
             Instantiate(item, pos, Quaternion.identity);
         }
 
         isOpen = true;
+        spriteRenderer.sprite = OpenedBoxSprite;
+        StartCoroutine(OpenBoxEffect());
+    }
+    
+    IEnumerator OpenBoxEffect()
+    {
+        float AlphaTime = 1.0f;
 
-        this.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+
+        //열리는 이펙트 재생
+        while (0 <= AlphaTime)
+        {
+            AlphaTime -= Time.deltaTime;
+            spriteRenderer.color = new Color(1, 1, 1, AlphaTime);
+            yield return null;
+        }
+
+        Destroy(gameObject);
+        //아이템 생성
     }
 
     /*
