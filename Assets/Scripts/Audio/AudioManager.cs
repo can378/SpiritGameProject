@@ -284,4 +284,61 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    // 미션맵 BGM 플레이 함수 ==========================================================
+    private AudioClip currentChapterBgm;
+    private bool isMissionBgmPlaying = false;
+
+    public List<string> ClockBgmMaps = new List<string>();
+    public List<string> HeartbpmBgmMaps = new List<string>();
+
+    public void OnEnterMap(GameObject mapObj)
+    {
+        if (!isPlayAudio) return;
+
+        string mapName = mapObj.name.Replace("(Clone)", "").Trim();
+
+        if (ClockBgmMaps.Contains(mapName))
+        {
+            currentChapterBgm = bgSound.clip; 
+            bgSound.clip = BgClipList[8]; 
+            bgSound.loop = true;
+            bgSound.volume = 0.6f;
+            bgSound.Play();
+            isMissionBgmPlaying = true;
+        }
+
+        else if (HeartbpmBgmMaps.Contains(mapName))
+        {
+            if (bgSound.isPlaying) bgSound.Stop();
+            currentChapterBgm = bgSound.clip;
+            bgSound.clip = BgClipList[9];
+            bgSound.loop = true;
+            bgSound.volume = 0.6f;
+            bgSound.Play();
+            isMissionBgmPlaying = true;
+        }
+    }
+
+    public void OnExitMap(GameObject mapObj)
+    {
+        if (!isMissionBgmPlaying) return;
+
+        string mapName = mapObj.name.Replace("(Clone)", "").Trim();
+
+        if (ClockBgmMaps.Contains(mapName) || HeartbpmBgmMaps.Contains(mapName))
+        {
+            if (bgSound.isPlaying)
+                bgSound.Stop();
+
+            if (currentChapterBgm != null)
+            {
+                bgSound.clip = currentChapterBgm;
+                bgSound.loop = true;
+                bgSound.volume = 0.6f;
+                bgSound.Play();
+            }
+
+            isMissionBgmPlaying = false;
+        }
+    }
 }

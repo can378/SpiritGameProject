@@ -216,4 +216,21 @@ public class Mission : MonoBehaviour
         { if (e.GetComponent<EnemyStats>().HP > 0) { return false; } }
         return true;
     }
+
+    // 미션맵 BGM 플레이 관련 함수
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AudioManager.instance.OnEnterMap(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AudioManager.instance.OnExitMap(gameObject);
+        }
+    }
 }
