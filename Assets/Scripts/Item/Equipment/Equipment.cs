@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Equipment : SelectItem
 {
-    [field: SerializeField] public EquipmentInstance equipmentInstance { get; protected set; }
+    [field: SerializeReference] public EquipmentInstance equipmentInstance { get; protected set; } = new EquipmentInstance();
 
     protected virtual void Awake()
     {

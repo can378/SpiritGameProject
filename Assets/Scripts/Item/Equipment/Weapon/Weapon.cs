@@ -8,7 +8,7 @@ using UnityEngine;
 // 무기의 기본 정보
 public class Weapon : SelectItem
 {
-    [field: SerializeField] public WeaponInstance weaponInstance { get; protected set; }
+    public WeaponInstance weaponInstance;
 
     protected void Awake()
     {

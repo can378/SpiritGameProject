@@ -7,7 +7,7 @@ using TMPro;
 
 public class SelectItem : MonoBehaviour, Interactable
 {
-    [HideInInspector] public ItemInstance itemInstance { get; protected set; }
+    [HideInInspector] public ItemInstance itemInstance;
     public string GetInteractText()
     {
         return "ащ╠Б";

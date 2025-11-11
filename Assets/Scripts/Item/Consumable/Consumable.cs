@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Consumable : SelectItem
 {
-    [field: SerializeField] public ConsumableInstance consumableInstance { get; protected set; }
+    public ConsumableInstance consumableInstance;
 
     protected void Awake()
     {
