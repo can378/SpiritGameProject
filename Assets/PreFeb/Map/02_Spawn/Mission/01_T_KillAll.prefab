@@ -1356,7 +1356,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e009f8f1642087f4b8c2977404843329, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4629,10 +4629,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8012559225851317896}
   - component: {fileID: 4128500497173244750}
-  - component: {fileID: 6961741063633529609}
   - component: {fileID: 7986515410581641374}
   - component: {fileID: 1658707079708437727}
   - component: {fileID: 4583387039078841697}
+  - component: {fileID: 1437005189642617319}
   m_Layer: 0
   m_Name: 01_T_KillAll
   m_TagString: Untagged
@@ -4679,31 +4679,6 @@ MonoBehaviour:
   - {fileID: 4087699902878083706}
   - {fileID: 3915529387149889584}
   enemys: []
---- !u!114 &6961741063633529609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7607378665148908052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c115b349223668489bacee1ac922e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  missionReward: {fileID: 8121596842545364636}
-  time: 0
-  isStart: 1
-  isEnd: 0
-  timeCondition: 0
-  clock: {fileID: 0}
-  curse: {fileID: 0}
-  safeAisle: {fileID: 0}
-  curseDuration: 0
-  curseTime: 0
-  isEscapeMaze: 0
-  roomScript: {fileID: 0}
 --- !u!114 &7986515410581641374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4774,6 +4749,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.020478, y: 9.48728}
   m_EdgeRadius: 0
+--- !u!114 &1437005189642617319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7607378665148908052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f006737d61d700945acbd2aeebe85321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionState: 0
+  missionReward: {fileID: 8121596842545364636}
 --- !u!1 &7649090964132856319
 GameObject:
   m_ObjectHideFlags: 0

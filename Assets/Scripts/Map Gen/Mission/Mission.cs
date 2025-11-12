@@ -4,22 +4,32 @@ using UnityEngine;
 
 public enum MissionType 
 {KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse, Dream, Maze, LittleMonster, MazeCurse}
+// KillALL : 모든 적 처치
+// KillAll2 : 일정 시간마다 적 리스폰 (그래서 적 빨리 처치)
+// NoHurt : 데미지 입지 않기
+// TimeAttack : 제한 시간 내 클리어
+// Curse : 저주받은 구역에서 살아남기
 
+// 쓰지 않음
+// MiniBoss : 미니보스 처치
+// Dream : 꿈속에서 일정 시간 버티기
+// Maze : 미로 탈출
+// LittleMonster : 작은 몬스터들과 일정 시간 버티기
 public class Mission : MonoBehaviour
 {
     public MissionType type;
 
     public GameObject missionReward;
-    
+
 
     private ObjectSpawn spawn;
     [SerializeField][ReadOnly] private float time;
     private float playerFirstHP;
     [HideInInspector]
-    public bool isStart=true;
+    public bool isStart = true;
     private bool isFail;                           //is player fail for mission
     [SerializeField] private bool isEnd;            //is mission ended
-   
+
 
     [Header("TimeAttack, Dream, LittleMonster")]
     public float timeCondition;
@@ -48,9 +58,9 @@ public class Mission : MonoBehaviour
         isEnd = false;
         if (MissionType.NoHurt == type) { isStart = false; }
         else { isStart = true; }
-        
-        if(clock != null) { clock.SetActive(false); }
-        
+
+        if (clock != null) { clock.SetActive(false); }
+
     }
     private void Start()
     {
@@ -61,17 +71,17 @@ public class Mission : MonoBehaviour
         }
     }
     //starts when the map is generated
-    public IEnumerator CheckMissionEnd() 
+    public IEnumerator CheckMissionEnd()
     {
-        if(isStart) time += Time.deltaTime;
+        if (isStart) time += Time.deltaTime;
 
         switch (type)
-        {  
+        {
             case MissionType.NoHurt:
                 //hurts --> fail
-                if (FindObj.instance.Player.GetComponent<PlayerStats>().HP < playerFirstHP || 
+                if (FindObj.instance.Player.GetComponent<PlayerStats>().HP < playerFirstHP ||
                     time > timeCondition)
-                { 
+                {
                     print("nohurt mission fail");
                     isFail = true;
                     clock.SetActive(false);
@@ -79,7 +89,7 @@ public class Mission : MonoBehaviour
 
                 }
                 //kill all of them --> end
-                else if (KillAll()) 
+                else if (KillAll())
                 {
                     print("no hurt mission success");
                     isEnd = true;
@@ -88,17 +98,17 @@ public class Mission : MonoBehaviour
                 break;
             case MissionType.KillAll:
             case MissionType.MiniBoss:
-                if (KillAll()) 
+                if (KillAll())
                 {
                     isEnd = true;
                 }
                 break;
             case MissionType.KillAll2:
-                if (time% 10==0)
+                if (time % 10 == 0)
                 {
                     //respawn
                     spawn.SpawnEnemy(MapType.Mission);
-                
+
                 }
                 if (KillAll())
                 {
@@ -107,23 +117,23 @@ public class Mission : MonoBehaviour
                 break;
             case MissionType.Curse:
 
-                if (KillAll()) 
+                if (KillAll())
                 {
                     isEnd = true;
                 }
-                else if(curse.transform.localScale.x>=2)
-                { 
+                else if (curse.transform.localScale.x >= 2)
+                {
                     //curse safe area decreased
-                    curse.transform.localScale-= new Vector3(0.001f, 0.001f, 0.001f);
+                    curse.transform.localScale -= new Vector3(0.001f, 0.001f, 0.001f);
                 }
                 break;
             case MissionType.TimeAttack:
-                if (KillAll()) 
+                if (KillAll())
                 {
                     isEnd = true;
                 }
-                else if (time > timeCondition) 
-                { 
+                else if (time > timeCondition)
+                {
                     print("fail");
                     isFail = true;
                     isEnd = true;
@@ -131,7 +141,7 @@ public class Mission : MonoBehaviour
                 break;
             case MissionType.Dream:
                 //ends over time
-                if (time > timeCondition) 
+                if (time > timeCondition)
                 {
                     isEnd = true;
                 }
@@ -164,12 +174,12 @@ public class Mission : MonoBehaviour
 
         if (isEnd)
         {
-            if (!isFail && missionReward!=null)
+            if (!isFail && missionReward != null)
             {
                 missionReward.SetActive(true);
             }
 
-            if(type== MissionType.Curse)
+            if (type == MissionType.Curse)
             {
                 safeAisle.SetActive(true);
             }
@@ -178,14 +188,14 @@ public class Mission : MonoBehaviour
             {
                 roomScript.UnLockDoor();
             }
-            
+
         }
         else
             StartCoroutine(CheckMissionEnd());
     }
-    public void startMission() 
+    public void startMission()
     {
-        if(isEnd)
+        if (isEnd)
         {
             roomScript.UnLockDoor();
             return;
@@ -204,7 +214,7 @@ public class Mission : MonoBehaviour
         StartCoroutine(CheckMissionEnd());
 
         //Start clock
-        if (MissionType.Dream == type || MissionType.LittleMonster == type || MissionType.TimeAttack == type||MissionType.NoHurt==type)
+        if (MissionType.Dream == type || MissionType.LittleMonster == type || MissionType.TimeAttack == type || MissionType.NoHurt == type)
         {
             clock.SetActive(true);
             StartCoroutine(clock.GetComponent<Clock>().ClockStart(timeCondition));
@@ -233,4 +243,48 @@ public class Mission : MonoBehaviour
             AudioManager.instance.OnExitMap(gameObject);
         }
     }
+}
+
+public enum MISSION_STATE { NotStarted, InProgress, Failed, Completed }
+
+public interface IMission
+{
+    public MISSION_STATE GetMissionState();
+
+    /// <summary>
+    /// 미션 시작할 때 호출
+    /// </summary>
+    public void StartMission();
+
+    /// <summary>
+    /// 미션이 끝났을 때 호출
+    /// </summary>
+    public void EndMission();
+}
+
+public abstract class RoomMissionBase : MonoBehaviour, IMission
+{
+    [field:SerializeField]protected MISSION_STATE missionState = MISSION_STATE.NotStarted;
+    [field: SerializeField] protected GameObject missionReward;
+    protected Room roomScript;
+
+    public MISSION_STATE GetMissionState()
+    {
+        return missionState;
+    }
+
+    public void SetRoom(Room _Room)
+    {
+        roomScript = _Room;
+    }
+
+    public abstract MissionType GetMissionType();
+
+    public abstract void LockDoor();
+
+    public abstract void StartMission();
+
+    protected abstract void CheckMissionEnd();
+
+    public abstract void EndMission();
 }

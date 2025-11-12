@@ -14,6 +14,7 @@ public class TrapEnter : MonoBehaviour
         }
     }
 
+    // 방에 완전히 입장
     void Trap()
     {
         if (room.doorType == DoorType.Trap)

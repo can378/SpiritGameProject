@@ -45,23 +45,25 @@ public class RoomEnterExit : MonoBehaviour
         }
     }
 
-/*
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
+    /*
+        void OnTriggerEnter2D(Collider2D collision)
         {
-            enterRoom();
+            if (collision.tag == "Player")
+            {
+                enterRoom();
+            }
         }
-    }
 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
+        void OnTriggerExit2D(Collider2D collision)
         {
-            exitRoom();
+            if (collision.tag == "Player")
+            {
+                exitRoom();
+            }
         }
-    }
-*/
+    */
+
+    // 방 입장
     void enterRoom()
     {
         GameObject.FindWithTag("MainCamera").GetComponent<CameraManager>().postCenter = transform.position;
@@ -108,10 +110,10 @@ public class RoomEnterExit : MonoBehaviour
         }
 
         //미션 맵이라면 미션 시작
-        else if(room.mapType == MapType.Mission)
-        {
-            room.map.GetComponent<Mission>().startMission();
-        }
+        //else if(room.mapType == MapType.Mission)
+        //{
+        //    room.map.GetComponent<Mission>().startMission();
+        //}
 
         //플레이어가 현재 있는 맵 위치
         GameManager.instance.nowRoom = room.gameObject;

@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1979b902e276449bb56bf1171ce02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MinItemNum: 1
+  MaxItemNum: 5
   TypeWeight: 03000000010000000300000002000000
   RatingWeight: 1400000023000000190000000f00000005000000
   lockObj: {fileID: 5965012193886757410}
@@ -57,8 +59,8 @@ MonoBehaviour:
   isLock: 0
   reward: []
   spriteRenderer: {fileID: 2761622146981021675}
-  ClosedBoxSprite: {fileID: 21300000, guid: f15601dd035440444911346e9d9df61a, type: 3}
-  OpenedBoxSprite: {fileID: 21300000, guid: 154ed395010e49543a14fa1ab227131c, type: 3}
+  ClosedBoxSprite: {fileID: 21300000, guid: 533a110def2a5a648911c5f66f6639c6, type: 3}
+  OpenedBoxSprite: {fileID: 21300000, guid: e2e92158061a18f4192fdbac8f83c067, type: 3}
 --- !u!58 &6113207734468413566
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -353,7 +355,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f15601dd035440444911346e9d9df61a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 533a110def2a5a648911c5f66f6639c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -12,6 +12,10 @@ public class Room : MonoBehaviour
     [SerializeField] bool lockTrigger;
     [SerializeField] bool unLockTrigger;
 
+    [SerializeField] event System.Action UnLockEvent;
+    [SerializeField] event System.Action LockEvent;
+
+
     [field: SerializeField] public MapType mapType { get; private set; }
     MapType preMapType = MapType.None;
     [field: SerializeField] public DoorType doorType { get; private set; }
@@ -143,8 +147,9 @@ public class Room : MonoBehaviour
             }
 
             map = Instantiate(missionMapPrefab, transform.position, transform.rotation);
-            map.GetComponent<Mission>().roomScript = this;
+            map.GetComponent<RoomMissionBase>().SetRoom(this.GetComponent<Room>());
             minimapIcon = Instantiate(map.GetComponent<MinimapIcon>().minimapIcon);
+            AddLockEvent(map.GetComponent<RoomMissionBase>().LockDoor);
         }
 
         else if (mapType == MapType.Boss)
@@ -201,13 +206,37 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void AddLockEvent(System.Action lockAction)
+    {
+        LockEvent += lockAction;
+    }
+
+    public void AddUnLockEvent(System.Action unLockAction)
+    {
+        UnLockEvent += unLockAction;
+    }
+
+
+    // 문을 닫는다.
     public void LockDoor()
     {
+        // 이미 닫혀있다면 반환
+        if (door.IsClosed())
+        {
+            return;
+        }
+        LockEvent?.Invoke();
         lockTrigger = true;
     }
 
     public void UnLockDoor()
     {
+        // 이미 열려있다면 반환
+        if (!door.IsClosed())
+        {
+            return;
+        }
+        UnLockEvent?.Invoke();
         unLockTrigger = true;
     }
 
