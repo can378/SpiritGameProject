@@ -147,9 +147,10 @@ public class Room : MonoBehaviour
             }
 
             map = Instantiate(missionMapPrefab, transform.position, transform.rotation);
-            map.GetComponent<RoomMissionBase>().SetRoom(this.GetComponent<Room>());
+            map.GetComponent<MissionController>().SetRoom(this.GetComponent<Room>());
+            map.GetComponent<MissionController>().SetTrigger();
             minimapIcon = Instantiate(map.GetComponent<MinimapIcon>().minimapIcon);
-            AddLockEvent(map.GetComponent<RoomMissionBase>().LockDoor);
+            
         }
 
         else if (mapType == MapType.Boss)
@@ -179,7 +180,7 @@ public class Room : MonoBehaviour
             minimapIcon.transform.localScale = new Vector3(0.005f, 0.005f, 1f);
             minimapIcon.transform.position = this.transform.position;
         }
-            
+        map.transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, roomManager.roomSize);
         map.GetComponent<ObjectSpawn>().SpawnEnemy(mapType);
         map.transform.SetParent(this.transform);
         //map.SetActive(false);
@@ -225,6 +226,7 @@ public class Room : MonoBehaviour
         {
             return;
         }
+        print("Lock");
         LockEvent?.Invoke();
         lockTrigger = true;
     }
@@ -236,6 +238,7 @@ public class Room : MonoBehaviour
         {
             return;
         }
+        print("UnLock");
         UnLockEvent?.Invoke();
         unLockTrigger = true;
     }

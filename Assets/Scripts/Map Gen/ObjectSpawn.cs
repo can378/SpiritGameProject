@@ -62,7 +62,7 @@ public class ObjectSpawn : MonoBehaviour
         nowChapter = userData.nowChapter;
 
 
-        transform.localScale = new Vector3(roomManager.roomSize, roomManager.roomSize, roomManager.roomSize);
+        
 
         foreach (Transform enemyTransform in enemySpawnPoint)
         {
@@ -115,6 +115,14 @@ public class ObjectSpawn : MonoBehaviour
         
     }
 
+    public void RespawnEnemy()
+    {
+        foreach (GameObject enemy in enemys)
+        {
+            enemy.GetComponent<ObjectBasic>().stats.HP = enemy.GetComponent<ObjectBasic>().stats.HPMax.Value;
+        }
+        EnableEnemy();
+    }
 
     void OnDestroy() {
         foreach(GameObject enemy in enemys)

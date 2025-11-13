@@ -21,6 +21,8 @@ public class Door : MonoBehaviour, Interactable
     DoorState doorState;
     SpriteRenderer sprite;
 
+    [SerializeField] event System.Action interactEvent;
+
     void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
@@ -35,7 +37,7 @@ public class Door : MonoBehaviour, Interactable
     public void Interact()
     {
         // 키가 있다면
-        if(this.doorType == DoorType.Key)
+        if (this.doorType == DoorType.Key)
         {
             Debug.Log("열쇠를 사용하였다.");
             UnLockDoor();
@@ -45,6 +47,11 @@ public class Door : MonoBehaviour, Interactable
         {
             Debug.Log("열리지 않는다.");
         }
+    }
+    
+            public void AddInteractEvent(System.Action _Action)
+    {
+        interactEvent += _Action;
     }
 
     // 문 잠그기

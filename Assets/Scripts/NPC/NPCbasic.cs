@@ -18,6 +18,8 @@ public class NPCbasic : MonoBehaviour, Interactable
 
     protected ScriptManager scriptManager;
 
+        [SerializeField] event System.Action interactEvent;
+
     void Awake()
     {
         scriptManager = GetComponent<ScriptManager>();
@@ -53,9 +55,14 @@ public class NPCbasic : MonoBehaviour, Interactable
         index++;
     }
 
+        public void AddInteractEvent(System.Action _Action)
+    {
+        interactEvent += _Action;
+    }
+
     public virtual void ConversationOut()
     {
-        isTalking=false;
+        isTalking = false;
         DialogPanel.SetActive(false);
     }
 

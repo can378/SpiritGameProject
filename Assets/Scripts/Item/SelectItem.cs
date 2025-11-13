@@ -8,6 +8,10 @@ using TMPro;
 public class SelectItem : MonoBehaviour, Interactable
 {
     [HideInInspector] public ItemInstance itemInstance;
+    
+    [SerializeField] event System.Action interactEvent;
+
+
     public string GetInteractText()
     {
         return "ащ╠Б";
@@ -16,6 +20,11 @@ public class SelectItem : MonoBehaviour, Interactable
     public void Interact()
     {
         Player.instance.GainSelectItem(this);
+    }
+
+        public void AddInteractEvent(System.Action _Action)
+    {
+        interactEvent += _Action;
     }
 
     #region Sort CompareFunc

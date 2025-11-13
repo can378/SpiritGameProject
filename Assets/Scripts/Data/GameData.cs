@@ -110,11 +110,6 @@ public class GameData : MonoBehaviour
     {
         instance = this;
 
-        for(int i = 0;i<ItemList.Count;++i)
-        {
-            Debug.Log(ItemList[i].itemInstance.itemData);
-        }
-
         // 유형 -> 등급 순으로 정렬
         ItemList.Sort(SelectItem.ClassSort);
 

@@ -4,13 +4,16 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//ÆÇ¸ÅÇÏ´Â ¾ÆÀÌÅÛ °¢°¢¿¡ µé¾î°¡´Â ½ºÅ©¸³Æ®
+//ï¿½Ç¸ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®
 
 public class SellingItem : MonoBehaviour, Interactable
 {
     [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
 
     [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
+
+    [SerializeField] event System.Action interactEvent;
+
 
     public GameObject info;
     //public TMP_Text itemName;
@@ -26,11 +29,11 @@ public class SellingItem : MonoBehaviour, Interactable
     private void SetStore()
     {
         // ====================================
-        // À¯Çü
-        // new·Î »ý¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ï¿½ï¿½ï¿½ï¿½
+        // newï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½?
         WeightRandom<SelectItemType> typeRandom = new WeightRandom<SelectItemType>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
         for (int i = 0; i < (int)SelectItemType.END; ++i)
         {
             typeRandom.Add((SelectItemType)i, TypeWeight[i]);
@@ -39,11 +42,11 @@ public class SellingItem : MonoBehaviour, Interactable
         SelectItemType ItemType = typeRandom.GetRandomItem();
 
         // ====================================
-        // µî±Þ
-        // new·Î »ý¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ï¿½ï¿½ï¿½
+        // newï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½?
         WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
         for (int i = 0; i < (int)SelectItemRating.END; ++i)
         {
             weightRandom.Add((SelectItemRating)i, RatingWeight[i]);
@@ -51,12 +54,12 @@ public class SellingItem : MonoBehaviour, Interactable
 
         SelectItemRating ItemRating = weightRandom.GetRandomItem();
 
-        // Á¶°ÇÀ» ´ãÀº Dictionary »ý¼º
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Dictionary ï¿½ï¿½ï¿½ï¿½
         Dictionary<string, int> ItemCondition = new Dictionary<string, int>();
         ItemCondition.Add("selectItemType", (int)ItemType);
         ItemCondition.Add("selectItemRating", (int)ItemRating);
 
-        // GameData¿¡¼­ ÇØ´ç Á¶°Ç¿¡ ¸Â´Â ¹«ÀÛÀ§ ¾ÆÀÌÅÛ ¹ÝÈ¯
+        // GameDataï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         GameObject thisSlotItem = Instantiate(GameData.instance.DrawRandomItem(ItemCondition), transform.position, Quaternion.identity);
         thisSlotItem.transform.SetParent(this.gameObject.transform);
         thisSlotItem.GetComponent<Collider2D>().enabled = false;
@@ -69,12 +72,17 @@ public class SellingItem : MonoBehaviour, Interactable
 
     public string GetInteractText()
     {
-        return "±¸¸ÅÇÏ±â";
+        return "ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½";
     }
 
     public void Interact()
     {
         BuyItem();
+    }
+
+    public void AddInteractEvent(System.Action _Action)
+    {
+        interactEvent += _Action;
     }
 
     public void BuyItem()
@@ -126,7 +134,7 @@ public class SellingItem : MonoBehaviour, Interactable
     public GameObject spriteR;
     
 
-    private List<GameObject> itemList;//ÆÇ¸Å °¡´ÉÇÑ ¾ÆÀÌÅÛ Á¾·ù
+    private List<GameObject> itemList;//ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
     public int thisItemIndex;
@@ -155,11 +163,11 @@ public class SellingItem : MonoBehaviour, Interactable
     private void setStore()
     {
         // ====================================
-        // À¯Çü
-        // new·Î »ý¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ï¿½ï¿½ï¿½ï¿½
+        // newï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½?
         WeightRandom<SelectItemType> typeRandom = new WeightRandom<SelectItemType>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
         for (int i = 0; i < (int)SelectItemType.END; ++i)
         {
             typeRandom.Add((SelectItemType)i, TypeWeight[i]);
@@ -168,11 +176,11 @@ public class SellingItem : MonoBehaviour, Interactable
         SelectItemType ItemType = typeRandom.GetRandomItem();
 
         // ====================================
-        // µî±Þ
-        // new·Î »ý¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ï¿½ï¿½ï¿½
+        // newï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½?
         WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
         for (int i = 0; i < (int)SelectItemRating.END; ++i)
         {
             weightRandom.Add((SelectItemRating)i, RatingWeight[i]);
@@ -180,12 +188,12 @@ public class SellingItem : MonoBehaviour, Interactable
 
         SelectItemRating ItemRating = weightRandom.GetRandomItem();
 
-        // Á¶°ÇÀ» ´ãÀº Dictionary »ý¼º
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Dictionary ï¿½ï¿½ï¿½ï¿½
         Dictionary<string,int> ItemCondition = new Dictionary<string, int>();
         ItemCondition.Add("selectItemType", (int)ItemType);
         ItemCondition.Add("selectItemRating", (int)ItemRating);
        
-        // GameData¿¡¼­ ÇØ´ç Á¶°Ç¿¡ ¸Â´Â ¹«ÀÛÀ§ ¾ÆÀÌÅÛ ¹ÝÈ¯
+        // GameDataï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         GameObject thisSlotItem = GameData.instance.DrawRandomItem(ItemCondition).GetComponent<GameObject>();
 
         //GameObject thisSlotImage = Instantiate(thisSlotItem);
@@ -213,7 +221,7 @@ public class SellingItem : MonoBehaviour, Interactable
             Player.instance.playerStats.coin -= cost;
 
             
-            //Àü¿¡ °¡Áö°í ÀÖ´ø ¾ÆÀÌÅÛ µå¶ø
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             if (Player.instance.playerItem != null)
             { 
                 Player.instance.playerItem.SetActive(true); 

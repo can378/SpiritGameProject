@@ -2,19 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MissionType 
-{KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse, Dream, Maze, LittleMonster, MazeCurse}
-// KillALL : 모든 적 처치
-// KillAll2 : 일정 시간마다 적 리스폰 (그래서 적 빨리 처치)
-// NoHurt : 데미지 입지 않기
-// TimeAttack : 제한 시간 내 클리어
-// Curse : 저주받은 구역에서 살아남기
 
-// 쓰지 않음
-// MiniBoss : 미니보스 처치
-// Dream : 꿈속에서 일정 시간 버티기
-// Maze : 미로 탈출
-// LittleMonster : 작은 몬스터들과 일정 시간 버티기
+
 public class Mission : MonoBehaviour
 {
     public MissionType type;
@@ -227,7 +216,7 @@ public class Mission : MonoBehaviour
         return true;
     }
 
-    // 미션맵 BGM 플레이 관련 함수
+    // 占싱션몌옙 BGM 占시뤄옙占쏙옙 占쏙옙占쏙옙 占쌉쇽옙
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -245,46 +234,28 @@ public class Mission : MonoBehaviour
     }
 }
 
-public enum MISSION_STATE { NotStarted, InProgress, Failed, Completed }
 
-public interface IMission
+public abstract class MissionBase : MonoBehaviour
 {
-    public MISSION_STATE GetMissionState();
-
-    /// <summary>
-    /// 미션 시작할 때 호출
-    /// </summary>
-    public void StartMission();
-
-    /// <summary>
-    /// 미션이 끝났을 때 호출
-    /// </summary>
-    public void EndMission();
-}
-
-public abstract class RoomMissionBase : MonoBehaviour, IMission
-{
-    [field:SerializeField]protected MISSION_STATE missionState = MISSION_STATE.NotStarted;
-    [field: SerializeField] protected GameObject missionReward;
-    protected Room roomScript;
-
-    public MISSION_STATE GetMissionState()
-    {
-        return missionState;
-    }
-
-    public void SetRoom(Room _Room)
-    {
-        roomScript = _Room;
-    }
+    [field : SerializeField,Tooltip("에디터에서 미리 채워야 함")] public MissionController m_Owner { get; set; }
 
     public abstract MissionType GetMissionType();
 
-    public abstract void LockDoor();
-
+    /// <summary>
+    /// MissionController가 호출 시킨다.
+    /// When Started Mission
+    /// </summary>
     public abstract void StartMission();
 
-    protected abstract void CheckMissionEnd();
+    /// <summary>
+    /// MissionController가 호출 시킨다.
+    /// Progress Mission
+    /// </summary>
+    public abstract void CheckMission();
 
+    /// <summary>
+    /// MissionController가 호출 시킨다.
+    /// When Ended Mission
+    /// </summary>
     public abstract void EndMission();
 }

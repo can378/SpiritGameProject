@@ -126,4 +126,6 @@ public interface Interactable
 {
     string GetInteractText();
     void Interact();
+
+    void AddInteractEvent(System.Action _Action);
 }

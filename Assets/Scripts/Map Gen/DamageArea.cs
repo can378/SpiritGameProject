@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DamageArea : CurseArea
 {
+    [SerializeField] float Damaged;
     protected override void CurseEffect(ObjectBasic _Object)
     {
-        _Object.Damaged(5);
+        _Object.Damaged(Damaged);
     }
 }
