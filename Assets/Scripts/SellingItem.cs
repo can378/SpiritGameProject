@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//�Ǹ��ϴ� ������ ������ ���� ��ũ��Ʈ
+//�Ǹ��ϴ� ������ ������ ����? ��ũ��Ʈ
 
 public class SellingItem : MonoBehaviour, Interactable
 {
@@ -12,7 +12,7 @@ public class SellingItem : MonoBehaviour, Interactable
 
     [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
 
-    [SerializeField] event System.Action interactEvent;
+    public event System.Action InteractEvent;
 
 
     public GameObject info;
@@ -42,7 +42,7 @@ public class SellingItem : MonoBehaviour, Interactable
         SelectItemType ItemType = typeRandom.GetRandomItem();
 
         // ====================================
-        // ���
+        // ���?
         // new�� �����Ѱ� ���� �������ϳ�?
         WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
 
@@ -78,11 +78,7 @@ public class SellingItem : MonoBehaviour, Interactable
     public void Interact()
     {
         BuyItem();
-    }
-
-    public void AddInteractEvent(System.Action _Action)
-    {
-        interactEvent += _Action;
+        InteractEvent?.Invoke();
     }
 
     public void BuyItem()
@@ -176,7 +172,7 @@ public class SellingItem : MonoBehaviour, Interactable
         SelectItemType ItemType = typeRandom.GetRandomItem();
 
         // ====================================
-        // ���
+        // ���?
         // new�� �����Ѱ� ���� �������ϳ�?
         WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
 
@@ -221,7 +217,7 @@ public class SellingItem : MonoBehaviour, Interactable
             Player.instance.playerStats.coin -= cost;
 
             
-            //���� ������ �ִ� ������ ���
+            //���� ������ �ִ� ������ ���?
             if (Player.instance.playerItem != null)
             { 
                 Player.instance.playerItem.SetActive(true); 

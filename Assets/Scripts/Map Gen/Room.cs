@@ -12,8 +12,8 @@ public class Room : MonoBehaviour
     [SerializeField] bool lockTrigger;
     [SerializeField] bool unLockTrigger;
 
-    [SerializeField] event System.Action UnLockEvent;
-    [SerializeField] event System.Action LockEvent;
+    public event System.Action UnLockEvent;
+    public event System.Action LockEvent;
 
 
     [field: SerializeField] public MapType mapType { get; private set; }
@@ -205,16 +205,6 @@ public class Room : MonoBehaviour
 
             preDoorType = doorType;
         }
-    }
-
-    public void AddLockEvent(System.Action lockAction)
-    {
-        LockEvent += lockAction;
-    }
-
-    public void AddUnLockEvent(System.Action unLockAction)
-    {
-        UnLockEvent += unLockAction;
     }
 
 

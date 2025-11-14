@@ -33,6 +33,7 @@ public class KillAllMission : MissionBase
         */
 
         m_Spawner = m_Owner.GetComponent<ObjectSpawn>();
+
     }
 
     public override void CheckMission()

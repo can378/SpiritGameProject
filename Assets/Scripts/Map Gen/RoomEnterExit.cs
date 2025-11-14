@@ -98,7 +98,8 @@ public class RoomEnterExit : MonoBehaviour
         //}
         
         // 몬스터 활동 시작
-        if (room.map!=null) 
+        // 단 미션은 미션이 시작될 떄
+        if (room.map !=null && room.mapType != MapType.Mission) 
         {
             room.map.GetComponent<ObjectSpawn>().EnableEnemy();
         }

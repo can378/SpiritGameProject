@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class TimeAttackMission : MissionBase
 {
+    [SerializeField] bool m_IsEndure;
+
     [SerializeField] float m_TimeAttackDuration;
     [SerializeField] float m_TimeAttackTimer;
 
@@ -46,7 +48,15 @@ public class TimeAttackMission : MissionBase
 
         if(m_TimeAttackTimer <= 0)
         {
-            m_Owner.FailedMission();
+            if(m_IsEndure)
+            {
+                m_Owner.CompletedMission();
+            }
+            else
+            {
+                m_Owner.FailedMission();
+                
+            }
         }
     }
 

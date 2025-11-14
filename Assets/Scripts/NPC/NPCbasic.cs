@@ -18,7 +18,7 @@ public class NPCbasic : MonoBehaviour, Interactable
 
     protected ScriptManager scriptManager;
 
-        [SerializeField] event System.Action interactEvent;
+    public event System.Action InteractEvent;
 
     void Awake()
     {
@@ -53,11 +53,8 @@ public class NPCbasic : MonoBehaviour, Interactable
             DialogPanel.GetComponent<TMP_Text>().text = scriptManager.NPCScript(chapter, index);
         }
         index++;
-    }
 
-        public void AddInteractEvent(System.Action _Action)
-    {
-        interactEvent += _Action;
+        InteractEvent?.Invoke();
     }
 
     public virtual void ConversationOut()

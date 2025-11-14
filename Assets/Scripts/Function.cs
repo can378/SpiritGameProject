@@ -124,8 +124,10 @@ public static class CombinationRandom
 
 public interface Interactable
 {
+    event System.Action InteractEvent;
+
     string GetInteractText();
+
     void Interact();
 
-    void AddInteractEvent(System.Action _Action);
 }

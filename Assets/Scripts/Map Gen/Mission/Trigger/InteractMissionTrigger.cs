@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class InteractMissionTrigger : MissionTriggerBase
 {
-    public Interactable m_Interactable;
+
+    [field : SerializeField, Tooltip("상호작용 오브젝트")] GameObject m_InterObject;
+    [field : SerializeField, Tooltip("상호작용 대상의 스프라이트들")] List<SpriteRenderer> m_InterSprite;
+
+    Interactable m_Interactable;
 
     public override MISSION_TRIGGER_TYPE GetTriggerType()
     {
@@ -13,7 +17,45 @@ public class InteractMissionTrigger : MissionTriggerBase
 
     public override void SetTrigger()
     {
-        m_Interactable.AddInteractEvent(m_Owner.StartMission);
+        m_Interactable = m_InterObject.GetComponent<Interactable>();
+
+        // 중복 등록 방지
+        m_Interactable.InteractEvent -= m_Owner.StartMission;
+        m_Interactable.InteractEvent -= ObjectDisapear;
+
+        // 등록
+        m_Interactable.InteractEvent += m_Owner.StartMission;
+        m_Interactable.InteractEvent += ObjectDisapear;
+
+    }
+
+    void OnDestroy()
+    {
+        m_Interactable.InteractEvent -= m_Owner.StartMission;
+        m_Interactable.InteractEvent -= ObjectDisapear;
+    }
+
+    void ObjectDisapear()
+    {
+        StartCoroutine("ObjectDisapearCoru");
+    }
+
+    IEnumerator ObjectDisapearCoru()
+    {
+        float alpha = 1f;
+        
+        while (alpha > 0f)
+        {
+            for(int i = 0; i<m_InterSprite.Count; ++i)
+            {
+                m_InterSprite[i].color = new Color(1f, 1f, 1f,alpha);
+            }
+            alpha -= 0.1f;
+            yield return new WaitForSeconds(0.05f);
+        }
+        m_InterObject.SetActive(false);
+        m_Interactable.InteractEvent -= m_Owner.StartMission;
+        m_Interactable.InteractEvent -= ObjectDisapear;
     }
 }
 

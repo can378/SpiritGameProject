@@ -9,6 +9,9 @@ public enum MISSION_STATE { NotStarted, InProgress, Failed, Completed }
 public enum MISSION_TRIGGER_TYPE { EnterMap, Interact, NONE }
 
 
+/// <summary>
+/// 미션 시작 시 몬스터 생성을 베이스로 미션 컨트롤러가 설계되어있음
+/// </summary>
 public class MissionController : MonoBehaviour
 {
     [field: SerializeField] public MISSION_STATE missionState { get; private set; } = MISSION_STATE.NotStarted;
@@ -38,6 +41,8 @@ public class MissionController : MonoBehaviour
 
     public void StartMission()
     {
+        print("MissionStart");
+
         if (missionState != MISSION_STATE.NotStarted)
             return;
 
@@ -46,6 +51,7 @@ public class MissionController : MonoBehaviour
             im.StartMission();
         }
 
+        GetComponent<ObjectSpawn>().EnableEnemy();
         missionState = MISSION_STATE.InProgress;
     }
 

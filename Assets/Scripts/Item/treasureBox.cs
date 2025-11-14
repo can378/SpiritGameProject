@@ -23,7 +23,7 @@ public class treasureBox : MonoBehaviour, Interactable
     [field: SerializeField] Sprite ClosedBoxSprite;
     [field: SerializeField] Sprite OpenedBoxSprite;
 
-    [SerializeField] event System.Action interactEvent;
+    public event System.Action InteractEvent;
 
 
     void Awake()
@@ -116,12 +116,9 @@ public class treasureBox : MonoBehaviour, Interactable
             }
             else { Open(); }
         }
+        InteractEvent?.Invoke();
     }
     
-        public void AddInteractEvent(System.Action _Action)
-    {
-        interactEvent += _Action;
-    }
 
     private void Open()
     {

@@ -9,7 +9,7 @@ public class SelectItem : MonoBehaviour, Interactable
 {
     [HideInInspector] public ItemInstance itemInstance;
     
-    [SerializeField] event System.Action interactEvent;
+    public event System.Action InteractEvent;
 
 
     public string GetInteractText()
@@ -20,11 +20,6 @@ public class SelectItem : MonoBehaviour, Interactable
     public void Interact()
     {
         Player.instance.GainSelectItem(this);
-    }
-
-        public void AddInteractEvent(System.Action _Action)
-    {
-        interactEvent += _Action;
     }
 
     #region Sort CompareFunc

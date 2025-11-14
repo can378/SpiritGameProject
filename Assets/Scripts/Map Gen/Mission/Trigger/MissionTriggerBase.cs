@@ -6,6 +6,7 @@ public abstract class MissionTriggerBase : MonoBehaviour
 {
     [field : SerializeField] public MissionController m_Owner { get; set; }
 
+
     void Awake()
     {
         m_Owner = GetComponent<MissionController>();

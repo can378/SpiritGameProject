@@ -21,7 +21,7 @@ public class Door : MonoBehaviour, Interactable
     DoorState doorState;
     SpriteRenderer sprite;
 
-    [SerializeField] event System.Action interactEvent;
+    public event System.Action InteractEvent;
 
     void Awake()
     {
@@ -47,12 +47,9 @@ public class Door : MonoBehaviour, Interactable
         {
             Debug.Log("열리지 않는다.");
         }
+        InteractEvent?.Invoke();
     }
     
-            public void AddInteractEvent(System.Action _Action)
-    {
-        interactEvent += _Action;
-    }
 
     // 문 잠그기
     // none, wall, shabbywall은 조작 불가
