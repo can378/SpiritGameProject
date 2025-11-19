@@ -18,6 +18,8 @@ public class NPCbasic : MonoBehaviour, Interactable
 
     protected ScriptManager scriptManager;
 
+    public event System.Action InteractEvent;
+
     void Awake()
     {
         scriptManager = GetComponent<ScriptManager>();
@@ -51,11 +53,13 @@ public class NPCbasic : MonoBehaviour, Interactable
             DialogPanel.GetComponent<TMP_Text>().text = scriptManager.NPCScript(chapter, index);
         }
         index++;
+
+        InteractEvent?.Invoke();
     }
 
     public virtual void ConversationOut()
     {
-        isTalking=false;
+        isTalking = false;
         DialogPanel.SetActive(false);
     }
 

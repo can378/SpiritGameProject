@@ -19,6 +19,10 @@ public class ObjectBasic : MonoBehaviour
     [HideInInspector] AnimBasic animBasic;
     [HideInInspector] public SpriteRenderer[] sprites;
     [HideInInspector] public Rigidbody2D rigid;
+
+    // 이벤트
+    // 피격, 버프, 패시브, 공격 등 추가할 예정
+    public event System.Action BeAttackedEvent;
     
     protected virtual void Awake()
     {
@@ -102,6 +106,8 @@ public class ObjectBasic : MonoBehaviour
                 ApplyBuff(statusEffect);
             }
         }
+
+        BeAttackedEvent?.Invoke();
 
         // 피격 시 이펙트 효과
         #region Effect

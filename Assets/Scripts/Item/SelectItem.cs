@@ -8,6 +8,10 @@ using TMPro;
 public class SelectItem : MonoBehaviour, Interactable
 {
     [HideInInspector] public ItemInstance itemInstance;
+    
+    public event System.Action InteractEvent;
+
+
     public string GetInteractText()
     {
         return "ащ╠Б";
