@@ -309,7 +309,7 @@ public class ObjectBasic : MonoBehaviour
     public Buff ApplyBuff(BuffData _Buff)
     {
         Buff buff;
-        stats.activeEffects.TryGetValue(_Buff.buffID,out buff);
+        stats.activeEffects.TryGetValue(_Buff.buffID, out buff);
 
         // 이미 같은 버프가 있다면 중첩 처리
         if (buff != null)
