@@ -29,8 +29,8 @@ public class MapUIManager : MonoBehaviour
     [SerializeField] GameObject BossProgressPanel;
 
     //Player Stats
-    [Header("플레이어 관련")]
-    [SerializeField] Slider Hpslider;
+    [Header("플레이어 관련")] public Image HPbar;
+    //[SerializeField] Slider Hpslider;
     //[SerializeField] Slider ExpSlider;
     //[SerializeField] TMP_Text ExpTxt;
     [SerializeField] TMP_Text CoinTxt;
@@ -84,6 +84,7 @@ public class MapUIManager : MonoBehaviour
         //{ updateItemUI(null); }
 
         //setUpgradePanel();
+        HPbar = HPbar.GetComponent<Image>();
     }
 
     void Update()
@@ -172,8 +173,8 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateHealthUI()
     {
-        float normalizedHealth = (Player.instance.stats.HP / Player.instance.stats.HPMax.Value) *100;
-        Hpslider.value = normalizedHealth;
+        HPbar.fillAmount = (Player.instance.stats.HP / Player.instance.stats.HPMax.Value);
+        //Hpslider.value = normalizedHealth;
     }
 
     /*

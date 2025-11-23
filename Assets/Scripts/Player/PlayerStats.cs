@@ -30,11 +30,17 @@ public class PlayerStats : Stats
     // 최소 0%, 최대 300%
     [field: SerializeField] public float defaultAttackSpeed { get; set; } = 1;
     public float addAttackSpeed { get; set; }
-    public float increasedAttackSpeed {  get; set; }
+    public float increasedAttackSpeed { get; set; }
     public float decreasedAttackSpeed { get; set; }
+
     public float attackSpeed
     {
-        get { return Mathf.Clamp((defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f, 3f); }
+        get
+        {
+            return Mathf.Clamp(
+                (defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f,
+                3f);
+        }
     }
 
 
@@ -64,7 +70,7 @@ public class PlayerStats : Stats
         get { return Mathf.Clamp((defaultRunSpeed + addRunSpeed) * (1f + increasedRunSpeed) * (1f - decreasedRunSpeed), 0f, 3f); }
     }
 
-    
+
     //RunCoolTime
     // 달리기 재사용 대기 시간
     // UI : 달리기 재사용 대기 시간 5초
@@ -86,24 +92,34 @@ public class PlayerStats : Stats
     // 최소 50%
     [field: SerializeField] public float defaultDodgeSpeed { get; set; } = 0.66f;
     public float addDodgeSpeed { get; set; }
-    public float increasedDodgeSpeed {  get; set; }
+    public float increasedDodgeSpeed { get; set; }
     public float decreasedDodgeSpeed { get; set; }
+
     public float dodgeSpeed
     {
-        get { return Mathf.Clamp((defaultDodgeSpeed + addDodgeSpeed) * (1f + increasedDodgeSpeed) * (1f - decreasedDodgeSpeed), 0f, 2f); }
+        get
+        {
+            return Mathf.Clamp(
+                (defaultDodgeSpeed + addDodgeSpeed) * (1f + increasedDodgeSpeed) * (1f - decreasedDodgeSpeed), 0f, 2f);
+        }
     }
 
     // 회피 시간
     // UI : 회피 시간 0.8초
     // 회피 시간 = 회피 시간
     // 최소 0.1초
-    [field: SerializeField] public float defaultDodgeTime { get; set; }  = 0.4f;
+    [field: SerializeField] public float defaultDodgeTime { get; set; } = 0.4f;
     public float addDodgeTime { get; set; }
-    public float increasedDodgeTime {  get; set; }
+    public float increasedDodgeTime { get; set; }
     public float decreasedDodgeTime { get; set; }
+
     public float dodgeTime
     {
-        get { return Mathf.Clamp((defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime), 0.1f, 0.8f); }
+        get
+        {
+            return Mathf.Clamp(
+                (defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime), 0.1f, 0.8f);
+        }
     }
 
     //n초간 실명
