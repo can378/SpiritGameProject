@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -15,7 +15,7 @@ public class ObjectSpawn : MonoBehaviour
     private Dictionary<string, GameObject[]> enemyTemplatesDic;
     private int nowChapter;
 
-    // ¸ó½ºÅÍ È°µ¿ ÁßÁö
+    // ëª¬ìŠ¤í„° í™œë™ ì¤‘ì§€
     public void DisableEnemy()
     {
         for (int i = enemys.Count - 1; i >= 0; i--)
@@ -34,7 +34,7 @@ public class ObjectSpawn : MonoBehaviour
         }
     }
 
-    // ¸ó½ºÅÍ È°µ¿ ½ÃÀÛ
+    // ëª¬ìŠ¤í„° í™œë™ ì‹œì‘
     public void EnableEnemy()
     {
         for (int i = enemys.Count - 1; i >= 0; i--)
@@ -77,6 +77,8 @@ public class ObjectSpawn : MonoBehaviour
                     if (enemyTemplatesDic.ContainsKey(key))
                     {
                         ran = Random.Range(0, enemyTemplatesDic[key].Length);
+                        Debug.Log("normalEnemyCh" + nowChapter.ToString());
+                        Debug.Log(enemyTemplatesDic[key][ran].name);
                         instEnemy = Instantiate(enemyTemplatesDic[key][ran], enemyTransform.position, enemyTransform.rotation);
                     }
                     else { print("there is no key here"); }
@@ -85,6 +87,8 @@ public class ObjectSpawn : MonoBehaviour
                 else 
                 {
                     ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
+                    Debug.Log("normalEnemyCh" + nowChapter.ToString());
+                    Debug.Log(enemyTemplates.normalEnemy[ran].name);
                     instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
                 }
                 
@@ -96,16 +100,16 @@ public class ObjectSpawn : MonoBehaviour
                 instEnemy = Instantiate(enemyTemplates.bossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
             }
             
-            // À§Ä¡ »èÁ¦
+            // ìœ„ì¹˜ ì‚­ì œ
             Destroy(enemyTransform.gameObject);
-            // ºÎ¸ğ ¼³Á¤
+            // ë¶€ëª¨ ì„¤ì •
             instEnemy.transform.SetParent(enemyGroup.transform);
             
-            // ¸®½ºÆ®¿¡ Ãß°¡
+            // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
             enemys.Add(instEnemy);
         }
-        // À§Ä¡ Á¤º¸ ÃÊ±âÈ­
-        // ¾È ¾ø¾Öµµ µÇ³ª?
+        // ìœ„ì¹˜ ì •ë³´ ì´ˆê¸°í™”
+        // ì•ˆ ì—†ì• ë„ ë˜ë‚˜?
         enemySpawnPoint.Clear();
 
         foreach (GameObject enemy in enemys)
