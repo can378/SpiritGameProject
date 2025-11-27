@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,36 +15,17 @@ public class Dosa : EnemyBasic
 
         if (skill == -1)
         {
-            // ±â¼ú ¹«ÀÛÀ§ ÀåÂø
-            skill = -1;
-            while (true)
-            {
-                skill = UnityEngine.Random.Range(1, skillList.Count);
-                if (skillList[skill] == null)
-                {
-                    skill = -1;
-                    continue;
-                }
-                else
-                {
-                    skillList[skill].gameObject.SetActive(true);
-                    break;
-                }
-            }
+            // ê¸°ìˆ  ë¬´ìž‘ìœ„ ìž¥ì°©
+            skill = UnityEngine.Random.Range(1, skillList.Count);
+
         }
-        else
-        {
-            skillList[skill].gameObject.SetActive(true);
-        }
-
-
-
+        skillList[skill].gameObject.SetActive(true);
     }
 
     protected override void AttackPattern()
     {
         //Debug.Log("skill num="+skill);
-        //½ºÅ³ »ç¿ë
+        //ìŠ¤í‚¬ ì‚¬ìš©
         if (skill != 0 && skillList[skill].skillCoolTime <= 0)
         {
             enemyStatus.attackCoroutine = StartCoroutine(Skill());
@@ -55,77 +36,77 @@ public class Dosa : EnemyBasic
     {
         SKILL_TYPE _Type = (SKILL_TYPE)skillList[skill].skillData.skillType;
 
-        // ½ºÅ³ ·çÆ¾ ½ÃÀÛ
+        // ìŠ¤í‚¬ ë£¨í‹´ ì‹œìž‘
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
 
 
         if(_Type == SKILL_TYPE.DOWN)
         {
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ½ÃÀÛ
+            // ì• ë‹ˆë©”ì´ì…˜ ì‹œìž‘
             enemyAnim.animator.SetBool("isAttack", true);
 
-            // Down ½ºÅ³ : ½ÃÀü ¼±µô
+            // Down ìŠ¤í‚¬ : ì‹œì „ ì„ ë”œ
             yield return new WaitForSeconds(skillList[skill].skillData.skillType == 0 ? skillList[skill].skillData.preDelay : 0);
 
-            // ½ºÅ³ ½ÃÀÛ
+            // ìŠ¤í‚¬ ì‹œìž‘
             skillList[skill].Enter(this);
 
-            // Down ½ºÅ³ : ½ÃÀü ÈÄµô
+            // Down ìŠ¤í‚¬ : ì‹œì „ í›„ë”œ
             yield return new WaitForSeconds(skillList[skill].skillData.skillType == 0 ? skillList[skill].skillData.postDelay : 0);
 
-            // ½ºÅ³ ³¡
+            // ìŠ¤í‚¬ ë
             skillList[skill].Exit();
             enemyStatus.attackCoroutine = null;
 
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ³¡
+            // ì• ë‹ˆë©”ì´ì…˜ ë
             enemyAnim.animator.SetBool("isAttack", false);
         }
         else if(_Type == SKILL_TYPE.HOLD)
         {
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ½ÃÀÛ
+            // ì• ë‹ˆë©”ì´ì…˜ ì‹œìž‘
             enemyAnim.animator.SetBool("isAttack", true);
 
-            // ½ºÅ³ ½ÃÀÛ
+            // ìŠ¤í‚¬ ì‹œìž‘
             skillList[skill].Enter(this);
 
-            // Hold ½ºÅ³ : ½ºÅ³ À¯ÁöµÇ´Â ½Ã°£
+            // Hold ìŠ¤í‚¬ : ìŠ¤í‚¬ ìœ ì§€ë˜ëŠ” ì‹œê°„
             yield return new WaitForSeconds(skillList[skill].skillData.skillType != 0 ? skillList[skill].skillData.maxHoldTime / 2 : 0);
 
-            // Á¾·á
+            // ì¢…ë£Œ
             skillList[skill].Exit();
             enemyStatus.attackCoroutine = null;
 
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ³¡
+            // ì• ë‹ˆë©”ì´ì…˜ ë
             enemyAnim.animator.SetBool("isAttack", false);
         }
         else if(_Type == SKILL_TYPE.UP)
         {
-            // ½ºÅ³ ½ÃÀÛ
+            // ìŠ¤í‚¬ ì‹œìž‘
             skillList[skill].Enter(this);
 
-            // Up ½ºÅ³ : Å° Up Àü ´ë±â ½Ã°£ 
+            // Up ìŠ¤í‚¬ : í‚¤ Up ì „ ëŒ€ê¸° ì‹œê°„ 
             yield return new WaitForSeconds(skillList[skill].skillData.skillType != SKILL_TYPE.DOWN ? skillList[skill].skillData.maxHoldTime / 2 : 0);
 
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ½ÃÀÛ
+            // ì• ë‹ˆë©”ì´ì…˜ ì‹œìž‘
             enemyAnim.animator.SetBool("isAttack", true);
 
-            // Up ½ºÅ³ : ½ÃÀü ¼±µô
+            // Up ìŠ¤í‚¬ : ì‹œì „ ì„ ë”œ
             yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.UP ? skillList[skill].skillData.preDelay : 0);
 
-            // ½ºÅ³ Á¾·á
+            // ìŠ¤í‚¬ ì¢…ë£Œ
             skillList[skill].Exit();
             enemyStatus.attackCoroutine = null;
 
-            // Up ½ºÅ³ : ½ÃÀü ÈÄµô
+            // Up ìŠ¤í‚¬ : ì‹œì „ í›„ë”œ
             yield return new WaitForSeconds(skillList[skill].skillData.skillType == SKILL_TYPE.UP ? skillList[skill].skillData.postDelay : 0);
 
-            // ¾Ö´Ï¸ÞÀÌ¼Ç ³¡
+            // ì• ë‹ˆë©”ì´ì…˜ ë
             enemyAnim.animator.SetBool("isAttack", false);
         }
 
 
-        // ½ºÅ³ ·çÆ¾ ³¡
+        // ìŠ¤í‚¬ ë£¨í‹´ ë
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 

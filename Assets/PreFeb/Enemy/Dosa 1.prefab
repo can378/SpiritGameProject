@@ -68,18 +68,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   <skillList>k__BackingField:
-  - {fileID: 0}
   - {fileID: 5016575238611569884}
   - {fileID: 7108943393202486851}
-  - {fileID: 0}
   - {fileID: 4778739406931861703}
-  - {fileID: 0}
   - {fileID: 2373034995828259676}
   - {fileID: 5324999359981792689}
   - {fileID: 5676891792596477939}
-  - {fileID: 0}
-  - {fileID: 0}
-  skill: 8
+  skill: -1
 --- !u!114 &5947272731351020574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +87,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 10
+  HPMax:
+    _Value: 0
+    _DefaultValue: 100
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 10
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 40
@@ -130,6 +130,9 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
   SkillPower:
     _Value: 0
     _DefaultValue: 10
@@ -142,7 +145,10 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
-  activeEffects: []
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
   enemyName: 
   DropCoin: 3
   detectionDis: 10
@@ -544,76 +550,9 @@ Transform:
   - {fileID: 2611323191939641139}
   - {fileID: 251221865821724094}
   - {fileID: 8932542122536039891}
-  - {fileID: 311990967338086574}
   - {fileID: 1447821651703166041}
   m_Father: {fileID: 3722874720538264585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &126285661709682489
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 972650104215619399}
-    m_Modifications:
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6106212988829730764, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_Name
-      value: 9_RandomBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 6106212988829730764, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
---- !u!4 &311990967338086574 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 402159582119425943, guid: 082146f47fc949c4cb053c0df8557801, type: 3}
-  m_PrefabInstance: {fileID: 126285661709682489}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1871640602669511280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -630,6 +569,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6658312218765360812, guid: 8d5409f6a9fc1c24db83e217c46858d6, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 11f835857f1cbea4c954836fc64d7b6c, type: 2}
+    - target: {fileID: 6658312218765360812, guid: 8d5409f6a9fc1c24db83e217c46858d6, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     - target: {fileID: 6730623706942897427, guid: 8d5409f6a9fc1c24db83e217c46858d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -930,6 +877,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7700024439858539317, guid: 9f7aaeddf91a07546ba0a1e8f03fb17b, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6872527a25ec1bb4faf6fe1686f19d88, type: 2}
+    - target: {fileID: 7700024439858539317, guid: 9f7aaeddf91a07546ba0a1e8f03fb17b, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     - target: {fileID: 8171833684401138529, guid: 9f7aaeddf91a07546ba0a1e8f03fb17b, type: 3}
       propertyPath: m_Name
       value: 07_Wave
@@ -967,6 +922,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 972650104215619399}
     m_Modifications:
+    - target: {fileID: 1477923717532919336, guid: af6d07f355b00674680d81de58148de7, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 29ad8ea2dc98bb742bb7307b1c147762, type: 2}
+    - target: {fileID: 1477923717532919336, guid: af6d07f355b00674680d81de58148de7, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     - target: {fileID: 3994580809863749232, guid: af6d07f355b00674680d81de58148de7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1078,6 +1041,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8312496441772739112, guid: 2b8dd6fd313bab74388a5ef039063970, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: cfceb3cd53f603f43a954ff9c5b395d7, type: 2}
+    - target: {fileID: 8312496441772739112, guid: 2b8dd6fd313bab74388a5ef039063970, type: 3}
       propertyPath: <user>k__BackingField
       value: 
       objectReference: {fileID: 817587810670594383}
@@ -1126,6 +1093,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3268479786500307209, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: c495f0c1961f9d44289ca6cc6ee47986, type: 2}
+    - target: {fileID: 3268479786500307209, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     - target: {fileID: 5990749010697458930, guid: 1fcd1819f23bbbb4ab2e968b7b437ed6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1243,6 +1218,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7424919456770533426, guid: d3761d6f16f66d14c96d1ffbebe03bd8, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: ddaad00055fff3d438195ab60522884a, type: 2}
+    - target: {fileID: 7424919456770533426, guid: d3761d6f16f66d14c96d1ffbebe03bd8, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1269,6 +1252,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5395305667038279949, guid: 0cb84cd6cfaee8641b7391ae8968e7d4, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 320c172c36923304b99c7cb9da79dfe6, type: 2}
+    - target: {fileID: 5395305667038279949, guid: 0cb84cd6cfaee8641b7391ae8968e7d4, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     - target: {fileID: 5623878494805241186, guid: 0cb84cd6cfaee8641b7391ae8968e7d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1378,6 +1369,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2674451930041150604, guid: 2486f87fdbe20d74597fca317423a437, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f6225a0987628448b35f89e330c44ef, type: 2}
+    - target: {fileID: 2674451930041150604, guid: 2486f87fdbe20d74597fca317423a437, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     - target: {fileID: 4686682863522434807, guid: 2486f87fdbe20d74597fca317423a437, type: 3}
       propertyPath: m_Name
       value: 08_Thunderbolt
@@ -1463,6 +1462,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7767428556330731038, guid: 13067f1f64595cf4797122f1d960c0a2, type: 3}
+      propertyPath: skillData
+      value: 
+      objectReference: {fileID: 11400000, guid: cfceb3cd53f603f43a954ff9c5b395d7, type: 2}
+    - target: {fileID: 7767428556330731038, guid: 13067f1f64595cf4797122f1d960c0a2, type: 3}
+      propertyPath: <user>k__BackingField
+      value: 
+      objectReference: {fileID: 817587810670594383}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

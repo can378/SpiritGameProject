@@ -1,15 +1,15 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public abstract class SkillBase : MonoBehaviour
 {
-    [HideInInspector] public SkillData skillData { get; protected set; }
+     public SkillData skillData; //{ get; protected set; }
 
-    [field: SerializeField] public float skillCoolTime { get; set; }                    //ÇöÀç ´ë±â ½Ã°£
+    [field: SerializeField] public float skillCoolTime { get; set; }                    //í˜„ì¬ ëŒ€ê¸° ì‹œê°„
 
-    [field: SerializeField] public ObjectBasic user { get; set; }                        //»ç¿ëÀÚ
+    [field: SerializeField] public ObjectBasic user { get; set; }                        //ì‚¬ìš©ì
 
     void Update() 
     {
@@ -35,17 +35,17 @@ public abstract class SkillBase : MonoBehaviour
         {
             PlayerStats playerStats = this.user.GetComponent<PlayerStats>();
 
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = (1 - playerStats.SkillCoolTime.Value) * skillData.skillDefalutCoolTime;
         }
         else if (user.tag == "Enemy")
         {
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = skillData.skillDefalutCoolTime;
         }
     }
 
-    public abstract void Exit();                                                            //½ºÅ³ »ç¿ë ³¡
+    public abstract void Exit();                                                            //ìŠ¤í‚¬ ì‚¬ìš© ë
 
     void CoolDown()
     {
