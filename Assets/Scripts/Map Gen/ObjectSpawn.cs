@@ -87,8 +87,6 @@ public class ObjectSpawn : MonoBehaviour
                 else 
                 {
                     ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
-                    Debug.Log("normalEnemyCh" + nowChapter.ToString());
-                    Debug.Log(enemyTemplates.normalEnemy[ran].name);
                     instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
                 }
                 
