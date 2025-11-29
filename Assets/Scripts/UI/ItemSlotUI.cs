@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,12 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [field: SerializeField] public bool isHover { get; private set; }
 
+    private void Awake()
+    {
+        if (itemInstance == null || !itemInstance.IsValid())
+            itemImage.enabled = false;
+    }
+
     public void SetItemInstance(ItemInstance _itemInstance = null)
     {
         // 안전한 null 체크: ItemInstance 자체뿐 아니라 내부의 ScriptableObject(ItemData)도 검사
@@ -19,17 +26,22 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             itemInstance.itemData = null;
             itemImage.sprite = null;
+            itemImage.enabled = false;
+
             if (isHover)
             {
                 toolTipUI.OpenToolTipUI(itemInstance);
                 toolTipUI.ChangePosition(ToolTipUIPos.InventorySlot);
             }
+
             return;
         }
+
         itemInstance = _itemInstance;
         itemImage.sprite = itemInstance.itemData.sprite;
+        itemImage.enabled = true;
 
-        if(isHover)
+        if (isHover)
         {
             toolTipUI.OpenToolTipUI(itemInstance);
             toolTipUI.ChangePosition(ToolTipUIPos.InventorySlot);
