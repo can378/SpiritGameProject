@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,10 +24,10 @@ public class HealSkill : SkillBase
         {
             Player player = this.user.GetComponent<Player>();
 
-            // ¸ÕÀú ¼Óµµ °¨¼Ò
+            // ë¨¼ì € ì†ë„ ê°ì†Œ
             player.stats.MoveSpeed.DecreasedValue += 0.9f;
 
-            // »ç¿ëÀÚ À§Ä¡¿¡ »ı¼º
+            // ì‚¬ìš©ì ìœ„ì¹˜ì— ìƒì„±
             if (effect != null)
                 Destroy(effect);
                 
@@ -39,7 +39,7 @@ public class HealSkill : SkillBase
             while(player.playerStatus.isSkillHold)
             {
                 player.Damaged(-player.stats.HPMax.Value * HSData.dotHeal * 0.1f);
-                yield return new WaitForSeconds(0.1f / player.playerStats.attackSpeed);
+                yield return new WaitForSeconds(0.1f / player.playerStats.AttackSpeed.Value);
             }
 
         }
@@ -48,10 +48,10 @@ public class HealSkill : SkillBase
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             float timer = 0;
 
-            // ¸ÕÀú ¼Óµµ °¨¼Ò
+            // ë¨¼ì € ì†ë„ ê°ì†Œ
             enemy.stats.MoveSpeed.DecreasedValue += 0.9f;
 
-            // »ç¿ëÀÚ À§Ä¡¿¡ »ı¼º
+            // ì‚¬ìš©ì ìœ„ì¹˜ì— ìƒì„±
             if (effect != null)
                 Destroy(effect);
 

@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewPassive", menuName = "Passive/AttackSpeedUp")]
 public class AttackSpeedUp : PassiveData
 {
-    // °ø°İ¼Óµµ Áõ°¡
+    // ê³µê²©ì†ë„ ì¦ê°€
     // +%
 
     [SerializeField] float variation;
@@ -19,9 +19,9 @@ public class AttackSpeedUp : PassiveData
     {
         if (_User.tag == "Player")
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾î °ø°İ¼Óµµ +" + variation * 100 + "% Áõ°¡");
+            Debug.Log("í”Œë ˆì´ì–´ ê³µê²©ì†ë„ +" + variation * 100 + "% ì¦ê°€");
             PlayerStats plyaerStats = _User.GetComponent<PlayerStats>();
-            plyaerStats.increasedAttackSpeed += variation;
+            plyaerStats.AttackSpeed.IncreasedValue += variation;
         }
     }
 
@@ -31,7 +31,7 @@ public class AttackSpeedUp : PassiveData
         if (_User.tag == "Player")
         {
             PlayerStats plyaerStats = _User.GetComponent<PlayerStats>();
-            plyaerStats.increasedAttackSpeed -= variation;
+            plyaerStats.AttackSpeed.IncreasedValue -= variation;
         }
     }
 

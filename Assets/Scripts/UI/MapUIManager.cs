@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,15 +21,15 @@ public class MapUIManager : MonoBehaviour
     public GameObject restartPanel;
     public GameObject resetPanel;
     public GameObject minimapPanel;
-    public GameObject statSelectPanel;      // ½ºÅÈ ¼±ÅÃÃ¢
-    public GameObject nearObjectPanel;      // »óÈ£ÀÛ¿ë
-    public GameObject inventoryPanel;       // Àåºñ Ã¢
+    public GameObject statSelectPanel;      // ìŠ¤íƒ¯ ì„ íƒì°½
+    public GameObject nearObjectPanel;      // ìƒí˜¸ì‘ìš©
+    public GameObject inventoryPanel;       // ì¥ë¹„ ì°½
     public ToolTipUI toolTipPanel;
 
     [SerializeField] GameObject BossProgressPanel;
 
     //Player Stats
-    [Header("ÇÃ·¹ÀÌ¾î °ü·Ã")] public Image HPbar;
+    [Header("í”Œë ˆì´ì–´ ê´€ë ¨")] public Image HPbar;
     //[SerializeField] Slider Hpslider;
     //[SerializeField] Slider ExpSlider;
     //[SerializeField] TMP_Text ExpTxt;
@@ -41,26 +41,26 @@ public class MapUIManager : MonoBehaviour
 
 
     //Boss Stats
-    [Header("º¸½º °ü·Ã")]
+    [Header("ë³´ìŠ¤ ê´€ë ¨")]
     [SerializeField] EnemyBasic Boss;
     [SerializeField] Slider BossHpslider;
     [SerializeField] Transform BossBuffbar;
     [SerializeField] TMP_Text BossName;
 
     // Inventory
-    [Header("ÀÎº¥Åä¸® °ü·Ã")]
-    [SerializeField] ItemSlotUI InvenWeaponSlot;                                                                  // Àåºñ ÀÌ¹ÌÁö
-    [SerializeField] ItemSlotUI[] InvenSkillSlot = new ItemSlotUI[5];                                                  // ½ºÅ³ ÀÌ¹ÌÁö
+    [Header("ì¸ë²¤í† ë¦¬ ê´€ë ¨")]
+    [SerializeField] ItemSlotUI InvenWeaponSlot;                                                                  // ì¥ë¹„ ì´ë¯¸ì§€
+    [SerializeField] ItemSlotUI[] InvenSkillSlot = new ItemSlotUI[5];                                                  // ìŠ¤í‚¬ ì´ë¯¸ì§€
     [SerializeField] Image InvenItemImage;
-    [SerializeField] ItemSlotUI[] InvenEquipmentsSlot = new ItemSlotUI[3];                                             // Àåºñ ÀÌ¹ÌÁö
-    [SerializeField] TMP_Text[] InvenStatsValueTxt = new TMP_Text[10];                                        // ½ºÅÈ ¼öÄ¡
+    [SerializeField] ItemSlotUI[] InvenEquipmentsSlot = new ItemSlotUI[3];                                             // ì¥ë¹„ ì´ë¯¸ì§€
+    [SerializeField] TMP_Text[] InvenStatsValueTxt = new TMP_Text[10];                                        // ìŠ¤íƒ¯ ìˆ˜ì¹˜
 
     // nearObject
-    [Header("±ÙÃ³ ¾ÆÀÌÅÛ °ü·Ã")]
+    [Header("ê·¼ì²˜ ì•„ì´í…œ ê´€ë ¨")]
     public TMP_Text nearObjectInteraction;
 
     //gameObject
-    [Header("Ã©ÅÍ °ü·Ã")]
+    [Header("ì±•í„° ê´€ë ¨")]
     public TMP_Text chapterTxt;
 
     UserData userData;
@@ -155,13 +155,13 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateStatUI()
     {
-        // ¿À·ù³ª¼­ Àá±ñ ÁÖ¼®Ã³¸®ÇØ³ùÀ½
-        // Main ¾À ¾È°ÅÄ¡°í Map ¾À µé¾î°¡¸é °É¸®´Â µí
-        // ¾Æ´Ï¸é final ¾À ¿¡¼­ ¼³Á¤À» ¾ÈÇØ¼­ ÀÏ µí
+        // ì˜¤ë¥˜ë‚˜ì„œ ì ê¹ ì£¼ì„ì²˜ë¦¬í•´ë†¨ìŒ
+        // Main ì”¬ ì•ˆê±°ì¹˜ê³  Map ì”¬ ë“¤ì–´ê°€ë©´ ê±¸ë¦¬ëŠ” ë“¯
+        // ì•„ë‹ˆë©´ final ì”¬ ì—ì„œ ì„¤ì •ì„ ì•ˆí•´ì„œ ì¼ ë“¯
 
         InvenStatsValueTxt[0].text = Player.instance.playerStats.HPMax.Value.ToString();
         InvenStatsValueTxt[1].text = Player.instance.playerStats.AttackPower.Value.ToString();
-        InvenStatsValueTxt[2].text = ((Player.instance.playerStats.attackSpeed) * 100).ToString() + " %";
+        InvenStatsValueTxt[2].text = ((Player.instance.playerStats.AttackSpeed.Value) * 100).ToString() + " %";
         InvenStatsValueTxt[3].text = (Player.instance.playerStats.CriticalChance.Value * 100).ToString() + " %";
         InvenStatsValueTxt[4].text = (Player.instance.playerStats.CriticalDamage.Value * 100).ToString() + " %";
         InvenStatsValueTxt[5].text = Player.instance.playerStats.SkillPower.Value.ToString();
@@ -223,7 +223,7 @@ public class MapUIManager : MonoBehaviour
     private float skillCoolTime_now;
     void UpdateSkillCoolTimeUI() 
     {
-        // ºñÀ² °è»ê (¿¹: now = ÇöÀç °ª, max = ÃÖ´ë °ª).
+        // ë¹„ìœ¨ ê³„ì‚° (ì˜ˆ: now = í˜„ì¬ ê°’, max = ìµœëŒ€ ê°’).
         fillValue = skillCoolTime_now / skillCoolTime_max;
         skillCoolImg.fillAmount = Mathf.Clamp(fillValue, 0f, 1f);
 
@@ -251,14 +251,14 @@ public class MapUIManager : MonoBehaviour
         if(inventoryPanel.activeSelf == false)
             return;
 
-        // ¹«±â ÀÌ¹ÌÁö
+        // ë¬´ê¸° ì´ë¯¸ì§€
         if (Player.instance.playerStats.weapon.weaponInstance.IsValid())
         {
             InvenWeaponSlot.SetItemInstance(Player.instance.playerStats.weapon.weaponInstance);
         }
         else { InvenWeaponSlot.SetItemInstance(); }
 
-        // Àåºñ ÀÌ¹ÌÁö
+        // ì¥ë¹„ ì´ë¯¸ì§€
         for (int i = 0; i < Player.instance.playerStats.maxEquipment; i++)
         {
             if (Player.instance.playerStats.equipments[i].IsValid())
@@ -268,7 +268,7 @@ public class MapUIManager : MonoBehaviour
             else { InvenEquipmentsSlot[i].SetItemInstance(); }
         }
 
-        // ½ºÅ³ ÀÌ¹ÌÁö
+        // ìŠ¤í‚¬ ì´ë¯¸ì§€
         for (int i = 0; i < Player.instance.playerStats.maxSkillSlot; i++)
         {
 
@@ -279,7 +279,7 @@ public class MapUIManager : MonoBehaviour
             else { InvenSkillSlot[i].SetItemInstance(); }
         }
 
-        // ¼Ò¸ğÇ° ÀÌ¹ÌÁö
+        // ì†Œëª¨í’ˆ ì´ë¯¸ì§€
         /*
         if (Player.instance.playerStats.item != 0)
         {
@@ -296,7 +296,7 @@ public class MapUIManager : MonoBehaviour
     }
     
 
-    //ÀåºñÃ¢ ¾÷µ¥ÀÌÆ®
+    //ì¥ë¹„ì°½ ì—…ë°ì´íŠ¸
     public void UpdateEquipmentUI()
     {
         for(int i = 0;i<Player.instance.playerStats.maxEquipment; i++)
@@ -332,16 +332,16 @@ public class MapUIManager : MonoBehaviour
         nearObjectPanel.SetActive(true);
 
         nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
-        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText();   // GetComponent º¯°æÇÏ±â
+        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText();   // GetComponent ë³€ê²½í•˜ê¸°
     }
 
-    // ÇöÀç ÇÃ·¹ÀÌ¾î°¡ ¾ÆÀÌÅÛ ±ÙÃ³¿¡ ÀÖÀ¸¸é ÅøÆÁÀ» ¶ç¿ì°í Á¤º¸¸¦ º¯°æÇÑ´Ù.
+    // í˜„ì¬ í”Œë ˆì´ì–´ê°€ ì•„ì´í…œ ê·¼ì²˜ì— ìˆìœ¼ë©´ íˆ´íŒì„ ë„ìš°ê³  ì •ë³´ë¥¼ ë³€ê²½í•œë‹¤.
     public void UpdateNearObjectToolTipUI()
     {
         if (inventoryPanel.activeSelf)
             return;
 
-        // ÇöÀç ÇÃ·¹ÀÌ¾î ±ÙÃ³¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´Â Áö È®ÀÎÇÑ´Ù.
+        // í˜„ì¬ í”Œë ˆì´ì–´ ê·¼ì²˜ì— ì•„ì´í…œì´ ìˆëŠ” ì§€ í™•ì¸í•œë‹¤.
         if (Player.instance.playerStatus.nearObject == null)
         {
             toolTipPanel.CloseToolTipUI();
@@ -366,7 +366,7 @@ public class MapUIManager : MonoBehaviour
 
     #region Boss UI
 
-    // UI¿¡ º¸½ºÀÇ Á¤º¸¸¦ ¶ç¿ì°í ½Í´Ù¸é ¼³Á¤
+    // UIì— ë³´ìŠ¤ì˜ ì •ë³´ë¥¼ ë„ìš°ê³  ì‹¶ë‹¤ë©´ ì„¤ì •
     public void SetBossProgress(EnemyBasic enemy)
     {
         Boss = enemy;

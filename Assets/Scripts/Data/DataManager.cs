@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 public class DataManager : MonoBehaviour
 {
-    //++ÃßÈÄ¿¡ µ¥ÀÌÅÍ ¾ÏÈ£È­ ±¸Çö ÇÊ¿ä
+    //++ì¶”í›„ì— ë°ì´í„° ì•”í˜¸í™” êµ¬í˜„ í•„ìš”
 
     public static DataManager instance = null;
 
@@ -27,8 +27,8 @@ public class DataManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            //¾À ÀüÈ¯ÀÌ µÇ¾úÀ»¶§, ÀÌÀü ¾ÀÀÇ ÀÎ½ºÅÏ½º¸¦ °è¼Ó »ç¿ëÇÏ±â À§ÇØ
-            //»õ·Î¿î ¾ÀÀÇ °ÔÀÓ¿ÀºêÁ§Æ® Á¦°Å
+            //ì”¬ ì „í™˜ì´ ë˜ì—ˆì„ë•Œ, ì´ì „ ì”¬ì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ê³„ì† ì‚¬ìš©í•˜ê¸° ìœ„í•´
+            //ìƒˆë¡œìš´ ì”¬ì˜ ê²Œì„ì˜¤ë¸Œì íŠ¸ ì œê±°
             Destroy(this.gameObject);
         }
 
@@ -44,17 +44,17 @@ public class DataManager : MonoBehaviour
 
         if (File.Exists(userDataFilePath)&&File.Exists(persistentDataFilePath))
         {
-            //jsonÆÄÀÏ ºÒ·¯¿À±â
+            //jsoníŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
             string userDataJsonData = File.ReadAllText(userDataFilePath);
             string persistentJsonData = File.ReadAllText(persistentDataFilePath);
-            //¿ªÁ÷·ÄÈ­
+            //ì—­ì§ë ¬í™”
             userData = JsonConvert.DeserializeObject<UserData>(userDataJsonData);
-            // userData·Î player ½ºÅÈ Àû¿ëÇÏ±â
+            // userDataë¡œ player ìŠ¤íƒ¯ ì ìš©í•˜ê¸°
             persistentData=JsonConvert.DeserializeObject<PersistentData>(persistentJsonData);
         }
         else
         {
-            Debug.Log("»õ·Î¿î µ¥ÀÌÅÍ »ı¼º");
+            Debug.Log("ìƒˆë¡œìš´ ë°ì´í„° ìƒì„±");
             
             userData = new UserData();
             persistentData =new PersistentData();
@@ -70,7 +70,7 @@ public class DataManager : MonoBehaviour
 
     public void SaveUserData()
     {
-        // userData¸¦ player ½ºÅÈÀ¸·Î µ¤¾î¾º¿ì±â
+        // userDataë¥¼ player ìŠ¤íƒ¯ìœ¼ë¡œ ë®ì–´ì”Œìš°ê¸°
         //userData.playerLevel = Player.instance.playerStats.level;
         //userData.playerExp = Player.instance.playerStats.exp;
         //userData.playerPoint = Player.instance.playerStats.point;
@@ -82,7 +82,7 @@ public class DataManager : MonoBehaviour
         userData.playerKey = Player.instance.playerStats.key;
         userData.playerDice = Player.instance.playerStats.dice;
 
-        userData.playerWeapon = Player.instance.playerStats.weapon.weaponInstance.weaponData == null ? 0 : Player.instance.playerStats.weapon.weaponInstance.weaponData.selectItemID;
+        userData.playerWeapon = Player.instance.playerStats.weapon.weaponInstance.weaponData == null ? 1 : Player.instance.playerStats.weapon.weaponInstance.weaponData.selectItemID;
 
         for(int i = 0;i < Player.instance.playerStats.skill.Length ; i++)
         {
@@ -100,10 +100,10 @@ public class DataManager : MonoBehaviour
             userData.playerStat[i] = Player.instance.playerStats.playerStat[i];
         }
 
-        //ÆÄÀÏ ÀúÀå °æ·Î
+        //íŒŒì¼ ì €ì¥ ê²½ë¡œ
         string userDataFilePath = Application.persistentDataPath + UserDataFileName;
 
-        //µ¥ÀÌÅÍ Á÷·ÄÈ­
+        //ë°ì´í„° ì§ë ¬í™”
         string userJsonData = JsonConvert.SerializeObject(userData);
 
         File.WriteAllText(userDataFilePath, userJsonData);
@@ -113,10 +113,10 @@ public class DataManager : MonoBehaviour
 
     public void SavePersistentData()
     {
-        //ÆÄÀÏ ÀúÀå °æ·Î
+        //íŒŒì¼ ì €ì¥ ê²½ë¡œ
         string persistentDataFilePath = Application.persistentDataPath + PersistentDataFileName;
 
-        //µ¥ÀÌÅÍ Á÷·ÄÈ­
+        //ë°ì´í„° ì§ë ¬í™”
         string persistentJsonData = JsonConvert.SerializeObject(persistentData);
 
         File.WriteAllText(persistentDataFilePath, persistentJsonData);
@@ -174,7 +174,7 @@ public class DataManager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        //°ÔÀÓÁ¾·á½Ã µ¥ÀÌÅÍ ÀúÀå
+        //ê²Œì„ì¢…ë£Œì‹œ ë°ì´í„° ì €ì¥
         SavePersistentData();
     }
 

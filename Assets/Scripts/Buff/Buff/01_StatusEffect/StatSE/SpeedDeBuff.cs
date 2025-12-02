@@ -1,12 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewBuff", menuName = "Buff/SpeedDe")]
 public class SpeedDeBuff : BuffData
 {
-    // ¹èÀ²
-    // ÀÌµ¿¼Óµµ, °ø°İ¼Óµµ °¨¼Ò
+    // ë°°ìœ¨
+    // ì´ë™ì†ë„, ê³µê²©ì†ë„ ê°ì†Œ
     [field: SerializeField] public float decreasedMoveSpeed { get; set; }
     [field: SerializeField] public float decreasedAttackSpeed { get; set; }
 
@@ -15,39 +15,39 @@ public class SpeedDeBuff : BuffData
         Overlap(_Buff);
     }
 
-    public override void Overlap(Buff _Buff)      //Áö¼Ó½Ã°£ °»½Å
+    public override void Overlap(Buff _Buff)      //ì§€ì†ì‹œê°„ ê°±ì‹ 
     {
-        // ÇÃ·¹ÀÌ¾îÀÏ ½Ã
+        // í”Œë ˆì´ì–´ì¼ ì‹œ
         if (_Buff.target.tag == "Player")
         {
             PlayerStats playerStats = _Buff.target.GetComponent<PlayerStats>();
 
-            // È¿°ú Àá½Ã Á¦°Å
+            // íš¨ê³¼ ì ì‹œ ì œê±°
             playerStats.MoveSpeed.DecreasedValue -= _Buff.stack * decreasedMoveSpeed;
-            playerStats.decreasedAttackSpeed -= _Buff.stack * decreasedAttackSpeed;
+            playerStats.AttackSpeed.DecreasedValue -= _Buff.stack * decreasedAttackSpeed;
 
-            // ÁßÃ¸ 
+            // ì¤‘ì²© 
             _Buff.stack = _Buff.stack < DefaultMaxStack ? _Buff.stack + 1 : DefaultMaxStack;
 
-            // ÀúÇ×¿¡ µû¸¥ Áö¼Ó½Ã°£ Àû¿ë
+            // ì €í•­ì— ë”°ë¥¸ ì§€ì†ì‹œê°„ ì ìš©
             _Buff.curDuration = _Buff.duration = (1 - playerStats.SEResist[(int)buffType].Value) * defaultDuration;
 
             playerStats.MoveSpeed.DecreasedValue += _Buff.stack * decreasedMoveSpeed;
-            playerStats.decreasedAttackSpeed += _Buff.stack * decreasedAttackSpeed;
+            playerStats.AttackSpeed.DecreasedValue += _Buff.stack * decreasedAttackSpeed;
 
         }
-        // ±× ¿Ü¿¡
+        // ê·¸ ì™¸ì—
         else
         {
             Stats stats = _Buff.target.GetComponent<Stats>();
 
-            // È¿°ú Àá½Ã Á¦°Å
+            // íš¨ê³¼ ì ì‹œ ì œê±°
             stats.MoveSpeed.DecreasedValue -= _Buff.stack * decreasedMoveSpeed;
 
-            // ÁßÃ¸ 
+            // ì¤‘ì²© 
             _Buff.AddStack();
 
-            // ÀúÇ×¿¡ µû¸¥ Áö¼Ó½Ã°£ Àû¿ë
+            // ì €í•­ì— ë”°ë¥¸ ì§€ì†ì‹œê°„ ì ìš©
             _Buff.curDuration = _Buff.duration = (1 - stats.SEResist[(int)buffType].Value) * defaultDuration;
 
             stats.MoveSpeed.DecreasedValue += _Buff.stack * decreasedMoveSpeed;
@@ -67,7 +67,7 @@ public class SpeedDeBuff : BuffData
             PlayerStats playerStats = _Buff.target.GetComponent<PlayerStats>();
 
             playerStats.MoveSpeed.DecreasedValue -= _Buff.stack * decreasedMoveSpeed;
-            playerStats.decreasedAttackSpeed -= _Buff.stack * decreasedAttackSpeed;
+            playerStats.AttackSpeed.DecreasedValue -= _Buff.stack * decreasedAttackSpeed;
         }
         else
         {

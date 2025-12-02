@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ public enum MISSION_TRIGGER_TYPE { EnterMap, Interact, NONE }
 
 
 /// <summary>
-/// ¹Ì¼Ç ½ÃÀÛ ½Ã ¸ó½ºÅÍ »ı¼ºÀ» º£ÀÌ½º·Î ¹Ì¼Ç ÄÁÆ®·Ñ·¯°¡ ¼³°èµÇ¾îÀÖÀ½
+/// ë¯¸ì…˜ ì‹œì‘ ì‹œ ëª¬ìŠ¤í„° ìƒì„±ì„ ë² ì´ìŠ¤ë¡œ ë¯¸ì…˜ ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì„¤ê³„ë˜ì–´ìˆìŒ
 /// </summary>
 public class MissionController : MonoBehaviour
 {
@@ -27,10 +27,10 @@ public class MissionController : MonoBehaviour
         return missionState;
     }
 
-    // Trigger ?„¤? •
+    // Trigger ?ê½•?ì ™
     public void SetTrigger()
     {
-        print("Trigger");
+        //print("Trigger");
         missionTrigger.SetTrigger();
     }
 
@@ -72,7 +72,7 @@ public class MissionController : MonoBehaviour
     }
 
     // End Mission
-    // ´Ù¸¥ ¹Ì¼Çµé¿¡°Ôµµ ¾Ë·ÁÁØ´Ù.
+    // ë‹¤ë¥¸ ë¯¸ì…˜ë“¤ì—ê²Œë„ ì•Œë ¤ì¤€ë‹¤.
     void EndMission()
     {
         if (missionState != MISSION_STATE.Completed && missionState != MISSION_STATE.Failed)
@@ -84,8 +84,8 @@ public class MissionController : MonoBehaviour
         }
     }
 
-    // ¹Ì¼Ç ¼º°ø
-    // ¹Ì¼ÇÀ» ¼º°ø Ã³¸®ÇÏ¸ç ¹Ì¼ÇÀ» Á¾·áÇÑ´Ù.
+    // ë¯¸ì…˜ ì„±ê³µ
+    // ë¯¸ì…˜ì„ ì„±ê³µ ì²˜ë¦¬í•˜ë©° ë¯¸ì…˜ì„ ì¢…ë£Œí•œë‹¤.
     public void CompletedMission()
     {
         missionState = MISSION_STATE.Completed;
@@ -97,8 +97,8 @@ public class MissionController : MonoBehaviour
         EndMission();
     }
 
-    // ¹Ì¼Ç ½ÇÆĞ
-    // ¹Ì¼ÇÀ» ½ÇÆĞ Ã³¸®ÇÏ¸ç ¹Ì¼ÇÀ» Á¾·áÇÑ´Ù.
+    // ë¯¸ì…˜ ì‹¤íŒ¨
+    // ë¯¸ì…˜ì„ ì‹¤íŒ¨ ì²˜ë¦¬í•˜ë©° ë¯¸ì…˜ì„ ì¢…ë£Œí•œë‹¤.
     public void FailedMission()
     {
         missionState = MISSION_STATE.Failed;

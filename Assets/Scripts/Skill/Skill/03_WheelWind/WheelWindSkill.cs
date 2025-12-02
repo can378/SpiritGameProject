@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ public class WheelWindSkill : SkillBase
 {
     [field: SerializeField] WheelWindSkillData WWSData;
 
-    //����Ʈ
+    //占쏙옙占쏙옙트
     GameObject WheelWindEffect;
 
     protected void Awake()
@@ -30,17 +30,17 @@ public class WheelWindSkill : SkillBase
             PlayerWeapon weapon = player.playerStats.weapon;
             HitDetection hitDetection;
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
-            float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
+            float attackRate = animationInfo.GetSPA() / player.playerStats.AttackSpeed.Value;
 
             skillCoolTime = 99;
 
-            // ���� �ӵ� ����
+            // 占쏙옙占쏙옙 占쌈듸옙 占쏙옙占쏙옙
             player.stats.MoveSpeed.DecreasedValue += 0.5f;
             
-            // �ð��� ���� ���� �� ȸ�� ����
+            // 占시곤옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 회占쏙옙 占쏙옙占쏙옙
             yield return new WaitForSeconds(WWSData.preDelay * attackRate);
 
-            // �����? ��ġ�� ����
+            // 占쏙옙占쏙옙占? 占쏙옙치占쏙옙 占쏙옙占쏙옙
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
@@ -50,7 +50,7 @@ public class WheelWindSkill : SkillBase
             WheelWindEffect.tag = "PlayerAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("PlayerAttack");
 
-            // ���� ���� ����
+            // 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
 
             hitDetection.SetHit_Ratio(WWSData.defaultDamage, WWSData.ratio, player.stats.AttackPower,
@@ -68,16 +68,16 @@ public class WheelWindSkill : SkillBase
 
             skillCoolTime = 99;
 
-            // ���� �ӵ� ����
+            // 占쏙옙占쏙옙 占쌈듸옙 占쏙옙占쏙옙
             enemy.stats.MoveSpeed.DecreasedValue += 0.5f;
 
-            // ��Ÿ�� ����
+            // 占쏙옙타占쏙옙 占쏙옙占쏙옙
             skillCoolTime = WWSData.skillDefalutCoolTime;
 
-            // �ð��� ���� ���� �� ȸ�� ����
+            // 占시곤옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙 회占쏙옙 占쏙옙占쏙옙
             yield return new WaitForSeconds(WWSData.preDelay);
 
-            // �����? ��ġ�� ����
+            // 占쏙옙占쏙옙占? 占쏙옙치占쏙옙 占쏙옙占쏙옙
             if (WheelWindEffect != null)
                 Destroy(WheelWindEffect);
 
@@ -87,19 +87,19 @@ public class WheelWindSkill : SkillBase
             WheelWindEffect.tag = "EnemyAttack";
             WheelWindEffect.layer = LayerMask.NameToLayer("EnemyAttack");
 
-            // ���� ���� ����
+            // 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             hitDetection = WheelWindEffect.GetComponent<HitDetection>();
             /*
-            ����ü = false
-            �����? = -1
-            �ٴ���Ʈ = true
-            �ʴ� Ÿ�� Ƚ�� = DPS * attackRate 
-            �Ӽ� = ���� �Ӽ�
-            ���ط� = (�⺻ ���ط� + ���� ���ط�) * �÷��̾� ���ݷ�
-            �˹� = ���� �˹�
-            ġȮ = �÷��̾� ġȮ
-            ġ�� = �÷��̾� ġ��
-            �����? = ����
+            占쏙옙占쏙옙체 = false
+            占쏙옙占쏙옙占? = -1
+            占쌕댐옙占쏙옙트 = true
+            占십댐옙 타占쏙옙 횟占쏙옙 = DPS * attackRate 
+            占쌈쇽옙 = 占쏙옙占쏙옙 占쌈쇽옙
+            占쏙옙占쌔뤄옙 = (占썩본 占쏙옙占쌔뤄옙 + 占쏙옙占쏙옙 占쏙옙占쌔뤄옙) * 占시뤄옙占싱억옙 占쏙옙占쌥뤄옙
+            占싯뱄옙 = 占쏙옙占쏙옙 占싯뱄옙
+            치확 = 占시뤄옙占싱억옙 치확
+            치占쏙옙 = 占시뤄옙占싱억옙 치占쏙옙
+            占쏙옙占쏙옙占? = 占쏙옙占쏙옙
             */
             hitDetection.SetHit_Ratio(
              WWSData.defaultDamage, WWSData.ratio, enemy.stats.AttackPower,
@@ -129,16 +129,16 @@ public class WheelWindSkill : SkillBase
             Player player = this.user.GetComponent<Player>();
             PlayerWeapon weapon = player.playerStats.weapon;
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
-            float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
+            float attackRate = animationInfo.GetSPA() / player.playerStats.AttackSpeed.Value;
 
             yield return new WaitForSeconds(0.5f * attackRate);
 
             Destroy(WheelWindEffect);
 
-            // ���� �ð��� ���� �� �ӵ� ���� ����
+            // 占쏙옙占쏙옙 占시곤옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占쌈듸옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             yield return new WaitForSeconds(WWSData.postDelay * attackRate);
 
-            // ��Ÿ�� ����
+            // 占쏙옙타占쏙옙 占쏙옙占쏙옙
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * WWSData.skillDefalutCoolTime;
 
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
@@ -149,13 +149,13 @@ public class WheelWindSkill : SkillBase
 
             yield return new WaitForSeconds(0.5f);
 
-            // ȸ�� ����
+            // 회占쏙옙 占쏙옙占쏙옙
             Destroy(WheelWindEffect);
 
-            // ���� �ð��� ���� �� �ӵ� ���� ����
+            // 占쏙옙占쏙옙 占시곤옙占쏙옙 占쏙옙占쏙옙 占쏙옙 占쌈듸옙 占쏙옙占쏙옙 占쏙옙占쏙옙
             yield return new WaitForSeconds(WWSData.postDelay);
 
-            // ��Ÿ�� ����
+            // 占쏙옙타占쏙옙 占쏙옙占쏙옙
             skillCoolTime = 5;
 
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;

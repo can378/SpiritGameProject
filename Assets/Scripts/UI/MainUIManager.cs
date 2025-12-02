@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,8 @@ public class MainUIManager : MonoBehaviour
     public GameObject taskPanel;
     public GameObject settingPanel;
     public GameObject warningPanel;
+    public ToolTipUI toolTipPanel;
+
 
     void Start()
     {
@@ -32,14 +34,19 @@ public class MainUIManager : MonoBehaviour
         else { Time.timeScale = 1f; }
     }
 
-    public void StartBtn() //°ÔÀÓ ½ÃÀÛ ¹öÆ°
+    private void FixedUpdate()
+    {
+        UpdateNearObjectToolTipUI();
+    }
+
+    public void StartBtn() //ê²Œì„ ì‹œì‘ ë²„íŠ¼
     {
         AudioManager.instance.UIClickAudio();
         //SceneManager.LoadScene("Map");
         mainPanel.SetActive(false);
     }
 
-    public void TaskBtn() //µµÀü °úÁ¦, Ã£Àº NPC º¸´Â ¹öÆ°
+    public void TaskBtn() //ë„ì „ ê³¼ì œ, ì°¾ì€ NPC ë³´ëŠ” ë²„íŠ¼
     {
         AudioManager.instance.UIClickAudio();
         settingPanel.SetActive(false);
@@ -47,7 +54,7 @@ public class MainUIManager : MonoBehaviour
         mainPanel.SetActive(false);
     }
 
-    public void BackBtn() //µÚ·Î°¡±â ¹öÆ°
+    public void BackBtn() //ë’¤ë¡œê°€ê¸° ë²„íŠ¼
     {
         AudioManager.instance.UIClickAudio();
         AudioManager.instance.UIClickAudio();
@@ -82,5 +89,26 @@ public class MainUIManager : MonoBehaviour
         #endif
     }
 
+    public void UpdateNearObjectToolTipUI()
+    {
 
+        // í˜„ì¬ í”Œë ˆì´ì–´ ê·¼ì²˜ì— ì•„ì´í…œì´ ìˆëŠ” ì§€ í™•ì¸í•œë‹¤.
+        if (Player.instance.playerStatus.nearObject == null)
+        {
+            toolTipPanel.CloseToolTipUI();
+            return;
+        }
+
+        SelectItem curItem = Player.instance.playerStatus.nearObject.GetComponent<SelectItem>();
+        if (curItem == null)
+            return;
+
+        if (!toolTipPanel.gameObject.activeSelf || curItem.itemInstance != toolTipPanel.ToolTipCurItem)
+        {
+            toolTipPanel.OpenToolTipUI(curItem.itemInstance);
+            toolTipPanel.ChangePosition(ToolTipUIPos.InGameItem);
+        }
+
+
+    }
 }

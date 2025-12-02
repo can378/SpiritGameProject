@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Bson;
+ï»¿using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -22,18 +22,18 @@ public class Player : ObjectBasic
 
     #region Key Input
 
-    public bool rDown { get; private set; }                                 // ÀçÀåÀü
-    public bool dDown { get; private set; }                                 // È¸ÇÇ
-    public bool aDown { get; private set; }                                 // °ø°İ
-    public bool siDown { get; private set; }                                // ¼±ÅÃ ¾ÆÀÌÅÛ H
-    public bool iDown { get; private set; }                                 // »óÈ£ÀÛ¿ë
+    public bool rDown { get; private set; }                                 // ì¬ì¥ì „
+    public bool dDown { get; private set; }                                 // íšŒí”¼
+    public bool aDown { get; private set; }                                 // ê³µê²©
+    public bool siDown { get; private set; }                                // ì„ íƒ ì•„ì´í…œ H
+    public bool iDown { get; private set; }                                 // ìƒí˜¸ì‘ìš©
 
-    public float skcDown { get; private set; }                              // ½ºÅ³ º¯°æ
-    public bool skDown { get; private set; }                                // ½ºÅ³ Å° ´Ù¿î Áß
+    public float skcDown { get; private set; }                              // ìŠ¤í‚¬ ë³€ê²½
+    public bool skDown { get; private set; }                                // ìŠ¤í‚¬ í‚¤ ë‹¤ìš´ ì¤‘
 
     #endregion
 
-    public LayerMask layerMask;             //Á¢±Ù ºÒ°¡ÇÑ ·¹ÀÌ¾î ¼³Á¤
+    public LayerMask layerMask;             //ì ‘ê·¼ ë¶ˆê°€í•œ ë ˆì´ì–´ ì„¤ì •
 
     Vector2 playerPosition;
     Vector2 dodgeVec;
@@ -153,45 +153,45 @@ public class Player : ObjectBasic
 
     private bool isMoveable()
     {
-        // ·¹ÀÌÀú°¡ Á¦´ë·Î µµÂøÇÏ¸é Null, ¸·ÇûÀ»¶§ ¹æÇØ¹° Return
+        // ë ˆì´ì €ê°€ ì œëŒ€ë¡œ ë„ì°©í•˜ë©´ Null, ë§‰í˜”ì„ë•Œ ë°©í•´ë¬¼ Return
         RaycastHit2D hit;
 
-        // ±âº» ¼Óµµ = ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ * ÇÃ·¹ÀÌ¾î µğÆúÆ® ÀÌµ¿¼Óµµ
+        // ê¸°ë³¸ ì†ë„ = í”Œë ˆì´ì–´ ì´ë™ì†ë„ * í”Œë ˆì´ì–´ ë””í´íŠ¸ ì´ë™ì†ë„
         playerPosition = transform.position;
         Vector2 end =
             playerPosition +
             new Vector2(playerPosition.x * playerStats.MoveSpeed.Value, playerPosition.y * playerStats.MoveSpeed.Value);
 
 
-        // ·¹ÀÌÀú ¹ß»ç (½ÃÀÛ, ³¡, ·¹ÀÌ¾î¸¶½ºÅ©)
+        // ë ˆì´ì € ë°œì‚¬ (ì‹œì‘, ë, ë ˆì´ì–´ë§ˆìŠ¤í¬)
         hit = Physics2D.Linecast(playerPosition, end, layerMask);
         Debug.DrawRay(playerPosition, end, Color.blue);
 
 
-        // º®À¸·Î ¸·ÇûÀ»¶§ ½ÇÇàÇÏÁö ¾Ê°Ô Ã³¸®
+        // ë²½ìœ¼ë¡œ ë§‰í˜”ì„ë•Œ ì‹¤í–‰í•˜ì§€ ì•Šê²Œ ì²˜ë¦¬
         if (hit.transform == null) { return true; }
         return false;
     }
 
-    void Move()     //ÀÌµ¿
+    void Move()     //ì´ë™
     {
         if (0 < playerStatus.isFlinch)
             return;
 
         playerStatus.moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (playerStatus.isAttack || playerStatus.isSkill)       // Á¤Áö
+        if (playerStatus.isAttack || playerStatus.isSkill)       // ì •ì§€
         {
             playerStatus.moveVec = Vector2.zero;
         }
 
-        if (playerStatus.isDodge)             // È¸ÇÇ½Ã ÇöÀç ¼Óµµ À¯Áö
+        if (playerStatus.isDodge)             // íšŒí”¼ì‹œ í˜„ì¬ ì†ë„ ìœ ì§€
         {
             rigid.velocity = dodgeVec.normalized * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed) * status.moveSpeedMultiplier;
         }
         else
         {
-            // ±âº» ¼Óµµ = ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ * ÇÃ·¹ÀÌ¾î µğÆúÆ® ÀÌµ¿¼Óµµ * Ãß°¡ ÀÌµ¿ ¼Óµµ
+            // ê¸°ë³¸ ì†ë„ = í”Œë ˆì´ì–´ ì´ë™ì†ë„ * í”Œë ˆì´ì–´ ë””í´íŠ¸ ì´ë™ì†ë„ * ì¶”ê°€ ì´ë™ ì†ë„
             rigid.velocity = playerStatus.moveVec * playerStats.MoveSpeed.Value * status.moveSpeedMultiplier;
         }
     }
@@ -206,7 +206,7 @@ public class Player : ObjectBasic
 
     }
 
-    void Dodge()    // È¸ÇÇ
+    void Dodge()    // íšŒí”¼
     {
         playerAnim.animator.SetBool("isDodge", playerStatus.isDodge);
 
@@ -226,7 +226,7 @@ public class Player : ObjectBasic
         }
     }
 
-    void DodgeOut() // È¸ÇÇ ºüÁ®³ª°¡±â
+    void DodgeOut() // íšŒí”¼ ë¹ ì ¸ë‚˜ê°€ê¸°
     {
         playerStatus.isDodge = false;
     }
@@ -287,7 +287,7 @@ public class Player : ObjectBasic
         if (!playerStatus.isReload)
             return;
 
-        playerStatus.reloadDelay += Time.deltaTime * (playerStats.attackSpeed);
+        playerStatus.reloadDelay += Time.deltaTime * (playerStats.AttackSpeed.Value);
 
         if (playerStatus.reloadDelay >= playerStats.weapon.GetReloadTime())
         {
@@ -304,7 +304,7 @@ public class Player : ObjectBasic
     class WeaponController : MonoBehaviour
     {
         Player player;
-        // °ø°İ Á¤º¸
+        // ê³µê²© ì •ë³´
         Coroutine attackCoroutine;
         [SerializeField] GameObject HitDetectionGameObject;
         GameObject projectile;
@@ -331,17 +331,17 @@ public class Player : ObjectBasic
 
         }
 
-        // ¹«±â¸¦ È¹µæ
+        // ë¬´ê¸°ë¥¼ íšë“
         public bool EquipWeapon(Weapon _Weapon)
         {
-            // ¹«±â ºñÈ°¼ºÈ­ ÈÄ ÀúÀå
+            // ë¬´ê¸° ë¹„í™œì„±í™” í›„ ì €ì¥
             //_Weapon.gameObject.SetActive(false);
 
-            // ¹«±â ´É·ÂÄ¡ Àû¿ë
+            // ë¬´ê¸° ëŠ¥ë ¥ì¹˜ ì ìš©
             player.playerStats.weapon.SetWeaponData(_Weapon);
             player.playerStats.weapon.Equip(player);
 
-            // ¹«±â ÆĞ½Ãºê Àû¿ë
+            // ë¬´ê¸° íŒ¨ì‹œë¸Œ ì ìš©
             //player.playerStats.weapon.Equip(this.gameObject.GetComponent<Player>());
 
             if ((int)player.playerStats.weapon.weaponInstance.weaponData.weaponType < (int)WEAPON_TYPE.MELEE)
@@ -353,7 +353,7 @@ public class Player : ObjectBasic
                 projectile = player.playerStats.weapon.weaponInstance.weaponData.projectile;
             }
 
-            // Àåºñ UI Àû¿ë
+            // ì¥ë¹„ UI ì ìš©
             //MapUIManager.instance.UpdateWeaponUI();
             return true;
         }
@@ -363,19 +363,19 @@ public class Player : ObjectBasic
             HitDetectionGameObject = null;
             projectile = null;
 
-            // ÇöÀç À§Ä¡¿¡ Àåºñ¸¦ ³õ´Â´Ù.
+            // í˜„ì¬ ìœ„ì¹˜ì— ì¥ë¹„ë¥¼ ë†“ëŠ”ë‹¤.
             player.playerStats.weapon.gameObject.transform.position = transform.position;
             Instantiate(DataManager.instance.gameData.weaponList[player.playerStats.weapon.weaponInstance.weaponData.selectItemID], player.CenterPivot.transform.position, gameObject.transform.localRotation);
 
-            // ¹«±â ÆĞ½Ãºê ÇØÁ¦
+            // ë¬´ê¸° íŒ¨ì‹œë¸Œ í•´ì œ
             player.playerStats.weapon.UnEquip(player);
 
-            // ¹«±â ´É·ÂÄ¡ ÇØÁ¦
+            // ë¬´ê¸° ëŠ¥ë ¥ì¹˜ í•´ì œ
             player.playerStats.weapon.SetWeaponData(null);
 
             //player.playerStats.weapon.gameObject.SetActive(true);
 
-            // ¹«±â ÇØÁ¦
+            // ë¬´ê¸° í•´ì œ
             //player.playerStats.weapon = null;
             //MapUIManager.instance.UpdateWeaponUI();
         }
@@ -390,7 +390,7 @@ public class Player : ObjectBasic
 
             if ((int)player.playerStats.weapon.weaponInstance.weaponData.weaponType < (int)WEAPON_TYPE.MELEE)
             {
-                // ÇÃ·¹ÀÌ¾î ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+                // í”Œë ˆì´ì–´ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
                 attackCoroutine = StartCoroutine(Swing(player.playerStatus.mouseDir, player.playerStatus.mouseAngle));
             }
             else if ((int)player.playerStats.weapon.weaponInstance.weaponData.weaponType < (int)WEAPON_TYPE.RANGE)
@@ -411,25 +411,25 @@ public class Player : ObjectBasic
             PlayerWeapon CurWeapon = player.playerStats.weapon;
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[CurWeapon.weaponInstance.weaponData.weaponType.ToSafeString()];
 
-            // °ø°İ »óÅÂ
+            // ê³µê²© ìƒíƒœ
             player.playerStatus.isAttack = true;
 
-            // ¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤
+            // ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •
             player.playerAnim.ChangeDirection(_AttackDir);
             player.playerAnim.ChangeWeaponSprite(CurWeapon.weaponInstance.weaponData.weaponType, CurWeapon.weaponInstance.weaponData.selectItemID);
             player.playerAnim.animator.Rebind();
             player.playerAnim.animator.SetBool("isAttack", true);
             player.playerAnim.animator.SetInteger("AttackType", (int)CurWeapon.weaponInstance.weaponData.weaponType);
             player.playerAnim.animator.SetInteger("AttackCombo", AttackCombo);
-            player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.attackSpeed);
+            player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.AttackSpeed.Value);
 
 
             AudioManager.instance.WeaponAttackAudioPlay(CurWeapon.weaponInstance.weaponData.weaponType);
 
-            //¼±µô
-            yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.attackSpeed);
+            //ì„ ë”œ
+            yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.AttackSpeed.Value);
 
-            // º£±â ¹æÇâ¸¸ ¿ì¼± ¹İÀü
+            // ë² ê¸° ë°©í–¥ë§Œ ìš°ì„  ë°˜ì „
             int SwingDir = animationInfo.Animation[AttackCombo].SwingDir;
             if (CurWeapon.weaponInstance.weaponData.weaponType == WEAPON_TYPE.SWORD ||
             CurWeapon.weaponInstance.weaponData.weaponType == WEAPON_TYPE.SHORT_SWORD ||
@@ -439,11 +439,11 @@ public class Player : ObjectBasic
                 SwingDir = 0 <= _AttackDir.x ? SwingDir : -SwingDir;
             }
 
-            // ¹«±â ÀÌÆåÆ® Å©±â ¼³Á¤
+            // ë¬´ê¸° ì´í™íŠ¸ í¬ê¸° ì„¤ì •
             HitDetectionGameObject.transform.localScale = new Vector3(CurWeapon.GetAttackSize() * SwingDir, CurWeapon.GetAttackSize(), 1);
 
 
-            // ÀÌÆåÆ® ¼öÄ¡ ¼³Á¤
+            // ì´í™íŠ¸ ìˆ˜ì¹˜ ì„¤ì •
             HitDetection hitDetection = HitDetectionGameObject.GetComponentInChildren<HitDetection>();
             hitDetection.SetHit_Ratio(
             0, 1, player.playerStats.AttackPower,
@@ -453,32 +453,32 @@ public class Player : ObjectBasic
             hitDetection.user = player;
             hitDetection.SetMultiHit(CurWeapon.GetMultiHit(), CurWeapon.GetDPS());
 
-            // ÀÎÃ¦Æ® ¼³Á¤
+            // ì¸ì±ˆíŠ¸ ì„¤ì •
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetSE(player.playerStats.SEType.Count == 0 ? SE_TYPE.None : player.playerStats.SEType[0]);
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetCommon(player.playerStats.CommonType.Count == 0 ? COMMON_TYPE.None : player.playerStats.CommonType[0]);
             HitDetectionGameObject.GetComponentInChildren<Enchant>().SetProjectile(player.playerStats.ProjectileType.Count == 0 ? PROJECTILE_TYPE.None : player.playerStats.ProjectileType[0]);
 
-            // ¹«±â ¹æÇâ
+            // ë¬´ê¸° ë°©í–¥
             HitDetectionGameObject.transform.rotation = Quaternion.AngleAxis(_AttackAngle - 90, Vector3.forward);
 
-            // ÆÄÆ¼Å¬
+            // íŒŒí‹°í´
             {
-                // °ø°İ ¼Óµµ¿¡ µû¸¥ ÀÌÆåÆ® °¡¼Ó
+                // ê³µê²© ì†ë„ì— ë”°ë¥¸ ì´í™íŠ¸ ê°€ì†
                 ParticleSystem.MainModule particleMain = HitDetectionGameObject.GetComponentInChildren<ParticleSystem>().main;
-                particleMain.startLifetime = animationInfo.Rate / player.playerStats.attackSpeed;
+                particleMain.startLifetime = animationInfo.Rate / player.playerStats.AttackSpeed.Value;
 
             }
 
-            // ¹«±â ÀÌÆåÆ® ½ÇÇà
+            // ë¬´ê¸° ì´í™íŠ¸ ì‹¤í–‰
             HitDetectionGameObject.SetActive(true);
 
-            // °ø°İ ½Ã°£
-            yield return new WaitForSeconds(animationInfo.Rate / player.playerStats.attackSpeed);
+            // ê³µê²© ì‹œê°„
+            yield return new WaitForSeconds(animationInfo.Rate / player.playerStats.AttackSpeed.Value);
 
-            // ¹«±â ÀÌÆåÆ® ÇØÁ¦
+            // ë¬´ê¸° ì´í™íŠ¸ í•´ì œ
             HitDetectionGameObject.SetActive(false);
 
-            // °ø°İ »óÅÂ ÇØÁ¦
+            // ê³µê²© ìƒíƒœ í•´ì œ
             player.playerAnim.animator.SetBool("isAttack", false);
             player.playerStatus.isAttack = false;
         }
@@ -489,7 +489,7 @@ public class Player : ObjectBasic
 
             player.playerStatus.isAttack = true;
 
-            // ¾Ö´Ï¸ŞÀÌ¼Ç ¼³Á¤
+            // ì• ë‹ˆë©”ì´ì…˜ ì„¤ì •
             player.playerAnim.ChangeDirection(_AttackDir);
             Vector3 ShotPos = player.hitEffects[(int)CurWeapon.weaponInstance.weaponData.ShotPosType].transform.position;
             Vector3 ShotDir = (player.playerStatus.mousePos - ShotPos).normalized;
@@ -500,22 +500,22 @@ public class Player : ObjectBasic
             player.playerAnim.animator.SetBool("isAttack", true);
             player.playerAnim.animator.SetInteger("AttackType", (int)CurWeapon.weaponInstance.weaponData.weaponType);
             player.playerAnim.animator.SetInteger("AttackCombo", AttackCombo);
-            player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.attackSpeed);
+            player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.AttackSpeed.Value);
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[CurWeapon.weaponInstance.weaponData.weaponType.ToSafeString()];
 
-            // ¼±µô
-            yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.attackSpeed);
+            // ì„ ë”œ
+            yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.AttackSpeed.Value);
             AudioManager.instance.WeaponAttackAudioPlay(CurWeapon.weaponInstance.weaponData.weaponType);
 
-            // ¹«±â Åõ»çÃ¼ Àû¿ë
+            // ë¬´ê¸° íˆ¬ì‚¬ì²´ ì ìš©
 
             GameObject instantProjectile = ObjectPoolManager.instance.Get(projectile, ShotPos);
 
-            //Åõ»çÃ¼ ¼³Á¤
+            //íˆ¬ì‚¬ì²´ ì„¤ì •
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             HitDetection hitDetection = instantProjectile.GetComponent<HitDetection>();
 
-            // Åõ»çÃ¼ ¼³Á¤
+            // íˆ¬ì‚¬ì²´ ì„¤ì •
             hitDetection.SetProjectile_Ratio(CurWeapon.GetMaxPenetrations()
                 , 0
                 , 1
@@ -527,43 +527,43 @@ public class Player : ObjectBasic
             hitDetection.user = player;
 
 
-            // ÀÎÃ¦Æ®
+            // ì¸ì±ˆíŠ¸
             instantProjectile.GetComponentInChildren<Enchant>().SetSE(player.playerStats.SEType.Count == 0 ? SE_TYPE.None : player.playerStats.SEType[0]);
             instantProjectile.GetComponentInChildren<Enchant>().SetCommon(player.playerStats.CommonType.Count == 0 ? COMMON_TYPE.None : player.playerStats.CommonType[0]);
             instantProjectile.GetComponentInChildren<Enchant>().SetProjectile(player.playerStats.ProjectileType.Count == 0 ? PROJECTILE_TYPE.None : player.playerStats.ProjectileType[0]);
 
-            // ¹æÇâ ¼³Á¤
+            // ë°©í–¥ ì„¤ì •
             instantProjectile.transform.rotation = Quaternion.AngleAxis(ShotAngle - 90, Vector3.forward);
 
-            // Å©±â ¼³Á¤
+            // í¬ê¸° ì„¤ì •
             instantProjectile.transform.localScale = new Vector3(CurWeapon.GetAttackSize(), CurWeapon.GetAttackSize(), 1);
 
-            // ¼Óµµ ¼³Á¤
+            // ì†ë„ ì„¤ì •
             bulletRigid.velocity = ShotDir * 10 * CurWeapon.GetProjectileSpeed();
 
-            // »çÁ¤°Å¸® ¼³Á¤
+            // ì‚¬ì •ê±°ë¦¬ ì„¤ì •
             hitDetection.SetDisableTime(CurWeapon.GetProjectileTime());
 
-            // °ø°İ »óÅÂ ÇØÁ¦
+            // ê³µê²© ìƒíƒœ í•´ì œ
             player.playerAnim.animator.SetBool("isAttack", false);
             player.playerStatus.isAttack = false;
         }
 
 
-        // È° ½ÃÀ§ ´ç±â±â
+        // í™œ ì‹œìœ„ ë‹¹ê¸°ê¸°
         IEnumerator Bow_Ready()
         {
 
             yield return null;
         }
 
-        // È° ½ÃÀ§ ´ç±â´Â Áß
+        // í™œ ì‹œìœ„ ë‹¹ê¸°ëŠ” ì¤‘
         IEnumerator Bow_Draw()
         {
             yield return null;
         }
 
-        // È­»ì ½î±â
+        // í™”ì‚´ ì˜ê¸°
         IEnumerator Bow_Shot()
         {
             yield return null;
@@ -604,8 +604,8 @@ public class Player : ObjectBasic
             weaponController.Use();
 
 
-            // ´ÙÀ½ °ø°İ±îÁö ´ë±â ½Ã°£ = 1 / ÃÊ´ç °ø°İ È½¼ö
-            playerStatus.attackDelay = SPA / playerStats.attackSpeed;
+            // ë‹¤ìŒ ê³µê²©ê¹Œì§€ ëŒ€ê¸° ì‹œê°„ = 1 / ì´ˆë‹¹ ê³µê²© íšŸìˆ˜
+            playerStatus.attackDelay = SPA / playerStats.AttackSpeed.Value;
         }
     }
 
@@ -625,12 +625,12 @@ public class Player : ObjectBasic
             player = GetComponent<Player>();
         }
 
-        // ½ºÅ³ È¹µæ
+        // ìŠ¤í‚¬ íšë“
         public bool EquipSkill(SkillInstance _SkillInstance)
         {
             int SkillIndex = _SkillInstance.skillData.selectItemID;
 
-            // ÀÌ¹Ì º¸À¯ÇÑ ½ºÅ³ÀÌ¶ó¸é
+            // ì´ë¯¸ ë³´ìœ í•œ ìŠ¤í‚¬ì´ë¼ë©´
             if (player.skillList[SkillIndex].gameObject.activeSelf == true)
                 return false;
 
@@ -639,7 +639,7 @@ public class Player : ObjectBasic
             return true;
         }
 
-        // ½ºÅ³ ÇØÁ¦
+        // ìŠ¤í‚¬ í•´ì œ
         public void UnEquipSkill()
         {
             int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
@@ -648,7 +648,7 @@ public class Player : ObjectBasic
             player.playerStats.skill[player.playerStatus.skillIndex].SetSI(null);
         }
 
-        // ½ºÅ³Å° ÀÔ·Â
+        // ìŠ¤í‚¬í‚¤ ì…ë ¥
         public void SkillDown()
         {
             skillCoroutine = StartCoroutine(Enter());
@@ -665,10 +665,10 @@ public class Player : ObjectBasic
             int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
 
             //print("Enter");
-            // È¦µå Áß
+            // í™€ë“œ ì¤‘
             player.playerStatus.isSkillHold = true;
 
-            // ½ºÅ³ Å° ´Ù¿î Áï½Ã ½ÃÀü
+            // ìŠ¤í‚¬ í‚¤ ë‹¤ìš´ ì¦‰ì‹œ ì‹œì „
             if (player.skillList[SkillIndex].skillData.skillType == 0)
             {
                 player.playerStatus.isSkill = true;
@@ -678,7 +678,7 @@ public class Player : ObjectBasic
 
             player.skillList[SkillIndex].Enter(player);
 
-            // ½ºÅ³ Å° ´Ù¿î Áï½Ã ½ÃÀü
+            // ìŠ¤í‚¬ í‚¤ ë‹¤ìš´ ì¦‰ì‹œ ì‹œì „
             if (player.skillList[SkillIndex].skillData.skillType == 0)
             {
                 yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.postDelay);
@@ -688,7 +688,7 @@ public class Player : ObjectBasic
 
             skillCoroutine = StartCoroutine(Stay());
 
-            yield return null;          // ¾È ³ÖÀ¸¸é ÄÚ·çÆ¾ ÀúÀåÀÌ ¾ÈµÊ yield returnÀÌ ¾øÀ¸¸é ÄÚ·çÆ¾À¸·Î Ãë±Ş ¾ÈÇÏ´Â µí?
+            yield return null;          // ì•ˆ ë„£ìœ¼ë©´ ì½”ë£¨í‹´ ì €ì¥ì´ ì•ˆë¨ yield returnì´ ì—†ìœ¼ë©´ ì½”ë£¨í‹´ìœ¼ë¡œ ì·¨ê¸‰ ì•ˆí•˜ëŠ” ë“¯?
         }
 
         IEnumerator Stay()
@@ -700,9 +700,9 @@ public class Player : ObjectBasic
 
             while (player.playerStatus.isSkillHold && timer > 0)
             {
-                yield return null;          // ¾È ³ÖÀ¸¸é ÄÚ·çÆ¾ ÀúÀåÀÌ ¾ÈµÊ
+                yield return null;          // ì•ˆ ë„£ìœ¼ë©´ ì½”ë£¨í‹´ ì €ì¥ì´ ì•ˆë¨
                 timer -= Time.deltaTime;
-                player.skillList[SkillIndex].HoldCoolDown();      // È¦µå ÁßÀÏ ¶§´Â ÄğÅ¸ÀÓÀÌ ÁÙ¾îµéÁö ¾ÊÀ½
+                player.skillList[SkillIndex].HoldCoolDown();      // í™€ë“œ ì¤‘ì¼ ë•ŒëŠ” ì¿¨íƒ€ì„ì´ ì¤„ì–´ë“¤ì§€ ì•ŠìŒ
                 if (timer <= 0)
                 {
                     skillCoroutine = StartCoroutine(Exit());
@@ -710,7 +710,7 @@ public class Player : ObjectBasic
                 }
             }
 
-            yield return null;          // ¾È ³ÖÀ¸¸é ÄÚ·çÆ¾ ÀúÀåÀÌ ¾ÈµÊ
+            yield return null;          // ì•ˆ ë„£ìœ¼ë©´ ì½”ë£¨í‹´ ì €ì¥ì´ ì•ˆë¨
         }
 
         IEnumerator Exit()
@@ -737,7 +737,7 @@ public class Player : ObjectBasic
                 player.playerStatus.isSkill = false;
             }
 
-            yield return null;      // ¾È ³ÖÀ¸¸é ÄÚ·çÆ¾ ÀúÀåÀÌ ¾ÈµÊ
+            yield return null;      // ì•ˆ ë„£ìœ¼ë©´ ì½”ë£¨í‹´ ì €ì¥ì´ ì•ˆë¨
 
             skillCoroutine = null;
 
@@ -776,17 +776,17 @@ public class Player : ObjectBasic
         if (skillList[SkillIndex].skillCoolTime > 0)
             return;
 
-        // ½ºÅ³ Å° ´Ù¿î
+        // ìŠ¤í‚¬ í‚¤ ë‹¤ìš´
         if (skDown && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
-            // ½ºÅ³ÀÌ Á¦ÇÑÀÌ ÀÖ´Â »óÅÂ¿¡¼­ ÀûÀıÇÑ ¹«±â°¡ °¡Áö°í ÀÖÁö ¾ÊÀ» ¶§
-            // ÇØ´ç ¹«±â¸¸ »ç¿ëÀÌ °¡´ÉÇÏ´Ù.
+            // ìŠ¤í‚¬ì´ ì œí•œì´ ìˆëŠ” ìƒíƒœì—ì„œ ì ì ˆí•œ ë¬´ê¸°ê°€ ê°€ì§€ê³  ìˆì§€ ì•Šì„ ë•Œ
+            // í•´ë‹¹ ë¬´ê¸°ë§Œ ì‚¬ìš©ì´ ê°€ëŠ¥í•˜ë‹¤.
 
-            // ¹«±â Á¦ÇÑÀÌ ÀÖÀ» ¶§
+            // ë¬´ê¸° ì œí•œì´ ìˆì„ ë•Œ
             if (skillList[SkillIndex].skillData.skillLimit.Length != 0)
             {
-                // ¹«±â°¡ ¾ø°Å³ª
-                // Á¦ÇÑ ¹«±â¸¦ °¡Áö°í ÀÖÁö ¾Ê°Å³ª
+                // ë¬´ê¸°ê°€ ì—†ê±°ë‚˜
+                // ì œí•œ ë¬´ê¸°ë¥¼ ê°€ì§€ê³  ìˆì§€ ì•Šê±°ë‚˜
                 int SkillUseOk = Array.IndexOf(skillList[SkillIndex].skillData.skillLimit, playerStats.weapon.weaponInstance.weaponData.weaponType);
                 print(SkillUseOk);
                 if (playerStats.weapon.weaponInstance == null || SkillUseOk == -1)
@@ -805,7 +805,7 @@ public class Player : ObjectBasic
         if (!playerStats.skill[playerStatus.skillIndex].IsValid())
             return;
 
-        //½ºÅ³ hold »óÅÂ¿¡¼­ ½ºÅ³ Å° up
+        //ìŠ¤í‚¬ hold ìƒíƒœì—ì„œ ìŠ¤í‚¬ í‚¤ up
         if ((!skDown) && (0 >= playerStatus.isFlinch) && !playerStatus.isAttack && !playerStatus.isDodge && !playerStatus.isSkill && playerStatus.isSkillHold)
         {
             playerStatus.isReload = false;
@@ -854,29 +854,29 @@ public class Player : ObjectBasic
 
     public void GainSelectItem(SelectItem selectItem)
     {
-        // ¾ÆÀÌÅÛ È¹µæ ¿©ºÎ
+        // ì•„ì´í…œ íšë“ ì—¬ë¶€
         bool gainItem = false;
 
-        // ¹«±â =======================================================
-        // ÇöÀç ÀåÂø ¹«±â ÇØÁ¦ ÈÄ ¹«±â ÀåÂø
+        // ë¬´ê¸° =======================================================
+        // í˜„ì¬ ì¥ì°© ë¬´ê¸° í•´ì œ í›„ ë¬´ê¸° ì¥ì°©
         if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Weapon)
         {
             if (playerStats.weapon.weaponInstance.itemData != null)
             {
                 weaponController.UnEquipWeapon();
             }
-            // ¹«±â Àåºñ
+            // ë¬´ê¸° ì¥ë¹„
             gainItem = weaponController.EquipWeapon(selectItem.GetComponent<Weapon>());
         }
-        // °©¿Ê =======================================================
-        // ºñ¾îÀÖ´Â Àåºñ ½½·ÔÀ¸·Î ÀåÂø
-        // ºñ¾îÀÖ´Â Àåºñ ½½·ÔÀÌ ¾ø´Ù¸é ÀåÂø ½ÇÆĞ
+        // ê°‘ì˜· =======================================================
+        // ë¹„ì–´ìˆëŠ” ì¥ë¹„ ìŠ¬ë¡¯ìœ¼ë¡œ ì¥ì°©
+        // ë¹„ì–´ìˆëŠ” ì¥ë¹„ ìŠ¬ë¡¯ì´ ì—†ë‹¤ë©´ ì¥ì°© ì‹¤íŒ¨
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Equipments)
         {
             gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentInstance);
         }
-        // ½ºÅ³ =======================================================
-        // ÇöÀç »ç¿ë ÁßÀÎ ½ºÅ³ ÇØÁ¦ ÈÄ ½ºÅ³ ÀåÂø
+        // ìŠ¤í‚¬ =======================================================
+        // í˜„ì¬ ì‚¬ìš© ì¤‘ì¸ ìŠ¤í‚¬ í•´ì œ í›„ ìŠ¤í‚¬ ì¥ì°©
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Skill)
         {
 
@@ -884,12 +884,12 @@ public class Player : ObjectBasic
             {
                 skillController.UnEquipSkill();
             }
-            // ½ºÅ³ ÀåÂø
+            // ìŠ¤í‚¬ ì¥ì°©
             gainItem = skillController.EquipSkill(selectItem.GetComponent<SkillItem>().skillInstance);
 
         }
-        // ÀÏ¹İ ¾ÆÀÌÅÛ =======================================================
-        // È¹µæ Áï½Ã »ç¿ë µÊ
+        // ì¼ë°˜ ì•„ì´í…œ =======================================================
+        // íšë“ ì¦‰ì‹œ ì‚¬ìš© ë¨
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Consumable)
         {
             //UseItem
@@ -926,17 +926,17 @@ public class Player : ObjectBasic
     }
     */
 
-    // ÀåÂøÇÒ ÀåºñÀÇ index
+    // ì¥ì°©í•  ì¥ë¹„ì˜ index
     public bool EquipEquipment(EquipmentInstance _EI)
     {
         bool equipOK = false;
 
         for (int i = 0; i < playerStats.equipments.Length; i++)
         {
-            // ÀåºñÇÏ°í ÀÖÀ» ¶§ °°Àº Àåºñ¶ó¸é
+            // ì¥ë¹„í•˜ê³  ìˆì„ ë•Œ ê°™ì€ ì¥ë¹„ë¼ë©´
             if (playerStats.equipments[i].IsValid() && playerStats.equipments[i].equipmentData == _EI.equipmentData)
                 break;
-            // ÀåÂø Áß
+            // ì¥ì°© ì¤‘
             if (playerStats.equipments[i].IsValid())
                 continue;
 
@@ -948,7 +948,7 @@ public class Player : ObjectBasic
         if (!equipOK)
             return false;
 
-        // ¹æ¾î±¸ ÆĞ½Ãºê Àû¿ë
+        // ë°©ì–´êµ¬ íŒ¨ì‹œë¸Œ ì ìš©
         foreach (PassiveData passiveData in _EI.equipmentData.passives)
         {
             ApplyPassive(passiveData);
@@ -957,7 +957,7 @@ public class Player : ObjectBasic
         return true;
     }
 
-    // ÇöÀç ÀåÂøÇÑ Àåºñ Áß ÇØÁ¦ÇÒ index
+    // í˜„ì¬ ì¥ì°©í•œ ì¥ë¹„ ì¤‘ í•´ì œí•  index
     public bool UnEquipEquipment(int index)
     {
        
@@ -965,10 +965,10 @@ public class Player : ObjectBasic
         if (!playerStats.equipments[index].IsValid())
             return false;
 
-        // ÇöÀç À§Ä¡¿¡ Àåºñ¸¦ ³õ´Â´Ù.
+        // í˜„ì¬ ìœ„ì¹˜ì— ì¥ë¹„ë¥¼ ë†“ëŠ”ë‹¤.
         GameObject EGO = Instantiate(DataManager.instance.gameData.equipmentList[playerStats.equipments[index].equipmentData.selectItemID], CenterPivot.transform.position, gameObject.transform.localRotation);
         EquipmentData EData= EGO.GetComponent<Equipment>().equipmentInstance.equipmentData;
-        // ¹«±â ´É·ÂÄ¡ ÇØÁ¦
+        // ë¬´ê¸° ëŠ¥ë ¥ì¹˜ í•´ì œ
         //equipmentList[playerStats.equipments[index]].UnEquip(this.gameObject.GetComponent<Player>());
         //equipmentList[playerStats.equipments[index]].gameObject.SetActive(false);
         foreach (PassiveData passiveData in EData.passives)
@@ -976,10 +976,10 @@ public class Player : ObjectBasic
             RemovePassive(passiveData);
         }
 
-        // ¹«±â ÇØÁ¦
+        // ë¬´ê¸° í•´ì œ
         playerStats.equipments[index].SetEI(null);
         //MapUIManager.instance.UpdateEquipmentUI();
-        print("Àåºñ ÇØÁ¦");
+        print("ì¥ë¹„ í•´ì œ");
         return true;
     }
     #endregion
@@ -1008,10 +1008,10 @@ public class Player : ObjectBasic
             playerStats.tempHP = DataManager.instance.userData.playerTempHP;
 
             //Debug.Log("Scene reloaded: " + scene.name);
-            //Scene reload ÈÄ¿¡µµ Àü¿¡ ¾òÀº ¾ÆÀÌÅÛ À¯Áö
+            //Scene reload í›„ì—ë„ ì „ì— ì–»ì€ ì•„ì´í…œ ìœ ì§€
             //int playerItemName = DataManager.instance.userData.playerItem;
 
-            // ¹«±â
+            // ë¬´ê¸°
             int playerWeapon = DataManager.instance.userData.playerWeapon;
             if (playerWeapon != 0)
             {
@@ -1019,7 +1019,7 @@ public class Player : ObjectBasic
                 weaponController.EquipWeapon(WeaponObject.GetComponent<Weapon>());
             }
 
-            // ½ºÅ³
+            // ìŠ¤í‚¬
             playerStats.maxSkillSlot = DataManager.instance.userData.playerMaxSkillSlot;
             int[] playerSkill = DataManager.instance.userData.playerSkill;
             for (int i = 0; i < playerSkill.Length; i++)
@@ -1033,7 +1033,7 @@ public class Player : ObjectBasic
                 }
             }
 
-            // ¹æ¾î±¸
+            // ë°©ì–´êµ¬
             playerStats.maxEquipment = DataManager.instance.userData.playerMaxEquipments;
             int[] playerEquipment = DataManager.instance.userData.playerEquipments;
             for (int i = 0; i < playerEquipment.Length; i++)
@@ -1047,7 +1047,7 @@ public class Player : ObjectBasic
                 }
             }
 
-            // ½ºÅÈ Àû¿ë
+            // ìŠ¤íƒ¯ ì ìš©
             for (int i = 0; i < playerStats.playerStat.Length; i++)
             {
                 playerStats.playerStat[i] = DataManager.instance.userData.playerStat[i];
@@ -1055,7 +1055,7 @@ public class Player : ObjectBasic
 
             Player.instance.playerStats.HPMax.AddValue += Player.instance.playerStats.playerStat[(int)StatID.HP] * StatIV[(int)StatID.HP];
             Player.instance.playerStats.AttackPower.IncreasedValue += Player.instance.playerStats.playerStat[(int)StatID.AP] * StatIV[(int)StatID.AP];
-            Player.instance.playerStats.increasedAttackSpeed += Player.instance.playerStats.playerStat[(int)StatID.AS] * StatIV[(int)StatID.AS];
+            Player.instance.playerStats.AttackSpeed.IncreasedValue += Player.instance.playerStats.playerStat[(int)StatID.AS] * StatIV[(int)StatID.AS];
             Player.instance.playerStats.CriticalChance.AddValue += Player.instance.playerStats.playerStat[(int)StatID.CC] * StatIV[(int)StatID.CC];
             Player.instance.playerStats.CriticalDamage.AddValue += Player.instance.playerStats.playerStat[(int)StatID.CD] * StatIV[(int)StatID.CD];
             Player.instance.playerStats.SkillPower.AddValue += Player.instance.playerStats.playerStat[(int)StatID.SP] * StatIV[(int)StatID.SP];
@@ -1066,7 +1066,7 @@ public class Player : ObjectBasic
             playerStats.key = DataManager.instance.userData.playerKey;
 
             /*
-            //¾ÆÀÌÅÛ
+            //ì•„ì´í…œ
             if(playerItemName != 0)
             {
                 foreach (GameObject obj in DataManager.instance.gameData.selectItemList)
@@ -1090,13 +1090,13 @@ public class Player : ObjectBasic
 
     #region StatLV
 
-    // Ã¼·Â, °ø°İ·Â, °ø°İ¼Óµµ, Ä¡¸íÅ¸ È®·ü ,Ä¡¸íÅ¸ ÇÇÇØ·®, µµ·Â, µµ¼ú ´ë±â½Ã°£, ÀÌµ¿¼Óµµ
+    // ì²´ë ¥, ê³µê²©ë ¥, ê³µê²©ì†ë„, ì¹˜ëª…íƒ€ í™•ë¥  ,ì¹˜ëª…íƒ€ í”¼í•´ëŸ‰, ë„ë ¥, ë„ìˆ  ëŒ€ê¸°ì‹œê°„, ì´ë™ì†ë„
     public enum StatID { HP, AP, AS, CC, CD, SP, SCT, MS };
-    // ½ºÅÈ Áõ°¡·®
+    // ìŠ¤íƒ¯ ì¦ê°€ëŸ‰
     [HideInInspector]
     public readonly float[] StatIV = { 25, 0.2f, 0.2f, 0.1f, 0.05f, 10f, -0.1f, 0.1f };
 
-    // ½ºÅÈÀ» Áõ°¡ ½ÃÅ²´Ù.
+    // ìŠ¤íƒ¯ì„ ì¦ê°€ ì‹œí‚¨ë‹¤.
     public void StatLevelUp(StatID _StatID)
     {
         Player.instance.playerStats.playerStat[(int)_StatID]++;
@@ -1109,7 +1109,7 @@ public class Player : ObjectBasic
                 Player.instance.playerStats.AttackPower.IncreasedValue += StatIV[(int)_StatID];
                 break;
             case StatID.AS:
-                Player.instance.playerStats.increasedAttackSpeed += StatIV[(int)_StatID];
+                Player.instance.playerStats.AttackSpeed.IncreasedValue += StatIV[(int)_StatID];
                 break;
             case StatID.CC:
                 Player.instance.playerStats.CriticalChance.AddValue += StatIV[(int)_StatID];
@@ -1136,13 +1136,13 @@ public class Player : ObjectBasic
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //°ø°İ¹ŞÀ½
+        //ê³µê²©ë°›ìŒ
         if (other.tag == "EnemyAttack" || other.tag == "AllAttack")
         {
-            // Àû¿¡°Ô °ø°İ ´çÇÒ½Ã
-            // ÇÇÇØ¸¦ ÀÔ°í
-            // µÚ·Î ¹Ğ·Á³ª¸ç
-            // Àá½Ã ¹«ÀûÀÌ µÈ´Ù.
+            // ì ì—ê²Œ ê³µê²© ë‹¹í• ì‹œ
+            // í”¼í•´ë¥¼ ì…ê³ 
+            // ë’¤ë¡œ ë°€ë ¤ë‚˜ë©°
+            // ì ì‹œ ë¬´ì ì´ ëœë‹¤.
             BeAttacked(other.gameObject.GetComponent<HitDetection>(), other.ClosestPoint(CenterPivot.position));
 
         }
@@ -1177,24 +1177,24 @@ public class Player : ObjectBasic
 
             if (item.itemClass == ItemClass.Coin)
             {
-                Destroy(other.gameObject); //ÄÚÀÎ ¿ÀºêÁ§Æ® »èÁ¦
+                Destroy(other.gameObject); //ì½”ì¸ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
                 playerStats.coin++;
             }
             else if (item.itemClass == ItemClass.Key)
             {
                 print("get key");
-                other.gameObject.SetActive(false); //Å° ¿ÀºêÁ§Æ® »èÁ¦
+                other.gameObject.SetActive(false); //í‚¤ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
                 playerStats.key++;
             }
             /*
             else if(item.itemClass == ItemClass.Heal)
             {
-                Destroy(other.gameObject); //ÄÚÀÎ ¿ÀºêÁ§Æ® »èÁ¦
+                Destroy(other.gameObject); //ì½”ì¸ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
                 playerStats.HP += 20f;
             }
             else if(item.itemClass == ItemClass.ExtraHealth)
             {
-                Destroy(other.gameObject); //Å° ¿ÀºêÁ§Æ® »èÁ¦
+                Destroy(other.gameObject); //í‚¤ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
                 playerStats.tempHP += 10f;
             }
             */
@@ -1204,7 +1204,7 @@ public class Player : ObjectBasic
 
     void OnTriggerStay2D(Collider2D other)
     {
-        // ÇØ´ç tag°¡ ºÙÀº ´ë»óÀº »óÈ£ÀÛ¿ëÀÌ °¡´É
+        // í•´ë‹¹ tagê°€ ë¶™ì€ ëŒ€ìƒì€ ìƒí˜¸ì‘ìš©ì´ ê°€ëŠ¥
         if (other.tag == "SelectItem" || other.tag == "Door" ||
         other.tag == "Npc" || other.tag == "reward" || other.tag == "SellingItem")
         {
@@ -1222,7 +1222,7 @@ public class Player : ObjectBasic
 
     #endregion
 
-    // »óÅÂ °ü·Ã
+    // ìƒíƒœ ê´€ë ¨
     #region Effect
 
     public override void FlinchCancle()

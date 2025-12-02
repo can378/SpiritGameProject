@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -7,7 +7,7 @@ public class SlashSkill : SkillBase
 {
     [field: SerializeField] SlashSkillData SSData;
 
-    //¹æÇâ Ç¥½Ã±â
+    //ë°©í–¥ í‘œì‹œê¸°
     float holdPower;
     GameObject simul;
     protected void Awake()
@@ -83,8 +83,8 @@ public class SlashSkill : SkillBase
     public override void Cancle()
     {
         StopCoroutine(Simulation());
-        // ½Ã¹Ä »èÁ¦
-        // ÀÌµ¿ ¼Óµµ È¸º¹
+        // ì‹œë®¬ ì‚­ì œ
+        // ì´ë™ ì†ë„ íšŒë³µ
         Destroy(simul);
         user.GetComponent<Stats>().MoveSpeed.DecreasedValue -= 0.5f;
     }
@@ -106,29 +106,29 @@ public class SlashSkill : SkillBase
             Rigidbody2D bulletRigid = instantProjectile.GetComponent<Rigidbody2D>();
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
 
-            float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;                               // °ø°İ 1È¸´ç °É¸®´Â ½Ã°£
+            float attackRate = animationInfo.GetSPA() / player.playerStats.AttackSpeed.Value;                               // ê³µê²© 1íšŒë‹¹ ê±¸ë¦¬ëŠ” ì‹œê°„
 
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * SSData.skillDefalutCoolTime;
 
-            //ÀÌÆåÆ® ¼³Á¤
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ¹æÇâ ¼³Á¤
+            //ì´í™íŠ¸ ì„¤ì •
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ë°©í–¥ ì„¤ì •
             instantProjectile.transform.localScale = simul.transform.lossyScale;
             instantProjectile.tag = "PlayerAttack";
             instantProjectile.layer = LayerMask.NameToLayer("PlayerAttack");
 
             /*
-            Åõ»çÃ¼ = true
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = true
-            ÃÊ´ç Å¸°İ È½¼ö = DPS / °ø°İ 1È¸´ç °É¸®´Â ½Ã°£
-            ÇÇÇØ·® = (±âº» ÇÇÇØ·® + °ø°İ·Â * °è¼ö) * °­È­ ¼öÄ¡
-            ³Ë¹é = ¹«±â ³Ë¹é
-            Ä¡È® = ÇÃ·¹ÀÌ¾î Ä¡È®
-            Ä¡µ© = ÇÃ·¹ÀÌ¾î Ä¡µ©
-            µğ¹öÇÁ = ¹«±â »óÅÂÀÌ»ó
+            íˆ¬ì‚¬ì²´ = true
+            ê´€í†µë ¥ = -1
+            ë‹¤ë‹¨íˆíŠ¸ = true
+            ì´ˆë‹¹ íƒ€ê²© íšŸìˆ˜ = DPS / ê³µê²© 1íšŒë‹¹ ê±¸ë¦¬ëŠ” ì‹œê°„
+            í”¼í•´ëŸ‰ = (ê¸°ë³¸ í”¼í•´ëŸ‰ + ê³µê²©ë ¥ * ê³„ìˆ˜) * ê°•í™” ìˆ˜ì¹˜
+            ë„‰ë°± = ë¬´ê¸° ë„‰ë°±
+            ì¹˜í™• = í”Œë ˆì´ì–´ ì¹˜í™•
+            ì¹˜ë€ = í”Œë ˆì´ì–´ ì¹˜ë€
+            ë””ë²„í”„ = ë¬´ê¸° ìƒíƒœì´ìƒ
             */
             hitDetection.SetHit_Ratio(
                 SSData.defaultDamage * holdPower, SSData.ratio * holdPower, player.stats.AttackPower,
@@ -141,7 +141,7 @@ public class SlashSkill : SkillBase
             bulletRigid.velocity = player.playerStatus.mouseDir * 10 * SSData.projectileSpeed;
 
             Destroy(simul);
-            Destroy(instantProjectile, SSData.projectileTime);  //»ç°Å¸® ¼³Á¤
+            Destroy(instantProjectile, SSData.projectileTime);  //ì‚¬ê±°ë¦¬ ì„¤ì •
         }
         else if (user.tag == "Enemy")
         {
@@ -153,32 +153,32 @@ public class SlashSkill : SkillBase
 
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
 
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = 5;
 
-            // ÀÌÆåÆ® »ìÁ¤
-            instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ¹æÇâ ¼³Á¤
+            // ì´í™íŠ¸ ì‚´ì •
+            instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ë°©í–¥ ì„¤ì •
             instantProjectile.transform.localScale = simul.transform.lossyScale;
             instantProjectile.tag = "EnemyAttack";
             instantProjectile.layer = LayerMask.NameToLayer("EnemyAttack");
             /*
-            Åõ»çÃ¼ = true
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = true
-            ÃÊ´ç Å¸°İ È½¼ö = DPS
-            ÇÇÇØ·® = (±âº» ÇÇÇØ·® + °ø°İ·Â * °è¼ö) * °­È­ ¼öÄ¡
-            ³Ë¹é = ±âº» ³Ë¹é
-            Ä¡È® = 0
-            Ä¡µ© = 0
-            µğ¹öÇÁ = 0
+            íˆ¬ì‚¬ì²´ = true
+            ê´€í†µë ¥ = -1
+            ë‹¤ë‹¨íˆíŠ¸ = true
+            ì´ˆë‹¹ íƒ€ê²© íšŸìˆ˜ = DPS
+            í”¼í•´ëŸ‰ = (ê¸°ë³¸ í”¼í•´ëŸ‰ + ê³µê²©ë ¥ * ê³„ìˆ˜) * ê°•í™” ìˆ˜ì¹˜
+            ë„‰ë°± = ê¸°ë³¸ ë„‰ë°±
+            ì¹˜í™• = 0
+            ì¹˜ë€ = 0
+            ë””ë²„í”„ = 0
             */
             hitDetection.SetHit_Ratio(SSData.defaultDamage, SSData.ratio, enemy.stats.AttackPower, 1 * holdPower);
             hitDetection.SetMultiHit(true, SSData.DPS);
             hitDetection.user = user;
-            bulletRigid.velocity = (enemy.enemyStatus.EnemyTarget.transform.position - enemy.CenterPivot.transform.position).normalized * 10 * SSData.projectileSpeed;  // ¼Óµµ ¼³Á¤
+            bulletRigid.velocity = (enemy.enemyStatus.EnemyTarget.transform.position - enemy.CenterPivot.transform.position).normalized * 10 * SSData.projectileSpeed;  // ì†ë„ ì„¤ì •
 
             Destroy(simul);
-            Destroy(instantProjectile, SSData.projectileTime);  //»ç°Å¸® ¼³Á¤
+            Destroy(instantProjectile, SSData.projectileTime);  //ì‚¬ê±°ë¦¬ ì„¤ì •
         }
     }
 }

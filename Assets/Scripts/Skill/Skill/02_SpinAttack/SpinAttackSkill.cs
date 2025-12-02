@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +7,8 @@ public class SpinAttackSkill : SkillBase
     [field: SerializeField] SpinAttackSkillData SASData;
 
     
-    float holdPower;        // °­È­ ¼öÄ¡
-    GameObject spinSimul;   // ÀÛµ¿ ÁßÀÎ ½Ã¹Ä·¹ÀÌ¼Ç
+    float holdPower;        // ê°•í™” ìˆ˜ì¹˜
+    GameObject spinSimul;   // ì‘ë™ ì¤‘ì¸ ì‹œë®¬ë ˆì´ì…˜
 
     protected void Awake()
     {
@@ -87,11 +87,11 @@ public class SpinAttackSkill : SkillBase
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
             WeaponAnimationInfo animationInfo = player.playerAnim.AttackAnimationData[weapon.weaponInstance.weaponData.weaponType.ToString()];
 
-            float attackRate = animationInfo.GetSPA() / player.playerStats.attackSpeed;
+            float attackRate = animationInfo.GetSPA() / player.playerStats.AttackSpeed.Value;
 
             holdPower = SASData.maxHoldPower < holdPower ? SASData.maxHoldPower : holdPower; 
 
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * SASData.skillDefalutCoolTime;
 
             Destroy(spinSimul);
@@ -101,15 +101,15 @@ public class SpinAttackSkill : SkillBase
             effect.tag = "PlayerAttack";
             effect.layer = LayerMask.NameToLayer("PlayerAttack");
             /*
-            Åõ»çÃ¼ = false
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = false
-            ÃÊ´ç Å¸°İ È½¼ö = -1 
-            ÇÇÇØ·® = (±âº» ÇÇÇØ·® + ¹«±â ÇÇÇØ·®) * ÇÃ·¹ÀÌ¾î °ø°İ·Â
-            ³Ë¹é = ¹«±â ³Ë¹é
-            Ä¡È® = ÇÃ·¹ÀÌ¾î Ä¡È®
-            Ä¡µ© = ÇÃ·¹ÀÌ¾î Ä¡µ©
-            µğ¹öÇÁ = ¾øÀ½
+            íˆ¬ì‚¬ì²´ = false
+            ê´€í†µë ¥ = -1
+            ë‹¤ë‹¨íˆíŠ¸ = false
+            ì´ˆë‹¹ íƒ€ê²© íšŸìˆ˜ = -1 
+            í”¼í•´ëŸ‰ = (ê¸°ë³¸ í”¼í•´ëŸ‰ + ë¬´ê¸° í”¼í•´ëŸ‰) * í”Œë ˆì´ì–´ ê³µê²©ë ¥
+            ë„‰ë°± = ë¬´ê¸° ë„‰ë°±
+            ì¹˜í™• = í”Œë ˆì´ì–´ ì¹˜í™•
+            ì¹˜ë€ = í”Œë ˆì´ì–´ ì¹˜ë€
+            ë””ë²„í”„ = ì—†ìŒ
             */
             hitDetection.SetHit_Ratio(
              SASData.defaultDamage * holdPower, SASData.ratio * holdPower, player.stats.AttackPower,
@@ -119,14 +119,14 @@ public class SpinAttackSkill : SkillBase
             //hitDetection.SetSE((int)player.weaponList[player.playerStats.weapon].statusEffect);
             hitDetection.user = user;
 
-            // ÆÄÆ¼Å¬
+            // íŒŒí‹°í´
             {
-                // °ø°İ ¼Óµµ¿¡ µû¸¥ ÀÌÆåÆ® °¡¼Ó
+                // ê³µê²© ì†ë„ì— ë”°ë¥¸ ì´í™íŠ¸ ê°€ì†
                 ParticleSystem.MainModule particleMain = effect.GetComponentInChildren<ParticleSystem>().main;
-                particleMain.startLifetime = animationInfo.Rate / player.playerStats.attackSpeed;
+                particleMain.startLifetime = animationInfo.Rate / player.playerStats.AttackSpeed.Value;
             }
 
-            // rate µ¿¾È À¯Áö
+            // rate ë™ì•ˆ ìœ ì§€
             player.stats.MoveSpeed.DecreasedValue -= 0.5f;
             Destroy(effect, SASData.effectTime * attackRate);
         }
@@ -136,7 +136,7 @@ public class SpinAttackSkill : SkillBase
             GameObject effect = Instantiate(SASData.spinPrefab, enemy.CenterPivot.transform.position, user.transform.rotation);
             HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
-            // ÄğÅ¸ÀÓ Àû¿ë
+            // ì¿¨íƒ€ì„ ì ìš©
             skillCoolTime = 5;
 
             Destroy(spinSimul);
@@ -147,22 +147,22 @@ public class SpinAttackSkill : SkillBase
             effect.layer = LayerMask.NameToLayer("EnemyAttack");
 
             /*
-            Åõ»çÃ¼ = false
-            °üÅë·Â = -1
-            ´Ù´ÜÈ÷Æ® = false
-            ÃÊ´ç Å¸°İ È½¼ö = -1 
-            ÇÇÇØ·® = (±âº» ÇÇÇØ·® + ¹«±â ÇÇÇØ·®) * ÇÃ·¹ÀÌ¾î °ø°İ·Â
-            ³Ë¹é = ¹«±â ³Ë¹é
-            Ä¡È® = ÇÃ·¹ÀÌ¾î Ä¡È®
-            Ä¡µ© = ÇÃ·¹ÀÌ¾î Ä¡µ©
-            µğ¹öÇÁ = ¾øÀ½
+            íˆ¬ì‚¬ì²´ = false
+            ê´€í†µë ¥ = -1
+            ë‹¤ë‹¨íˆíŠ¸ = false
+            ì´ˆë‹¹ íƒ€ê²© íšŸìˆ˜ = -1 
+            í”¼í•´ëŸ‰ = (ê¸°ë³¸ í”¼í•´ëŸ‰ + ë¬´ê¸° í”¼í•´ëŸ‰) * í”Œë ˆì´ì–´ ê³µê²©ë ¥
+            ë„‰ë°± = ë¬´ê¸° ë„‰ë°±
+            ì¹˜í™• = í”Œë ˆì´ì–´ ì¹˜í™•
+            ì¹˜ë€ = í”Œë ˆì´ì–´ ì¹˜ë€
+            ë””ë²„í”„ = ì—†ìŒ
             */
             hitDetection.SetHit_Ratio(
              SASData.defaultDamage * holdPower, SASData.ratio * holdPower, enemy.stats.AttackPower,
              10 * holdPower);
             hitDetection.user = user;
 
-            // rate µ¿¾È À¯Áö
+            // rate ë™ì•ˆ ìœ ì§€
             enemy.stats.MoveSpeed.DecreasedValue -= 0.5f;
             Destroy(effect, SASData.effectTime);
         }

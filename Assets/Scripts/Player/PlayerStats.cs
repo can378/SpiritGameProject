@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,55 +12,42 @@ public class PlayerStats : Stats
     //Attack
 
     // Critical
-    // UI : Ä¡¸íÅ¸ È®·ü 0%
-    // Ä¡¸íÅ¸ = ¹«ÀÛÀ§(0 ~ 100) < Ä¡¸íÅ¸ È®·ü * 100 ? Âü : °ÅÁş
-    // ÃÖ¼Ò 0%, ÃÖ´ë 100%
+    // UI : ì¹˜ëª…íƒ€ í™•ë¥  0%
+    // ì¹˜ëª…íƒ€ = ë¬´ì‘ìœ„(0 ~ 100) < ì¹˜ëª…íƒ€ í™•ë¥  * 100 ? ì°¸ : ê±°ì§“
+    // ìµœì†Œ 0%, ìµœëŒ€ 100%
     [field: SerializeField] public Stat CriticalChance = new Stat(0.0f, 1.0f, 0.0f);
 
     //CriticalDamage
-    // UI : Ä¡¸íÅ¸ ÇÇÇØ·® 150%
-    // ÇÇÇØ·® = Ä¡¸íÅ¸ ? Ä¡¸íÅ¸ ÇÇÇØ·® * ±âº» ÇÇÇØ·® : ±âº» ÇÇÇØ·®
-    // ÃÖ¼Ò 100%, ÃÖ´ë 300%
+    // UI : ì¹˜ëª…íƒ€ í”¼í•´ëŸ‰ 150%
+    // í”¼í•´ëŸ‰ = ì¹˜ëª…íƒ€ ? ì¹˜ëª…íƒ€ í”¼í•´ëŸ‰ * ê¸°ë³¸ í”¼í•´ëŸ‰ : ê¸°ë³¸ í”¼í•´ëŸ‰
+    // ìµœì†Œ 100%, ìµœëŒ€ 300%
     [field: SerializeField] public Stat CriticalDamage { get; set; } = new Stat(1.5f, 3.0f, 1.0f);
 
     // attackSpeed
     // UI 0%
-    // ³ôÀ»¼ö·Ï »¡¶óÁü
-    // ÃÊ´ç °ø°İ¼Óµµ = ¹«±â ÃÊ´ç °ø°İ ¼Óµµ * ÇÃ·¹ÀÌ¾î °ø°İ¼Óµµ
-    // ÃÖ¼Ò 0%, ÃÖ´ë 300%
-    [field: SerializeField] public float defaultAttackSpeed { get; set; } = 1;
-    public float addAttackSpeed { get; set; }
-    public float increasedAttackSpeed { get; set; }
-    public float decreasedAttackSpeed { get; set; }
-
-    public float attackSpeed
-    {
-        get
-        {
-            return Mathf.Clamp(
-                (defaultAttackSpeed + addAttackSpeed) * (1f + increasedAttackSpeed) * (1f - decreasedAttackSpeed), 0.0f,
-                3f);
-        }
-    }
+    // ë†’ì„ìˆ˜ë¡ ë¹¨ë¼ì§
+    // ì´ˆë‹¹ ê³µê²©ì†ë„ = ë¬´ê¸° ì´ˆë‹¹ ê³µê²© ì†ë„ * í”Œë ˆì´ì–´ ê³µê²©ì†ë„
+    // ìµœì†Œ 0%, ìµœëŒ€ 300%
+    [field: SerializeField] public Stat AttackSpeed { get; set; } = new Stat(1.0f, 3.0f, 0.0f);
 
 
     // SkillCoolTime
-    // µµ¼ú Àç»ç¿ë ´ë±â ½Ã°£
-    // UI Àç»ç¿ë ´ë±â ½Ã°£ 0%
-    // ³·À»¼ö·Ï µµ¼ú ÀÚ¼ö »ç¿ë °¡´É
-    // µµ¼ú Àç»ç¿ë ´ë±â ½Ã°£ = µµ¼ú ±âº» Àç»ç¿ë ´ë±â ½Ã°£ * Àç»ç¿ë ´ë±â½Ã°£
-    // ÃÖ¼Ò -80% ,ÃÖ´ë 80%
+    // ë„ìˆ  ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„
+    // UI ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ 0%
+    // ë‚®ì„ìˆ˜ë¡ ë„ìˆ  ììˆ˜ ì‚¬ìš© ê°€ëŠ¥
+    // ë„ìˆ  ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ = ë„ìˆ  ê¸°ë³¸ ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ * ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„
+    // ìµœì†Œ -80% ,ìµœëŒ€ 80%
     [field: SerializeField] public Stat SkillCoolTime = new Stat(0.0f, 0.8f, -0.8f);
 
     // Move
 
-    // ´Ş¸®±â Æó±â
+    // ë‹¬ë¦¬ê¸° íê¸°
     /*
     // RunSpeed
-    // UI ´Ş¸®±â ½Ã ÀÌµ¿¼Óµµ 50%
-    // ´Ş¸®±â ½Ã ¼Óµµ
-    // ÀÌµ¿¼Óµµ = ÀÌµ¿¼Óµµ (´Ş¸®±â ? ´Ş¸®±â ½Ã ¼Óµµ : 1)
-    // ÃÖ¼Ò 100%
+    // UI ë‹¬ë¦¬ê¸° ì‹œ ì´ë™ì†ë„ 50%
+    // ë‹¬ë¦¬ê¸° ì‹œ ì†ë„
+    // ì´ë™ì†ë„ = ì´ë™ì†ë„ (ë‹¬ë¦¬ê¸° ? ë‹¬ë¦¬ê¸° ì‹œ ì†ë„ : 1)
+    // ìµœì†Œ 100%
     [field: SerializeField] public float defaultRunSpeed { get; set; } = 1f;
     public float addRunSpeed { get; set; }
     public float increasedRunSpeed {  get; set; }
@@ -72,10 +59,10 @@ public class PlayerStats : Stats
 
 
     //RunCoolTime
-    // ´Ş¸®±â Àç»ç¿ë ´ë±â ½Ã°£
-    // UI : ´Ş¸®±â Àç»ç¿ë ´ë±â ½Ã°£ 5ÃÊ
-    // ´Ş¸®±â Àç»ç¿ë ´ë±â ½Ã°£ = ´Ş¸®±â Àç»ç¿ë ´ë±â ½Ã°£
-    // ÃÖ¼Ò 0ÃÊ
+    // ë‹¬ë¦¬ê¸° ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„
+    // UI : ë‹¬ë¦¬ê¸° ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ 5ì´ˆ
+    // ë‹¬ë¦¬ê¸° ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„ = ë‹¬ë¦¬ê¸° ì¬ì‚¬ìš© ëŒ€ê¸° ì‹œê°„
+    // ìµœì†Œ 0ì´ˆ
     [field: SerializeField] public float defaultRunCoolTime { get; set; } = 5f;
     public float addRunCoolTime { get; set; }
     public float increasedRunCoolTime { get; set; }
@@ -87,9 +74,9 @@ public class PlayerStats : Stats
     */
 
     // Dodge
-    // È¸ÇÇ ¼Óµµ
-    // UI : È¸ÇÇ ½Ã Ãß°¡ ÀÌµ¿ ¼Óµµ 66%
-    // ÃÖ¼Ò 50%
+    // íšŒí”¼ ì†ë„
+    // UI : íšŒí”¼ ì‹œ ì¶”ê°€ ì´ë™ ì†ë„ 66%
+    // ìµœì†Œ 50%
     [field: SerializeField] public float defaultDodgeSpeed { get; set; } = 0.66f;
     public float addDodgeSpeed { get; set; }
     public float increasedDodgeSpeed { get; set; }
@@ -104,10 +91,10 @@ public class PlayerStats : Stats
         }
     }
 
-    // È¸ÇÇ ½Ã°£
-    // UI : È¸ÇÇ ½Ã°£ 0.8ÃÊ
-    // È¸ÇÇ ½Ã°£ = È¸ÇÇ ½Ã°£
-    // ÃÖ¼Ò 0.1ÃÊ
+    // íšŒí”¼ ì‹œê°„
+    // UI : íšŒí”¼ ì‹œê°„ 0.8ì´ˆ
+    // íšŒí”¼ ì‹œê°„ = íšŒí”¼ ì‹œê°„
+    // ìµœì†Œ 0.1ì´ˆ
     [field: SerializeField] public float defaultDodgeTime { get; set; } = 0.4f;
     public float addDodgeTime { get; set; }
     public float increasedDodgeTime { get; set; }
@@ -122,8 +109,8 @@ public class PlayerStats : Stats
         }
     }
 
-    //nÃÊ°£ ½Ç¸í
-    //-->cameraManager¿¡¼­ È¿°úÀû¿ë
+    //nì´ˆê°„ ì‹¤ëª…
+    //-->cameraManagerì—ì„œ íš¨ê³¼ì ìš©
     public float blind;
 
     //Item

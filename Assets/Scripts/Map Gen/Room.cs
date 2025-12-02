@@ -148,7 +148,7 @@ public class Room : MonoBehaviour
 
             map = Instantiate(missionMapPrefab, transform.position, transform.rotation);
             map.GetComponent<MissionController>().SetRoom(this.GetComponent<Room>());
-            map.GetComponent<MissionController>().SetTrigger();
+            map.GetComponent<MissionController>().SetTrigger();     // 미션 트리거 설정
             minimapIcon = Instantiate(map.GetComponent<MinimapIcon>().minimapIcon);
             
         }
