@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BossBaby : Boss
 {
     /// <summary>
-    /// ÀúÄûÀÇ °ø°İ ÀÌÆåÆ® ÀÚ·áÇü, hitEffect¿¡ ÀúÀåÇÒ ¶§ ²À ÀÌ ¼ø¼­´ë·Î ÀúÀåÇÒ °Í
+    /// ì €í€´ì˜ ê³µê²© ì´í™íŠ¸ ìë£Œí˜•, hitEffectì— ì €ì¥í•  ë•Œ ê¼­ ì´ ìˆœì„œëŒ€ë¡œ ì €ì¥í•  ê²ƒ
     /// </summary>
     enum BossBabyHitEffect {SafeArea, DamageArea, ScreamArea, RushHitArea, Poision_Trail, Tear, None };
     public List<BuffData> BuffDatas = new List<BuffData>();
@@ -42,7 +42,7 @@ public class BossBaby : Boss
         bounds = floor.GetComponent<Collider2D>().bounds;
 
 
-        // °ø°İ ÆÇÁ¤ ÃÊ±âÈ­
+        // ê³µê²© íŒì • ì´ˆê¸°í™”
         hitEffects[(int)BossBabyHitEffect.RushHitArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.AttackPower, 100);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetDamage(1, 10);
         //hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>().SetHit_Ratio(0, 1, stats.SkillPower, 10);
@@ -77,18 +77,21 @@ public class BossBaby : Boss
                 RemoveDisarm();
                 yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); 
                 break;
-            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); break;
-            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); break;
+            case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); 
+                break;
+            case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); 
+                break;
             case 3: 
                 Disarm();
                 yield return enemyStatus.attackCoroutine = StartCoroutine(Crying());
                 break;
-            case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding());break;
+            case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding());
+                break;
         }
         
     }
 
-    #region ¾î¸¥
+    #region ì–´ë¥¸
 
     IEnumerator Grap() 
     {
@@ -111,10 +114,10 @@ public class BossBaby : Boss
             enemyStatus.moveVec = enemyStatus.targetDirVec * 5.0f;
             time += Time.deltaTime;
 
-            // Àâ±â ¼º°ø 
+            // ì¡ê¸° ì„±ê³µ 
             if(status.hitTarget)
             {
-                // ´ë»ó¿¡°Ô Àâ±â µğ¹öÇÁ ºÎ¿©
+                // ëŒ€ìƒì—ê²Œ ì¡ê¸° ë””ë²„í”„ ë¶€ì—¬
                 grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(BuffDatas[0]);
                 GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;
                 GrapDeBuffData.SetGrapCustomData(grapDeBuff, this.GetComponent<ObjectBasic>(), GrapPos);
@@ -128,19 +131,19 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
         enemyStatus.moveVec = Vector2.zero;
 
-        // Àâ±â ¼º°ø ½Ã
+        // ì¡ê¸° ì„±ê³µ ì‹œ
         if (grapSucces)
         {
             time = 0;
             jukqwiAnim.animator.SetBool("isGrap", true);
-            // ´ë»óÀÌ °è¼Ó Àâ±â »óÅÂ¶ó¸é
+            // ëŒ€ìƒì´ ê³„ì† ì¡ê¸° ìƒíƒœë¼ë©´
             while (grapDeBuff != null)
             {
                 time += Time.deltaTime;
-                // 3ÃÊµ¿¾È Àâ±â »óÅÂ¶ó¸é
+                // 3ì´ˆë™ì•ˆ ì¡ê¸° ìƒíƒœë¼ë©´
                 if (4.0f < time)
                 {
-                    // Å« ÇÇÇØ¿Í Àâ±â¸¦ 1ÃÊ ÈÄ¿¡ ÇØÁ¦
+                    // í° í”¼í•´ì™€ ì¡ê¸°ë¥¼ 1ì´ˆ í›„ì— í•´ì œ
                     jukqwiAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
                     break;
@@ -195,7 +198,7 @@ public class BossBaby : Boss
                 if(time > 10.0f)
                     break;
 
-                // ÀÌÀü µ¹Áø ¹æÇâ°ú ´ÙÀ½ µ¹Áø ¹æÇâÀÇ °¢µµ°¡ 120 µµ ÀÌÇÏ¶ó¸é µÚ·Î µ¹Áø
+                // ì´ì „ ëŒì§„ ë°©í–¥ê³¼ ë‹¤ìŒ ëŒì§„ ë°©í–¥ì˜ ê°ë„ê°€ 120 ë„ ì´í•˜ë¼ë©´ ë’¤ë¡œ ëŒì§„
                 HitWall = false;
                 madRushVec = NextRushVec(madRushVec, enemyStatus.targetDirVec).normalized;
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
@@ -232,7 +235,7 @@ public class BossBaby : Boss
         jukqwiAnim.animator.SetBool("isScream", true);
         hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
 
-        //ÇÃ·¹ÀÌ¾î ´À·ÁÁö°Ô ¸¸µç´Ù.
+        //í”Œë ˆì´ì–´ ëŠë ¤ì§€ê²Œ ë§Œë“ ë‹¤.
         yield return new WaitForSeconds(5f);
 
         jukqwiAnim.animator.SetBool("isScream", false);
@@ -259,10 +262,10 @@ public class BossBaby : Boss
     }
 
 
-    #endregion ¾î¸¥
+    #endregion ì–´ë¥¸
 
 
-    #region ÀÀ¾Ö
+    #region ì‘ì• 
 
     IEnumerator Crying() 
     {
@@ -345,11 +348,11 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = false;
         print("Hiding");
 
-        // ±¸¼®À¸·Î ÀÌµ¿ÇÑ´Ù.
+        // êµ¬ì„ìœ¼ë¡œ ì´ë™í•œë‹¤.
         enemyStatus.moveVec = (FindCorner() - transform.position).normalized;
         while (true)
         {
-            // º®¿¡ ´êÀ¸¸é ¿òÁ÷ÀÓÀ» ¸ØÃá´Ù.
+            // ë²½ì— ë‹¿ìœ¼ë©´ ì›€ì§ì„ì„ ë©ˆì¶˜ë‹¤.
             Debug.DrawRay(transform.position, madRushVec.normalized * 5.0f, Color.green);
             if (Physics2D.Raycast(transform.position, enemyStatus.moveVec, 5.0f, LayerMask.GetMask("EnemyWall") | LayerMask.GetMask("Wall")))
             {
@@ -386,7 +389,7 @@ public class BossBaby : Boss
         // initiate scale
         hitEffects[(int)BossBabyHitEffect.SafeArea].transform.localScale = new Vector3(80, 80, 1);
 
-        // ¿ÏÀüÈ÷ °¡¸± ¶§±îÁö ½ºÄÉÀÏ Á¶Á¤
+        // ì™„ì „íˆ ê°€ë¦´ ë•Œê¹Œì§€ ìŠ¤ì¼€ì¼ ì¡°ì •
         //while (renderer1.bounds.Intersects(renderer2.bounds))
         while (time < 8)
         {
@@ -414,7 +417,7 @@ public class BossBaby : Boss
         Renderer renderer2 = floor.GetComponent<Renderer>();
 
 
-        // ¿ÏÀüÈ÷ °¡¸± ¶§±îÁö ½ºÄÉÀÏ Á¶Á¤
+        // ì™„ì „íˆ ê°€ë¦´ ë•Œê¹Œì§€ ìŠ¤ì¼€ì¼ ì¡°ì •
         //while (renderer1.bounds.Intersects(renderer2.bounds))
         while (hitEffects[(int)BossBabyHitEffect.DamageArea].transform.localScale.x<500)
         {
@@ -435,7 +438,7 @@ public class BossBaby : Boss
     }
 
 
-    #endregion ÀÀ¾Ö
+    #endregion ì‘ì• 
 
     Vector3 FindCorner()
     {
@@ -485,7 +488,7 @@ public class BossBaby : Boss
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Ãæµ¹Ã¼ Ãæµ¹ ½Ã µ¹Áø ¸ØÃã
+        // ì¶©ëŒì²´ ì¶©ëŒ ì‹œ ëŒì§„ ë©ˆì¶¤
         if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
         {
             HitWall = true;

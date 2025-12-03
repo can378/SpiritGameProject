@@ -151,7 +151,7 @@ MonoBehaviour:
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 01000000
+  <statusEffect>k__BackingField: []
   EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
@@ -5545,7 +5545,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2704612775559256278}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27579832d20014d4ebf20b9e772fec77, type: 3}
   m_Name: 
@@ -10692,6 +10692,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
+  BuffDatas:
+  - {fileID: 11400000, guid: 829c1a23862a6704294b2c07a05791c5, type: 2}
+  - {fileID: 11400000, guid: be770fd1d73a26143b097052041903c4, type: 2}
   jukqwiAnim: {fileID: 0}
   GrapPos: {fileID: 2977670295039493966}
   CrackPrefab: {fileID: 9181631073716312681, guid: 470a91000999a4140b4f9debf6cdaf80, type: 3}
@@ -10707,7 +10710,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 300
+  HPMax:
+    _Value: 0
+    _DefaultValue: 100
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 300
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 50
@@ -10745,6 +10753,9 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
   SkillPower:
     _Value: 0
     _DefaultValue: 20
@@ -10757,7 +10768,10 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
-  activeEffects: []
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
   enemyName: "\uC800\uD034"
   DropCoin: 3
   detectionDis: 200
@@ -10779,6 +10793,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   moveSpeedMultiplier: 1
   hitTarget: {fileID: 0}
+  isDead: 0
   isBeAttaked: 0
   isFlinch: 0
   isSuperArmor: 0
@@ -10790,6 +10805,8 @@ MonoBehaviour:
   isBoss: 1
   isRun: 0
   isWating: 0
+  isTargetNoThisRoom: 0
+  isTargetNoThisRoomTime: 0
   isTarget: 0
   isTargetForced: 0
   randomMove: 0
@@ -10934,7 +10951,7 @@ MonoBehaviour:
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 
+  <statusEffect>k__BackingField: []
   EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1

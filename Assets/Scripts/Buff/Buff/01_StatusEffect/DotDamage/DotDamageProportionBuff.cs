@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +6,15 @@ using UnityEngine;
 
 public class DotDamageProportionBuff : BuffData
 {
-    // °íÁ¤ ¼öÄ¡ ÇÇÇØ
-    // dotDamage°¡ ¾ç¼öÀÌ¸é ÇÇÇØ
-    // À½¼öÀÌ¸é Èú
-    [field: SerializeField] public float damagePerTick { get; set; }       // Æ½´ç ÇÇÇØ·®
+    // ê³ ì • ìˆ˜ì¹˜ í”¼í•´
+    // dotDamageê°€ ì–‘ìˆ˜ì´ë©´ í”¼í•´
+    // ìŒìˆ˜ì´ë©´ í
+    [field: SerializeField] public float damagePerTick { get; set; }       // í‹±ë‹¹ í”¼í•´ëŸ‰
 
-    [field: SerializeField] public float tick { get; set; } = 0.1f;     // Æ½ °£°İ
+    [field: SerializeField] public float tick { get; set; } = 0.1f;     // í‹± ê°„ê²©
     public override void Apply(Buff _Buff)
     {
-        // ÁÖ±âÀûÀ¸·Î ÇÇÇØ¸¦ ÀÔÈ÷´Â ÄÚ·çÆ¾ ½ÃÀÛ
+        // ì£¼ê¸°ì ìœ¼ë¡œ í”¼í•´ë¥¼ ì…íˆëŠ” ì½”ë£¨í‹´ ì‹œì‘
         _Buff.CustomData["tickTimer"] = 0f;
         Overlap(_Buff);
         //Debug.Log("DoT debuff applied: " + damagePerSecond + " damage per second");
@@ -22,7 +22,7 @@ public class DotDamageProportionBuff : BuffData
 
     public override void Remove(Buff _Buff)
     {
-        // µğ¹öÇÁ Á¾·á ½Ã ÇÇÇØ ÄÚ·çÆ¾ Áß´Ü
+        // ë””ë²„í”„ ì¢…ë£Œ ì‹œ í”¼í•´ ì½”ë£¨í‹´ ì¤‘ë‹¨
         //Debug.Log("DoT debuff removed");
     }
 
@@ -36,14 +36,15 @@ public class DotDamageProportionBuff : BuffData
             timer -= tick;
 
             DealDamageToTarget(_Buff, damagePerTick);
-            _Buff.CustomData["tickTimer"] = timer;
         }
+        _Buff.CustomData["tickTimer"] = timer;
+
     }
 
 
-    public override void Overlap(Buff _Buff)      //Áö¼Ó½Ã°£ °»½Å
+    public override void Overlap(Buff _Buff)      //ì§€ì†ì‹œê°„ ê°±ì‹ 
     {
-        // ÁßÃ¸ 
+        // ì¤‘ì²© 
         //stack = stack < DefaultMaxOverlap ? stack + 1 : DefaultMaxOverlap;
         _Buff.AddStack();
 
@@ -57,10 +58,10 @@ public class DotDamageProportionBuff : BuffData
     {
         while (duration > 0)
         {
-            // ÇÇÇØ¸¦ ÀÔÈ÷´Â ºÎºĞ
+            // í”¼í•´ë¥¼ ì…íˆëŠ” ë¶€ë¶„
             DealDamageToTarget(damageTick);
 
-            // ÁÖ±âÀûÀ¸·Î ÇÇÇØ¸¦ ÀÔÈ÷´Â °£°İ(¿¹: 1ÃÊ)À» ±â´Ù¸³´Ï´Ù.
+            // ì£¼ê¸°ì ìœ¼ë¡œ í”¼í•´ë¥¼ ì…íˆëŠ” ê°„ê²©(ì˜ˆ: 1ì´ˆ)ì„ ê¸°ë‹¤ë¦½ë‹ˆë‹¤.
             yield return new WaitForSeconds(1f);
         }
     }

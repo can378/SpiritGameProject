@@ -88,7 +88,8 @@ MonoBehaviour:
   stats: {fileID: 0}
   status: {fileID: 0}
   CenterPivot: {fileID: 2982962965724750265}
-  hitEffects: []
+  hitEffects:
+  - {fileID: 6425500129360686181}
   buffTF: {fileID: 0}
   animGameObject: {fileID: 7940180268011986199}
   sprites: []
@@ -119,8 +120,8 @@ MonoBehaviour:
     _DecreasedValue: 0
   <HP>k__BackingField: 30
   <tempHP>k__BackingField: 0
-  <poiseMax>k__BackingField: 1
-  <poise>k__BackingField: 1
+  <poiseMax>k__BackingField: 30
+  <poise>k__BackingField: 30
   DefensivePower:
     _Value: 0
     _DefaultValue: 0
@@ -256,6 +257,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   moveSpeedMultiplier: 1
   hitTarget: {fileID: 0}
+  isDead: 0
   isBeAttaked: 0
   isFlinch: 0
   isSuperArmor: 0
@@ -294,7 +296,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997188540857653842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27579832d20014d4ebf20b9e772fec77, type: 3}
   m_Name: 
@@ -548,13 +550,14 @@ MonoBehaviour:
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 5
-  <statusEffect>k__BackingField: []
+  <statusEffect>k__BackingField:
+  - {fileID: 11400000, guid: 7c65e62b47e793f41a22f05448698b1d, type: 2}
   EnableTime: 0
   isPooling: 0
   isAttackIDManage: 1
   isMultiHit: 0
   DPS: 1
-  EnableType: 0
+  EnableType: 3
   penetrations: 0
   DisableTime: 0
   DisableObjects: []

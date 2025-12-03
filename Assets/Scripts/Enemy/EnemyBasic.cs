@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -11,9 +11,9 @@ using static UnityEngine.GraphicsBuffer;
 public class EnemyBasic : ObjectBasic
 {
     [HideInInspector]
-    public EnemyStats enemyStats;       // ?  ?Š¤?ƒ¯
+    public EnemyStats enemyStats;       // ?ìŸ» ?ë’ª?êºˆ
     [HideInInspector]
-    public EnemyStatus enemyStatus;     // ?  ?–‰?™ ?ƒ?ƒœ
+    public EnemyStatus enemyStatus;     // ?ìŸ» ?ë»¾?ë£ ?ê¸½?ê¹­
     [HideInInspector]
     public EnemyAnim enemyAnim;
 
@@ -42,7 +42,7 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Update()
     {
-        if (CameraManager.instance.isShowingBoss) 
+        if (CameraManager.instance.isShowingBoss || enemyStatus.isDead) 
         {
             return;
         }
@@ -80,8 +80,8 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
-    // ?„ë§? ì¤‘ì´ ?•„?‹ ?•Œ
-    // ?  ê³µê²© ?Œ¨?„´(ê¸°ë³¸ ?Œ¨?„´ : ê³µê²© ?•ˆ?•¨)
+    // ?ë£„ï§? ä»¥ë¬’ì”  ?ë¸˜?ë•º ?ë¸£
+    // ?ìŸ» æ€¨ë“¦êº½ ?ë™£?ê½©(æ¹²ê³•ë‚¯ ?ë™£?ê½© : æ€¨ë“¦êº½ ?ë¸?ë¸¿)
     protected virtual void AttackPattern()
     {
         enemyStatus.isAttack = false;
@@ -103,7 +103,7 @@ public class EnemyBasic : ObjectBasic
         // When there is a target
         if (enemyStatus.isTarget)
         {
-            // Å¸°ÙÀÌ ½Ã¾ß ¹üÀ§ ¾È¿¡ µé¾î¿Ô¾îµµ, Å¸°ÙÀÌ ½Ã¾ß À¯Áö °Å¸®º¸´Ù ¸Ö¸® ÀÖ´Ù¸é Å¸°ÙÀ» ÇØÁ¦.
+            // íƒ€ê²Ÿì´ ì‹œì•¼ ë²”ìœ„ ì•ˆì— ë“¤ì–´ì™”ì–´ë„, íƒ€ê²Ÿì´ ì‹œì•¼ ìœ ì§€ ê±°ë¦¬ë³´ë‹¤ ë©€ë¦¬ ìˆë‹¤ë©´ íƒ€ê²Ÿì„ í•´ì œ.
             if (!enemyStatus.isTargetForced &&
                 0 <= enemyStats.detectionKeepDis &&
                 enemyStats.detectionKeepDis < enemyStatus.targetDis)
@@ -160,21 +160,21 @@ public class EnemyBasic : ObjectBasic
 
     }
 
-    // ?´?™ ?Œ¨?„´(ê¸°ë³¸ ?Œ¨?„´ : ???ê²Ÿì´ ?—†?œ¼ë©? ë¬´ì‘?œ„ ?´?™, ???ê²Ÿì´ ?ˆ?œ¼ë©? ?‚¬? •ê±°ë¦¬ ê¹Œì?? ì¶”ì )
+    // ?ì” ?ë£ ?ë™£?ê½©(æ¹²ê³•ë‚¯ ?ë™£?ê½© : ???å¯ƒì›ì”  ?ë¾¾?ì‘ï§? è‡¾ëŒì˜‰?ì ?ì” ?ë£, ???å¯ƒì›ì”  ?ì—³?ì‘ï§? ?ê¶—?ì ™å«„ê³•â” æºëš¯?? ç•°ë¶¿ìŸ»)
     protected virtual void MovePattern()
     {
         if (!enemyStatus.isTarget)
         {
             RandomMove();
         }
-        // ? ?´ ê³µê²© ?‚¬? •ê±°ë¦¬ ë°–ì— ?ˆ?„ ?‹œ
+        // ?ìŸ»?ì”  æ€¨ë“¦êº½ ?ê¶—?ì ™å«„ê³•â” è«›ë½°ë¿‰ ?ì—³?ì“£ ?ë–†
         else if (enemyStatus.targetDis > enemyStats.maxAttackRange)
         {
             Chase();
         }
     }
 
-    // ë¬´ì‘?œ„ ?´?™
+    // è‡¾ëŒì˜‰?ì ?ì” ?ë£
     protected void RandomMove()
     {
         enemyStatus.randomMove -= Time.deltaTime;
@@ -190,7 +190,7 @@ public class EnemyBasic : ObjectBasic
         }
     }
 
-    // ?  ì¶”ì 
+    // ?ìŸ» ç•°ë¶¿ìŸ»
     protected void Chase()
     {
         if (!enemyStatus.isTarget || enemyStatus.targetDis < 1f)
@@ -204,7 +204,7 @@ public class EnemyBasic : ObjectBasic
     }
 
     
-    // ?¼?‹œ? ?œ¼ë¡? ?„ë§ì¹˜ê¸?
+    // ?ì”ª?ë–†?ìŸ»?ì‘æ¿¡? ?ë£„ï§ì•¹íŠ‚æ¹²?
     protected void Run()
     {
         if (enemyStatus.fearTarget)
@@ -230,7 +230,7 @@ public class EnemyBasic : ObjectBasic
         enemyStatus.runCoroutine = StartCoroutine(RunCoroutine(_Time));
     }
 
-    // ?¼? • ?‹œê°? ?™?•ˆ ?„ë§ì¹˜ê¸?
+    // ?ì”ª?ì ™ ?ë–†åª›? ?ë£?ë¸ ?ë£„ï§ì•¹íŠ‚æ¹²?
     IEnumerator RunCoroutine(float time)
     {
         enemyStatus.isRun = true;
@@ -250,7 +250,7 @@ public class EnemyBasic : ObjectBasic
         enemyStatus.watingCoroutine = StartCoroutine(WaitingCoroutine(_Time));
     }
 
-    // ?¼? • ?‹œê°? ?™?•ˆ ?„ë§ì¹˜ê¸?
+    // ?ì”ª?ì ™ ?ë–†åª›? ?ë£?ë¸ ?ë£„ï§ì•¹íŠ‚æ¹²?
     IEnumerator WaitingCoroutine(float time)
     {
         enemyStatus.isWating = true;
@@ -265,7 +265,7 @@ public class EnemyBasic : ObjectBasic
 
         if (velocity.magnitude == 0)
         {
-            //Debug.Log("ë©ˆì¶¤");
+            //Debug.Log("ï§ë‰ë•„");
             enemyAnim.horizontalMove = 0;
             enemyAnim.verticalMove = 0;
         }
@@ -275,12 +275,12 @@ public class EnemyBasic : ObjectBasic
             {
                 if (velocity.x > 0)
                 {
-                    //Debug.Log("?˜¤ë¥¸ìª½?œ¼ë¡? ???ì§ì„");
+                    //Debug.Log("?ì‚¤ç‘œëª„ã?ì‘æ¿¡? ???ï§ê³¸ì—«");
                     enemyAnim.horizontalMove = 1;
                 }
                 else
                 {
-                    //Debug.Log("?™¼ìª½ìœ¼ë¡? ???ì§ì„");
+                    //Debug.Log("?ì‡Šï§ŸìŒì‘æ¿¡? ???ï§ê³¸ì—«");
                     enemyAnim.horizontalMove = -1;
                 }
             }
@@ -288,12 +288,12 @@ public class EnemyBasic : ObjectBasic
             {
                 if (velocity.y > 0)
                 {
-                    //Debug.Log("?œ„ìª½ìœ¼ë¡? ???ì§ì„");
+                    //Debug.Log("?ìï§ŸìŒì‘æ¿¡? ???ï§ê³¸ì—«");
                     enemyAnim.verticalMove = 1;
                 }
                 else
                 {
-                    //Debug.Log("?•„?˜ìª½ìœ¼ë¡? ???ì§ì„");
+                    //Debug.Log("?ë¸˜?ì˜’ï§ŸìŒì‘æ¿¡? ???ï§ê³¸ì—«");
                     enemyAnim.verticalMove = -1;
                 }
             }
@@ -320,7 +320,7 @@ public class EnemyBasic : ObjectBasic
     public override void Dead()
     {
         //drop coin
-        // enemyStats.DropCoinÀ» ¼öÁ¤ÇÏ¿© ¶³²Ù´Â ÄÚÀÎ ¼ö º¯°æ °¡´É
+        // enemyStats.DropCoinì„ ìˆ˜ì •í•˜ì—¬ ë–¨ê¾¸ëŠ” ì½”ì¸ ìˆ˜ ë³€ê²½ ê°€ëŠ¥
         Vector3 coinDropPoint = transform.position;
         GameManager.instance.dropCoin(enemyStats.DropCoin, coinDropPoint);
         
@@ -339,14 +339,6 @@ public class EnemyBasic : ObjectBasic
         enemyStatus.isTarget = true;
         enemyStatus.isTargetForced= true;
         return criticalHit;
-    }
-
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionDis);
-        //Gizmos.DrawWireSphere(this.transform.position, enemyStats.detectionKeepDis);
     }
 
     public override void FlinchCancle()
@@ -375,14 +367,14 @@ public class EnemyBasic : ObjectBasic
 
     void OnEnable()
     {
-        // ë³´ìŠ¤?¼ë©? UI?— ? •ë³´ë?? ?„?š´?‹¤.
+        // è¹‚ëŒë’ª?ì”ªï§? UI?ë¿‰ ?ì ™è¹‚ëŒ€?? ?ì“£?ìŠ«?ë–.
         if(enemyStatus.isBoss)
             MapUIManager.instance.SetBossProgress(this.GetComponent<EnemyBasic>());
     }
 
     void OnDisable()
     {
-        // ë¹„í™œ?„±?™”?‹œ ?ƒ?ƒœ ì´ˆê¸°?™”
+        // é®ê¾ªì†¢?ê½¦?ì†•?ë–† ?ê¸½?ê¹­ ç¥ë‡ë¦°?ì†•
         InitStatus();
     }
 

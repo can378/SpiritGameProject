@@ -459,7 +459,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   defaulBlizzardCoolTime: 10
-  blizzardDebuff: []
+  blizzardDebuff:
+  - {fileID: 11400000, guid: 768174edf6dea844a915eb3732aa8010, type: 2}
 --- !u!114 &7406414688100231865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,6 +476,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   moveSpeedMultiplier: 1
   hitTarget: {fileID: 0}
+  isDead: 0
   isBeAttaked: 0
   isFlinch: 0
   isSuperArmor: 0

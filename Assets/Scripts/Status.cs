@@ -1,33 +1,34 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ »óÅÂ¸¦ ³ªÅ¸³»´Â Å¬·¡½º
-/// ¿µ±¸ÀûÀÌÁö ¾ÊÀº °ªµéÀ» ÀúÀå
+/// í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì˜ ìƒíƒœë¥¼ ë‚˜íƒ€ë‚´ëŠ” í´ë˜ìŠ¤
+/// ì˜êµ¬ì ì´ì§€ ì•Šì€ ê°’ë“¤ì„ ì €ì¥
 /// </summary>
 public class Status : MonoBehaviour
 {
-    public Vector2 moveVec;                     // ÀÌµ¿ ¹æÇâ
+    public Vector2 moveVec;                     // ì´ë™ ë°©í–¥
 
     /// <summary>
-    /// Ãß°¡ ¼Óµµ (Æ¯Á¤ »óÅÂÀÏ ¶§ Àá½Ã Àû¿ë µÇ´Â ¼Óµµ, ¿ì¼± Status ¼ÒÀ¯ ¿ÀºêÁ§Æ®¸¸ »ç¿ëÇÒ °Í)
+    /// ì¶”ê°€ ì†ë„ (íŠ¹ì • ìƒíƒœì¼ ë•Œ ì ì‹œ ì ìš© ë˜ëŠ” ì†ë„, ìš°ì„  Status ì†Œìœ  ì˜¤ë¸Œì íŠ¸ë§Œ ì‚¬ìš©í•  ê²ƒ)
     /// </summary>
     public float moveSpeedMultiplier = 1f;
-    public Coroutine beAttackedCoroutine;       // ÇÇ°İ ÄÚ·çÆ¾
-    public GameObject hitTarget;                // °ø°İÀ» ¹ŞÀº ´ë»ó
+    public Coroutine beAttackedCoroutine;       // í”¼ê²© ì½”ë£¨í‹´
+    public GameObject hitTarget;                // ê³µê²©ì„ ë°›ì€ ëŒ€ìƒ
 
-    public bool isBeAttaked;                 // °ø°İ ¹ŞÀº »óÅÂ
-    public float isFlinch;                   // °æÁ÷ »óÅÂ, Á¶ÀÛ ºÒ°¡
-    public bool isSuperArmor;               // °æÁ÷ ¹«½Ã
-    public bool isInvincible;               // ¹«Àû
-    public bool isAttack;                   // °ø°İ
-    public bool isAttackReady = true;       // °ø°İ ÁØºñ (true¸é °ø°İ °¡´É, false¸é °ø°İ ºÒ°¡)
+    public bool isDead;
+    public bool isBeAttaked;                 // ê³µê²© ë°›ì€ ìƒíƒœ
+    public float isFlinch;                   // ê²½ì§ ìƒíƒœ, ì¡°ì‘ ë¶ˆê°€
+    public bool isSuperArmor;               // ê²½ì§ ë¬´ì‹œ
+    public bool isInvincible;               // ë¬´ì 
+    public bool isAttack;                   // ê³µê²©
+    public bool isAttackReady = true;       // ê³µê²© ì¤€ë¹„ (trueë©´ ê³µê²© ê°€ëŠ¥, falseë©´ ê³µê²© ë¶ˆê°€)
 
-    public Transform fearTarget;            // °øÆ÷¸¦ °Ç ´ë»ó
-    public Coroutine runCoroutine;          // µµ¸Á°¡±â ÄÚ·çÆ¾
+    public Transform fearTarget;            // ê³µí¬ë¥¼ ê±´ ëŒ€ìƒ
+    public Coroutine runCoroutine;          // ë„ë§ê°€ê¸° ì½”ë£¨í‹´
 
-    public Coroutine watingCoroutine;       // ´ë±â ÄÚ·çÆ¾
+    public Coroutine watingCoroutine;       // ëŒ€ê¸° ì½”ë£¨í‹´
 
 
 

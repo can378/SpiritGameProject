@@ -65,7 +65,7 @@ public class Player : ObjectBasic
     }
     void Update()
     {
-        if (Time.timeScale == 0)
+        if (Time.timeScale == 0 || status.isDead)
             return;
 
         //sprite.sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
@@ -114,6 +114,8 @@ public class Player : ObjectBasic
 
     void FixedUpdate()
     {
+        if (status.isDead)
+            return;
         Move();
     }
 
@@ -1017,6 +1019,7 @@ public class Player : ObjectBasic
             {
                 GameObject WeaponObject = Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]);
                 weaponController.EquipWeapon(WeaponObject.GetComponent<Weapon>());
+                Destroy(WeaponObject);
             }
 
             // 스킬
@@ -1026,7 +1029,7 @@ public class Player : ObjectBasic
             {
                 if (playerSkill[i] != 0)
                 {
-                    SkillData SData = DataManager.instance.gameData.skillList[playerSkill[i]].GetComponent<SkillInstance>().skillData;
+                    SkillData SData = DataManager.instance.gameData.skillList[playerSkill[i]].GetComponent<SkillItem>().skillInstance.skillData;
                     SkillInstance SI = new SkillInstance();
                     SI.SetSI(SData);
                     skillController.EquipSkill(SI);

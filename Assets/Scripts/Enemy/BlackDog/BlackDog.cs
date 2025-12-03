@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,8 +6,8 @@ using UnityEngine;
 public class BlackDog : EnemyBasic
 {
     BlackDogStatus blackDogStatus;
-    [SerializeField] LayerMask detectLayer;         //°ø°İ Å½Áö ·¹ÀÌ¾î
-    [SerializeField] int attackDetectRange;         //°ø°İ °¨Áö ¹üÀ§
+    [SerializeField] LayerMask detectLayer;         //ê³µê²© íƒì§€ ë ˆì´ì–´
+    [SerializeField] int attackDetectRange;         //ê³µê²© ê°ì§€ ë²”ìœ„
 
     Vector3 mousePos;
     Vector3 playerForward;
@@ -22,6 +22,9 @@ public class BlackDog : EnemyBasic
 
     protected override void Update()
     {
+        if (status.isDead)
+            return;
+
         base.Update();
         DetectAttack();
         Dodge();
@@ -59,7 +62,7 @@ public class BlackDog : EnemyBasic
     {
         blackDogStatus.isDodge = true;
         blackDogStatus.isAttackReady = false;
-        //Àû ¹æÇâ ¼öÁ÷À¸·Î È¸ÇÇ
+        //ì  ë°©í–¥ ìˆ˜ì§ìœ¼ë¡œ íšŒí”¼
         if (Random.Range(0, 2) == 0)
         {
             blackDogStatus.moveVec = new Vector2(blackDogStatus.targetDirVec.y, -blackDogStatus.targetDirVec.x).normalized;
@@ -105,7 +108,7 @@ public class BlackDog : EnemyBasic
         {
             blackDogStatus.attackCoroutine = StartCoroutine(HitAndRun());
         }
-        // ÀÌ°Å´Â ¾î¶² ÆĞÅÏ? ÀÛµ¿À» ¾ÈÇÏ´Â °Å °°¾Æ¼­ ¿ì¼± ÁÖ¼® Ã³¸®
+        // ì´ê±°ëŠ” ì–´ë–¤ íŒ¨í„´? ì‘ë™ì„ ì•ˆí•˜ëŠ” ê±° ê°™ì•„ì„œ ìš°ì„  ì£¼ì„ ì²˜ë¦¬
         // else
         // {
         //     StartCoroutine(Evasion());

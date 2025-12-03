@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -14,14 +14,14 @@ public class ObjectBasic : MonoBehaviour
     public GameObject[] hitEffects;
     public Transform buffTF;
     public GameObject animGameObject;
-    HashSet<int> ReceivedAttackID = new HashSet<int>(); // IDÀÇ ºü¸¥ Ãß°¡¿Í Á¦°Å, ±×¸®°í Áßº¹µÇ¾î ÀÖ´ÂÁö¸¸ È®ÀÎÇÏ¸é µÇ±â ¶§¹®¿¡ HashSet
+    HashSet<int> ReceivedAttackID = new HashSet<int>(); // IDì˜ ë¹ ë¥¸ ì¶”ê°€ì™€ ì œê±°, ê·¸ë¦¬ê³  ì¤‘ë³µë˜ì–´ ìˆëŠ”ì§€ë§Œ í™•ì¸í•˜ë©´ ë˜ê¸° ë•Œë¬¸ì— HashSet
 
     [HideInInspector] AnimBasic animBasic;
     [HideInInspector] public SpriteRenderer[] sprites;
     [HideInInspector] public Rigidbody2D rigid;
 
-    // ÀÌº¥Æ®
-    // ÇÇ°İ, ¹öÇÁ, ÆĞ½Ãºê, °ø°İ µî Ãß°¡ÇÒ ¿¹Á¤
+    // ì´ë²¤íŠ¸
+    // í”¼ê²©, ë²„í”„, íŒ¨ì‹œë¸Œ, ê³µê²© ë“± ì¶”ê°€í•  ì˜ˆì •
     public event System.Action BeAttackedEvent;
     
     protected virtual void Awake()
@@ -39,14 +39,14 @@ public class ObjectBasic : MonoBehaviour
 
     #region BeAttacked
 
-    // BeAttacked ÇÔ¼ö¿¡¼­ È£ÃâÇÔ
+    // BeAttacked í•¨ìˆ˜ì—ì„œ í˜¸ì¶œí•¨
     bool DuplicateAttack(int _AttackID)
     {
-        // Áßº¹ µÉ ½Ã True ¹İÈ¯
+        // ì¤‘ë³µ ë  ì‹œ True ë°˜í™˜
         if(ReceivedAttackID.Contains(_AttackID))
             return true;
 
-        // Áßº¹ÀÌ ¾Æ´Ï¸é ÀúÀåÇÑ ÈÄ 0.5ÃÊ ÈÄ »èÁ¦
+        // ì¤‘ë³µì´ ì•„ë‹ˆë©´ ì €ì¥í•œ í›„ 0.5ì´ˆ í›„ ì‚­ì œ
         ReceivedAttackID.Add(_AttackID);
         StartCoroutine(RemoveAttackID(_AttackID));
         return false;
@@ -54,7 +54,7 @@ public class ObjectBasic : MonoBehaviour
 
     private IEnumerator RemoveAttackID(int _AttackID)
     {
-        yield return new WaitForSeconds(0.5f); // 0.5ÃÊ ÈÄ ´Ù½Ã ÇÇ°İ °¡´É
+        yield return new WaitForSeconds(0.5f); // 0.5ì´ˆ í›„ ë‹¤ì‹œ í”¼ê²© ê°€ëŠ¥
         ReceivedAttackID.Remove(_AttackID);
 
     }
@@ -62,18 +62,19 @@ public class ObjectBasic : MonoBehaviour
     public void BeAttacked(HitDetection hitDetection, Vector3 _HitPos)
     {
 
-        // °°Àº °ø°İ¿¡ ´Ù½Ã ÇÇ°İµÇÁö ¾ÊÀ½
+        // ê°™ì€ ê³µê²©ì— ë‹¤ì‹œ í”¼ê²©ë˜ì§€ ì•ŠìŒ
         if (DuplicateAttack(hitDetection.AttackID))
             return;
 
-        // ¹«ÀûÀÏ ½Ã ÇÇ°İµÇÁö ¾ÊÀ½
-        if (status.isInvincible)
+        // ë¬´ì ì¼ ì‹œ í”¼ê²©ë˜ì§€ ì•ŠìŒ
+        // ì‚¬ë§ ì‹œ í”¼ê²©ë˜ì§€ ì•ŠìŒ
+        if (status.isInvincible || status.isDead)
             return;
 
-        // ÇÇ°İ »óÅÂ
+        // í”¼ê²© ìƒíƒœ
         status.isBeAttaked = true;
 
-        // ÇÇÇØ·® °è»ê
+        // í”¼í•´ëŸ‰ ê³„ì‚°
         bool criticalHit = false;
         if (hitDetection.critical == null || hitDetection.criticalDamage == null)
             criticalHit = Damaged(hitDetection.Damage);
@@ -84,20 +85,20 @@ public class ObjectBasic : MonoBehaviour
         if (stats.HP <= 0)
             return;
 
-        // °æÁ÷ »óÅÂ °è»ê
+        // ê²½ì§ ìƒíƒœ ê³„ì‚°
         if (DamagedPoise(hitDetection.Damage))
         {
             //Debug.Log(gameObject.name + ":Flinch");
             SetFlinch(0.5f);
 
-            // °ø°İÀ» ÇÑ ÁÖÀÎÀÌ ÀÖ´Ù¸é ±× ´ë»óÀ» Áß½ÉÀ¸·Î
+            // ê³µê²©ì„ í•œ ì£¼ì¸ì´ ìˆë‹¤ë©´ ê·¸ ëŒ€ìƒì„ ì¤‘ì‹¬ìœ¼ë¡œ
             if (hitDetection.user != null)
                 KnockBack(hitDetection.user.gameObject, hitDetection.knockBack);
             else
                 KnockBack(hitDetection.gameObject, hitDetection.knockBack);
         }
 
-        // »óÅÂÀÌ»ó Àû¿ë
+        // ìƒíƒœì´ìƒ ì ìš©
         if (hitDetection.statusEffect != null)
         {
             foreach (BuffData statusEffect in hitDetection.statusEffect)
@@ -109,7 +110,7 @@ public class ObjectBasic : MonoBehaviour
 
         BeAttackedEvent?.Invoke();
 
-        // ÇÇ°İ ½Ã ÀÌÆåÆ® È¿°ú
+        // í”¼ê²© ì‹œ ì´í™íŠ¸ íš¨ê³¼
         #region Effect
         if (hitDetection.Damage == 0)
             return;
@@ -140,11 +141,11 @@ public class ObjectBasic : MonoBehaviour
         #endregion Effect
     }
 
-    // ´Ü¼ø ÇÇÇØ
+    // ë‹¨ìˆœ í”¼í•´
     public void BeAttacked(float _Damage, Vector3 _HitPos)
     {
 
-        if (status.isInvincible)
+        if (status.isInvincible || status.isDead)
             return;
 
         status.isBeAttaked = true;
@@ -176,7 +177,7 @@ public class ObjectBasic : MonoBehaviour
     public virtual bool Damaged(float damage, float critical = 0, float criticalDamage = 0)
     {
       
-        if (status.isInvincible)
+        if (status.isInvincible || status.isDead)
             return false;
 
         bool criticalHit = UnityEngine.Random.Range(0, 100) < critical * 100 ? true : false;
@@ -232,7 +233,7 @@ public class ObjectBasic : MonoBehaviour
 
     protected void HealPoise()
     {
-        // °æÁ÷ ÁßÀÌ¶ó¸é
+        // ê²½ì§ ì¤‘ì´ë¼ë©´
         if( 0 < status.isFlinch)
         {
             status.isFlinch -= Time.deltaTime;
@@ -308,10 +309,13 @@ public class ObjectBasic : MonoBehaviour
 
     public Buff ApplyBuff(BuffData _Buff)
     {
+        if (status.isDead)
+            return null;
+
         Buff buff;
         stats.activeEffects.TryGetValue(_Buff.buffID, out buff);
 
-        // ÀÌ¹Ì °°Àº ¹öÇÁ°¡ ÀÖ´Ù¸é ÁßÃ¸ Ã³¸®
+        // ì´ë¯¸ ê°™ì€ ë²„í”„ê°€ ìˆë‹¤ë©´ ì¤‘ì²© ì²˜ë¦¬
         if (buff != null)
         {
             buff.Overlap();
@@ -340,29 +344,32 @@ public class ObjectBasic : MonoBehaviour
 
         if (buff != null)
         {
-            buff.Remove();                                  // ¹öÇÁ ÇØÁ¦
-            //Destroy(buff.gameObject);                       // ¹öÇÁ ¾ÆÀÌÄÜ »èÁ¦
-            stats.activeEffects.Remove(_Buff.buffID);               // ¸®½ºÆ®¿¡¼­ Á¦°Å
+            buff.Remove();                                  // ë²„í”„ í•´ì œ
+            //Destroy(buff.gameObject);                       // ë²„í”„ ì•„ì´ì½˜ ì‚­ì œ
+            stats.activeEffects.Remove(_Buff.buffID);               // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
         }
     }
 
     protected void Update_Buff()
     {
+        if (status.isDead)
+            return;
+
         List<int> toRemove = new();
 
         foreach (var kvp in stats.activeEffects)
         {
-            // Áö¼Ó ½Ã°£ Á¾·á ½Ã
+            // ì§€ì† ì‹œê°„ ì¢…ë£Œ ì‹œ
             Buff buff = kvp.Value;
             if (0 >= buff.curDuration)
             {
-                stats.activeEffects[buff.buffData.buffID].Remove();                // ¹öÇÁ ÇØÁ¦
-                //Destroy(stats.activeEffects[i].gameObject);     // ¹öÇÁ ¾ÆÀÌÄÜ »èÁ¦
-                toRemove.Add(buff.buffData.buffID);              // ¸®½ºÆ®¿¡¼­ Á¦°Å
+                stats.activeEffects[buff.buffData.buffID].Remove();                // ë²„í”„ í•´ì œ
+                //Destroy(stats.activeEffects[i].gameObject);     // ë²„í”„ ì•„ì´ì½˜ ì‚­ì œ
+                toRemove.Add(buff.buffData.buffID);              // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
                 continue;
             }
-            buff.curDuration -= Time.deltaTime;  // Áö¼Ó½Ã°£ °¨¼Ò
-            buff.Update_Buff();                  // È¿°ú
+            buff.curDuration -= Time.deltaTime;  // ì§€ì†ì‹œê°„ ê°ì†Œ
+            buff.Update_Buff();                  // íš¨ê³¼
         }
 
         foreach (int id in toRemove)
@@ -386,6 +393,9 @@ public class ObjectBasic : MonoBehaviour
     
     public PassiveData ApplyPassive(PassiveData _Passive)
     {
+        if(status.isDead)
+            return null;
+
         PassiveData passive;
         stats.activePassive.TryGetValue(_Passive.PID, out passive);
 
@@ -401,7 +411,7 @@ public class ObjectBasic : MonoBehaviour
 
     public PassiveData FindPassive(PassiveData _Passive)
     {
-        // ÀÖ´ÂÁö Ã£¾Æº¸°í ¹İÈ¯ÇÑ´Ù.
+        // ìˆëŠ”ì§€ ì°¾ì•„ë³´ê³  ë°˜í™˜í•œë‹¤.
         PassiveData passive;
         stats.activePassive.TryGetValue(_Passive.PID, out passive);
         return passive;
@@ -414,20 +424,23 @@ public class ObjectBasic : MonoBehaviour
 
         if (passive)
         {
-            passive.Remove(this);                                   // ¹öÇÁ ÇØÁ¦
-            stats.activePassive.Remove(passive.PID);                    // ¸®½ºÆ®¿¡¼­ Á¦°Å
+            passive.Remove(this);                                   // ë²„í”„ í•´ì œ
+            stats.activePassive.Remove(passive.PID);                    // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
         }
         else
         {
-            Debug.Log("Á¸ÀçÇÏÁö ¾Ê´Â ÆĞ½Ãºê Á¦°Å");
+            Debug.Log("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” íŒ¨ì‹œë¸Œ ì œê±°");
         }
     }
 
     protected void Update_Passive()
     {
+        if (status.isDead)
+            return;
+
         foreach (var kvp in stats.activePassive)
         {
-            // Áö¼Ó ½Ã°£ Á¾·á ½Ã
+            // ì§€ì† ì‹œê°„ ì¢…ë£Œ ì‹œ
             PassiveData passive = kvp.Value;
             passive.Update_Passive(this);
         }
@@ -475,7 +488,9 @@ public class ObjectBasic : MonoBehaviour
         FlinchCancle();
         StopAllCoroutines();
         ReceivedAttackID.Clear();
-        this.gameObject.SetActive(false);
+        status.isDead = true;
+        status.moveVec = new Vector2(0, 0);
+        //this.gameObject.SetActive(false);
         //Destroy(this.gameObject);
     }
 
