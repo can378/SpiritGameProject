@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,36 +41,36 @@ public class treasureBox : MonoBehaviour, Interactable
     public void ItemChoose()
     {
         // ====================================
-        // À¯Çü
-        // new·Î »ı¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ìœ í˜•
+        // newë¡œ ìƒì„±í•œê±° ë”°ë¡œ ì§€ì›Œì•¼í•˜ë‚˜?
         WeightRandom<SelectItemType> typeRandom = new WeightRandom<SelectItemType>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡ ¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ì„¤ì •í•œ ê°€ì¤‘ì¹˜ë¥¼ ê°€ì¤‘ì¹˜ ë¬´ì‘ìœ„ì— ë„£ëŠ”ë‹¤.
         for (int i = 0; i < (int)SelectItemType.END; ++i)
         {
             typeRandom.Add((SelectItemType)i, TypeWeight[i]);
         }
 
         // ====================================
-        // µî±Ş
+        // ë“±ê¸‰
         WeightRandom<SelectItemRating> weightRandom = new WeightRandom<SelectItemRating>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡ ¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ì„¤ì •í•œ ê°€ì¤‘ì¹˜ë¥¼ ê°€ì¤‘ì¹˜ ë¬´ì‘ìœ„ì— ë„£ëŠ”ë‹¤.
         for (int i = 0; i < (int)SelectItemRating.END; ++i)
         {
             weightRandom.Add((SelectItemRating)i, RatingWeight[i]);
         }
 
-        // Á¶°ÇÀ» ´ãÀº Dictionary »ı¼º
+        // ì¡°ê±´ì„ ë‹´ì€ Dictionary ìƒì„±
         Dictionary<string, int> ItemCondition = new Dictionary<string, int>();
 
-        // »óÀÚ¿¡ µé¾îÀÖ´Â ¾ÆÀÌÅÛ °³¼ö¸¦ Á¤ÇÔ
+        // ìƒìì— ë“¤ì–´ìˆëŠ” ì•„ì´í…œ ê°œìˆ˜ë¥¼ ì •í•¨
         int ItemNum = Random.Range(MinItemNum, MaxItemNum + 1);
 
-        // ¾ÆÀÌÅÛ °³¼ö¸¸Å­ Á¶°Ç¿¡ ¸Â°Ô ¹«ÀÛÀ§ ¼±ÅÃ
+        // ì•„ì´í…œ ê°œìˆ˜ë§Œí¼ ì¡°ê±´ì— ë§ê²Œ ë¬´ì‘ìœ„ ì„ íƒ
         for (int i = 0; i < ItemNum; ++i)
         {
-            // °¡ÁßÄ¡¿¡ µû¶ó ¹«ÀÛÀ§·Î »Ì´Â´Ù.
+            // ê°€ì¤‘ì¹˜ì— ë”°ë¼ ë¬´ì‘ìœ„ë¡œ ë½‘ëŠ”ë‹¤.
             SelectItemType ItemType = typeRandom.GetRandomItem();
             SelectItemRating ItemRating = weightRandom.GetRandomItem();
 
@@ -79,7 +79,7 @@ public class treasureBox : MonoBehaviour, Interactable
             ItemCondition.Add("selectItemType", (int)ItemType);
             ItemCondition.Add("selectItemRating", (int)ItemRating);
 
-            // °ÔÀÓ µ¥ÀÌÅÍ Á¢±ÙÇÏ¿© °ÔÀÓ¿ÀºêÁ§Æ®¸¦ °¡Á®¿Â´Ù.
+            // ê²Œì„ ë°ì´í„° ì ‘ê·¼í•˜ì—¬ ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
             GameObject selectItem = GameData.instance.DrawRandomItem(ItemCondition);
 
             if (selectItem != null)
@@ -87,7 +87,7 @@ public class treasureBox : MonoBehaviour, Interactable
 
             ItemCondition.Clear();
         }
-        Debug.Log("»Ì±â ¿Ï·á");
+        Debug.Log("ë½‘ê¸° ì™„ë£Œ");
     }
 
     public string GetInteractText()
@@ -96,7 +96,7 @@ public class treasureBox : MonoBehaviour, Interactable
         {
             return "";
         }
-        return "»óÀÚ ¿­±â";
+        return "ìƒì ì—´ê¸°";
     }
 
     public void Interact()
@@ -145,7 +145,7 @@ public class treasureBox : MonoBehaviour, Interactable
 
         yield return new WaitForSeconds(0.5f);
 
-        //¿­¸®´Â ÀÌÆåÆ® Àç»ı
+        //ì—´ë¦¬ëŠ” ì´í™íŠ¸ ì¬ìƒ
         while (0 <= AlphaTime)
         {
             AlphaTime -= Time.deltaTime;
@@ -154,7 +154,7 @@ public class treasureBox : MonoBehaviour, Interactable
         }
 
         Destroy(gameObject);
-        //¾ÆÀÌÅÛ »ı¼º
+        //ì•„ì´í…œ ìƒì„±
     }
 
     /*
@@ -174,22 +174,22 @@ public class treasureBox : MonoBehaviour, Interactable
     void WeightRandomTest()
     {
         // ====================================
-        // À¯Çü
-        // new·Î »ı¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ìœ í˜•
+        // newë¡œ ìƒì„±í•œê±° ë”°ë¡œ ì§€ì›Œì•¼í•˜ë‚˜?
         WeightRandom<SelectItemType> typeRandom = new WeightRandom<SelectItemType>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡ ¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ì„¤ì •í•œ ê°€ì¤‘ì¹˜ë¥¼ ê°€ì¤‘ì¹˜ ë¬´ì‘ìœ„ì— ë„£ëŠ”ë‹¤.
         for (int i = 0; i < (int)SelectItemType.END; ++i)
         {
             typeRandom.Add((SelectItemType)i, TypeWeight[i]);
         }
 
         // ====================================
-        // µî±Ş
-        // new·Î »ı¼ºÇÑ°Å µû·Î Áö¿ö¾ßÇÏ³ª?
+        // ë“±ê¸‰
+        // newë¡œ ìƒì„±í•œê±° ë”°ë¡œ ì§€ì›Œì•¼í•˜ë‚˜?
         WeightRandom<SelectItemRating> ratingRandom = new WeightRandom<SelectItemRating>();
 
-        // ¼³Á¤ÇÑ °¡ÁßÄ¡¸¦ °¡ÁßÄ¡ ¹«ÀÛÀ§¿¡ ³Ö´Â´Ù.
+        // ì„¤ì •í•œ ê°€ì¤‘ì¹˜ë¥¼ ê°€ì¤‘ì¹˜ ë¬´ì‘ìœ„ì— ë„£ëŠ”ë‹¤.
         for (int i = 0; i < (int)SelectItemRating.END; ++i)
         {
             ratingRandom.Add((SelectItemRating)i, RatingWeight[i]);
@@ -201,7 +201,7 @@ public class treasureBox : MonoBehaviour, Interactable
 
         for (int i = 0; i < 100000; ++i)
         {
-            // °¡ÁßÄ¡¿¡ µû¶ó ¹«ÀÛÀ§·Î »Ì´Â´Ù.
+            // ê°€ì¤‘ì¹˜ì— ë”°ë¼ ë¬´ì‘ìœ„ë¡œ ë½‘ëŠ”ë‹¤.
             SelectItemType ItemType = typeRandom.GetRandomItem();
             SelectItemRating ItemRating = ratingRandom.GetRandomItem();
 

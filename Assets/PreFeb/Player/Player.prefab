@@ -445,53 +445,6 @@ MonoBehaviour:
   - {fileID: 5459595728386863653}
   - {fileID: 726707132998332633}
   - {fileID: 4414882775074814602}
-  <equipmentList>k__BackingField:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &6162495839983942233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +515,10 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
-  activePassive: []
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
   CriticalChance:
     _Value: 0
     _DefaultValue: 0
@@ -575,8 +531,18 @@ MonoBehaviour:
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
-  <defaultAttackSpeed>k__BackingField: 1
-  <defaultSkillCoolTime>k__BackingField: 0
+  <AttackSpeed>k__BackingField:
+    _Value: 0
+    _DefaultValue: 1
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillCoolTime:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <defaultDodgeSpeed>k__BackingField: 2
   <defaultDodgeTime>k__BackingField: 0.3
   blind: 0
@@ -586,9 +552,39 @@ MonoBehaviour:
   item: 0
   weapon: {fileID: 1305022503070300601}
   maxSkillSlot: 1
-  skill: 0000000000000000000000000000000000000000
+  skill:
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
   maxEquipment: 3
-  equipments: 0000000000000000000000000000000000000000
+  equipments:
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
   playerStat: 0000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &2680101835875493889
 MonoBehaviour:
@@ -605,6 +601,7 @@ MonoBehaviour:
   moveVec: {x: 0, y: 0}
   moveSpeedMultiplier: 1
   hitTarget: {fileID: 0}
+  isDead: 0
   isBeAttaked: 0
   isFlinch: 0
   isSuperArmor: 0
@@ -1268,8 +1265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee680427cd2bf540897309f39ca1f87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <weapon>k__BackingField: {fileID: 0}
-  <weaponData>k__BackingField: {fileID: 0}
+  <weaponInstance>k__BackingField:
+    id: 
+    itemData: {fileID: 0}
+    weaponData: {fileID: 0}
   <isMultiHit>k__BackingField: 0
   <DPS>k__BackingField:
     _Value: 0

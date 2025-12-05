@@ -490,12 +490,58 @@ public class ObjectBasic : MonoBehaviour
         ReceivedAttackID.Clear();
         status.isDead = true;
         status.moveVec = new Vector2(0, 0);
+        StartCoroutine("PaperBurn");
         //this.gameObject.SetActive(false);
         //Destroy(this.gameObject);
     }
 
+    IEnumerator PaperBurn()
+    {
+        // 애니메이션 중지
+        animBasic.animator.speed = 0;
+
+        // 페이퍼 번 재질을 가져온다.
+        Material PBMat = Resources.Load<Material>("Material/PaperBurn/PaperBurn");
+        Material OriginMat = sprites[0].material;       // 원본 재질
+
+        // 페이퍼 번 재질로 교체
+        for(int i = 0;i<sprites.Length; ++i)
+        {
+            sprites[i].material = PBMat;
+        }
+
+        // 2초 동안 대상이 사라진다.
+        float Timer = 0;
+
+        while (Timer <= 1.0f)
+        {
+            Timer += Time.deltaTime / 2;
+            // 모든 재질에게 시간을 적용한다.
+            for (int i = 0; i < sprites.Length; ++i)
+            {
+                sprites[i].material.SetFloat("_Timer", Timer);
+            }
+            yield return null;
+        }
+
+
+        // 효과가 끝났다면 혹시 모르니 원상태 돌려준다.
+
+        // 재질
+        for (int i = 0; i < sprites.Length; ++i)
+        {
+            sprites[i].material = OriginMat;
+        }
+
+        // 애니메이션 속도
+        animBasic.animator.speed = 1;
+
+        // 완전히 비활성화 한다.
+        this.gameObject.SetActive(false);
+    }
+
     #endregion Dead
-   
+
     /// <summary>
     /// Reset status Func
     /// </summary>

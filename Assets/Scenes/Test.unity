@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1452,21 +1451,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c1f3f103429984db857c505bb5ed1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
+  HPMax:
+    _Value: 0
+    _DefaultValue: 100
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
-  activeEffects: []
-  <defaultCriticalChance>k__BackingField: 0
-  <defaultCriticalDamage>k__BackingField: 1.5
-  <defaultAttackSpeed>k__BackingField: 1
-  <defaultSkillPower>k__BackingField: 0
-  <defaultSkillCoolTime>k__BackingField: 0
+  DefensivePower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
+  SkillPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefaultValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
+  CriticalChance:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <CriticalDamage>k__BackingField:
+    _Value: 0
+    _DefaultValue: 1.5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <AttackSpeed>k__BackingField:
+    _Value: 0
+    _DefaultValue: 1
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  SkillCoolTime:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <defaultDodgeSpeed>k__BackingField: 2
   <defaultDodgeTime>k__BackingField: 0.6
   blind: 0
@@ -1474,11 +1544,41 @@ MonoBehaviour:
   key: 0
   dice: 0
   item: 0
-  weapon: 0
+  weapon: {fileID: 0}
   maxSkillSlot: 1
-  skill: 00000000
+  skill:
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    skillData: {fileID: 0}
   maxEquipment: 3
-  equipments: 
+  equipments:
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
+  - id: 
+    itemData: {fileID: 0}
+    equipmentData: {fileID: 0}
   playerStat: 0000000000000000000000000000000000000000000000000000000000000000
 --- !u!70 &571690359
 CapsuleCollider2D:
@@ -2037,20 +2137,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
+  HPMax:
+    _Value: 0
+    _DefaultValue: 100
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
-  activeEffects: []
+  DefensivePower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
+  SkillPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefaultValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
   enemyName: 
+  DropCoin: 3
   detectionDis: 0
   detectionKeepDis: 0
   maxAttackRange: 0
+  disableTime: 0
 --- !u!114 &859875203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2075,18 +2229,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
+  AttackID: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
-  isHit: 0
+  <statusEffect>k__BackingField: []
+  EnableTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!212 &859875205
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3766,20 +3942,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70159e382ef0bcb44bc4396c3f1a5ea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HPMax>k__BackingField: 100
+  HPMax:
+    _Value: 0
+    _DefaultValue: 100
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
   <HP>k__BackingField: 100
   <tempHP>k__BackingField: 0
   <poiseMax>k__BackingField: 20
   <poise>k__BackingField: 20
-  <defaultDefensivePower>k__BackingField: 0
-  <defaultSEResist>k__BackingField: []
-  <defaultAttackPower>k__BackingField: 0
-  <defaultMoveSpeed>k__BackingField: 5
-  activeEffects: []
+  DefensivePower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEResist>k__BackingField:
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  - _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  AttackPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  <SEType>k__BackingField: 
+  <CommonType>k__BackingField: 
+  <ProjectileType>k__BackingField: 
+  SkillPower:
+    _Value: 0
+    _DefaultValue: 0
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  MoveSpeed:
+    _Value: 0
+    _DefaultValue: 5
+    _AddValue: 0
+    _IncreasedValue: 0
+    _DecreasedValue: 0
+  activePassive:
+    _serializedList: []
+  activeEffects:
+    _serializedList: []
   enemyName: 
+  DropCoin: 3
   detectionDis: 0
   detectionKeepDis: 0
   maxAttackRange: 0
+  disableTime: 0
 --- !u!114 &1943004351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3792,18 +4022,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  user: {fileID: 0}
-  <isProjectile>k__BackingField: 0
-  <penetrations>k__BackingField: 0
-  <isMultiHit>k__BackingField: 0
-  <DPS>k__BackingField: 0
-  <damage>k__BackingField: 0
+  AttackID: 0
+  <user>k__BackingField: {fileID: 0}
+  DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <critical>k__BackingField: 0
-  <criticalDamage>k__BackingField: 0
-  <statusEffect>k__BackingField: 
-  multiHitDurationTime: 0
-  isHit: 0
+  <statusEffect>k__BackingField: []
+  EnableTime: 0
+  isPooling: 0
+  isAttackIDManage: 1
+  isMultiHit: 0
+  DPS: 1
+  EnableType: 0
+  penetrations: 0
+  DisableTime: 0
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!114 &1943004352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3817,27 +4069,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  defaultLayer: 0
-  moveVec: {x: 0, y: 0}
-  isFlinch: 0
-  isInvincible: 0
+  status: {fileID: 0}
+  CenterPivot: {fileID: 0}
+  hitEffects: []
   buffTF: {fileID: 0}
-  isAttack: 0
-  isAttackReady: 0
-  hitTarget: {fileID: 0}
-  sprite: {fileID: 0}
+  animGameObject: {fileID: 0}
+  sprites: []
   rigid: {fileID: 0}
-  isRun: 0
-  randomMove: 0
   enemyStats: {fileID: 0}
-  detectEnemy:
+  enemyStatus: {fileID: 0}
+  enemyAnim: {fileID: 0}
+  targetLayer:
     serializedVersion: 2
     m_Bits: 0
-  enemyTarget: {fileID: 0}
-  targetDirVec: {x: 0, y: 0}
-  targetDis: 0
-  isTouchPlayer: 0
-  hitDetection: {fileID: 0}
   splitSnowArea: {fileID: 0}
   attackArea: {fileID: 0}
   screamArea: {fileID: 0}
@@ -5457,6 +5701,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb6292ed1f0dead4fa6d5f3ee84b82af, type: 3}
+--- !u!1001 &7798894868082371701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2616729919542716236, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_Name
+      value: GameObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528100056064114251, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d4ebde6a179e29f449c664f46e289bb3, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5487,3 +5788,4 @@ SceneRoots:
   - {fileID: 1115097303}
   - {fileID: 3168180453586117752}
   - {fileID: 1468837672}
+  - {fileID: 7798894868082371701}
