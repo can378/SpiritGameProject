@@ -121,7 +121,7 @@ public class ObjectSpawn : MonoBehaviour
     {
         foreach (GameObject enemy in enemys)
         {
-            enemy.GetComponent<ObjectBasic>().stats.HP = enemy.GetComponent<ObjectBasic>().stats.HPMax.Value;
+            enemy.GetComponent<ObjectBasic>().Revive(1.0f);
         }
         EnableEnemy();
     }

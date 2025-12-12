@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 제한 시간이 지난다면 해당 방의 모든 적을 부활시킨다.
 [System.Serializable]
 public class ReSpawnMission : MissionBase
 {

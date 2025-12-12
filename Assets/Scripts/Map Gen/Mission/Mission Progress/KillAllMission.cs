@@ -54,7 +54,7 @@ public class KillAllMission : MissionBase
     private bool KillAll()
     {
         foreach (GameObject e in m_Spawner.enemys)
-        { if (e.GetComponent<EnemyStats>().HP > 0) { return false; } }
+        { if (!e.GetComponent<Status>().isDead) { return false; } }
         return true;
     }
 
