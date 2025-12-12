@@ -121,7 +121,7 @@ public class ObjectSpawn : MonoBehaviour
     {
         foreach (GameObject enemy in enemys)
         {
-            enemy.GetComponent<ObjectBasic>().Revive(1.0f);
+            enemy.GetComponent<EnemyBasic>().Revive(1.0f);
         }
         EnableEnemy();
     }

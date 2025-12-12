@@ -365,6 +365,13 @@ public class EnemyBasic : ObjectBasic
 
     }
 
+    public virtual void Revive(float _HPRatio)
+    {
+        InitStatus();
+        status.isDead = false;
+        stats.HP = _HPRatio * stats.HPMax.Value;
+    }
+
     void OnEnable()
     {
         // 蹂댁뒪?씪硫? UI?뿉 ?젙蹂대?? ?쓣?슫?떎.

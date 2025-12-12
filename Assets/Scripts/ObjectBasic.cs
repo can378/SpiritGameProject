@@ -540,13 +540,6 @@ public class ObjectBasic : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public virtual void Revive(float _HPRatio)
-    {
-        InitStatus();
-        status.isDead = false;
-        stats.HP = _HPRatio * stats.HPMax.Value;
-    }
-
     #endregion Dead
 
     /// <summary>
