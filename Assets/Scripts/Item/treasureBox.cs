@@ -87,7 +87,7 @@ public class treasureBox : MonoBehaviour, Interactable
 
             ItemCondition.Clear();
         }
-        Debug.Log("뽑기 완료");
+        //Debug.Log("뽑기 완료");
     }
 
     public string GetInteractText()

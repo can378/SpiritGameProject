@@ -13,7 +13,7 @@ public class EnterMapMissionTrigger : MissionTriggerBase
 
     public override void SetTrigger()
     {
-        print("entermap trigger 등록");
+        //print("entermap trigger 등록");
         
         m_Owner.roomScript.LockEvent -= m_Owner.StartMission;
 

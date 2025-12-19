@@ -104,11 +104,11 @@ public class RoomEnterExit : MonoBehaviour
             room.map.GetComponent<ObjectSpawn>().EnableEnemy();
         }
 
-        // 보스맵이라면 보스 연출
+        /*// 보스맵이라면 보스 연출
         if(room.mapType==MapType.Boss) 
         {
             enterBossRoom();
-        }
+        }*/
 
         //미션 맵이라면 미션 시작
         //else if(room.mapType == MapType.Mission)

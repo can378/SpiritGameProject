@@ -77,8 +77,8 @@ public class ObjectSpawn : MonoBehaviour
                     if (enemyTemplatesDic.ContainsKey(key))
                     {
                         ran = Random.Range(0, enemyTemplatesDic[key].Length);
-                        Debug.Log("normalEnemyCh" + nowChapter.ToString());
-                        Debug.Log(enemyTemplatesDic[key][ran].name);
+                        //Debug.Log("normalEnemyCh" + nowChapter.ToString());
+                        //Debug.Log(enemyTemplatesDic[key][ran].name);
                         instEnemy = Instantiate(enemyTemplatesDic[key][ran], enemyTransform.position, enemyTransform.rotation);
                     }
                     else { print("there is no key here"); }

@@ -257,7 +257,7 @@ public class GameData : MonoBehaviour
         {
             // return null;
             // 임시로 쿠키 제공으로
-            Debug.Log("아이템 없네요... 이거나 드셔");
+            // Debug.Log("아이템 없네요... 이거나 드셔");
             FindList = ItemList.FindAll(x => (int)x.itemInstance.itemData.GetType().GetProperty("selectItemType").GetValue(x.itemInstance.itemData) == (int)SelectItemType.Consumable);
         }
 

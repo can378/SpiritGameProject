@@ -43,7 +43,7 @@ public class KillAllMission : MissionBase
             return;
         }
 
-        print("Cheking...");
+        //print("Cheking...");
 
         if (KillAll())
         {
