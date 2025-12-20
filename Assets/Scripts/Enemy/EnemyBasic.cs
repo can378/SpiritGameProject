@@ -42,13 +42,19 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Update()
     {
-        if (CameraManager.instance.isShowingBoss || enemyStatus.isDead) 
+        if (enemyStatus.isDead) 
         {
             return;
         }
+
         Update_Buff();
         Update_Passive();
         HealPoise();
+
+        // 컷신 상태에서는 이동 관련만 해제
+        if (CameraManager.instance.isShowingBoss)
+            return;
+
         Attack();
         Move();
         Detect();
@@ -90,6 +96,8 @@ public class EnemyBasic : ObjectBasic
 
     protected virtual void Detect()
     {
+
+
         if (enemyStatus.isTargetNoThisRoom)
         {
             enemyStatus.isTargetNoThisRoomTime += Time.deltaTime;
@@ -124,6 +132,17 @@ public class EnemyBasic : ObjectBasic
         //enemyStatus.enemyTarget = target.transform;
         enemyStatus.isTarget = true;
         Waiting(0.5f);
+    }
+
+    // 탐지 거리 시각화
+    void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(CenterPivot.position, enemyStats.detectionDis);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(CenterPivot.position, enemyStats.detectionKeepDis);
     }
 
     #endregion Attack
@@ -341,13 +360,13 @@ public class EnemyBasic : ObjectBasic
         return criticalHit;
     }
 
-    public override void FlinchCancle()
+    public override void CancleAction()
     {
         if (enemyStatus.attackCoroutine != null)
         {
             StopCoroutine(enemyStatus.attackCoroutine);
         }
-        base.FlinchCancle();
+        base.CancleAction();
 
     }
 

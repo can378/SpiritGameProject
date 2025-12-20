@@ -18,17 +18,17 @@ public class Status : MonoBehaviour
     public GameObject hitTarget;                // 공격을 받은 대상
 
     public bool isDead;
-    public bool isBeAttaked;                 // 공격 받은 상태
-    public float isFlinch;                   // 경직 상태, 조작 불가
-    public bool isSuperArmor;               // 경직 무시
-    public bool isInvincible;               // 무적
-    public bool isAttack;                   // 공격
-    public bool isAttackReady = true;       // 공격 준비 (true면 공격 가능, false면 공격 불가)
+    public bool isBeAttaked;                    // 공격 받은 상태
+    public float isFlinch;                      // 경직 상태, 조작 불가
+    public bool isSuperArmor;                   // 경직 무시
+    public bool isInvincible;                   // 무적
+    public bool isAttack;                       // 공격
+    public bool isAttackReady = true;           // 공격 준비 (true면 공격 가능, false면 공격 불가)
 
-    public Transform fearTarget;            // 공포를 건 대상
-    public Coroutine runCoroutine;          // 도망가기 코루틴
+    public Transform fearTarget;                // 공포를 건 대상
+    public Coroutine runCoroutine;              // 도망가기 코루틴
 
-    public Coroutine watingCoroutine;       // 대기 코루틴
+    public Coroutine watingCoroutine;           // 대기 코루틴
 
 
 

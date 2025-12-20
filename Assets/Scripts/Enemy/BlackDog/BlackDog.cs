@@ -174,9 +174,9 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttackReady = true;
     }
 
-    public override void FlinchCancle() 
+    public override void CancleAction() 
     {
-        base.FlinchCancle();
+        base.CancleAction();
         if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
     }
 

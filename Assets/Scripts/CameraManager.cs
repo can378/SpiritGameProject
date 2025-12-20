@@ -6,8 +6,6 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField]
-    GameObject Player;
 
     [SerializeField]
     Vector3 cameraPosition;
@@ -49,7 +47,7 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-        playerTransform = Player.GetComponent<Player>().CenterPivot;
+        playerTransform = Player.instance.CenterPivot;
     }
 
     void FixedUpdate()
@@ -57,10 +55,10 @@ public class CameraManager : MonoBehaviour
         if (isCameraChasing) CameraChasing();
 
 
-        if (Player.GetComponent<PlayerStats>().blind > 0)
+        if (Player.instance.playerStats.blind > 0)
         {
             blindSprite.SetActive(true);
-            Player.GetComponent<PlayerStats>().blind -= Time.deltaTime;
+            Player.instance.playerStats.blind -= Time.deltaTime;
         }
         else { blindSprite.SetActive(false); }
     }
@@ -96,6 +94,7 @@ public class CameraManager : MonoBehaviour
     public IEnumerator BossRoomEnterEffect(ObjectBasic boss, GameObject room)
     {
         isShowingBoss = true;
+        Player.instance.CancleAction();
         //startSize = cam.orthographicSize;
 
         //boss zoom in

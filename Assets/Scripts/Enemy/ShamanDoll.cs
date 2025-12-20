@@ -65,9 +65,9 @@ public class ShamanDoll : EnemyBasic
         if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
     }
 
-    public override void FlinchCancle()
+    public override void CancleAction()
     {
-        base.FlinchCancle();
+        base.CancleAction();
         if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
     }
 

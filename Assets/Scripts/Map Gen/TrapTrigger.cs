@@ -18,10 +18,8 @@ public class TrapEnter : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            //print("Trigger 충돌");
             if (col2D.OverlapPoint(collision.GetComponent<ObjectBasic>().CenterPivot.position))
             {
-                //print(room.gameObject.name);
                 Trap();
             }
         }
@@ -30,9 +28,11 @@ public class TrapEnter : MonoBehaviour
     // 방에 완전히 입장
     void Trap()
     {
-        if (room.doorType == DoorType.Trap)
+        if (room.doorType == DoorType.Trap && !room.door.IsClosed())
         {
             room.LockDoor();
         }
+        // 방에 완전히 입장했으니 이 스크립트는 파괴
+        Destroy(this);
     }
 }

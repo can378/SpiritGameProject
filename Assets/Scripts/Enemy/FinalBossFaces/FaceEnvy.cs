@@ -104,7 +104,7 @@ public class FaceEnvy : BossFace
         }
     }
 
-    public override void FlinchCancle()
+    public override void CancleAction()
     {
         status.isAttack = false;
         status.isAttackReady = true;

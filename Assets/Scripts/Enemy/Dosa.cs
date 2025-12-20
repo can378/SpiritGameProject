@@ -112,7 +112,7 @@ public class Dosa : EnemyBasic
 
     }
 
-    public override void FlinchCancle()
+    public override void CancleAction()
     {
         status.isAttack = false;
         status.isAttackReady = true;

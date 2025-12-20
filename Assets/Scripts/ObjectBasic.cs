@@ -253,7 +253,7 @@ public class ObjectBasic : MonoBehaviour
 
     public void SetFlinch(float time = 0)
     {
-        FlinchCancle();
+        CancleAction();
     
         if (animBasic != null)
         {
@@ -269,9 +269,13 @@ public class ObjectBasic : MonoBehaviour
         status.isFlinch = 0;
     }
 
-
-    public virtual void FlinchCancle()
+    // 하고 있는 행동을 취소한다.
+    public virtual void CancleAction()
     {
+        if (animBasic != null)
+        {
+            animBasic.animator.Rebind();
+}
         status.isAttack = false;
         status.isAttackReady = true;
         status.moveVec = Vector2.zero;
@@ -485,7 +489,7 @@ public class ObjectBasic : MonoBehaviour
         print(this.name + " Dead");
 
         RemoveAllBuff();
-        FlinchCancle();
+        CancleAction();
         StopAllCoroutines();
         ReceivedAttackID.Clear();
         status.isDead = true;

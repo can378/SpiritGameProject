@@ -159,8 +159,14 @@ public class Room : MonoBehaviour
             doorType = DoorType.Trap;
             ran = UnityEngine.Random.Range(0, mapTemplates.BossMap.Length);
             map = Instantiate(mapTemplates.GetBossMap(top, bottom, left, right), transform.position, transform.rotation);
+            
+            // 미션 트리거를 설정하여 문을 잠궈 버린다.
             map.GetComponent<MissionController>().SetRoom(this.GetComponent<Room>());
             map.GetComponent<MissionController>().SetTrigger();     // 미션 트리거 설정
+
+            // BossRoom을 세팅한다.
+            map.GetComponent<BossRoom>().SetRoom(this);
+
             minimapIcon = Instantiate(map.gameObject.GetComponent<MinimapIcon>().minimapIcon);
             
         }

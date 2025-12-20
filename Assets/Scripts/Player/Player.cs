@@ -84,6 +84,9 @@ public class Player : ObjectBasic
         Update_Passive();
         HealPoise();
 
+        if(CameraManager.instance.isShowingBoss)
+            return;
+
         Turn();
         //Run();
         Dodge();
@@ -107,14 +110,11 @@ public class Player : ObjectBasic
             }
 
         }
-
-        string layerName = LayerMask.LayerToName(gameObject.layer);
-        //Debug.Log("My layer name is: " + layerName);
     }
 
     void FixedUpdate()
     {
-        if (status.isDead)
+        if (status.isDead || CameraManager.instance.isShowingBoss)
             return;
         Move();
     }
@@ -254,8 +254,6 @@ public class Player : ObjectBasic
 
     void Reload()
     {
-
-
         if (playerStats.weapon.weaponInstance == null)
             return;
 
@@ -1226,11 +1224,11 @@ public class Player : ObjectBasic
     #endregion
 
     // 상태 관련
-    #region Effect
+    #region State
 
-    public override void FlinchCancle()
+    public override void CancleAction()
     {
-        base.FlinchCancle();
+        base.CancleAction();
         playerStatus.attackDelay = 0;
         playerStatus.isReload = false;
         skillController.SkillCancle();

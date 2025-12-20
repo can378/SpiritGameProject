@@ -28,7 +28,7 @@ public class StunDeBuff : BuffData
             _Buff.curDuration = _Buff.duration = (1 - objectBasic.stats.SEResist[(int)buffType].Value) * defaultDuration;
 
             // 효과 적용
-            objectBasic.FlinchCancle();
+            objectBasic.CancleAction();
             objectBasic.SetFlinch(_Buff.curDuration);
         }
     }
