@@ -6,6 +6,11 @@ public class Boss : EnemyBasic
 {
     private BossRoom bossRoom;
 
+    public virtual void BossCutScene()
+    {
+        
+    }
+
     // 보스는 플레이어 감지 로직이 다름
     protected override void Detect()
     {

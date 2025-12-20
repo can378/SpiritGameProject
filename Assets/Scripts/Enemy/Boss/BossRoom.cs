@@ -43,10 +43,10 @@ public class BossRoom : MonoBehaviour
     {
         GameObject boss = m_Room.map.GetComponent<ObjectSpawn>().enemys[0];
         m_Boss = boss.GetComponent<Boss>();
-        
+
         // 보스 움직일 수 있게
-        m_Boss.status.isFlinch = 0f;
         m_Boss.enemyStatus.isTarget = true;
+        m_Boss.BossCutScene();
 
         PlayBgm();
         ZoomInBoss();

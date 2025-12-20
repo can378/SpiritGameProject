@@ -91,6 +91,11 @@ public class BossBaby : Boss
         
     }
 
+    public override void BossCutScene()
+    {
+        StartCoroutine(StartAttack());
+    }
+
     #region 어른
 
     IEnumerator Grap() 
