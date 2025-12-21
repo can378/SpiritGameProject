@@ -28,8 +28,8 @@ public class BossRoom : MonoBehaviour
     */
 
     Room m_Room;
-
     Boss m_Boss;
+    [SerializeField] List<GameObject> m_Backgrounds;
 
     public void SetRoom(Room _Room)
     {
@@ -48,8 +48,17 @@ public class BossRoom : MonoBehaviour
         m_Boss.enemyStatus.isTarget = true;
         m_Boss.BossCutScene();
 
+        ActiveBackground();
         PlayBgm();
         ZoomInBoss();
+    }
+
+    void ActiveBackground()
+    {
+        foreach (GameObject bg in m_Backgrounds)
+        {
+            bg.SetActive(true);
+        }
     }
 
     void PlayBgm()
@@ -64,12 +73,5 @@ public class BossRoom : MonoBehaviour
         CameraManager.instance.isCameraChasing = false;
         StartCoroutine(CameraManager.instance.BossRoomEnterEffect(m_Boss, m_Room.gameObject));
     }
-
-    // 이거는 플레이어에서 만들어야 할 듯
-    IEnumerator DontMovePlayer()
-    {
-        yield return null;
-    }
-
 
 }

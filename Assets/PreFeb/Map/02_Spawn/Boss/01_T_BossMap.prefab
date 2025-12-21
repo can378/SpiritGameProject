@@ -203,8 +203,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca7930a8678d0c4cb1740c4c025467f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossDead: 0
-  nextChapterDoor: {fileID: 6384596373396706539}
+  m_Backgrounds:
+  - {fileID: 2517103013966862644}
 --- !u!156049354 &3434322985547147498
 Grid:
   m_ObjectHideFlags: 0
@@ -8368,6 +8368,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fire
       objectReference: {fileID: 0}
+    - target: {fileID: 6323049955539154071, guid: fe0e4f23a1501aa44821c28016fa22b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7824272928496911858, guid: fe0e4f23a1501aa44821c28016fa22b4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.12
@@ -8420,5 +8424,10 @@ PrefabInstance:
 --- !u!4 &1856628136074618961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7824272928496911858, guid: fe0e4f23a1501aa44821c28016fa22b4, type: 3}
+  m_PrefabInstance: {fileID: 8453669598623608227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2517103013966862644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6323049955539154071, guid: fe0e4f23a1501aa44821c28016fa22b4, type: 3}
   m_PrefabInstance: {fileID: 8453669598623608227}
   m_PrefabAsset: {fileID: 0}
