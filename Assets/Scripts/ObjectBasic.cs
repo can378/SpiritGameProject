@@ -23,6 +23,8 @@ public class ObjectBasic : MonoBehaviour
     // 이벤트
     // 피격, 버프, 패시브, 공격 등 추가할 예정
     public event System.Action BeAttackedEvent;
+    public event System.Action PassiveApplyEvent;
+    public event System.Action PassiveRemoveEvent;
     
     protected virtual void Awake()
     {
@@ -410,15 +412,14 @@ public class ObjectBasic : MonoBehaviour
         _Passive.Apply(this);
         stats.activePassive.Add(_Passive.PID,_Passive);
 
+        PassiveApplyEvent?.Invoke();
+
         return passive;
     }
 
-    public PassiveData FindPassive(PassiveData _Passive)
+    public bool FindPassive(int _ID, out PassiveData _Passive)
     {
-        // 있는지 찾아보고 반환한다.
-        PassiveData passive;
-        stats.activePassive.TryGetValue(_Passive.PID, out passive);
-        return passive;
+        return stats.activePassive.TryGetValue(_ID, out _Passive);
     }
 
     public void RemovePassive(PassiveData _Passive)
@@ -428,8 +429,10 @@ public class ObjectBasic : MonoBehaviour
 
         if (passive)
         {
-            passive.Remove(this);                                   // 버프 해제
+            passive.Remove(this);                                       // 버프 해제
             stats.activePassive.Remove(passive.PID);                    // 리스트에서 제거
+
+            PassiveRemoveEvent?.Invoke();
         }
         else
         {
