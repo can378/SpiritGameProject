@@ -16,6 +16,8 @@ public class ObjectBasic : MonoBehaviour
     public GameObject animGameObject;
     HashSet<int> ReceivedAttackID = new HashSet<int>(); // ID의 빠른 추가와 제거, 그리고 중복되어 있는지만 확인하면 되기 때문에 HashSet
 
+    public BuffController m_BuffController;
+
     [HideInInspector] AnimBasic animBasic;
     [HideInInspector] public SpriteRenderer[] sprites;
     [HideInInspector] public Rigidbody2D rigid;
@@ -106,7 +108,7 @@ public class ObjectBasic : MonoBehaviour
             foreach (BuffData statusEffect in hitDetection.statusEffect)
             {
                 print(statusEffect.buffName);
-                ApplyBuff(statusEffect);
+                m_BuffController.ApplyBuff(statusEffect);
             }
         }
 
@@ -311,6 +313,7 @@ public class ObjectBasic : MonoBehaviour
 
     #endregion  Invincible
 
+/*
     #region Buff
 
     public Buff ApplyBuff(BuffData _Buff)
@@ -394,6 +397,7 @@ public class ObjectBasic : MonoBehaviour
     }
 
     #endregion Buff
+    */
 
     #region Passive
     
@@ -491,7 +495,9 @@ public class ObjectBasic : MonoBehaviour
     {
         print(this.name + " Dead");
 
-        RemoveAllBuff();
+        m_BuffController.RemoveAllBuff();
+        m_BuffController.enabled = false;
+
         CancleAction();
         StopAllCoroutines();
         ReceivedAttackID.Clear();
@@ -569,7 +575,8 @@ public class ObjectBasic : MonoBehaviour
 
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
-        RemoveAllBuff();
+
+        m_BuffController.RemoveAllBuff();
     }
 
     /// <summary>

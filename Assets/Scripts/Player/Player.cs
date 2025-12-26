@@ -80,7 +80,7 @@ public class Player : ObjectBasic
         }
         */
 
-        Update_Buff();
+        //Update_Buff();
         Update_Passive();
         HealPoise();
 

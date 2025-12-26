@@ -123,7 +123,7 @@ public class BossBaby : Boss
             if(status.hitTarget)
             {
                 // 대상에게 잡기 디버프 부여
-                grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().ApplyBuff(BuffDatas[0]);
+                grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BuffDatas[0]);
                 GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;
                 GrapDeBuffData.SetGrapCustomData(grapDeBuff, this.GetComponent<ObjectBasic>(), GrapPos);
                 grapSucces = true;
@@ -435,11 +435,11 @@ public class BossBaby : Boss
 
     void Disarm()
     {
-        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().ApplyBuff(BuffDatas[1]);
+        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().m_BuffController.ApplyBuff(BuffDatas[1]);
     }
     void RemoveDisarm()
     {
-        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().RemoveBuff(BuffDatas[1]);
+        enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().m_BuffController.RemoveBuff(BuffDatas[1]);
     }
 
 

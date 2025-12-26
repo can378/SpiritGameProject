@@ -37,7 +37,7 @@ public class LittleStarSkill : SkillBase
             // 쿨타임 적용
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * LSSData.skillDefalutCoolTime;
 
-            player.ApplyBuff(LSSData.LSBuff);
+            player.m_BuffController.ApplyBuff(LSSData.LSBuff);
 
         }
         else if (user.tag == "Enemy")
@@ -48,7 +48,7 @@ public class LittleStarSkill : SkillBase
             // 쿨타임 적용
             skillCoolTime = LSSData.skillDefalutCoolTime;
 
-            objectBasic.ApplyBuff(LSSData.LSBuff);
+            objectBasic.m_BuffController.ApplyBuff(LSSData.LSBuff);
 
 
         }

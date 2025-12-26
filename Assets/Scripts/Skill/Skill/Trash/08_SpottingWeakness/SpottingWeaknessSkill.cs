@@ -24,7 +24,7 @@ public class SpottingWeaknessSkill : SkillBase
             // 쿨타임 적용
             skillCoolTime = (1 - player.playerStats.SkillCoolTime.Value) * 9999999999;
 
-            player.ApplyBuff(spottingWeaknessBuff);
+            player.m_BuffController.ApplyBuff(spottingWeaknessBuff);
         }
         else if (user.tag == "Enemy")
         {
@@ -33,7 +33,7 @@ public class SpottingWeaknessSkill : SkillBase
             // 쿨타임 적용
             skillCoolTime =99999999;
 
-            enemy.ApplyBuff(spottingWeaknessBuff);
+            enemy.m_BuffController.ApplyBuff(spottingWeaknessBuff);
 
         }
     }
