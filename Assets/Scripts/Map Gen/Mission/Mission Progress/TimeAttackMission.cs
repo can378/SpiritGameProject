@@ -62,7 +62,7 @@ public class TimeAttackMission : MissionBase
 
     public override void EndMission()
     {
-        clock.SetActive(false);
+        clock.SetActive(true);
         
     }
 }
