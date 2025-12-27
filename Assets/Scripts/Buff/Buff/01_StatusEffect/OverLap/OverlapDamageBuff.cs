@@ -17,7 +17,7 @@ public class OverlapDamageBuff : BuffData
     }
     public override void Overlap(Buff _Buff)     //°»½Å
     {
-        ObjectBasic objectBasic = _Buff.target.GetComponent<ObjectBasic>();
+        ObjectBasic objectBasic = _Buff.target;
         Stats stats = _Buff.target.GetComponent<Stats>();
 
         int maxStack = DefaultMaxStack + (int)(stats.SEResist[(int)buffType].Value * 10);
@@ -43,6 +43,8 @@ public class OverlapDamageBuff : BuffData
             GameObject BleedObject = ObjectPoolManager.instance.Get("Bleeding");
             BleedObject.transform.position = objectBasic.CenterPivot.transform.position;
             BleedObject.transform.localScale = Vector3.one * 3;
+
+            objectBasic.m_BuffController.RemoveBuff(this);
 
             _Buff.duration = 0;
         }
