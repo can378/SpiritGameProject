@@ -70,6 +70,6 @@ public class DotDamageProportionBuff : BuffData
     private void DealDamageToTarget(Buff _Buff, float damage)
     {
         ObjectBasic objectBasic = _Buff.target.GetComponent<ObjectBasic>();
-        objectBasic.Damaged(objectBasic.stats.HPMax.Value * damage * _Buff.stack);
+        objectBasic.Damaged(objectBasic.stats.HPMax.Value * damage * (float)_Buff.stack);
     }
 }

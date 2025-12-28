@@ -12,7 +12,7 @@ public class BuffField : MonoBehaviour
             Player player = other.GetComponent<Player>();
             for(int i = 0 ; i<Buff.Length;i++)
             {
-                player.ApplyBuff(Buff[i]);
+                player.m_BuffController.ApplyBuff(Buff[i]);
             }
             
         }
@@ -21,7 +21,7 @@ public class BuffField : MonoBehaviour
             EnemyBasic enemy = other.GetComponent<EnemyBasic>();
             for (int i = 0; i < Buff.Length; i++)
             {
-                enemy.ApplyBuff(Buff[i]);
+                enemy.m_BuffController.ApplyBuff(Buff[i]);
             }
         }
     }
