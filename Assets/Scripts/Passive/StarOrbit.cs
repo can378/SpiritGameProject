@@ -17,9 +17,9 @@ public class StarOrbit : PassiveData
     public override void Update_Passive(ObjectBasic _User)
     {
 
-        if (_User.FindBuff(lsBuff) == null)
+        if (_User.m_BuffController.FindBuff(lsBuff) == null)
         {
-            _User.ApplyBuff(lsBuff);
+            _User.m_BuffController.ApplyBuff(lsBuff);
         }
 
     }
@@ -27,11 +27,11 @@ public class StarOrbit : PassiveData
     public override void Apply(ObjectBasic _User)
     {
         // 버프 적용
-        _User.ApplyBuff(lsBuff);
+        _User.m_BuffController.ApplyBuff(lsBuff);
     }
 
     public override void Remove(ObjectBasic _User)
     {
-        _User.RemoveBuff(lsBuff);
+        _User.m_BuffController.RemoveBuff(lsBuff);
     }
 }

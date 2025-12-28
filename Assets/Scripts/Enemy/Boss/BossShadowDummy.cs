@@ -30,7 +30,7 @@ public class BossShadowDummy : EnemyBasic
     {
         print(this.name + " Dead");
 
-        RemoveAllBuff();
+        m_BuffController.RemoveAllBuff();
         CancleAction();
         StopAllCoroutines();
         this.gameObject.SetActive(false);

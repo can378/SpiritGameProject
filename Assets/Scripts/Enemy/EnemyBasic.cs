@@ -47,7 +47,7 @@ public class EnemyBasic : ObjectBasic
             return;
         }
 
-        Update_Buff();
+        //Update_Buff();
         Update_Passive();
         HealPoise();
 
@@ -387,6 +387,9 @@ public class EnemyBasic : ObjectBasic
     public virtual void Revive(float _HPRatio)
     {
         InitStatus();
+
+        m_BuffController.enabled = true;
+
         status.isDead = false;
         stats.HP = _HPRatio * stats.HPMax.Value;
     }

@@ -147,5 +147,5 @@ public class Stats : MonoBehaviour
 
     
     [field: SerializeField] public SerializedDictionary<int, PassiveData> activePassive = new SerializedDictionary<int, PassiveData>();         //버프 디버프
-    [field: SerializeField] public SerializedDictionary<int, Buff> activeEffects = new SerializedDictionary<int, Buff>();         //버프 디버프
+    //[field: SerializeField] public SerializedDictionary<int, Buff> activeEffects = new SerializedDictionary<int, Buff>();         //버프 디버프
 }
