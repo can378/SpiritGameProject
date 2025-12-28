@@ -57,6 +57,22 @@ public class InteractMissionTrigger : MissionTriggerBase
         m_Interactable.InteractEvent -= m_Owner.StartMission;
         m_Interactable.InteractEvent -= ObjectDisapear;
     }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AudioManager.instance.OnEnterMap(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AudioManager.instance.OnExitMap(gameObject);
+        }
+    }
 }
 
 

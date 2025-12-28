@@ -74,10 +74,10 @@ public class RoomEnterExit : MonoBehaviour
         foreach (SpriteRenderer spr in aisleSprite) 
         { spr.color = new Color(0.8f, 0.8f, 0.8f, 1); }
 
-        //show minimap icon
+        //hide minimap icon (player 있을때는 hide)
         if (room.minimapIcon != null)
         {
-            room.minimapIcon.SetActive(true);
+            room.minimapIcon.SetActive(false);
         }
         /*
         if (room.map!=null && HasComponent(room.map, "MinimapIcon")) 
@@ -124,6 +124,12 @@ public class RoomEnterExit : MonoBehaviour
     {
         // 미니맵 플레이어 현 위치 꺼짐
         playerPosCheker.SetActive(false);
+
+        //minimap icon
+        if (room.minimapIcon != null)
+        {
+            room.minimapIcon.SetActive(true);
+        }
 
         /*
         if (HasComponent(room.map.gameObject, minimapIconString))

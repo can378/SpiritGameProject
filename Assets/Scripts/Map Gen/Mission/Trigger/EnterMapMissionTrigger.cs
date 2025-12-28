@@ -24,6 +24,22 @@ public class EnterMapMissionTrigger : MissionTriggerBase
     {
         m_Owner.roomScript.LockEvent -= m_Owner.StartMission;
     }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AudioManager.instance.OnEnterMap(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            AudioManager.instance.OnExitMap(gameObject);
+        }
+    }
 
 }
 
