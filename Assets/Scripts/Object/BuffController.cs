@@ -13,7 +13,7 @@ public class BuffController : MonoBehaviour
     public event System.Action m_BuffOverlapEvent;
     public event System.Action m_BuffRemoveEvent;
 
-    public List<ParticleSystem> m_BuffEffectList = new List<ParticleSystem>();
+    public List<BuffEffect> m_BuffEffectList = new List<BuffEffect>();
 
 
     // 비활성화로 버프 기능을 끄고 켤수 있다.
@@ -46,7 +46,7 @@ public class BuffController : MonoBehaviour
         m_activeEffects.Add(_Buff.buffID, buff);
 
         // 버프 이펙트를 켠다.
-        ActvieEffect(_Buff.buffID,true);
+        ActvieEffect(buff, true);
         OverlapEffect(buff);
 
 
@@ -76,7 +76,7 @@ public class BuffController : MonoBehaviour
         //Destroy(buff.gameObject);                         // 버프 아이콘 삭제
         m_activeEffects.Remove(_Buff.buffID);               // 리스트에서 제거
 
-        ActvieEffect(_Buff.buffID, false);
+        ActvieEffect(buff, false);
 
     }
 
@@ -96,7 +96,7 @@ public class BuffController : MonoBehaviour
         //Destroy(buff.gameObject);                         // 버프 아이콘 삭제
         m_activeEffects.Remove(_ID);               // 리스트에서 제거
 
-        ActvieEffect(_ID, false);
+        ActvieEffect(buff, false);
 
     }
 
@@ -139,53 +139,28 @@ public class BuffController : MonoBehaviour
         m_activeEffects.Clear();
     }
 
-    void ActvieEffect(int _BuffID, bool _Active)
+    void ActvieEffect(Buff _Buff, bool _Active)
     {
 
-        if (_BuffID < 0 || _BuffID >= m_BuffEffectList.Count)
+        if (_Buff.buffData.buffID < 0 || _Buff.buffData.buffID >= m_BuffEffectList.Count)
             return;
-        if(m_BuffEffectList[_BuffID] == null)
+        if(m_BuffEffectList[_Buff.buffData.buffID] == null)
             return;
 
         if (_Active)
         {
-            m_BuffEffectList[_BuffID].Clear();
-            m_BuffEffectList[_BuffID].Play();
+            m_BuffEffectList[_Buff.buffData.buffID].Play(_Buff);
         }
         else
-            m_BuffEffectList[_BuffID].Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            m_BuffEffectList[_Buff.buffData.buffID].Stop(_Buff);
     }
 
     // 버프 수가 많지 않으므로 우선 스위치문으로 하드 코딩
     // 종류가 많아진다면 BuffeEffectController, BuffeEffect 클래스를 만들 예정
     void OverlapEffect(Buff _Buff)
     {
-        switch(_Buff.buffData.buffID)
-        {
-            case 4: //Poison
-                PoisonStackEffect(_Buff);
-                break;
-            case 8: //Bleeding
-                BleedingStackEffect(_Buff);
-                break;
-            default:
-                break;
-        }
+        m_BuffEffectList[_Buff.buffData.buffID].Overlap(_Buff);
     }
 
-    // 중첩별 이펙트 효과 변경
-    void PoisonStackEffect(Buff _Buff)
-    {
-        // 방울이 더 많이
-        var emission = m_BuffEffectList[_Buff.buffData.buffID].emission;
-        emission.rateOverTime = 4 * _Buff.stack;
-    }
-
-    void BleedingStackEffect(Buff _Buff)
-    {
-        // 방울이 더 많이
-        var emission = m_BuffEffectList[_Buff.buffData.buffID].emission;
-        emission.rateOverTime = 0.5f * _Buff.stack;
-    }
 
 }
