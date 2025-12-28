@@ -657,6 +657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f186c8ddb4aa2478bf39b732a93538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  darkEffectObject: {fileID: 0}
   darkOverlay: {fileID: 6955902120514674989}
   targetAlpha: 0.6
   fadeDuration: 0.5
@@ -756,7 +757,7 @@ GameObject:
   - component: {fileID: 6177489405544765781}
   - component: {fileID: 6955902120514674989}
   m_Layer: 0
-  m_Name: Image
+  m_Name: black_bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -769,7 +770,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3434098420842495799}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -778,7 +779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00000095367, y: -0.000023603}
+  m_AnchoredPosition: {x: 0, y: -0.00002360344}
   m_SizeDelta: {x: 29.987, y: 30.005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6177489405544765781
@@ -801,7 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: f2d13d3703ea7f940bfae5b8a9498230, type: 2}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -834,7 +835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2793661271188005641
 Transform:
   m_ObjectHideFlags: 0
