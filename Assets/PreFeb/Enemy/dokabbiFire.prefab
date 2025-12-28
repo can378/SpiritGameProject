@@ -82,9 +82,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackID: 0
   <user>k__BackingField: {fileID: 0}
-  DefaultDamage: 15
+  DefaultDamage: 5
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: []
+  <statusEffect>k__BackingField:
+  - {fileID: 11400000, guid: 2d51cdf269852f6488efb402bcdaa5cd, type: 2}
   EnableTime: 0
   isPooling: 1
   isAttackIDManage: 1
@@ -264,8 +265,7 @@ MonoBehaviour:
   stats: {fileID: 0}
   status: {fileID: 0}
   CenterPivot: {fileID: 4558640942167324471}
-  hitEffects:
-  - {fileID: 1180146606842955558}
+  hitEffects: []
   animGameObject: {fileID: 6537886198063257128}
   m_BuffController: {fileID: 372350160040357799}
   sprites: []
