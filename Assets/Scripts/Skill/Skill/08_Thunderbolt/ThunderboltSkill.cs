@@ -136,13 +136,14 @@ public class ThunderboltSkill : SkillBase
 
             Destroy(simul);
 
+            player.stats.MoveSpeed.DecreasedValue -= 99f;
+
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(TSData.postDelay);
 
             // 쿨타임 적용
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * TSData.skillDefalutCoolTime;
 
-            player.stats.MoveSpeed.DecreasedValue -= 99f;
         }
         else if (user.tag == "Enemy")
         {
@@ -152,13 +153,14 @@ public class ThunderboltSkill : SkillBase
 
             Destroy(simul);
 
+            enemy.stats.MoveSpeed.DecreasedValue -= 99f;
+
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(TSData.postDelay);
 
             // 쿨타임 적용
             skillCoolTime = 5;
 
-            enemy.stats.MoveSpeed.DecreasedValue -= 99f;
         }
     }
 

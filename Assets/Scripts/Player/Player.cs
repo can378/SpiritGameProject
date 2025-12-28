@@ -672,6 +672,8 @@ public class Player : ObjectBasic
             if (player.skillList[SkillIndex].skillData.skillType == 0)
             {
                 player.playerStatus.isSkill = true;
+                player.playerAnim.animator.SetBool("isSkill", true);
+                player.playerAnim.animator.SetFloat("SkillSpeed", 1 / player.skillList[SkillIndex].skillData.preDelay);
                 yield return null;
                 yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.preDelay);
             }
@@ -684,6 +686,7 @@ public class Player : ObjectBasic
                 yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.postDelay);
                 yield return null;
                 player.playerStatus.isSkill = false;
+                player.playerAnim.animator.SetBool("isSkill", false);
             }
 
             skillCoroutine = StartCoroutine(Stay());
@@ -694,6 +697,12 @@ public class Player : ObjectBasic
         IEnumerator Stay()
         {
             int SkillIndex = player.playerStats.skill[player.playerStatus.skillIndex].skillData.selectItemID;
+
+            if (player.skillList[SkillIndex].skillData.skillType == SKILL_TYPE.HOLD)
+            {
+                player.playerAnim.animator.SetBool("isSkill", true);
+                player.playerAnim.animator.SetFloat("SkillSpeed", 1);
+            }
 
             //print("Stay");
             float timer = player.skillList[SkillIndex].skillData.maxHoldTime;
@@ -709,7 +718,9 @@ public class Player : ObjectBasic
                     break;
                 }
             }
-
+            if (player.skillList[SkillIndex].skillData.skillType == SKILL_TYPE.HOLD)
+                player.playerAnim.animator.SetBool("isSkill", false);
+                
             yield return null;          // 안 넣으면 코루틴 저장이 안됨
         }
 
@@ -722,6 +733,9 @@ public class Player : ObjectBasic
             if (player.skillList[SkillIndex].skillData.skillType == SKILL_TYPE.UP)
             {
                 player.playerStatus.isSkill = true;
+                player.playerAnim.animator.SetBool("isSkill", true);
+                player.playerAnim.animator.SetFloat("SkillSpeed", 1 / player.skillList[SkillIndex].skillData.preDelay);
+
                 yield return null;
                 yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.preDelay);
             }
@@ -735,6 +749,7 @@ public class Player : ObjectBasic
                 yield return new WaitForSeconds(player.skillList[SkillIndex].skillData.postDelay);
                 yield return null;
                 player.playerStatus.isSkill = false;
+                player.playerAnim.animator.SetBool("isSkill", false);
             }
 
             yield return null;      // 안 넣으면 코루틴 저장이 안됨
@@ -753,6 +768,8 @@ public class Player : ObjectBasic
             //print("Cancle");
             player.playerStatus.isSkillHold = false;
             player.playerStatus.isSkill = false;
+            player.playerAnim.animator.SetBool("isSkill", player.playerStatus.isSkill);
+
             if (skillCoroutine != null)
             {
                 StopCoroutine(skillCoroutine);
