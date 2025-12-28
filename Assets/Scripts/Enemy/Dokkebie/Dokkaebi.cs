@@ -59,6 +59,8 @@ public class Dokkaebi : EnemyBasic
         //bullet.GetComponent<Rigidbody2D>().AddForce(dokkeabieStatus.targetDirVec.normalized, ForceMode2D.Impulse);
         //Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);
 
+        bullet.GetComponent<EnemyBasic>().Revive(1.0f);
+
         // 공격 루틴 끝
         dokkeabieStatus.isAttack = false;
         dokkeabieStatus.isAttackReady = true;
