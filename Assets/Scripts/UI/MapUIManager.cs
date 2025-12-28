@@ -370,7 +370,6 @@ public class MapUIManager : MonoBehaviour
     public void SetBossProgress(EnemyBasic enemy)
     {
         Boss = enemy;
-        enemy.buffTF = BossBuffbar;
     }
 
     void OnOffBossProgress()

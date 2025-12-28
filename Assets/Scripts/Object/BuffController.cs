@@ -159,6 +159,11 @@ public class BuffController : MonoBehaviour
     // 종류가 많아진다면 BuffeEffectController, BuffeEffect 클래스를 만들 예정
     void OverlapEffect(Buff _Buff)
     {
+        if (_Buff.buffData.buffID < 0 || _Buff.buffData.buffID >= m_BuffEffectList.Count)
+            return;
+        if (m_BuffEffectList[_Buff.buffData.buffID] == null)
+            return;
+
         m_BuffEffectList[_Buff.buffData.buffID].Overlap(_Buff);
     }
 

@@ -12,7 +12,6 @@ public class ObjectBasic : MonoBehaviour
     public Transform CenterPivot;
 
     public GameObject[] hitEffects;
-    public Transform buffTF;
     public GameObject animGameObject;
     HashSet<int> ReceivedAttackID = new HashSet<int>(); // ID의 빠른 추가와 제거, 그리고 중복되어 있는지만 확인하면 되기 때문에 HashSet
 
