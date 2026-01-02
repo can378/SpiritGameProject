@@ -20,7 +20,7 @@ public class PlayerStatus : Status
     [field: SerializeField] public float reloadDelay { get; set; }
     [field: SerializeField] public bool isDodge { get; set; }                       // 회피
 
-    [field: SerializeField] public bool isAttackable { get; set; }                  // 공격가능 상태
+    [field: SerializeField] public int isAttackable { get; set; }                  // 공격가능 상태
 
     [field: SerializeField] public float attackDelay { get; set; }                  // 다음 공격까지 대기시간
 

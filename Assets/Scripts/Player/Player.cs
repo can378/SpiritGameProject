@@ -93,7 +93,7 @@ public class Player : ObjectBasic
         //UseItem();
         Interaction();
 
-        if (playerStatus.isAttackable)
+        if (playerStatus.isAttackable != 0)
         {
             Reload();
             ReloadOut();

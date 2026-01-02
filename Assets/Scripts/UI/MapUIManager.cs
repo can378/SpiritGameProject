@@ -108,13 +108,17 @@ public class MapUIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.I))
         {
-            if (inventoryPanel.activeSelf == true) {
+            if (inventoryPanel.activeSelf == true) 
+            {
                 inventoryPanel.SetActive(false);
-                
+                ++Player.instance.playerStatus.isAttackable;
             }
-            else {
+            else 
+            {
                 inventoryPanel.SetActive(true);
                 toolTipPanel.gameObject.SetActive(false);
+                --Player.instance.playerStatus.isAttackable;
+
             }
         }
 
