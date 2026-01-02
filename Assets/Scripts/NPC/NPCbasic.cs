@@ -36,6 +36,8 @@ public class NPCbasic : MonoBehaviour, Interactable
     public virtual void Interact()
     {
         isTalking = true;
+        if (DialogPanel==null) { return;}
+        
         DialogPanel.SetActive(true);
 
         if (scriptManager.NPCScript(chapter, index) == "border")
@@ -60,7 +62,7 @@ public class NPCbasic : MonoBehaviour, Interactable
     public virtual void ConversationOut()
     {
         isTalking = false;
-        DialogPanel.SetActive(false);
+        if (DialogPanel) { DialogPanel.SetActive(false); }
     }
 
     #endregion Interaction
