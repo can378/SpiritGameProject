@@ -51,6 +51,10 @@ public class ShamanDoll : EnemyBasic
         //print("shamon doll hurts hershelf");
         yield return new WaitForSeconds(0.6f);
         enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BleedingDeBuff);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BleedingDeBuff);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BleedingDeBuff);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BleedingDeBuff);
+        enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BleedingDeBuff);
         yield return new WaitForSeconds(2f);
 
         enemyAnim.animator.SetBool("isAttack", false);
@@ -58,7 +62,7 @@ public class ShamanDoll : EnemyBasic
         enemyStatus.isAttack = false;
         enemyStatus.isAttackReady = true;
 
-        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 5.0f);
     }
 
     public override void CancleAction()

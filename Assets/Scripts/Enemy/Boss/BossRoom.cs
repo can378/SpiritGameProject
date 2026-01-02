@@ -51,8 +51,6 @@ public class BossRoom : MonoBehaviour
         ActiveBackground();
         PlayBgm();
         ZoomInBoss();
-
-        MapUIManager.instance.OpenBossUI();
     }
 
     void ActiveBackground()

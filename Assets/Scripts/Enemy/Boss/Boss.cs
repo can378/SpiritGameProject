@@ -24,9 +24,9 @@ public class Boss : EnemyBasic
     public override void Dead()
     {
         bossRoom=GameManager.instance.nowRoomScript.map.GetComponent<BossRoom>();
-        MapUIManager.instance.CloseBossUI();
-        //if (bossRoom != null) { bossRoom.bossDead = true; }
 
+        //if (bossRoom != null) { bossRoom.bossDead = true; }
+        
         base.Dead();
 
     }

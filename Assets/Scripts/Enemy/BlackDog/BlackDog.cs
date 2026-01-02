@@ -125,8 +125,6 @@ public class BlackDog : EnemyBasic
 
         if (hitEffects.Length > 0 && hitEffects[0] != null)
         {
-            yield return new WaitForSeconds(0.1f);
-
             hitEffects[0].GetComponent<HitDetection>().SetHit_Ratio(5, 0.5f, enemyStats.AttackPower);
 
             hitEffects[0].transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(blackDogStatus.targetDirVec.y, blackDogStatus.targetDirVec.x) * Mathf.Rad2Deg - 90);
@@ -142,7 +140,7 @@ public class BlackDog : EnemyBasic
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;
 
-        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 0.5f);
+        if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
 
     }
 

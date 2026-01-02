@@ -143,7 +143,7 @@ public class MapUIManager : MonoBehaviour
         UpdateNearObjectUI();
         UpdateNearObjectToolTipUI();
 
-        //OnOffBossProgress();
+        OnOffBossProgress();
         UpdateBossHealthUI();
         UpdateBossName();
 
@@ -395,31 +395,13 @@ public class MapUIManager : MonoBehaviour
         
     }
 
-    public void OpenBossUI()
-    {
-        if (Boss == null || Boss.isActiveAndEnabled == false)
-            return;
-        BossProgressPanel.SetActive(true);
-    }
-
-    public void CloseBossUI()
-    {
-        if(!Boss.status.isDead)
-
-        BossProgressPanel.SetActive(false);
-    }
-
     void UpdateBossHealthUI()
     {
-        if (!BossProgressPanel.activeSelf)
-            return;
-
-        if (Boss == null || Boss.isActiveAndEnabled==false)
+        if(Boss == null||Boss.isActiveAndEnabled==false)
             return;
 
         if(!Boss.enemyStatus.EnemyTarget)
             return;
-
 
         float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax.Value) * 100;
         BossHpslider.value = normalizedHealth;
@@ -427,10 +409,7 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateBossName()
     {
-        if (!BossProgressPanel.activeSelf)
-            return;
-
-        if (Boss == null || Boss.isActiveAndEnabled == false)
+        if(Boss == null || Boss.isActiveAndEnabled == false)
             return;
 
         if(!Boss.enemyStatus.EnemyTarget)
