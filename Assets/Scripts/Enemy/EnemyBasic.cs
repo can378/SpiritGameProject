@@ -256,7 +256,7 @@ public class EnemyBasic : ObjectBasic
         yield return new WaitForSeconds(time);
         enemyStatus.isRun = false;
         enemyStatus.fearTarget = null;
-        Waiting(1f);
+        Waiting(0.5f);
     }
 
     public void Waiting(float _Time)
