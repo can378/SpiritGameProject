@@ -11,7 +11,9 @@ public class GrapDeBuff : BuffData
 
     bool LeftRight;     // False면 Left, True면 Right;
 
-    float Tick = 0.0f;         // 0.1초
+    float Tick = 0.1f;         // 0.1초
+
+    int KeyDownMax = 20;
 
     public override void Apply(Buff _Buff)
     {
@@ -51,9 +53,10 @@ public class GrapDeBuff : BuffData
         ObjectBasic GrapOwner = (ObjectBasic)_Buff.CustomData["GO"];      // 잡기를 시전한 대상
         Transform GrapPos = (Transform)_Buff.CustomData["GP"];
         int KeyDownCount = (int)_Buff.CustomData["KDC"];
+        Debug.Log(KeyDownCount);
         // 잡기를 시전한 대상이 있을 때 경직 상태거나 죽었다면 해제
         // 또는 KeyDownCount가 조건을 만족할 때
-        if (GrapOwner == null || 0 < GrapOwner.status.isFlinch || !GrapOwner.gameObject.activeSelf || KeyDownCount > 30)
+        if (GrapOwner == null || 0 < GrapOwner.status.isFlinch || !GrapOwner.gameObject.activeSelf || KeyDownCount > KeyDownMax)
         {
             _Buff.curDuration = 0.0f;
             return;
@@ -92,6 +95,8 @@ public class GrapDeBuff : BuffData
                 Tick -= 0.5f;
             }
         }
+
+        _Buff.CustomData["KDC"] = KeyDownCount;
     }
 
     public override void Remove(Buff _Buff)

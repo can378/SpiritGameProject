@@ -141,6 +141,7 @@ public class BossBaby : Boss
         {
             time = 0;
             jukqwiAnim.animator.SetBool("isGrap", true);
+
             // 대상이 계속 잡기 상태라면
             while (grapDeBuff != null)
             {
@@ -306,7 +307,7 @@ public class BossBaby : Boss
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
                 hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
-                hitDetection.SetHit_Ratio(10, 1.0f, enemyStats.SkillPower, 10);
+                hitDetection.SetHit_Ratio(0, 1.0f, enemyStats.SkillPower, 10);
 
             }
             if(PlayerPos == 0)
@@ -435,10 +436,15 @@ public class BossBaby : Boss
 
     void Disarm()
     {
+        if(enemyStatus.EnemyTarget.GetComponent<ObjectBasic>().status.isDead)
+            return;
+
         enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().m_BuffController.ApplyBuff(BuffDatas[1]);
     }
     void RemoveDisarm()
     {
+        if (enemyStatus.EnemyTarget.GetComponent<ObjectBasic>().status.isDead)
+            return;
         enemyStatus.EnemyTarget.GetComponentInParent<ObjectBasic>().m_BuffController.RemoveBuff(BuffDatas[1]);
     }
 

@@ -8,6 +8,8 @@ public class AbscessExplosion : CurseArea
     {
         if (_Object is Abscess myScript)
         {
+            if(_Object.status.isDead)
+                return;
             myScript.Explosion();
         }
     }
