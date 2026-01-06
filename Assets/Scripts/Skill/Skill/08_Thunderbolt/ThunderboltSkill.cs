@@ -28,9 +28,6 @@ public class ThunderboltSkill : SkillBase
 
             skillCoolTime = 99;
 
-            // 먼저 속도 감소
-            player.stats.MoveSpeed.DecreasedValue += 99f;
-
             // 사용자 위치에 생성
             if (simul != null)
                 Destroy(simul);
@@ -70,11 +67,6 @@ public class ThunderboltSkill : SkillBase
             float timer = 0;
 
             skillCoolTime = 99;
-
-            // 먼저 속도 감소
-            enemy.stats.MoveSpeed.DecreasedValue += 99f;
-
-            
 
             // 사용자 위치에 생성
             if (simul != null)
@@ -132,11 +124,11 @@ public class ThunderboltSkill : SkillBase
         {
             Player player = this.user.GetComponent<Player>();
 
+
             yield return new WaitForSeconds(TSData.effectTime);
 
             Destroy(simul);
 
-            player.stats.MoveSpeed.DecreasedValue -= 99f;
 
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(TSData.postDelay);
@@ -153,7 +145,6 @@ public class ThunderboltSkill : SkillBase
 
             Destroy(simul);
 
-            enemy.stats.MoveSpeed.DecreasedValue -= 99f;
 
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(TSData.postDelay);

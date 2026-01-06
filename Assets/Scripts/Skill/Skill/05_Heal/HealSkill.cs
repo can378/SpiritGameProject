@@ -24,9 +24,6 @@ public class HealSkill : SkillBase
         {
             Player player = this.user.GetComponent<Player>();
 
-            // 먼저 속도 감소
-            player.stats.MoveSpeed.DecreasedValue += 0.9f;
-
             // 사용자 위치에 생성
             if (effect != null)
                 Destroy(effect);
@@ -47,9 +44,6 @@ public class HealSkill : SkillBase
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             float timer = 0;
-
-            // 먼저 속도 감소
-            enemy.stats.MoveSpeed.DecreasedValue += 0.9f;
 
             // 사용자 위치에 생성
             if (effect != null)
@@ -80,14 +74,12 @@ public class HealSkill : SkillBase
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            player.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * HSData.skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
-            enemy.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = HSData.skillDefalutCoolTime;
         }
     }

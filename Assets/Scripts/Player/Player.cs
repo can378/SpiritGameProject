@@ -182,7 +182,7 @@ public class Player : ObjectBasic
 
         playerStatus.moveVec = new Vector2(hAxis, vAxis).normalized;
 
-        if (playerStatus.isAttack || playerStatus.isSkill)       // 정지
+        if (playerStatus.isAttack || playerStatus.isSkill || playerStatus.isSkillHold)       // 정지
         {
             playerStatus.moveVec = Vector2.zero;
         }
