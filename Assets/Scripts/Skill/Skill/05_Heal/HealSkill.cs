@@ -93,14 +93,12 @@ public class HealSkill : SkillBase
         if (user.tag == "Player")
         {
             Player player = this.user.GetComponent<Player>();
-            player.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * HSData.skillDefalutCoolTime;
 
         }
         else if (user.tag == "Enemy")
         {
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
-            enemy.stats.MoveSpeed.DecreasedValue -= 0.9f;
             skillCoolTime = HSData.skillDefalutCoolTime;
         }
     }

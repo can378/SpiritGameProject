@@ -124,7 +124,6 @@ public class ThunderboltSkill : SkillBase
         {
             Player player = this.user.GetComponent<Player>();
 
-
             yield return new WaitForSeconds(TSData.effectTime);
 
             Destroy(simul);
@@ -144,7 +143,6 @@ public class ThunderboltSkill : SkillBase
             yield return new WaitForSeconds(TSData.effectTime);
 
             Destroy(simul);
-
 
             // 조금 시간이 지난 후 속도 감소 해제
             yield return new WaitForSeconds(TSData.postDelay);
