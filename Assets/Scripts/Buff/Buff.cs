@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
+public enum BuffState { None, Apply, Remove}
 public enum BuffType { ABILITY , CONTINUOUS_DAMAGE , DISTURBING_EFFECT ,OVERLAP, SPECIAL, Buff }
 
 [System.Serializable]
 public class Buff
 {
+    [HideInInspector] public BuffState m_BuffState { get; private set; } = BuffState.None;      // 버프 현재 상태 None, Apply : 대상에게 적용 중, Remove, 대상에게서 제거됨
     [field: SerializeField] public BuffData buffData { get; private set; }
     [field: SerializeField] public ObjectBasic target { get; private set; }
     [field: SerializeField] public float duration { get; set; }                              // 버프 지속 시간
@@ -44,6 +45,7 @@ public class Buff
     public void Apply()     //추가
     {
         buffData.Apply(this);
+        m_BuffState = BuffState.Apply;
     }
     public void Overlap()     //갱신
     {
@@ -56,5 +58,7 @@ public class Buff
     public void Remove()    //제거
     {
         buffData.Remove(this);
+        m_BuffState = BuffState.Remove;
     }
+
 }

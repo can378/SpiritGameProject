@@ -74,7 +74,7 @@ public class BossBaby : Boss
         switch (Pattern % 5)
         { 
             case 0:
-                RemoveDisarm();
+                //RemoveDisarm();
                 yield return enemyStatus.attackCoroutine = StartCoroutine(Screaming()); 
                 break;
             case 1: yield return enemyStatus.attackCoroutine = StartCoroutine(Grap()); 
@@ -82,7 +82,7 @@ public class BossBaby : Boss
             case 2: yield return enemyStatus.attackCoroutine = StartCoroutine(MadRush()); 
                 break;
             case 3: 
-                Disarm();
+                //Disarm();
                 yield return enemyStatus.attackCoroutine = StartCoroutine(Crying());
                 break;
             case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding());
@@ -143,12 +143,14 @@ public class BossBaby : Boss
             jukqwiAnim.animator.SetBool("isGrap", true);
 
             // 대상이 계속 잡기 상태라면
-            while (grapDeBuff != null)
+            while (grapDeBuff.m_BuffState == BuffState.Apply)
             {
                 time += Time.deltaTime;
                 // 3초동안 잡기 상태라면
                 if (4.0f < time)
                 {
+                    int a = 0;
+
                     // 큰 피해와 잡기를 1초 후에 해제
                     jukqwiAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);
@@ -297,7 +299,7 @@ public class BossBaby : Boss
         for (int i = 0; i < 50; i++)
         {
             int DropCount = Random.Range(2, 4);
-            int PlayerPos = Random.Range(0, 5);
+            int PlayerPos = Random.Range(0, 10);
             Vector2 DropPos;
             for (int j = 0; j < DropCount; ++j)
             {
