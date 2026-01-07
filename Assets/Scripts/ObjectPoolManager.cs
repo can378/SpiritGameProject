@@ -48,7 +48,16 @@ public class ObjectPoolManager : MonoBehaviour
             {
                 select = item;
                 select.transform.position = _Position;
+
+                // 만약 몬스터라면 부활 함수 호출
+                EnemyBasic enemyBasic = select.GetComponent<EnemyBasic>();
+                if (enemyBasic)
+                {
+                    enemyBasic.Revive(1.0f);
+                }
+
                 select.SetActive(true);
+
                 return select;
             }
         }

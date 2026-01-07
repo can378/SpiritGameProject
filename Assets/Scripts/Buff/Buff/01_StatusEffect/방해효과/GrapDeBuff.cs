@@ -8,12 +8,9 @@ public class GrapDeBuff : BuffData
 {
     // 공격 및 스킬, 이동 불가
     // 피격 시 해제
+    [field:SerializeField] float Tick = 0.1f;         // 0.1초
 
-    bool LeftRight;     // False면 Left, True면 Right;
-
-    float Tick = 0.1f;         // 0.1초
-
-    int KeyDownMax = 20;
+    [field: SerializeField] int KeyDownMax = 20;
 
     public override void Apply(Buff _Buff)
     {
@@ -33,6 +30,9 @@ public class GrapDeBuff : BuffData
 
             // 효과 적용
             _Buff.target.SetFlinch(_Buff.curDuration);
+
+            _Buff.CustomData.Add("LeftRight", false);
+            _Buff.CustomData.Add("KDC", 0);
         }
         if (_Buff.target.tag == "Enemy")
         {
@@ -45,6 +45,9 @@ public class GrapDeBuff : BuffData
 
             // 효과 적용
             _Buff.target.SetFlinch(_Buff.curDuration);
+
+            _Buff.CustomData.Add("LeftRight", false);
+            _Buff.CustomData.Add("KDC", 0);
         }
     }
 
@@ -53,6 +56,7 @@ public class GrapDeBuff : BuffData
         ObjectBasic GrapOwner = (ObjectBasic)_Buff.CustomData["GO"];      // 잡기를 시전한 대상
         Transform GrapPos = (Transform)_Buff.CustomData["GP"];
         int KeyDownCount = (int)_Buff.CustomData["KDC"];
+        bool LeftRight = (bool)_Buff.CustomData["LeftRight"];
         Debug.Log(KeyDownCount);
         // 잡기를 시전한 대상이 있을 때 경직 상태거나 죽었다면 해제
         // 또는 KeyDownCount가 조건을 만족할 때
@@ -97,6 +101,7 @@ public class GrapDeBuff : BuffData
         }
 
         _Buff.CustomData["KDC"] = KeyDownCount;
+        _Buff.CustomData["LeftRight"] = LeftRight;
     }
 
     public override void Remove(Buff _Buff)
@@ -109,7 +114,6 @@ public class GrapDeBuff : BuffData
     {
         _Buff.CustomData.Add("GO", _OB);
         _Buff.CustomData.Add("GP", _Pos);
-        _Buff.CustomData.Add("KDC", 0);
     }
 
 }

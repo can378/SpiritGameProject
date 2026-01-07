@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abscess : EnemyBasic
+public class Tear : EnemyBasic
 {
     [SerializeField]
     GameObject m_Pus;       // Á×À» ¶§ Æø¹ßÇÏ´Â Á¾±â
