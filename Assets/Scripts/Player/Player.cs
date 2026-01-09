@@ -1164,6 +1164,7 @@ public class Player : ObjectBasic
             BeAttacked(other.gameObject.GetComponent<HitDetection>(), other.ClosestPoint(CenterPivot.position));
 
         }
+        /*
         else if (other.tag == "EnterDungeon")
         {
             AudioManager.instance.Bgm_normal(userData.nowChapter);
@@ -1189,6 +1190,7 @@ public class Player : ObjectBasic
                 SceneManager.LoadScene("Main");
             }
         }
+        */
         else if (other.tag == "Item")
         {
             Item item = other.GetComponent<Item>();
