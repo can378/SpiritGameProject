@@ -12,19 +12,20 @@ public class MapUIManager : MonoBehaviour
 
     [Header("UI")]
     //Panel
-    public GameObject tabkeyPanel;
-    public GameObject esckeyPanel;
-    public GameObject diePanel;
-    public GameObject settingPanel;
-    public GameObject startPanel;
-    public GameObject warningPanel;
-    public GameObject restartPanel;
-    public GameObject resetPanel;
-    public GameObject minimapPanel;
-    public GameObject statSelectPanel;      // 스탯 선택창
-    public GameObject nearObjectPanel;      // 상호작용
-    public GameObject inventoryPanel;       // 장비 창
-    public ToolTipUI toolTipPanel;
+    public GameObject   tabkeyPanel;
+    public GameObject   esckeyPanel;
+    public GameObject   diePanel;
+    public GameObject   settingPanel;
+    public GameObject   startPanel;
+    public GameObject   warningPanel;
+    public GameObject   restartPanel;
+    public GameObject   resetPanel;
+    public GameObject   minimapPanel;
+    public GameObject   statSelectPanel;      // 스탯 선택창
+    public GameObject   nearObjectPanel;      // 상호작용
+    public GameObject   inventoryPanel;       // 장비 창
+    public ToolTipUI    toolTipPanel;
+    public GameObject   endPanel;
 
     [SerializeField] GameObject BossProgressPanel;
 
@@ -97,17 +98,16 @@ public class MapUIManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if (esckeyPanel) { Time.timeScale = 1; }
-            else { Time.timeScale = 0; }
-
             AudioManager.instance.UIClickAudio();
             esckeyPanel.SetActive(!esckeyPanel.activeSelf);
             settingPanel.SetActive(false);
-            
         }
 
         if(Input.GetKeyDown(KeyCode.I))
         {
+            if (Time.timeScale == 0)
+                return;
+
             if (inventoryPanel.activeSelf == true) 
             {
                 inventoryPanel.SetActive(false);
@@ -123,7 +123,7 @@ public class MapUIManager : MonoBehaviour
         }
 
 
-        if(esckeyPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf || resetPanel.activeSelf || restartPanel.activeSelf)
+        if(esckeyPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf || resetPanel.activeSelf || restartPanel.activeSelf || endPanel.activeSelf)
         {
             Time.timeScale = 0f;
         }
