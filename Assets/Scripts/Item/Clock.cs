@@ -10,6 +10,7 @@ public class Clock : MonoBehaviour
 
     public IEnumerator ClockStart(float duration)
     {
+        animator.SetTrigger("ReStart");
         float elapsed = 0f;
         int currentIndex = -1;
 

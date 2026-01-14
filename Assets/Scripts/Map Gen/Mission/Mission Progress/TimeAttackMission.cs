@@ -10,7 +10,7 @@ public class TimeAttackMission : MissionBase
     [SerializeField] float m_TimeAttackDuration;
     [SerializeField] float m_TimeAttackTimer;
 
-    [SerializeField] GameObject clock;
+    [SerializeField] Clock m_Clock;
 
 
 
@@ -26,14 +26,14 @@ public class TimeAttackMission : MissionBase
 
     public void ResetTimer()
     {
+        StartCoroutine(m_Clock.GetComponent<Clock>().ClockStart(m_TimeAttackDuration));
         m_TimeAttackTimer = m_TimeAttackDuration;
     }
 
 
     public override void StartMission()
     {
-        clock.SetActive(true);
-        StartCoroutine(clock.GetComponent<Clock>().ClockStart(m_TimeAttackDuration));
+        m_Clock.gameObject.SetActive(true);
         ResetTimer();
     }
 
@@ -62,7 +62,7 @@ public class TimeAttackMission : MissionBase
 
     public override void EndMission()
     {
-        clock.SetActive(true);
+        m_Clock.gameObject.SetActive(true);
         
     }
 }

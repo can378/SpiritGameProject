@@ -24,6 +24,7 @@ public class ReSpawnMission : MissionBase
 
     public void ResetTimer()
     {
+        StartCoroutine(clock.GetComponent<Clock>().ClockStart(m_RespawnDuration));
         m_RespawnTimer = m_RespawnDuration;
     }
 
@@ -32,7 +33,6 @@ public class ReSpawnMission : MissionBase
     {
         m_Spawner = m_Owner.GetComponent<ObjectSpawn>();
         clock.SetActive(true);
-        StartCoroutine(clock.GetComponent<Clock>().ClockStart(m_RespawnDuration));
         ResetTimer();
     }
 
@@ -48,7 +48,6 @@ public class ReSpawnMission : MissionBase
         if(m_RespawnTimer <= 0)
         {
             m_Spawner.RespawnEnemy();
-            StartCoroutine(clock.GetComponent<Clock>().ClockStart(m_RespawnDuration));
             ResetTimer();
         }
     }
