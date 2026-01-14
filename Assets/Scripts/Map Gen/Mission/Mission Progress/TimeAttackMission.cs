@@ -10,7 +10,7 @@ public class TimeAttackMission : MissionBase
     [SerializeField] float m_TimeAttackDuration;
     [SerializeField] float m_TimeAttackTimer;
 
-    [SerializeField] Clock m_Clock;
+    [SerializeField] GameObject m_Clock;
 
 
 

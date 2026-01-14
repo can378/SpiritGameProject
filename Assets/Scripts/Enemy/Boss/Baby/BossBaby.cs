@@ -149,8 +149,8 @@ public class BossBaby : Boss
                 // 3초동안 잡기 상태라면
                 if (4.0f < time)
                 {
-                    int a = 0;
-
+                    GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;
+                    GrapDeBuffData.SetKeyLock(grapDeBuff, true);
                     // 큰 피해와 잡기를 1초 후에 해제
                     jukqwiAnim.animator.SetTrigger("Hug");
                     grapDeBuff.target.BeAttacked(stats.AttackPower.Value, grapDeBuff.target.transform.position);

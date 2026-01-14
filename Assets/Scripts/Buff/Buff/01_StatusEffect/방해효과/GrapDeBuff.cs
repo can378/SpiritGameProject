@@ -31,8 +31,10 @@ public class GrapDeBuff : BuffData
             // 효과 적용
             _Buff.target.SetFlinch(_Buff.curDuration);
 
+            // 전용 변수
             _Buff.CustomData.Add("LeftRight", false);
             _Buff.CustomData.Add("KDC", 0);
+            _Buff.CustomData.Add("KeyLock", false);
         }
         if (_Buff.target.tag == "Enemy")
         {
@@ -46,8 +48,11 @@ public class GrapDeBuff : BuffData
             // 효과 적용
             _Buff.target.SetFlinch(_Buff.curDuration);
 
+            // 전용 변수
             _Buff.CustomData.Add("LeftRight", false);
             _Buff.CustomData.Add("KDC", 0);
+            _Buff.CustomData.Add("KeyLock", false);
+
         }
     }
 
@@ -57,7 +62,8 @@ public class GrapDeBuff : BuffData
         Transform GrapPos = (Transform)_Buff.CustomData["GP"];
         int KeyDownCount = (int)_Buff.CustomData["KDC"];
         bool LeftRight = (bool)_Buff.CustomData["LeftRight"];
-        Debug.Log(KeyDownCount);
+        bool KeyLock = (bool)_Buff.CustomData["KeyLock"];
+
         // 잡기를 시전한 대상이 있을 때 경직 상태거나 죽었다면 해제
         // 또는 KeyDownCount가 조건을 만족할 때
         if (GrapOwner == null || 0 < GrapOwner.status.isFlinch || !GrapOwner.gameObject.activeSelf || KeyDownCount > KeyDownMax)
@@ -76,6 +82,9 @@ public class GrapDeBuff : BuffData
 
         // 경직 시킴
         _Buff.target.status.isFlinch = Mathf.Max(_Buff.target.status.isFlinch, _Buff.curDuration);
+
+        if (KeyLock)
+            return;
 
         if (_Buff.target.tag == "Player")
         {
@@ -100,6 +109,7 @@ public class GrapDeBuff : BuffData
             }
         }
 
+
         _Buff.CustomData["KDC"] = KeyDownCount;
         _Buff.CustomData["LeftRight"] = LeftRight;
     }
@@ -114,6 +124,11 @@ public class GrapDeBuff : BuffData
     {
         _Buff.CustomData.Add("GO", _OB);
         _Buff.CustomData.Add("GP", _Pos);
+    }
+
+    public void SetKeyLock(Buff _Buff, bool _Lock)
+    {
+        _Buff.CustomData["KeyLock"] = _Lock;
     }
 
 }
