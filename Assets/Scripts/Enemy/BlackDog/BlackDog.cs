@@ -122,6 +122,7 @@ public class BlackDog : EnemyBasic
         //yield return new WaitForSeconds(biteTime * 0.4f);
 
         enemyAnim.ChangeDirection(blackDogStatus.targetDirVec);
+        enemyAnim.animator.SetBool("isAttack", true);
 
         if (hitEffects.Length > 0 && hitEffects[0] != null)
         {
@@ -138,6 +139,8 @@ public class BlackDog : EnemyBasic
         {
             Debug.LogWarning("hitEffects[0] is missing in BlackDog!");
         }
+
+        enemyAnim.animator.SetBool("isAttack", false);
 
         blackDogStatus.isAttack = false;
         blackDogStatus.isAttackReady = true;

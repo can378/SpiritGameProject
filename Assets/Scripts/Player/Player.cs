@@ -1225,7 +1225,7 @@ public class Player : ObjectBasic
     void OnTriggerStay2D(Collider2D other)
     {
         // 해당 tag가 붙은 대상은 상호작용이 가능
-        if (other.tag == "SelectItem" || other.tag == "Door" ||
+        if (other.tag == "SelectItem" ||
         other.tag == "Npc" || other.tag == "reward" || other.tag == "SellingItem")
         {
             if (playerStatus.nearObject == null || Vector2.Distance(CenterPivot.transform.position, other.transform.position) < Vector2.Distance(CenterPivot.transform.position, playerStatus.nearObject.transform.position))

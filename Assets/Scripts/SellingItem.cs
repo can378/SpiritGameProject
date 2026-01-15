@@ -72,7 +72,7 @@ public class SellingItem : MonoBehaviour, Interactable
 
     public string GetInteractText()
     {
-        return "ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½";
+        return "±¸¸ÅÇÏ±â";
     }
 
     public void Interact()

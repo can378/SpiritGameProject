@@ -84,6 +84,8 @@ public class ObjectBasic : MonoBehaviour
         else
             criticalHit = Damaged(hitDetection.Damage, hitDetection.critical.Value, hitDetection.criticalDamage.Value);
 
+        HitEffect(_HitPos, criticalHit, hitDetection.Damage);
+
         // if enemy is Dead, Don't Flinch and Buff
         if (stats.HP <= 0)
             return;
@@ -112,36 +114,6 @@ public class ObjectBasic : MonoBehaviour
         }
 
         BeAttackedEvent?.Invoke();
-
-        // 피격 시 이펙트 효과
-        #region Effect
-        if (hitDetection.Damage == 0)
-            return;
-
-
-        if (criticalHit)
-        {
-            ObjectPoolManager.instance.Get("Hit_Red").transform.position = _HitPos;
-            AudioManager.instance.SFXPlay("Stab_Attack_Sound");
-        }
-        else
-        {
-            ObjectPoolManager.instance.Get("Hit_White").transform.position = _HitPos;
-            AudioManager.instance.SFXPlay("Hit_SFX");
-        }
-
-        foreach (SpriteRenderer sprite in sprites)
-        {
-            sprite.color = Color.red;
-        }
-
-        if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
-        status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
-
-        transform.DOShakePosition(0.1f, new Vector3(0.1f, 0.1f,0.0f));
-        //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-
-        #endregion Effect
     }
 
     // 단순 피해
@@ -213,6 +185,35 @@ public class ObjectBasic : MonoBehaviour
         {
             sprite.color = new Color(1, 1, 1,1);
         }
+    }
+
+    public void HitEffect(Vector3 _HitPos, bool _IsCritical = false, float _Damage = 1.0f)
+    {
+        if (_Damage == 0)
+            return;
+
+
+        if (_IsCritical)
+        {
+            ObjectPoolManager.instance.Get("Hit_Red").transform.position = _HitPos;
+            AudioManager.instance.SFXPlay("Stab_Attack_Sound");
+        }
+        else
+        {
+            ObjectPoolManager.instance.Get("Hit_White").transform.position = _HitPos;
+            AudioManager.instance.SFXPlay("Hit_SFX");
+        }
+
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.color = Color.red;
+        }
+
+        if (status.beAttackedCoroutine != null) StopCoroutine(status.beAttackedCoroutine);
+        status.beAttackedCoroutine = StartCoroutine(ChangeHitColor(0.1f));
+
+        transform.DOShakePosition(0.1f, new Vector3(0.1f, 0.1f, 0.0f));
+        //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
     #endregion BeAttacked
