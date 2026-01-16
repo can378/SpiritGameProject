@@ -53,7 +53,7 @@ public class ThunderboltSkill : SkillBase
                 hitDetection.SetHit_Ratio(
                 TSData.defaultDamage, TSData.ratio, player.playerStats.SkillPower,
                 TSData.knockBack);
-                hitDetection.SetSEs(TSData.statusEffect);
+                //hitDetection.SetSEs(TSData.statusEffect);
 
                 Destroy(effect, TSData.effectTime);
 
@@ -93,7 +93,7 @@ public class ThunderboltSkill : SkillBase
                 hitDetection.SetHit_Ratio(
                 TSData.defaultDamage, TSData.ratio, enemy.stats.SkillPower,
                 TSData.knockBack);
-                hitDetection.SetSEs(TSData.statusEffect);
+                //hitDetection.SetSEs(TSData.statusEffect);
                 hitDetection.user = user;
 
                 Destroy(effect, TSData.effectTime);

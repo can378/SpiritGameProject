@@ -25,12 +25,12 @@ Transform:
   m_GameObject: {fileID: 873871646850055799}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 198877494814382181}
-  - {fileID: 6554310292060134569}
+  - {fileID: 1367408901043937491}
   m_Father: {fileID: 9000933290160733339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3296880656510438592
@@ -43,11 +43,11 @@ GameObject:
   m_Component:
   - component: {fileID: 9000933290160733339}
   - component: {fileID: 6601849473291929727}
-  - component: {fileID: -7419339772885541375}
-  - component: {fileID: 1257599354484383976}
-  - component: {fileID: -3922601081136190845}
+  - component: {fileID: -5267978439393089101}
+  - component: {fileID: -8167548937175115626}
+  - component: {fileID: -8722801260500114178}
   m_Layer: 6
-  m_Name: 37_DotDamageImmunity
+  m_Name: 36_SEImmunity
   m_TagString: SelectItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
---- !u!210 &-7419339772885541375
+--- !u!210 &-5267978439393089101
 SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +116,7 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!114 &1257599354484383976
+--- !u!114 &-8167548937175115626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,19 +130,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemInstance:
     id: 
-    itemData: {fileID: 11400000, guid: dd74ea31322987f468240c3402c37920, type: 2}
+    itemData: {fileID: 11400000, guid: 92d078ef4089a1548bd9f46cd7042ecf, type: 2}
   <equipmentInstance>k__BackingField:
-    rid: 2225152306607030523
+    rid: 2225152306607030521
   references:
     version: 2
     RefIds:
-    - rid: 2225152306607030523
+    - rid: 2225152306607030521
       type: {class: EquipmentInstance, ns: , asm: Assembly-CSharp}
       data:
         id: 
-        itemData: {fileID: 11400000, guid: dd74ea31322987f468240c3402c37920, type: 2}
-        equipmentData: {fileID: 11400000, guid: dd74ea31322987f468240c3402c37920, type: 2}
---- !u!50 &-3922601081136190845
+        itemData: {fileID: 11400000, guid: 92d078ef4089a1548bd9f46cd7042ecf, type: 2}
+        equipmentData: {fileID: 11400000, guid: 92d078ef4089a1548bd9f46cd7042ecf, type: 2}
+--- !u!50 &-8722801260500114178
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -242,7 +242,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1798884776, guid: 0f1d483afaa72c244a48b83f3bedab1b, type: 3}
+  m_Sprite: {fileID: -1427008707, guid: 0f1d483afaa72c244a48b83f3bedab1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -253,7 +253,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &2090990683840018182
+--- !u!1001 &6128033122969668476
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -310,8 +310,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8069194a3498142b0e77439273c20e, type: 3}
---- !u!4 &6554310292060134569 stripped
+--- !u!4 &1367408901043937491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5183967040813214639, guid: fa8069194a3498142b0e77439273c20e, type: 3}
-  m_PrefabInstance: {fileID: 2090990683840018182}
+  m_PrefabInstance: {fileID: 6128033122969668476}
   m_PrefabAsset: {fileID: 0}

@@ -6,7 +6,6 @@ public class WhiteFox : EnemyBasic
 {
     WhiteFoxStatus whiteFoxStatus;
     [SerializeField] int defaulBlizzardCoolTime = 10;
-    [SerializeField] BuffData[] blizzardDebuff;
 
     protected override void Awake()
     {
@@ -76,7 +75,6 @@ public class WhiteFox : EnemyBasic
         hitDetection.user = this;
         hitDetection.SetHit_Ratio(1f, 0.1f, enemyStats.SkillPower);
         hitDetection.SetMultiHit(true, 4);
-        hitDetection.SetSEs(blizzardDebuff);
         hitEffects[1].SetActive(true);
         yield return new WaitForSeconds(1f);
 

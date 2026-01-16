@@ -97,7 +97,7 @@ public class IcicleSkill : SkillBase
             Destroy(simul);
             
             hitDetection.SetProjectile_Ratio(0, ISData.defaultDamage, ISData.ratio, player.playerStats.SkillPower);
-            hitDetection.SetSEs(ISData.statusEffect);
+            //hitDetection.SetSEs(ISData.statusEffect);
             hitDetection.SetDisableTime(ISData.projectileTime);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(player.playerStatus.mouseAngle - 90, Vector3.forward);  // ���� ����
@@ -124,7 +124,7 @@ public class IcicleSkill : SkillBase
             Destroy(simul);
 
             hitDetection.SetProjectile_Ratio(0, ISData.defaultDamage, ISData.ratio, enemy.stats.SkillPower, ISData.knockBack);
-            hitDetection.SetSEs(ISData.statusEffect);
+            //hitDetection.SetSEs(ISData.statusEffect);
             hitDetection.SetDisableTime(ISData.projectileTime);
             hitDetection.user = user;
             instantProjectile.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);  // ���� ����

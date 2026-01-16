@@ -15,7 +15,7 @@ public class ThunderboltSkillData : SkillData
     [field: SerializeField, Tooltip("초당 소환 횟수")] public float DPS { get; private set; }
     [field: SerializeField, Tooltip("넉백 수치")] public float knockBack { get; private set; }
 
-    [field: SerializeField, Tooltip("벼락 약화 상태이상")] public BuffData[] statusEffect { get; private set; }
+    //[field: SerializeField, Tooltip("벼락 약화 상태이상")] public BuffData[] statusEffect { get; private set; }
 
     [field: SerializeField, Header("GameObject"), Tooltip("벼락 프리팹")] public GameObject thunderboltEffectSimul { get; private set; }
     [field: SerializeField, Header("GameObject"), Tooltip("벼략 소원 범위 시뮬 프리팹")] public GameObject summonAreaSimul { get; private set; }
