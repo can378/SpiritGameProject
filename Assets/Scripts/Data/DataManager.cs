@@ -62,13 +62,18 @@ public class DataManager : MonoBehaviour
             InitData();
             InitPersistentData();
 
-            SaveUserData();
+            SavePlayerStatsToUserData();
+
             SavePersistentData();
         }
 
     }
 
-    public void SaveUserData()
+
+    /// <summary>
+    /// 플레이어의 스탯을 UserData에 덮어씌워 저장한다.
+    /// </summary>
+    public void SavePlayerStatsToUserData()
     {
         // userData를 player 스탯으로 덮어씌우기
         //userData.playerLevel = Player.instance.playerStats.level;
@@ -100,15 +105,7 @@ public class DataManager : MonoBehaviour
             userData.playerStat[i] = Player.instance.playerStats.playerStat[i];
         }
 
-        //파일 저장 경로
-        string userDataFilePath = Application.persistentDataPath + UserDataFileName;
-
-        //데이터 직렬화
-        string userJsonData = JsonConvert.SerializeObject(userData);
-
-        File.WriteAllText(userDataFilePath, userJsonData);
-
-        Debug.Log("user data : " + userDataFilePath);
+        SaveUserData();
     }
 
     public void SavePersistentData()
@@ -122,6 +119,22 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(persistentDataFilePath, persistentJsonData);
 
         Debug.Log("persistent data : " + persistentDataFilePath);
+    }
+
+    /// <summary>
+    /// 현재 UserData를 저장한다.
+    /// </summary>
+    public void SaveUserData()
+    {
+        //파일 저장 경로
+        string userDataFilePath = Application.persistentDataPath + UserDataFileName;
+
+        //데이터 직렬화
+        string userJsonData = JsonConvert.SerializeObject(userData);
+
+        File.WriteAllText(userDataFilePath, userJsonData);
+
+        Debug.Log("user data : " + userDataFilePath);
     }
 
     public void InitData()

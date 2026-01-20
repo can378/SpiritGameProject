@@ -17,7 +17,7 @@ public class EnterDungeon : MonoBehaviour
             {
 
                 userData.nowChapter++;
-                DataManager.instance.SaveUserData();
+                DataManager.instance.SavePlayerStatsToUserData();
                 SceneManager.LoadScene("Map");
             }
             else
