@@ -43,7 +43,7 @@ public class ThunderboltSkill : SkillBase
                 // 무작위 생성 위치 선정
                 Vector3 pos = player.CenterPivot.transform.position + (Random.insideUnitSphere * TSData.summonAreaSize /2);
                 pos.z = 0;
-                GameObject effect = Instantiate(TSData.thunderboltEffectSimul, pos, Quaternion.identity);
+                GameObject effect = ObjectPoolManager.instance.Get(TSData.thunderboltEffectSimul, pos);
                 HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
                 effect.transform.localScale = new Vector3(TSData.defaultSize, TSData.defaultSize, 0);
@@ -55,7 +55,7 @@ public class ThunderboltSkill : SkillBase
                 TSData.knockBack);
                 //hitDetection.SetSEs(TSData.statusEffect);
 
-                Destroy(effect, TSData.effectTime);
+                //Destroy(effect, TSData.effectTime);
 
                 yield return new WaitForSeconds(1f/ TSData.DPS);
             }
@@ -83,7 +83,7 @@ public class ThunderboltSkill : SkillBase
                 // 무작위 생성 위치 선정
                 Vector3 pos = enemy.CenterPivot.transform.position + (Random.insideUnitSphere * TSData.summonAreaSize / 2);
                 pos.z = 0;
-                GameObject effect = Instantiate(TSData.thunderboltEffectSimul, pos, Quaternion.identity);
+                GameObject effect = ObjectPoolManager.instance.Get(TSData.thunderboltEffectSimul, pos);
                 HitDetection hitDetection = effect.GetComponent<HitDetection>();
 
                 effect.transform.localScale = new Vector3(TSData.defaultSize, TSData.defaultSize, 0);
@@ -96,7 +96,7 @@ public class ThunderboltSkill : SkillBase
                 //hitDetection.SetSEs(TSData.statusEffect);
                 hitDetection.user = user;
 
-                Destroy(effect, TSData.effectTime);
+                //Destroy(effect, TSData.effectTime);
 
                 timer += 1f/ TSData.DPS;
 
