@@ -26,6 +26,7 @@ public class MapUIManager : MonoBehaviour
     public GameObject   inventoryPanel;       // 장비 창
     public ToolTipUI    toolTipPanel;
     public GameObject   endPanel;
+    public GameObject   checkPanel; //확인용 창
 
     [SerializeField] GameObject BossProgressPanel;
 
@@ -101,6 +102,7 @@ public class MapUIManager : MonoBehaviour
             AudioManager.instance.UIClickAudio();
             esckeyPanel.SetActive(!esckeyPanel.activeSelf);
             settingPanel.SetActive(false);
+            UpdateCheckPanelUI(false);
         }
 
         if(Input.GetKeyDown(KeyCode.I))
@@ -363,6 +365,13 @@ public class MapUIManager : MonoBehaviour
         }
 
 
+    }
+
+    public void UpdateCheckPanelUI(bool is_open)
+    {
+        if (checkPanel != null)
+        { checkPanel.SetActive(is_open); }
+        else { print("no check panel error"); }
     }
 
 
