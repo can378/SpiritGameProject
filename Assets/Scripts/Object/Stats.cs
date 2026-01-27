@@ -18,6 +18,8 @@ public class Stat
     [field: SerializeField, ReadOnly] float _IncreasedValue;
     [field: SerializeField, ReadOnly] float _DecreasedValue;
 
+    public event System.Action StatChangeEvent;
+
     public Stat(float _DefalutValue, float _MaxValue = float.MaxValue, float _MinValue = float.MinValue)
     {
         this._DefaultValue = _DefalutValue;
@@ -37,13 +39,13 @@ public class Stat
     void ResetValue()
     {
         _Value = Mathf.Clamp((_DefaultValue + _AddValue) * (1f + _IncreasedValue) * (1f - _DecreasedValue), _MinValue, _MaxValue);
+        StatChangeEvent?.Invoke();
     }
 
     public float Value
     {
         get
         {
-            ResetValue();
             return _Value;
         }
     }

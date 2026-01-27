@@ -5,25 +5,29 @@ using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 
-public class StatValueUI : MonoBehaviour, IStatUI
+public class StatValueUI : IStatUI
 {
-    [field: SerializeField] Stat m_Stat;
-    [field: SerializeField] TMP_Text m_Name;
-    [field: SerializeField] TMP_Text m_Value;
+    Stat m_Stat;
+    [field: SerializeField] TMP_Text m_StatName;
+    [field: SerializeField] TMP_Text m_StatValue;
 
-    public Stat GetStat() { return m_Stat; }
-    public TMP_Text GetName() { return m_Name; }
-    public TMP_Text GetValue() { return m_Value; }
-
-    // Start is called before the first frame update
-    void Start()
+    public override Stat GetStat() { return m_Stat; }
+    public override void SetStat(Stat _Stat)
     {
-        
+        m_Stat = _Stat;
+        m_Stat.StatChangeEvent += UpdateUI;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override TMP_Text GetName() { return m_StatName; }
+    public override TMP_Text GetValue() { return m_StatValue; }
+
+    private void OnEnable()
     {
-        
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        m_StatValue.text = m_Stat.Value.ToString();
     }
 }

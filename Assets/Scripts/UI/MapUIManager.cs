@@ -137,7 +137,7 @@ public class MapUIManager : MonoBehaviour
         UpdateHealthUI();
         UpdateCoinUI();
         UpdateKeyUI();
-        UpdateStatUI();
+        //UpdateStatUI();
         UpdateSkillUI();
         UpdateSkillCoolTimeUI();
 
