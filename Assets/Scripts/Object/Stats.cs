@@ -11,8 +11,8 @@ public class Stat
     [field: SerializeField, ReadOnly] float _Value;
     [Header("기본값")]
     [field: SerializeField] float _DefaultValue;
-    float _MaxValue;
-    float _MinValue;
+    [field: SerializeField, ReadOnly] float _MaxValue;
+    [field: SerializeField, ReadOnly] float _MinValue;
     [Header("수정값")]
     [field: SerializeField, ReadOnly] float _AddValue;
     [field: SerializeField, ReadOnly] float _IncreasedValue;
@@ -40,6 +40,16 @@ public class Stat
     {
         _Value = Mathf.Clamp((_DefaultValue + _AddValue) * (1f + _IncreasedValue) * (1f - _DecreasedValue), _MinValue, _MaxValue);
         StatChangeEvent?.Invoke();
+    }
+
+    public float Max
+    {
+        get { return _MaxValue; }
+    }
+
+    public float Min
+    {
+        get { return _MinValue; }
     }
 
     public float Value

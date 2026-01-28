@@ -7,7 +7,7 @@ public class StatUIController : MonoBehaviour
     [field: SerializeField]IStatUI[] m_StatUI;
     Player m_Player;
 
-    void Start()
+    void Awake()
     {
         m_Player = Player.instance;
 

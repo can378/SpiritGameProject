@@ -28,7 +28,7 @@ public class PlayerStats : Stats
     // 높을수록 빨라짐
     // 초당 공격속도 = 무기 초당 공격 속도 * 플레이어 공격속도
     // 최소 0%, 최대 300%
-    [field: SerializeField] public Stat AttackSpeed { get; set; } = new Stat(1.0f, 3.0f, 0.0f);
+    [field: SerializeField] public Stat AttackSpeed { get; set; } = new Stat(1.0f, 3.0f, 0.33f);
 
 
     // SkillCoolTime
