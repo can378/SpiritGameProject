@@ -27,7 +27,7 @@ public class PassiveUI : MonoBehaviour
             PassiveIconUI iconUI = icon.GetComponent<PassiveIconUI>();
 
             // 해당 패시브가 더 이상 없다면
-            if (!m_ObjectBasic.FindPassive(iconUI.m_PassiveData.PID, out PassiveData passive))
+            if (!m_ObjectBasic.FindPassive(iconUI.m_PassiveData))
             {
                 m_Icons.RemoveAt(i);
                 Destroy(icon);
@@ -36,7 +36,7 @@ public class PassiveUI : MonoBehaviour
 
         // 아이콘 추가
         // 대상에게 있는 패시브인지 확인
-        foreach (PassiveData passive in m_ObjectBasic.stats.activePassive.Values)
+        foreach (PassiveData passive in m_ObjectBasic.stats.activePassive.Keys)
         {
             bool isExist = false;
 

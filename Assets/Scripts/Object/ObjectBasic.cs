@@ -406,42 +406,48 @@ public class ObjectBasic : MonoBehaviour
         if(status.isDead)
             return null;
 
-        PassiveData passive;
-        stats.activePassive.TryGetValue(_Passive.PID, out passive);
-
-        if (passive)
+        // 패시브 찾기
+        if(stats.activePassive.ContainsKey(_Passive))
         {
-            return passive;
+            // 이미 같은 패시브가 있다면 중첩 처리
+            stats.activePassive[_Passive] += 1;
+            return _Passive;
         }
+
         _Passive.Apply(this);
-        stats.activePassive.Add(_Passive.PID,_Passive);
+        stats.activePassive.Add(_Passive,1);
 
         PassiveApplyEvent?.Invoke();
 
-        return passive;
+        return _Passive;
     }
 
-    public bool FindPassive(int _ID, out PassiveData _Passive)
+    public bool FindPassive(PassiveData _Passive)
     {
-        return stats.activePassive.TryGetValue(_ID, out _Passive);
+        return stats.activePassive.ContainsKey(_Passive);
     }
 
     public void RemovePassive(PassiveData _Passive)
     {
-        PassiveData passive;
-        stats.activePassive.TryGetValue(_Passive.PID, out passive);
-
-        if (passive)
-        {
-            passive.Remove(this);                                       // 버프 해제
-            stats.activePassive.Remove(passive.PID);                    // 리스트에서 제거
-
-            PassiveRemoveEvent?.Invoke();
-        }
-        else
+        // 패시브 찾기
+        if (!stats.activePassive.ContainsKey(_Passive))
         {
             Debug.Log("존재하지 않는 패시브 제거");
+            return;
         }
+
+        // 패시브 스택이 1보다 크다면 중첩 감소
+        if(1 < stats.activePassive[_Passive])
+        {
+            stats.activePassive[_Passive] -= 1;
+            return;
+        }
+
+        // 패시브 제거
+        _Passive.Remove(this);
+        stats.activePassive.Remove(_Passive);
+
+        PassiveRemoveEvent?.Invoke();
     }
 
     protected void Update_Passive()
@@ -452,7 +458,7 @@ public class ObjectBasic : MonoBehaviour
         foreach (var kvp in stats.activePassive)
         {
             // 지속 시간 종료 시
-            PassiveData passive = kvp.Value;
+            PassiveData passive = kvp.Key;
             passive.Update_Passive(this);
         }
     }

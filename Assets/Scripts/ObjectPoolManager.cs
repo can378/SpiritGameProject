@@ -38,9 +38,16 @@ public class ObjectPoolManager : MonoBehaviour
     // 모든 자식 오브젝트 삭제
     void DeleteAllChildren()
     {
+        // 자식 제거
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
+        }
+
+        // 풀 초기화
+        foreach (List<GameObject> pool in pools)
+        {
+            pool.Clear();
         }
     }
 

@@ -170,6 +170,9 @@ public class Stats : MonoBehaviour
     [field: SerializeField] public Stat MoveSpeed = new Stat(5f, float.MaxValue, 0);
 
     
-    [field: SerializeField] public SerializedDictionary<int, PassiveData> activePassive = new SerializedDictionary<int, PassiveData>();         //버프 디버프
+    // 활성화된 패시브 목록
+    // Key PassiveData
+    // Value 패시브 중첩(중복 패시브 적용 시 안전하게 제거하기 위한 값)
+    [field: SerializeField] public SerializedDictionary<PassiveData, int> activePassive = new SerializedDictionary<PassiveData, int>();
     //[field: SerializeField] public SerializedDictionary<int, Buff> activeEffects = new SerializedDictionary<int, Buff>();         //버프 디버프
 }
