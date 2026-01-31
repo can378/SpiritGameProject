@@ -24,8 +24,8 @@ public class DodgeTimeUp : PassiveData
             Debug.Log("플레이어 회피 시 추가 이동속도 +" + speedVariation * 100 + "%p 증가");
             Debug.Log("플레이어 회피 시간 +" + timeVariation * 100 + "% 증가");
             PlayerStats playerStats = _User.GetComponent<PlayerStats>();
-            playerStats.decreasedDodgeSpeed += speedVariation;
-            playerStats.increasedDodgeTime += timeVariation;
+            playerStats.DodgeSpeed.AddValue -= speedVariation;
+            playerStats.DodgeTime.AddValue += timeVariation;
         }
     }
 
@@ -35,8 +35,8 @@ public class DodgeTimeUp : PassiveData
         if (_User.tag == "Player")
         {
             PlayerStats playerStats = _User.GetComponent<PlayerStats>();
-            playerStats.decreasedDodgeSpeed -= speedVariation;
-            playerStats.increasedDodgeTime -= timeVariation;
+            playerStats.DodgeSpeed.AddValue += speedVariation;
+            playerStats.DodgeTime.AddValue -= timeVariation;
         }
     }
 }

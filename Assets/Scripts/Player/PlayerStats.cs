@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class PlayerStats : Stats
 {
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+        CriticalChance.ResetValue();
+        CriticalDamage.ResetValue();
+        AttackSpeed.ResetValue();
+        SkillCoolTime.ResetValue();
+        DodgeSpeed.ResetValue();
+        DodgeTime.ResetValue();
+    }
+
     //EXP
     //public int level = 1;
     //public int exp = 1;
@@ -37,7 +48,7 @@ public class PlayerStats : Stats
     // 낮을수록 도술 자수 사용 가능
     // 도술 재사용 대기 시간 = 도술 기본 재사용 대기 시간 * 재사용 대기시간
     // 최소 -80% ,최대 80%
-    [field: SerializeField] public Stat SkillCoolTime = new Stat(0.0f, 0.8f, -0.8f);
+    [field: SerializeField] public Stat SkillCoolTime { get; set; } = new Stat(0.0f, 0.8f, -0.8f);
 
     // Move
 
@@ -77,37 +88,13 @@ public class PlayerStats : Stats
     // 회피 속도
     // UI : 회피 시 추가 이동 속도 66%
     // 최소 50%
-    [field: SerializeField] public float defaultDodgeSpeed { get; set; } = 0.66f;
-    public float addDodgeSpeed { get; set; }
-    public float increasedDodgeSpeed { get; set; }
-    public float decreasedDodgeSpeed { get; set; }
-
-    public float dodgeSpeed
-    {
-        get
-        {
-            return Mathf.Clamp(
-                (defaultDodgeSpeed + addDodgeSpeed) * (1f + increasedDodgeSpeed) * (1f - decreasedDodgeSpeed), 0f, 2f);
-        }
-    }
+    [field: SerializeField] public Stat DodgeSpeed { get; set; } = new Stat(0.66f, 2.0f, 0.0f );
 
     // 회피 시간
     // UI : 회피 시간 0.8초
     // 회피 시간 = 회피 시간
     // 최소 0.1초
-    [field: SerializeField] public float defaultDodgeTime { get; set; } = 0.4f;
-    public float addDodgeTime { get; set; }
-    public float increasedDodgeTime { get; set; }
-    public float decreasedDodgeTime { get; set; }
-
-    public float dodgeTime
-    {
-        get
-        {
-            return Mathf.Clamp(
-                (defaultDodgeTime + addDodgeTime) * (1f + increasedDodgeTime) * (1f - decreasedDodgeTime), 0.1f, 0.8f);
-        }
-    }
+    [field: SerializeField] public Stat DodgeTime { get; set; } = new Stat(0.4f, 0.6f, 0.2f);
 
     //n초간 실명
     //-->cameraManager에서 효과적용

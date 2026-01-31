@@ -189,7 +189,7 @@ public class Player : ObjectBasic
 
         if (playerStatus.isDodge)             // 회피시 현재 속도 유지
         {
-            rigid.velocity = dodgeVec.normalized * playerStats.MoveSpeed.Value * (1 + playerStats.dodgeSpeed) * status.moveSpeedMultiplier;
+            rigid.velocity = dodgeVec.normalized * playerStats.MoveSpeed.Value * (1 + playerStats.DodgeSpeed.Value) * status.moveSpeedMultiplier;
         }
         else
         {
@@ -223,7 +223,7 @@ public class Player : ObjectBasic
             //playerStats.HP += 100;
             //playerStats.MoveSpeed.AddValue = 20;
 
-            Invoke("DodgeOut", playerStats.dodgeTime);
+            Invoke("DodgeOut", playerStats.DodgeTime.Value);
 
         }
     }

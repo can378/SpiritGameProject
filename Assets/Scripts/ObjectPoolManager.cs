@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 //using System.Reflection;
 //using Unity.VisualScripting;
-//using UnityEditor.SceneManagement;
 using UnityEngine;
 //using static UnityEditor.Progress;
+using UnityEngine.SceneManagement;
 
 public class ObjectPoolManager : MonoBehaviour
 {
@@ -14,6 +14,37 @@ public class ObjectPoolManager : MonoBehaviour
     public List<GameObject> prefabs;
     List<List<GameObject>> pools;
 
+    #region Scene Load Event
+
+    void OnEnable()
+    {
+        // 씬 로드 이벤트 구독
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        // 오브젝트가 파괴되거나 비활성화될 때 구독 해제 (메모리 누수 방지)
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 씬이 로드될 때 실행될 함수
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"새로운 씬 로드됨: {scene.name}");
+        DeleteAllChildren();
+    }
+
+    // 모든 자식 오브젝트 삭제
+    void DeleteAllChildren()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    #endregion
 
     void Awake()
     {

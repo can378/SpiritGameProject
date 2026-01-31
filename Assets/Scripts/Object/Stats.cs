@@ -25,6 +25,7 @@ public class Stat
         this._DefaultValue = _DefalutValue;
         this._MaxValue = _MaxValue;
         this._MinValue = _MinValue;
+        ResetValue();
     }
 
     public void SetDefaultValue(float _DefalutValue)
@@ -36,7 +37,7 @@ public class Stat
     //public void SetDefaultValue(float _DefalutValue) { this._DefalutValue = _DefalutValue; }
 
     // 최종 값을 수정합니다.
-    void ResetValue()
+    public void ResetValue()
     {
         _Value = Mathf.Clamp((_DefaultValue + _AddValue) * (1f + _IncreasedValue) * (1f - _DecreasedValue), _MinValue, _MaxValue);
         StatChangeEvent?.Invoke();
@@ -100,6 +101,17 @@ public class Stats : MonoBehaviour
     /// add,sub는 + 추가,감소
     /// 마지막 최종 수치
     /// </summary>
+
+    // 인스펙터에서 변경 시 값 초기화
+    protected virtual void OnValidate() 
+    {
+        HPMax.ResetValue();
+        DefensivePower.ResetValue();
+        AttackPower.ResetValue();   
+        SkillPower.ResetValue();
+        MoveSpeed.ResetValue();
+    }
+
 
     //HP
     [field: SerializeField] public Stat HPMax = new Stat(100, 999999, 0);
