@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.87, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5484860125208463268}
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5322ae253403a4c8207d3c8193661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1503840477471109207}
   status: {fileID: -4266050704333988154}
 --- !u!1 &4326672082813216711
 GameObject:
@@ -494,7 +494,6 @@ GameObject:
   - component: {fileID: 7338967536234966317}
   - component: {fileID: 916321001779519949}
   - component: {fileID: 3513946093969927790}
-  - component: {fileID: 3425371506458399996}
   m_Layer: 8
   m_Name: pox
   m_TagString: Enemy
@@ -548,7 +547,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
-  ThrowPos: {fileID: 0}
+  ThrowPos: {fileID: 6416233390143714351}
 --- !u!114 &-4266050704333988154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,27 +763,6 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortAtRoot: 0
---- !u!95 &3425371506458399996
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7641949530967464337}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8723fe94fcc112249a6e3206527dac54, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8554602054196231730
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,15 +897,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7190910557781430627, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.27
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7190910557781430627, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.27
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7190910557781430627, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.27
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7190910557781430627, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -971,7 +949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7190910557781430627, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8287510454698264832, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
       propertyPath: m_Name
@@ -982,9 +960,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
+--- !u!95 &1503840477471109207 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4254682043573511824, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
+  m_PrefabInstance: {fileID: 3446692103477417671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5484860125208463268 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7190910557781430627, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
+  m_PrefabInstance: {fileID: 3446692103477417671}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6416233390143714351 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8565308223986229992, guid: b825160f8ca6d2945af845fce0cb31b1, type: 3}
   m_PrefabInstance: {fileID: 3446692103477417671}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9127292141459405051
