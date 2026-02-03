@@ -54,11 +54,11 @@ public class ScriptManager : MonoBehaviour
         {
             if (Sentence[index % lineSize, 1] == "npc")
             {
-                return "npc : " + Sentence[index % lineSize, 2];
+                return Sentence[index % lineSize, 2];
             }
             else if (Sentence[index % lineSize, 1] == "player")
             {
-                return "player : " + Sentence[index % lineSize, 2];
+                return Sentence[index % lineSize, 2];
             }
             else if (Sentence[index % lineSize, 1] == "border")
             {

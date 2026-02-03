@@ -338,7 +338,7 @@ public class MapUIManager : MonoBehaviour
         nearObjectPanel.SetActive(true);
 
         nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
-        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText();   // GetComponent 변경하기
+        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText()+"[F]";   // GetComponent 변경하기
     }
 
     // 현재 플레이어가 아이템 근처에 있으면 툴팁을 띄우고 정보를 변경한다.
