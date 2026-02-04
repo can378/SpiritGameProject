@@ -40,7 +40,7 @@ public class StunDeBuff : BuffData
 
     public override void Remove(Buff _Buff)
     {
-        if (_Buff.target.tag == "Player" || _Buff.target.tag == "Enemy" || _Buff.target.tag == "Npc")
+        if (_Buff.target.tag == "Player" || _Buff.target.tag == "Enemy")
         {
             objectBasic = _Buff.target.GetComponent<ObjectBasic>();
             objectBasic.ClearFlinch();

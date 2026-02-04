@@ -54,7 +54,7 @@ public class GrowthDeBuff : Buff
                 Player player = target.GetComponent<Player>();
                 player.ApplyBuff(addDeBuff);
             }
-            else if (target.tag == "Enemy" || target.tag == "Npc")
+            else if (target.tag == "Enemy")
             {
                 EnemyBasic enemy = target.GetComponent<EnemyBasic>();
                 enemy.ApplyBuff(addDeBuff);

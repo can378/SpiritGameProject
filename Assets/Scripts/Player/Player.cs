@@ -858,6 +858,9 @@ public class Player : ObjectBasic
         if (playerStatus.nearObject == null)
             return;
 
+        if (playerStatus.nearObject.GetComponent<Interactable>() == null)
+            return;
+
         if (iDown && (0 >= playerStatus.isFlinch) && !playerStatus.isDodge && !playerStatus.isAttack && !playerStatus.isSkill && !playerStatus.isSkillHold)
         {
             playerStatus.nearObject.GetComponent<Interactable>().Interact();
@@ -1191,7 +1194,7 @@ public class Player : ObjectBasic
             }
         }
         */
-        else if (other.tag == "Item")
+        else if (other.CompareTag("Item"))
         {
             Item item = other.GetComponent<Item>();
 
@@ -1225,8 +1228,8 @@ public class Player : ObjectBasic
     void OnTriggerStay2D(Collider2D other)
     {
         // 해당 tag가 붙은 대상은 상호작용이 가능
-        if (other.tag == "SelectItem" ||
-        other.tag == "Npc" || other.tag == "reward" || other.tag == "SellingItem")
+        // SelectItem, Npc, reward, SellingItem -> Interactable로 통합 
+        if (other.tag == "Interactable")
         {
             if (playerStatus.nearObject == null || Vector2.Distance(CenterPivot.transform.position, other.transform.position) < Vector2.Distance(CenterPivot.transform.position, playerStatus.nearObject.transform.position))
             {

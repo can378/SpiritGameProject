@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93695db3a465dba47b1fd9667c55b2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OtherTransform: {fileID: 0}
 --- !u!61 &6670052150082720866
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -879,7 +880,7 @@ GameObject:
   - component: {fileID: 8090730684234179878}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Door
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -914,6 +915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: 0
+  doorState: 0
 --- !u!58 &5843738907404671946
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2095,14 +2097,12 @@ MonoBehaviour:
   unLockTrigger: 0
   <mapType>k__BackingField: 0
   <doorType>k__BackingField: 0
-  <roomType>k__BackingField: 2
   <door>k__BackingField: {fileID: 3640156602629977763}
   <map>k__BackingField: {fileID: 0}
   <top>k__BackingField: 0
   <bottom>k__BackingField: 0
   <left>k__BackingField: 1
   <right>k__BackingField: 1
-  floorArea: {fileID: 208138711109955232}
 --- !u!61 &6077312093182583063
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2404,6 +2404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93695db3a465dba47b1fd9667c55b2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OtherTransform: {fileID: 0}
 --- !u!61 &4161937851094238322
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2812,6 +2813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: 0
+  doorState: 0
 --- !u!1 &5677688797680263391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,6 +2912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93695db3a465dba47b1fd9667c55b2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OtherTransform: {fileID: 0}
 --- !u!61 &1566364676758998778
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3127,6 +3130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: 0
+  doorState: 0
 --- !u!1 &7062876030075349350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,6 +3608,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9bed69f70f39a4b85e781c8826e6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  room: {fileID: 0}
 --- !u!1 &7873187546616640582
 GameObject:
   m_ObjectHideFlags: 0
@@ -3722,6 +3728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9bed69f70f39a4b85e781c8826e6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  room: {fileID: 0}
 --- !u!1 &8379919844347968819
 GameObject:
   m_ObjectHideFlags: 0

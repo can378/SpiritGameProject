@@ -122,6 +122,7 @@ public static class CombinationRandom
     }
 }
 
+// Door, SellingItem, NPC, reward 태그가 나오면 지우기
 public interface Interactable
 {
     event System.Action InteractEvent;

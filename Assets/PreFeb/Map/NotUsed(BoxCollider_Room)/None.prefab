@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93695db3a465dba47b1fd9667c55b2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OtherTransform: {fileID: 0}
 --- !u!61 &6670052150082720866
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -875,7 +876,7 @@ GameObject:
   - component: {fileID: 3640156602629977763}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Door
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -908,6 +909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorType: 0
+  doorState: 0
 --- !u!1 &2519987422020114468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,14 +1849,12 @@ MonoBehaviour:
   unLockTrigger: 0
   <mapType>k__BackingField: 0
   <doorType>k__BackingField: 0
-  <roomType>k__BackingField: 0
   <door>k__BackingField: {fileID: 3640156602629977763}
   <map>k__BackingField: {fileID: 0}
   <top>k__BackingField: 0
   <bottom>k__BackingField: 0
   <left>k__BackingField: 0
   <right>k__BackingField: 0
-  floorArea: {fileID: 208138711109955232}
 --- !u!61 &7364294565937649574
 BoxCollider2D:
   m_ObjectHideFlags: 0

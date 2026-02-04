@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 7129858118906730615}
   m_Layer: 10
   m_Name: Merchant
-  m_TagString: Npc
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,8 +291,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPMax:
-    _Value: 0
+    _Value: 100
     _DefaultValue: 100
+    _MaxValue: 999999
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
@@ -303,33 +305,45 @@ MonoBehaviour:
   DefensivePower:
     _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.5
+    _MinValue: -0.5
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   <SEResist>k__BackingField:
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   AttackPower:
     _Value: 0
     _DefaultValue: 0
+    _MaxValue: 3.4028235e+38
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
@@ -339,12 +353,16 @@ MonoBehaviour:
   SkillPower:
     _Value: 0
     _DefaultValue: 0
+    _MaxValue: 3.4028235e+38
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   MoveSpeed:
-    _Value: 0
+    _Value: 5
     _DefaultValue: 5
+    _MaxValue: 3.4028235e+38
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
@@ -977,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7284050916987701146, guid: 89e33c2e77142924fa375a5ad27bc6f5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1.09
       objectReference: {fileID: 0}
     - target: {fileID: 7284050916987701146, guid: 89e33c2e77142924fa375a5ad27bc6f5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1071,7 +1089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7284050916987701146, guid: 89e33c2e77142924fa375a5ad27bc6f5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1.09
       objectReference: {fileID: 0}
     - target: {fileID: 7284050916987701146, guid: 89e33c2e77142924fa375a5ad27bc6f5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1165,7 +1183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7284050916987701146, guid: 89e33c2e77142924fa375a5ad27bc6f5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1.09
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7284050916987701146, guid: 89e33c2e77142924fa375a5ad27bc6f5, type: 3}
       propertyPath: m_AnchoredPosition.x
