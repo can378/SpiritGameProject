@@ -1111,11 +1111,11 @@ public class Player : ObjectBasic
 
     #region StatLV
 
-    // 체력, 공격력, 공격속도, 치명타 확률 ,치명타 피해량, 도력, 도술 대기시간, 이동속도
-    public enum StatID { HP, AP, AS, CC, CD, SP, SCT, MS };
+    // 체력, 공격력, 공격속도, 치명타 확률 ,치명타 피해량, 도력, 도술 대기시간, 방어력 이동속도
+    public enum StatID { HP, AP, AS, CC, CD, SP, SCT, DP, MS, END };
     // 스탯 증가량
     [HideInInspector]
-    public readonly float[] StatIV = { 25, 0.2f, 0.2f, 0.1f, 0.05f, 10f, -0.1f, 0.1f };
+    public readonly float[] StatIV = { 25, 0.2f, 0.2f, 0.1f, 0.05f, 10f, -0.1f, 0.1f, 0.1f };
 
     // 스탯을 증가 시킨다.
     public void StatLevelUp(StatID _StatID)
@@ -1142,7 +1142,10 @@ public class Player : ObjectBasic
                 Player.instance.playerStats.SkillPower.AddValue += StatIV[(int)_StatID];
                 break;
             case StatID.SCT:
-                Player.instance.playerStats.SkillCoolTime.AddValue = StatIV[(int)_StatID];
+                Player.instance.playerStats.SkillCoolTime.AddValue += StatIV[(int)_StatID];
+                break;
+            case StatID.DP:
+                Player.instance.playerStats.DefensivePower.AddValue += StatIV[(int)_StatID];
                 break;
             case StatID.MS:
                 Player.instance.playerStats.MoveSpeed.IncreasedValue += StatIV[(int)_StatID];

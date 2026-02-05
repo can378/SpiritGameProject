@@ -116,5 +116,5 @@ public class PlayerStats : Stats
     public EquipmentInstance[] equipments = new EquipmentInstance[5];
 
     //Stat
-    public int[] playerStat = new int[8];
+    public int[] playerStat = new int[(int)Player.StatID.END];
 }

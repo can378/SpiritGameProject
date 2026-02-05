@@ -38,6 +38,6 @@ public class UserData
     public int nowChapter;
 
     //Stat
-    public int[] playerStat = new int[8];
+    public int[] playerStat = new int[(int)Player.StatID.END];
 
 }

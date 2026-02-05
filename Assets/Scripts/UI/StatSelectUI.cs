@@ -29,7 +29,7 @@ public class StatSelectUI : MonoBehaviour
         curAltar = altar;
         for (int i = 0; i < statSlots.Length; i++)
         {
-            statSlots[i].UpdateStatSelectUI(altar.table[i]);
+            //statSlots[i].UpdateStatSelectUI(altar.table[i]);
         }
     }
 
