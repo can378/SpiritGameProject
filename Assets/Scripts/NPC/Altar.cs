@@ -10,10 +10,11 @@ public class Altar : NPCbasic
     
     void Start()
     {
+        // 무작위로 3개를 가져옴
         List<int> table = CombinationRandom.CombRandom(3, 0, Player.instance.playerStats.playerStat.Length);
         for(int i = 0;i< statSelectors.Length; i++)
         {
-            statSelectors[i].SetStatIndex((Player.StatID)table[i]);
+            statSelectors[i].SetStatIndex(DataManager.instance.gameData.statList[table[i]]);
             statSelectors[i].InteractEvent += Finish;
         }
     }

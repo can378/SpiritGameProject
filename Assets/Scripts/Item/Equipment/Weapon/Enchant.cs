@@ -69,7 +69,7 @@ public class Enchant : MonoBehaviour
 
         if (SEType != SE_TYPE.None)
         {
-            hitDetection.SetSE(DataManager.instance.gameData.statusEffectList[(int)_Type]);
+            hitDetection.SetSE(DataManager.instance.gameData.buffList[(int)_Type]);
         }
         else
         {

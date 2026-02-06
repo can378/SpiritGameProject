@@ -61,17 +61,26 @@ public class SelectItemList
 
 public class GameData : MonoBehaviour
 {
+    // 나중에 이것들 외부에서 변경 못하게 해야할 듯
 
     public static GameData instance;
 
-    public List<GameObject> equipmentList;          //1부터 시작
-    public List<GameObject> weaponList;             //2부터 시작
-    public List<GameObject> selectItemList;         //3부터 시작
-    public List<GameObject> skillList;              //4부터 시작
-    public List<GameObject> testList;
-    public List<BuffData> statusEffectList;       //5부터 시작
+    [Header("Equipment")]
+    public List<GameObject> equipmentList;          // 장비 : 1부터 시작
+    [Header("Weapon")]
+    public List<GameObject> weaponList;             // 무기 : 2부터 시작
+    [Header("Consumable")]
+    public List<GameObject> selectItemList;         // 소모품 : 3부터 시작
+    [Header("Skill")]
+    public List<GameObject> skillList;              // 스킬 : 4부터 시작
+    //public List<GameObject> testList;
+    [field: SerializeField, Header("Buff")]
+    public List<BuffData>   buffList { get; private set; }               // 버프
+
+    [field: SerializeField, Header("Player Altar Stat")]
+    public List<SOStatData> statList { get; private set; }               // 제단의 스탯 증감 정보
     
-    [field :SerializeField]
+    [field :SerializeField, Header("All Item")]
     public List<SelectItem> ItemList {get; private set;}
 
     /// <summary>
