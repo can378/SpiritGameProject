@@ -11,8 +11,8 @@ public class ItemData : ScriptableObject
     [field: SerializeField] public SelectItemType selectItemType { get; private set; }
     [field: SerializeField] public SelectItemRating selectItemRating { get; private set; }
     [field: SerializeField] public int selectItemID { get; private set; }
-
     [field: SerializeField] public string selectItemName { get; private set; }
+    [field: SerializeField] public ActionDescription m_ActionDescription { get; private set; }
     [field: SerializeField, TextArea,Tooltip("설명 부분 template")] public string description { get; private set; } // 인자를 넣어서 값을 정확히 표시할 수 있음
     [field: SerializeField] public int price { get; private set; }
     [field: SerializeField] public Sprite sprite { get; private set; }

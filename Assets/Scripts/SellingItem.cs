@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class SellingItem : MonoBehaviour, Interactable
 {
+    [field: SerializeField] public ActionDescription m_ActionDescription { get; private set; }
+
     [field: SerializeField] int[] TypeWeight = new int[(int)SelectItemType.END];
 
     [field: SerializeField] int[] RatingWeight = new int[(int)SelectItemRating.END];
@@ -72,7 +74,7 @@ public class SellingItem : MonoBehaviour, Interactable
 
     public string GetInteractText()
     {
-        return "구매하기";
+        return thisSelectItem.itemInstance.itemData.selectItemName + " " +m_ActionDescription.m_Description;
     }
 
     public void Interact()

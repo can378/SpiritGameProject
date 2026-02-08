@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class treasureBox : MonoBehaviour, Interactable
 {
-
+    [field: SerializeField] public ActionDescription m_ActionDescription { get; private set; }
     [field: SerializeField] int MinItemNum = 1;
     [field: SerializeField] int MaxItemNum = 5;
 
@@ -96,7 +96,7 @@ public class treasureBox : MonoBehaviour, Interactable
         {
             return "";
         }
-        return "상자 열기";
+        return m_ActionDescription.m_Description;
     }
 
     public void Interact()

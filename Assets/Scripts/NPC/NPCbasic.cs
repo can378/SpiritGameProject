@@ -7,6 +7,7 @@ using UnityEngine.U2D;
 
 public class NPCbasic : MonoBehaviour, Interactable
 {
+    [field: SerializeField] public ActionDescription m_ActionDescription { get; private set; }
     public bool isTalking;
 
     public GameObject DialogPanel;
@@ -29,7 +30,7 @@ public class NPCbasic : MonoBehaviour, Interactable
 
     public string GetInteractText()
     {
-        return "대화하기";
+        return m_ActionDescription.m_Description;
     }
 
     //대화

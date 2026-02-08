@@ -14,7 +14,7 @@ public class SelectItem : MonoBehaviour, Interactable
 
     public string GetInteractText()
     {
-        return "ащ╠Б";
+        return itemInstance.itemData.selectItemName+ " " + itemInstance.itemData.m_ActionDescription.m_Description;
     }
 
     public void Interact()

@@ -14,14 +14,13 @@ public class StatSelector : MonoBehaviour, Interactable
 
     [field: SerializeField] public List<SpriteRenderer> m_DisableRenderer { get; private set; }
 
-
     [field: SerializeField] public SOStatData m_StatData {get; private set; }
 
     public event System.Action InteractEvent;
 
     public string GetInteractText()
     {
-        return "획득하기";
+        return m_StatData.m_StatName +" " + m_StatData.m_ActionDescription.m_Description;
     }
 
     public void Interact()
@@ -40,7 +39,7 @@ public class StatSelector : MonoBehaviour, Interactable
     {
         m_StatData = _StatData;
         m_Icon.sprite = m_StatData.m_Icon;
-        m_StatName.text = m_StatData.m_Description;
+        m_StatName.text = m_StatData.m_StatName;
     }
 
     // 선택지 비활성화
