@@ -12,6 +12,7 @@ public class CurseMission : MissionBase
     public float curseDuration;
     public float curseTime;
     Vector3 curseDefaultScale;
+    public ParticleSystem m_PS;
 
 
 
@@ -33,6 +34,11 @@ public class CurseMission : MissionBase
         safeArea.SetActive(true);
         curseTime = curseDuration;
         curseDefaultScale = curse.transform.localScale;
+
+
+        var shape = m_PS.shape;
+        Room room = m_Owner.roomScript;
+        shape.scale = new Vector3(room.transform.localScale.x, room.transform.localScale.y, 1.0f);
     }
 
     public override void CheckMission()
