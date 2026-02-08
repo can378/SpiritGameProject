@@ -89,6 +89,12 @@ public class SellingItem : MonoBehaviour, Interactable
 
         if (Player.instance.playerStats.coin >= cost)
         {
+            if(Player.instance.ContainItem(thisSelectItem))
+            {
+                Debug.Log("이미 아이템 보유 중");
+                return;
+            }
+
             //useCoin
             Player.instance.playerStats.coin -= cost;
             Player.instance.GainSelectItem(thisSelectItem);

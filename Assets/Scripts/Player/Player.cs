@@ -872,6 +872,81 @@ public class Player : ObjectBasic
 
     #region Item
 
+    // 선택 아이템을 가지고 있다면 true 반환
+    // 선택 아이템이 가지고 있지 않낟면 false 반환
+    public bool ContainItem(SelectItem selectItem)
+    {
+        // 무기
+        if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Weapon)
+        {
+            return ContainWeapon(selectItem.itemInstance as WeaponInstance);
+        }
+        // 방어구
+        else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Equipments)
+        {
+            return ContainEquipment(selectItem.itemInstance as EquipmentInstance);
+        }
+        // 스킬
+        else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Skill)
+        {
+            return ContainSkill(selectItem.itemInstance as SkillInstance);
+        }
+
+        return false;
+
+    }
+
+    public bool ContainWeapon(WeaponInstance weaponInstance)
+    {
+        // 무기
+
+        // 유효하지 않음
+        if(!playerStats.weapon.weaponInstance.IsValid())
+            return false;
+
+        // 다른 무기
+        if (playerStats.weapon.weaponInstance.itemData.selectItemID != weaponInstance.itemData.selectItemID)
+            return false;
+
+        return true;
+    }
+
+    public bool ContainEquipment(EquipmentInstance equipmentInstance)
+    {
+        // 방어구
+        for (int i = 0; i < playerStats.equipments.Length; i++)
+        {
+            // 유효하지 않음
+            if(!playerStats.equipments[i].IsValid())
+                continue;
+
+            // 같은 장비
+            if (playerStats.equipments[i].equipmentData.selectItemID == equipmentInstance.itemData.selectItemID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool ContainSkill(SkillInstance skillInstance)
+    {
+        // 스킬
+        for(int i = 0;i< playerStats.maxSkillSlot; i++)
+        {
+            // 유효하지 않음
+            if(!playerStats.skill[i].IsValid())
+                continue;
+
+            // 보유한 스킬
+            if (playerStats.skill[i].skillData.selectItemID == skillInstance.itemData.selectItemID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void GainSelectItem(SelectItem selectItem)
     {
         // 아이템 획득 여부
@@ -881,6 +956,11 @@ public class Player : ObjectBasic
         // 현재 장착 무기 해제 후 무기 장착
         if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Weapon)
         {
+            if(ContainWeapon(selectItem.itemInstance as WeaponInstance))
+            {
+                Debug.Log("이미 무기 보유 중");
+                return;
+            }
             if (playerStats.weapon.weaponInstance.itemData != null)
             {
                 weaponController.UnEquipWeapon();
@@ -893,13 +973,22 @@ public class Player : ObjectBasic
         // 비어있는 장비 슬롯이 없다면 장착 실패
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Equipments)
         {
+            if(ContainEquipment(selectItem.itemInstance as EquipmentInstance))
+            {
+                Debug.Log("이미 장비 보유 중");
+                return;
+            }
             gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentInstance);
         }
         // 스킬 =======================================================
         // 현재 사용 중인 스킬 해제 후 스킬 장착
         else if (selectItem.itemInstance.itemData.selectItemType == SelectItemType.Skill)
         {
-
+            if(ContainSkill(selectItem.itemInstance as SkillInstance))
+            {
+                Debug.Log("이미 스킬 보유 중");
+                return;
+            }
             if (playerStats.skill[playerStatus.skillIndex].IsValid())
             {
                 skillController.UnEquipSkill();
