@@ -88,7 +88,8 @@ public class BossBaby : Boss
             case 4: yield return enemyStatus.attackCoroutine = StartCoroutine(Hiding());
                 break;
         }
-        
+        yield return new WaitForSeconds(0.5f);
+
     }
 
     public override void BossCutScene()
@@ -122,6 +123,12 @@ public class BossBaby : Boss
             // 잡기 성공 
             if(status.hitTarget)
             {
+                ObjectBasic HitTarget = status.hitTarget.GetComponent<ObjectBasic>();
+                if (HitTarget != null)
+                    break;
+                else if (HitTarget.status.isDead)
+                    break;
+
                 // 대상에게 잡기 디버프 부여
                 grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BuffDatas[0]);
                 GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;

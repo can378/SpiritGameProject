@@ -58,7 +58,7 @@ public class InteractMissionTrigger : MissionTriggerBase
         m_Interactable.InteractEvent -= ObjectDisapear;
     }
     
-    private void OnTriggerEnter2D(Collider2D other)
+/*    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
@@ -72,7 +72,7 @@ public class InteractMissionTrigger : MissionTriggerBase
         {
             AudioManager.instance.OnExitMap(gameObject);
         }
-    }
+    }*/
 }
 
 
