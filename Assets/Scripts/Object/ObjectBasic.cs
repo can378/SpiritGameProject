@@ -501,9 +501,6 @@ public class ObjectBasic : MonoBehaviour
     {
         print(this.name + " Dead");
 
-        m_BuffController.RemoveAllBuff();
-        m_BuffController.enabled = false;
-
         CancleAction();
         StopAllCoroutines();
         ReceivedAttackID.Clear();
@@ -581,8 +578,6 @@ public class ObjectBasic : MonoBehaviour
 
         foreach(GameObject hitEffect in hitEffects)
             hitEffect.SetActive(false);
-
-        m_BuffController.RemoveAllBuff();
     }
 
     /// <summary>

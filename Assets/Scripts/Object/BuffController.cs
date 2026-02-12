@@ -7,7 +7,7 @@ using AYellowpaper.SerializedCollections;
 public class BuffController : MonoBehaviour
 {
     [SerializeField] ObjectBasic m_Owner;
-    [field: SerializeField] public SerializedDictionary<int, Buff> m_activeEffects = new SerializedDictionary<int, Buff>();         //버프 디버프
+    [field: SerializeField] SerializedDictionary<int, Buff> m_activeEffects = new SerializedDictionary<int, Buff>();         //버프 디버프
 
     public event System.Action m_BuffApplyEvent;
     public event System.Action m_BuffOverlapEvent;
@@ -94,7 +94,7 @@ public class BuffController : MonoBehaviour
         buff.Remove();                                      // 버프 해제
         m_BuffRemoveEvent?.Invoke();
         //Destroy(buff.gameObject);                         // 버프 아이콘 삭제
-        m_activeEffects.Remove(_ID);               // 리스트에서 제거
+        m_activeEffects.Remove(_ID);                        // 리스트에서 제거
 
         ActvieEffect(buff, false);
 
@@ -105,6 +105,9 @@ public class BuffController : MonoBehaviour
         if (m_Owner.status.isDead)
             return;
 
+        if (m_activeEffects.Count == 0)
+            return;
+
         List<int> toRemove = new();
 
         foreach (var kvp in m_activeEffects)
@@ -113,9 +116,9 @@ public class BuffController : MonoBehaviour
             Buff buff = kvp.Value;
             if (0 >= buff.curDuration)
             {
-                m_activeEffects[buff.buffData.buffID].Remove();                // 버프 해제
-                //Destroy(stats.activeEffects[i].gameObject);     // 버프 아이콘 삭제
-                toRemove.Add(buff.buffData.buffID);              // 리스트에서 제거
+                //m_activeEffects[buff.buffData.buffID].Remove();               // 버프 해제
+                //Destroy(stats.activeEffects[i].gameObject);                   // 버프 아이콘 삭제
+                toRemove.Add(buff.buffData.buffID);                             // 리스트에서 제거
                 continue;
             }
             buff.curDuration -= Time.deltaTime;  // 지속시간 감소
@@ -130,12 +133,18 @@ public class BuffController : MonoBehaviour
 
     public void RemoveAllBuff()
     {
+        List<int> toRemove = new();
+
         foreach (var kvp in m_activeEffects)
         {
-            Buff buff = kvp.Value;
-            buff.Remove();
-            //Destroy(effect.gameObject);
+            toRemove.Add(kvp.Value.buffData.buffID);
         }
+
+        foreach (int id in toRemove)
+        {
+            RemoveBuff(id);
+        }
+
         m_activeEffects.Clear();
     }
 

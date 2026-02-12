@@ -108,7 +108,6 @@ public class BossBaby : Boss
         //start
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
-        print("Rush");
         jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
 
         yield return new WaitForSeconds(0.1f);
@@ -124,7 +123,8 @@ public class BossBaby : Boss
             if(status.hitTarget)
             {
                 ObjectBasic HitTarget = status.hitTarget.GetComponent<ObjectBasic>();
-                if (HitTarget != null)
+
+                if (HitTarget == null)
                     break;
                 else if (HitTarget.status.isDead)
                     break;
