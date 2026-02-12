@@ -53,6 +53,8 @@ public class MissionController : MonoBehaviour
 
         GetComponent<ObjectSpawn>().EnableEnemy();
         missionState = MISSION_STATE.InProgress;
+
+        AudioManager.instance.OnEnterMap(gameObject);
     }
 
     void Update()
