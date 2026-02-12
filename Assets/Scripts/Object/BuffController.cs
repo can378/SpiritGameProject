@@ -42,8 +42,8 @@ public class BuffController : MonoBehaviour
         buff = new Buff(_Buff, m_Owner);
 
         buff.Apply();
-        m_BuffApplyEvent?.Invoke();
         m_activeEffects.Add(_Buff.buffID, buff);
+        m_BuffApplyEvent?.Invoke();
 
         // 버프 이펙트를 켠다.
         ActvieEffect(buff, true);
@@ -71,16 +71,11 @@ public class BuffController : MonoBehaviour
             return;
         }
 
-        buff.Remove();                                      // 버프 해제
-        m_BuffRemoveEvent?.Invoke();
-        //Destroy(buff.gameObject);                         // 버프 아이콘 삭제
-        m_activeEffects.Remove(_Buff.buffID);               // 리스트에서 제거
-
-        ActvieEffect(buff, false);
+        buff.curDuration = 0;
 
     }
 
-    public void RemoveBuff(int _ID)
+    void RemoveBuff(int _ID)
     {
         Buff buff;
         m_activeEffects.TryGetValue(_ID, out buff);
@@ -92,15 +87,15 @@ public class BuffController : MonoBehaviour
         }
 
         buff.Remove();                                      // 버프 해제
+        m_activeEffects.Remove(_ID);                        // 리스트에서 제거
         m_BuffRemoveEvent?.Invoke();
         //Destroy(buff.gameObject);                         // 버프 아이콘 삭제
-        m_activeEffects.Remove(_ID);                        // 리스트에서 제거
 
         ActvieEffect(buff, false);
 
     }
 
-    protected void Update_Buff()
+    void Update_Buff()
     {
         if (m_Owner.status.isDead)
             return;
@@ -114,7 +109,7 @@ public class BuffController : MonoBehaviour
         {
             // 지속 시간 종료 시
             Buff buff = kvp.Value;
-            if (0 >= buff.curDuration)
+            if (buff.curDuration <= 0)
             {
                 //m_activeEffects[buff.buffData.buffID].Remove();               // 버프 해제
                 //Destroy(stats.activeEffects[i].gameObject);                   // 버프 아이콘 삭제
@@ -131,23 +126,23 @@ public class BuffController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 지속 시간을 0으로 만들고 다음 틱에 제거
+    /// </summary>
     public void RemoveAllBuff()
     {
-        List<int> toRemove = new();
-
         foreach (var kvp in m_activeEffects)
         {
-            toRemove.Add(kvp.Value.buffData.buffID);
+            Buff buff = kvp.Value;
+            buff.curDuration = 0;
         }
-
-        foreach (int id in toRemove)
-        {
-            RemoveBuff(id);
-        }
-
-        m_activeEffects.Clear();
     }
 
+    /// <summary>
+    /// 효과 설정
+    /// </summary>
+    /// <param name="_Buff"></param>
+    /// <param name="_Active"></param>
     void ActvieEffect(Buff _Buff, bool _Active)
     {
 
