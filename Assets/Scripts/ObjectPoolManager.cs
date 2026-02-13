@@ -110,7 +110,7 @@ public class ObjectPoolManager : MonoBehaviour
         return select;
     }
 
-    //get object iwth name
+    //get object with name
     public GameObject Get(string _name, Vector3 _Position = default)
     {
         GameObject select = null;
@@ -150,10 +150,17 @@ public class ObjectPoolManager : MonoBehaviour
         // if Not Found _Prefab in prefabs
         PrefabIndex = prefabs.Count;
 
+        // 해당 프리팹 추가
         prefabs.Add(_Prefab);
         pools.Add(new List<GameObject>());
-        select = Instantiate(_Prefab, _Position, Quaternion.identity);
+
+        // 
+        select = Instantiate(_Prefab, transform);
+        select.transform.position = _Position;
+
+        //
         pools[PrefabIndex].Add(select);
+        
         return select;
     }
 

@@ -9818,7 +9818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9205bc1bbacc90040a998067b5643d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearBehavior: 1
+  clearBehavior: 0
   cameraShake:
     enabled: 1
     useMainCamera: 1
@@ -9981,22 +9981,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
+  AttackID: 0
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 
+  <statusEffect>k__BackingField: []
+  EnableTime: 0
   isPooling: 1
   isAttackIDManage: 1
   isMultiHit: 0
   DPS: 1
-  EnableType: 0
+  EnableType: 2
   penetrations: 0
-  DisableTime: 0
-  isDisableObjcet_Instant: 0
-  DisableObject_Instant: {fileID: 0}
-  isDisableObjcet_Pool: 0
-  DisableObject_Pool: 
+  DisableDuration: 0.5
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!1 &6629381145518134005
 GameObject:
   m_ObjectHideFlags: 0
