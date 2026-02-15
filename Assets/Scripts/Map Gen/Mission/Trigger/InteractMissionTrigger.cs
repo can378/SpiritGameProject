@@ -8,6 +8,7 @@ public class InteractMissionTrigger : MissionTriggerBase
     [field : SerializeField, Tooltip("상호작용 오브젝트")] GameObject m_InterObject;
     [field : SerializeField, Tooltip("상호작용 대상의 스프라이트들")] List<SpriteRenderer> m_InterSprite;
 
+    public float disappear_time;//클수록 천천히 사라짐
     Interactable m_Interactable;
 
     public override MISSION_TRIGGER_TYPE GetTriggerType()
@@ -42,7 +43,7 @@ public class InteractMissionTrigger : MissionTriggerBase
 
     IEnumerator ObjectDisapearCoru()
     {
-        float alpha = 1f;
+        float alpha = disappear_time;
         
         while (alpha > 0f)
         {
