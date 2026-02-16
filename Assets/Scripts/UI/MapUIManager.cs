@@ -40,6 +40,7 @@ public class MapUIManager : MonoBehaviour
     //[SerializeField] Image itemImg;
     [SerializeField] Image skillImg;
     public Image skillCoolImg;
+    public GameObject skillUI;
 
 
     //Boss Stats
@@ -97,15 +98,26 @@ public class MapUIManager : MonoBehaviour
             tabkeyPanel.SetActive(!tabkeyPanel.activeSelf);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             AudioManager.instance.UIClickAudio();
+
+            // 인벤만 닫고 끝
+            if (inventoryPanel.activeSelf)
+            {
+                inventoryPanel.SetActive(false);
+                ++Player.instance.playerStatus.isAttackable;
+                return;
+            }
+
+            // ESC 패널 토글
             esckeyPanel.SetActive(!esckeyPanel.activeSelf);
             settingPanel.SetActive(false);
             UpdateCheckPanelUI(false);
         }
 
-        if(Input.GetKeyDown(KeyCode.I))
+
+        if (Input.GetKeyDown(KeyCode.I))
         {
             if (Time.timeScale == 0)
                 return;
@@ -123,6 +135,8 @@ public class MapUIManager : MonoBehaviour
 
             }
         }
+
+
 
 
         if(esckeyPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf || resetPanel.activeSelf || restartPanel.activeSelf || endPanel.activeSelf)
@@ -216,9 +230,12 @@ public class MapUIManager : MonoBehaviour
 
     void UpdateSkillUI()
     {
+        if (!skillUI) return;
+
         if (Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex].IsValid())
         {
             skillImg.GetComponent<Image>().sprite = Player.instance.skillList[Player.instance.playerStats.skill[Player.instance.playerStatus.skillIndex].itemData.selectItemID].GetComponent<SkillBase>().skillData.sprite;
+            skillUI.SetActive(true);
         }
         else { skillImg.GetComponent<Image>().sprite = null; }
     }
@@ -229,6 +246,8 @@ public class MapUIManager : MonoBehaviour
     private float skillCoolTime_now;
     void UpdateSkillCoolTimeUI() 
     {
+        if (!skillUI || skillUI.activeSelf==false) return;
+
         // 비율 계산 (예: now = 현재 값, max = 최대 값).
         fillValue = skillCoolTime_now / skillCoolTime_max;
         skillCoolImg.fillAmount = Mathf.Clamp(fillValue, 0f, 1f);
