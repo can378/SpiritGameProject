@@ -1,10 +1,6 @@
-using System;
-//using System.Collections;
+ï»¿using System;
 using System.Collections.Generic;
-//using System.Reflection;
-//using Unity.VisualScripting;
 using UnityEngine;
-//using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
 
 public class ObjectPoolManager : MonoBehaviour
@@ -16,39 +12,12 @@ public class ObjectPoolManager : MonoBehaviour
 
     #region Scene Load Event
 
-    void OnEnable()
-    {
-        // ¾À ·Îµå ÀÌº¥Æ® ±¸µ¶
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnDisable()
-    {
-        // ¿ÀºêÁ§Æ®°¡ ÆÄ±«µÇ°Å³ª ºñÈ°¼ºÈ­µÉ ¶§ ±¸µ¶ ÇØÁ¦ (¸Ş¸ğ¸® ´©¼ö ¹æÁö)
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    // ¾ÀÀÌ ·ÎµåµÉ ¶§ ½ÇÇàµÉ ÇÔ¼ö
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"»õ·Î¿î ¾À ·ÎµåµÊ: {scene.name}");
-        DeleteAllChildren();
-    }
+        Debug.Log($"ìƒˆë¡œìš´ ì”¬ ë¡œë“œë¨: {scene.name}");
+        if (pools == null) return;
 
-    // ¸ğµç ÀÚ½Ä ¿ÀºêÁ§Æ® »èÁ¦
-    void DeleteAllChildren()
-    {
-        // ÀÚ½Ä Á¦°Å
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        // Ç® ÃÊ±âÈ­
-        foreach (List<GameObject> pool in pools)
-        {
-            pool.Clear();
-        }
+        ClearAll();
     }
 
     #endregion
@@ -63,22 +32,34 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else if (instance != this)
         {
-            //¾À ÀüÈ¯ÀÌ µÇ¾úÀ»¶§, ÀÌÀü ¾ÀÀÇ ÀÎ½ºÅÏ½º¸¦ °è¼Ó »ç¿ëÇÏ±â À§ÇØ
-            //»õ·Î¿î ¾ÀÀÇ °ÔÀÓ¿ÀºêÁ§Æ® Á¦°Å
             Destroy(this.gameObject);
+            return;
         }
 
-        //pools ÃÊ±âÈ­/////////////////////////
+        // pools ì´ˆê¸°í™”
         pools = new List<List<GameObject>>();
         for (int index = 0; index < prefabs.Count; ++index)
             pools.Add(new List<GameObject>());
-        //print(pools.Count);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        // ì‚´ì•„ë‚¨ëŠ” ì¸ìŠ¤í„´ìŠ¤ë§Œ í•´ì œ
+        if (instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     //get object with index
     public GameObject Get(int index, Vector3 _Position = default)
     {
         GameObject select = null;
+
+        // ìµœì†Œ ë°©ì–´ (ì¸ë±ìŠ¤ ì‹¤ìˆ˜ë¡œ í¬ë˜ì‹œ ë°©ì§€)
+        if (index < 0 || index >= prefabs.Count) return null;
+
+        pools[index].RemoveAll(item => item == null);
 
         foreach (GameObject item in pools[index])
         {
@@ -87,7 +68,7 @@ public class ObjectPoolManager : MonoBehaviour
                 select = item;
                 select.transform.position = _Position;
 
-                // ¸¸¾à ¸ó½ºÅÍ¶ó¸é ºÎÈ° ÇÔ¼ö È£Ãâ
+                // ë§Œì•½ ëª¬ìŠ¤í„°ë¼ë©´ ë¶€í™œ í•¨ìˆ˜ í˜¸ì¶œ
                 EnemyBasic enemyBasic = select.GetComponent<EnemyBasic>();
                 if (enemyBasic)
                 {
@@ -114,20 +95,21 @@ public class ObjectPoolManager : MonoBehaviour
     public GameObject Get(string _name, Vector3 _Position = default)
     {
         GameObject select = null;
-       
+
         for (int i = 0; i < prefabs.Count; i++)
         {
             if (prefabs[i].name == _name)
             {
                 select = Get(i, _Position);
                 return select;
-            }    
+            }
         
         }
 
         print("WARNING:there is no name!!!");
-        select = Instantiate(prefabs[0]);
+        select = Instantiate(prefabs[0], transform);
         pools[0].Add(select);
+        select.transform.position = _Position;
         return select;
     }
 
@@ -150,7 +132,7 @@ public class ObjectPoolManager : MonoBehaviour
         // if Not Found _Prefab in prefabs
         PrefabIndex = prefabs.Count;
 
-        // ÇØ´ç ÇÁ¸®ÆÕ Ãß°¡
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         prefabs.Add(_Prefab);
         pools.Add(new List<GameObject>());
 
@@ -160,11 +142,11 @@ public class ObjectPoolManager : MonoBehaviour
 
         //
         pools[PrefabIndex].Add(select);
-        
+
         return select;
     }
 
-    public GameObject ExplosionSFX(Sprite sprite) 
+    public GameObject ExplosionSFX(Sprite sprite)
     {
 
         GameObject select = Get("explosionSFX");
@@ -176,16 +158,20 @@ public class ObjectPoolManager : MonoBehaviour
 
     public void Clear(int index)
     {
+        if (pools == null) return;
+        if (index < 0 || index >= pools.Count) return;
+
         foreach (GameObject item in pools[index])
-            item.SetActive(false);
+            if (item) item.SetActive(false);
     }
 
 
     public void ClearAll()
     {
+        if (pools == null) return;
         for (int index = 0; index < pools.Count; index++)
             foreach (GameObject item in pools[index])
-                item.SetActive(false);
+                if (item) item.SetActive(false);
     }
 
 
