@@ -94,6 +94,8 @@ public class GrapDeBuff : BuffData
             {
                 KeyDownCount += (int)(1 + _Buff.target.stats.SEResist[(int)buffType].Value * 10);
                 LeftRight = !LeftRight;
+                var callback = _Buff.CustomData["ResistEvent"] as System.Action;
+                callback?.Invoke();
             }
         }
         if (_Buff.target.tag == "Enemy")
@@ -124,6 +126,12 @@ public class GrapDeBuff : BuffData
     {
         _Buff.CustomData.Add("GO", _OB);
         _Buff.CustomData.Add("GP", _Pos);
+    }
+
+    // 잡기 저항 애니메이션이 있다면 추가한다.
+    public void AddResistEvent(Buff _Buff, System.Action _ResistAction)
+    {
+        _Buff.CustomData.Add("ResistEvent", _ResistAction);
     }
 
     public void SetKeyLock(Buff _Buff, bool _Lock)

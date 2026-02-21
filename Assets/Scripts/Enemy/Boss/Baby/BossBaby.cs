@@ -114,7 +114,7 @@ public class BossBaby : Boss
 
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         
-        while (time<5.0f)
+        while (time < 5.0f)
         {
             enemyStatus.moveVec = enemyStatus.targetDirVec * 5.0f;
             time += Time.deltaTime;
@@ -133,6 +133,7 @@ public class BossBaby : Boss
                 grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BuffDatas[0]);
                 GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;
                 GrapDeBuffData.SetGrapCustomData(grapDeBuff, this.GetComponent<ObjectBasic>(), GrapPos);
+                GrapDeBuffData.AddResistEvent(grapDeBuff, GrapResist);   // 잡기 저항 시 이벤트 연결
                 grapSucces = true;
                 break;
             }
@@ -176,6 +177,11 @@ public class BossBaby : Boss
         yield return new WaitForSeconds(3f);
         enemyStatus.isAttackReady = true;
 
+    }
+
+    void GrapResist()
+    {
+        jukqwiAnim.animator.SetTrigger("HugResist");
     }
 
     IEnumerator MadRush()
