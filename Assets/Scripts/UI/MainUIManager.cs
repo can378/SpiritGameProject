@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class MainUIManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MainUIManager : MonoBehaviour
     public GameObject settingPanel;
     public GameObject warningPanel;
     public ToolTipUI toolTipPanel;
+
+    public TimeLineController timeLineController;
 
 
     void Start()
@@ -25,9 +28,18 @@ public class MainUIManager : MonoBehaviour
             settingPanel.SetActive(false);
             taskPanel.SetActive(false);
             warningPanel.SetActive(false);
+
+            if(timeLineController.GetPlayableState() == PlayState.Playing)
+            {
+                timeLineController.Pause();
+            }
+            else if(timeLineController.GetPlayableState() == PlayState.Paused)
+            {
+                timeLineController.Resume();
+            }
         }
 
-        if(mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf)
+        if(timeLineController.GetPlayableState() == PlayState.Playing || (mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf))
         {
             Time.timeScale = 0f;
         }
@@ -43,6 +55,7 @@ public class MainUIManager : MonoBehaviour
     {
         AudioManager.instance.UIClickAudio();
         //SceneManager.LoadScene("Map");
+        timeLineController.Play("Intro");
         mainPanel.SetActive(false);
     }
 
@@ -62,6 +75,7 @@ public class MainUIManager : MonoBehaviour
         settingPanel.SetActive(false);
         taskPanel.SetActive(false);
         warningPanel.SetActive(false);
+
     }
     public void SettingBtn() 
     {
