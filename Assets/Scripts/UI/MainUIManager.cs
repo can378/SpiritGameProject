@@ -13,6 +13,7 @@ public class MainUIManager : MonoBehaviour
     public ToolTipUI toolTipPanel;
 
     public TimeLineController timeLineController;
+    bool isPlayCutScene = false; // 그냥 대충 한 것이므로 수정할 것
 
 
     void Start()
@@ -29,17 +30,16 @@ public class MainUIManager : MonoBehaviour
             taskPanel.SetActive(false);
             warningPanel.SetActive(false);
 
-            if(timeLineController.GetPlayableState() == PlayState.Playing)
-            {
+            // UI가 하나라도 켜져있으면 일시 중지
+            // 그냥 대충 한 것이므로 수정할 것
+            if(mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf)
                 timeLineController.Pause();
-            }
-            else if(timeLineController.GetPlayableState() == PlayState.Paused)
-            {
-                timeLineController.Resume();
-            }
+            else 
+                timeLineController.Resume(); 
         }
 
-        if(timeLineController.GetPlayableState() == PlayState.Playing || (mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf))
+        if(timeLineController.GetPlayableState() == PlayState.Playing ||
+            (mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf))
         {
             Time.timeScale = 0f;
         }
@@ -55,7 +55,17 @@ public class MainUIManager : MonoBehaviour
     {
         AudioManager.instance.UIClickAudio();
         //SceneManager.LoadScene("Map");
-        timeLineController.Play("Intro");
+
+        // 씬 최초 진입시만 컷신 재생
+        // 그냥 대충 한 것이므로 수정할 것
+        if (!isPlayCutScene) {
+            timeLineController.Play("Intro");
+            isPlayCutScene = true;
+        }
+        else
+        {
+            timeLineController.Resume();
+        }
         mainPanel.SetActive(false);
     }
 
