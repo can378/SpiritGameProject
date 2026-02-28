@@ -16,6 +16,13 @@ public class TimeLineController : MonoBehaviour
     {
         m_PlayableDirector.stopped += OnTimelineStopped;
     }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Skip();
+        }
+    }
 
     public PlayState GetPlayableState()
     {
@@ -55,6 +62,16 @@ public class TimeLineController : MonoBehaviour
     public void Pause()
     {
         m_PlayableDirector.Pause();
+    }
+
+    public void Skip()
+    {
+        if (m_PlayableDirector.state == PlayState.Playing)
+        {
+            m_PlayableDirector.time = m_PlayableDirector.duration;
+            m_PlayableDirector.Evaluate(); // 마지막 프레임 상태로 강제 갱신
+            m_PlayableDirector.Stop();
+        }
     }
 
     public void SetPlayable(string _playableName)
