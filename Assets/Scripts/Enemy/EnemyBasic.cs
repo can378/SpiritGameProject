@@ -67,6 +67,15 @@ public class EnemyBasic : ObjectBasic
         if (!enemyStatus.isTarget)
             return;
 
+        if (enemyStatus.EnemyTarget == null)
+            return;
+
+        if (enemyStatus.EnemyTarget.CenterPivot == null)
+            return;
+
+        if (CenterPivot == null)
+            return;
+
         enemyStatus.targetDis = Vector2.Distance(CenterPivot.position, enemyStatus.EnemyTarget.CenterPivot.position);
         enemyStatus.targetDirVec = (enemyStatus.EnemyTarget.CenterPivot.position - CenterPivot.position).normalized;
 
