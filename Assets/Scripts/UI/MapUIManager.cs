@@ -65,6 +65,8 @@ public class MapUIManager : MonoBehaviour
     //gameObject
     [Header("챕터 관련")]
     public TMP_Text chapterTxt;
+    public TimeLineController timeLineController;
+
 
     UserData userData;
 
@@ -560,6 +562,12 @@ public class MapUIManager : MonoBehaviour
     }
 
     #endregion
+
+    public void Ending()
+    {
+        endPanel.SetActive(true);
+        timeLineController.Play("Ending");
+    }
 
     //set random passive skill
 

@@ -22,7 +22,7 @@ public class EnterDungeon : MonoBehaviour
             }
             else
             {
-                MapUIManager.instance.endPanel.SetActive(true);
+                MapUIManager.instance.Ending();
             }
 
 
