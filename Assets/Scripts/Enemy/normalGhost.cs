@@ -35,7 +35,7 @@ public class NormalGhost : EnemyBasic
             HitDetection HD = knife.GetComponent<HitDetection>();
             HD.SetGuiding(true, enemyStatus.EnemyTarget.CenterPivot, 20, 0.3f, true);
             Debug.Log(knife.name+" throwing");
-
+            AudioManager.instance.PlaySFX(enemyAudio.attack);//오디오 공격
 
             knife.transform.position = CenterPivot.transform.position;
             knife.transform.rotation = Quaternion.LookRotation(Vector3.forward, enemyStatus.targetDirVec);

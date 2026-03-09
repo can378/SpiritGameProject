@@ -53,6 +53,8 @@ public class Pox : EnemyBasic
         enemyAnim.animator.SetTrigger("isThrow");
         enemyAnim.ChangeDirection(enemyStatus.targetDirVec);
 
+        AudioManager.instance.PlaySFX(enemyAudio.attack);//오디오 플레이
+
         enemyStatus.isAttack = true;
         enemyStatus.isAttackReady = false;
         yield return new WaitForSeconds(0.75f);

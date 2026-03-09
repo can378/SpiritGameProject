@@ -226,7 +226,7 @@ MonoBehaviour:
   DPS: 1
   EnableType: 0
   penetrations: 0
-  DisableTime: 0
+  DisableDuration: 10
   DisableObjects: []
   isGuide: 1
   GuideTime: 1
@@ -408,7 +408,7 @@ MonoBehaviour:
   DPS: 1
   EnableType: 0
   penetrations: 0
-  DisableTime: 0
+  DisableDuration: 10
   DisableObjects: []
   isGuide: 0
   GuideTime: 0
@@ -541,11 +541,11 @@ MonoBehaviour:
   enemyStats: {fileID: 0}
   enemyStatus: {fileID: 0}
   enemyAnim: {fileID: 0}
+  enemyAudio: {fileID: 11400000, guid: 4fb233e0937da504ea8e0fd819dc801d, type: 2}
   targetLayer:
     serializedVersion: 2
     m_Bits: 8
   defaulBlizzardCoolTime: 10
-  blizzardDebuff: []
 --- !u!114 &7406414688100231865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,8 +595,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPMax:
-    _Value: 0
+    _Value: 50
     _DefaultValue: 50
+    _MaxValue: 999999
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
@@ -607,33 +609,45 @@ MonoBehaviour:
   DefensivePower:
     _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.5
+    _MinValue: -0.5
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   <SEResist>k__BackingField:
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   - _Value: 0
     _DefaultValue: 0
+    _MaxValue: 0.75
+    _MinValue: -0.75
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   AttackPower:
-    _Value: 0
+    _Value: 10
     _DefaultValue: 10
+    _MaxValue: 3.4028235e+38
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
@@ -641,14 +655,18 @@ MonoBehaviour:
   <CommonType>k__BackingField: 
   <ProjectileType>k__BackingField: 
   SkillPower:
-    _Value: 0
+    _Value: 10
     _DefaultValue: 10
+    _MaxValue: 3.4028235e+38
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0
   MoveSpeed:
-    _Value: 0
+    _Value: 8
     _DefaultValue: 8
+    _MaxValue: 3.4028235e+38
+    _MinValue: 0
     _AddValue: 0
     _IncreasedValue: 0
     _DecreasedValue: 0

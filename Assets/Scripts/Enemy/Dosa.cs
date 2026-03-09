@@ -45,6 +45,7 @@ public class Dosa : EnemyBasic
         {
             // 애니메이션 시작
             enemyAnim.animator.SetBool("isAttack", true);
+            AudioManager.instance.PlaySFX(enemyAudio.attack);//오디오
 
             // Down 스킬 : 시전 선딜
             yield return new WaitForSeconds(skillList[skill].skillData.skillType == 0 ? skillList[skill].skillData.preDelay : 0);

@@ -35,6 +35,7 @@ public class Crow : EnemyBasic
             GameObject bullet = ObjectPoolManager.instance.Get("jewel");
             bullet.transform.position = ThrowPos[RandomParam].position;     // 손을 기준으로 적의 방향
             Vector3 TargetDirVec = (targetPos - ThrowPos[RandomParam].position).normalized;
+            AudioManager.instance.PlaySFX(enemyAudio.attack);// 던지는 소리 오디오
             bullet.GetComponent<Rigidbody2D>().AddForce(TargetDirVec * 7, ForceMode2D.Impulse);
             yield return new WaitForSeconds(0.6f);
 

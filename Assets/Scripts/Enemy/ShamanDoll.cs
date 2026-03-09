@@ -50,6 +50,7 @@ public class ShamanDoll : EnemyBasic
 
         //print("shamon doll hurts hershelf");
         yield return new WaitForSeconds(0.6f);
+        AudioManager.instance.PlaySFX(enemyAudio.attack);//¿Àµð¿À
         enemyStatus.EnemyTarget.gameObject.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BleedingDeBuff);
         yield return new WaitForSeconds(2f);
 

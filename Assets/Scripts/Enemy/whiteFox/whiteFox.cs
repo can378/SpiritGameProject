@@ -79,6 +79,7 @@ public class WhiteFox : EnemyBasic
         yield return new WaitForSeconds(1f);
 
         enemyAnim.animator.SetBool("isCry", true);
+        AudioManager.instance.PlaySFX(enemyAudio.attack);//여우 울기 오디오
         yield return new WaitForSeconds(3f);
 
         // 영역 끄기

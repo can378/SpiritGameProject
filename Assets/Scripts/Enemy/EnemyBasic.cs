@@ -16,6 +16,8 @@ public class EnemyBasic : ObjectBasic
     public EnemyStatus enemyStatus;     // ?쟻 ?뻾?룞 ?긽?깭
     [HideInInspector]
     public EnemyAnim enemyAnim;
+    [SerializeField]
+    protected EnemyAudio enemyAudio;
 
     [SerializeField]
     LayerMask targetLayer;
