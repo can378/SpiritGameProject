@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class Sound : MonoBehaviour
 {
-
     void Update()
     {
-        if (this.GetComponent<AudioSource>().isPlaying == false)
-        { AudioManager.ReturnObject(this); }
+        var source = GetComponent<AudioSource>();
+
+        if (source.clip != null && source.isPlaying == false)
+        {
+            AudioManager.ReturnObject(this);
+        }
     }
 }
