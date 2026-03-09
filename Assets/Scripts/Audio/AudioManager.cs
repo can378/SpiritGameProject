@@ -15,23 +15,23 @@ public class AudioManager : MonoBehaviour
     GameObject Canvas;
 
     [Header("object")]
-    //¼Ò¸® Á¶Àý ½½¶óÀÌ´õ
+    //ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½
     public GameObject BGSoundSlider;
     public GameObject SFXSoundSlider;
 
     [Header("Sound")]
-    public AudioMixer mixer;//¿Àµð¿À ¹Í¼­
-    public AudioSource bgSound;//¿Àµð¿À ¸Å´ÏÀú
+    public AudioMixer mixer;//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¼ï¿½
+    public AudioSource bgSound;//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½
 
     [Header("Pooling")]
     [SerializeField]
-    private GameObject soundPrefab; //¹Ì¸® »ý¼ºµÉ ÇÁ¸®ÆÕ
-    Queue<Sound> poolingObjectQueue = new Queue<Sound>(); //Å¥ »ý¼º
+    private GameObject soundPrefab; //ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    Queue<Sound> poolingObjectQueue = new Queue<Sound>(); //Å¥ ï¿½ï¿½ï¿½ï¿½
     public GameObject AudioManagerObj;
 
 
     [Header("BGM Audio Source")]
-    //¹è°æÀ½ ¿Àµð¿À
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public AudioClip[] BgClipList;
     public AudioClip[] ChapterBgm_normal;
     public AudioClip[] ChapterBgm_boss;
@@ -49,20 +49,20 @@ public class AudioManager : MonoBehaviour
     public AudioClip fireWooschSfx;
     public AudioClip UIClickSfx;
 
-   
+
     [field:SerializeField, Header("Player Weapon")]
     public AudioClip[] weaponAttack {get; private set; } = new AudioClip[(int)WEAPON_TYPE.END];
 
     //instance
     public static AudioManager instance;
-   
+
 
     //========================================================================================================
     private void Awake()
     {
         instance = this;
-        
-        Initialize(10);//10°³ ¹Ì¸® ¸¸µé±â
+
+        Initialize(10);//10ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
 
@@ -79,21 +79,21 @@ public class AudioManager : MonoBehaviour
         Bgm_normal(DataManager.instance.userData.nowChapter);
 
 
-        //½½¶óÀÌµå°ª º¯ÇÒ¶§¸¶´Ù ¾Æ·¡ ÇÔ¼ö ½ÇÇà
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ìµå°ª ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         BGSoundSlider.GetComponent<Slider>().onValueChanged.AddListener(delegate { BGSoundVolume(); });
         SFXSoundSlider.GetComponent<Slider>().onValueChanged.AddListener(delegate { SFXVolume(); });
     }
 
 
-    //¿Àµð¿À À½·® Á¶Àý========================================================================================================
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½========================================================================================================
 
     public void BGSoundVolume()
     {
 
-        //¹è°æÀ½ À½·®Á¶Àý
-        if (BGSoundSlider.GetComponent<Slider>().value == 0) 
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (BGSoundSlider.GetComponent<Slider>().value == 0)
         { mixer.SetFloat("BG", -80); }
-        else 
+        else
         { mixer.SetFloat("BG", Mathf.Log10(BGSoundSlider.GetComponent<Slider>().value) * 20); }
 
 
@@ -103,7 +103,7 @@ public class AudioManager : MonoBehaviour
 
     public void SFXVolume()
     {
-        //È¿°úÀ½ À½·®Á¶Àý
+        //È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (SFXSoundSlider.GetComponent<Slider>().value == 0) { mixer.SetFloat("SFX", -80); }
         else { mixer.SetFloat("SFX", Mathf.Log10(SFXSoundSlider.GetComponent<Slider>().value) * 20); }
 
@@ -115,8 +115,8 @@ public class AudioManager : MonoBehaviour
 
 
     //========================================================================================================
-    
-    //¿Àµð¿À ¸ØÃã
+
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void PauseAudio(string clipName)
     {
         GameObject player = GameObject.Find(clipName);
@@ -126,7 +126,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //¿Àµð¿À Àç°³
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ç°³
     public void ResumePlayAudio(string clipName)
     {
         GameObject player = GameObject.Find(clipName);
@@ -138,21 +138,44 @@ public class AudioManager : MonoBehaviour
         //else Debug.Log($"player {clipName} is null!");
     }
 
-
     
-    //È¿°úÀ½ ÇÃ·¹ÀÌ ÇÔ¼ö====================================================================================
+    private void PlayBGM(AudioClip clip, float volume)
+    {
+        if (!isPlayAudio || clip == null) return;
+
+        bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
+        bgSound.clip = clip;
+        bgSound.loop = true;
+        bgSound.volume = volume;
+        bgSound.Play();
+    }
+    
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        var obj = GetObject();
+        var source = obj.gameObject.GetComponent<AudioSource>();
+        source.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
+        source.clip = clip;
+        source.loop = false;
+        source.Play();
+    }
+
+
+    //È¿ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½====================================================================================
     public void TestAudioPlay()
     { SFXPlayPoolingVersion(testAudio); }
 
-    public void WeaponAttackAudioPlay(WEAPON_TYPE weaponType) 
+    public void WeaponAttackAudioPlay(WEAPON_TYPE weaponType)
     { SFXPlayPoolingVersion(weaponAttack[(int)weaponType]); }
-    public void KeyAudioPlay() 
+    public void KeyAudioPlay()
     { SFXPlayPoolingVersion(drop_key); }
-    public void HitAudioPlay() 
+    public void HitAudioPlay()
     { SFXPlayPoolingVersion(hit); }
-    public void FootDirtAudioPlay() 
+    public void FootDirtAudioPlay()
     { SFXPlayPoolingVersion(footStepDirt); }
-    public void FootStoneAudioPlay() 
+    public void FootStoneAudioPlay()
     { SFXPlayPoolingVersion(footStepStone); }
 
     public void HealAudioPlay() { SFXPlayPoolingVersion(healSfx); }
@@ -160,40 +183,30 @@ public class AudioManager : MonoBehaviour
 
     public void fireWooschAudio() { SFXPlayPoolingVersion(fireWooschSfx); }
     public void UIClickAudio() { SFXPlayPoolingVersion(UIClickSfx); }
-    
 
-    //¹è°æÀ½¾Ç ÇÃ·¹ÀÌ ÇÔ¼ö===============================================================================
+
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½===============================================================================
     public void BGMPlay(int index)
     {
-
-        AudioClip clip;
-        clip = AudioManager.instance.BgClipList[index];
-
-        if (isPlayAudio == true)
-        {
-            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
-            bgSound.clip = clip;
-            bgSound.loop = true;
-            bgSound.volume = 0.2f;
-            bgSound.Play();
-        }
+        PlayBGM(BgClipList[index], 0.2f);
     }
-    public void Bgm_normal(int chapterNum) 
+
+    public void BGMPlay(AudioClip clip)
+    {
+        if (clip == null) { Debug.LogWarning("no BGM Audio clip"); return; }
+        PlayBGM(clip, 0.2f);
+    }
+    public void Bgm_normal(int chapterNum)
     {
         
 
         AudioClip clip;
         clip = AudioManager.instance.ChapterBgm_normal[chapterNum];
 
-        
+
         if (isPlayAudio)
         {
-            
-            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
-            bgSound.clip = clip;
-            bgSound.loop = true;
-            bgSound.volume = 0.6f;
-            bgSound.Play();
+            PlayBGM(clip, 0.6f);
 
             //Debug.Log("bgm normal=" + chapterNum + "," + bgSound.clip.name);
         }
@@ -207,21 +220,17 @@ public class AudioManager : MonoBehaviour
 
         if (isPlayAudio)
         {
-            bgSound.outputAudioMixerGroup = mixer.FindMatchingGroups("BG")[0];
-            bgSound.clip = clip;
-            bgSound.loop = true;
-            bgSound.volume = 0.6f;
-            bgSound.Play();
+            PlayBGM(clip, 0.6f);
         }
     }
-    //¿ÀºêÁ§Æ® Ç®¸µ========================================================================================================
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Ç®ï¿½ï¿½========================================================================================================
 
 
     private void Initialize(int initCount)
     {
         for (int i = 0; i < initCount; i++)
         {
-            poolingObjectQueue.Enqueue(CreateNewObject()); //10¹ø Enqueue
+            poolingObjectQueue.Enqueue(CreateNewObject()); //10ï¿½ï¿½ Enqueue
         }
     }
 
@@ -231,60 +240,65 @@ public class AudioManager : MonoBehaviour
         var newObj = Instantiate(soundPrefab).GetComponent<Sound>();
         newObj.gameObject.SetActive(false);
         newObj.transform.SetParent(AudioManagerObj.transform);
-        return newObj; //±×¸®°í Queue¿¡ ³Ö°Ô ¹ÝÈ¯
+        return newObj; //ï¿½×¸ï¿½ï¿½ï¿½ Queueï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½È¯
     }
 
-    public static Sound GetObject() // ¹Ì¸® ¸¸µç°Å °¡Á®´Ù°¡ ¾´´Ù!
+    public static Sound GetObject() // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½!
     {
-        if (instance.poolingObjectQueue.Count > 0) // ¹Ì¸® »ý¼ºµÈ°Ô ¾ÈºÎÁ·ÇÏ¸é
+        if (instance.poolingObjectQueue.Count > 0) // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½È°ï¿½ ï¿½Èºï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
         {
             var obj = instance.poolingObjectQueue.Dequeue(); // Dequeue
-            obj.gameObject.SetActive(true); // ¹Ì¸® »ý¼ºµÇ¾îÀÖ´Â°Å ON
+            obj.gameObject.SetActive(true); // ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö´Â°ï¿½ ON
             return obj;
         }
-        else // ºÎÁ·ÇÏ¸é
+        else // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
         {
-            var newObj = instance.CreateNewObject(); // ÇÏ³ª »õ·Î ¸¸µé¾î¼­
-            newObj.gameObject.SetActive(true); // ¹Ø¿¡´Â À§¿Í °°À½
+            var newObj = instance.CreateNewObject(); // ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­
+            newObj.gameObject.SetActive(true); // ï¿½Ø¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             return newObj;
         }
     }
 
-    public static void ReturnObject(Sound obj) //½è´ø °Å ´Ù½Ã ¹ÝÈ¯
+    public static void ReturnObject(Sound obj) //ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½È¯
     {
-        obj.gameObject.SetActive(false); //²ô°í
-        instance.poolingObjectQueue.Enqueue(obj); // ´Ù½Ã Enqueue »ðÀÔ
+        obj.gameObject.SetActive(false); //ï¿½ï¿½ï¿½ï¿½
+        instance.poolingObjectQueue.Enqueue(obj); // ï¿½Ù½ï¿½ Enqueue ï¿½ï¿½ï¿½ï¿½
     }
     public void SFXPlayPoolingVersion(AudioClip clip)
     {
-        var obj = GetObject();
-        obj.gameObject.GetComponent<AudioSource>().clip = clip;
-        obj.gameObject.GetComponent<AudioSource>().loop = false;
-        obj.gameObject.GetComponent<AudioSource>().Play();
-        obj.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
-
+        PlaySFX(clip);
     }
 
-    
-    public void SFXPlay(string clipName) 
-    { 
-        AudioClip clip=null;
+
+    public void SFXPlay(string clipName)
+    {
+        AudioClip clip = null;
 
         //find Audio clip
         foreach (AudioClip c in SFXClipList)
-        { if (c.name == clipName) { clip = c; break; } }
+        {
+            if (c.name == clipName)
+            {
+                clip = c;
+                break;
+            }
+        }
 
         if (clip == null) { Debug.LogWarning("cannot find SFX AudioClip"); return; }
 
-        var obj = GetObject();
-        obj.gameObject.GetComponent<AudioSource>().clip = clip;
-        obj.gameObject.GetComponent<AudioSource>().loop = false;
-        obj.gameObject.GetComponent<AudioSource>().Play();
-        obj.gameObject.GetComponent<AudioSource>().outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
-
+        PlaySFX(clip);
     }
 
-    // ¹Ì¼Ç¸Ê BGM ÇÃ·¹ÀÌ ÇÔ¼ö ==========================================================
+    public void SFXPlay(AudioClip clip)
+    {
+        if (clip == null) { Debug.LogWarning("no SFX Audio clip"); return; }
+
+        PlaySFX(clip);
+    }
+
+
+
+    // ï¿½Ì¼Ç¸ï¿½ BGM ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ==========================================================
     private AudioClip currentChapterBgm;
     private bool isMissionBgmPlaying = false;
 
@@ -299,11 +313,8 @@ public class AudioManager : MonoBehaviour
 
         if (ClockBgmMaps.Contains(mapName))
         {
-            currentChapterBgm = bgSound.clip; 
-            bgSound.clip = BgClipList[8]; 
-            bgSound.loop = true;
-            bgSound.volume = 0.6f;
-            bgSound.Play();
+            currentChapterBgm = bgSound.clip;
+            PlayBGM(BgClipList[8], 0.6f);
             isMissionBgmPlaying = true;
         }
 
@@ -311,10 +322,7 @@ public class AudioManager : MonoBehaviour
         {
             if (bgSound.isPlaying) bgSound.Stop();
             currentChapterBgm = bgSound.clip;
-            bgSound.clip = BgClipList[9];
-            bgSound.loop = true;
-            bgSound.volume = 0.6f;
-            bgSound.Play();
+            PlayBGM(BgClipList[9], 0.6f);
             isMissionBgmPlaying = true;
         }
     }
@@ -332,10 +340,7 @@ public class AudioManager : MonoBehaviour
 
             if (currentChapterBgm != null)
             {
-                bgSound.clip = currentChapterBgm;
-                bgSound.loop = true;
-                bgSound.volume = 0.6f;
-                bgSound.Play();
+                PlayBGM(currentChapterBgm, 0.6f);
             }
 
             isMissionBgmPlaying = false;
