@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +17,7 @@ public class SettingManager : MonoBehaviour
     public Slider sensitivitySlider;
 
 
-    
+
     void Start()
     {
         initVideoOption();
@@ -29,49 +28,76 @@ public class SettingManager : MonoBehaviour
 
 
 //Vide Option======================================================================
-    void initVideoOption() 
+    void initVideoOption()
     {
+        if (resolutionDropdown == null || fullScreenBtn == null)
+        {
+            Debug.LogError("UI references are not assigned in Inspector.");
+            return;
+        }
 
+        resolutions.Clear();
 
         for (int i = 0; i < Screen.resolutions.Length; i++)
         {
-            if (Screen.resolutions[i].refreshRate == 60)//Àç»çÀ²ºóµµ60ÀÎ°Í¸¸ °ñ¶úµû
-            { resolutions.Add(Screen.resolutions[i]); }
+            resolutions.Add(Screen.resolutions[i]);
         }
 
         resolutionDropdown.options.Clear();
 
         int optionNum = 0;
-        foreach (Resolution item in resolutions) 
+        foreach (Resolution item in resolutions)
         {
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = item.width + "x" + item.height + " " + item.refreshRate + "hz";
             resolutionDropdown.options.Add(option);
 
             if (item.width == Screen.width && item.height == Screen.height)
+            {
                 resolutionDropdown.value = optionNum;
+                resolutionNum = optionNum;
+            }
+
             optionNum++;
         }
+
         resolutionDropdown.RefreshShownValue();
-        fullScreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
-    
+
+        fullScreenBtn.isOn = Screen.fullScreenMode == FullScreenMode.FullScreenWindow;
+        screenMode = Screen.fullScreenMode;
     }
 
-    public void DropboxOptionChange(int x) 
+    public void DropboxOptionChange(int x)
     {
         resolutionNum = x;
     }
 
 
 
-    public void FullScreenBtn(bool isFull) 
+    public void FullScreenBtn(bool isFull)
     {
         screenMode = isFull ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
     }
 
-    public void OKBtnClick() 
+    public void OKBtnClick()
     {
-        Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, screenMode);
+        if (resolutions == null || resolutions.Count == 0)
+        {
+            Debug.LogError("Resolution list is empty.");
+            return;
+        }
+
+        if (resolutionNum < 0 || resolutionNum >= resolutions.Count)
+        {
+            Debug.LogError("resolutionNum is out of range: " + resolutionNum);
+            return;
+        }
+
+        Screen.SetResolution(
+            resolutions[resolutionNum].width,
+            resolutions[resolutionNum].height,
+            screenMode
+        );
     }
 
 
@@ -80,30 +106,36 @@ public class SettingManager : MonoBehaviour
 
 
     //sensitive======================================================================
-    private void InitializeSensitivitySlider() //°¨µµ ÃÊ±âÈ­
+    private void InitializeSensitivitySlider() //ê°ë„ ì´ˆê¸°í™”
     {
+        if (sensitivitySlider == null)
+        {
+            Debug.LogError("Sensitivity slider is not assigned.");
+            return;
+        }
+
         sensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity", 0.5f);
     }
 
-    public void OnSensitivityChange() //°¨µµ º¯°æ
+    public void OnSensitivityChange()//ê°ë„ ë³€ê²½
     {
         float sensitivityValue = sensitivitySlider.value;
         SaveSensitivity(sensitivityValue);
     }
 
-    public void OnConfirmButtonClicked() //°¨µµ Á¶Àı È®ÀÎ ¹öÆ°
+    public void OnConfirmButtonClicked()//ê°ë„ ì¡°ì ˆ í™•ì¸ ë²„íŠ¼
     {
         ConfirmSensitivity();
     }
 
-    public void OnResetButtonClicked() //¼³Á¤ ÃÊ±âÈ­ ¹öÆ°
+    public void OnResetButtonClicked()//ì„¤ì • ì´ˆê¸°í™” ë²„íŠ¼
     {
         ResetSensitivity();
     }
 
-    private void SaveSensitivity(float sensitivityValue) //¸¶¿ì½º ¹Î°¨µµ ÀúÀå
+    private void SaveSensitivity(float sensitivityValue)//ë§ˆìš°ìŠ¤ ë¯¼ê°ë„ ì €ì¥
     {
-        PlayerPrefs.SetFloat("MouseSensitivity", sensitivityValue); 
+        PlayerPrefs.SetFloat("MouseSensitivity", sensitivityValue);
         PlayerPrefs.Save();
     }
 
@@ -114,7 +146,7 @@ public class SettingManager : MonoBehaviour
 
     private void ResetSensitivity()
     {
-        sensitivitySlider.value = 0.5f; //½½¶óÀÌ´õ¸¦ ÃÊ±â°ªÀ¸·Î ¼³Á¤
-        SaveSensitivity(0.5f); //ÃÊ±â°ªÀ¸·Î ¸¶¿ì½º °¨µµ ÀúÀåÇÏ´Â ÇÔ¼ö È£Ãâ
+        sensitivitySlider.value = 0.5f;//ìŠ¬ë¼ì´ë”ë¥¼ ì´ˆê¸°ê°’ìœ¼ë¡œ ì„¤ì •
+        SaveSensitivity(0.5f);//ì´ˆê¸°ê°’ìœ¼ë¡œ ë§ˆìš°ìŠ¤ ê°ë„ ì €ì¥í•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
     }
 }
