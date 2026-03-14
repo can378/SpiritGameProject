@@ -967,6 +967,11 @@ public class Player : ObjectBasic
             }
             // 무기 장비
             gainItem = weaponController.EquipWeapon(selectItem.GetComponent<Weapon>());
+
+            if (gainItem)
+            {
+                if (AudioManager.instance != null){ AudioManager.instance.FitItemAudioPlay(); }
+            }
         }
         // 갑옷 =======================================================
         // 비어있는 장비 슬롯으로 장착
@@ -995,6 +1000,11 @@ public class Player : ObjectBasic
             }
             // 스킬 장착
             gainItem = skillController.EquipSkill(selectItem.GetComponent<SkillItem>().skillInstance);
+            
+            if (gainItem)
+            {
+                if (AudioManager.instance != null){ AudioManager.instance.FitItemAudioPlay(); }
+            }
 
         }
         // 일반 아이템 =======================================================
@@ -1051,6 +1061,9 @@ public class Player : ObjectBasic
 
             playerStats.equipments[i] = _EI;
             equipOK = true;
+            
+            if (AudioManager.instance != null){ AudioManager.instance.FitItemAudioPlay(); }
+            
             break;
         }
 

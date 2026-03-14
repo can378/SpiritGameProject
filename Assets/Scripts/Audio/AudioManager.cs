@@ -44,10 +44,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip footStepDirt;
     public AudioClip footStepStone;
     public AudioClip[] SFXClipList;
-    public AudioClip healSfx;
     public AudioClip chestOpenSfx;
-    public AudioClip fireWooschSfx;
     public AudioClip UIClickSfx;
+    public AudioClip AltarBlessing;
+    public AudioClip FireTimer;
+    public AudioClip Eat;
+    public AudioClip FitItem;
+    //public AudioClip fireWooschSfx;
+    //public AudioClip healSfx;
 
 
     [field:SerializeField, Header("Player Weapon")]
@@ -178,11 +182,15 @@ public class AudioManager : MonoBehaviour
     public void FootStoneAudioPlay()
     { SFXPlayPoolingVersion(footStepStone); }
 
-    public void HealAudioPlay() { SFXPlayPoolingVersion(healSfx); }
+    //public void HealAudioPlay() { SFXPlayPoolingVersion(healSfx); }
     public void chestOpenAudioPlay() { SFXPlayPoolingVersion(chestOpenSfx); }
 
-    public void fireWooschAudio() { SFXPlayPoolingVersion(fireWooschSfx); }
+    //public void fireWooschAudio() { SFXPlayPoolingVersion(fireWooschSfx); }
     public void UIClickAudio() { SFXPlayPoolingVersion(UIClickSfx); }
+    public void AltarBlessAudioPlay() { SFXPlayPoolingVersion(AltarBlessing); }
+    public void FireTimerAudioPlay() { SFXPlayPoolingVersion(FireTimer); }
+    public void EatAudioPlay() { SFXPlayPoolingVersion(Eat); }
+    public void FitItemAudioPlay()  { SFXPlayPoolingVersion(FitItem); }
 
 
     //������� �÷��� �Լ�===============================================================================

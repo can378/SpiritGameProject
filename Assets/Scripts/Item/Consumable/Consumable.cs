@@ -23,7 +23,7 @@ public class Consumable : SelectItem
     {
         switch (consumableInstance.consumableData.consumableType)
         {
-            // °íÁ¤ ¼öÄ¡ È¸º¹
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ È¸ï¿½ï¿½
             case ConsumableType.HP:
                 {
                     if (user.stats.HP + consumableInstance.consumableData.Value > user.stats.HPMax.Value)
@@ -36,7 +36,7 @@ public class Consumable : SelectItem
                     }
                 }
                 break;
-            // ºñÀ²·Î È¸º¹
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
             case ConsumableType.HPP:
                 {
                     if (user.stats.HP + user.stats.HPMax.Value * consumableInstance.consumableData.Value > user.stats.HPMax.Value)
@@ -49,7 +49,7 @@ public class Consumable : SelectItem
                     }
                 }
                 break;
-            // ÃÖ´ë Ã¼·Â Áõ°¡
+            // ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             case ConsumableType.HPMax:
                 {
                     user.stats.HPMax.AddValue += consumableInstance.consumableData.Value;
@@ -59,6 +59,7 @@ public class Consumable : SelectItem
             default:
                 break;
         }
+        if (AudioManager.instance != null){ AudioManager.instance.EatAudioPlay(); }
 
 
     }

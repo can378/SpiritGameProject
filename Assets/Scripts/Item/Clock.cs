@@ -13,6 +13,8 @@ public class Clock : MonoBehaviour
         animator.SetTrigger("ReStart");
         float elapsed = 0f;
         int currentIndex = -1;
+        
+        if (AudioManager.instance != null){ AudioManager.instance.FireTimerAudioPlay();} 
 
         while (elapsed < duration)
         {

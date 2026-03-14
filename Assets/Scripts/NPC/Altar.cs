@@ -21,6 +21,8 @@ public class Altar : NPCbasic
 
     void Finish()
     {
+        if (AudioManager.instance != null) { AudioManager.instance.AltarBlessAudioPlay(); }
+        
         check = true;
         for (int i = 0; i < statSelectors.Length; i++)
         {

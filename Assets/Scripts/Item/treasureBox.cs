@@ -141,6 +141,8 @@ public class treasureBox : MonoBehaviour, Interactable
     
     IEnumerator OpenBoxEffect()
     {
+        if (AudioManager.instance != null) { AudioManager.instance.chestOpenAudioPlay(); }
+        
         float AlphaTime = 1.0f;
 
         yield return new WaitForSeconds(0.5f);

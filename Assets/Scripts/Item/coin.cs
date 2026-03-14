@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class coin : MonoBehaviour
 {
-    public int maxBounce;//ÆÃ±â´Â È½¼ö
+    public int maxBounce;//ï¿½Ã±ï¿½ï¿½ È½ï¿½ï¿½
     public float xForce;
     public float yForce;
     public float gravity;
@@ -74,6 +74,7 @@ public class coin : MonoBehaviour
         {
             sprite.position = shadow.position;
             //shadow.localScale = Vector2.one;
+            if (AudioManager.instance != null){ AudioManager.instance.KeyAudioPlay();}
 
             if (currentBounce < maxBounce) { Initialize(direction / 1.5f); }
             else
