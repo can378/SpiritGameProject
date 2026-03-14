@@ -59,7 +59,7 @@ public class MainUIManager : MonoBehaviour
         // 씬 최초 진입시만 컷신 재생
         // 그냥 대충 한 것이므로 수정할 것
         if (!isPlayCutScene) {
-            timeLineController.Play("Intro");
+            timeLineController.Play();
             isPlayCutScene = true;
         }
         else

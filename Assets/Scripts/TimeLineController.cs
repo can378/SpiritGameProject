@@ -30,6 +30,7 @@ public class TimeLineController : MonoBehaviour
     }
 
     // 컷신을 처음부터 재생
+    /*
     public void Play(string _playableName)
     {
         this.gameObject.SetActive(true);
@@ -40,7 +41,16 @@ public class TimeLineController : MonoBehaviour
             return;
         }
         
-        m_PlayableDirector.playableAsset = m_Playable[_playableName];
+        //m_PlayableDirector.playableAsset = m_Playable[_playableName];
+
+        m_PlayableDirector.time = 0; // 타임라인을 처음부터 재생하도록 설정
+        m_PlayableDirector.Play();
+    }
+    */
+
+    public void Play()
+    {
+        this.gameObject.SetActive(true);
 
         m_PlayableDirector.time = 0; // 타임라인을 처음부터 재생하도록 설정
         m_PlayableDirector.Play();

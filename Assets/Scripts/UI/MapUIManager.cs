@@ -566,7 +566,7 @@ public class MapUIManager : MonoBehaviour
     public void Ending()
     {
         endPanel.SetActive(true);
-        timeLineController.Play("Ending");
+        timeLineController.Play();
     }
 
     //set random passive skill
