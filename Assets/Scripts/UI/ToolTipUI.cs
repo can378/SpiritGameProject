@@ -43,6 +43,10 @@ public class ToolTipUI : MonoBehaviour
     public TMP_Text ToolTipDescriptionText;
     public ItemInstance ToolTipCurItem { get; private set; }
 
+    [Header("아이템 추가 설명")]
+    public GameObject ExtraToolTip;
+    public TMP_Text ExtraToolTipDescriptionText;
+
     public void OpenToolTipUI(ItemInstance _ItemInstance)
     {
 
