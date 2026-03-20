@@ -25,6 +25,8 @@ public class BossBaby : Boss
     [SerializeField] GameObject CrackPrefab;
 
     bool HitWall;
+    private bool isFirstScream = true;
+
 
     protected override void Awake()
     {
@@ -252,10 +254,19 @@ public class BossBaby : Boss
         enemyStatus.isAttackReady = false;
         print("Screaming");
         jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
-
         jukqwiAnim.animator.SetBool("isScream", true);
-        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
+        
 
+        //처음에만 hit guide끄기
+        var hit = hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>();
+        if (isFirstScream) { 
+            hit.SetGuideEffect(false);
+            isFirstScream = false;
+        }
+        else { hit.SetGuideEffect(true); }
+
+
+        hitEffects[(int)BossBabyHitEffect.ScreamArea].SetActive(true);
         //플레이어 느려지게 만든다.
         yield return new WaitForSeconds(5f);
 
