@@ -4990,7 +4990,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: daaf6de9954b75e4ebe93bbe7d66674c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.347
+  m_Volume: 0.08
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9985,28 +9985,34 @@ MonoBehaviour:
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 50
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 
+  <statusEffect>k__BackingField: []
+  EnableTime: 0
   isPooling: 1
   isAttackIDManage: 1
   isMultiHit: 0
   DPS: 1
   EnableType: 2
   penetrations: 0
-  DisableTime: 0.5
+  DisableDuration: 10
   DisableObjects: []
   isGuide: 0
   GuideTime: 0
   GuideEffect: {fileID: 0}
   GuideEndEffect: {fileID: 0}
   FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
   isHitSuccesEffect_Instant: 0
   HitSuccesEffectObjcet_Instant: {fileID: 0}
   isHitSuccesEffect_Pool: 0
   HitSuccesEffectObjcet_Pool: 
-  isGuided: 0
-  GuidingTarget: {fileID: 0}
-  GuidingSpeed: 0
-  GuidingAngularSpeed: 0
   isRotate: 0
   RoatateAngulerSpeed: 0
 --- !u!1 &6629381145518134005
