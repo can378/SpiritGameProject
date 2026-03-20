@@ -46,7 +46,8 @@ public class MapUIManager : MonoBehaviour
     //Boss Stats
     [Header("보스 관련")]
     [SerializeField] EnemyBasic Boss;
-    [SerializeField] Slider BossHpslider;
+    [SerializeField] Slider BossHpslider; //slider로 hp표현
+    [SerializeField] Image BossHpFill; //custom mask로 hp 표현
     [SerializeField] Transform BossBuffbar;
     [SerializeField] TMP_Text BossName;
 
@@ -450,9 +451,13 @@ public class MapUIManager : MonoBehaviour
         if(!Boss.enemyStatus.EnemyTarget)
             return;
 
+        // slider hp bar
+        //float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax.Value) * 100;
+        //BossHpslider.value = normalizedHealth;
 
-        float normalizedHealth = (Boss.stats.HP / Boss.stats.HPMax.Value) * 100;
-        BossHpslider.value = normalizedHealth;
+        //custom hp bar
+        float normalizedHealth = Boss.stats.HP / Boss.stats.HPMax.Value;
+        BossHpFill.fillAmount = normalizedHealth;
     }
 
     void UpdateBossName()
