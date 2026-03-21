@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7229794731934350907}
   - component: {fileID: 3623754899108670778}
-  - component: {fileID: 5703476852033077316}
   - component: {fileID: 2520229236398862641}
   - component: {fileID: 7151203544794728555}
   - component: {fileID: 3361026644957457091}
@@ -75,102 +74,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!82 &5703476852033077316
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5651732826295342366}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 715c45a6aaa3d4649ab7afa90aa7dd1f, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.155
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!199 &2520229236398862641
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5261,7 +5164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5ee489bd1c3eb4f8fe74727894c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotPos: {fileID: 7229794731934350907}
+  WorldPos: {x: 0, y: 0, z: 0}
 --- !u!114 &6148003402210330183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5274,22 +5177,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517541243dcd4454f8a905851faf2f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackID>k__BackingField: 0
+  AttackID: 0
   <user>k__BackingField: {fileID: 0}
   DefaultDamage: 0
   <knockBack>k__BackingField: 0
-  <statusEffect>k__BackingField: 
+  <statusEffect>k__BackingField: []
+  EnableTime: 0
   isPooling: 1
   isAttackIDManage: 1
   isMultiHit: 0
   DPS: 1
   EnableType: 0
   penetrations: 0
-  DisableTime: 0
-  isDisableObjcet_Instant: 0
-  DisableObject_Instant: {fileID: 0}
-  isDisableObjcet_Pool: 0
-  DisableObject_Pool: 
+  DisableDuration: 10
+  EnableSound: {fileID: 8300000, guid: 6b7186c59036bd747a14a2f968e9cf82, type: 3}
+  DisableSound: {fileID: 0}
+  DisableObjects: []
+  isGuide: 0
+  GuideTime: 0
+  GuideEffect: {fileID: 0}
+  GuideEndEffect: {fileID: 0}
+  FinishGuide: 0
+  isGrowing: 0
+  DefaultScale: {x: 0, y: 0, z: 0}
+  GPS: 0
+  isGuiding: 0
+  rigid: {fileID: 0}
+  GuidingTarget: {fileID: 0}
+  GuidingSpeed: 0
+  GuidingAngularSpeed: 0
+  isGuidingLookRotation: 0
+  isHitSuccesEffect_Instant: 0
+  HitSuccesEffectObjcet_Instant: {fileID: 0}
+  isHitSuccesEffect_Pool: 0
+  HitSuccesEffectObjcet_Pool: 
+  isRotate: 0
+  RoatateAngulerSpeed: 0
 --- !u!1001 &5575407509815370326
 PrefabInstance:
   m_ObjectHideFlags: 0

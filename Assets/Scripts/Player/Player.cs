@@ -16,6 +16,9 @@ public class Player : ObjectBasic
     public UserData userData { get; private set; }
     public PlayerAnim playerAnim { get; private set; }
 
+    [field: SerializeField]
+    public PlayerAudio playerAudio { get; private set; }
+
 
     [HideInInspector] public float hAxis;
     [HideInInspector] public float vAxis;
@@ -224,6 +227,7 @@ public class Player : ObjectBasic
             //playerStats.MoveSpeed.AddValue = 20;
 
             Invoke("DodgeOut", playerStats.DodgeTime.Value);
+            AudioManager.instance.SFXPlayPoolingVersion(playerAudio.DodgeAudioClips[0]);
 
         }
     }
@@ -424,7 +428,7 @@ public class Player : ObjectBasic
             player.playerAnim.animator.SetFloat("AttackSpeed", player.playerStats.AttackSpeed.Value);
 
 
-            AudioManager.instance.WeaponAttackAudioPlay(CurWeapon.weaponInstance.weaponData.weaponType);
+            AudioManager.instance.SFXPlayPoolingVersion(player.playerAudio.AttackAudioClips[(int)CurWeapon.weaponInstance.weaponData.weaponType]);
 
             //선딜
             yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.AttackSpeed.Value);
@@ -505,7 +509,8 @@ public class Player : ObjectBasic
 
             // 선딜
             yield return new WaitForSeconds(animationInfo.PreDelay / player.playerStats.AttackSpeed.Value);
-            AudioManager.instance.WeaponAttackAudioPlay(CurWeapon.weaponInstance.weaponData.weaponType);
+            AudioManager.instance.SFXPlayPoolingVersion(player.playerAudio.AttackAudioClips[(int)CurWeapon.weaponInstance.weaponData.weaponType]);
+
 
             // 무기 투사체 적용
 

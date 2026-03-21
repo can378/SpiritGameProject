@@ -45,6 +45,7 @@ public class OverlapDamageBuff : BuffData
             BleedObject.transform.localScale = Vector3.one * 3;
 
             objectBasic.m_BuffController.RemoveBuff(this);
+            AudioManager.instance.SFXPlayPoolingVersion(BuffSound["Bleed"]);
 
             _Buff.duration = 0;
         }

@@ -154,9 +154,13 @@ public class BuffController : MonoBehaviour
         if (_Active)
         {
             m_BuffEffectList[_Buff.buffData.buffID].Play(_Buff);
+            AudioManager.instance.SFXPlayPoolingVersion(_Buff.buffData.ActiveBuffSound);
         }
         else
+        {
             m_BuffEffectList[_Buff.buffData.buffID].Stop(_Buff);
+            AudioManager.instance.SFXPlayPoolingVersion(_Buff.buffData.DeActiveBuffSound);
+        }
     }
 
     // 버프 수가 많지 않으므로 우선 스위치문으로 하드 코딩

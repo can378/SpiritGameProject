@@ -20,8 +20,8 @@ public class AudioManager : MonoBehaviour
     public GameObject SFXSoundSlider;
 
     [Header("Sound")]
-    public AudioMixer mixer;//����� �ͼ�
-    public AudioSource bgSound;//����� �Ŵ���
+    public AudioMixer mixer;//�����? �ͼ�
+    public AudioSource bgSound;//�����? �Ŵ���
 
     [Header("Pooling")]
     [SerializeField]
@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
 
 
     [Header("BGM Audio Source")]
-    //����� �����
+    //�����? �����?
     public AudioClip[] BgClipList;
     public AudioClip[] ChapterBgm_normal;
     public AudioClip[] ChapterBgm_boss;
@@ -53,10 +53,6 @@ public class AudioManager : MonoBehaviour
     //public AudioClip fireWooschSfx;
     //public AudioClip healSfx;
 
-
-    [field:SerializeField, Header("Player Weapon")]
-    public AudioClip[] weaponAttack {get; private set; } = new AudioClip[(int)WEAPON_TYPE.END];
-
     //instance
     public static AudioManager instance;
 
@@ -66,7 +62,7 @@ public class AudioManager : MonoBehaviour
     {
         instance = this;
 
-        Initialize(10);//10�� �̸� �����
+        Initialize(10);//10�� �̸� �����?
     }
 
 
@@ -89,12 +85,12 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    //����� ���� ����========================================================================================================
+    //�����? ���� ����========================================================================================================
 
     public void BGSoundVolume()
     {
 
-        //����� ��������
+        //�����? ��������
         if (BGSoundSlider.GetComponent<Slider>().value == 0)
         { mixer.SetFloat("BG", -80); }
         else
@@ -120,7 +116,7 @@ public class AudioManager : MonoBehaviour
 
     //========================================================================================================
 
-    //����� ����
+    //�����? ����
     public void PauseAudio(string clipName)
     {
         GameObject player = GameObject.Find(clipName);
@@ -130,7 +126,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //����� �簳
+    //�����? �簳
     public void ResumePlayAudio(string clipName)
     {
         GameObject player = GameObject.Find(clipName);
@@ -171,8 +167,6 @@ public class AudioManager : MonoBehaviour
     public void TestAudioPlay()
     { SFXPlayPoolingVersion(testAudio); }
 
-    public void WeaponAttackAudioPlay(WEAPON_TYPE weaponType)
-    { SFXPlayPoolingVersion(weaponAttack[(int)weaponType]); }
     public void KeyAudioPlay()
     { SFXPlayPoolingVersion(drop_key); }
     public void HitAudioPlay()
@@ -193,7 +187,7 @@ public class AudioManager : MonoBehaviour
     public void FitItemAudioPlay()  { SFXPlayPoolingVersion(FitItem); }
 
 
-    //������� �÷��� �Լ�===============================================================================
+    //�������? �÷��� �Լ�===============================================================================
     public void BGMPlay(int index)
     {
         PlayBGM(BgClipList[index], 0.2f);
@@ -251,7 +245,7 @@ public class AudioManager : MonoBehaviour
         return newObj; //�׸��� Queue�� �ְ� ��ȯ
     }
 
-    public static Sound GetObject() // �̸� ����� �����ٰ� ����!
+    public static Sound GetObject() // �̸� �����? �����ٰ� ����!
     {
         if (instance.poolingObjectQueue.Count > 0) // �̸� �����Ȱ� �Ⱥ����ϸ�
         {
@@ -261,13 +255,13 @@ public class AudioManager : MonoBehaviour
         }
         else // �����ϸ�
         {
-            var newObj = instance.CreateNewObject(); // �ϳ� ���� ����
+            var newObj = instance.CreateNewObject(); // �ϳ� ���� �����?
             newObj.gameObject.SetActive(true); // �ؿ��� ���� ����
             return newObj;
         }
     }
 
-    public static void ReturnObject(Sound obj) //��� �� �ٽ� ��ȯ
+    public static void ReturnObject(Sound obj) //���? �� �ٽ� ��ȯ
     {
         obj.gameObject.SetActive(false); //����
         instance.poolingObjectQueue.Enqueue(obj); // �ٽ� Enqueue ����

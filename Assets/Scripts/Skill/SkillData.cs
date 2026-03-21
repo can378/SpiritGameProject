@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 
 public enum SKILL_TYPE { DOWN, HOLD, UP }
@@ -21,6 +22,9 @@ public class SkillData : ItemData
 
     [field: SerializeField] public float skillDefalutCoolTime { get; private set; }     //기본 대기 시간
     [field: SerializeField] public Dictionary<string, object> CustomData { get; private set; }
+
+    [field: SerializeField] public SerializedDictionary<string, AudioClip> SkillSound { get; private set; }                      // 버프 기타 사운드
+
 
     public string TypeToKorean()
     {
