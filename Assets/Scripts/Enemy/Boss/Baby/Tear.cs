@@ -23,6 +23,7 @@ public class Tear : EnemyBasic
         HitDetection Pus_HD = Pus.GetComponent<HitDetection>();
         Pus_HD.SetDamage(m_PusDamage, 20);
         Pus_HD.SetDisableTime(1,ENABLE_TYPE.Time);
+        AudioManager.instance.SFXPlay(enemyAudio.attack);
         Dead();
     }
 

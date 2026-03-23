@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossBaby : Boss
@@ -23,6 +24,8 @@ public class BossBaby : Boss
     [SerializeField] Transform GrapPos;
 
     [SerializeField] GameObject CrackPrefab;
+
+    [SerializeField] protected BossBabyAudio bossAudio;
 
     bool HitWall;
     private bool isFirstScream = true;
@@ -132,6 +135,7 @@ public class BossBaby : Boss
                     break;
 
                 // 대상에게 잡기 디버프 부여
+                AudioManager.instance.PlaySFX(bossAudio.boneCrash);//오디오
                 grapDeBuff = status.hitTarget.GetComponent<ObjectBasic>().m_BuffController.ApplyBuff(BuffDatas[0]);
                 GrapDeBuff GrapDeBuffData = (GrapDeBuff)grapDeBuff.buffData;
                 GrapDeBuffData.SetGrapCustomData(grapDeBuff, this.GetComponent<ObjectBasic>(), GrapPos);
@@ -204,6 +208,7 @@ public class BossBaby : Boss
         hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(true);
         hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(true);
         jukqwiAnim.animator.SetBool("isRush",true);
+        AudioManager.instance.PlaySFX(bossAudio.footstep);//오디오
 
         while (true)
         {
@@ -255,7 +260,8 @@ public class BossBaby : Boss
         print("Screaming");
         jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Adult);
         jukqwiAnim.animator.SetBool("isScream", true);
-        
+        AudioManager.instance.PlaySFX(bossAudio.adultScream);//오디오
+
 
         //처음에만 hit guide끄기
         var hit = hitEffects[(int)BossBabyHitEffect.ScreamArea].GetComponent<HitDetection>();
@@ -306,6 +312,7 @@ public class BossBaby : Boss
         print("Crying");
         jukqwiAnim.ChangeVersion(AnimJukqwi.Version.Baby);
         jukqwiAnim.animator.SetBool("isCry",true);
+        AudioManager.instance.PlaySFX(bossAudio.babyCry);//오디오
 
         //move to corner
         corner = FindCorner();
@@ -529,6 +536,7 @@ public class BossBaby : Boss
         if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
         {
             HitWall = true;
+            AudioManager.instance.PlaySFX(bossAudio.wallCrash);//오디오
         }
     }
 
