@@ -263,8 +263,10 @@ public class AudioManager : MonoBehaviour
 
     public static void ReturnObject(Sound obj) //���? �� �ٽ� ��ȯ
     {
-        obj.gameObject.SetActive(false); //����
-        instance.poolingObjectQueue.Enqueue(obj); // �ٽ� Enqueue ����
+        var source = obj.GetComponent<AudioSource>();
+        source.clip = null;
+        obj.gameObject.SetActive(false);
+        instance.poolingObjectQueue.Enqueue(obj);
     }
     public void SFXPlayPoolingVersion(AudioClip clip)
     {
