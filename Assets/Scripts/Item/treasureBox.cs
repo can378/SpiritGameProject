@@ -128,10 +128,18 @@ public class treasureBox : MonoBehaviour, Interactable
         // Instantiate(itemCandidate[randomNum], rewardPos.transform).GetComponent<SpriteRenderer>().sortingOrder
         //     =GetComponent<SpriteRenderer>().sortingOrder+1;
 
-        foreach (SelectItem item in reward)
+        int count = reward.Count;
+        float minX = -2.5f;
+        float maxX = 2.5f;
+        float y = -2f;
+
+        for (int i = 0; i < count; i++)
         {
-            Vector3 pos = transform.position + (Random.insideUnitSphere * 3);
-            Instantiate(item, pos, Quaternion.identity);
+            float t = (count == 1) ? 0.5f : (float)i / (count - 1);
+            float x = Mathf.Lerp(minX, maxX, t);
+
+            Vector3 pos = transform.position + new Vector3(x, y, 0f);
+            Instantiate(reward[i], pos, Quaternion.identity);
         }
 
         isOpen = true;
