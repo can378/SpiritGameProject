@@ -5,8 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class EnterDungeon : MonoBehaviour
 {
+    private Collider2D portalCollider;
+    private float activateDelay = 2.0f;
+    private bool canEnter = false;
+
+    private void Awake()
+    {
+        portalCollider = GetComponent<Collider2D>();
+        portalCollider.enabled = false;
+        StartCoroutine(EnablePortal());
+    }
+
+    private IEnumerator EnablePortal()
+    {
+        yield return new WaitForSeconds(activateDelay);
+        portalCollider.enabled = true;
+        canEnter = true;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (!canEnter) return;
         if (other.CompareTag("Player"))
         {
             UserData userData = Player.instance.userData;
@@ -15,7 +34,6 @@ public class EnterDungeon : MonoBehaviour
 
             if (userData.nowChapter == 0)
             {
-
                 userData.nowChapter++;
                 DataManager.instance.SavePlayerStatsToUserData();
                 SceneManager.LoadScene("Map");
