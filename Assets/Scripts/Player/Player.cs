@@ -183,7 +183,6 @@ public class Player : ObjectBasic
         if (0 < playerStatus.isFlinch)
             return;
 
-        Debug.Log("player move");
         playerStatus.moveVec = new Vector2(hAxis, vAxis).normalized;
 
         if (playerStatus.isAttack || playerStatus.isSkill || playerStatus.isSkillHold)       // 정지

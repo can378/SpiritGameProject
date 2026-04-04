@@ -6,10 +6,12 @@ public class HealSkill : SkillBase
 {
     [field: SerializeField] HealSkillData HSData;
     GameObject effect;
+    SoundInstance m_SoundInstance;
     protected void Awake()
     {
         skillData = HSData;
     }
+
     public override void Enter(ObjectBasic user)
     {
         base.Enter(user);
@@ -33,7 +35,10 @@ public class HealSkill : SkillBase
 
             player.Damaged(-player.stats.HPMax.Value * HSData.defaultHeal);
 
-            while(player.playerStatus.isSkillHold)
+            m_SoundInstance = AudioManager.instance.SFXPlayPoolingVersion(HSData.SkillSound["Healing"]);
+
+
+            while (player.playerStatus.isSkillHold)
             {
                 player.Damaged(-player.stats.HPMax.Value * HSData.dotHeal * 0.1f);
                 yield return new WaitForSeconds(0.1f / player.playerStats.AttackSpeed.Value);
@@ -53,6 +58,8 @@ public class HealSkill : SkillBase
             effect.transform.parent = user.transform;
 
             enemy.Damaged(-enemy.stats.HPMax.Value * HSData.defaultHeal);
+
+            m_SoundInstance = AudioManager.instance.SFXPlayPoolingVersion(HSData.SkillSound["Healing"]);
 
             while (timer <= HSData.maxHoldTime / 2 && enemy.enemyStatus.isAttack)
             {
@@ -82,6 +89,8 @@ public class HealSkill : SkillBase
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             skillCoolTime = HSData.skillDefalutCoolTime;
         }
+
+        m_SoundInstance.Stop();
     }
 
     public override void Exit()
@@ -101,6 +110,9 @@ public class HealSkill : SkillBase
             EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
             skillCoolTime = HSData.skillDefalutCoolTime;
         }
+
+        m_SoundInstance.Stop();
+
     }
 
 
