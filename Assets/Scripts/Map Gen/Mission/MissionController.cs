@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum MissionType
 { KillAll, NoHurt, MiniBoss, TimeAttack, KillAll2, Curse, Dream, Maze, LittleMonster, MazeCurse }
@@ -21,6 +22,9 @@ public class MissionController : MonoBehaviour
     [SerializeReference]
     public List<MissionBase> missions;
     public MissionTriggerBase missionTrigger;
+
+    public UnityEvent OnMissionCompleted;
+    public UnityEvent OnMissionFaild;
 
     public MISSION_STATE GetMissionState()
     {
@@ -95,6 +99,7 @@ public class MissionController : MonoBehaviour
         AudioManager.instance.OnExitMap(gameObject);
         roomScript.UnLockDoor();
         missionReward.SetActive(true);
+        OnMissionCompleted?.Invoke();
 
         EndMission();
     }
@@ -108,6 +113,7 @@ public class MissionController : MonoBehaviour
         AudioManager.instance.OnExitMap(gameObject);
         roomScript.UnLockDoor();
         //missionReward.SetActive(true);
+        OnMissionFaild?.Invoke();
 
         EndMission();
     }

@@ -36,7 +36,7 @@ public class BlackDog : EnemyBasic
     {
         var playerAttackObj = Physics2D.OverlapCircle(transform.position, attackDetectRange, detectLayer);
 
-        if(playerAttackObj == null)
+        if(playerAttackObj == null || 0.0f < blackDogStatus.isFlinch)
         {
             blackDogStatus.isDetectAttack = false;
             return;

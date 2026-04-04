@@ -64,6 +64,14 @@ public class BossRoom : MonoBehaviour
         }
     }
 
+    public void DeActiveBackground()
+    {
+        foreach (GameObject bg in m_Backgrounds)
+        {
+            bg.SetActive(false);
+        }
+    }
+
     void PlayBgm()
     {
         //start audio

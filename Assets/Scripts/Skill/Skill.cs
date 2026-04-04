@@ -60,7 +60,7 @@ public abstract class SkillBase : MonoBehaviour
 
     public void HoldCoolDown()
     {
-        skillCoolTime = skillData.skillDefalutCoolTime * 2;
+        skillCoolTime = skillData.skillDefalutCoolTime;
     }
 
 

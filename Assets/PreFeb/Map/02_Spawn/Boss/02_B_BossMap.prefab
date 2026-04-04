@@ -3755,6 +3755,24 @@ MonoBehaviour:
   missions:
   - {fileID: 3227889683444126699}
   missionTrigger: {fileID: 7242787373621201621}
+  OnMissionCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7399106270705271396}
+        m_TargetAssemblyTypeName: BossRoom, Assembly-CSharp
+        m_MethodName: DeActiveBackground
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnMissionFaild:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7242787373621201621
 MonoBehaviour:
   m_ObjectHideFlags: 0
