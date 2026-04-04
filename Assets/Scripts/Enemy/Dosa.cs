@@ -131,4 +131,15 @@ public class Dosa : EnemyBasic
 
     }
 
+    public override void InitStatus()
+    {
+        base.InitStatus();
+        if (enemyStatus.attackCoroutine != null)
+        {
+            StopCoroutine(enemyStatus.attackCoroutine);
+            skillList[skill].Cancle();
+            enemyStatus.attackCoroutine = null;
+        }
+    }
+
 }

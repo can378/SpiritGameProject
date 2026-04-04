@@ -33,6 +33,7 @@ public class NormalGhost : EnemyBasic
             //throw knife
             GameObject knife = ObjectPoolManager.instance.Get("knife");
             HitDetection HD = knife.GetComponent<HitDetection>();
+            HD.SetProjectile_Ratio(0, 10.0f, 0.0f, enemyStats.SkillPower);
             HD.SetGuiding(true, enemyStatus.EnemyTarget.CenterPivot, 20, 0.3f, true);
             Debug.Log(knife.name+" throwing");
             AudioManager.instance.PlaySFX(enemyAudio.attack);//오디오 공격

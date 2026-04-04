@@ -38,7 +38,7 @@ public class Sound : MonoBehaviour
 // SoundInstance.Stop() will stop the sound and unbind it immediately.
 public struct SoundInstance
 {
-    public Sound m_SoundObject;
+    Sound m_SoundObject;
     int m_SessionID;
 
     public SoundInstance(Sound obj)
@@ -54,12 +54,12 @@ public struct SoundInstance
     {
         if (IsValid)
         {
-            // 수동 정지 시에도 이벤트 리스트에서 나를 빼달라고 요청 (선택 사항)
             m_SoundObject.GetAudioSource().Stop();
+            m_SoundObject = null;
         }
-        else
+        else if(m_SoundObject != null && m_SoundObject.GetSessionID() != m_SessionID)
         {
-            Debug.LogWarning("SoundInstance: Sound object is already unbound or null.");
+            Debug.LogWarning("SoundInstance: Sound object is not Valid.");
         }
     }
 }

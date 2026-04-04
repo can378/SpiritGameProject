@@ -192,6 +192,7 @@ public class Player : ObjectBasic
 
         if (playerStatus.isDodge)             // 회피시 현재 속도 유지
         {
+            playerStatus.moveVec = dodgeVec;
             rigid.velocity = dodgeVec.normalized * playerStats.MoveSpeed.Value * (1 + playerStats.DodgeSpeed.Value) * status.moveSpeedMultiplier;
         }
         else
@@ -723,6 +724,7 @@ public class Player : ObjectBasic
                     break;
                 }
             }
+
             if (player.skillList[SkillIndex].skillData.skillType == SKILL_TYPE.HOLD)
                 player.playerAnim.animator.SetBool("isSkill", false);
                 
