@@ -458,6 +458,9 @@ MonoBehaviour:
   EnableType: 0
   penetrations: 0
   DisableDuration: 10
+  EnableSound: {fileID: 0}
+  Sound: {fileID: 0}
+  DisableSound: {fileID: 0}
   DisableObjects: []
   isGuide: 1
   GuideTime: 0.5
@@ -978,6 +981,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5223026196715050006}
     m_Modifications:
+    - target: {fileID: 2009415835267642002, guid: 6071bb71a1942104a9fc85834438eb6c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8035527203812504727, guid: 6071bb71a1942104a9fc85834438eb6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
