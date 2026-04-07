@@ -19,6 +19,11 @@ public class MainUIManager : MonoBehaviour
     void Start()
     {
         mainPanel.SetActive(true);
+
+        // 초기에 패널 다 꺼줌
+        taskPanel.SetActive(false);
+        settingPanel.SetActive(false);
+        warningPanel.SetActive(false);
     }
     private void Update()
     {
@@ -80,7 +85,7 @@ public class MainUIManager : MonoBehaviour
     public void BackBtn() //뒤로가기 버튼
     {
         AudioManager.instance.UIClickAudio();
-        AudioManager.instance.UIClickAudio();
+
         mainPanel.SetActive(!mainPanel.activeSelf);
         settingPanel.SetActive(false);
         taskPanel.SetActive(false);
@@ -117,7 +122,7 @@ public class MainUIManager : MonoBehaviour
     {
 
         // 현재 플레이어 근처에 아이템이 있는 지 확인한다.
-        if (Player.instance.playerStatus.nearObject == null)
+        if (Player.instance == null || Player.instance.playerStatus == null || Player.instance.playerStatus.nearObject == null)
         {
             toolTipPanel.CloseToolTipUI();
             return;
