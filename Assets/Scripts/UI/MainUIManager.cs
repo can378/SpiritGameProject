@@ -5,7 +5,6 @@ using UnityEngine.Playables;
 
 public class MainUIManager : MonoBehaviour
 {
-
     public GameObject mainPanel;
     public GameObject taskPanel;
     public GameObject settingPanel;
@@ -15,7 +14,7 @@ public class MainUIManager : MonoBehaviour
     public TimeLineController timeLineController;
     bool wasTimelinePausedByUI = false;
     bool isPlayCutScene = false; // 그냥 대충 한 것이므로 수정할 것
-
+    bool isPlayStart = false;
 
     void Start()
     {
@@ -31,7 +30,9 @@ public class MainUIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             AudioManager.instance.UIClickAudio();
-            mainPanel.SetActive(!mainPanel.activeSelf);
+            //if (isPlayStart) { mainPanel.SetActive(!mainPanel.activeSelf); }
+            if (mainPanel.activeSelf) { if (isPlayStart) { mainPanel.SetActive(false); } }
+            else { mainPanel.SetActive(true); }
             settingPanel.SetActive(false);
             taskPanel.SetActive(false);
             warningPanel.SetActive(false);
@@ -86,6 +87,7 @@ public class MainUIManager : MonoBehaviour
     {
         AudioManager.instance.UIClickAudio();
         //SceneManager.LoadScene("Map");
+        isPlayStart = true;
 
         // 씬 최초 진입시만 컷신 재생
         // 그냥 대충 한 것이므로 수정할 것
