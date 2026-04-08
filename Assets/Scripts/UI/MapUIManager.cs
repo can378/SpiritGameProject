@@ -114,9 +114,50 @@ public class MapUIManager : MonoBehaviour
             }
 
             // ESC 패널 토글
-            esckeyPanel.SetActive(!esckeyPanel.activeSelf);
-            settingPanel.SetActive(false);
-            UpdateCheckPanelUI(false);
+            if (checkPanel.activeSelf)
+            {
+                checkPanel.SetActive(false);
+                return;
+            }
+
+            if (warningPanel.activeSelf)
+            {
+                warningPanel.SetActive(false);
+                esckeyPanel.SetActive(true);
+                return;
+            }
+
+            if (resetPanel.activeSelf)
+            {
+                resetPanel.SetActive(false);
+                esckeyPanel.SetActive(true);
+                return;
+            }
+
+            if (restartPanel.activeSelf)
+            {
+                restartPanel.SetActive(false);
+                esckeyPanel.SetActive(true);
+                return;
+            }
+
+            // 설정
+            if (settingPanel.activeSelf)
+            {
+                settingPanel.SetActive(false);
+                esckeyPanel.SetActive(true);
+                return;
+            }
+
+            // ESC 메뉴
+            if (esckeyPanel.activeSelf)
+            {
+                esckeyPanel.SetActive(false);
+                return;
+            }
+
+            // 아무것도 없으면 ESC 열기
+            esckeyPanel.SetActive(true);
         }
 
 

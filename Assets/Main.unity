@@ -218,6 +218,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 923270710}
+  - {fileID: 1094294085}
   - {fileID: 464456148}
   - {fileID: 839903968}
   - {fileID: 554915694}
@@ -226,7 +227,6 @@ RectTransform:
   - {fileID: 1203659775}
   - {fileID: 667925805}
   - {fileID: 911653954}
-  - {fileID: 1094294085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -345,6 +345,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &82764441 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2899265781491279674, guid: 1a06ab62ad28f4f45a987a068d717eee, type: 3}
+  m_PrefabInstance: {fileID: 4045153078666237900}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &113409987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,8 +2282,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainPanel: {fileID: 1203659774}
   taskPanel: {fileID: 554915693}
-  settingPanel: {fileID: 1161655565361950966}
-  warningPanel: {fileID: 1400498618}
+  settingPanel: {fileID: 82764441}
+  warningPanel: {fileID: 1691664540}
   toolTipPanel: {fileID: 1705176634}
   timeLineController: {fileID: 839903966}
 --- !u!1 &977745657
@@ -4071,11 +4076,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1400498618 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2476918862697021996, guid: 4deeaa4ae7a6e7c4ba68439412580d1d, type: 3}
-  m_PrefabInstance: {fileID: 667925804}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1445319084 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9089761720648685604, guid: 4449dab069d860d4b83c6b36c8e20489, type: 3}
@@ -4445,6 +4445,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1691664540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2476918862697021996, guid: 4deeaa4ae7a6e7c4ba68439412580d1d, type: 3}
+  m_PrefabInstance: {fileID: 667925804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1705176634 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7146664876739608535, guid: 4262d1c0e11f8e84b9aee46bf44d1cbb, type: 3}
@@ -5600,11 +5605,6 @@ PrefabInstance:
 --- !u!1 &1097162310206601224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3970664160000552900, guid: 1a06ab62ad28f4f45a987a068d717eee, type: 3}
-  m_PrefabInstance: {fileID: 4045153078666237900}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1161655565361950966 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2899265781491279674, guid: 1a06ab62ad28f4f45a987a068d717eee, type: 3}
   m_PrefabInstance: {fileID: 4045153078666237900}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1513706692779876497

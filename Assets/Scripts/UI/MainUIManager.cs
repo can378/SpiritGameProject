@@ -13,6 +13,7 @@ public class MainUIManager : MonoBehaviour
     public ToolTipUI toolTipPanel;
 
     public TimeLineController timeLineController;
+    bool wasTimelinePausedByUI = false;
     bool isPlayCutScene = false; // 그냥 대충 한 것이므로 수정할 것
 
 
@@ -37,14 +38,10 @@ public class MainUIManager : MonoBehaviour
 
             // UI가 하나라도 켜져있으면 일시 중지
             // 그냥 대충 한 것이므로 수정할 것
-            if(mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf)
-                timeLineController.Pause();
-            else 
-                timeLineController.Resume(); 
+            HandleTimelineByUI();
         }
 
-        if(timeLineController.GetPlayableState() == PlayState.Playing ||
-            (mainPanel.activeSelf || taskPanel.activeSelf || settingPanel.activeSelf || warningPanel.activeSelf))
+        if (timeLineController.GetPlayableState() == PlayState.Playing || IsAnyUIOpen())
         {
             Time.timeScale = 0f;
         }
@@ -55,6 +52,35 @@ public class MainUIManager : MonoBehaviour
     {
         UpdateNearObjectToolTipUI();
     }
+
+    private bool IsAnyUIOpen()
+    {
+        return mainPanel.gameObject.activeSelf ||
+               taskPanel.gameObject.activeSelf ||
+               settingPanel.gameObject.activeSelf ||
+               warningPanel.gameObject.activeSelf;
+    }
+
+    private void HandleTimelineByUI()
+    {
+        if (IsAnyUIOpen())
+        {
+            if (timeLineController.GetPlayableState() == PlayState.Playing)
+            {
+                timeLineController.Pause();
+                wasTimelinePausedByUI = true;
+            }
+        }
+        else
+        {
+            if (wasTimelinePausedByUI)
+            {
+                timeLineController.Resume();
+                wasTimelinePausedByUI = false;
+            }
+        }
+    }
+
 
     public void StartBtn() //게임 시작 버튼
     {
@@ -67,7 +93,7 @@ public class MainUIManager : MonoBehaviour
             timeLineController.Play();
             isPlayCutScene = true;
         }
-        else
+        else if (timeLineController.GetPlayableState() == PlayState.Paused)
         {
             timeLineController.Resume();
         }
@@ -92,7 +118,7 @@ public class MainUIManager : MonoBehaviour
         warningPanel.SetActive(false);
 
     }
-    public void SettingBtn() 
+    public void SettingBtn()
     {
         AudioManager.instance.UIClickAudio();
         settingPanel.SetActive(true);
