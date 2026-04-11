@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         GUIStyle style = new GUIStyle();
 
         Rect rect = new Rect(30, 30, Screen.width, Screen.height);
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         string text = string.Format("{0:0.} FPS ({1:0.0} ms)", fps, ms);
 
         GUI.Label(rect, text, style);
+#endif
     }
 
     void LoadNowScene() 
