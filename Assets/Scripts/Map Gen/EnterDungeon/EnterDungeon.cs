@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EnterDungeon : MonoBehaviour
+public class EnterDungeon : MonoBehaviour, Interactable
 {
     private Collider2D portalCollider;
     private float activateDelay = 2.0f;
     private bool canEnter = false;
+
+    public ActionDescription mActionDescription;
+
+    public event System.Action InteractEvent;
+
+    public string GetInteractText()
+    {
+        return mActionDescription.m_Description;
+    }
+
+    public void Interact()
+    {
+        if (!canEnter) return;
+
+        InteractEvent?.Invoke();
+
+        Enter();
+    }
 
     private void Awake()
     {
@@ -23,50 +41,21 @@ public class EnterDungeon : MonoBehaviour
         canEnter = true;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void Enter()
     {
-        if (!canEnter) return;
-        if (other.CompareTag("Player"))
+        UserData userData = Player.instance.userData;
+
+        AudioManager.instance.Bgm_normal(userData.nowChapter);
+
+        if (userData.nowChapter == 0)
         {
-            UserData userData = Player.instance.userData;
-
-            AudioManager.instance.Bgm_normal(userData.nowChapter);
-
-            if (userData.nowChapter == 0)
-            {
-                userData.nowChapter++;
-                DataManager.instance.SavePlayerStatsToUserData();
-                SceneManager.LoadScene("Map");
-            }
-            else
-            {
-                MapUIManager.instance.Ending();
-            }
-
-
-            /*
-            if (userData.nowChapter < 3)
-            {
-
-                userData.nowChapter++;
-                DataManager.instance.SaveUserData();
-                SceneManager.LoadScene("Map");
-            }
-            else if (userData.nowChapter == 3)
-            {
-
-                userData.nowChapter++;
-                DataManager.instance.SaveUserData();
-                SceneManager.LoadScene("FinalMap");
-            }
-            else if (userData.nowChapter == 4)
-            {
-                DataManager.instance.InitData();
-                DataManager.instance.SaveUserData();
-                SceneManager.LoadScene("Main");
-            }
-            */
+            userData.nowChapter++;
+            DataManager.instance.SavePlayerStatsToUserData();
+            SceneManager.LoadScene("Map");
         }
-
+        else
+        {
+            MapUIManager.instance.Ending();
+        }
     }
 }

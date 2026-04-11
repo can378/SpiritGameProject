@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -9,12 +10,17 @@ public class MainUIManager : MonoBehaviour
     public GameObject taskPanel;
     public GameObject settingPanel;
     public GameObject warningPanel;
+    public GameObject nearObjectPanel;      // 상호작용
     public ToolTipUI toolTipPanel;
 
     public TimeLineController timeLineController;
     bool wasTimelinePausedByUI = false;
     bool isPlayCutScene = false; // 그냥 대충 한 것이므로 수정할 것
     bool isPlayStart = false;
+
+    // nearObject
+    [Header("근처 아이템 관련")]
+    public TMP_Text nearObjectInteraction;
 
     void Start()
     {
@@ -52,6 +58,7 @@ public class MainUIManager : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateNearObjectToolTipUI();
+        UpdateNearObjectUI();
     }
 
     private bool IsAnyUIOpen()
@@ -165,7 +172,25 @@ public class MainUIManager : MonoBehaviour
             toolTipPanel.OpenToolTipUI(curItem.itemInstance);
             toolTipPanel.ChangePosition(ToolTipUIPos.InGameItem);
         }
+    }
 
+    public void UpdateNearObjectUI()
+    {
+        if (Player.instance.playerStatus.nearObject == null)
+        {
+            nearObjectPanel.SetActive(false);
+            return;
+        }
 
+        if (Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText() == "")
+        {
+            nearObjectPanel.SetActive(false);
+            return;
+        }
+
+        nearObjectPanel.SetActive(true);
+
+        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
+        nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText() + "[F]";   // GetComponent 변경하기
     }
 }

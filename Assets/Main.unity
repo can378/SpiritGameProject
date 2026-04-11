@@ -279,6 +279,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &39952255 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1520809724334029454, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
+  m_PrefabInstance: {fileID: 1513260498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &68411985
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +488,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113409987}
   m_CullTransparentMesh: 1
+--- !u!114 &168400566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5997342463345552199, guid: 7a087b3911ce474459e66b50fd218e53, type: 3}
+  m_PrefabInstance: {fileID: 1513260498}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &365082596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2284,8 +2300,10 @@ MonoBehaviour:
   taskPanel: {fileID: 554915693}
   settingPanel: {fileID: 82764441}
   warningPanel: {fileID: 1691664540}
+  nearObjectPanel: {fileID: 39952255}
   toolTipPanel: {fileID: 1705176634}
   timeLineController: {fileID: 839903966}
+  nearObjectInteraction: {fileID: 168400566}
 --- !u!1 &977745657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5123,6 +5141,30 @@ PrefabInstance:
     - target: {fileID: 3516569555127593206, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123516174046013069, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
+      propertyPath: mActionDescription
+      value: 
+      objectReference: {fileID: 11400000, guid: 20171e6401e167745b8acf2b8d7566b4, type: 2}
+    - target: {fileID: 6001771881413258906, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001771881413258906, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8854714999859378769, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
+      value: -1.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 8854714999859378769, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].y
+      value: -1.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 8854714999859378769, guid: ca775a7495e777246966b0c53a7aeda8, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
+      value: 1.98
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
