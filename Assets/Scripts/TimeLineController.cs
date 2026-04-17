@@ -12,8 +12,11 @@ public class TimeLineController : MonoBehaviour
     [field: SerializeField]
     SerializedDictionary<string,PlayableAsset> m_Playable;  // 재생할 타임라인들을 딕셔너리로 관리 (키: 타임라인 이름, 값: PlayableAsset)
 
+    private bool isFinish;
+
     public void Awake()
     {
+        isFinish = false;
         m_PlayableDirector.stopped += OnTimelineStopped;
     }
     void Update()
@@ -104,7 +107,13 @@ public class TimeLineController : MonoBehaviour
         {
             Debug.Log("Timeline 재생 완료! 오브젝트를 끕니다.");
             gameObject.SetActive(false); // 혹은 특정 컴포넌트만 .enabled = false;
+            isFinish=true;
         }
+    }
+
+    public bool CheckFinish()
+    {
+        return isFinish;
     }
 
     // 파괴될 시 이벤트 구독 해제

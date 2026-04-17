@@ -28,6 +28,18 @@ public class MapUIManager : MonoBehaviour
     public GameObject   endPanel;
     public GameObject   checkPanel; //확인용 창
 
+    //사용법
+    public GameObject equipGuidePanel;   // "인벤토리에서 클릭으로 해제 가능"
+    public GameObject skillGuidePanel;   // "오른쪽 클릭으로 사용 가능"
+
+    bool hasShownEquipGuide = false;
+    bool hasShownSkillGuide = false;
+
+    Queue<GameObject> guideQueue = new Queue<GameObject>();
+    bool isShowingGuide = false;
+
+
+
     [SerializeField] GameObject BossProgressPanel;
 
     //Player Stats
@@ -619,7 +631,66 @@ public class MapUIManager : MonoBehaviour
 
 
     //get passive skill
-    
+
+
+
+    #region 사용법
+    void EnqueueGuide(GameObject panel)
+    {
+        guideQueue.Enqueue(panel);
+
+        if (!isShowingGuide)
+        {
+            StartCoroutine(ProcessGuideQueue());
+        }
+    }
+
+    public void ShowEquipGuide()
+    {
+        if (hasShownEquipGuide) return;
+
+        hasShownEquipGuide = true;
+        EnqueueGuide(equipGuidePanel);
+    }
+
+    public void ShowSkillGuide()
+    {
+        if (hasShownSkillGuide) return;
+
+        hasShownSkillGuide = true;
+        EnqueueGuide(skillGuidePanel);
+    }
+    IEnumerator ProcessGuideQueue()
+    {
+        isShowingGuide = true;
+
+        while (guideQueue.Count > 0)
+        {
+            GameObject panel = guideQueue.Dequeue();
+            CanvasGroup cg = panel.GetComponent<CanvasGroup>();
+
+            cg.alpha = 1f;
+            panel.SetActive(true);
+
+            yield return new WaitForSeconds(4f);
+
+            float t = 0f;
+            float duration = 2f;
+
+            while (t < duration)
+            {
+                t += Time.deltaTime;
+                cg.alpha = 1f - (t / duration);
+                yield return null;
+            }
+
+            cg.alpha = 0f;
+            panel.SetActive(false);
+        }
+
+        isShowingGuide = false;
+    }
+    #endregion
 
 
 }

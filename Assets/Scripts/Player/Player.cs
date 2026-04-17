@@ -991,6 +991,11 @@ public class Player : ObjectBasic
                 return;
             }
             gainItem = EquipEquipment(selectItem.GetComponent<Equipment>().equipmentInstance);
+
+            if (gainItem)
+            {
+                if (MapUIManager.instance != null) { MapUIManager.instance.ShowEquipGuide(); }
+            }
         }
         // 스킬 =======================================================
         // 현재 사용 중인 스킬 해제 후 스킬 장착
@@ -1011,6 +1016,7 @@ public class Player : ObjectBasic
             if (gainItem)
             {
                 if (AudioManager.instance != null){ AudioManager.instance.FitItemAudioPlay(); }
+                if (MapUIManager.instance != null){ MapUIManager.instance.ShowSkillGuide(); }
             }
 
         }

@@ -11,12 +11,15 @@ public class MainUIManager : MonoBehaviour
     public GameObject settingPanel;
     public GameObject warningPanel;
     public GameObject nearObjectPanel;      // 상호작용
+    public GameObject DefaultGuidePanel; //기본 사용법
     public ToolTipUI toolTipPanel;
 
     public TimeLineController timeLineController;
     bool wasTimelinePausedByUI = false;
     bool isPlayCutScene = false; // 그냥 대충 한 것이므로 수정할 것
     bool isPlayStart = false;
+
+    bool hasHiddenDirectionPanel = false;
 
     // nearObject
     [Header("근처 아이템 관련")]
@@ -25,9 +28,10 @@ public class MainUIManager : MonoBehaviour
     void Start()
     {
         mainPanel.SetActive(true);
+        DefaultGuidePanel.SetActive(true);
 
         // 초기에 패널 다 꺼줌
-        taskPanel.SetActive(false);
+        taskPanel.SetActive(false); 
         settingPanel.SetActive(false);
         warningPanel.SetActive(false);
     }
@@ -53,6 +57,11 @@ public class MainUIManager : MonoBehaviour
             Time.timeScale = 0f;
         }
         else { Time.timeScale = 1f; }
+
+        if (!hasHiddenDirectionPanel && timeLineController.CheckFinish()==true)
+        {
+            HideDefaultGuidePanel();
+        }
     }
 
     private void FixedUpdate()
@@ -192,5 +201,40 @@ public class MainUIManager : MonoBehaviour
 
         nearObjectInteraction.text = Player.instance.playerStatus.nearObject.name;
         nearObjectInteraction.text = Player.instance.playerStatus.nearObject.GetComponent<Interactable>().GetInteractText() + "[F]";   // GetComponent 변경하기
+    }
+
+
+    public void HideDefaultGuidePanel()
+    {
+        if (DefaultGuidePanel.activeSelf==false)
+            return;
+
+        hasHiddenDirectionPanel = true;
+
+        StartCoroutine(FadeOutDefaultGuidePanel());
+    }
+
+    IEnumerator FadeOutDefaultGuidePanel()
+    {
+        Debug.Log("기본 사용법 비활성화 시작");
+
+        DefaultGuidePanel.SetActive(true);
+        CanvasGroup DefGuideCG = DefaultGuidePanel.GetComponent<CanvasGroup>();
+        DefGuideCG.alpha = 1f;
+
+        yield return new WaitForSeconds(4f);
+
+        float t = 0f;
+        float duration = 2.0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            DefGuideCG.alpha = 1f - (t / duration);
+            yield return null;
+        }
+
+        DefGuideCG.alpha = 0f;
+        DefaultGuidePanel.SetActive(false);
     }
 }
