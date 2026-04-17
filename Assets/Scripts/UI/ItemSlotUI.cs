@@ -40,6 +40,7 @@ public class ItemSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         itemInstance = _itemInstance;
         itemImage.sprite = itemInstance.itemData.sprite;
         itemImage.enabled = true;
+        itemImage.preserveAspect = true;
 
         if (isHover)
         {
