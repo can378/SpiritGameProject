@@ -108,8 +108,20 @@ public class ThunderboltSkill : SkillBase
     public override void Cancle()
     {
         base.Cancle();
-        StartCoroutine(AttackOut());
         Destroy(simul);
+        if (user.tag == "Player")
+        {
+            Player player = this.user.GetComponent<Player>();
+            // 쿨타임 적용
+            skillCoolTime = (1 + player.playerStats.SkillCoolTime.Value) * TSData.skillDefalutCoolTime;
+
+        }
+        else if (user.tag == "Enemy")
+        {
+            EnemyBasic enemy = this.user.GetComponent<EnemyBasic>();
+            // 쿨타임 적용
+            skillCoolTime = 5;
+        }
     }
 
 
