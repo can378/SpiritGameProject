@@ -218,6 +218,7 @@ public class BossBaby : Boss
             if (HitWall)
             {
                 Instantiate(CrackPrefab, CenterPivot.position, Quaternion.identity);
+                AudioManager.instance.PlaySFX(bossAudio.wallCrash);//오디오
                 hitEffects[(int)BossBabyHitEffect.RushHitArea].SetActive(false);
                 hitEffects[(int)BossBabyHitEffect.Poision_Trail].SetActive(false);
                 enemyStatus.moveVec = Vector2.zero;
@@ -339,7 +340,7 @@ public class BossBaby : Boss
                 GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
-                hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
+                hitDetection.SetDisableTime(1.0f, ENABLE_TYPE.Time);
                 hitDetection.SetHit_Ratio(0, 1.0f, enemyStats.SkillPower, 10);
 
             }
@@ -349,8 +350,8 @@ public class BossBaby : Boss
                 GameObject ThisTear = ObjectPoolManager.instance.Get(hitEffects[(int)BossBabyHitEffect.Tear], DropPos);
                 HitDetection hitDetection = ThisTear.GetComponent<HitDetection>();
                 hitDetection.user = this;
-                hitDetection.SetDisableTime(0.5f, ENABLE_TYPE.Time);
-                hitDetection.SetHit_Ratio(10, 1.0f, enemyStats.SkillPower, 10);
+                hitDetection.SetDisableTime(1.0f, ENABLE_TYPE.Time);
+                hitDetection.SetHit_Ratio(0, 1.0f, enemyStats.SkillPower, 10);
             }
             yield return new WaitForSeconds(Random.Range(0.1f, 0.3f));
         }
@@ -526,6 +527,12 @@ public class BossBaby : Boss
 
     public override void Dead()
     {
+        for(int i = 0; i<summonList.Count; ++i)
+        {
+            if(summonList[i] != null)
+                summonList[i].GetComponent<EnemyBasic>().Dead();
+        }
+
         RemoveDisarm();
         base.Dead();
     }
@@ -536,7 +543,6 @@ public class BossBaby : Boss
         if(collision.gameObject.tag == "Wall" || collision.gameObject.tag == "EnemyWall")
         {
             HitWall = true;
-            AudioManager.instance.PlaySFX(bossAudio.wallCrash);//오디오
         }
     }
 

@@ -22,6 +22,9 @@ public class EnemyBasic : ObjectBasic
     [SerializeField]
     LayerMask targetLayer;
 
+    protected System.Func<EnemyBasic, GameObject, Transform, GameObject> summonFunc;
+    protected List<GameObject> summonList = new List<GameObject>();
+
 
     protected override void Awake()
     {
@@ -35,6 +38,7 @@ public class EnemyBasic : ObjectBasic
         }
 
         enemyAnim = animGameObject.GetComponent<EnemyAnim>();
+        summonFunc = DefaultSummon;
     }
 
     protected virtual void Start()
@@ -459,6 +463,7 @@ public class EnemyBasic : ObjectBasic
     */
 
 
+
     #region Coroutine Manager
     /*
 
@@ -519,4 +524,44 @@ public class EnemyBasic : ObjectBasic
     #endregion
 
 
+    #region Summon
+    
+    public void SetSummonFunc(System.Func<EnemyBasic, GameObject, Transform, GameObject> callback)
+    {
+        summonFunc = callback;
+    }
+
+    public void SummonFunc(GameObject Enemy, Transform Trans)
+    {
+        summonFunc?.Invoke(this, Enemy, Trans);
+    }
+
+    // 만약 몬스터가 ObjectBasic을 거치치 않고 생성되었을 때, 기본
+    GameObject DefaultSummon(EnemyBasic User, GameObject Enemy, Transform Trans)
+    {
+        if (Enemy.GetComponent<EnemyBasic>() == null)
+        {
+            Debug.Log("EnemyBasic component found on the Enemy GameObject.");
+            return null;
+        }
+
+        // 몬스터 생성
+        GameObject instEnemy = Instantiate(Enemy, Trans.position,Trans.rotation);
+        AddSummon(instEnemy);
+
+        return instEnemy;
+
+    }
+
+    // 소환된 몬스터 리스트에 추가
+    public void AddSummon(GameObject Enemy)
+    {
+        if (Enemy.GetComponent<EnemyBasic>() == null)
+        {
+            Debug.Log("EnemyBasic component found on the Enemy GameObject.");
+            return;
+        }
+        summonList.Add(Enemy);
+    }
+    #endregion
 }

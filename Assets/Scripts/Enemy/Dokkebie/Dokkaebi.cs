@@ -5,7 +5,7 @@ using UnityEngine;
 public class Dokkaebi : EnemyBasic
 {
     DokkaebieStatus dokkeabieStatus;
-
+    [SerializeField] GameObject Wisp;
     [SerializeField] Transform WispPos;
 
     protected override void Awake()
@@ -54,7 +54,7 @@ public class Dokkaebi : EnemyBasic
         yield return new WaitForSeconds(1f);
 
         // 도깨비 불 소환
-        GameObject bullet = ObjectPoolManager.instance.Get("dokabbiFire");
+        GameObject bullet = summonFunc?.Invoke(this,Wisp, WispPos);
         bullet.transform.position = WispPos.position;
         //bullet.GetComponent<Rigidbody2D>().AddForce(dokkeabieStatus.targetDirVec.normalized, ForceMode2D.Impulse);
         //Instantiate(ObjectPoolManager.instance.Get2("dokabbiFire"), transform.position,Quaternion.identity);

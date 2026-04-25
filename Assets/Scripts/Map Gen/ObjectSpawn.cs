@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -102,6 +103,11 @@ public class ObjectSpawn : MonoBehaviour
             Destroy(enemyTransform.gameObject);
             // 부모 설정
             instEnemy.transform.SetParent(enemyGroup.transform);
+
+            if(instEnemy.GetComponent<EnemyBasic>() != null)
+            {
+                instEnemy.GetComponent<EnemyBasic>().SetSummonFunc(Summon);
+            }
             
             // 리스트에 추가
             enemys.Add(instEnemy);
@@ -147,4 +153,27 @@ public class ObjectSpawn : MonoBehaviour
         }
     }
 
+    // 적이 적을 소환
+    public GameObject Summon(EnemyBasic User, GameObject Enemy, Transform Trans)
+    {
+        // 1. 단순 확인
+        if (Enemy.GetComponent<EnemyBasic>() == null)
+        {
+            Debug.Log("EnemyBasic component found on the Enemy GameObject.");
+            return null;
+        }
+
+        // 몬스터 생성
+        GameObject instEnemy = Instantiate(Enemy, Trans.position, Trans.rotation);
+
+        // 부모 설정
+        instEnemy.transform.SetParent(enemyGroup.transform);
+
+        // 리스트에 추가
+        enemys.Add(instEnemy);
+        User.AddSummon(instEnemy);
+
+        return instEnemy;
+
+    }
 }
