@@ -38,6 +38,8 @@ public class WhiteFox : EnemyBasic
 
         whiteFoxStatus.isAttack = true;
         whiteFoxStatus.isAttackReady = false;
+        
+        enemyAnim.animator.SetBool("isBite", true);
         yield return new WaitForSeconds(1f);
 
         if (hitEffects[0] != null)
@@ -55,6 +57,9 @@ public class WhiteFox : EnemyBasic
         {
             Debug.LogError("hitEffects[1]ÀÌ null");
         }
+        
+        enemyAnim.animator.SetBool("isBite", false);
+        
         whiteFoxStatus.isAttack = false;
         whiteFoxStatus.isAttackReady = true;
         if(enemyStatus.EnemyTarget) RunAway(enemyStatus.EnemyTarget.transform, 1.0f);
