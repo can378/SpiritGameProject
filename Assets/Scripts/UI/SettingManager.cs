@@ -96,7 +96,8 @@ public class SettingManager : MonoBehaviour
         Screen.SetResolution(
             resolutions[resolutionNum].width,
             resolutions[resolutionNum].height,
-            screenMode
+            screenMode,
+            resolutions[resolutionNum].refreshRateRatio
         );
     }
 
