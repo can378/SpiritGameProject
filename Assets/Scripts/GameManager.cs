@@ -39,7 +39,11 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        // 개발용 프레임 제한
+#if UNITY_EDITOR
         Application.targetFrameRate = 60;
+#endif
+
         userData = DataManager.instance.userData;
 
         AudioManager.instance.Bgm_normal(userData.nowChapter);
