@@ -21,13 +21,14 @@ public class WhiteFox : EnemyBasic
 
     protected override void AttackPattern()
     {
-        if (whiteFoxStatus.targetDis <= 3f)
-        {
-            enemyStatus.attackCoroutine = StartCoroutine(HitAndRun());
-        }
-        else if (whiteFoxStatus.targetDis <= enemyStats.maxAttackRange && whiteFoxStatus.blizzardCoolTime <= 0f)
+        
+        if (whiteFoxStatus.targetDis <= 8f && whiteFoxStatus.blizzardCoolTime <= 0f)
         {
             enemyStatus.attackCoroutine = StartCoroutine(PeripheralAttack());
+        }
+        else if (whiteFoxStatus.targetDis <= 5f)
+        {
+            enemyStatus.attackCoroutine = StartCoroutine(HitAndRun());
         }
     }
 
