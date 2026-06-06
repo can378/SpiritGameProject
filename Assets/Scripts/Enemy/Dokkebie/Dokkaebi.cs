@@ -86,9 +86,11 @@ public class Dokkaebi : EnemyBasic
         // 애니메이션과 공격 판정 활성화
         enemyAnim.animator.SetBool("isAttack", true);
         hitEffects[0].gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+
         AudioManager.instance.PlaySFX(enemyAudio.attack);//공격 오디오
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         // 애니메이션과 공격 판정 비활성화
         enemyAnim.animator.SetBool("isAttack", false);
