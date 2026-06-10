@@ -65,27 +65,28 @@ public class ObjectSpawn : MonoBehaviour
 
         
 
+        int spawnChapter = Mathf.Clamp(userData.nowChapter, 1, 3);
         foreach (Transform enemyTransform in enemySpawnPoint)
         {
             int ran;
             GameObject instEnemy = null;
             if (mapType == MapType.Default|| mapType==MapType.Mission)
             {
-                if (Random.Range(0, 6) ==0) 
+                if (Random.Range(0, 6) ==0)
                 {
-                    string key = "normalEnemyCh" + nowChapter.ToString();
+                    string key = "normalEnemyCh" + spawnChapter.ToString();
 
-                    if (enemyTemplatesDic.ContainsKey(key))
+                    if (enemyTemplatesDic.TryGetValue(key, out GameObject[] templateArray) && templateArray.Length > 0)
                     {
-                        ran = Random.Range(0, enemyTemplatesDic[key].Length);
+                        ran = Random.Range(0, templateArray.Length);
                         //Debug.Log("normalEnemyCh" + nowChapter.ToString());
                         //Debug.Log(enemyTemplatesDic[key][ran].name);
-                        instEnemy = Instantiate(enemyTemplatesDic[key][ran], enemyTransform.position, enemyTransform.rotation);
+                        instEnemy = Instantiate(templateArray[ran], enemyTransform.position, enemyTransform.rotation);
                     }
-                    else { print("there is no key here"); }
-                    
+                    else { Debug.LogWarning($"Enemy template missing or empty for chapter {spawnChapter}: {key}"); }
                 }
-                else 
+
+                if (instEnemy == null && enemyTemplates.normalEnemy != null && enemyTemplates.normalEnemy.Length > 0)
                 {
                     ran = Random.Range(0, enemyTemplates.normalEnemy.Length);
                     instEnemy = Instantiate(enemyTemplates.normalEnemy[ran], enemyTransform.position, enemyTransform.rotation);
@@ -94,13 +95,24 @@ public class ObjectSpawn : MonoBehaviour
             }
             else if (mapType == MapType.Boss)
             {
-                ran = nowChapter - 1;
-                //ran = Random.Range(0, enemyTemplates.bossEnemy.Length);
-                instEnemy = Instantiate(enemyTemplates.bossEnemy[ran], enemyTransform.position, enemyTransform.rotation);
+                GameObject[] bossArray = enemyTemplates.bossEnemy;
+                if (bossArray != null && bossArray.Length > 0)
+                {
+                    int bossIndex = Mathf.Clamp(nowChapter - 1, 0, bossArray.Length - 1);
+                    instEnemy = Instantiate(bossArray[bossIndex], enemyTransform.position, enemyTransform.rotation);
+                }
+                else
+                {
+                    Debug.LogWarning("Boss enemy template array is missing or empty.");
+                }
             }
-            
+
             // 위치 삭제
             Destroy(enemyTransform.gameObject);
+
+            if (instEnemy == null)
+                continue;
+
             // 부모 설정
             instEnemy.transform.SetParent(enemyGroup.transform);
 
@@ -108,7 +120,7 @@ public class ObjectSpawn : MonoBehaviour
             {
                 instEnemy.GetComponent<EnemyBasic>().SetSummonFunc(Summon);
             }
-            
+
             // 리스트에 추가
             enemys.Add(instEnemy);
         }

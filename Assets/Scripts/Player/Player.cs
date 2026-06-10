@@ -1148,6 +1148,12 @@ public class Player : ObjectBasic
 
             // 무기
             int playerWeapon = DataManager.instance.userData.playerWeapon;
+            if (playerWeapon == 0)
+            {
+                playerWeapon = 1;
+                DataManager.instance.userData.playerWeapon = 1;
+            }
+
             if (playerWeapon != 0)
             {
                 GameObject WeaponObject = Instantiate(DataManager.instance.gameData.weaponList[playerWeapon]);

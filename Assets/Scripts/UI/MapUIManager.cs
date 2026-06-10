@@ -552,6 +552,18 @@ public class MapUIManager : MonoBehaviour
     {
         DataManager.instance.LoadData();
 
+        if (userData.nowChapter == 0)
+        {
+            userData.nowChapter = 1;
+        }
+
+        if (userData.playerWeapon == 0)
+        {
+            userData.playerWeapon = 1;
+        }
+
+        DataManager.instance.SaveUserData();
+
         AudioManager.instance.Bgm_normal(userData.nowChapter);
         if (userData.nowChapter == 4) 
         {
