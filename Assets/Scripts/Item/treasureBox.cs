@@ -83,7 +83,39 @@ public class treasureBox : MonoBehaviour, Interactable
             GameObject selectItem = GameData.instance.DrawRandomItem(ItemCondition);
 
             if (selectItem != null)
-                reward.Add(selectItem.GetComponent<SelectItem>());
+            {
+                // 단순하게 순회를 돌려 중복된 아이템인지 체크
+                SelectItem selectItemComponent = selectItem.GetComponent<SelectItem>();
+
+                //소모품은 중복 허용
+                if (selectItemComponent.itemInstance.itemData.selectItemType == SelectItemType.Consumable)
+                {
+                    // break; // 소모품은 중복 허용
+                }
+                else
+                {
+                    // 단순하게 순회를 돌려 중복된 아이템인지 체크
+                    foreach (SelectItem rewardSelectItm in reward)
+                    {
+                        // 유효성 체크
+                        if (selectItemComponent.itemInstance.IsValid() && rewardSelectItm.itemInstance.IsValid())
+                        {
+                            // 동일한 아이템이라면 다시 뽑기
+                            if (selectItemComponent.itemInstance.itemData == rewardSelectItm.itemInstance.itemData)
+                            {
+                                selectItem = GameData.instance.GetDefaultConsumableItem();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                selectItem = GameData.instance.GetDefaultConsumableItem();
+            }
+
+            reward.Add(selectItem.GetComponent<SelectItem>());
 
             ItemCondition.Clear();
         }

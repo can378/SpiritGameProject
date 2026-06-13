@@ -1,10 +1,11 @@
+using AYellowpaper.SerializedCollections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using System.Reflection;
-using System;
-using AYellowpaper.SerializedCollections;
+using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [System.Serializable]
 public class SelectItemList
@@ -272,6 +273,14 @@ public class GameData : MonoBehaviour
 
         int ItemIndex = UnityEngine.Random.Range(0, FindList.Count);
 
+        return FindList[ItemIndex].gameObject;
+    }
+
+    // 기본 회복 아이템 제공
+    public GameObject GetDefaultConsumableItem()
+    {
+        List<SelectItem> FindList = ItemList.FindAll(x => (int)x.itemInstance.itemData.GetType().GetProperty("selectItemType").GetValue(x.itemInstance.itemData) == (int)SelectItemType.Consumable);
+        int ItemIndex = 0;
         return FindList[ItemIndex].gameObject;
     }
 
